@@ -1,0 +1,4 @@
+# No external dependencies required.
+# The build system and test runner rely solely on the Python Standard Library.
+#
+# Recommended: Python 3.8+

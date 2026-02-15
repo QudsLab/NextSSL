@@ -1,0 +1,81 @@
+import os
+import sys
+import ctypes
+
+# Add project root to path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../')))
+from script.core import console
+
+def main(color=True):
+    """Run all legacy tests for hash_legacy.dll (Base Tier)."""
+    console.set_color(color)
+
+    PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../'))
+    DLL_PATH = os.path.join(PROJECT_ROOT, 'bin', 'base', 'hash_legacy.dll')
+    
+    if sys.platform != 'win32':
+        DLL_PATH = DLL_PATH.replace('.dll', '.so')
+
+    console.print_info(f"Loading DLL: {DLL_PATH}")
+    if not os.path.exists(DLL_PATH):
+        console.print_fail(f"DLL not found: {DLL_PATH}")
+        return 1
+        
+    try:
+        lib = ctypes.CDLL(DLL_PATH)
+    except OSError as e:
+        console.print_fail(f"Failed to load DLL: {e}")
+        return 1
+    
+    console.print_pass("DLL loaded successfully")
+
+    symbols = ['leyline_md5', 'leyline_md2']
+    
+    missing = []
+    for s in symbols:
+        if not hasattr(lib, s):
+            missing.append(s)
+            
+    if missing:
+        console.print_fail(f"Missing symbols: {missing}")
+        return 1
+        
+    passed = 0
+    failed = 0
+    
+    # MD5 (Alive)
+    lib.leyline_md5.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
+    lib.leyline_md5.restype = ctypes.c_int
+    digest = ctypes.create_string_buffer(16)
+    lib.leyline_md5(b"abc", 3, digest)
+    if digest.raw.hex() == "900150983cd24fb0d6963f7d28e17f72":
+        console.print_pass("MD5 (Alive category)")
+        msg = f"       Hash (16 bytes): {digest.raw.hex()}"
+        console.log_to_file(msg)
+        print(msg)
+        passed += 1
+    else:
+        console.print_fail("MD5")
+        failed += 1
+
+    # MD2 (Unsafe)
+    lib.leyline_md2.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
+    lib.leyline_md2.restype = ctypes.c_int
+    digest = ctypes.create_string_buffer(16)
+    lib.leyline_md2(b"abc", 3, digest)
+    if digest.raw.hex() == "da853b0d3f88d99b30283a69e6ded6bb":
+        console.print_pass("MD2 (Unsafe category)")
+        msg = f"       Hash (16 bytes): {digest.raw.hex()}"
+        console.log_to_file(msg)
+        print(msg)
+        passed += 1
+    else:
+        console.print_fail("MD2")
+        failed += 1
+
+    print(f"\n{'='*50}")
+    console.print_info(f"Results: {passed} passed, {failed} failed")
+    return 0 if failed == 0 else 1
+
+if __name__ == "__main__":
+    sys.exit(main())
