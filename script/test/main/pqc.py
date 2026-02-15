@@ -80,6 +80,8 @@ def main():
         # 1. OS Random Mode
         ret = keypair_func(pk, sk)
         console.print_info(f"{algo_name} keypair (OS random): ret={ret}")
+        console.log_data(f"{algo_name}.keypair.pk", pk.raw.hex())
+        console.log_data(f"{algo_name}.keypair.sk", sk.raw.hex())
         if ret == 0:
             test_pass(f"{algo_name} keypair")
         else:
@@ -87,6 +89,8 @@ def main():
 
         ret = encaps_func(ct, ss_enc, pk)
         console.print_info(f"{algo_name} encaps: ret={ret}")
+        console.log_data(f"{algo_name}.encaps.ct", ct.raw.hex())
+        console.log_data(f"{algo_name}.encaps.ss", ss_enc.raw.hex())
         if ret == 0:
             test_pass(f"{algo_name} encaps")
         else:
@@ -94,6 +98,7 @@ def main():
 
         ret = decaps_func(ss_dec, ct, sk)
         console.print_info(f"{algo_name} decaps: ret={ret}")
+        console.log_data(f"{algo_name}.decaps.ss", ss_dec.raw.hex())
         if ret == 0 and ss_enc.raw == ss_dec.raw:
             test_pass(f"{algo_name} decaps + shared secret match")
         else:
@@ -135,6 +140,8 @@ def main():
         # 1. OS Random Mode
         ret = keypair_func(pk, sk)
         console.print_info(f"{algo_name} keypair (OS random): ret={ret}")
+        console.log_data(f"{algo_name}.keypair.pk", pk.raw.hex())
+        console.log_data(f"{algo_name}.keypair.sk", sk.raw.hex())
         if ret == 0:
             test_pass(f"{algo_name} keypair")
         else:
@@ -142,6 +149,8 @@ def main():
 
         ret = sign_func(sig, ctypes.byref(siglen), msg, msglen, sk)
         console.print_info(f"{algo_name} sign: ret={ret}, siglen={siglen.value}")
+        console.log_data(f"{algo_name}.sign.msg", msg.hex())
+        console.log_data(f"{algo_name}.sign.sig", sig.raw[:siglen.value].hex())
         if ret == 0:
             test_pass(f"{algo_name} sign")
         else:
