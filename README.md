@@ -1,3 +1,10 @@
+<div align="center">
+
+<img src="extra/assets/logo.svg" alt="NextSSL Banner" />
+
+</div>
+
+
 # NextSSL
 **Next Super Secure Layer**
 
