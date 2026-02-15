@@ -91,6 +91,8 @@ def main():
         # 1. OS Random Mode
         ret = keypair_func(pk, sk)
         console.print_info(f"{algo_name} keypair (OS random): ret={ret}")
+        console.log_data(f"{algo_name}.keypair.pk", pk.raw.hex())
+        console.log_data(f"{algo_name}.keypair.sk", sk.raw.hex())
         if ret == 0:
             test_pass(f"{algo_name} keypair")
         else:
@@ -98,6 +100,8 @@ def main():
 
         ret = sign_func(sig, ctypes.byref(siglen), msg, msglen, sk)
         console.print_info(f"{algo_name} sign: ret={ret}, siglen={siglen.value}")
+        console.log_data(f"{algo_name}.sign.msg", msg.hex())
+        console.log_data(f"{algo_name}.sign.sig", sig.raw[:siglen.value].hex())
         if ret == 0:
             test_pass(f"{algo_name} sign")
         else:
