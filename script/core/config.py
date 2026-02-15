@@ -1,4 +1,5 @@
 import os
+import time
 from .platform import Platform
 
 class Config:
@@ -40,14 +41,9 @@ class Config:
         ]
 
     def get_log_path(self, tier, name, timed=True):
-        # log_subdir = os.path.join(self.log_dir, tier)
-        # os.makedirs(log_subdir, exist_ok=True)
-        # return os.path.join(log_subdir, f"{name}.log")
-
-        # insted of makinf subdir, just add with a _ to avoid path issues
-        # also add timestamp to avoid overwriting
+        os.makedirs(self.log_dir, exist_ok=True)
         if timed:
-            return os.path.join(self.log_dir, f"{Platform.get_timestamp()}_{tier}_{name}.log")
+            return os.path.join(self.log_dir, f"{time.strftime('%Y%m%d_%H%M%S')}_{tier}_{name}.log")
         return os.path.join(self.log_dir, f"{tier}_{name}.log")
 
     def get_output_path(self, tier, name):

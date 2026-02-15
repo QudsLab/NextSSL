@@ -111,6 +111,40 @@ def main():
         else:
             test_fail(f"{algo_name} decaps", "shared secret mismatch" if ret == 0 else f"returned {ret}")
 
+        # 2. Deterministic Key Generation Test
+        seed1 = os.urandom(32)
+        seed2 = os.urandom(32)
+        
+        pk1 = ctypes.create_string_buffer(pk_size)
+        sk1 = ctypes.create_string_buffer(sk_size)
+        pk2 = ctypes.create_string_buffer(pk_size)
+        sk2 = ctypes.create_string_buffer(sk_size)
+        pk3 = ctypes.create_string_buffer(pk_size)
+        sk3 = ctypes.create_string_buffer(sk_size)
+
+        # Gen Key 1 (Seed A)
+        ret1 = keypair_derand_func(pk1, sk1, seed1)
+        
+        # Gen Key 2 (Seed A)
+        ret2 = keypair_derand_func(pk2, sk2, seed1)
+        
+        # Gen Key 3 (Seed B)
+        ret3 = keypair_derand_func(pk3, sk3, seed2)
+        
+        if ret1 == 0 and ret2 == 0 and ret3 == 0:
+            if pk1.raw == pk2.raw and sk1.raw == sk2.raw:
+                test_pass(f"{algo_name} deterministic keygen (same seed)")
+            else:
+                test_fail(f"{algo_name} deterministic keygen (same seed)", "Keys differ with same seed")
+                
+            if pk1.raw != pk3.raw: # SK comparison might be tricky for some algos if they have random components, but usually SK is deterministic too
+                test_pass(f"{algo_name} deterministic keygen (diff seed)")
+            else:
+                test_fail(f"{algo_name} deterministic keygen (diff seed)", "Keys match with different seed")
+        else:
+            test_fail(f"{algo_name} deterministic keygen", f"Returns: {ret1}, {ret2}, {ret3}")
+
+
     # ML-KEM-768
     test_kem("ML-KEM-768", 1184, 2400, 1088, 32,
              lib.pqc_mlkem768_keypair, lib.pqc_mlkem768_keypair_derand,
