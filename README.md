@@ -2,6 +2,11 @@
 
 <img src="extra/assets/logo.svg" style="width: 300px;" alt="NextSSL Banner" />
 
+<div align="center" style="background: #e46e0013;color: #ff7b00ff;border:1px solid #eb5e00ff;padding:12px 16px;border-radius:6px;margin-bottom:16px;font-weight:600;">
+  This repository is under active development — APIs and features may change without notice.
+</div>
+
+
 </div>
 
 
