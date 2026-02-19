@@ -16,3 +16,4 @@ PROMPT.md
 /script/test/__pycache__
 /script/test/base/__pycache__
 /script/test/main/__pycache__
+*.pyc

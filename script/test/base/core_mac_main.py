@@ -39,6 +39,7 @@ def main():
         
         if mac_buf.raw == expected_mac:
             console.print_pass("AES-CMAC OK")
+            print(f"       MAC:        {mac_buf.raw.hex()}")
             console.log_data("AES-CMAC.key", key.hex())
             console.log_data("AES-CMAC.msg", msg.hex())
             console.log_data("AES-CMAC.mac", mac_buf.raw.hex())
@@ -62,6 +63,7 @@ def main():
         
         if hmac_buf.raw == expected_hmac:
             console.print_pass("HMAC-SHA256 OK")
+            print(f"       HMAC:       {hmac_buf.raw.hex()}")
             console.log_data("HMAC-SHA256.key", key_hmac.hex())
             console.log_data("HMAC-SHA256.msg", msg_hmac.hex())
             console.log_data("HMAC-SHA256.mac", hmac_buf.raw.hex())

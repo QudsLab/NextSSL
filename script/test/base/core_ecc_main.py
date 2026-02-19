@@ -40,6 +40,7 @@ def main():
         
         if pk_buf.raw == expected_pk:
             console.print_pass("Ed25519 OK")
+            print(f"       Public Key: {pk_buf.raw.hex()}")
             console.log_data("Ed25519.sk_seed", sk_seed.hex())
             console.log_data("Ed25519.pk", pk_buf.raw.hex())
             passed += 1
@@ -62,6 +63,7 @@ def main():
         
         if shared_buf.raw == expected_shared:
             console.print_pass("X25519 OK")
+            print(f"       Shared:     {shared_buf.raw.hex()}")
             console.log_data("X25519.alice_sk", alice_sk.hex())
             console.log_data("X25519.bob_pk", bob_pk.hex())
             console.log_data("X25519.shared", shared_buf.raw.hex())

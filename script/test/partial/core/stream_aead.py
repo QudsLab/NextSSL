@@ -59,6 +59,7 @@ def main():
         
         if ct_buf.raw == expected_ct_full:
             console.print_pass("ChaCha20-Poly1305 Encrypt KAT")
+            print(f"       Ciphertext: {ct_buf.raw.hex()}")
             log_test("ChaCha20-Poly1305", key, nonce, pt, ct_buf.raw)
             passed += 1
         else:

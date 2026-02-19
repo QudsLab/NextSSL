@@ -57,6 +57,7 @@ def main():
         
         if ct_buf.raw == expected_ct:
             console.print_pass("AES-CBC Encrypt KAT")
+            print(f"       Ciphertext: {ct_buf.raw.hex()}")
             log_test("AES-CBC", key, iv, pt, ct_buf.raw)
             passed += 1
         else:
@@ -113,6 +114,7 @@ def main():
         
         if pt_xts_out.raw == pt_xts:
             console.print_pass("AES-XTS Roundtrip")
+            print(f"       Ciphertext: {ct_xts_buf.raw.hex()}")
             log_test("AES-XTS", key_xts, tweak, pt_xts, ct_xts_buf.raw)
             passed += 1
         else:

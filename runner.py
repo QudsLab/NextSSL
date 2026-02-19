@@ -20,6 +20,10 @@ from script.gen.partial.core import aes_modes, aes_aead, stream_aead, macs, ecc
 from script.gen.base import core_cipher_main, core_mac_main, core_ecc_main
 from script.gen.main import core as core_main
 
+from script.gen.partial.dhcm import primitive_fast as dhcm_primitive_fast, primitive_memory_hard as dhcm_primitive_memory_hard, primitive_sponge_xof as dhcm_primitive_sponge_xof, legacy_alive as dhcm_legacy_alive, legacy_unsafe as dhcm_legacy_unsafe
+from script.gen.base import dhcm_primitive_main, dhcm_legacy_main
+from script.gen.main import dhcm as dhcm_main
+
 from script.test.partial.hash import primitive_fast as test_primitive_fast
 from script.test.partial.hash import primitive_memory_hard as test_primitive_memory_hard
 from script.test.partial.hash import primitive_sponge_xof as test_primitive_sponge_xof
@@ -47,6 +51,15 @@ from script.test.base import core_mac_main as test_core_mac_main
 from script.test.base import core_ecc_main as test_core_ecc_main
 from script.test.main import core as test_core_main
 
+from script.test.partial.dhcm import primitive_fast as test_dhcm_primitive_fast
+from script.test.partial.dhcm import primitive_memory_hard as test_dhcm_primitive_memory_hard
+from script.test.partial.dhcm import primitive_sponge_xof as test_dhcm_primitive_sponge_xof
+from script.test.partial.dhcm import legacy_alive as test_dhcm_legacy_alive
+from script.test.partial.dhcm import legacy_unsafe as test_dhcm_legacy_unsafe
+from script.test.base import dhcm_primitive_main as test_dhcm_primitive_main
+from script.test.base import dhcm_legacy_main as test_dhcm_legacy_main
+from script.test.main import dhcm as test_dhcm_main
+
 def run_build(args):
     config = Config()
     target = args.build
@@ -68,22 +81,31 @@ def run_build(args):
         core_partial = [aes_modes, aes_aead, stream_aead, macs, ecc]
         core_base = [core_cipher_main, core_mac_main, core_ecc_main]
         core_main_list = [core_main]
+
+        # DHCM Modules
+        dhcm_partial = [dhcm_primitive_fast, dhcm_primitive_memory_hard, dhcm_primitive_sponge_xof, dhcm_legacy_alive, dhcm_legacy_unsafe]
+        dhcm_base = [dhcm_primitive_main, dhcm_legacy_main]
+        dhcm_main_list = [dhcm_main]
         
         # Build logic
         build_hash = False
         build_pqc = False
         build_core = False
+        build_dhcm = False
         
         if target == 'all':
             build_hash = True
             build_pqc = True
             build_core = True
+            build_dhcm = True
         elif target == 'hash':
             build_hash = True
         elif target == 'pqc':
             build_pqc = True
         elif target == 'core':
             build_core = True
+        elif target == 'dhcm':
+            build_dhcm = True
         elif target.startswith('hash:'):
             # Specific hash target
             if target == 'hash:partial':
@@ -126,6 +148,20 @@ def run_build(args):
                 if module: module.build(builder)
                 else: logger.error(f"Unknown target: {target}")
             return # Done
+        elif target.startswith('dhcm:'):
+            # Specific DHCM target
+            if target == 'dhcm:partial':
+                for m in dhcm_partial: m.build(builder)
+            elif target == 'dhcm:base':
+                for m in dhcm_base: m.build(builder)
+            elif target == 'dhcm:main':
+                for m in dhcm_main_list: m.build(builder)
+            else:
+                name = target.split(':')[-1]
+                module = next((m for m in dhcm_partial if m.__name__.endswith(name)), None)
+                if module: module.build(builder)
+                else: logger.error(f"Unknown target: {target}")
+            return # Done
         else:
             logger.error(f"Unknown build target: {target}")
             return
@@ -143,6 +179,11 @@ def run_build(args):
         if build_core:
             logger.info("Building Core targets...")
             for m in core_partial + core_base + core_main_list:
+                m.build(builder)
+
+        if build_dhcm:
+            logger.info("Building DHCM targets...")
+            for m in dhcm_partial + dhcm_base + dhcm_main_list:
                 m.build(builder)
 
 def run_test(args):
@@ -179,20 +220,32 @@ def run_test(args):
         core_base = [test_core_cipher_main, test_core_mac_main, test_core_ecc_main]
         core_main_list = [test_core_main]
 
+        # DHCM Tests
+        dhcm_partial = [
+            test_dhcm_primitive_fast, test_dhcm_primitive_memory_hard, test_dhcm_primitive_sponge_xof,
+            test_dhcm_legacy_alive, test_dhcm_legacy_unsafe
+        ]
+        dhcm_base = [test_dhcm_primitive_main, test_dhcm_legacy_main]
+        dhcm_main_list = [test_dhcm_main]
+
         run_hash = False
         run_pqc = False
         run_core = False
+        run_dhcm = False
 
         if target == 'all':
             run_hash = True
             run_pqc = True
             run_core = True
+            run_dhcm = True
         elif target == 'hash':
             run_hash = True
         elif target == 'pqc':
             run_pqc = True
         elif target == 'core':
             run_core = True
+        elif target == 'dhcm':
+            run_dhcm = True
         elif target.startswith('hash:'):
             if target == 'hash:partial': test_modules = hash_partial
             elif target == 'hash:base': test_modules = hash_base
@@ -214,6 +267,13 @@ def run_test(args):
             else:
                 name = target.split(':')[-1]
                 test_modules = [m for m in core_partial if m.__name__.endswith(name)]
+        elif target.startswith('dhcm:'):
+            if target == 'dhcm:partial': test_modules = dhcm_partial
+            elif target == 'dhcm:base': test_modules = dhcm_base
+            elif target == 'dhcm:main': test_modules = dhcm_main_list
+            else:
+                name = target.split(':')[-1]
+                test_modules = [m for m in dhcm_partial if m.__name__.endswith(name)]
         else:
             console.print_fail(f"Unknown test target: {target}")
             return
@@ -224,6 +284,8 @@ def run_test(args):
             test_modules.extend(pqc_partial + pqc_base + pqc_main_list)
         if run_core:
             test_modules.extend(core_partial + core_base + core_main_list)
+        if run_dhcm:
+            test_modules.extend(dhcm_partial + dhcm_base + dhcm_main_list)
 
         console.print_header(f"Running {len(test_modules)} test suites...")
         

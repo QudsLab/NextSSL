@@ -56,6 +56,7 @@ def main():
         
         if pk_buf.raw == expected_pk:
             console.print_pass("Ed25519 Keypair Gen KAT")
+            print(f"       Public Key: {pk_buf.raw.hex()}")
             passed += 1
         else:
             console.print_fail("Ed25519 Keypair Gen KAT mismatch")
@@ -69,6 +70,7 @@ def main():
         
         if sig_buf.raw == expected_sig:
             console.print_pass("Ed25519 Sign KAT")
+            print(f"       Signature:  {sig_buf.raw.hex()}")
             log_test("Ed25519", expected_pk, msg, sig_buf.raw)
             passed += 1
         else:

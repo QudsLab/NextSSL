@@ -40,6 +40,7 @@ def main():
         
         if ct_buf.raw == expected_ct:
             console.print_pass("AES-CBC OK")
+            print(f"       Ciphertext: {ct_buf.raw.hex()}")
             console.log_data("AES-CBC.key", key.hex())
             console.log_data("AES-CBC.iv", iv.hex())
             console.log_data("AES-CBC.pt", pt.hex())
@@ -64,6 +65,7 @@ def main():
         
         if tag_buf.raw.hex() == "58e2fccefa7e3061367f1d57a4e7455a":
             console.print_pass("AES-GCM OK")
+            print(f"       Tag:        {tag_buf.raw.hex()}")
             console.log_data("AES-GCM.key", key_gcm.hex())
             console.log_data("AES-GCM.iv", iv_gcm.hex())
             console.log_data("AES-GCM.tag", tag_buf.raw.hex())

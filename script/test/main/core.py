@@ -35,7 +35,10 @@ def main():
         expected_ct = bytes.fromhex("7649abac8119b246cee98e9b12e9197d")
         ct_buf = ctypes.create_string_buffer(len(pt))
         lib.AES_CBC_encrypt(key, iv, pt, len(pt), ct_buf)
-        if ct_buf.raw == expected_ct: passed += 1
+        if ct_buf.raw == expected_ct:
+            console.print_pass("AES-CBC OK")
+            print(f"       Ciphertext: {ct_buf.raw.hex()}")
+            passed += 1
         else: failed += 1; console.print_fail("AES-CBC Failed")
 
         # ---------------------------------------------------------
@@ -45,7 +48,10 @@ def main():
         lib.AES_GCM_encrypt.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_void_p, ctypes.c_size_t, ctypes.c_void_p, ctypes.c_size_t, ctypes.c_void_p]
         tag_buf = ctypes.create_string_buffer(16)
         lib.AES_GCM_encrypt(bytes(16), bytes(12), b"", 0, b"", 0, tag_buf)
-        if tag_buf.raw.hex() == "58e2fccefa7e3061367f1d57a4e7455a": passed += 1
+        if tag_buf.raw.hex() == "58e2fccefa7e3061367f1d57a4e7455a":
+            console.print_pass("AES-GCM OK")
+            print(f"       Tag:        {tag_buf.raw.hex()}")
+            passed += 1
         else: failed += 1; console.print_fail("AES-GCM Failed")
 
         # ---------------------------------------------------------
@@ -80,7 +86,10 @@ def main():
         pk_buf = ctypes.create_string_buffer(32)
         sk_buf = ctypes.create_string_buffer(64)
         lib.ed25519_create_keypair(pk_buf, sk_buf, sk_seed)
-        if pk_buf.raw == expected_pk: passed += 1
+        if pk_buf.raw == expected_pk:
+            console.print_pass("Ed25519 OK")
+            print(f"       Public Key: {pk_buf.raw.hex()}")
+            passed += 1
         else: failed += 1; console.print_fail("Ed25519 Failed")
 
         # Summary

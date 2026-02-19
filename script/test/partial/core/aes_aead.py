@@ -65,6 +65,7 @@ def main():
         actual_tag = ct_buf.raw[-16:]
         if actual_tag == expected_tag:
             console.print_pass("AES-GCM Encrypt KAT")
+            print(f"       Tag:        {actual_tag.hex()}")
             log_test("AES-GCM", key, iv, pt, ct_buf.raw, actual_tag)
             passed += 1
         else:

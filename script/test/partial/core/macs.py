@@ -46,6 +46,7 @@ def main():
         
         if mac_buf.raw == expected_mac:
             console.print_pass("AES-CMAC KAT")
+            print(f"       MAC:        {mac_buf.raw.hex()}")
             log_test("AES-CMAC", key_cmac, msg_cmac, mac_buf.raw)
             passed += 1
         else:
@@ -71,6 +72,7 @@ def main():
         
         if hmac_buf.raw == expected_hmac:
             console.print_pass("HMAC-SHA256 KAT")
+            print(f"       HMAC:       {hmac_buf.raw.hex()}")
             log_test("HMAC-SHA256", key_hmac, msg_hmac, hmac_buf.raw)
             passed += 1
         else:
@@ -96,6 +98,7 @@ def main():
         
         if sip_buf.raw == expected_sip:
             console.print_pass("SipHash KAT")
+            print(f"       Hash:       {sip_buf.raw.hex()}")
             log_test("SipHash", key_sip, msg_sip, sip_buf.raw)
             passed += 1
         else:
