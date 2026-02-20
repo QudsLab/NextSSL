@@ -24,6 +24,20 @@ from script.gen.partial.dhcm import primitive_fast as dhcm_primitive_fast, primi
 from script.gen.base import dhcm_primitive_main, dhcm_legacy_main
 from script.gen.main import dhcm as dhcm_main
 
+from script.gen.partial.pow.server import primitive_fast as pow_server_primitive_fast, primitive_memory_hard as pow_server_primitive_memory_hard, primitive_sponge_xof as pow_server_primitive_sponge_xof, legacy_alive as pow_server_legacy_alive, legacy_unsafe as pow_server_legacy_unsafe
+from script.gen.partial.pow.client import primitive_fast as pow_client_primitive_fast, primitive_memory_hard as pow_client_primitive_memory_hard, primitive_sponge_xof as pow_client_primitive_sponge_xof, legacy_alive as pow_client_legacy_alive, legacy_unsafe as pow_client_legacy_unsafe
+from script.gen.partial.pow.combined import primitive_fast as pow_combined_primitive_fast, primitive_memory_hard as pow_combined_primitive_memory_hard, primitive_sponge_xof as pow_combined_primitive_sponge_xof, legacy_alive as pow_combined_legacy_alive, legacy_unsafe as pow_combined_legacy_unsafe
+from script.gen.base import pow_primitive, pow_legacy
+from script.gen.main import pow as pow_main
+
+from script.test.partial.pow import primitive_fast as test_pow_primitive_fast
+from script.test.partial.pow import primitive_memory_hard as test_pow_primitive_memory_hard
+from script.test.partial.pow import primitive_sponge_xof as test_pow_primitive_sponge_xof
+from script.test.partial.pow import legacy_alive as test_pow_legacy_alive
+from script.test.partial.pow import legacy_unsafe as test_pow_legacy_unsafe
+from script.test.suites import pow_integration as test_pow_integration
+from script.test.base import pow_primitive as test_pow_primitive, pow_legacy as test_pow_legacy
+from script.test.main import pow as test_pow_main
 from script.test.partial.hash import primitive_fast as test_primitive_fast
 from script.test.partial.hash import primitive_memory_hard as test_primitive_memory_hard
 from script.test.partial.hash import primitive_sponge_xof as test_primitive_sponge_xof
@@ -86,18 +100,31 @@ def run_build(args):
         dhcm_partial = [dhcm_primitive_fast, dhcm_primitive_memory_hard, dhcm_primitive_sponge_xof, dhcm_legacy_alive, dhcm_legacy_unsafe]
         dhcm_base = [dhcm_primitive_main, dhcm_legacy_main]
         dhcm_main_list = [dhcm_main]
+
+        # PoW Modules
+        pow_partial = [
+            pow_server_primitive_fast, pow_client_primitive_fast, pow_combined_primitive_fast,
+            pow_server_primitive_memory_hard, pow_client_primitive_memory_hard, pow_combined_primitive_memory_hard,
+            pow_server_primitive_sponge_xof, pow_client_primitive_sponge_xof, pow_combined_primitive_sponge_xof,
+            pow_server_legacy_alive, pow_client_legacy_alive, pow_combined_legacy_alive,
+            pow_server_legacy_unsafe, pow_client_legacy_unsafe, pow_combined_legacy_unsafe
+        ]
+        pow_base = [pow_primitive, pow_legacy]
+        pow_main_list = [pow_main]
         
         # Build logic
         build_hash = False
         build_pqc = False
         build_core = False
         build_dhcm = False
+        build_pow = False
         
         if target == 'all':
             build_hash = True
             build_pqc = True
             build_core = True
             build_dhcm = True
+            build_pow = True
         elif target == 'hash':
             build_hash = True
         elif target == 'pqc':
@@ -106,6 +133,8 @@ def run_build(args):
             build_core = True
         elif target == 'dhcm':
             build_dhcm = True
+        elif target == 'pow':
+            build_pow = True
         elif target.startswith('hash:'):
             # Specific hash target
             if target == 'hash:partial':
@@ -162,6 +191,20 @@ def run_build(args):
                 if module: module.build(builder)
                 else: logger.error(f"Unknown target: {target}")
             return # Done
+        elif target.startswith('pow:'):
+            # Specific PoW target
+            if target == 'pow:partial':
+                for m in pow_partial: m.build(builder)
+            elif target == 'pow:base':
+                for m in pow_base: m.build(builder)
+            elif target == 'pow:main':
+                for m in pow_main_list: m.build(builder)
+            else:
+                name = target.split(':')[-1]
+                module = next((m for m in pow_partial if m.__name__.endswith(name)), None)
+                if module: module.build(builder)
+                else: logger.error(f"Unknown target: {target}")
+            return # Done
         else:
             logger.error(f"Unknown build target: {target}")
             return
@@ -184,6 +227,11 @@ def run_build(args):
         if build_dhcm:
             logger.info("Building DHCM targets...")
             for m in dhcm_partial + dhcm_base + dhcm_main_list:
+                m.build(builder)
+
+        if build_pow:
+            logger.info("Building PoW targets...")
+            for m in pow_partial + pow_base + pow_main_list:
                 m.build(builder)
 
 def run_test(args):
@@ -228,16 +276,30 @@ def run_test(args):
         dhcm_base = [test_dhcm_primitive_main, test_dhcm_legacy_main]
         dhcm_main_list = [test_dhcm_main]
 
+        # PoW Tests
+        pow_partial = [
+            test_pow_primitive_fast,
+            test_pow_primitive_memory_hard,
+            test_pow_primitive_sponge_xof,
+            test_pow_legacy_alive,
+            test_pow_legacy_unsafe
+        ]
+        pow_base = [test_pow_primitive, test_pow_legacy]
+        pow_main_list = [test_pow_main]
+        pow_suites = [test_pow_integration]
+
         run_hash = False
         run_pqc = False
         run_core = False
         run_dhcm = False
+        run_pow = False
 
         if target == 'all':
             run_hash = True
             run_pqc = True
             run_core = True
             run_dhcm = True
+            run_pow = True
         elif target == 'hash':
             run_hash = True
         elif target == 'pqc':
@@ -246,6 +308,8 @@ def run_test(args):
             run_core = True
         elif target == 'dhcm':
             run_dhcm = True
+        elif target == 'pow':
+            run_pow = True
         elif target.startswith('hash:'):
             if target == 'hash:partial': test_modules = hash_partial
             elif target == 'hash:base': test_modules = hash_base
@@ -274,6 +338,14 @@ def run_test(args):
             else:
                 name = target.split(':')[-1]
                 test_modules = [m for m in dhcm_partial if m.__name__.endswith(name)]
+        elif target.startswith('pow:'):
+            if target == 'pow:partial': test_modules = pow_partial
+            elif target == 'pow:base': test_modules = pow_base
+            elif target == 'pow:main': test_modules = pow_main_list
+            elif target == 'pow:integration': test_modules = pow_suites
+            else:
+                name = target.split(':')[-1]
+                test_modules = [m for m in pow_partial if m.__name__.endswith(name)]
         else:
             console.print_fail(f"Unknown test target: {target}")
             return
@@ -286,6 +358,8 @@ def run_test(args):
             test_modules.extend(core_partial + core_base + core_main_list)
         if run_dhcm:
             test_modules.extend(dhcm_partial + dhcm_base + dhcm_main_list)
+        if run_pow:
+            test_modules.extend(pow_partial + pow_base + pow_main_list + pow_suites)
 
         console.print_header(f"Running {len(test_modules)} test suites...")
         
