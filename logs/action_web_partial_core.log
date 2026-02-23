@@ -1,5 +1,0 @@
-2026-02-23 22:01:56,749 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/aes_aead.wasm
-2026-02-23 22:01:56,749 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/aes_modes.wasm
-2026-02-23 22:01:56,750 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/macs.wasm
-2026-02-23 22:01:56,750 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/stream_aead.wasm
-2026-02-23 22:01:56,750 - ERROR - [FAIL] WASM missing: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/ecc.wasm

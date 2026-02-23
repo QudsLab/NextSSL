@@ -1,6 +1,0 @@
-2026-02-23 22:06:15,841 - INFO - === Running 1 test suites... ===
-2026-02-23 22:06:15,841 - INFO - -> Running script.test.main.hash
-2026-02-23 22:06:15,841 - INFO - [INFO] Loading DLL: /home/runner/work/NextSSL/NextSSL/bin/linux/main/hash.so
-2026-02-23 22:06:15,841 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/main/hash.so
-2026-02-23 22:06:15,841 - ERROR - [FAIL] TEST SUITE FAILED: 1 modules failed
-2026-02-23 22:06:15,841 - ERROR - [FAIL]   - script.test.main.hash FAILED

@@ -1,6 +1,0 @@
-2026-02-23 22:06:16,362 - INFO - === Running 1 test suites... ===
-2026-02-23 22:06:16,362 - INFO - -> Running script.test.main.dhcm
-2026-02-23 22:06:16,362 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/main/dhcm.so
-2026-02-23 22:06:16,362 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/main/dhcm.so
-2026-02-23 22:06:16,362 - ERROR - [FAIL] TEST SUITE FAILED: 1 modules failed
-2026-02-23 22:06:16,362 - ERROR - [FAIL]   - script.test.main.dhcm FAILED

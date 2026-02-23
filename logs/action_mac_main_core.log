@@ -1,6 +1,0 @@
-2026-02-23 22:04:20,681 - INFO - === Running 1 test suites... ===
-2026-02-23 22:04:20,681 - INFO - -> Running script.test.main.core
-2026-02-23 22:04:20,681 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/main/core.dylib
-2026-02-23 22:04:20,681 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/main/core.dylib
-2026-02-23 22:04:20,681 - ERROR - [FAIL] TEST SUITE FAILED: 1 modules failed
-2026-02-23 22:04:20,681 - ERROR - [FAIL]   - script.test.main.core FAILED

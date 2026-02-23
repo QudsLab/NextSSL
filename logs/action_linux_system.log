@@ -1,6 +1,0 @@
-2026-02-23 22:07:53,828 - INFO - === Running 1 test suites... ===
-2026-02-23 22:07:53,828 - INFO - -> Running script.test.main.system
-2026-02-23 22:07:53,828 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/main.so
-2026-02-23 22:07:53,828 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/main.so
-2026-02-23 22:07:53,828 - ERROR - [FAIL] TEST SUITE FAILED: 1 modules failed
-2026-02-23 22:07:53,828 - ERROR - [FAIL]   - script.test.main.system FAILED
