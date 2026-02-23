@@ -9,6 +9,10 @@ uint64_t dhcm_argon2_mu(uint32_t m_cost) {
     return m_cost; // Direct memory cost in KB
 }
 
+uint64_t dhcm_argon2id_mu(uint32_t m_cost) {
+    return dhcm_argon2_mu(m_cost);
+}
+
 uint64_t dhcm_argon2id_wu(uint32_t t_cost, uint32_t m_cost, uint32_t parallelism) {
     // Each iteration processes m_cost blocks
     // Each block involves BLAKE2b compression

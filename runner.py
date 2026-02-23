@@ -19,6 +19,7 @@ from script.gen.main import pqc as pqc_main
 from script.gen.partial.core import aes_modes, aes_aead, stream_aead, macs, ecc
 from script.gen.base import core_cipher_main, core_mac_main, core_ecc_main
 from script.gen.main import core as core_main
+from script.gen.main import system as system_main
 
 from script.gen.partial.dhcm import primitive_fast as dhcm_primitive_fast, primitive_memory_hard as dhcm_primitive_memory_hard, primitive_sponge_xof as dhcm_primitive_sponge_xof, legacy_alive as dhcm_legacy_alive, legacy_unsafe as dhcm_legacy_unsafe
 from script.gen.base import dhcm_primitive_main, dhcm_legacy_main
@@ -64,6 +65,7 @@ from script.test.base import core_cipher_main as test_core_cipher_main
 from script.test.base import core_mac_main as test_core_mac_main
 from script.test.base import core_ecc_main as test_core_ecc_main
 from script.test.main import core as test_core_main
+from script.test.main import system as test_system_main
 
 from script.test.partial.dhcm import primitive_fast as test_dhcm_primitive_fast
 from script.test.partial.dhcm import primitive_memory_hard as test_dhcm_primitive_memory_hard
@@ -95,6 +97,7 @@ def run_build(args):
         core_partial = [aes_modes, aes_aead, stream_aead, macs, ecc]
         core_base = [core_cipher_main, core_mac_main, core_ecc_main]
         core_main_list = [core_main]
+        system_main_list = [system_main]
 
         # DHCM Modules
         dhcm_partial = [dhcm_primitive_fast, dhcm_primitive_memory_hard, dhcm_primitive_sponge_xof, dhcm_legacy_alive, dhcm_legacy_unsafe]
@@ -118,6 +121,7 @@ def run_build(args):
         build_core = False
         build_dhcm = False
         build_pow = False
+        build_system = False
         
         if target == 'all':
             build_hash = True
@@ -125,6 +129,7 @@ def run_build(args):
             build_core = True
             build_dhcm = True
             build_pow = True
+            build_system = True
         elif target == 'hash':
             build_hash = True
         elif target == 'pqc':
@@ -135,6 +140,8 @@ def run_build(args):
             build_dhcm = True
         elif target == 'pow':
             build_pow = True
+        elif target == 'system':
+            build_system = True
         elif target.startswith('hash:'):
             # Specific hash target
             if target == 'hash:partial':
@@ -205,6 +212,12 @@ def run_build(args):
                 if module: module.build(builder)
                 else: logger.error(f"Unknown target: {target}")
             return # Done
+        elif target.startswith('system:'):
+            if target == 'system:main':
+                for m in system_main_list: m.build(builder)
+            else:
+                logger.error(f"Unknown target: {target}")
+            return
         else:
             logger.error(f"Unknown build target: {target}")
             return
@@ -232,6 +245,11 @@ def run_build(args):
         if build_pow:
             logger.info("Building PoW targets...")
             for m in pow_partial + pow_base + pow_main_list:
+                m.build(builder)
+        
+        if build_system:
+            logger.info("Building System targets...")
+            for m in system_main_list:
                 m.build(builder)
 
 def run_test(args):
@@ -267,6 +285,7 @@ def run_test(args):
         ]
         core_base = [test_core_cipher_main, test_core_mac_main, test_core_ecc_main]
         core_main_list = [test_core_main]
+        system_main_list = [test_system_main]
 
         # DHCM Tests
         dhcm_partial = [
@@ -293,6 +312,7 @@ def run_test(args):
         run_core = False
         run_dhcm = False
         run_pow = False
+        run_system = False
 
         if target == 'all':
             run_hash = True
@@ -300,6 +320,7 @@ def run_test(args):
             run_core = True
             run_dhcm = True
             run_pow = True
+            run_system = True
         elif target == 'hash':
             run_hash = True
         elif target == 'pqc':
@@ -310,6 +331,8 @@ def run_test(args):
             run_dhcm = True
         elif target == 'pow':
             run_pow = True
+        elif target == 'system':
+            run_system = True
         elif target.startswith('hash:'):
             if target == 'hash:partial': test_modules = hash_partial
             elif target == 'hash:base': test_modules = hash_base
@@ -346,6 +369,9 @@ def run_test(args):
             else:
                 name = target.split(':')[-1]
                 test_modules = [m for m in pow_partial if m.__name__.endswith(name)]
+        elif target.startswith('system:'):
+            if target == 'system:main':
+                test_modules = system_main_list
         else:
             console.print_fail(f"Unknown test target: {target}")
             return
@@ -360,6 +386,8 @@ def run_test(args):
             test_modules.extend(dhcm_partial + dhcm_base + dhcm_main_list)
         if run_pow:
             test_modules.extend(pow_partial + pow_base + pow_main_list + pow_suites)
+        if run_system:
+            test_modules.extend(system_main_list)
 
         console.print_header(f"Running {len(test_modules)} test suites...")
         
