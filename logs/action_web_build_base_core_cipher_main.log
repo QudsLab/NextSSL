@@ -1,0 +1,21 @@
+2026-02-23 20:28:39,752 - ERROR - Compilation failed for core_cipher_main:
+2026-02-23 20:28:39,752 - ERROR - shared:INFO: (Emscripten: Running sanity checks)
+/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305/monocypher.c:286:48: warning: shift count >= width of type [-Wshift-count-overflow]
+  286 |     store32_le(len_buf + 4, (uint32_t)(ad_size >> 32));
+      |                                                ^  ~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305/monocypher.c:288:51: warning: shift count >= width of type [-Wshift-count-overflow]
+  288 |     store32_le(len_buf + 12, (uint32_t)(text_size >> 32));
+      |                                                   ^  ~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305/monocypher.c:328:48: warning: shift count >= width of type [-Wshift-count-overflow]
+  328 |     store32_le(len_buf + 4, (uint32_t)(ad_size >> 32));
+      |                                                ^  ~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305/monocypher.c:330:51: warning: shift count >= width of type [-Wshift-count-overflow]
+  330 |     store32_le(len_buf + 12, (uint32_t)(text_size >> 32));
+      |                                                   ^  ~~
+4 warnings generated.
+/home/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:7:10: fatal error: 'primitives/aead/AES_GCM/aes_gcm.h' file not found
+    7 | #include "primitives/aead/AES_GCM/aes_gcm.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+emcc: error: '/home/runner/work/NextSSL/NextSSL/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/home/runner/work/NextSSL/NextSSL/emsdk/upstream/emscripten/cache/sysroot -DEMSCRIPTEN -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O2 -Wall -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/include -I/home/runner/work/NextSSL/NextSSL/src/primitives -I/home/runner/work/NextSSL/NextSSL/src/primitives/hash/fast/blake3 -I/home/runner/work/NextSSL/NextSSL/src/primitives/hash/memory_hard/utils -I/home/runner/work/NextSSL/NextSSL/src/legacy/alive -I/home/runner/work/NextSSL/NextSSL/src/legacy/unsafe -I/home/runner/work/NextSSL/NextSSL/src/utils -I/home/runner/work/NextSSL/NextSSL/src/primitives/cipher/aes_core -I/home/runner/work/NextSSL/NextSSL/src/primitives/cipher -I/home/runner/work/NextSSL/NextSSL/src/primitives/aead -I/home/runner/work/NextSSL/NextSSL/src/primitives/mac -I/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305 -I/home/runner/work/NextSSL/NextSSL/src -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -DBLAKE3_NO_THREADING -DBLAKE3_ATOMICS=0 -DEXCLUDE_SPHINCS -DAES___=128 -DFF_X=1 /home/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c -c -o /tmp/emscripten_temp_88kpwt1o/base_encryption_19.o' failed (returned 1)
+

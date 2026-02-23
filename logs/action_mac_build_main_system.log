@@ -1,0 +1,52 @@
+2026-02-23 21:10:32,271 - ERROR - Compilation failed for main:
+2026-02-23 21:10:32,273 - ERROR - /Users/runner/work/NextSSL/NextSSL/src/PoW/core/pow_parser.c:70:10: warning: unused variable 'json_str' [-Wunused-variable]
+   70 |     char json_str[4096];
+      |          ^~~~~~~~
+1 warning generated.
+/Users/runner/work/NextSSL/NextSSL/src/primitives/ecc/ristretto255/ristretto255.c:2:10: warning: non-portable path to file '"../ed25519/fe.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+    2 | #include "../Ed25519/fe.h"
+      |          ^~~~~~~~~~~~~~~~~
+      |          "../ed25519/fe.h"
+/Users/runner/work/NextSSL/NextSSL/src/primitives/ecc/ristretto255/ristretto255.c:3:10: warning: non-portable path to file '"../ed25519/ge.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+    3 | #include "../Ed25519/ge.h"
+      |          ^~~~~~~~~~~~~~~~~
+      |          "../ed25519/ge.h"
+/Users/runner/work/NextSSL/NextSSL/src/primitives/ecc/ristretto255/ristretto255.c:4:10: warning: non-portable path to file '"../ed25519/sc.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+    4 | #include "../Ed25519/sc.h" // For scalar operations if needed, though mostly using fe/ge
+      |          ^~~~~~~~~~~~~~~~~
+      |          "../ed25519/sc.h"
+3 warnings generated.
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:7:10: warning: non-portable path to file '"primitives/aead/aes_gcm/aes_gcm.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+    7 | #include "primitives/aead/AES_GCM/aes_gcm.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_gcm/aes_gcm.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:8:10: warning: non-portable path to file '"primitives/aead/aes_ccm/aes_ccm.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+    8 | #include "primitives/aead/AES_CCM/aes_ccm.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_ccm/aes_ccm.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:9:10: warning: non-portable path to file '"primitives/aead/aes_ocb/aes_ocb.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+    9 | #include "primitives/aead/AES_OCB/aes_ocb.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_ocb/aes_ocb.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:10:10: warning: non-portable path to file '"primitives/aead/aes_eax/aes_eax.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+   10 | #include "primitives/aead/AES_EAX/aes_eax.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_eax/aes_eax.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:11:10: warning: non-portable path to file '"primitives/aead/aes_siv/aes_siv.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+   11 | #include "primitives/aead/AES_SIV/aes_siv.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_siv/aes_siv.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:12:10: warning: non-portable path to file '"primitives/aead/aes_gcm_siv/aes_gcm_siv.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+   12 | #include "primitives/aead/AES_GCM_SIV/aes_gcm_siv.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_gcm_siv/aes_gcm_siv.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:17:10: warning: non-portable path to file '"primitives/aead/aes_poly1305/aes_poly1305.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+   17 | #include "primitives/aead/AES_Poly1305/aes_poly1305.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_poly1305/aes_poly1305.h"
+7 warnings generated.
+/Users/runner/work/NextSSL/NextSSL/src/primitives/ecc/elligator2/elligator2.c:88:36: error: unknown type name 'size_t'
+   88 | static void wipe_buffer(void *buf, size_t size) {
+      |                                    ^
+1 error generated.
+

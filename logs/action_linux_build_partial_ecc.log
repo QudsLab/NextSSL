@@ -1,0 +1,24 @@
+2026-02-23 21:05:40,771 - ERROR - Compilation failed for ecc:
+2026-02-23 21:05:40,771 - ERROR - /home/runner/work/NextSSL/NextSSL/src/primitives/ecc/ed25519/seed.c: In function ‘ed25519_create_seed’:
+/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/ed25519/seed.c:33:5: warning: ignoring return value of ‘fread’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   33 |     fread(seed, 1, 32, f);
+      |     ^~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/elligator2/elligator2.c:88:36: error: unknown type name ‘size_t’
+   88 | static void wipe_buffer(void *buf, size_t size) {
+      |                                    ^~~~~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/elligator2/elligator2.c:3:1: note: ‘size_t’ is defined in header ‘<stddef.h>’; did you forget to ‘#include <stddef.h>’?
+    2 | #include "../ed25519/fe.h"
+  +++ |+#include <stddef.h>
+    3 | 
+/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/elligator2/elligator2.c: In function ‘fe_isequal’:
+/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/elligator2/elligator2.c:93:26: warning: implicit declaration of function ‘wipe_buffer’ [-Wimplicit-function-declaration]
+   93 | #define WIPE_BUFFER(buf) wipe_buffer(buf, sizeof(buf))
+      |                          ^~~~~~~~~~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/elligator2/elligator2.c:109:5: note: in expansion of macro ‘WIPE_BUFFER’
+  109 |     WIPE_BUFFER(fs);
+      |     ^~~~~~~~~~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/ristretto255/ristretto255.c:2:10: fatal error: ../Ed25519/fe.h: No such file or directory
+    2 | #include "../Ed25519/fe.h"
+      |          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+

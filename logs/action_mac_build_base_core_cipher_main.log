@@ -1,0 +1,84 @@
+2026-02-23 21:10:13,539 - ERROR - Compilation failed for core_cipher_main:
+2026-02-23 21:10:13,539 - ERROR - /Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:7:10: warning: non-portable path to file '"primitives/aead/aes_gcm/aes_gcm.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+    7 | #include "primitives/aead/AES_GCM/aes_gcm.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_gcm/aes_gcm.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:8:10: warning: non-portable path to file '"primitives/aead/aes_ccm/aes_ccm.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+    8 | #include "primitives/aead/AES_CCM/aes_ccm.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_ccm/aes_ccm.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:9:10: warning: non-portable path to file '"primitives/aead/aes_ocb/aes_ocb.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+    9 | #include "primitives/aead/AES_OCB/aes_ocb.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_ocb/aes_ocb.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:10:10: warning: non-portable path to file '"primitives/aead/aes_eax/aes_eax.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+   10 | #include "primitives/aead/AES_EAX/aes_eax.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_eax/aes_eax.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:11:10: warning: non-portable path to file '"primitives/aead/aes_siv/aes_siv.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+   11 | #include "primitives/aead/AES_SIV/aes_siv.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_siv/aes_siv.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:12:10: warning: non-portable path to file '"primitives/aead/aes_gcm_siv/aes_gcm_siv.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+   12 | #include "primitives/aead/AES_GCM_SIV/aes_gcm_siv.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_gcm_siv/aes_gcm_siv.h"
+/Users/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:17:10: warning: non-portable path to file '"primitives/aead/aes_poly1305/aes_poly1305.h"'; specified path differs in case from file name on disk [-Wnonportable-include-path]
+   17 | #include "primitives/aead/AES_Poly1305/aes_poly1305.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |          "primitives/aead/aes_poly1305/aes_poly1305.h"
+7 warnings generated.
+Undefined symbols for architecture arm64:
+  "___memcpy_chk", referenced from:
+      _AES_CBC_encrypt in aes_cbc-cc7a82.o
+      _AES_Poly1305 in aes_poly1305-82da66.o
+  "___stack_chk_fail", referenced from:
+      _AES_CBC_encrypt in aes_cbc-cc7a82.o
+      _AES_CFB_encrypt in aes_cfb-5a5372.o
+      _AES_CFB_decrypt in aes_cfb-5a5372.o
+      _AES_OFB_encrypt in aes_ofb-1b08ac.o
+      _CTR_cipher in aes_ctr-979fa5.o
+      _AES_CTR_encrypt in aes_ctr-979fa5.o
+      _AES_CTR_decrypt in aes_ctr-979fa5.o
+      ...
+  "___stack_chk_guard", referenced from:
+      _AES_CBC_encrypt in aes_cbc-cc7a82.o
+      _AES_CBC_encrypt in aes_cbc-cc7a82.o
+      _AES_CFB_encrypt in aes_cfb-5a5372.o
+      _AES_CFB_encrypt in aes_cfb-5a5372.o
+      _AES_CFB_decrypt in aes_cfb-5a5372.o
+      _AES_CFB_decrypt in aes_cfb-5a5372.o
+      _AES_OFB_encrypt in aes_ofb-1b08ac.o
+      _AES_OFB_encrypt in aes_ofb-1b08ac.o
+      ...
+  "_bzero", referenced from:
+      _padBlock in aes_core-2470db.o
+      _FF1round in aes_fpe-95ad91.o
+      _FF1round in aes_fpe-95ad91.o
+      _AES_CCM_decrypt in aes_ccm-840002.o
+      _AES_OCB_decrypt in aes_ocb-72e23b.o
+      _AES_SIV_decrypt in aes_siv-e6bf2b.o
+      _GCM_SIV_decrypt in aes_gcm_siv-793c85.o
+      ...
+  "_free", referenced from:
+      _FPE_cipher in aes_fpe-95ad91.o
+      _FPE_cipher in aes_fpe-95ad91.o
+  "_malloc", referenced from:
+      _FPE_cipher in aes_fpe-95ad91.o
+  "_memcpy", referenced from:
+      _AES_ECB_encrypt in aes_ecb-9005d3.o
+      _AES_ECB_decrypt in aes_ecb-9005d3.o
+      _AES_CBC_encrypt in aes_cbc-cc7a82.o
+      _AES_CBC_encrypt in aes_cbc-cc7a82.o
+      _AES_CBC_decrypt in aes_cbc-cc7a82.o
+      _AES_OFB_encrypt in aes_ofb-1b08ac.o
+      _CTR_cipher in aes_ctr-979fa5.o
+      ...
+  "_printf", referenced from:
+      _base_encryption_info in base_encryption-b1956e.o
+  "_puts", referenced from:
+      _base_encryption_info in base_encryption-b1956e.o
+      _base_encryption_info in base_encryption-b1956e.o
+ld: symbol(s) not found for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+

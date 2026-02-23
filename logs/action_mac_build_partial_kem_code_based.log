@@ -1,0 +1,111 @@
+2026-02-23 21:14:26,864 - ERROR - Compilation failed for kem_code_based:
+2026-02-23 21:14:26,865 - ERROR - Undefined symbols for architecture arm64:
+  "___chkstk_darwin", referenced from:
+      _PQCLEAN_HQC128_CLEAN_vect_mul in gf2x-407a96.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6afb19.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_dec in kem-6afb19.o
+      _PQCLEAN_HQC128_CLEAN_hqc_pke_keygen in hqc-64dedb.o
+      _PQCLEAN_HQC128_CLEAN_hqc_pke_encrypt in hqc-64dedb.o
+      _PQCLEAN_HQC128_CLEAN_hqc_pke_decrypt in hqc-64dedb.o
+      _PQCLEAN_HQC192_CLEAN_vect_set_random in vector-ebe50f.o
+      ...
+  "___memcpy_chk", referenced from:
+      _radix in fft-c643bb.o
+      _radix in fft-c643bb.o
+      _radix in fft-ce23ca.o
+      _radix in fft-ce23ca.o
+      _drbg_update in drbg-e2b79e.o
+      _drbg_update in drbg-e2b79e.o
+      _hkdf_expand in hkdf-3a02c9.o
+      _hkdf_expand in hkdf-3a02c9.o
+      ...
+  "___stack_chk_fail", referenced from:
+      _PQCLEAN_HQC128_CLEAN_seedexpander in shake_prng-fb164f.o
+      _PQCLEAN_HQC128_CLEAN_vect_set_random_fixed_weight in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_vect_set_random in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_vect_mul in gf2x-407a96.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6afb19.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_dec in kem-6afb19.o
+      _PQCLEAN_HQC128_CLEAN_fft in fft-aed0d6.o
+      ...
+  "___stack_chk_guard", referenced from:
+      _PQCLEAN_HQC128_CLEAN_seedexpander in shake_prng-fb164f.o
+      _PQCLEAN_HQC128_CLEAN_seedexpander in shake_prng-fb164f.o
+      _PQCLEAN_HQC128_CLEAN_vect_set_random_fixed_weight in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_vect_set_random_fixed_weight in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_vect_set_random in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_vect_set_random in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_vect_mul in gf2x-407a96.o
+      _PQCLEAN_HQC128_CLEAN_vect_mul in gf2x-407a96.o
+      ...
+  "_arc4random_buf", referenced from:
+      _PQCLEAN_randombytes in randombytes-796f75.o
+  "_bzero", referenced from:
+      _PQCLEAN_HQC128_CLEAN_vect_set_random_fixed_weight in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_vect_set_random in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_vect_mul in gf2x-407a96.o
+      _PQCLEAN_HQC128_CLEAN_vect_mul in gf2x-407a96.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6afb19.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6afb19.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6afb19.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6afb19.o
+      ...
+  "_calloc", referenced from:
+      _shake128_inc_init in fips202-a76ee8.o
+      _shake256_inc_init in fips202-a76ee8.o
+      _shake128_absorb in fips202-a76ee8.o
+      _shake256_absorb in fips202-a76ee8.o
+      _sha3_256_inc_init in fips202-a76ee8.o
+      _sha3_384_inc_init in fips202-a76ee8.o
+      _sha3_512_inc_init in fips202-a76ee8.o
+      ...
+  "_exit", referenced from:
+      _aes128_ecb_keyexp in aes-36a46b.o
+      _aes128_ctr_keyexp in aes-36a46b.o
+      _aes192_ecb_keyexp in aes-36a46b.o
+      _aes192_ctr_keyexp in aes-36a46b.o
+      _aes256_ecb_keyexp in aes-36a46b.o
+      _aes256_ctr_keyexp in aes-36a46b.o
+      _sha224_inc_init in sha2-e323d6.o
+      ...
+  "_free", referenced from:
+      _aes128_ctx_release in aes-36a46b.o
+      _aes192_ctx_release in aes-36a46b.o
+      _aes256_ctx_release in aes-36a46b.o
+      _sha224_inc_ctx_release in sha2-e323d6.o
+      _sha256_inc_ctx_release in sha2-e323d6.o
+      _sha384_inc_ctx_release in sha2-e323d6.o
+      _sha512_inc_ctx_release in sha2-e323d6.o
+      ...
+  "_malloc", referenced from:
+      _aes128_ecb_keyexp in aes-36a46b.o
+      _aes128_ctr_keyexp in aes-36a46b.o
+      _aes192_ecb_keyexp in aes-36a46b.o
+      _aes192_ctr_keyexp in aes-36a46b.o
+      _aes256_ecb_keyexp in aes-36a46b.o
+      _aes256_ctr_keyexp in aes-36a46b.o
+      _sha224_inc_init in sha2-e323d6.o
+      ...
+  "_memcpy", referenced from:
+      _PQCLEAN_HQC128_CLEAN_hqc_secret_key_to_string in parsing-4ca05e.o
+      _PQCLEAN_HQC128_CLEAN_hqc_secret_key_from_string in parsing-4ca05e.o
+      _PQCLEAN_HQC128_CLEAN_seedexpander in shake_prng-fb164f.o
+      _PQCLEAN_HQC128_CLEAN_vect_resize in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_vect_resize in vector-3cfa0c.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6afb19.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_dec in kem-6afb19.o
+      ...
+  "_memmove", referenced from:
+      _PQCLEAN_MCELIECE348864_CLEAN_bm in bm-00b344.o
+      _PQCLEAN_MCELIECE348864F_CLEAN_bm in bm-6c80b5.o
+      _PQCLEAN_MCELIECE460896_CLEAN_bm in bm-dcd33f.o
+      _PQCLEAN_MCELIECE460896F_CLEAN_bm in bm-0196d6.o
+      _PQCLEAN_MCELIECE6688128_CLEAN_bm in bm-589429.o
+      _PQCLEAN_MCELIECE6688128F_CLEAN_bm in bm-b98fc5.o
+      _PQCLEAN_MCELIECE6960119_CLEAN_bm in bm-4d4ee3.o
+      ...
+  "_strlen", referenced from:
+      _hkdf_expand_label in hkdf-3a02c9.o
+ld: symbol(s) not found for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+

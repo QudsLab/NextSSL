@@ -1,0 +1,110 @@
+2026-02-23 21:10:19,691 - ERROR - Compilation failed for pqc:
+2026-02-23 21:10:19,698 - ERROR - Undefined symbols for architecture arm64:
+  "___chkstk_darwin", referenced from:
+      _PQCLEAN_MLKEM512_CLEAN_indcpa_keypair_derand in indcpa-2bc720.o
+      _PQCLEAN_MLKEM512_CLEAN_indcpa_enc in indcpa-2bc720.o
+      _PQCLEAN_MLKEM768_CLEAN_indcpa_keypair_derand in indcpa-fc6519.o
+      _PQCLEAN_MLKEM768_CLEAN_indcpa_enc in indcpa-fc6519.o
+      _PQCLEAN_MLKEM768_CLEAN_indcpa_dec in indcpa-fc6519.o
+      _PQCLEAN_MLKEM1024_CLEAN_indcpa_keypair_derand in indcpa-723952.o
+      _PQCLEAN_MLKEM1024_CLEAN_indcpa_enc in indcpa-723952.o
+      ...
+  "___memcpy_chk", referenced from:
+      _radix in fft-bd60fb.o
+      _radix in fft-bd60fb.o
+      _radix in fft-470bca.o
+      _radix in fft-470bca.o
+      _PQCLEAN_SPHINCSSHA2128FSIMPLE_CLEAN_gen_message_random in hash_sha2-3935ef.o
+      _PQCLEAN_SPHINCSSHA2128FSIMPLE_CLEAN_hash_message in hash_sha2-3935ef.o
+      _PQCLEAN_SPHINCSSHA2128SSIMPLE_CLEAN_gen_message_random in hash_sha2-4f529b.o
+      ...
+  "___stack_chk_fail", referenced from:
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake128_absorb in symmetric-shake-4ff05c.o
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake256_prf in symmetric-shake-4ff05c.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta1 in poly-87a550.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta2 in poly-87a550.o
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_keypair in kem-f4a70f.o
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_enc_derand in kem-f4a70f.o
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_enc in kem-f4a70f.o
+      ...
+  "___stack_chk_guard", referenced from:
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake128_absorb in symmetric-shake-4ff05c.o
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake128_absorb in symmetric-shake-4ff05c.o
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake256_prf in symmetric-shake-4ff05c.o
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake256_prf in symmetric-shake-4ff05c.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta1 in poly-87a550.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta1 in poly-87a550.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta2 in poly-87a550.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta2 in poly-87a550.o
+      ...
+  "_arc4random_buf", referenced from:
+      _PQCLEAN_randombytes in randombytes-78c8eb.o
+  "_bzero", referenced from:
+      _PQCLEAN_HQC128_CLEAN_vect_set_random_fixed_weight in vector-8d5000.o
+      _PQCLEAN_HQC128_CLEAN_vect_set_random in vector-8d5000.o
+      _PQCLEAN_HQC128_CLEAN_vect_mul in gf2x-ac6205.o
+      _PQCLEAN_HQC128_CLEAN_vect_mul in gf2x-ac6205.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6d3869.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6d3869.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6d3869.o
+      _PQCLEAN_HQC128_CLEAN_crypto_kem_enc in kem-6d3869.o
+      ...
+  "_calloc", referenced from:
+      _shake128_inc_init in fips202-109a79.o
+      _shake256_inc_init in fips202-109a79.o
+      _shake128_absorb in fips202-109a79.o
+      _shake256_absorb in fips202-109a79.o
+      _sha3_256_inc_init in fips202-109a79.o
+      _sha3_384_inc_init in fips202-109a79.o
+      _sha3_512_inc_init in fips202-109a79.o
+      ...
+  "_exit", referenced from:
+      _aes128_ecb_keyexp in aes-e67e2c.o
+      _aes128_ctr_keyexp in aes-e67e2c.o
+      _aes192_ecb_keyexp in aes-e67e2c.o
+      _aes192_ctr_keyexp in aes-e67e2c.o
+      _aes256_ecb_keyexp in aes-e67e2c.o
+      _aes256_ctr_keyexp in aes-e67e2c.o
+      _sha224_inc_init in sha2-831bfd.o
+      ...
+  "_free", referenced from:
+      _aes128_ctx_release in aes-e67e2c.o
+      _aes192_ctx_release in aes-e67e2c.o
+      _aes256_ctx_release in aes-e67e2c.o
+      _sha224_inc_ctx_release in sha2-831bfd.o
+      _sha256_inc_ctx_release in sha2-831bfd.o
+      _sha384_inc_ctx_release in sha2-831bfd.o
+      _sha512_inc_ctx_release in sha2-831bfd.o
+      ...
+  "_malloc", referenced from:
+      _aes128_ecb_keyexp in aes-e67e2c.o
+      _aes128_ctr_keyexp in aes-e67e2c.o
+      _aes192_ecb_keyexp in aes-e67e2c.o
+      _aes192_ctr_keyexp in aes-e67e2c.o
+      _aes256_ecb_keyexp in aes-e67e2c.o
+      _aes256_ctr_keyexp in aes-e67e2c.o
+      _sha224_inc_init in sha2-831bfd.o
+      ...
+  "_memcpy", referenced from:
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_keypair_derand in kem-f4a70f.o
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_keypair in kem-f4a70f.o
+      _PQCLEAN_MLKEM768_CLEAN_crypto_kem_keypair_derand in kem-879640.o
+      _PQCLEAN_MLKEM768_CLEAN_crypto_kem_keypair in kem-879640.o
+      _PQCLEAN_MLKEM1024_CLEAN_crypto_kem_keypair_derand in kem-411413.o
+      _PQCLEAN_MLKEM1024_CLEAN_crypto_kem_keypair in kem-411413.o
+      _PQCLEAN_HQC128_CLEAN_hqc_secret_key_to_string in parsing-2b600d.o
+      ...
+  "_memmove", referenced from:
+      _PQCLEAN_MCELIECE348864_CLEAN_bm in bm-4b1edc.o
+      _PQCLEAN_MCELIECE348864F_CLEAN_bm in bm-cca62e.o
+      _PQCLEAN_MCELIECE460896_CLEAN_bm in bm-db8b39.o
+      _PQCLEAN_MCELIECE460896F_CLEAN_bm in bm-b1a946.o
+      _PQCLEAN_MCELIECE6688128_CLEAN_bm in bm-909c97.o
+      _PQCLEAN_MCELIECE6688128F_CLEAN_bm in bm-2e4c2a.o
+      _PQCLEAN_MCELIECE6960119_CLEAN_bm in bm-abc28f.o
+      ...
+  "_strlen", referenced from:
+      _hkdf_expand_label in hkdf-c994a3.o
+ld: symbol(s) not found for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+

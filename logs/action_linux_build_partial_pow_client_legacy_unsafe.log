@@ -1,0 +1,18 @@
+2026-02-23 21:07:10,534 - ERROR - Compilation failed for legacy_unsafe:
+2026-02-23 21:07:10,534 - ERROR - /home/runner/work/NextSSL/NextSSL/src/PoW/core/pow_parser.c: In function ‘pow_parser_encode_challenge’:
+/home/runner/work/NextSSL/NextSSL/src/PoW/core/pow_parser.c:70:10: warning: unused variable ‘json_str’ [-Wunused-variable]
+   70 |     char json_str[4096];
+      |          ^~~~~~~~
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginT.o: relocation R_X86_64_32 against hidden symbol `__TMC_END__' can not be used when making a shared object
+/usr/bin/ld: failed to set dynamic section sizes: bad value
+collect2: error: ld returned 1 exit status
+
+2026-02-23 21:07:11,726 - ERROR - Compilation failed for legacy_unsafe:
+2026-02-23 21:07:11,726 - ERROR - /home/runner/work/NextSSL/NextSSL/src/PoW/core/pow_parser.c: In function ‘pow_parser_encode_challenge’:
+/home/runner/work/NextSSL/NextSSL/src/PoW/core/pow_parser.c:70:10: warning: unused variable ‘json_str’ [-Wunused-variable]
+   70 |     char json_str[4096];
+      |          ^~~~~~~~
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginT.o: relocation R_X86_64_32 against hidden symbol `__TMC_END__' can not be used when making a shared object
+/usr/bin/ld: failed to set dynamic section sizes: bad value
+collect2: error: ld returned 1 exit status
+

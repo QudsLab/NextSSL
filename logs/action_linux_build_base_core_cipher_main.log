@@ -1,0 +1,6 @@
+2026-02-23 21:03:31,973 - ERROR - Compilation failed for core_cipher_main:
+2026-02-23 21:03:31,973 - ERROR - /home/runner/work/NextSSL/NextSSL/src/utils/base_encryption.c:7:10: fatal error: primitives/aead/AES_GCM/aes_gcm.h: No such file or directory
+    7 | #include "primitives/aead/AES_GCM/aes_gcm.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+

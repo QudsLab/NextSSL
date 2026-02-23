@@ -1,0 +1,54 @@
+2026-02-23 21:12:26,632 - ERROR - Compilation failed for primitive_fast:
+2026-02-23 21:12:26,632 - ERROR - Undefined symbols for architecture arm64:
+  "___assert_rtn", referenced from:
+      _blake3_hasher_update.cold.1 in blake3-ba399d.o
+  "___memcpy_chk", referenced from:
+      _blake2b_init_key in blake2b-fff268.o
+      _blake3_hasher_update in blake3-ba399d.o
+      _blake2s_init_key in blake2s-d533bd.o
+  "___stack_chk_fail", referenced from:
+      _sha512_transform in sha512-cc3678.o
+      _sha512_final in sha512-cc3678.o
+      _sha384_final in sha512-cc3678.o
+      _sha512_hash in sha512-cc3678.o
+      _sha384_hash in sha512-cc3678.o
+      _blake2b_init_key in blake2b-fff268.o
+      _blake2b_final in blake2b-fff268.o
+      ...
+  "___stack_chk_guard", referenced from:
+      _sha512_transform in sha512-cc3678.o
+      _sha512_transform in sha512-cc3678.o
+      _sha512_final in sha512-cc3678.o
+      _sha512_final in sha512-cc3678.o
+      _sha384_final in sha512-cc3678.o
+      _sha384_final in sha512-cc3678.o
+      _sha512_hash in sha512-cc3678.o
+      _sha512_hash in sha512-cc3678.o
+      ...
+  "_blake3_hash_many_neon", referenced from:
+      _blake3_hash_many in blake3_dispatch-0d184b.o
+  "_bzero", referenced from:
+      _blake2b_final in blake2b-fff268.o
+      _sha224_final in sha224-e6253f.o
+      _sha224_final in sha224-e6253f.o
+      _blake2s_final in blake2s-d533bd.o
+      _sha256_final in sha256-66b0c0.o
+      _sha256_final in sha256-66b0c0.o
+  "_memcpy", referenced from:
+      _sha512_update in sha512-cc3678.o
+      _sha512_update in sha512-cc3678.o
+      _blake2b_update in blake2b-fff268.o
+      _blake2b_update in blake2b-fff268.o
+      _blake2b_final in blake2b-fff268.o
+      _blake3_compress_subtree_wide in blake3-ba399d.o
+      _blake3_hasher_update in blake3-ba399d.o
+      _blake3_hasher_update in blake3-ba399d.o
+      _blake3_hasher_update in blake3-ba399d.o
+      _blake3_hasher_update in blake3-ba399d.o
+      _blake3_hasher_update in blake3-ba399d.o
+      ...
+  "_strlen", referenced from:
+      _blake3_hasher_init_derive_key in blake3-ba399d.o
+ld: symbol(s) not found for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+

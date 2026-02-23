@@ -1,0 +1,7 @@
+2026-02-23 21:10:54,008 - ERROR - Compilation failed for hash_primitive:
+2026-02-23 21:10:54,009 - ERROR - Undefined symbols for architecture arm64:
+  "_blake3_hash_many_neon", referenced from:
+      _blake3_hash_many in blake3_dispatch-5bb17f.o
+ld: symbol(s) not found for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+

@@ -1,0 +1,98 @@
+2026-02-23 21:14:22,454 - ERROR - Compilation failed for kem_lattice:
+2026-02-23 21:14:22,455 - ERROR - Undefined symbols for architecture arm64:
+  "___chkstk_darwin", referenced from:
+      _PQCLEAN_MLKEM512_CLEAN_indcpa_keypair_derand in indcpa-4579e3.o
+      _PQCLEAN_MLKEM512_CLEAN_indcpa_enc in indcpa-4579e3.o
+      _PQCLEAN_MLKEM768_CLEAN_indcpa_keypair_derand in indcpa-9c175e.o
+      _PQCLEAN_MLKEM768_CLEAN_indcpa_enc in indcpa-9c175e.o
+      _PQCLEAN_MLKEM768_CLEAN_indcpa_dec in indcpa-9c175e.o
+      _PQCLEAN_MLKEM1024_CLEAN_indcpa_keypair_derand in indcpa-c4a315.o
+      _PQCLEAN_MLKEM1024_CLEAN_indcpa_enc in indcpa-c4a315.o
+      ...
+  "___memcpy_chk", referenced from:
+      _drbg_update in drbg-a13838.o
+      _drbg_update in drbg-a13838.o
+      _hkdf_expand in hkdf-f1dd16.o
+      _hkdf_expand in hkdf-f1dd16.o
+      _hkdf_sha3_256_expand in hkdf-f1dd16.o
+      _hkdf_sha3_256_expand in hkdf-f1dd16.o
+      _hkdf_sha3_512_expand in hkdf-f1dd16.o
+      _hkdf_sha3_512_expand in hkdf-f1dd16.o
+      ...
+  "___stack_chk_fail", referenced from:
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake128_absorb in symmetric-shake-6ae55d.o
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake256_prf in symmetric-shake-6ae55d.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta1 in poly-3f8546.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta2 in poly-3f8546.o
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_keypair in kem-36c65c.o
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_enc_derand in kem-36c65c.o
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_enc in kem-36c65c.o
+      ...
+  "___stack_chk_guard", referenced from:
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake128_absorb in symmetric-shake-6ae55d.o
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake128_absorb in symmetric-shake-6ae55d.o
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake256_prf in symmetric-shake-6ae55d.o
+      _PQCLEAN_MLKEM512_CLEAN_kyber_shake256_prf in symmetric-shake-6ae55d.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta1 in poly-3f8546.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta1 in poly-3f8546.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta2 in poly-3f8546.o
+      _PQCLEAN_MLKEM512_CLEAN_poly_getnoise_eta2 in poly-3f8546.o
+      ...
+  "_arc4random_buf", referenced from:
+      _PQCLEAN_randombytes in randombytes-80f650.o
+  "_bzero", referenced from:
+      _sha256_inc_finalize in sha2-9f2b32.o
+      _sha256_inc_finalize in sha2-9f2b32.o
+      _sha512_inc_finalize in sha2-9f2b32.o
+      _sha512_inc_finalize in sha2-9f2b32.o
+      _PQCLEAN_randombytes in randombytes-80f650.o
+  "_calloc", referenced from:
+      _shake128_inc_init in fips202-36758b.o
+      _shake256_inc_init in fips202-36758b.o
+      _shake128_absorb in fips202-36758b.o
+      _shake256_absorb in fips202-36758b.o
+      _sha3_256_inc_init in fips202-36758b.o
+      _sha3_384_inc_init in fips202-36758b.o
+      _sha3_512_inc_init in fips202-36758b.o
+      ...
+  "_exit", referenced from:
+      _aes128_ecb_keyexp in aes-680d86.o
+      _aes128_ctr_keyexp in aes-680d86.o
+      _aes192_ecb_keyexp in aes-680d86.o
+      _aes192_ctr_keyexp in aes-680d86.o
+      _aes256_ecb_keyexp in aes-680d86.o
+      _aes256_ctr_keyexp in aes-680d86.o
+      _sha224_inc_init in sha2-9f2b32.o
+      ...
+  "_free", referenced from:
+      _aes128_ctx_release in aes-680d86.o
+      _aes192_ctx_release in aes-680d86.o
+      _aes256_ctx_release in aes-680d86.o
+      _sha224_inc_ctx_release in sha2-9f2b32.o
+      _sha256_inc_ctx_release in sha2-9f2b32.o
+      _sha384_inc_ctx_release in sha2-9f2b32.o
+      _sha512_inc_ctx_release in sha2-9f2b32.o
+      ...
+  "_malloc", referenced from:
+      _aes128_ecb_keyexp in aes-680d86.o
+      _aes128_ctr_keyexp in aes-680d86.o
+      _aes192_ecb_keyexp in aes-680d86.o
+      _aes192_ctr_keyexp in aes-680d86.o
+      _aes256_ecb_keyexp in aes-680d86.o
+      _aes256_ctr_keyexp in aes-680d86.o
+      _sha224_inc_init in sha2-9f2b32.o
+      ...
+  "_memcpy", referenced from:
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_keypair_derand in kem-36c65c.o
+      _PQCLEAN_MLKEM512_CLEAN_crypto_kem_keypair in kem-36c65c.o
+      _PQCLEAN_MLKEM768_CLEAN_crypto_kem_keypair_derand in kem-72eec2.o
+      _PQCLEAN_MLKEM768_CLEAN_crypto_kem_keypair in kem-72eec2.o
+      _PQCLEAN_MLKEM1024_CLEAN_crypto_kem_keypair_derand in kem-21174f.o
+      _PQCLEAN_MLKEM1024_CLEAN_crypto_kem_keypair in kem-21174f.o
+      _br_aes_ct64_keysched in aes-680d86.o
+      ...
+  "_strlen", referenced from:
+      _hkdf_expand_label in hkdf-f1dd16.o
+ld: symbol(s) not found for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+

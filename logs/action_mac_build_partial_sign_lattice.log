@@ -1,0 +1,117 @@
+2026-02-23 21:15:08,139 - ERROR - Compilation failed for sign_lattice:
+2026-02-23 21:15:08,141 - ERROR - Undefined symbols for architecture arm64:
+  "___chkstk_darwin", referenced from:
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_keypair in sign-0d375c.o
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_signature_ctx in sign-0d375c.o
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_verify_ctx in sign-0d375c.o
+      _PQCLEAN_MLDSA65_CLEAN_crypto_sign_keypair in sign-1ecac1.o
+      _PQCLEAN_MLDSA65_CLEAN_crypto_sign_signature_ctx in sign-1ecac1.o
+      _PQCLEAN_MLDSA65_CLEAN_crypto_sign_verify_ctx in sign-1ecac1.o
+      _PQCLEAN_MLDSA87_CLEAN_crypto_sign_keypair in sign-93cc16.o
+      ...
+  "___memcpy_chk", referenced from:
+      _drbg_update in drbg-7cce39.o
+      _drbg_update in drbg-7cce39.o
+      _hkdf_expand in hkdf-bf0f76.o
+      _hkdf_expand in hkdf-bf0f76.o
+      _hkdf_sha3_256_expand in hkdf-bf0f76.o
+      _hkdf_sha3_256_expand in hkdf-bf0f76.o
+      _hkdf_sha3_512_expand in hkdf-bf0f76.o
+      _hkdf_sha3_512_expand in hkdf-bf0f76.o
+      ...
+  "___stack_chk_fail", referenced from:
+      _PQCLEAN_MLDSA44_CLEAN_poly_uniform in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_uniform_eta in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_uniform_gamma1 in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_challenge in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_keypair in sign-0d375c.o
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_signature_ctx in sign-0d375c.o
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_verify_ctx in sign-0d375c.o
+      ...
+  "___stack_chk_guard", referenced from:
+      _PQCLEAN_MLDSA44_CLEAN_poly_uniform in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_uniform in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_uniform_eta in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_uniform_eta in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_uniform_gamma1 in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_uniform_gamma1 in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_challenge in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_poly_challenge in poly-ffa01d.o
+      ...
+  "_arc4random_buf", referenced from:
+      _PQCLEAN_randombytes in randombytes-71da51.o
+  "_bzero", referenced from:
+      _PQCLEAN_MLDSA44_CLEAN_poly_challenge in poly-ffa01d.o
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_open_ctx in sign-0d375c.o
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_open in sign-0d375c.o
+      _PQCLEAN_MLDSA44_CLEAN_unpack_sig in packing-4646c1.o
+      _PQCLEAN_MLDSA44_CLEAN_unpack_sig in packing-4646c1.o
+      _PQCLEAN_MLDSA44_CLEAN_unpack_sig in packing-4646c1.o
+      _PQCLEAN_MLDSA44_CLEAN_unpack_sig in packing-4646c1.o
+      ...
+  "_calloc", referenced from:
+      _shake128_inc_init in fips202-dd5b35.o
+      _shake256_inc_init in fips202-dd5b35.o
+      _shake128_absorb in fips202-dd5b35.o
+      _shake256_absorb in fips202-dd5b35.o
+      _sha3_256_inc_init in fips202-dd5b35.o
+      _sha3_384_inc_init in fips202-dd5b35.o
+      _sha3_512_inc_init in fips202-dd5b35.o
+      ...
+  "_exit", referenced from:
+      _aes128_ecb_keyexp in aes-127d0b.o
+      _aes128_ctr_keyexp in aes-127d0b.o
+      _aes192_ecb_keyexp in aes-127d0b.o
+      _aes192_ctr_keyexp in aes-127d0b.o
+      _aes256_ecb_keyexp in aes-127d0b.o
+      _aes256_ctr_keyexp in aes-127d0b.o
+      _sha224_inc_init in sha2-ab6348.o
+      ...
+  "_free", referenced from:
+      _aes128_ctx_release in aes-127d0b.o
+      _aes192_ctx_release in aes-127d0b.o
+      _aes256_ctx_release in aes-127d0b.o
+      _sha224_inc_ctx_release in sha2-ab6348.o
+      _sha256_inc_ctx_release in sha2-ab6348.o
+      _sha384_inc_ctx_release in sha2-ab6348.o
+      _sha512_inc_ctx_release in sha2-ab6348.o
+      ...
+  "_malloc", referenced from:
+      _aes128_ecb_keyexp in aes-127d0b.o
+      _aes128_ctr_keyexp in aes-127d0b.o
+      _aes192_ecb_keyexp in aes-127d0b.o
+      _aes192_ctr_keyexp in aes-127d0b.o
+      _aes256_ecb_keyexp in aes-127d0b.o
+      _aes256_ctr_keyexp in aes-127d0b.o
+      _sha224_inc_init in sha2-ab6348.o
+      ...
+  "_memcpy", referenced from:
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_keypair in sign-0d375c.o
+      _PQCLEAN_MLDSA44_CLEAN_crypto_sign_signature_ctx in sign-0d375c.o
+      _PQCLEAN_MLDSA65_CLEAN_crypto_sign_keypair in sign-1ecac1.o
+      _PQCLEAN_MLDSA65_CLEAN_crypto_sign_signature_ctx in sign-1ecac1.o
+      _PQCLEAN_MLDSA87_CLEAN_crypto_sign_keypair in sign-93cc16.o
+      _PQCLEAN_MLDSA87_CLEAN_crypto_sign_signature_ctx in sign-93cc16.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      ...
+  "_memmove", referenced from:
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      _solve_NTRU in keygen-179dfc.o
+      ...
+  "_strlen", referenced from:
+      _hkdf_expand_label in hkdf-bf0f76.o
+ld: symbol(s) not found for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+

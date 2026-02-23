@@ -1,0 +1,87 @@
+2026-02-23 21:11:50,625 - ERROR - Compilation failed for macs:
+2026-02-23 21:11:50,625 - ERROR - Undefined symbols for architecture arm64:
+  "___assert_rtn", referenced from:
+      _siphash.cold.1 in siphash-3cda7d.o
+  "___memcpy_chk", referenced from:
+      _hkdf_expand in hkdf-8b848f.o
+      _hkdf_expand in hkdf-8b848f.o
+      _hkdf_sha3_256_expand in hkdf-8b848f.o
+      _hkdf_sha3_256_expand in hkdf-8b848f.o
+      _hkdf_sha3_512_expand in hkdf-8b848f.o
+      _hkdf_sha3_512_expand in hkdf-8b848f.o
+  "___stack_chk_fail", referenced from:
+      _AES_CMAC in aes_cmac-c807ca.o
+      _pqc_hmac_sha256 in hkdf-8b848f.o
+      _hkdf_extract in hkdf-8b848f.o
+      _hkdf_expand in hkdf-8b848f.o
+      _hkdf in hkdf-8b848f.o
+      _hmac_sha3_256 in hkdf-8b848f.o
+      _hkdf_sha3_256_extract in hkdf-8b848f.o
+      ...
+  "___stack_chk_guard", referenced from:
+      _AES_CMAC in aes_cmac-c807ca.o
+      _AES_CMAC in aes_cmac-c807ca.o
+      _pqc_hmac_sha256 in hkdf-8b848f.o
+      _pqc_hmac_sha256 in hkdf-8b848f.o
+      _hkdf_extract in hkdf-8b848f.o
+      _hkdf_extract in hkdf-8b848f.o
+      _hkdf_expand in hkdf-8b848f.o
+      _hkdf_expand in hkdf-8b848f.o
+      ...
+  "_bzero", referenced from:
+      _padBlock in aes_core-18890d.o
+      _sha256_inc_finalize in sha2-3f115c.o
+      _sha256_inc_finalize in sha2-3f115c.o
+      _sha512_inc_finalize in sha2-3f115c.o
+      _sha512_inc_finalize in sha2-3f115c.o
+  "_calloc", referenced from:
+      _shake128_inc_init in fips202-78852c.o
+      _shake256_inc_init in fips202-78852c.o
+      _shake128_absorb in fips202-78852c.o
+      _shake256_absorb in fips202-78852c.o
+      _sha3_256_inc_init in fips202-78852c.o
+      _sha3_384_inc_init in fips202-78852c.o
+      _sha3_512_inc_init in fips202-78852c.o
+      ...
+  "_exit", referenced from:
+      _sha224_inc_init in sha2-3f115c.o
+      _sha256_inc_init in sha2-3f115c.o
+      _sha384_inc_init in sha2-3f115c.o
+      _sha512_inc_init in sha2-3f115c.o
+      _sha224_inc_ctx_clone in sha2-3f115c.o
+      _sha256_inc_ctx_clone in sha2-3f115c.o
+      _sha384_inc_ctx_clone in sha2-3f115c.o
+      ...
+  "_free", referenced from:
+      _hkdf_expand_label in hkdf-8b848f.o
+      _sha224_inc_ctx_release in sha2-3f115c.o
+      _sha256_inc_ctx_release in sha2-3f115c.o
+      _sha384_inc_ctx_release in sha2-3f115c.o
+      _sha512_inc_ctx_release in sha2-3f115c.o
+      _sha256_inc_finalize in sha2-3f115c.o
+      _sha512_inc_finalize in sha2-3f115c.o
+      ...
+  "_malloc", referenced from:
+      _hkdf_expand_label in hkdf-8b848f.o
+      _sha224_inc_init in sha2-3f115c.o
+      _sha256_inc_init in sha2-3f115c.o
+      _sha384_inc_init in sha2-3f115c.o
+      _sha512_inc_init in sha2-3f115c.o
+      _sha224_inc_ctx_clone in sha2-3f115c.o
+      _sha256_inc_ctx_clone in sha2-3f115c.o
+      ...
+  "_memcpy", referenced from:
+      _hkdf_expand in hkdf-8b848f.o
+      _hkdf_expand in hkdf-8b848f.o
+      _hkdf_sha3_256_expand in hkdf-8b848f.o
+      _hkdf_sha3_256_expand in hkdf-8b848f.o
+      _hkdf_sha3_512_expand in hkdf-8b848f.o
+      _hkdf_sha3_512_expand in hkdf-8b848f.o
+      _hkdf_expand_label in hkdf-8b848f.o
+      _hkdf_expand_label in hkdf-8b848f.o
+      ...
+  "_strlen", referenced from:
+      _hkdf_expand_label in hkdf-8b848f.o
+ld: symbol(s) not found for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+
