@@ -6,8 +6,15 @@ on:
     tags:
       - '*'
   workflow_dispatch:
+    inputs:
+      windows:
+        description: "Enable Windows jobs"
+        required: false
+        default: "false"
 permissions:
   contents: write
+env:
+  ENABLE_WINDOWS: ${{ github.event_name == 'workflow_dispatch' && inputs.windows == 'true' }}
 jobs:
   guard:
     runs-on: ubuntu-latest
@@ -62,13 +69,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_web_partial_core.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-web-partial-core-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_web_partial_core.log
-          if-no-files-found: error
+          if-no-files-found: warn
   web_partial_hash:
     runs-on: ubuntu-latest
     needs: guard
@@ -114,13 +122,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_web_partial_hash.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-web-partial-hash-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_web_partial_hash.log
-          if-no-files-found: error
+          if-no-files-found: warn
   web_partial_dhcm:
     runs-on: ubuntu-latest
     needs: guard
@@ -166,13 +175,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_web_partial_dhcm.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-web-partial-dhcm-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_web_partial_dhcm.log
-          if-no-files-found: error
+          if-no-files-found: warn
   web_partial_pow:
     runs-on: ubuntu-latest
     needs: guard
@@ -218,13 +228,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_web_partial_pow.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-web-partial-pow-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_web_partial_pow.log
-          if-no-files-found: error
+          if-no-files-found: warn
   web_partial_pqc:
     runs-on: ubuntu-latest
     needs: guard
@@ -270,13 +281,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_web_partial_pqc.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-web-partial-pqc-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_web_partial_pqc.log
-          if-no-files-found: error
+          if-no-files-found: warn
   web_base:
     runs-on: ubuntu-latest
     needs:
@@ -332,13 +344,14 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_web_base_pow.log
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_web_base_pqc.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-web-base-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_web_base_*.log
-          if-no-files-found: error
+          if-no-files-found: warn
   web_main:
     runs-on: ubuntu-latest
     needs: web_base
@@ -389,13 +402,14 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_web_main_pow.log
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_web_main_pqc.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-web-main-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_web_main_*.log
-          if-no-files-found: error
+          if-no-files-found: warn
   web_system:
     runs-on: ubuntu-latest
     needs: web_main
@@ -441,13 +455,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_web_system.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-web-system-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_web_system.log
-          if-no-files-found: error
+          if-no-files-found: warn
   
   # windows_partial_core:
   #   runs-on: windows-latest
@@ -709,13 +724,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_linux_partial_core.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-linux-partial-core-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_linux_partial_core.log
-          if-no-files-found: error
+          if-no-files-found: warn
   linux_partial_hash:
     runs-on: ubuntu-latest
     needs: guard
@@ -736,13 +752,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_linux_partial_hash.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-linux-partial-hash-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_linux_partial_hash.log
-          if-no-files-found: error
+          if-no-files-found: warn
   linux_partial_dhcm:
     runs-on: ubuntu-latest
     needs: guard
@@ -763,13 +780,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_linux_partial_dhcm.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-linux-partial-dhcm-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_linux_partial_dhcm.log
-          if-no-files-found: error
+          if-no-files-found: warn
   linux_partial_pow:
     runs-on: ubuntu-latest
     needs: guard
@@ -790,13 +808,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_linux_partial_pow.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-linux-partial-pow-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_linux_partial_pow.log
-          if-no-files-found: error
+          if-no-files-found: warn
   linux_partial_pqc:
     runs-on: ubuntu-latest
     needs: guard
@@ -817,13 +836,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_linux_partial_pqc.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-linux-partial-pqc-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_linux_partial_pqc.log
-          if-no-files-found: error
+          if-no-files-found: warn
   linux_base:
     runs-on: ubuntu-latest
     needs:
@@ -854,13 +874,14 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_linux_base_pow.log
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_linux_base_pqc.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-linux-base-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_linux_base_*.log
-          if-no-files-found: error
+          if-no-files-found: warn
   linux_main:
     runs-on: ubuntu-latest
     needs: linux_base
@@ -886,13 +907,14 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_linux_main_pow.log
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_linux_main_pqc.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-linux-main-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_linux_main_*.log
-          if-no-files-found: error
+          if-no-files-found: warn
   linux_system:
     runs-on: ubuntu-latest
     needs: linux_main
@@ -913,13 +935,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_linux_system.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-linux-system-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_linux_system.log
-          if-no-files-found: error
+          if-no-files-found: warn
   mac_partial_core:
     runs-on: macos-latest
     needs: guard
@@ -940,13 +963,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_mac_partial_core.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-mac-partial-core-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_mac_partial_core.log
-          if-no-files-found: error
+          if-no-files-found: warn
   mac_partial_hash:
     runs-on: macos-latest
     needs: guard
@@ -967,13 +991,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_mac_partial_hash.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-mac-partial-hash-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_mac_partial_hash.log
-          if-no-files-found: error
+          if-no-files-found: warn
   mac_partial_dhcm:
     runs-on: macos-latest
     needs: guard
@@ -994,13 +1019,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_mac_partial_dhcm.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-mac-partial-dhcm-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_mac_partial_dhcm.log
-          if-no-files-found: error
+          if-no-files-found: warn
   mac_partial_pow:
     runs-on: macos-latest
     needs: guard
@@ -1021,13 +1047,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_mac_partial_pow.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-mac-partial-pow-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_mac_partial_pow.log
-          if-no-files-found: error
+          if-no-files-found: warn
   mac_partial_pqc:
     runs-on: macos-latest
     needs: guard
@@ -1048,13 +1075,14 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_mac_partial_pqc.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-mac-partial-pqc-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_mac_partial_pqc.log
-          if-no-files-found: error
+          if-no-files-found: warn
   mac_base:
     runs-on: macos-latest
     needs:
@@ -1085,13 +1113,14 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_mac_base_pow.log
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_mac_base_pqc.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-mac-base-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_mac_base_*.log
-          if-no-files-found: error
+          if-no-files-found: warn
   mac_main:
     runs-on: macos-latest
     needs: mac_base
@@ -1117,13 +1146,14 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_mac_main_pow.log
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_mac_main_pqc.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-mac-main-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_mac_main_*.log
-          if-no-files-found: error
+          if-no-files-found: warn
   mac_system:
     runs-on: macos-latest
     needs: mac_main
@@ -1144,15 +1174,17 @@ jobs:
       - name: Build and Test
         run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_mac_system.log
       - name: Upload Output
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: output-mac-system-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action_mac_system.log
-          if-no-files-found: error
+          if-no-files-found: warn
   commit:
     runs-on: ubuntu-latest
+    if: always()
     needs:
       - web_system
       # - windows_system
@@ -1167,6 +1199,7 @@ jobs:
         with:
           path: .
           merge-multiple: true
+          if-no-files-found: ignore
       - name: Commit Outputs
         run: |
           git config user.name "github-actions[bot]"
