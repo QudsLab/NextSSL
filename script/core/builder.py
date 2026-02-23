@@ -48,7 +48,9 @@ class Builder:
         if is_web:
             args = ['-O2', '-Wall', '-s', 'WASM=1', '-s', 'STANDALONE_WASM=1', '-Wl,--no-entry', '-s', 'EXPORTED_FUNCTIONS=_leyline_wasm_selftest']
         else:
-            args = ['-shared', '-fPIC', '-O2', '-Wall', '-static']
+            args = ['-shared', '-fPIC', '-O2', '-Wall']
+            if Platform.get_os() == 'windows':
+                args.append('-static')
         
         if lib_ext == '.so':
             args.append('-Wl,--build-id=none')
