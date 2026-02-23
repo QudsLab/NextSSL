@@ -9,17 +9,17 @@ on:
 permissions:
   contents: write
 jobs:
-  build:
-    runs-on: ${{ matrix.platform.os }}
+  build_web:
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       max-parallel: 4
       matrix:
-        platform: ${{ fromJson('[{"name":"windows","os":"windows-latest"},{"name":"linux","os":"ubuntu-latest"},{"name":"mac","os":"macos-latest"},{"name":"web","os":"ubuntu-latest"}]') }}
         target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
     env:
-      BIN_DIR: ${{ matrix.platform.name == 'web' && 'web' || matrix.platform.name }}
-      LOG_FILE: action_${{ matrix.platform.name }}_build_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
+      PLATFORM: web
+      BIN_DIR: web
+      LOG_FILE: action_web_build_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
       SOURCE_DATE_EPOCH: 0
       TZ: UTC
     steps:
@@ -30,19 +30,8 @@ jobs:
         with:
           python-version: "3.11"
       - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and '.github/workflows' not in str(p) and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
-      - name: Install GCC (Windows)
-        if: matrix.platform.name == 'windows'
-        run: choco install mingw -y
-        shell: powershell
-      - name: Install GCC (Linux)
-        if: matrix.platform.name == 'linux'
-        run: sudo apt-get update && sudo apt-get install -y build-essential
-      - name: Install GCC (mac)
-        if: matrix.platform.name == 'mac'
-        run: brew install gcc
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Setup Emscripten
-        if: matrix.platform.name == 'web'
         run: |
           git clone https://github.com/emscripten-core/emsdk.git
           cd emsdk
@@ -53,27 +42,27 @@ jobs:
           echo "$PWD" >> $GITHUB_PATH
           echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
       - name: Build
-        run: python runner.py --platform ${{ matrix.platform.name }} --build ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+        run: python runner.py --platform ${{ env.PLATFORM }} --build ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ matrix.platform.name }}-${{ matrix.target.name }}-build
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build
           path: |
             bin/${{ env.BIN_DIR }}
             logs/${{ env.LOG_FILE }}
           if-no-files-found: error
-  test:
-    runs-on: ${{ matrix.platform.os }}
-    needs: build
+  build_windows:
+    runs-on: windows-latest
+    needs: build_web
     strategy:
       fail-fast: false
       max-parallel: 4
       matrix:
-        platform: ${{ fromJson('[{"name":"windows","os":"windows-latest"},{"name":"linux","os":"ubuntu-latest"},{"name":"mac","os":"macos-latest"},{"name":"web","os":"ubuntu-latest"}]') }}
         target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
     env:
-      BIN_DIR: ${{ matrix.platform.name == 'web' && 'web' || matrix.platform.name }}
-      LOG_FILE: action_${{ matrix.platform.name }}_test_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
+      PLATFORM: windows
+      BIN_DIR: windows
+      LOG_FILE: action_windows_build_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
       SOURCE_DATE_EPOCH: 0
       TZ: UTC
     steps:
@@ -84,41 +73,262 @@ jobs:
         with:
           python-version: "3.11"
       - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and '.github/workflows' not in str(p) and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install GCC (Windows)
-        if: matrix.platform.name == 'windows'
         run: choco install mingw -y
         shell: powershell
+      - name: Build
+        run: python runner.py --platform ${{ env.PLATFORM }} --build ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/${{ env.LOG_FILE }}
+          if-no-files-found: error
+  build_linux:
+    runs-on: ubuntu-latest
+    needs: build_windows
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      LOG_FILE: action_linux_build_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Guard --no_gen not present
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install GCC (Linux)
-        if: matrix.platform.name == 'linux'
         run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build
+        run: python runner.py --platform ${{ env.PLATFORM }} --build ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/${{ env.LOG_FILE }}
+          if-no-files-found: error
+  build_mac:
+    runs-on: macos-latest
+    needs: build_linux
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      LOG_FILE: action_mac_build_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Guard --no_gen not present
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install GCC (mac)
-        if: matrix.platform.name == 'mac'
         run: brew install gcc
+      - name: Build
+        run: python runner.py --platform ${{ env.PLATFORM }} --build ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/${{ env.LOG_FILE }}
+          if-no-files-found: error
+  test_web:
+    runs-on: ubuntu-latest
+    needs: build_web
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      LOG_FILE: action_web_test_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Guard --no_gen not present
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install Wasmtime (web)
-        if: matrix.platform.name == 'web'
         run: |
           curl https://wasmtime.dev/install.sh -sSf | bash
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Download Build Output
         uses: actions/download-artifact@v4
         with:
-          name: output-${{ matrix.platform.name }}-${{ matrix.target.name }}-build
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build
           path: .
       - name: Test
-        run: python runner.py --platform ${{ matrix.platform.name }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+        run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ matrix.platform.name }}-${{ matrix.target.name }}-test
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-test
+          path: |
+            logs/${{ env.LOG_FILE }}
+          if-no-files-found: error
+  test_windows:
+    runs-on: windows-latest
+    needs:
+      - build_windows
+      - test_web
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      LOG_FILE: action_windows_test_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Guard --no_gen not present
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Download Build Output
+        uses: actions/download-artifact@v4
+        with:
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build
+          path: .
+      - name: Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-test
+          path: |
+            logs/${{ env.LOG_FILE }}
+          if-no-files-found: error
+  test_linux:
+    runs-on: ubuntu-latest
+    needs:
+      - build_linux
+      - test_windows
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      LOG_FILE: action_linux_test_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Guard --no_gen not present
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Download Build Output
+        uses: actions/download-artifact@v4
+        with:
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build
+          path: .
+      - name: Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-test
+          path: |
+            logs/${{ env.LOG_FILE }}
+          if-no-files-found: error
+  test_mac:
+    runs-on: macos-latest
+    needs:
+      - build_mac
+      - test_linux
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      LOG_FILE: action_mac_test_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Guard --no_gen not present
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
+      - name: Install GCC (mac)
+        run: brew install gcc
+      - name: Download Build Output
+        uses: actions/download-artifact@v4
+        with:
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build
+          path: .
+      - name: Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-test
           path: |
             logs/${{ env.LOG_FILE }}
           if-no-files-found: error
   commit:
     runs-on: ubuntu-latest
     needs:
-      - build
-      - test
+      - test_web
+      - test_windows
+      - test_linux
+      - test_mac
     steps:
       - uses: actions/checkout@v4
         with:
