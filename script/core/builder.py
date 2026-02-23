@@ -53,6 +53,8 @@ class Builder:
                 args.append('-static')
         
         if lib_ext == '.so':
+            if Platform.get_os() == 'linux':
+                args.append('-nostartfiles')
             args.append('-Wl,--build-id=none')
         elif lib_ext == '.dll':
             args.append('-Wl,--no-insert-timestamp')
