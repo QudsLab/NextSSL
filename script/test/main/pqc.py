@@ -1,14 +1,13 @@
 import ctypes
 import os
 import sys
-from script.core import Config, Logger, Platform, console
+from script.core import Config, Logger, console
 
 def main():
     """Run tests for pqc.dll (Main)."""
     config = Config()
     
-    dll_name = "pqc" + Platform.get_shared_lib_ext()
-    dll_path = os.path.join(config.bin_dir, 'main', dll_name)
+    dll_path = config.get_lib_path('main', 'pqc')
     
     console.print_info(f"Loading DLL: {dll_path}")
     if not os.path.exists(dll_path):

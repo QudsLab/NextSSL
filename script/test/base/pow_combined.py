@@ -3,7 +3,7 @@ import os
 import sys
 import time
 import threading
-from script.core import console
+from script.core import Config, console
 
 def leading_zero_bits(data):
     count = 0
@@ -64,8 +64,8 @@ class POWConfig(ctypes.Structure):
     ]
 
 def load_dll():
-    bin_dir = os.path.join(os.getcwd(), 'bin/base')
-    dll_path = os.path.join(bin_dir, 'pow_combined.dll')
+    config = Config()
+    dll_path = config.get_lib_path('base', 'pow_combined')
     
     if not os.path.exists(dll_path):
         console.print_warn(f"Skipping Base Combined: DLL not found at {dll_path}")

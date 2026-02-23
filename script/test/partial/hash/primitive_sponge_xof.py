@@ -4,17 +4,14 @@ import ctypes
 
 # Add project root to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../')))
-from script.core import console
+from script.core import Config, console
 
 def main(color=True):
     """Run all tests for primitive_sponge_xof.dll."""
     console.set_color(color)
 
-    PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../'))
-    DLL_PATH = os.path.join(PROJECT_ROOT, 'bin', 'partial', 'hash', 'primitive_sponge_xof.dll')
-    
-    if sys.platform != 'win32':
-        DLL_PATH = DLL_PATH.replace('.dll', '.so')
+    config = Config()
+    DLL_PATH = config.get_lib_path('partial', 'primitive_sponge_xof', 'hash')
 
     console.print_info(f"Loading DLL: {DLL_PATH}")
     if not os.path.exists(DLL_PATH):

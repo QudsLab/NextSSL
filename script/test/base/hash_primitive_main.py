@@ -4,17 +4,14 @@ import ctypes
 
 # Add project root to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../')))
-from script.core import console
+from script.core import Config, console
 
 def main(color=True):
     """Run all primitive tests for hash_primitive.dll (Base Tier)."""
     console.set_color(color)
 
-    PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../'))
-    DLL_PATH = os.path.join(PROJECT_ROOT, 'bin', 'base', 'hash_primitive.dll')
-    
-    if sys.platform != 'win32':
-        DLL_PATH = DLL_PATH.replace('.dll', '.so')
+    config = Config()
+    DLL_PATH = config.get_lib_path('base', 'hash_primitive')
 
     console.print_info(f"Loading DLL: {DLL_PATH}")
     if not os.path.exists(DLL_PATH):

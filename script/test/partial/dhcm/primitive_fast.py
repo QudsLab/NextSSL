@@ -5,7 +5,7 @@ import sys
 # Add project root to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../')))
 
-from script.core import console
+from script.core import Config, console
 
 # ── Step 3: Define structs ──
 class DHCMParams(ctypes.Structure):
@@ -36,8 +36,8 @@ def main():
     """Run tests for primitive_fast.dll."""
     try:
         # 1. Resolve DLL path
-        PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../'))
-        DLL_PATH = os.path.join(PROJECT_ROOT, 'bin', 'partial', 'dhcm', 'primitive_fast.dll')
+        config = Config()
+        DLL_PATH = config.get_lib_path('partial', 'primitive_fast', 'dhcm')
 
         console.print_step(f"Loading {DLL_PATH}")
         if not os.path.exists(DLL_PATH):

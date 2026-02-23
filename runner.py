@@ -2,6 +2,7 @@ import argparse
 import sys
 import os
 import time
+import subprocess
 
 # Add project root to path (current directory)
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
@@ -36,6 +37,11 @@ from script.test.partial.pow import primitive_memory_hard as test_pow_primitive_
 from script.test.partial.pow import primitive_sponge_xof as test_pow_primitive_sponge_xof
 from script.test.partial.pow import legacy_alive as test_pow_legacy_alive
 from script.test.partial.pow import legacy_unsafe as test_pow_legacy_unsafe
+from script.test.partial.pow.combined import primitive_fast as test_pow_combined_primitive_fast
+from script.test.partial.pow.combined import primitive_memory_hard as test_pow_combined_primitive_memory_hard
+from script.test.partial.pow.combined import primitive_sponge_xof as test_pow_combined_primitive_sponge_xof
+from script.test.partial.pow.combined import legacy_alive as test_pow_combined_legacy_alive
+from script.test.partial.pow.combined import legacy_unsafe as test_pow_combined_legacy_unsafe
 from script.test.suites import pow_integration as test_pow_integration
 from script.test.base import pow_primitive as test_pow_primitive, pow_legacy as test_pow_legacy, pow_combined as test_pow_combined_base
 from script.test.main import pow as test_pow_main, pow_combined as test_pow_combined_main
@@ -76,11 +82,183 @@ from script.test.base import dhcm_primitive_main as test_dhcm_primitive_main
 from script.test.base import dhcm_legacy_main as test_dhcm_legacy_main
 from script.test.main import dhcm as test_dhcm_main
 
+PLATFORM_LIB_EXT = {
+    'windows': '.dll',
+    'linux': '.so',
+    'mac': '.dylib',
+    'web': '.wasm'
+}
+
+def resolve_platform_settings(platform, project_root):
+    if not platform:
+        return None, None
+    platform = platform.lower()
+    lib_ext = PLATFORM_LIB_EXT.get(platform)
+    if platform == 'web':
+        return os.path.join(project_root, 'bin', 'web'), lib_ext
+    if platform in ['windows', 'linux', 'mac']:
+        return os.path.join(project_root, 'bin', platform), lib_ext
+    return None, None
+
+def create_config(args):
+    project_root = os.path.abspath(os.path.dirname(__file__))
+    platform = args.platform or os.getenv('LEYLINE_PLATFORM')
+    bin_dir, lib_ext = resolve_platform_settings(platform, project_root)
+    if args.bin_root:
+        bin_dir = os.path.abspath(os.path.join(project_root, args.bin_root)) if not os.path.isabs(args.bin_root) else args.bin_root
+    log_dir = args.log_root or os.path.join(project_root, 'logs')
+    lib_ext = args.lib_ext or lib_ext
+    if bin_dir:
+        os.environ['LEYLINE_BIN_DIR'] = bin_dir
+    if log_dir:
+        os.makedirs(log_dir, exist_ok=True)
+        os.environ['LEYLINE_LOG_DIR'] = log_dir
+    if lib_ext:
+        os.environ['LEYLINE_LIB_EXT'] = lib_ext
+    return Config(bin_dir=bin_dir, log_dir=log_dir, lib_ext=lib_ext)
+
+def get_action_log_path(config, action_log):
+    if not action_log:
+        return None
+    if os.path.isabs(action_log):
+        return action_log
+    return os.path.join(config.log_dir, action_log)
+
+def pick_module_by_name(name, modules):
+    for module in modules:
+        if module.__name__.endswith(name):
+            return module
+    return None
+
+def resolve_web_paths(config, selector):
+    ext = config.get_shared_lib_ext()
+    def make(tier, name, subdirs=None, root=False):
+        if root:
+            return os.path.join(config.bin_dir, f"{name}{ext}")
+        if subdirs:
+            return os.path.join(config.bin_dir, tier, *subdirs, f"{name}{ext}")
+        return os.path.join(config.bin_dir, tier, f"{name}{ext}")
+
+    parts = selector.split(':')
+    if selector == 'system:main':
+        return [make(None, 'main', root=True)]
+
+    if len(parts) < 2:
+        return []
+
+    group = parts[0]
+    item = parts[1]
+
+    if group == 'hash':
+        if item == 'main':
+            return [make('main', 'hash')]
+        if item == 'hash_legacy_main':
+            return [make('base', 'hash_legacy')]
+        if item == 'hash_primitive_main':
+            return [make('base', 'hash_primitive')]
+        return [make('partial', item, ['hash'])]
+
+    if group == 'core':
+        if item == 'main':
+            return [make('main', 'core')]
+        if item in ['core_cipher_main', 'core_ecc_main', 'core_mac_main']:
+            return [make('base', item)]
+        return [make('partial', item, ['core'])]
+
+    if group == 'dhcm':
+        if item == 'main':
+            return [make('main', 'dhcm')]
+        if item == 'dhcm_legacy_main':
+            return [make('base', 'dhcm_legacy')]
+        if item == 'dhcm_primitive_main':
+            return [make('base', 'dhcm_primitive')]
+        return [make('partial', item, ['dhcm'])]
+
+    if group == 'pqc':
+        if item == 'main':
+            return [make('main', 'pqc')]
+        if item == 'pqc_kem_main':
+            return [make('base', 'pqc_kem_main')]
+        if item == 'pqc_sign_main':
+            return [make('base', 'pqc_sign_main')]
+        return [make('partial', item, ['pqc'])]
+
+    if group == 'pow':
+        if item == 'main':
+            if len(parts) == 2 or parts[2] == 'pair':
+                return [make('main', 'pow_client'), make('main', 'pow_server')]
+            if parts[2] == 'client':
+                return [make('main', 'pow_client')]
+            if parts[2] == 'server':
+                return [make('main', 'pow_server')]
+            if parts[2] == 'combined':
+                return [make('main', 'pow_combined')]
+        if item == 'base':
+            if len(parts) >= 3 and parts[2] == 'primitive':
+                return [make('base', 'pow_client_primitive'), make('base', 'pow_server_primitive')]
+            if len(parts) >= 3 and parts[2] == 'legacy':
+                return [make('base', 'pow_client_legacy'), make('base', 'pow_server_legacy')]
+            if len(parts) >= 3 and parts[2] == 'combined':
+                return [make('base', 'pow_combined')]
+        if item == 'partial':
+            if len(parts) >= 4 and parts[2] in ['server', 'client']:
+                return [make('partial', parts[3], ['pow', parts[2]])]
+            if len(parts) >= 4 and parts[2] == 'combined':
+                return [make('partial', parts[3], ['pow', 'combined'])]
+            if len(parts) >= 4 and parts[2] == 'pair':
+                return [
+                    make('partial', parts[3], ['pow', 'server']),
+                    make('partial', parts[3], ['pow', 'client'])
+                ]
+    return []
+
+def run_web_test(config, selector):
+    paths = resolve_web_paths(config, selector)
+    if not paths:
+        console.print_fail(f"Web test selector not supported: {selector}")
+        return 1
+    missing = []
+    for path in paths:
+        if not os.path.exists(path):
+            missing.append(path)
+        else:
+            size = os.path.getsize(path)
+            if size <= 0:
+                missing.append(path)
+            else:
+                console.print_pass(f"WASM present: {path}")
+    if missing:
+        for path in missing:
+            console.print_fail(f"WASM missing: {path}")
+        return 1
+    failures = 0
+    for path in paths:
+        try:
+            result = subprocess.run(
+                ['wasmtime', '--invoke', 'leyline_wasm_selftest', path],
+                capture_output=True,
+                text=True
+            )
+            if result.returncode != 0:
+                console.print_fail(f"WASM execute failed: {path}")
+                failures += 1
+            else:
+                console.print_pass(f"WASM execute ok: {path}")
+        except FileNotFoundError:
+            console.print_fail("wasmtime not found in PATH")
+            return 1
+        except Exception as e:
+            console.print_fail(f"WASM execute error: {e}")
+            return 1
+    return 0 if failures == 0 else 1
+
 def run_build(args):
-    config = Config()
+    config = create_config(args)
     target = args.build
     
-    with Logger(config.get_log_path('runner', 'build')) as logger:
+    action_log_path = get_action_log_path(config, args.action_log)
+    log_path = action_log_path or config.get_log_path('runner', 'build')
+    with Logger(log_path) as logger:
         builder = Builder(config, logger)
         
         # Hash Modules
@@ -114,6 +292,34 @@ def run_build(args):
         ]
         pow_base = [pow_primitive, pow_legacy, pow_combined_base]
         pow_main_list = [pow_main, pow_combined_main]
+        pow_partial_map = {
+            ('server', 'primitive_fast'): pow_server_primitive_fast,
+            ('server', 'primitive_memory_hard'): pow_server_primitive_memory_hard,
+            ('server', 'primitive_sponge_xof'): pow_server_primitive_sponge_xof,
+            ('server', 'legacy_alive'): pow_server_legacy_alive,
+            ('server', 'legacy_unsafe'): pow_server_legacy_unsafe,
+            ('client', 'primitive_fast'): pow_client_primitive_fast,
+            ('client', 'primitive_memory_hard'): pow_client_primitive_memory_hard,
+            ('client', 'primitive_sponge_xof'): pow_client_primitive_sponge_xof,
+            ('client', 'legacy_alive'): pow_client_legacy_alive,
+            ('client', 'legacy_unsafe'): pow_client_legacy_unsafe,
+            ('combined', 'primitive_fast'): pow_combined_primitive_fast,
+            ('combined', 'primitive_memory_hard'): pow_combined_primitive_memory_hard,
+            ('combined', 'primitive_sponge_xof'): pow_combined_primitive_sponge_xof,
+            ('combined', 'legacy_alive'): pow_combined_legacy_alive,
+            ('combined', 'legacy_unsafe'): pow_combined_legacy_unsafe
+        }
+        pow_base_map = {
+            'primitive': pow_primitive,
+            'legacy': pow_legacy,
+            'combined': pow_combined_base
+        }
+        pow_main_map = {
+            'combined': pow_combined_main,
+            'pair': pow_main,
+            'client': pow_main,
+            'server': pow_main
+        }
         
         # Build logic
         build_hash = False
@@ -152,7 +358,7 @@ def run_build(args):
                 for m in hash_main_list: m.build(builder)
             else:
                 name = target.split(':')[-1]
-                module = next((m for m in hash_partial if m.__name__.endswith(name)), None)
+                module = pick_module_by_name(name, hash_partial + hash_base + hash_main_list)
                 if module: module.build(builder)
                 else: logger.error(f"Unknown target: {target}")
             return # Done
@@ -166,7 +372,7 @@ def run_build(args):
                 for m in pqc_main_list: m.build(builder)
             else:
                 name = target.split(':')[-1]
-                module = next((m for m in pqc_partial if m.__name__.endswith(name)), None)
+                module = pick_module_by_name(name, pqc_partial + pqc_base + pqc_main_list)
                 if module: module.build(builder)
                 else: logger.error(f"Unknown target: {target}")
             return # Done
@@ -180,7 +386,7 @@ def run_build(args):
                 for m in core_main_list: m.build(builder)
             else:
                 name = target.split(':')[-1]
-                module = next((m for m in core_partial if m.__name__.endswith(name)), None)
+                module = pick_module_by_name(name, core_partial + core_base + core_main_list)
                 if module: module.build(builder)
                 else: logger.error(f"Unknown target: {target}")
             return # Done
@@ -194,12 +400,11 @@ def run_build(args):
                 for m in dhcm_main_list: m.build(builder)
             else:
                 name = target.split(':')[-1]
-                module = next((m for m in dhcm_partial if m.__name__.endswith(name)), None)
+                module = pick_module_by_name(name, dhcm_partial + dhcm_base + dhcm_main_list)
                 if module: module.build(builder)
                 else: logger.error(f"Unknown target: {target}")
             return # Done
         elif target.startswith('pow:'):
-            # Specific PoW target
             if target == 'pow:partial':
                 for m in pow_partial: m.build(builder)
             elif target == 'pow:base':
@@ -207,8 +412,25 @@ def run_build(args):
             elif target == 'pow:main':
                 for m in pow_main_list: m.build(builder)
             else:
-                name = target.split(':')[-1]
-                module = next((m for m in pow_partial if m.__name__.endswith(name)), None)
+                parts = target.split(':')
+                module = None
+                if len(parts) >= 3 and parts[1] == 'partial':
+                    if len(parts) >= 4 and parts[2] == 'pair':
+                        server_module = pow_partial_map.get(('server', parts[3]))
+                        client_module = pow_partial_map.get(('client', parts[3]))
+                        if server_module: server_module.build(builder)
+                        if client_module: client_module.build(builder)
+                        if not server_module and not client_module:
+                            logger.error(f"Unknown target: {target}")
+                        return
+                    if len(parts) >= 4:
+                        module = pow_partial_map.get((parts[2], parts[3]))
+                    else:
+                        module = pick_module_by_name(parts[2], pow_partial)
+                elif len(parts) >= 3 and parts[1] == 'base':
+                    module = pow_base_map.get(parts[2])
+                elif len(parts) >= 3 and parts[1] == 'main':
+                    module = pow_main_map.get(parts[2])
                 if module: module.build(builder)
                 else: logger.error(f"Unknown target: {target}")
             return # Done
@@ -253,16 +475,22 @@ def run_build(args):
                 m.build(builder)
 
 def run_test(args):
-    config = Config()
+    config = create_config(args)
     
-    # Setup test logging
-    with Logger(config.get_log_path('runner', 'test'), console_output=False) as logger:
+    action_log_path = get_action_log_path(config, args.action_log)
+    log_path = action_log_path or config.get_log_path('runner', 'test')
+    with Logger(log_path, console_output=False) as logger:
         from script.core import console
         console.set_logger(logger)
         
         target = args.test
         results = []
         test_modules = []
+        
+        if args.platform == 'web' or config.get_shared_lib_ext() == '.wasm':
+            res = run_web_test(config, target)
+            results.append((target, res))
+            return res
     
         # Hash Tests
         hash_partial = [
@@ -301,11 +529,49 @@ def run_test(args):
             test_pow_primitive_memory_hard,
             test_pow_primitive_sponge_xof,
             test_pow_legacy_alive,
-            test_pow_legacy_unsafe
+            test_pow_legacy_unsafe,
+            test_pow_combined_primitive_fast,
+            test_pow_combined_primitive_memory_hard,
+            test_pow_combined_primitive_sponge_xof,
+            test_pow_combined_legacy_alive,
+            test_pow_combined_legacy_unsafe
         ]
         pow_base = [test_pow_primitive, test_pow_legacy, test_pow_combined_base]
         pow_main_list = [test_pow_main, test_pow_combined_main]
         pow_suites = [test_pow_integration]
+        pow_partial_map = {
+            ('server', 'primitive_fast'): test_pow_primitive_fast,
+            ('server', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
+            ('server', 'primitive_sponge_xof'): test_pow_primitive_sponge_xof,
+            ('server', 'legacy_alive'): test_pow_legacy_alive,
+            ('server', 'legacy_unsafe'): test_pow_legacy_unsafe,
+            ('client', 'primitive_fast'): test_pow_primitive_fast,
+            ('client', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
+            ('client', 'primitive_sponge_xof'): test_pow_primitive_sponge_xof,
+            ('client', 'legacy_alive'): test_pow_legacy_alive,
+            ('client', 'legacy_unsafe'): test_pow_legacy_unsafe,
+            ('combined', 'primitive_fast'): test_pow_combined_primitive_fast,
+            ('combined', 'primitive_memory_hard'): test_pow_combined_primitive_memory_hard,
+            ('combined', 'primitive_sponge_xof'): test_pow_combined_primitive_sponge_xof,
+            ('combined', 'legacy_alive'): test_pow_combined_legacy_alive,
+            ('combined', 'legacy_unsafe'): test_pow_combined_legacy_unsafe,
+            ('pair', 'primitive_fast'): test_pow_primitive_fast,
+            ('pair', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
+            ('pair', 'primitive_sponge_xof'): test_pow_primitive_sponge_xof,
+            ('pair', 'legacy_alive'): test_pow_legacy_alive,
+            ('pair', 'legacy_unsafe'): test_pow_legacy_unsafe
+        }
+        pow_base_map = {
+            'primitive': test_pow_primitive,
+            'legacy': test_pow_legacy,
+            'combined': test_pow_combined_base
+        }
+        pow_main_map = {
+            'combined': test_pow_combined_main,
+            'pair': test_pow_main,
+            'client': test_pow_main,
+            'server': test_pow_main
+        }
 
         run_hash = False
         run_pqc = False
@@ -339,36 +605,50 @@ def run_test(args):
             elif target == 'hash:main': test_modules = hash_main_list
             else:
                 name = target.split(':')[-1]
-                test_modules = [m for m in hash_partial if m.__name__.endswith(name)]
+                module = pick_module_by_name(name, hash_partial + hash_base + hash_main_list)
+                test_modules = [module] if module else []
         elif target.startswith('pqc:'):
             if target == 'pqc:partial': test_modules = pqc_partial
             elif target == 'pqc:base': test_modules = pqc_base
             elif target == 'pqc:main': test_modules = pqc_main_list
             else:
                 name = target.split(':')[-1]
-                test_modules = [m for m in pqc_partial if m.__name__.endswith(name)]
+                module = pick_module_by_name(name, pqc_partial + pqc_base + pqc_main_list)
+                test_modules = [module] if module else []
         elif target.startswith('core:'):
             if target == 'core:partial': test_modules = core_partial
             elif target == 'core:base': test_modules = core_base
             elif target == 'core:main': test_modules = core_main_list
             else:
                 name = target.split(':')[-1]
-                test_modules = [m for m in core_partial if m.__name__.endswith(name)]
+                module = pick_module_by_name(name, core_partial + core_base + core_main_list)
+                test_modules = [module] if module else []
         elif target.startswith('dhcm:'):
             if target == 'dhcm:partial': test_modules = dhcm_partial
             elif target == 'dhcm:base': test_modules = dhcm_base
             elif target == 'dhcm:main': test_modules = dhcm_main_list
             else:
                 name = target.split(':')[-1]
-                test_modules = [m for m in dhcm_partial if m.__name__.endswith(name)]
+                module = pick_module_by_name(name, dhcm_partial + dhcm_base + dhcm_main_list)
+                test_modules = [module] if module else []
         elif target.startswith('pow:'):
             if target == 'pow:partial': test_modules = pow_partial
             elif target == 'pow:base': test_modules = pow_base
             elif target == 'pow:main': test_modules = pow_main_list
             elif target == 'pow:integration': test_modules = pow_suites
             else:
-                name = target.split(':')[-1]
-                test_modules = [m for m in pow_partial if m.__name__.endswith(name)]
+                parts = target.split(':')
+                module = None
+                if len(parts) >= 3 and parts[1] == 'partial':
+                    if len(parts) >= 4:
+                        module = pow_partial_map.get((parts[2], parts[3]))
+                    else:
+                        module = pick_module_by_name(parts[2], pow_partial)
+                elif len(parts) >= 3 and parts[1] == 'base':
+                    module = pow_base_map.get(parts[2])
+                elif len(parts) >= 3 and parts[1] == 'main':
+                    module = pow_main_map.get(parts[2])
+                test_modules = [module] if module else []
         elif target.startswith('system:'):
             if target == 'system:main':
                 test_modules = system_main_list
@@ -417,6 +697,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="NextSSL Build & Test Runner")
     parser.add_argument('--build', help="Build target (e.g., hash, hash:partial)")
     parser.add_argument('--test', help="Test target (e.g., hash, hash:partial)")
+    parser.add_argument('--platform', type=str, choices=['windows', 'linux', 'mac', 'web'], help='Platform output selector')
+    parser.add_argument('--action-log', type=str, help='Action log filename or path')
+    parser.add_argument('--bin-root', type=str, help='Override bin output root')
+    parser.add_argument('--log-root', type=str, help='Override log output root')
+    parser.add_argument('--lib-ext', type=str, help='Override output library extension')
     parser.add_argument('--no-color', action='store_true', help="Disable colored output")
     
     args = parser.parse_args()

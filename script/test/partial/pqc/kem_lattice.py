@@ -9,7 +9,7 @@ project_root = os.path.abspath(os.path.join(current_dir, '../../../../'))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from script.core import Config, Logger, Platform, console
+from script.core import Config, Logger, console
 
 def main():
     """Run all tests for kem_lattice.dll."""
@@ -23,8 +23,7 @@ def main():
     # Actually, TASK_PQC.md uses os.path.join from __file__.
     # But since we have Config, let's use it to get bin_dir.
     
-    dll_name = "kem_lattice" + Platform.get_shared_lib_ext()
-    dll_path = os.path.join(config.bin_dir, 'partial', 'pqc', dll_name)
+    dll_path = config.get_lib_path('partial', 'kem_lattice', 'pqc')
     
     console.print_info(f"Loading DLL: {dll_path}")
     if not os.path.exists(dll_path):

@@ -1,8 +1,7 @@
 import ctypes
 import os
-import sys
-import time
 import threading
+import time
 from script.core import Config, console
 
 def leading_zero_bits(data):
@@ -63,12 +62,12 @@ class POWConfig(ctypes.Structure):
         ("rate_limit_window_seconds", ctypes.c_uint32)
     ]
 
-def load_dll():
+def load_combined_dll(name):
     config = Config()
-    dll_path = config.get_lib_path('main', 'pow_combined')
+    dll_path = config.get_lib_path('partial', name, 'pow', 'combined')
     
     if not os.path.exists(dll_path):
-        console.print_warn(f"Skipping Main Combined: DLL not found at {dll_path}")
+        console.print_fail(f"Combined DLL not found: {dll_path}")
         return None
         
     try:
@@ -92,7 +91,7 @@ def load_dll():
         
         return lib
     except Exception as e:
-        console.print_fail(f"Error loading Main Combined DLL: {e}")
+        console.print_fail(f"Error loading Combined DLL: {e}")
         return None
 
 def boss_control_loop(lib, algos, difficulty=1):
@@ -165,27 +164,15 @@ def boss_control_loop(lib, algos, difficulty=1):
             
     return success
 
-def main():
-    console.print_header("=== Starting PoW Main Combined Test ===")
+def run_combined_test(name, algos, difficulties):
+    console.print_header(f"=== Starting PoW Combined Test: {name} ===")
     
-    algos = [
-        'sha256', 'sha512', 'blake3', 'blake2b', 'blake2s',
-        'argon2id', 'argon2i', 'argon2d',
-        'shake128', 'shake256', 'sha3_256', 'sha3_512', 'keccak_256',
-        'md5', 'sha1', 'ripemd160', 'whirlpool', 'nt',
-        'md2', 'md4', 'sha0', 'has160', 'ripemd128', 'ripemd256', 'ripemd320'
-    ]
-    difficulties = [1, 4]
-    
-    lib = load_dll()
-    if lib:
-        all_ok = True
-        for difficulty in difficulties:
-            if not boss_control_loop(lib, algos, difficulty=difficulty):
-                all_ok = False
-        if all_ok:
-            return 0
-    return 1
-
-if __name__ == "__main__":
-    sys.exit(main())
+    lib = load_combined_dll(name)
+    if not lib:
+        return 1
+        
+    all_ok = True
+    for difficulty in difficulties:
+        if not boss_control_loop(lib, algos, difficulty=difficulty):
+            all_ok = False
+    return 0 if all_ok else 1

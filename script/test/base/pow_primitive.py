@@ -3,7 +3,7 @@ import os
 import sys
 import time
 import threading
-from script.core import console
+from script.core import Config, console
 
 def leading_zero_bits(data):
     count = 0
@@ -65,13 +65,9 @@ class POWConfig(ctypes.Structure):
     ]
 
 def load_dll_pair():
-    bin_dir = os.path.join(os.getcwd(), 'bin/base')
-    # Assuming pow_primitive_server.dll or pow_server_primitive.dll
-    # Based on gen script: 'pow_server_primitive', output_subdir='base'
-    # So it should be bin/base/pow_server_primitive.dll
-    
-    server_path = os.path.join(bin_dir, 'pow_server_primitive.dll')
-    client_path = os.path.join(bin_dir, 'pow_client_primitive.dll')
+    config = Config()
+    server_path = config.get_lib_path('base', 'pow_server_primitive')
+    client_path = config.get_lib_path('base', 'pow_client_primitive')
     
     if not os.path.exists(server_path): # Check relative to cwd if bin_dir is absolute
         # bin_dir is absolute

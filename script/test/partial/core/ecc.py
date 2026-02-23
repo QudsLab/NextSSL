@@ -5,13 +5,13 @@ import sys
 # Add project root to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../')))
 
-from script.core import console
+from script.core import Config, console
 
 def main():
     """Run tests for ecc.dll."""
     try:
-        PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../'))
-        DLL_PATH = os.path.join(PROJECT_ROOT, 'bin', 'partial', 'core', 'ecc.dll')
+        config = Config()
+        DLL_PATH = config.get_lib_path('partial', 'ecc', 'core')
 
         console.print_step(f"Loading {DLL_PATH}")
         if not os.path.exists(DLL_PATH):

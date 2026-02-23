@@ -3,7 +3,7 @@ import os
 import sys
 import time
 import threading
-from script.core import console
+from script.core import Config, console
 
 def leading_zero_bits(data):
     count = 0
@@ -65,9 +65,9 @@ class POWConfig(ctypes.Structure):
     ]
 
 def load_dll_pair():
-    bin_dir = os.path.join(os.getcwd(), 'bin/base')
-    server_path = os.path.join(bin_dir, 'pow_server_legacy.dll')
-    client_path = os.path.join(bin_dir, 'pow_client_legacy.dll')
+    config = Config()
+    server_path = config.get_lib_path('base', 'pow_server_legacy')
+    client_path = config.get_lib_path('base', 'pow_client_legacy')
     
     if not os.path.exists(server_path) or not os.path.exists(client_path):
         console.print_warn(f"Skipping Legacy Base: DLLs not found at {server_path}")

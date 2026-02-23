@@ -5,13 +5,13 @@ import sys
 # Add project root to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../')))
 
-from script.core import console
+from script.core import Config, console
 
 def main():
     """Run tests for stream_aead.dll."""
     try:
-        PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../../'))
-        DLL_PATH = os.path.join(PROJECT_ROOT, 'bin', 'partial', 'core', 'stream_aead.dll')
+        config = Config()
+        DLL_PATH = config.get_lib_path('partial', 'stream_aead', 'core')
 
         console.print_step(f"Loading {DLL_PATH}")
         if not os.path.exists(DLL_PATH):

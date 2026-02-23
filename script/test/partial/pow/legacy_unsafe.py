@@ -2,7 +2,7 @@ import ctypes
 import os
 import sys
 import time
-from script.core import console
+from script.core import Config, console
 
 def leading_zero_bits(data):
     count = 0
@@ -27,10 +27,9 @@ def prefix_bits(data, bits):
 def main():
     """Test server + client + combined DLLs for legacy_unsafe algorithms."""
     
-    # Paths to DLLs
-    bin_dir = os.path.join(os.getcwd(), 'bin/partial/pow')
-    server_dll_path = os.path.join(bin_dir, 'server/legacy_unsafe.dll')
-    client_dll_path = os.path.join(bin_dir, 'client/legacy_unsafe.dll')
+    config = Config()
+    server_dll_path = config.get_lib_path('partial', 'legacy_unsafe', 'pow', 'server')
+    client_dll_path = config.get_lib_path('partial', 'legacy_unsafe', 'pow', 'client')
     
     # Check if DLLs exist
     if not os.path.exists(server_dll_path):

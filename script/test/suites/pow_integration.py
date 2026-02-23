@@ -3,7 +3,7 @@ import os
 import sys
 import time
 import threading
-from script.core import console
+from script.core import Config, console
 
 def leading_zero_bits(data):
     count = 0
@@ -66,9 +66,9 @@ class POWConfig(ctypes.Structure):
 
 # --- Helper Functions ---
 def load_dll_pair(category):
-    bin_dir = os.path.join(os.getcwd(), 'bin/partial/pow')
-    server_path = os.path.join(bin_dir, f'server/{category}.dll')
-    client_path = os.path.join(bin_dir, f'client/{category}.dll')
+    config = Config()
+    server_path = config.get_lib_path('partial', category, 'pow', 'server')
+    client_path = config.get_lib_path('partial', category, 'pow', 'client')
     
     if not os.path.exists(server_path) or not os.path.exists(client_path):
         console.print_warn(f"Skipping {category}: DLLs not found.")

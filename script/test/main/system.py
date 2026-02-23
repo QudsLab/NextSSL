@@ -1,12 +1,12 @@
 import ctypes
 import os
 import sys
-from script.core import console
+from script.core import Config, console
 
 def main():
     try:
-        root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../'))
-        dll_path = os.path.join(root, 'bin', 'main.dll')
+        config = Config()
+        dll_path = os.path.join(config.bin_dir, f"main{config.get_shared_lib_ext()}")
         
         console.print_step(f"Loading {dll_path}")
         if not os.path.exists(dll_path):

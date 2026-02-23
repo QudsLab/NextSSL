@@ -42,8 +42,20 @@ class Builder:
         # Ensure output directory exists
         os.makedirs(output_dir, exist_ok=True)
 
-        # Arguments for GCC
-        args = ['-shared', '-fPIC', '-O2', '-Wall', '-static']
+        lib_ext = self.config.get_shared_lib_ext()
+        is_web = lib_ext == '.wasm'
+        compiler = 'emcc' if is_web else 'gcc'
+        if is_web:
+            args = ['-O2', '-Wall', '-s', 'WASM=1', '-s', 'STANDALONE_WASM=1', '-Wl,--no-entry', '-s', 'EXPORTED_FUNCTIONS=_leyline_wasm_selftest']
+        else:
+            args = ['-shared', '-fPIC', '-O2', '-Wall', '-static']
+        
+        if lib_ext == '.so':
+            args.append('-Wl,--build-id=none')
+        elif lib_ext == '.dll':
+            args.append('-Wl,--no-insert-timestamp')
+        elif lib_ext == '.dylib':
+            args.append('-Wl,-no_uuid')
         
         # Add includes
         for inc in self.config.includes:
@@ -69,7 +81,10 @@ class Builder:
             else:
                 args.append(f'-D{macro}')
             
-        # Add sources
+        wasm_selftest = os.path.join(self.config.src_dir, 'utils', 'wasm_selftest.c')
+        if is_web and os.path.exists(wasm_selftest) and wasm_selftest not in sources:
+            sources = list(sources) + [wasm_selftest]
+        
         args.extend(sources)
         
         # Output
@@ -78,7 +93,10 @@ class Builder:
         
         # Add extra libs (like -lpthread) - usually at the end
         if extra_libs:
-            args.extend(extra_libs)
+            if is_web:
+                args.extend([lib for lib in extra_libs if lib != '-lpthread'])
+            else:
+                args.extend(extra_libs)
 
         # Write arguments to response file to avoid command line length limits
         rsp_file = os.path.join(output_dir, f"{name}.rsp")
@@ -94,14 +112,17 @@ class Builder:
              self.logger.error(f"Failed to write response file: {e}")
              return False
 
-        # Run gcc with response file
-        cmd = ['gcc', f'@{rsp_file}']
+        cmd = [compiler, f'@{rsp_file}']
         
         try:
+            env = os.environ.copy()
+            env.setdefault('SOURCE_DATE_EPOCH', '0')
+            env.setdefault('TZ', 'UTC')
             result = subprocess.run(
                 cmd,
                 capture_output=True,
-                text=True
+                text=True,
+                env=env
             )
             
             # Clean up response file

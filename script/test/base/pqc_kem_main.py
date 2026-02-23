@@ -8,14 +8,13 @@ project_root = os.path.abspath(os.path.join(current_dir, '../../../'))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from script.core import Config, Logger, Platform, console
+from script.core import Config, Logger, console
 
 def main():
     """Run tests for pqc_kem_main.dll."""
     config = Config()
     
-    dll_name = "pqc_kem_main" + Platform.get_shared_lib_ext()
-    dll_path = os.path.join(config.bin_dir, 'base', dll_name)
+    dll_path = config.get_lib_path('base', 'pqc_kem_main')
     
     console.print_info(f"Loading DLL: {dll_path}")
     if not os.path.exists(dll_path):
