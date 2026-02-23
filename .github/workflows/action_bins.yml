@@ -46,7 +46,7 @@ jobs:
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/${{ env.LOG_FILE }}
@@ -82,7 +82,7 @@ jobs:
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/${{ env.LOG_FILE }}
@@ -117,7 +117,7 @@ jobs:
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/${{ env.LOG_FILE }}
@@ -152,7 +152,7 @@ jobs:
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
             logs/${{ env.LOG_FILE }}
@@ -187,14 +187,14 @@ jobs:
       - name: Download Build Output
         uses: actions/download-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
           path: .
       - name: Test
         run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
           path: |
             logs/${{ env.LOG_FILE }}
           if-no-files-found: error
@@ -229,14 +229,14 @@ jobs:
       - name: Download Build Output
         uses: actions/download-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
           path: .
       - name: Test
         run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
           path: |
             logs/${{ env.LOG_FILE }}
           if-no-files-found: error
@@ -270,14 +270,14 @@ jobs:
       - name: Download Build Output
         uses: actions/download-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
           path: .
       - name: Test
         run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
           path: |
             logs/${{ env.LOG_FILE }}
           if-no-files-found: error
@@ -311,14 +311,14 @@ jobs:
       - name: Download Build Output
         uses: actions/download-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
           path: .
       - name: Test
         run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
+          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
           path: |
             logs/${{ env.LOG_FILE }}
           if-no-files-found: error
