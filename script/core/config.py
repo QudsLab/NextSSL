@@ -43,6 +43,8 @@ class Config:
             'BLAKE3_ATOMICS=0',
             'EXCLUDE_SPHINCS'
         ]
+        if Platform.get_os() == 'macos':
+            self.macros.append('BLAKE3_USE_NEON=0')
 
     def get_log_path(self, tier, name, timed=True):
         os.makedirs(self.log_dir, exist_ok=True)

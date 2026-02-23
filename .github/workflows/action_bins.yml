@@ -9,17 +9,11 @@ on:
 permissions:
   contents: write
 jobs:
-  build_web:
+  web_partial_core:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
     env:
       PLATFORM: web
       BIN_DIR: web
-      LOG_FILE: action_web_build_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
       SOURCE_DATE_EPOCH: 0
       TZ: UTC
     steps:
@@ -35,6 +29,11 @@ jobs:
             emsdk
             ~/.emscripten_cache
           key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
       - name: Guard --no_gen not present
         run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Setup Emscripten
@@ -47,28 +46,28 @@ jobs:
           echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
           echo "$PWD" >> $GITHUB_PATH
           echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
-      - name: Build
-        run: python runner.py --platform ${{ env.PLATFORM }} --build ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_web_partial_core.log
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-web-partial-core-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/${{ env.LOG_FILE }}
+            logs/action_web_partial_core.log
           if-no-files-found: error
-  build_windows:
-    runs-on: windows-latest
-    needs: build_web
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
+  web_partial_hash:
+    runs-on: ubuntu-latest
+    needs: web_partial_core
     env:
-      PLATFORM: windows
-      BIN_DIR: windows
-      LOG_FILE: action_windows_build_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
+      PLATFORM: web
+      BIN_DIR: web
       SOURCE_DATE_EPOCH: 0
       TZ: UTC
     steps:
@@ -81,105 +80,46 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
             ~/.wasmtime
           key: wasmtime-${{ runner.os }}-v1
-      - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
-      - name: Install GCC (Windows)
-        run: choco install mingw -y
-        shell: powershell
-      - name: Build
-        run: python runner.py --platform ${{ env.PLATFORM }} --build ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_web_partial_hash.log
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
+          name: output-web-partial-hash-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/${{ env.LOG_FILE }}
+            logs/action_web_partial_hash.log
           if-no-files-found: error
-  build_linux:
+  web_partial_dhcm:
     runs-on: ubuntu-latest
-    needs: build_windows
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
-    env:
-      PLATFORM: linux
-      BIN_DIR: linux
-      LOG_FILE: action_linux_build_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
-      - name: Install GCC (Linux)
-        run: sudo apt-get update && sudo apt-get install -y build-essential
-      - name: Build
-        run: python runner.py --platform ${{ env.PLATFORM }} --build ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/${{ env.LOG_FILE }}
-          if-no-files-found: error
-  build_mac:
-    runs-on: macos-latest
-    needs: build_linux
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
-    env:
-      PLATFORM: mac
-      BIN_DIR: mac
-      LOG_FILE: action_mac_build_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
-      - name: Install GCC (mac)
-        run: brew install gcc
-      - name: Build
-        run: python runner.py --platform ${{ env.PLATFORM }} --build ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/${{ env.LOG_FILE }}
-          if-no-files-found: error
-  test_web:
-    runs-on: ubuntu-latest
-    needs: build_web
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
+    needs: web_partial_hash
     env:
       PLATFORM: web
       BIN_DIR: web
-      LOG_FILE: action_web_test_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
       SOURCE_DATE_EPOCH: 0
       TZ: UTC
     steps:
@@ -189,40 +129,318 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
-      - name: Install Wasmtime (web)
-        run: |
-          curl https://wasmtime.dev/install.sh -sSf | bash
-          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
-      - name: Download Build Output
-        uses: actions/download-artifact@v4
+      - uses: actions/cache@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
-          path: .
-      - name: Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_web_partial_dhcm.log
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
+          name: output-web-partial-dhcm-${{ github.run_attempt }}
           path: |
-            logs/${{ env.LOG_FILE }}
+            bin/${{ env.BIN_DIR }}
+            logs/action_web_partial_dhcm.log
           if-no-files-found: error
-  test_windows:
+  web_partial_pow:
+    runs-on: ubuntu-latest
+    needs: web_partial_dhcm
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_web_partial_pow.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_web_partial_pow.log
+          if-no-files-found: error
+  web_partial_pqc:
+    runs-on: ubuntu-latest
+    needs: web_partial_pow
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_web_partial_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_web_partial_pqc.log
+          if-no-files-found: error
+  web_base:
+    runs-on: ubuntu-latest
+    needs: web_partial_pqc
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_web_base_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_web_base_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_web_base_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_web_base_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_web_base_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_web_base_*.log
+          if-no-files-found: error
+  web_main:
+    runs-on: ubuntu-latest
+    needs: web_base
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_web_main_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_web_main_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_web_main_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_web_main_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_web_main_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_web_main_*.log
+          if-no-files-found: error
+  web_system:
+    runs-on: ubuntu-latest
+    needs: web_main
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_web_system.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_web_system.log
+          if-no-files-found: error
+  windows_partial_core:
     runs-on: windows-latest
-    needs:
-      - build_windows
-      - test_web
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
     env:
       PLATFORM: windows
       BIN_DIR: windows
-      LOG_FILE: action_windows_test_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
       SOURCE_DATE_EPOCH: 0
       TZ: UTC
     steps:
@@ -237,34 +455,227 @@ jobs:
       - name: Install GCC (Windows)
         run: choco install mingw -y
         shell: powershell
-      - name: Download Build Output
-        uses: actions/download-artifact@v4
-        with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
-          path: .
-      - name: Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_windows_partial_core.log
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
+          name: output-windows-partial-core-${{ github.run_attempt }}
           path: |
-            logs/${{ env.LOG_FILE }}
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_core.log
           if-no-files-found: error
-  test_linux:
+  windows_partial_hash:
+    runs-on: windows-latest
+    needs: windows_partial_core
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_windows_partial_hash.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_hash.log
+          if-no-files-found: error
+  windows_partial_dhcm:
+    runs-on: windows-latest
+    needs: windows_partial_hash
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_windows_partial_dhcm.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_dhcm.log
+          if-no-files-found: error
+  windows_partial_pow:
+    runs-on: windows-latest
+    needs: windows_partial_dhcm
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_windows_partial_pow.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_pow.log
+          if-no-files-found: error
+  windows_partial_pqc:
+    runs-on: windows-latest
+    needs: windows_partial_pow
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_windows_partial_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_pqc.log
+          if-no-files-found: error
+  windows_base:
+    runs-on: windows-latest
+    needs: windows_partial_pqc
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_windows_base_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_windows_base_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_windows_base_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_windows_base_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_windows_base_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_base_*.log
+          if-no-files-found: error
+  windows_main:
+    runs-on: windows-latest
+    needs: windows_base
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_windows_main_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_windows_main_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_windows_main_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_windows_main_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_windows_main_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_main_*.log
+          if-no-files-found: error
+  windows_system:
+    runs-on: windows-latest
+    needs: windows_main
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_windows_system.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_system.log
+          if-no-files-found: error
+  linux_partial_core:
     runs-on: ubuntu-latest
-    needs:
-      - build_linux
-      - test_windows
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
     env:
       PLATFORM: linux
       BIN_DIR: linux
-      LOG_FILE: action_linux_test_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
       SOURCE_DATE_EPOCH: 0
       TZ: UTC
     steps:
@@ -278,34 +689,220 @@ jobs:
         run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
-      - name: Download Build Output
-        uses: actions/download-artifact@v4
-        with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
-          path: .
-      - name: Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_linux_partial_core.log
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
+          name: output-linux-partial-core-${{ github.run_attempt }}
           path: |
-            logs/${{ env.LOG_FILE }}
+            bin/${{ env.BIN_DIR }}
+            logs/action_linux_partial_core.log
           if-no-files-found: error
-  test_mac:
+  linux_partial_hash:
+    runs-on: ubuntu-latest
+    needs: linux_partial_core
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_linux_partial_hash.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_linux_partial_hash.log
+          if-no-files-found: error
+  linux_partial_dhcm:
+    runs-on: ubuntu-latest
+    needs: linux_partial_hash
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_linux_partial_dhcm.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_linux_partial_dhcm.log
+          if-no-files-found: error
+  linux_partial_pow:
+    runs-on: ubuntu-latest
+    needs: linux_partial_dhcm
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_linux_partial_pow.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_linux_partial_pow.log
+          if-no-files-found: error
+  linux_partial_pqc:
+    runs-on: ubuntu-latest
+    needs: linux_partial_pow
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_linux_partial_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_linux_partial_pqc.log
+          if-no-files-found: error
+  linux_base:
+    runs-on: ubuntu-latest
+    needs: linux_partial_pqc
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_linux_base_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_linux_base_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_linux_base_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_linux_base_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_linux_base_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_linux_base_*.log
+          if-no-files-found: error
+  linux_main:
+    runs-on: ubuntu-latest
+    needs: linux_base
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_linux_main_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_linux_main_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_linux_main_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_linux_main_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_linux_main_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_linux_main_*.log
+          if-no-files-found: error
+  linux_system:
+    runs-on: ubuntu-latest
+    needs: linux_main
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_linux_system.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_linux_system.log
+          if-no-files-found: error
+  mac_partial_core:
     runs-on: macos-latest
-    needs:
-      - build_mac
-      - test_linux
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        target: ${{ fromJson('[{"tier":"main","name":"core","selector":"core:main","testable":true},{"tier":"main","name":"hash","selector":"hash:main","testable":true},{"tier":"main","name":"dhcm","selector":"dhcm:main","testable":true},{"tier":"main","name":"pow_client","selector":"pow:main:client","testable":true},{"tier":"main","name":"pow_server","selector":"pow:main:server","testable":true},{"tier":"main","name":"pow_combined","selector":"pow:main:combined","testable":true},{"tier":"main","name":"pqc","selector":"pqc:main","testable":true},{"tier":"main","name":"system","selector":"system:main","testable":true},{"tier":"base","name":"core_cipher_main","selector":"core:core_cipher_main","testable":true},{"tier":"base","name":"core_ecc_main","selector":"core:core_ecc_main","testable":true},{"tier":"base","name":"core_mac_main","selector":"core:core_mac_main","testable":true},{"tier":"base","name":"dhcm_legacy","selector":"dhcm:dhcm_legacy_main","testable":true},{"tier":"base","name":"dhcm_primitive","selector":"dhcm:dhcm_primitive_main","testable":true},{"tier":"base","name":"hash_legacy","selector":"hash:hash_legacy_main","testable":true},{"tier":"base","name":"hash_primitive","selector":"hash:hash_primitive_main","testable":true},{"tier":"base","name":"pow_client_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_client_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_server_legacy","selector":"pow:base:legacy","testable":true},{"tier":"base","name":"pow_server_primitive","selector":"pow:base:primitive","testable":true},{"tier":"base","name":"pow_combined","selector":"pow:base:combined","testable":true},{"tier":"base","name":"pqc_kem_main","selector":"pqc:pqc_kem_main","testable":true},{"tier":"base","name":"pqc_sign_main","selector":"pqc:pqc_sign_main","testable":true},{"tier":"partial","name":"aes_aead","selector":"core:aes_aead","testable":true},{"tier":"partial","name":"aes_modes","selector":"core:aes_modes","testable":true},{"tier":"partial","name":"ecc","selector":"core:ecc","testable":true},{"tier":"partial","name":"macs","selector":"core:macs","testable":true},{"tier":"partial","name":"stream_aead","selector":"core:stream_aead","testable":true},{"tier":"partial","name":"dhcm_legacy_alive","selector":"dhcm:legacy_alive","testable":true},{"tier":"partial","name":"dhcm_legacy_unsafe","selector":"dhcm:legacy_unsafe","testable":true},{"tier":"partial","name":"dhcm_primitive_fast","selector":"dhcm:primitive_fast","testable":true},{"tier":"partial","name":"dhcm_primitive_memory_hard","selector":"dhcm:primitive_memory_hard","testable":true},{"tier":"partial","name":"dhcm_primitive_sponge_xof","selector":"dhcm:primitive_sponge_xof","testable":true},{"tier":"partial","name":"hash_legacy_alive","selector":"hash:legacy_alive","testable":true},{"tier":"partial","name":"hash_legacy_unsafe","selector":"hash:legacy_unsafe","testable":true},{"tier":"partial","name":"hash_primitive_fast","selector":"hash:primitive_fast","testable":true},{"tier":"partial","name":"hash_primitive_memory_hard","selector":"hash:primitive_memory_hard","testable":true},{"tier":"partial","name":"hash_primitive_sponge_xof","selector":"hash:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_client_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_client_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_client_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_client_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_client_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_server_legacy_alive","selector":"pow:partial:pair:legacy_alive","testable":true},{"tier":"partial","name":"pow_server_legacy_unsafe","selector":"pow:partial:pair:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_server_primitive_fast","selector":"pow:partial:pair:primitive_fast","testable":true},{"tier":"partial","name":"pow_server_primitive_memory_hard","selector":"pow:partial:pair:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_server_primitive_sponge_xof","selector":"pow:partial:pair:primitive_sponge_xof","testable":true},{"tier":"partial","name":"pow_combined_legacy_alive","selector":"pow:partial:combined:legacy_alive","testable":true},{"tier":"partial","name":"pow_combined_legacy_unsafe","selector":"pow:partial:combined:legacy_unsafe","testable":true},{"tier":"partial","name":"pow_combined_primitive_fast","selector":"pow:partial:combined:primitive_fast","testable":true},{"tier":"partial","name":"pow_combined_primitive_memory_hard","selector":"pow:partial:combined:primitive_memory_hard","testable":true},{"tier":"partial","name":"pow_combined_primitive_sponge_xof","selector":"pow:partial:combined:primitive_sponge_xof","testable":true},{"tier":"partial","name":"kem_code_based","selector":"pqc:kem_code_based","testable":true},{"tier":"partial","name":"kem_lattice","selector":"pqc:kem_lattice","testable":true},{"tier":"partial","name":"sign_hash_based","selector":"pqc:sign_hash_based","testable":true},{"tier":"partial","name":"sign_lattice","selector":"pqc:sign_lattice","testable":true}]') }}
     env:
       PLATFORM: mac
       BIN_DIR: mac
-      LOG_FILE: action_mac_test_${{ matrix.target.tier }}_${{ matrix.target.name }}.log
       SOURCE_DATE_EPOCH: 0
       TZ: UTC
     steps:
@@ -318,28 +915,223 @@ jobs:
       - name: Guard --no_gen not present
         run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install GCC (mac)
-        run: brew install gcc
-      - name: Download Build Output
-        uses: actions/download-artifact@v4
-        with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-build-${{ github.run_attempt }}
-          path: .
-      - name: Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --test ${{ matrix.target.selector }} --action-log ${{ env.LOG_FILE }}
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_mac_partial_core.log
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: output-${{ env.PLATFORM }}-${{ matrix.target.tier }}-${{ matrix.target.name }}-test-${{ github.run_attempt }}
+          name: output-mac-partial-core-${{ github.run_attempt }}
           path: |
-            logs/${{ env.LOG_FILE }}
+            bin/${{ env.BIN_DIR }}
+            logs/action_mac_partial_core.log
+          if-no-files-found: error
+  mac_partial_hash:
+    runs-on: macos-latest
+    needs: mac_partial_core
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_mac_partial_hash.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_mac_partial_hash.log
+          if-no-files-found: error
+  mac_partial_dhcm:
+    runs-on: macos-latest
+    needs: mac_partial_hash
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_mac_partial_dhcm.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_mac_partial_dhcm.log
+          if-no-files-found: error
+  mac_partial_pow:
+    runs-on: macos-latest
+    needs: mac_partial_dhcm
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_mac_partial_pow.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_mac_partial_pow.log
+          if-no-files-found: error
+  mac_partial_pqc:
+    runs-on: macos-latest
+    needs: mac_partial_pow
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_mac_partial_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_mac_partial_pqc.log
+          if-no-files-found: error
+  mac_base:
+    runs-on: macos-latest
+    needs: mac_partial_pqc
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_mac_base_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_mac_base_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_mac_base_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_mac_base_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_mac_base_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_mac_base_*.log
+          if-no-files-found: error
+  mac_main:
+    runs-on: macos-latest
+    needs: mac_base
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_mac_main_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_mac_main_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_mac_main_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_mac_main_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_mac_main_pqc.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_mac_main_*.log
+          if-no-files-found: error
+  mac_system:
+    runs-on: macos-latest
+    needs: mac_main
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_mac_system.log
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_mac_system.log
           if-no-files-found: error
   commit:
     runs-on: ubuntu-latest
     needs:
-      - test_web
-      - test_windows
-      - test_linux
-      - test_mac
+      - web_system
+      - windows_system
+      - linux_system
+      - mac_system
     steps:
       - uses: actions/checkout@v4
         with:

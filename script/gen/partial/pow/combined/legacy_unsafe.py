@@ -5,21 +5,19 @@ def build(builder: Builder):
     """Build PoW combined DLL for legacy unsafe algorithms."""
     src_dir = builder.config.src_dir
     
-    sources = builder.get_sources([
+    source_dirs = [
         os.path.join(src_dir, 'PoW/core/'),
         os.path.join(src_dir, 'PoW/client/'),
         os.path.join(src_dir, 'PoW/server/'),
-        os.path.join(src_dir, 'PoW/combined/'),
         os.path.join(src_dir, 'PoW/adapters/legacy_unsafe/'),
         os.path.join(src_dir, 'legacy/unsafe/')
-    ], recursive=True) 
-    # Add Base64 implementation
+    ]
+    combined_dir = os.path.join(src_dir, 'PoW/combined/')
+    if os.path.exists(combined_dir):
+        source_dirs.append(combined_dir)
+    sources = builder.get_sources(source_dirs, recursive=True)
     sources.append(os.path.join(src_dir, 'utils/radix/base64.c'))
-    
-    # Add Mock Dependencies
     sources.append(os.path.join(src_dir, 'PoW/mock_deps.c'))
-    
-    # Wrapper
     wrapper = os.path.join(src_dir, 'utils/pow/combined/legacy_unsafe.c')
     if os.path.exists(wrapper):
         sources.append(wrapper)

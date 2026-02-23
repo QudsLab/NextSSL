@@ -139,6 +139,17 @@ def resolve_web_paths(config, selector):
             return os.path.join(config.bin_dir, tier, *subdirs, f"{name}{ext}")
         return os.path.join(config.bin_dir, tier, f"{name}{ext}")
 
+    hash_partial_items = ['legacy_alive', 'legacy_unsafe', 'primitive_fast', 'primitive_memory_hard', 'primitive_sponge_xof']
+    hash_base_items = ['hash_legacy', 'hash_primitive']
+    core_partial_items = ['aes_aead', 'aes_modes', 'ecc', 'macs', 'stream_aead']
+    core_base_items = ['core_cipher_main', 'core_ecc_main', 'core_mac_main']
+    dhcm_partial_items = ['legacy_alive', 'legacy_unsafe', 'primitive_fast', 'primitive_memory_hard', 'primitive_sponge_xof']
+    dhcm_base_items = ['dhcm_legacy', 'dhcm_primitive']
+    pqc_partial_items = ['kem_code_based', 'kem_lattice', 'sign_hash_based', 'sign_lattice']
+    pqc_base_items = ['pqc_kem_main', 'pqc_sign_main']
+    pow_partial_items = ['primitive_fast', 'primitive_memory_hard', 'primitive_sponge_xof', 'legacy_alive', 'legacy_unsafe']
+    pow_partial_subdirs = ['server', 'client', 'combined']
+
     parts = selector.split(':')
     if selector == 'system:main':
         return [make(None, 'main', root=True)]
@@ -152,6 +163,10 @@ def resolve_web_paths(config, selector):
     if group == 'hash':
         if item == 'main':
             return [make('main', 'hash')]
+        if item == 'partial':
+            return [make('partial', name, ['hash']) for name in hash_partial_items]
+        if item == 'base':
+            return [make('base', name) for name in hash_base_items]
         if item == 'hash_legacy_main':
             return [make('base', 'hash_legacy')]
         if item == 'hash_primitive_main':
@@ -161,6 +176,10 @@ def resolve_web_paths(config, selector):
     if group == 'core':
         if item == 'main':
             return [make('main', 'core')]
+        if item == 'partial':
+            return [make('partial', name, ['core']) for name in core_partial_items]
+        if item == 'base':
+            return [make('base', name) for name in core_base_items]
         if item in ['core_cipher_main', 'core_ecc_main', 'core_mac_main']:
             return [make('base', item)]
         return [make('partial', item, ['core'])]
@@ -168,6 +187,10 @@ def resolve_web_paths(config, selector):
     if group == 'dhcm':
         if item == 'main':
             return [make('main', 'dhcm')]
+        if item == 'partial':
+            return [make('partial', name, ['dhcm']) for name in dhcm_partial_items]
+        if item == 'base':
+            return [make('base', name) for name in dhcm_base_items]
         if item == 'dhcm_legacy_main':
             return [make('base', 'dhcm_legacy')]
         if item == 'dhcm_primitive_main':
@@ -177,6 +200,10 @@ def resolve_web_paths(config, selector):
     if group == 'pqc':
         if item == 'main':
             return [make('main', 'pqc')]
+        if item == 'partial':
+            return [make('partial', name, ['pqc']) for name in pqc_partial_items]
+        if item == 'base':
+            return [make('base', name) for name in pqc_base_items]
         if item == 'pqc_kem_main':
             return [make('base', 'pqc_kem_main')]
         if item == 'pqc_sign_main':
@@ -193,7 +220,21 @@ def resolve_web_paths(config, selector):
                 return [make('main', 'pow_server')]
             if parts[2] == 'combined':
                 return [make('main', 'pow_combined')]
+        if item == 'partial':
+            return [
+                make('partial', name, ['pow', subdir])
+                for name in pow_partial_items
+                for subdir in pow_partial_subdirs
+            ]
         if item == 'base':
+            if len(parts) == 2:
+                return [
+                    make('base', 'pow_client_primitive'),
+                    make('base', 'pow_server_primitive'),
+                    make('base', 'pow_client_legacy'),
+                    make('base', 'pow_server_legacy'),
+                    make('base', 'pow_combined')
+                ]
             if len(parts) >= 3 and parts[2] == 'primitive':
                 return [make('base', 'pow_client_primitive'), make('base', 'pow_server_primitive')]
             if len(parts) >= 3 and parts[2] == 'legacy':

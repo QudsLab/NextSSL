@@ -1,5 +1,6 @@
 #include "elligator2.h"
 #include "../ed25519/fe.h"
+#include <stddef.h>
 
 /*
     Constants for Elligator 2
