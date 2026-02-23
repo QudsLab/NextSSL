@@ -17,9 +17,6 @@ on:
         default: "partial,base,main,system"
 permissions:
   contents: write
-env:
-  PLATFORMS: ${{ github.event_name == 'workflow_dispatch' && inputs.platforms || 'web,linux,mac' }}
-  TIERS: ${{ github.event_name == 'workflow_dispatch' && inputs.tiers || 'partial,base,main,system' }}
 jobs:
   guard:
     runs-on: ubuntu-latest
@@ -31,7 +28,7 @@ jobs:
         run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
   web_partial_core:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -85,7 +82,7 @@ jobs:
           if-no-files-found: warn
   web_partial_hash:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -139,7 +136,7 @@ jobs:
           if-no-files-found: warn
   web_partial_dhcm:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -193,7 +190,7 @@ jobs:
           if-no-files-found: warn
   web_partial_pow:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -247,7 +244,7 @@ jobs:
           if-no-files-found: warn
   web_partial_pqc:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -301,7 +298,7 @@ jobs:
           if-no-files-found: warn
   web_base:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',base,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
     needs:
       - web_partial_core
       - web_partial_hash
@@ -365,7 +362,7 @@ jobs:
           if-no-files-found: warn
   web_main:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',main,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
     needs: web_base
     env:
       PLATFORM: web
@@ -424,7 +421,7 @@ jobs:
           if-no-files-found: warn
   web_system:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',system,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
     needs: web_main
     env:
       PLATFORM: web
@@ -478,7 +475,7 @@ jobs:
           if-no-files-found: warn
   windows_partial_core:
     runs-on: windows-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: windows
@@ -508,7 +505,7 @@ jobs:
           if-no-files-found: warn
   windows_partial_hash:
     runs-on: windows-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: windows
@@ -538,7 +535,7 @@ jobs:
           if-no-files-found: warn
   windows_partial_dhcm:
     runs-on: windows-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: windows
@@ -568,7 +565,7 @@ jobs:
           if-no-files-found: warn
   windows_partial_pow:
     runs-on: windows-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: windows
@@ -598,7 +595,7 @@ jobs:
           if-no-files-found: warn
   windows_partial_pqc:
     runs-on: windows-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: windows
@@ -628,7 +625,7 @@ jobs:
           if-no-files-found: warn
   windows_base:
     runs-on: windows-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',base,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
     needs:
       - windows_partial_core
       - windows_partial_hash
@@ -668,7 +665,7 @@ jobs:
           if-no-files-found: warn
   windows_main:
     runs-on: windows-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',main,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
     needs: windows_base
     env:
       PLATFORM: windows
@@ -703,7 +700,7 @@ jobs:
           if-no-files-found: warn
   windows_system:
     runs-on: windows-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',system,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
     needs: windows_main
     env:
       PLATFORM: windows
@@ -733,7 +730,7 @@ jobs:
           if-no-files-found: warn
   linux_partial_core:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -762,7 +759,7 @@ jobs:
           if-no-files-found: warn
   linux_partial_hash:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -791,7 +788,7 @@ jobs:
           if-no-files-found: warn
   linux_partial_dhcm:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -820,7 +817,7 @@ jobs:
           if-no-files-found: warn
   linux_partial_pow:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -849,7 +846,7 @@ jobs:
           if-no-files-found: warn
   linux_partial_pqc:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -878,7 +875,7 @@ jobs:
           if-no-files-found: warn
   linux_base:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',base,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
     needs:
       - linux_partial_core
       - linux_partial_hash
@@ -917,7 +914,7 @@ jobs:
           if-no-files-found: warn
   linux_main:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',main,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
     needs: linux_base
     env:
       PLATFORM: linux
@@ -951,7 +948,7 @@ jobs:
           if-no-files-found: warn
   linux_system:
     runs-on: ubuntu-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',system,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
     needs: linux_main
     env:
       PLATFORM: linux
@@ -980,7 +977,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_core:
     runs-on: macos-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -1009,7 +1006,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_hash:
     runs-on: macos-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -1038,7 +1035,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_dhcm:
     runs-on: macos-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -1067,7 +1064,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_pow:
     runs-on: macos-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -1096,7 +1093,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_pqc:
     runs-on: macos-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -1125,7 +1122,7 @@ jobs:
           if-no-files-found: warn
   mac_base:
     runs-on: macos-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',base,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
     needs:
       - mac_partial_core
       - mac_partial_hash
@@ -1164,7 +1161,7 @@ jobs:
           if-no-files-found: warn
   mac_main:
     runs-on: macos-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',main,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
     needs: mac_base
     env:
       PLATFORM: mac
@@ -1198,7 +1195,7 @@ jobs:
           if-no-files-found: warn
   mac_system:
     runs-on: macos-latest
-    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',system,') }}
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
     needs: mac_main
     env:
       PLATFORM: mac
