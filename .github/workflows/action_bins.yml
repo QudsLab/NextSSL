@@ -29,11 +29,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
       - name: Guard --no_gen not present
         run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Setup Emscripten
         run: |
-          git clone https://github.com/emscripten-core/emsdk.git
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
           cd emsdk
           ./emsdk install 3.1.60
           ./emsdk activate 3.1.60
@@ -72,6 +78,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
       - name: Guard --no_gen not present
         run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install GCC (Windows)
