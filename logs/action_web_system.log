@@ -1,3 +1,0 @@
-2026-02-23 23:23:34,864 - INFO - Successfully built main
-2026-02-23 23:23:34,865 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/main.wasm
-2026-02-23 23:23:34,872 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/main.wasm

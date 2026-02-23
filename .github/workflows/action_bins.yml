@@ -7,14 +7,19 @@ on:
       - '*'
   workflow_dispatch:
     inputs:
-      windows:
-        description: "Enable Windows jobs"
+      platforms:
+        description: "Comma-separated platforms to run (web,linux,mac,windows)"
         required: false
-        default: "false"
+        default: "web,linux,mac"
+      tiers:
+        description: "Comma-separated tiers to run (partial,base,main,system)"
+        required: false
+        default: "partial,base,main,system"
 permissions:
   contents: write
 env:
-  ENABLE_WINDOWS: ${{ github.event_name == 'workflow_dispatch' && inputs.windows == 'true' }}
+  PLATFORMS: ${{ github.event_name == 'workflow_dispatch' && inputs.platforms || 'web,linux,mac' }}
+  TIERS: ${{ github.event_name == 'workflow_dispatch' && inputs.tiers || 'partial,base,main,system' }}
 jobs:
   guard:
     runs-on: ubuntu-latest
@@ -26,6 +31,7 @@ jobs:
         run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
   web_partial_core:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -79,6 +85,7 @@ jobs:
           if-no-files-found: warn
   web_partial_hash:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -132,6 +139,7 @@ jobs:
           if-no-files-found: warn
   web_partial_dhcm:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -185,6 +193,7 @@ jobs:
           if-no-files-found: warn
   web_partial_pow:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -238,6 +247,7 @@ jobs:
           if-no-files-found: warn
   web_partial_pqc:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: web
@@ -291,6 +301,7 @@ jobs:
           if-no-files-found: warn
   web_base:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',base,') }}
     needs:
       - web_partial_core
       - web_partial_hash
@@ -354,6 +365,7 @@ jobs:
           if-no-files-found: warn
   web_main:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',main,') }}
     needs: web_base
     env:
       PLATFORM: web
@@ -412,6 +424,7 @@ jobs:
           if-no-files-found: warn
   web_system:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',web,') && contains(format(',{0},', env.TIERS), ',system,') }}
     needs: web_main
     env:
       PLATFORM: web
@@ -463,249 +476,264 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action_web_system.log
           if-no-files-found: warn
-  
-  # windows_partial_core:
-  #   runs-on: windows-latest
-  #   needs: guard
-  #   env:
-  #     PLATFORM: windows
-  #     BIN_DIR: windows
-  #     SOURCE_DATE_EPOCH: 0
-  #     TZ: UTC
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.11"
-  #     - name: Install GCC (Windows)
-  #       run: choco install mingw -y
-  #       shell: powershell
-  #     - name: Build and Test
-  #       run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_windows_partial_core.log
-  #     - name: Upload Output
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: output-windows-partial-core-${{ github.run_attempt }}
-  #         path: |
-  #           bin/${{ env.BIN_DIR }}
-  #           logs/action_windows_partial_core.log
-  #         if-no-files-found: error
-  # windows_partial_hash:
-  #   runs-on: windows-latest
-  #   needs: guard
-  #   env:
-  #     PLATFORM: windows
-  #     BIN_DIR: windows
-  #     SOURCE_DATE_EPOCH: 0
-  #     TZ: UTC
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.11"
-  #     - name: Install GCC (Windows)
-  #       run: choco install mingw -y
-  #       shell: powershell
-  #     - name: Build and Test
-  #       run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_windows_partial_hash.log
-  #     - name: Upload Output
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: output-windows-partial-hash-${{ github.run_attempt }}
-  #         path: |
-  #           bin/${{ env.BIN_DIR }}
-  #           logs/action_windows_partial_hash.log
-  #         if-no-files-found: error
-  # windows_partial_dhcm:
-  #   runs-on: windows-latest
-  #   needs: guard
-  #   env:
-  #     PLATFORM: windows
-  #     BIN_DIR: windows
-  #     SOURCE_DATE_EPOCH: 0
-  #     TZ: UTC
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.11"
-  #     - name: Install GCC (Windows)
-  #       run: choco install mingw -y
-  #       shell: powershell
-  #     - name: Build and Test
-  #       run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_windows_partial_dhcm.log
-  #     - name: Upload Output
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: output-windows-partial-dhcm-${{ github.run_attempt }}
-  #         path: |
-  #           bin/${{ env.BIN_DIR }}
-  #           logs/action_windows_partial_dhcm.log
-  #         if-no-files-found: error
-  # windows_partial_pow:
-  #   runs-on: windows-latest
-  #   needs: guard
-  #   env:
-  #     PLATFORM: windows
-  #     BIN_DIR: windows
-  #     SOURCE_DATE_EPOCH: 0
-  #     TZ: UTC
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.11"
-  #     - name: Install GCC (Windows)
-  #       run: choco install mingw -y
-  #       shell: powershell
-  #     - name: Build and Test
-  #       run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_windows_partial_pow.log
-  #     - name: Upload Output
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: output-windows-partial-pow-${{ github.run_attempt }}
-  #         path: |
-  #           bin/${{ env.BIN_DIR }}
-  #           logs/action_windows_partial_pow.log
-  #         if-no-files-found: error
-  # windows_partial_pqc:
-  #   runs-on: windows-latest
-  #   needs: guard
-  #   env:
-  #     PLATFORM: windows
-  #     BIN_DIR: windows
-  #     SOURCE_DATE_EPOCH: 0
-  #     TZ: UTC
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.11"
-  #     - name: Install GCC (Windows)
-  #       run: choco install mingw -y
-  #       shell: powershell
-  #     - name: Build and Test
-  #       run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_windows_partial_pqc.log
-  #     - name: Upload Output
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: output-windows-partial-pqc-${{ github.run_attempt }}
-  #         path: |
-  #           bin/${{ env.BIN_DIR }}
-  #           logs/action_windows_partial_pqc.log
-  #         if-no-files-found: error
-  # windows_base:
-  #   runs-on: windows-latest
-  #   needs:
-  #     - windows_partial_core
-  #     - windows_partial_hash
-  #     - windows_partial_dhcm
-  #     - windows_partial_pow
-  #     - windows_partial_pqc
-  #   env:
-  #     PLATFORM: windows
-  #     BIN_DIR: windows
-  #     SOURCE_DATE_EPOCH: 0
-  #     TZ: UTC
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.11"
-  #     - name: Install GCC (Windows)
-  #       run: choco install mingw -y
-  #       shell: powershell
-  #     - name: Build and Test
-  #       run: |
-  #         python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_windows_base_core.log
-  #         python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_windows_base_hash.log
-  #         python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_windows_base_dhcm.log
-  #         python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_windows_base_pow.log
-  #         python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_windows_base_pqc.log
-  #     - name: Upload Output
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: output-windows-base-${{ github.run_attempt }}
-  #         path: |
-  #           bin/${{ env.BIN_DIR }}
-  #           logs/action_windows_base_*.log
-  #         if-no-files-found: error
-  # windows_main:
-  #   runs-on: windows-latest
-  #   needs: windows_base
-  #   env:
-  #     PLATFORM: windows
-  #     BIN_DIR: windows
-  #     SOURCE_DATE_EPOCH: 0
-  #     TZ: UTC
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.11"
-  #     - name: Install GCC (Windows)
-  #       run: choco install mingw -y
-  #       shell: powershell
-  #     - name: Build and Test
-  #       run: |
-  #         python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_windows_main_core.log
-  #         python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_windows_main_hash.log
-  #         python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_windows_main_dhcm.log
-  #         python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_windows_main_pow.log
-  #         python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_windows_main_pqc.log
-  #     - name: Upload Output
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: output-windows-main-${{ github.run_attempt }}
-  #         path: |
-  #           bin/${{ env.BIN_DIR }}
-  #           logs/action_windows_main_*.log
-  #         if-no-files-found: error
-  # windows_system:
-  #   runs-on: windows-latest
-  #   needs: windows_main
-  #   env:
-  #     PLATFORM: windows
-  #     BIN_DIR: windows
-  #     SOURCE_DATE_EPOCH: 0
-  #     TZ: UTC
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 1
-  #     - uses: actions/setup-python@v5
-  #       with:
-  #         python-version: "3.11"
-  #     - name: Install GCC (Windows)
-  #       run: choco install mingw -y
-  #       shell: powershell
-  #     - name: Build and Test
-  #       run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_windows_system.log
-  #     - name: Upload Output
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: output-windows-system-${{ github.run_attempt }}
-  #         path: |
-  #           bin/${{ env.BIN_DIR }}
-  #           logs/action_windows_system.log
-  #         if-no-files-found: error
-
+  windows_partial_core:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_windows_partial_core.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-core-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_core.log
+          if-no-files-found: warn
+  windows_partial_hash:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_windows_partial_hash.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_hash.log
+          if-no-files-found: warn
+  windows_partial_dhcm:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_windows_partial_dhcm.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_dhcm.log
+          if-no-files-found: warn
+  windows_partial_pow:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_windows_partial_pow.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_pow.log
+          if-no-files-found: warn
+  windows_partial_pqc:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_windows_partial_pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_partial_pqc.log
+          if-no-files-found: warn
+  windows_base:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',base,') }}
+    needs:
+      - windows_partial_core
+      - windows_partial_hash
+      - windows_partial_dhcm
+      - windows_partial_pow
+      - windows_partial_pqc
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_windows_base_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_windows_base_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_windows_base_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_windows_base_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_windows_base_pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_base_*.log
+          if-no-files-found: warn
+  windows_main:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',main,') }}
+    needs: windows_base
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_windows_main_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_windows_main_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_windows_main_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_windows_main_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_windows_main_pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_main_*.log
+          if-no-files-found: warn
+  windows_system:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',windows,') && contains(format(',{0},', env.TIERS), ',system,') }}
+    needs: windows_main
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_windows_system.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action_windows_system.log
+          if-no-files-found: warn
   linux_partial_core:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -734,6 +762,7 @@ jobs:
           if-no-files-found: warn
   linux_partial_hash:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -762,6 +791,7 @@ jobs:
           if-no-files-found: warn
   linux_partial_dhcm:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -790,6 +820,7 @@ jobs:
           if-no-files-found: warn
   linux_partial_pow:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -818,6 +849,7 @@ jobs:
           if-no-files-found: warn
   linux_partial_pqc:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: linux
@@ -846,6 +878,7 @@ jobs:
           if-no-files-found: warn
   linux_base:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',base,') }}
     needs:
       - linux_partial_core
       - linux_partial_hash
@@ -884,6 +917,7 @@ jobs:
           if-no-files-found: warn
   linux_main:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',main,') }}
     needs: linux_base
     env:
       PLATFORM: linux
@@ -917,6 +951,7 @@ jobs:
           if-no-files-found: warn
   linux_system:
     runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',linux,') && contains(format(',{0},', env.TIERS), ',system,') }}
     needs: linux_main
     env:
       PLATFORM: linux
@@ -945,6 +980,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_core:
     runs-on: macos-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -973,6 +1009,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_hash:
     runs-on: macos-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -1001,6 +1038,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_dhcm:
     runs-on: macos-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -1029,6 +1067,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_pow:
     runs-on: macos-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -1057,6 +1096,7 @@ jobs:
           if-no-files-found: warn
   mac_partial_pqc:
     runs-on: macos-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',partial,') }}
     needs: guard
     env:
       PLATFORM: mac
@@ -1085,6 +1125,7 @@ jobs:
           if-no-files-found: warn
   mac_base:
     runs-on: macos-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',base,') }}
     needs:
       - mac_partial_core
       - mac_partial_hash
@@ -1123,6 +1164,7 @@ jobs:
           if-no-files-found: warn
   mac_main:
     runs-on: macos-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',main,') }}
     needs: mac_base
     env:
       PLATFORM: mac
@@ -1156,6 +1198,7 @@ jobs:
           if-no-files-found: warn
   mac_system:
     runs-on: macos-latest
+    if: ${{ contains(format(',{0},', env.PLATFORMS), ',mac,') && contains(format(',{0},', env.TIERS), ',system,') }}
     needs: mac_main
     env:
       PLATFORM: mac
@@ -1187,7 +1230,7 @@ jobs:
     if: always()
     needs:
       - web_system
-      # - windows_system
+      - windows_system
       - linux_system
       - mac_system
     steps:
