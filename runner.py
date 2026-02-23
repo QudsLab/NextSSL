@@ -301,6 +301,12 @@ def run_build(args):
     log_path = action_log_path or config.get_log_path('runner', 'build')
     with Logger(log_path) as logger:
         builder = Builder(config, logger)
+        build_ok = True
+        def build_list(modules):
+            nonlocal build_ok
+            for m in modules:
+                if not m.build(builder):
+                    build_ok = False
         
         # Hash Modules
         hash_partial = [primitive_fast, primitive_memory_hard, primitive_sponge_xof, legacy_alive, legacy_unsafe]
@@ -392,66 +398,78 @@ def run_build(args):
         elif target.startswith('hash:'):
             # Specific hash target
             if target == 'hash:partial':
-                for m in hash_partial: m.build(builder)
+                build_list(hash_partial)
             elif target == 'hash:base':
-                for m in hash_base: m.build(builder)
+                build_list(hash_base)
             elif target == 'hash:main':
-                for m in hash_main_list: m.build(builder)
+                build_list(hash_main_list)
             else:
                 name = target.split(':')[-1]
                 module = pick_module_by_name(name, hash_partial + hash_base + hash_main_list)
-                if module: module.build(builder)
-                else: logger.error(f"Unknown target: {target}")
-            return # Done
+                if module:
+                    build_list([module])
+                else:
+                    logger.error(f"Unknown target: {target}")
+                    build_ok = False
+            return build_ok
         elif target.startswith('pqc:'):
             # Specific PQC target
             if target == 'pqc:partial':
-                for m in pqc_partial: m.build(builder)
+                build_list(pqc_partial)
             elif target == 'pqc:base':
-                for m in pqc_base: m.build(builder)
+                build_list(pqc_base)
             elif target == 'pqc:main':
-                for m in pqc_main_list: m.build(builder)
+                build_list(pqc_main_list)
             else:
                 name = target.split(':')[-1]
                 module = pick_module_by_name(name, pqc_partial + pqc_base + pqc_main_list)
-                if module: module.build(builder)
-                else: logger.error(f"Unknown target: {target}")
-            return # Done
+                if module:
+                    build_list([module])
+                else:
+                    logger.error(f"Unknown target: {target}")
+                    build_ok = False
+            return build_ok
         elif target.startswith('core:'):
             # Specific Core target
             if target == 'core:partial':
-                for m in core_partial: m.build(builder)
+                build_list(core_partial)
             elif target == 'core:base':
-                for m in core_base: m.build(builder)
+                build_list(core_base)
             elif target == 'core:main':
-                for m in core_main_list: m.build(builder)
+                build_list(core_main_list)
             else:
                 name = target.split(':')[-1]
                 module = pick_module_by_name(name, core_partial + core_base + core_main_list)
-                if module: module.build(builder)
-                else: logger.error(f"Unknown target: {target}")
-            return # Done
+                if module:
+                    build_list([module])
+                else:
+                    logger.error(f"Unknown target: {target}")
+                    build_ok = False
+            return build_ok
         elif target.startswith('dhcm:'):
             # Specific DHCM target
             if target == 'dhcm:partial':
-                for m in dhcm_partial: m.build(builder)
+                build_list(dhcm_partial)
             elif target == 'dhcm:base':
-                for m in dhcm_base: m.build(builder)
+                build_list(dhcm_base)
             elif target == 'dhcm:main':
-                for m in dhcm_main_list: m.build(builder)
+                build_list(dhcm_main_list)
             else:
                 name = target.split(':')[-1]
                 module = pick_module_by_name(name, dhcm_partial + dhcm_base + dhcm_main_list)
-                if module: module.build(builder)
-                else: logger.error(f"Unknown target: {target}")
-            return # Done
+                if module:
+                    build_list([module])
+                else:
+                    logger.error(f"Unknown target: {target}")
+                    build_ok = False
+            return build_ok
         elif target.startswith('pow:'):
             if target == 'pow:partial':
-                for m in pow_partial: m.build(builder)
+                build_list(pow_partial)
             elif target == 'pow:base':
-                for m in pow_base: m.build(builder)
+                build_list(pow_base)
             elif target == 'pow:main':
-                for m in pow_main_list: m.build(builder)
+                build_list(pow_main_list)
             else:
                 parts = target.split(':')
                 module = None
@@ -459,11 +477,14 @@ def run_build(args):
                     if len(parts) >= 4 and parts[2] == 'pair':
                         server_module = pow_partial_map.get(('server', parts[3]))
                         client_module = pow_partial_map.get(('client', parts[3]))
-                        if server_module: server_module.build(builder)
-                        if client_module: client_module.build(builder)
+                        if server_module:
+                            build_list([server_module])
+                        if client_module:
+                            build_list([client_module])
                         if not server_module and not client_module:
                             logger.error(f"Unknown target: {target}")
-                        return
+                            build_ok = False
+                        return build_ok
                     if len(parts) >= 4:
                         module = pow_partial_map.get((parts[2], parts[3]))
                     else:
@@ -472,48 +493,47 @@ def run_build(args):
                     module = pow_base_map.get(parts[2])
                 elif len(parts) >= 3 and parts[1] == 'main':
                     module = pow_main_map.get(parts[2])
-                if module: module.build(builder)
-                else: logger.error(f"Unknown target: {target}")
-            return # Done
+                if module:
+                    build_list([module])
+                else:
+                    logger.error(f"Unknown target: {target}")
+                    build_ok = False
+            return build_ok
         elif target.startswith('system:'):
             if target == 'system:main':
-                for m in system_main_list: m.build(builder)
+                build_list(system_main_list)
             else:
                 logger.error(f"Unknown target: {target}")
-            return
+                build_ok = False
+            return build_ok
         else:
             logger.error(f"Unknown build target: {target}")
-            return
+            return False
 
         if build_hash:
             logger.info("Building Hash targets...")
-            for m in hash_partial + hash_base + hash_main_list:
-                m.build(builder)
+            build_list(hash_partial + hash_base + hash_main_list)
 
         if build_pqc:
             logger.info("Building PQC targets...")
-            for m in pqc_partial + pqc_base + pqc_main_list:
-                m.build(builder)
+            build_list(pqc_partial + pqc_base + pqc_main_list)
 
         if build_core:
             logger.info("Building Core targets...")
-            for m in core_partial + core_base + core_main_list:
-                m.build(builder)
+            build_list(core_partial + core_base + core_main_list)
 
         if build_dhcm:
             logger.info("Building DHCM targets...")
-            for m in dhcm_partial + dhcm_base + dhcm_main_list:
-                m.build(builder)
+            build_list(dhcm_partial + dhcm_base + dhcm_main_list)
 
         if build_pow:
             logger.info("Building PoW targets...")
-            for m in pow_partial + pow_base + pow_main_list:
-                m.build(builder)
+            build_list(pow_partial + pow_base + pow_main_list)
         
         if build_system:
             logger.info("Building System targets...")
-            for m in system_main_list:
-                m.build(builder)
+            build_list(system_main_list)
+        return build_ok
 
 def run_test(args):
     config = create_config(args)
@@ -733,6 +753,7 @@ def run_test(args):
             for name, res in results:
                 if res != 0:
                     console.print_fail(f"  - {name} FAILED")
+        return 0 if failed_count == 0 else 1
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="NextSSL Build & Test Runner")
@@ -761,16 +782,23 @@ if __name__ == "__main__":
     start_time = time.time()
     console.print_header("NextSSL Build & Test Runner")
 
+    build_ok = True
     if args.build:
-        run_build(args)
+        build_ok = run_build(args)
     
     # Record build time
     build_time = time.time() - start_time
     console.print_step(f"Build completed in {build_time:.2f} seconds")
 
+    if not build_ok:
+        console.print_fail("Build failed")
+        sys.exit(1)
+
+    test_code = 0
     if args.test:
-        run_test(args)
+        test_code = run_test(args)
     
     # Record test time
     test_time = time.time() - start_time - build_time
     console.print_step(f"Test completed in {test_time:.2f} seconds")
+    sys.exit(test_code)

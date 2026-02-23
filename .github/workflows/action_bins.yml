@@ -9,8 +9,17 @@ on:
 permissions:
   contents: write
 jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Guard --no_gen not present
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
   web_partial_core:
     runs-on: ubuntu-latest
+    needs: guard
     env:
       PLATFORM: web
       BIN_DIR: web
@@ -34,8 +43,6 @@ jobs:
           path: |
             ~/.wasmtime
           key: wasmtime-${{ runner.os }}-v1
-      - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Setup Emscripten
         run: |
           if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
@@ -64,7 +71,7 @@ jobs:
           if-no-files-found: error
   web_partial_hash:
     runs-on: ubuntu-latest
-    needs: web_partial_core
+    needs: guard
     env:
       PLATFORM: web
       BIN_DIR: web
@@ -116,7 +123,7 @@ jobs:
           if-no-files-found: error
   web_partial_dhcm:
     runs-on: ubuntu-latest
-    needs: web_partial_hash
+    needs: guard
     env:
       PLATFORM: web
       BIN_DIR: web
@@ -168,7 +175,7 @@ jobs:
           if-no-files-found: error
   web_partial_pow:
     runs-on: ubuntu-latest
-    needs: web_partial_dhcm
+    needs: guard
     env:
       PLATFORM: web
       BIN_DIR: web
@@ -220,7 +227,7 @@ jobs:
           if-no-files-found: error
   web_partial_pqc:
     runs-on: ubuntu-latest
-    needs: web_partial_pow
+    needs: guard
     env:
       PLATFORM: web
       BIN_DIR: web
@@ -272,7 +279,12 @@ jobs:
           if-no-files-found: error
   web_base:
     runs-on: ubuntu-latest
-    needs: web_partial_pqc
+    needs:
+      - web_partial_core
+      - web_partial_hash
+      - web_partial_dhcm
+      - web_partial_pow
+      - web_partial_pqc
     env:
       PLATFORM: web
       BIN_DIR: web
@@ -438,6 +450,7 @@ jobs:
           if-no-files-found: error
   windows_partial_core:
     runs-on: windows-latest
+    needs: guard
     env:
       PLATFORM: windows
       BIN_DIR: windows
@@ -450,8 +463,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install GCC (Windows)
         run: choco install mingw -y
         shell: powershell
@@ -467,7 +478,7 @@ jobs:
           if-no-files-found: error
   windows_partial_hash:
     runs-on: windows-latest
-    needs: windows_partial_core
+    needs: guard
     env:
       PLATFORM: windows
       BIN_DIR: windows
@@ -495,7 +506,7 @@ jobs:
           if-no-files-found: error
   windows_partial_dhcm:
     runs-on: windows-latest
-    needs: windows_partial_hash
+    needs: guard
     env:
       PLATFORM: windows
       BIN_DIR: windows
@@ -523,7 +534,7 @@ jobs:
           if-no-files-found: error
   windows_partial_pow:
     runs-on: windows-latest
-    needs: windows_partial_dhcm
+    needs: guard
     env:
       PLATFORM: windows
       BIN_DIR: windows
@@ -551,7 +562,7 @@ jobs:
           if-no-files-found: error
   windows_partial_pqc:
     runs-on: windows-latest
-    needs: windows_partial_pow
+    needs: guard
     env:
       PLATFORM: windows
       BIN_DIR: windows
@@ -579,7 +590,12 @@ jobs:
           if-no-files-found: error
   windows_base:
     runs-on: windows-latest
-    needs: windows_partial_pqc
+    needs:
+      - windows_partial_core
+      - windows_partial_hash
+      - windows_partial_dhcm
+      - windows_partial_pow
+      - windows_partial_pqc
     env:
       PLATFORM: windows
       BIN_DIR: windows
@@ -673,6 +689,7 @@ jobs:
           if-no-files-found: error
   linux_partial_core:
     runs-on: ubuntu-latest
+    needs: guard
     env:
       PLATFORM: linux
       BIN_DIR: linux
@@ -685,8 +702,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
@@ -701,7 +716,7 @@ jobs:
           if-no-files-found: error
   linux_partial_hash:
     runs-on: ubuntu-latest
-    needs: linux_partial_core
+    needs: guard
     env:
       PLATFORM: linux
       BIN_DIR: linux
@@ -728,7 +743,7 @@ jobs:
           if-no-files-found: error
   linux_partial_dhcm:
     runs-on: ubuntu-latest
-    needs: linux_partial_hash
+    needs: guard
     env:
       PLATFORM: linux
       BIN_DIR: linux
@@ -755,7 +770,7 @@ jobs:
           if-no-files-found: error
   linux_partial_pow:
     runs-on: ubuntu-latest
-    needs: linux_partial_dhcm
+    needs: guard
     env:
       PLATFORM: linux
       BIN_DIR: linux
@@ -782,7 +797,7 @@ jobs:
           if-no-files-found: error
   linux_partial_pqc:
     runs-on: ubuntu-latest
-    needs: linux_partial_pow
+    needs: guard
     env:
       PLATFORM: linux
       BIN_DIR: linux
@@ -809,7 +824,12 @@ jobs:
           if-no-files-found: error
   linux_base:
     runs-on: ubuntu-latest
-    needs: linux_partial_pqc
+    needs:
+      - linux_partial_core
+      - linux_partial_hash
+      - linux_partial_dhcm
+      - linux_partial_pow
+      - linux_partial_pqc
     env:
       PLATFORM: linux
       BIN_DIR: linux
@@ -900,6 +920,7 @@ jobs:
           if-no-files-found: error
   mac_partial_core:
     runs-on: macos-latest
+    needs: guard
     env:
       PLATFORM: mac
       BIN_DIR: mac
@@ -912,8 +933,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Guard --no_gen not present
-        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
@@ -928,7 +947,7 @@ jobs:
           if-no-files-found: error
   mac_partial_hash:
     runs-on: macos-latest
-    needs: mac_partial_core
+    needs: guard
     env:
       PLATFORM: mac
       BIN_DIR: mac
@@ -955,7 +974,7 @@ jobs:
           if-no-files-found: error
   mac_partial_dhcm:
     runs-on: macos-latest
-    needs: mac_partial_hash
+    needs: guard
     env:
       PLATFORM: mac
       BIN_DIR: mac
@@ -982,7 +1001,7 @@ jobs:
           if-no-files-found: error
   mac_partial_pow:
     runs-on: macos-latest
-    needs: mac_partial_dhcm
+    needs: guard
     env:
       PLATFORM: mac
       BIN_DIR: mac
@@ -1009,7 +1028,7 @@ jobs:
           if-no-files-found: error
   mac_partial_pqc:
     runs-on: macos-latest
-    needs: mac_partial_pow
+    needs: guard
     env:
       PLATFORM: mac
       BIN_DIR: mac
@@ -1036,7 +1055,12 @@ jobs:
           if-no-files-found: error
   mac_base:
     runs-on: macos-latest
-    needs: mac_partial_pqc
+    needs:
+      - mac_partial_core
+      - mac_partial_hash
+      - mac_partial_dhcm
+      - mac_partial_pow
+      - mac_partial_pqc
     env:
       PLATFORM: mac
       BIN_DIR: mac

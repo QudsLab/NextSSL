@@ -32,7 +32,8 @@ class Logger:
         
         # File handler
         try:
-            fh = logging.FileHandler(log_path, mode='w', encoding='utf-8')
+            file_mode = 'a' if os.path.exists(log_path) else 'w'
+            fh = logging.FileHandler(log_path, mode=file_mode, encoding='utf-8')
             fh.setLevel(logging.DEBUG)
             file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
             fh.setFormatter(file_formatter)

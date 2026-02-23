@@ -55,7 +55,7 @@ class Builder:
         elif lib_ext == '.dll':
             args.append('-Wl,--no-insert-timestamp')
         elif lib_ext == '.dylib':
-            args.append('-Wl,-no_uuid')
+            pass
         
         # Add includes
         for inc in self.config.includes:
