@@ -1,7 +1,7 @@
 #include "ristretto255.h"
-#include "../Ed25519/fe.h"
-#include "../Ed25519/ge.h"
-#include "../Ed25519/sc.h" // For scalar operations if needed, though mostly using fe/ge
+#include "../ed25519/fe.h"
+#include "../ed25519/ge.h"
+#include "../ed25519/sc.h"
 #include <string.h>
 
 /* Constants adapted from libsodium's fe_25_5/constants.h */
