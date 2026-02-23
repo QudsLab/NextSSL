@@ -1,0 +1,12 @@
+2026-02-23 23:28:30,842 - INFO - Successfully built main
+2026-02-23 23:28:30,843 - INFO - === Running 1 test suites... ===
+2026-02-23 23:28:30,843 - INFO - -> Running script.test.main.system
+2026-02-23 23:28:30,843 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/main.dylib
+2026-02-23 23:28:30,844 - INFO - [PASS] DLL Loaded
+2026-02-23 23:28:30,844 - INFO - [PASS] SHA256 OK
+2026-02-23 23:28:30,844 - INFO - [PASS] DHCM OK
+2026-02-23 23:28:30,844 - INFO - [PASS] PoW symbols OK
+2026-02-23 23:28:30,844 - INFO - [PASS] PQC symbols OK
+2026-02-23 23:28:30,845 - INFO - [PASS] AES-CBC OK
+2026-02-23 23:28:30,845 - INFO - [PASS] Main unified DLL OK
+2026-02-23 23:28:30,845 - INFO - [PASS] ALL TESTS PASSED

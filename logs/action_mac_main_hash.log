@@ -1,0 +1,11 @@
+2026-02-23 23:27:23,910 - INFO - Successfully built hash
+2026-02-23 23:27:23,911 - INFO - === Running 1 test suites... ===
+2026-02-23 23:27:23,911 - INFO - -> Running script.test.main.hash
+2026-02-23 23:27:23,911 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/main/hash.dylib
+2026-02-23 23:27:23,911 - INFO - [PASS] DLL loaded successfully
+2026-02-23 23:27:23,912 - INFO - [PASS] SHA-256 (Primitive)
+2026-02-23 23:27:23,912 - INFO -        Hash (32 bytes): ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
+2026-02-23 23:27:23,912 - INFO - [PASS] MD5 (Legacy)
+2026-02-23 23:27:23,912 - INFO -        Hash (16 bytes): 900150983cd24fb0d6963f7d28e17f72
+2026-02-23 23:27:23,912 - INFO - [INFO] Results: 2 passed, 0 failed
+2026-02-23 23:27:23,912 - INFO - [PASS] ALL TESTS PASSED
