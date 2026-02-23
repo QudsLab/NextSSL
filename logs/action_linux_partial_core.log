@@ -1,0 +1,14 @@
+2026-02-23 23:13:57,244 - INFO - Successfully built aes_modes
+2026-02-23 23:13:57,679 - INFO - Successfully built aes_aead
+2026-02-23 23:13:57,853 - INFO - Successfully built stream_aead
+2026-02-23 23:13:59,023 - INFO - Successfully built macs
+2026-02-23 23:14:00,848 - ERROR - Compilation failed for ecc:
+2026-02-23 23:14:00,848 - ERROR - /home/runner/work/NextSSL/NextSSL/src/primitives/ecc/ed25519/seed.c: In function ‘ed25519_create_seed’:
+/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/ed25519/seed.c:33:5: warning: ignoring return value of ‘fread’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   33 |     fread(seed, 1, 32, f);
+      |     ^~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/ristretto255/ristretto255.c:2:10: fatal error: ../Ed25519/fe.h: No such file or directory
+    2 | #include "../Ed25519/fe.h"
+      |          ^~~~~~~~~~~~~~~~~
+compilation terminated.
+
