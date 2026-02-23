@@ -1,0 +1,4 @@
+2026-02-23 22:04:31,473 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_legacy.wasm
+2026-02-23 22:04:31,473 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_primitive.wasm
+2026-02-23 22:04:31,481 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_legacy.wasm
+2026-02-23 22:04:31,486 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_primitive.wasm

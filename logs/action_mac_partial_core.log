@@ -1,0 +1,22 @@
+2026-02-23 22:01:36,355 - INFO - === Running 5 test suites... ===
+2026-02-23 22:01:36,355 - INFO - -> Running script.test.partial.core.aes_modes
+2026-02-23 22:01:36,355 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/aes_modes.dylib
+2026-02-23 22:01:36,355 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/aes_modes.dylib
+2026-02-23 22:01:36,355 - INFO - -> Running script.test.partial.core.aes_aead
+2026-02-23 22:01:36,356 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/aes_aead.dylib
+2026-02-23 22:01:36,356 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/aes_aead.dylib
+2026-02-23 22:01:36,356 - INFO - -> Running script.test.partial.core.stream_aead
+2026-02-23 22:01:36,356 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/stream_aead.dylib
+2026-02-23 22:01:36,356 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/stream_aead.dylib
+2026-02-23 22:01:36,356 - INFO - -> Running script.test.partial.core.macs
+2026-02-23 22:01:36,356 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/macs.dylib
+2026-02-23 22:01:36,356 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/macs.dylib
+2026-02-23 22:01:36,356 - INFO - -> Running script.test.partial.core.ecc
+2026-02-23 22:01:36,356 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/ecc.dylib
+2026-02-23 22:01:36,356 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/core/ecc.dylib
+2026-02-23 22:01:36,356 - ERROR - [FAIL] TEST SUITE FAILED: 5 modules failed
+2026-02-23 22:01:36,356 - ERROR - [FAIL]   - script.test.partial.core.aes_modes FAILED
+2026-02-23 22:01:36,356 - ERROR - [FAIL]   - script.test.partial.core.aes_aead FAILED
+2026-02-23 22:01:36,356 - ERROR - [FAIL]   - script.test.partial.core.stream_aead FAILED
+2026-02-23 22:01:36,356 - ERROR - [FAIL]   - script.test.partial.core.macs FAILED
+2026-02-23 22:01:36,356 - ERROR - [FAIL]   - script.test.partial.core.ecc FAILED

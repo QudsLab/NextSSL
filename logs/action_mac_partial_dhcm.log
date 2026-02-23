@@ -1,0 +1,22 @@
+2026-02-23 22:02:08,004 - INFO - === Running 5 test suites... ===
+2026-02-23 22:02:08,004 - INFO - -> Running script.test.partial.dhcm.primitive_fast
+2026-02-23 22:02:08,004 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/primitive_fast.dylib
+2026-02-23 22:02:08,004 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/primitive_fast.dylib
+2026-02-23 22:02:08,004 - INFO - -> Running script.test.partial.dhcm.primitive_memory_hard
+2026-02-23 22:02:08,005 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/primitive_memory_hard.dylib
+2026-02-23 22:02:08,005 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/primitive_memory_hard.dylib
+2026-02-23 22:02:08,005 - INFO - -> Running script.test.partial.dhcm.primitive_sponge_xof
+2026-02-23 22:02:08,005 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/primitive_sponge_xof.dylib
+2026-02-23 22:02:08,005 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/primitive_sponge_xof.dylib
+2026-02-23 22:02:08,005 - INFO - -> Running script.test.partial.dhcm.legacy_alive
+2026-02-23 22:02:08,005 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/legacy_alive.dylib
+2026-02-23 22:02:08,005 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/legacy_alive.dylib
+2026-02-23 22:02:08,005 - INFO - -> Running script.test.partial.dhcm.legacy_unsafe
+2026-02-23 22:02:08,005 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/legacy_unsafe.dylib
+2026-02-23 22:02:08,005 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/dhcm/legacy_unsafe.dylib
+2026-02-23 22:02:08,005 - ERROR - [FAIL] TEST SUITE FAILED: 5 modules failed
+2026-02-23 22:02:08,005 - ERROR - [FAIL]   - script.test.partial.dhcm.primitive_fast FAILED
+2026-02-23 22:02:08,005 - ERROR - [FAIL]   - script.test.partial.dhcm.primitive_memory_hard FAILED
+2026-02-23 22:02:08,005 - ERROR - [FAIL]   - script.test.partial.dhcm.primitive_sponge_xof FAILED
+2026-02-23 22:02:08,005 - ERROR - [FAIL]   - script.test.partial.dhcm.legacy_alive FAILED
+2026-02-23 22:02:08,005 - ERROR - [FAIL]   - script.test.partial.dhcm.legacy_unsafe FAILED

@@ -1,0 +1,18 @@
+2026-02-23 22:04:23,259 - INFO - === Running 4 test suites... ===
+2026-02-23 22:04:23,259 - INFO - -> Running script.test.partial.pqc.kem_lattice
+2026-02-23 22:04:23,259 - INFO - [INFO] Loading DLL: /home/runner/work/NextSSL/NextSSL/bin/linux/partial/pqc/kem_lattice.so
+2026-02-23 22:04:23,259 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/partial/pqc/kem_lattice.so
+2026-02-23 22:04:23,260 - INFO - -> Running script.test.partial.pqc.kem_code_based
+2026-02-23 22:04:23,260 - INFO - [INFO] Loading DLL: /home/runner/work/NextSSL/NextSSL/bin/linux/partial/pqc/kem_code_based.so
+2026-02-23 22:04:23,260 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/partial/pqc/kem_code_based.so
+2026-02-23 22:04:23,260 - INFO - -> Running script.test.partial.pqc.sign_lattice
+2026-02-23 22:04:23,260 - INFO - [INFO] Loading DLL: /home/runner/work/NextSSL/NextSSL/bin/linux/partial/pqc/sign_lattice.so
+2026-02-23 22:04:23,260 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/partial/pqc/sign_lattice.so
+2026-02-23 22:04:23,260 - INFO - -> Running script.test.partial.pqc.sign_hash_based
+2026-02-23 22:04:23,260 - INFO - [INFO] Loading DLL: /home/runner/work/NextSSL/NextSSL/bin/linux/partial/pqc/sign_hash_based.so
+2026-02-23 22:04:23,260 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/partial/pqc/sign_hash_based.so
+2026-02-23 22:04:23,260 - ERROR - [FAIL] TEST SUITE FAILED: 4 modules failed
+2026-02-23 22:04:23,260 - ERROR - [FAIL]   - script.test.partial.pqc.kem_lattice FAILED
+2026-02-23 22:04:23,260 - ERROR - [FAIL]   - script.test.partial.pqc.kem_code_based FAILED
+2026-02-23 22:04:23,260 - ERROR - [FAIL]   - script.test.partial.pqc.sign_lattice FAILED
+2026-02-23 22:04:23,260 - ERROR - [FAIL]   - script.test.partial.pqc.sign_hash_based FAILED

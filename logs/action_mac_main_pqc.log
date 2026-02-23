@@ -1,0 +1,6 @@
+2026-02-23 22:04:54,554 - INFO - === Running 1 test suites... ===
+2026-02-23 22:04:54,554 - INFO - -> Running script.test.main.pqc
+2026-02-23 22:04:54,554 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/main/pqc.dylib
+2026-02-23 22:04:54,554 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/main/pqc.dylib
+2026-02-23 22:04:54,554 - ERROR - [FAIL] TEST SUITE FAILED: 1 modules failed
+2026-02-23 22:04:54,554 - ERROR - [FAIL]   - script.test.main.pqc FAILED

@@ -1,0 +1,10 @@
+2026-02-23 22:04:53,292 - INFO - === Running 2 test suites... ===
+2026-02-23 22:04:53,292 - INFO - -> Running script.test.base.hash_primitive_main
+2026-02-23 22:04:53,293 - INFO - [INFO] Loading DLL: /home/runner/work/NextSSL/NextSSL/bin/linux/base/hash_primitive.so
+2026-02-23 22:04:53,293 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/base/hash_primitive.so
+2026-02-23 22:04:53,293 - INFO - -> Running script.test.base.hash_legacy_main
+2026-02-23 22:04:53,293 - INFO - [INFO] Loading DLL: /home/runner/work/NextSSL/NextSSL/bin/linux/base/hash_legacy.so
+2026-02-23 22:04:53,293 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/base/hash_legacy.so
+2026-02-23 22:04:53,293 - ERROR - [FAIL] TEST SUITE FAILED: 2 modules failed
+2026-02-23 22:04:53,293 - ERROR - [FAIL]   - script.test.base.hash_primitive_main FAILED
+2026-02-23 22:04:53,293 - ERROR - [FAIL]   - script.test.base.hash_legacy_main FAILED

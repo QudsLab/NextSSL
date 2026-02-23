@@ -1,0 +1,6 @@
+2026-02-23 22:05:37,166 - INFO - === Running 1 test suites... ===
+2026-02-23 22:05:37,166 - INFO - -> Running script.test.main.system
+2026-02-23 22:05:37,167 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/main.dylib
+2026-02-23 22:05:37,168 - ERROR - [FAIL] Test crashed: dlopen(/Users/runner/work/NextSSL/NextSSL/bin/mac/main.dylib, 0x0006): tried: '/Users/runner/work/NextSSL/NextSSL/bin/mac/main.dylib' (missing LC_UUID load command), '/System/Volumes/Preboot/Cryptexes/OS/Users/runner/work/NextSSL/NextSSL/bin/mac/main.dylib' (no such file), '/Users/runner/work/NextSSL/NextSSL/bin/mac/main.dylib' (missing LC_UUID load command)
+2026-02-23 22:05:37,168 - ERROR - [FAIL] TEST SUITE FAILED: 1 modules failed
+2026-02-23 22:05:37,168 - ERROR - [FAIL]   - script.test.main.system FAILED

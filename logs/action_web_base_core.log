@@ -1,0 +1,3 @@
+2026-02-23 22:04:28,760 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_cipher_main.wasm
+2026-02-23 22:04:28,760 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_mac_main.wasm
+2026-02-23 22:04:28,760 - ERROR - [FAIL] WASM missing: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_ecc_main.wasm

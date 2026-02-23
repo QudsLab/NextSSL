@@ -1,0 +1,14 @@
+2026-02-23 22:04:49,351 - INFO - === Running 3 test suites... ===
+2026-02-23 22:04:49,351 - INFO - -> Running script.test.base.core_cipher_main
+2026-02-23 22:04:49,351 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/base/core_cipher_main.so
+2026-02-23 22:04:49,351 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/base/core_cipher_main.so
+2026-02-23 22:04:49,351 - INFO - -> Running script.test.base.core_mac_main
+2026-02-23 22:04:49,351 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/base/core_mac_main.so
+2026-02-23 22:04:49,351 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/base/core_mac_main.so
+2026-02-23 22:04:49,351 - INFO - -> Running script.test.base.core_ecc_main
+2026-02-23 22:04:49,351 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/base/core_ecc_main.so
+2026-02-23 22:04:49,351 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/base/core_ecc_main.so
+2026-02-23 22:04:49,351 - ERROR - [FAIL] TEST SUITE FAILED: 3 modules failed
+2026-02-23 22:04:49,351 - ERROR - [FAIL]   - script.test.base.core_cipher_main FAILED
+2026-02-23 22:04:49,351 - ERROR - [FAIL]   - script.test.base.core_mac_main FAILED
+2026-02-23 22:04:49,351 - ERROR - [FAIL]   - script.test.base.core_ecc_main FAILED

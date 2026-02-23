@@ -1,0 +1,6 @@
+2026-02-23 22:04:23,012 - INFO - === Running 1 test suites... ===
+2026-02-23 22:04:23,012 - INFO - -> Running script.test.main.hash
+2026-02-23 22:04:23,012 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/main/hash.dylib
+2026-02-23 22:04:23,012 - ERROR - [FAIL] Failed to load DLL: dlopen(/Users/runner/work/NextSSL/NextSSL/bin/mac/main/hash.dylib, 0x0006): tried: '/Users/runner/work/NextSSL/NextSSL/bin/mac/main/hash.dylib' (missing LC_UUID load command), '/System/Volumes/Preboot/Cryptexes/OS/Users/runner/work/NextSSL/NextSSL/bin/mac/main/hash.dylib' (no such file), '/Users/runner/work/NextSSL/NextSSL/bin/mac/main/hash.dylib' (missing LC_UUID load command)
+2026-02-23 22:04:23,012 - ERROR - [FAIL] TEST SUITE FAILED: 1 modules failed
+2026-02-23 22:04:23,012 - ERROR - [FAIL]   - script.test.main.hash FAILED

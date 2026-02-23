@@ -1,0 +1,14 @@
+2026-02-23 22:05:08,053 - INFO - === Running 3 test suites... ===
+2026-02-23 22:05:08,053 - INFO - -> Running script.test.base.pow_primitive
+2026-02-23 22:05:08,053 - INFO - === === Starting PoW Primitive Base Test === ===
+2026-02-23 22:05:08,053 - INFO - [WARN] Skipping Primitive Base: DLLs not found at /home/runner/work/NextSSL/NextSSL/bin/linux/base/pow_server_primitive.so
+2026-02-23 22:05:08,053 - INFO - -> Running script.test.base.pow_legacy
+2026-02-23 22:05:08,053 - INFO - === === Starting PoW Legacy Base Test === ===
+2026-02-23 22:05:08,053 - INFO - [WARN] Skipping Legacy Base: DLLs not found at /home/runner/work/NextSSL/NextSSL/bin/linux/base/pow_server_legacy.so
+2026-02-23 22:05:08,054 - INFO - -> Running script.test.base.pow_combined
+2026-02-23 22:05:08,054 - INFO - === === Starting PoW Base Combined Test === ===
+2026-02-23 22:05:08,054 - INFO - [WARN] Skipping Base Combined: DLL not found at /home/runner/work/NextSSL/NextSSL/bin/linux/base/pow_combined.so
+2026-02-23 22:05:08,054 - ERROR - [FAIL] TEST SUITE FAILED: 3 modules failed
+2026-02-23 22:05:08,054 - ERROR - [FAIL]   - script.test.base.pow_primitive FAILED
+2026-02-23 22:05:08,054 - ERROR - [FAIL]   - script.test.base.pow_legacy FAILED
+2026-02-23 22:05:08,054 - ERROR - [FAIL]   - script.test.base.pow_combined FAILED

@@ -1,0 +1,10 @@
+2026-02-23 22:05:33,580 - INFO - === Running 2 test suites... ===
+2026-02-23 22:05:33,580 - INFO - -> Running script.test.base.pqc_kem_main
+2026-02-23 22:05:33,580 - INFO - [INFO] Loading DLL: /home/runner/work/NextSSL/NextSSL/bin/linux/base/pqc_kem_main.so
+2026-02-23 22:05:33,580 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/base/pqc_kem_main.so
+2026-02-23 22:05:33,580 - INFO - -> Running script.test.base.pqc_sign_main
+2026-02-23 22:05:33,580 - INFO - [INFO] Loading DLL: /home/runner/work/NextSSL/NextSSL/bin/linux/base/pqc_sign_main.so
+2026-02-23 22:05:33,580 - ERROR - [FAIL] DLL not found: /home/runner/work/NextSSL/NextSSL/bin/linux/base/pqc_sign_main.so
+2026-02-23 22:05:33,580 - ERROR - [FAIL] TEST SUITE FAILED: 2 modules failed
+2026-02-23 22:05:33,580 - ERROR - [FAIL]   - script.test.base.pqc_kem_main FAILED
+2026-02-23 22:05:33,580 - ERROR - [FAIL]   - script.test.base.pqc_sign_main FAILED

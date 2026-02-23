@@ -1,0 +1,10 @@
+2026-02-23 22:04:32,275 - INFO - === Running 2 test suites... ===
+2026-02-23 22:04:32,275 - INFO - -> Running script.test.main.pow
+2026-02-23 22:04:32,275 - INFO - === === Starting PoW Main Tier Test (All Algos) === ===
+2026-02-23 22:04:32,280 - ERROR - [FAIL] Error loading Main Tier DLLs: dlopen(/Users/runner/work/NextSSL/NextSSL/bin/mac/main/pow_server.dylib, 0x0006): tried: '/Users/runner/work/NextSSL/NextSSL/bin/mac/main/pow_server.dylib' (missing LC_UUID load command), '/System/Volumes/Preboot/Cryptexes/OS/Users/runner/work/NextSSL/NextSSL/bin/mac/main/pow_server.dylib' (no such file), '/Users/runner/work/NextSSL/NextSSL/bin/mac/main/pow_server.dylib' (missing LC_UUID load command)
+2026-02-23 22:04:32,280 - INFO - -> Running script.test.main.pow_combined
+2026-02-23 22:04:32,280 - INFO - === === Starting PoW Main Combined Test === ===
+2026-02-23 22:04:32,281 - ERROR - [FAIL] Error loading Main Combined DLL: dlopen(/Users/runner/work/NextSSL/NextSSL/bin/mac/main/pow_combined.dylib, 0x0006): tried: '/Users/runner/work/NextSSL/NextSSL/bin/mac/main/pow_combined.dylib' (missing LC_UUID load command), '/System/Volumes/Preboot/Cryptexes/OS/Users/runner/work/NextSSL/NextSSL/bin/mac/main/pow_combined.dylib' (no such file), '/Users/runner/work/NextSSL/NextSSL/bin/mac/main/pow_combined.dylib' (missing LC_UUID load command)
+2026-02-23 22:04:32,281 - ERROR - [FAIL] TEST SUITE FAILED: 2 modules failed
+2026-02-23 22:04:32,281 - ERROR - [FAIL]   - script.test.main.pow FAILED
+2026-02-23 22:04:32,281 - ERROR - [FAIL]   - script.test.main.pow_combined FAILED

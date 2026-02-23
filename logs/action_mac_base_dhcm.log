@@ -1,0 +1,10 @@
+2026-02-23 22:03:33,860 - INFO - === Running 2 test suites... ===
+2026-02-23 22:03:33,860 - INFO - -> Running script.test.base.dhcm_primitive_main
+2026-02-23 22:03:33,860 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/base/dhcm_primitive.dylib
+2026-02-23 22:03:33,860 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/base/dhcm_primitive.dylib
+2026-02-23 22:03:33,860 - INFO - -> Running script.test.base.dhcm_legacy_main
+2026-02-23 22:03:33,860 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/base/dhcm_legacy.dylib
+2026-02-23 22:03:33,860 - ERROR - [FAIL] DLL not found: /Users/runner/work/NextSSL/NextSSL/bin/mac/base/dhcm_legacy.dylib
+2026-02-23 22:03:33,860 - ERROR - [FAIL] TEST SUITE FAILED: 2 modules failed
+2026-02-23 22:03:33,860 - ERROR - [FAIL]   - script.test.base.dhcm_primitive_main FAILED
+2026-02-23 22:03:33,860 - ERROR - [FAIL]   - script.test.base.dhcm_legacy_main FAILED
