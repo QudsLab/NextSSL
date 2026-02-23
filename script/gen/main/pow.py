@@ -27,11 +27,18 @@ def build(builder: Builder):
     # Unified Main Dispatcher
     adapter_sources.append(os.path.join(src_dir, 'PoW/adapters/dispatcher_main.c'))
 
-    # Legacy Hash Implementations (required for linking)
+    # Hash Implementations (required for linking)
     hash_sources = builder.get_sources([
+        os.path.join(src_dir, 'primitives', 'hash', 'fast'),
+        os.path.join(src_dir, 'primitives', 'hash', 'sponge_xof'),
+        os.path.join(src_dir, 'primitives', 'hash', 'memory_hard'),
         os.path.join(src_dir, 'legacy/alive/'),
         os.path.join(src_dir, 'legacy/unsafe/')
     ], recursive=True)
+    
+    hash_wrapper = os.path.join(src_dir, 'utils', 'hash', 'primitive_memory_hard.c')
+    if os.path.exists(hash_wrapper):
+        hash_sources.append(hash_wrapper)
     
     # AES Core (required for AES-ECB in legacy_alive)
     aes_sources = builder.get_sources([

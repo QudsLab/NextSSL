@@ -27,8 +27,8 @@ from script.gen.main import dhcm as dhcm_main
 from script.gen.partial.pow.server import primitive_fast as pow_server_primitive_fast, primitive_memory_hard as pow_server_primitive_memory_hard, primitive_sponge_xof as pow_server_primitive_sponge_xof, legacy_alive as pow_server_legacy_alive, legacy_unsafe as pow_server_legacy_unsafe
 from script.gen.partial.pow.client import primitive_fast as pow_client_primitive_fast, primitive_memory_hard as pow_client_primitive_memory_hard, primitive_sponge_xof as pow_client_primitive_sponge_xof, legacy_alive as pow_client_legacy_alive, legacy_unsafe as pow_client_legacy_unsafe
 from script.gen.partial.pow.combined import primitive_fast as pow_combined_primitive_fast, primitive_memory_hard as pow_combined_primitive_memory_hard, primitive_sponge_xof as pow_combined_primitive_sponge_xof, legacy_alive as pow_combined_legacy_alive, legacy_unsafe as pow_combined_legacy_unsafe
-from script.gen.base import pow_primitive, pow_legacy
-from script.gen.main import pow as pow_main
+from script.gen.base import pow_primitive, pow_legacy, pow_combined as pow_combined_base
+from script.gen.main import pow as pow_main, pow_combined as pow_combined_main
 
 from script.test.partial.pow import primitive_fast as test_pow_primitive_fast
 from script.test.partial.pow import primitive_memory_hard as test_pow_primitive_memory_hard
@@ -36,8 +36,8 @@ from script.test.partial.pow import primitive_sponge_xof as test_pow_primitive_s
 from script.test.partial.pow import legacy_alive as test_pow_legacy_alive
 from script.test.partial.pow import legacy_unsafe as test_pow_legacy_unsafe
 from script.test.suites import pow_integration as test_pow_integration
-from script.test.base import pow_primitive as test_pow_primitive, pow_legacy as test_pow_legacy
-from script.test.main import pow as test_pow_main
+from script.test.base import pow_primitive as test_pow_primitive, pow_legacy as test_pow_legacy, pow_combined as test_pow_combined_base
+from script.test.main import pow as test_pow_main, pow_combined as test_pow_combined_main
 from script.test.partial.hash import primitive_fast as test_primitive_fast
 from script.test.partial.hash import primitive_memory_hard as test_primitive_memory_hard
 from script.test.partial.hash import primitive_sponge_xof as test_primitive_sponge_xof
@@ -109,8 +109,8 @@ def run_build(args):
             pow_server_legacy_alive, pow_client_legacy_alive, pow_combined_legacy_alive,
             pow_server_legacy_unsafe, pow_client_legacy_unsafe, pow_combined_legacy_unsafe
         ]
-        pow_base = [pow_primitive, pow_legacy]
-        pow_main_list = [pow_main]
+        pow_base = [pow_primitive, pow_legacy, pow_combined_base]
+        pow_main_list = [pow_main, pow_combined_main]
         
         # Build logic
         build_hash = False
@@ -284,8 +284,8 @@ def run_test(args):
             test_pow_legacy_alive,
             test_pow_legacy_unsafe
         ]
-        pow_base = [test_pow_primitive, test_pow_legacy]
-        pow_main_list = [test_pow_main]
+        pow_base = [test_pow_primitive, test_pow_legacy, test_pow_combined_base]
+        pow_main_list = [test_pow_main, test_pow_combined_main]
         pow_suites = [test_pow_integration]
 
         run_hash = False

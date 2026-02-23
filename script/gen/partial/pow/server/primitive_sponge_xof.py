@@ -14,6 +14,11 @@ def build(builder: Builder):
     # Add Base64 implementation
     sources.append(os.path.join(src_dir, 'utils/radix/base64.c'))
     
+    # Add Hash Primitive Sources (Sponge XOF)
+    sources.extend(builder.get_sources([
+        os.path.join(src_dir, 'primitives', 'hash', 'sponge_xof')
+    ], recursive=True))
+    
     # Add Mock Dependencies
     sources.append(os.path.join(src_dir, 'PoW/mock_deps.c'))
     

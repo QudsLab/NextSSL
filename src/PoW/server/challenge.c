@@ -18,6 +18,36 @@
 // Forward declaration of adapter getter
 extern POWAlgoAdapter* pow_adapter_get(const char* algorithm_id);
 
+static size_t pow_get_hash_len(const char* algorithm_id) {
+    if (!algorithm_id) return 32;
+    if (strcmp(algorithm_id, "sha256") == 0) return 32;
+    if (strcmp(algorithm_id, "sha512") == 0) return 64;
+    if (strcmp(algorithm_id, "blake3") == 0) return 32;
+    if (strcmp(algorithm_id, "blake2b") == 0) return 32;
+    if (strcmp(algorithm_id, "blake2s") == 0) return 32;
+    if (strcmp(algorithm_id, "sha3_256") == 0) return 32;
+    if (strcmp(algorithm_id, "sha3_512") == 0) return 64;
+    if (strcmp(algorithm_id, "keccak_256") == 0) return 32;
+    if (strcmp(algorithm_id, "shake128") == 0) return 32;
+    if (strcmp(algorithm_id, "shake256") == 0) return 64;
+    if (strcmp(algorithm_id, "argon2id") == 0) return 32;
+    if (strcmp(algorithm_id, "argon2i") == 0) return 32;
+    if (strcmp(algorithm_id, "argon2d") == 0) return 32;
+    if (strcmp(algorithm_id, "md5") == 0) return 16;
+    if (strcmp(algorithm_id, "sha1") == 0) return 20;
+    if (strcmp(algorithm_id, "ripemd160") == 0) return 20;
+    if (strcmp(algorithm_id, "whirlpool") == 0) return 64;
+    if (strcmp(algorithm_id, "nt") == 0) return 16;
+    if (strcmp(algorithm_id, "md2") == 0) return 16;
+    if (strcmp(algorithm_id, "md4") == 0) return 16;
+    if (strcmp(algorithm_id, "sha0") == 0) return 20;
+    if (strcmp(algorithm_id, "has160") == 0) return 20;
+    if (strcmp(algorithm_id, "ripemd128") == 0) return 16;
+    if (strcmp(algorithm_id, "ripemd256") == 0) return 32;
+    if (strcmp(algorithm_id, "ripemd320") == 0) return 40;
+    return 32;
+}
+
 int pow_server_generate_challenge(
     POWConfig* config,
     const char* algorithm_id,
@@ -50,7 +80,11 @@ int pow_server_generate_challenge(
     
     // 4. Calculate target
     out_challenge->difficulty_bits = difficulty_bits;
-    out_challenge->target_len = 32; // Default 32 bytes for now
+    size_t target_len = pow_get_hash_len(algorithm_id);
+    if (target_len == 0 || target_len > sizeof(out_challenge->target)) {
+        target_len = 32;
+    }
+    out_challenge->target_len = target_len;
     pow_difficulty_bits_to_target(difficulty_bits, out_challenge->target, out_challenge->target_len);
     
     // 5. Query DHCM via adapter

@@ -25,7 +25,6 @@ def prefix_bits(data, bits):
         return ""
     return "".join(f"{b:08b}" for b in data)[:bits]
 
-# Reuse structures
 class POWChallenge(ctypes.Structure):
     _fields_ = [
         ("version", ctypes.c_uint8),
@@ -64,41 +63,39 @@ class POWConfig(ctypes.Structure):
         ("rate_limit_window_seconds", ctypes.c_uint32)
     ]
 
-def load_dll_pair():
-    bin_dir = os.path.join(os.getcwd(), 'bin/main')
-    server_path = os.path.join(bin_dir, 'pow_server.dll')
-    client_path = os.path.join(bin_dir, 'pow_client.dll')
+def load_dll():
+    bin_dir = os.path.join(os.getcwd(), 'bin/base')
+    dll_path = os.path.join(bin_dir, 'pow_combined.dll')
     
-    if not os.path.exists(server_path) or not os.path.exists(client_path):
-        console.print_warn(f"Skipping Main Tier: DLLs not found at {server_path}")
-        return None, None
+    if not os.path.exists(dll_path):
+        console.print_warn(f"Skipping Base Combined: DLL not found at {dll_path}")
+        return None
         
     try:
-        server = ctypes.CDLL(server_path)
-        client = ctypes.CDLL(client_path)
+        lib = ctypes.CDLL(dll_path)
         
-        server.leyline_pow_server_generate_challenge.argtypes = [
+        lib.leyline_pow_server_generate_challenge.argtypes = [
             ctypes.POINTER(POWConfig), ctypes.c_char_p, ctypes.POINTER(ctypes.c_uint8), 
             ctypes.c_size_t, ctypes.c_uint32, ctypes.POINTER(POWChallenge)
         ]
-        server.leyline_pow_server_generate_challenge.restype = ctypes.c_int
+        lib.leyline_pow_server_generate_challenge.restype = ctypes.c_int
 
-        server.leyline_pow_server_verify_solution.argtypes = [
+        lib.leyline_pow_server_verify_solution.argtypes = [
             ctypes.POINTER(POWChallenge), ctypes.POINTER(POWSolution), ctypes.POINTER(ctypes.c_bool)
         ]
-        server.leyline_pow_server_verify_solution.restype = ctypes.c_int
+        lib.leyline_pow_server_verify_solution.restype = ctypes.c_int
 
-        client.leyline_pow_client_solve.argtypes = [
+        lib.leyline_pow_client_solve.argtypes = [
             ctypes.POINTER(POWChallenge), ctypes.POINTER(POWSolution)
         ]
-        client.leyline_pow_client_solve.restype = ctypes.c_int
+        lib.leyline_pow_client_solve.restype = ctypes.c_int
         
-        return server, client
+        return lib
     except Exception as e:
-        console.print_fail(f"Error loading Main Tier DLLs: {e}")
-        return None, None
+        console.print_fail(f"Error loading Base Combined DLL: {e}")
+        return None
 
-def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
+def boss_control_loop(lib, algos, difficulty=1):
     config = POWConfig()
     config.default_difficulty_bits = difficulty
     config.max_wu_per_challenge = 10**10
@@ -111,8 +108,7 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
         challenge = POWChallenge()
         context = (ctypes.c_uint8 * 32)(*([0x00]*32))
         
-        start_gen = time.time()
-        ret = server_dll.leyline_pow_server_generate_challenge(
+        ret = lib.leyline_pow_server_generate_challenge(
             ctypes.byref(config), algo.encode('utf-8'), context, 32, difficulty, ctypes.byref(challenge)
         )
         if ret != 0:
@@ -124,11 +120,11 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
         console.print_info(f"Target (Hex): {target_bytes.hex()}")
         console.print_info(f"Target (Bin): {bytes_to_bin(target_bytes)}")
         console.print_info(f"Target Prefix Bits: {prefix_bits(target_bytes, challenge.difficulty_bits)}")
-            
+        
         solution = POWSolution()
         result_container = {'ret': -1}
         def solve_task():
-            result_container['ret'] = client_dll.leyline_pow_client_solve(ctypes.byref(challenge), ctypes.byref(solution))
+            result_container['ret'] = lib.leyline_pow_client_solve(ctypes.byref(challenge), ctypes.byref(solution))
             
         t = threading.Thread(target=solve_task)
         t.daemon = True
@@ -157,7 +153,7 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
             continue
             
         is_valid = ctypes.c_bool(False)
-        ret = server_dll.leyline_pow_server_verify_solution(
+        ret = lib.leyline_pow_server_verify_solution(
             ctypes.byref(challenge), ctypes.byref(solution), ctypes.byref(is_valid)
         )
         
@@ -170,9 +166,8 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
     return success
 
 def main():
-    console.print_header("=== Starting PoW Main Tier Test (All Algos) ===")
+    console.print_header("=== Starting PoW Base Combined Test ===")
     
-    # All algorithms
     algos = [
         'sha256', 'sha512', 'blake3', 'blake2b', 'blake2s',
         'argon2id', 'argon2i', 'argon2d',
@@ -182,11 +177,11 @@ def main():
     ]
     difficulties = [1, 4]
     
-    server, client = load_dll_pair()
-    if server and client:
+    lib = load_dll()
+    if lib:
         all_ok = True
         for difficulty in difficulties:
-            if not boss_control_loop(server, client, algos, difficulty=difficulty):
+            if not boss_control_loop(lib, algos, difficulty=difficulty):
                 all_ok = False
         if all_ok:
             return 0

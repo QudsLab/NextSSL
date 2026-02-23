@@ -30,11 +30,22 @@ def build(builder: Builder):
     # Base64
     core_sources.append(os.path.join(src_dir, 'utils/radix/base64.c'))
     
+    # Hash Primitive Sources
+    hash_sources = builder.get_sources([
+        os.path.join(src_dir, 'primitives', 'hash', 'fast'),
+        os.path.join(src_dir, 'primitives', 'hash', 'sponge_xof'),
+        os.path.join(src_dir, 'primitives', 'hash', 'memory_hard')
+    ], recursive=True)
+    
+    hash_wrapper = os.path.join(src_dir, 'utils', 'hash', 'primitive_memory_hard.c')
+    if os.path.exists(hash_wrapper):
+        hash_sources.append(hash_wrapper)
+    
     # Mock Deps (until integrated)
     core_sources.append(os.path.join(src_dir, 'PoW/mock_deps.c'))
     
     # --- Server Build ---
-    server_sources = core_sources + adapter_sources + builder.get_sources([
+    server_sources = core_sources + adapter_sources + hash_sources + builder.get_sources([
         os.path.join(src_dir, 'PoW/server/')
     ], recursive=True)
     
@@ -62,7 +73,7 @@ def build(builder: Builder):
     )
     
     # --- Client Build ---
-    client_sources = core_sources + adapter_sources + builder.get_sources([
+    client_sources = core_sources + adapter_sources + hash_sources + builder.get_sources([
         os.path.join(src_dir, 'PoW/client/')
     ], recursive=True)
     

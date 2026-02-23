@@ -1,8 +1,11 @@
 #include "../../core/pow_types.h"
 #include "argon2_params.h"
+#include "../../../utils/hash/primitive_memory_hard.h"
 #include <string.h>
 
 // Forward declarations
+static int argon2id_get_default_params(void** out_params, size_t* out_len);
+
 // Assuming leyline_argon2id signature:
 // int leyline_argon2id(const void* pwd, size_t pwd_len, const void* salt, size_t salt_len, 
 //                      uint32_t t, uint32_t m, uint32_t p, void* out, size_t out_len);
@@ -19,16 +22,21 @@
 // OR better: The adapter implementation decides.
 // For this implementation, I will use `input` as Password and a zero-salt or specific salt.
 
-extern int leyline_argon2id(const void* pwd, size_t pwdlen, const void* salt, size_t saltlen, 
-                           uint32_t t_cost, uint32_t m_cost, uint32_t parallelism, 
-                           void* output, size_t outlen);
+extern int leyline_argon2id(const uint8_t *pwd, size_t pwd_len, 
+                            const uint8_t *salt, size_t salt_len,
+                            const LeylineArgon2Params *params,
+                            uint8_t *out, size_t out_len);
 
 extern uint64_t dhcm_argon2id_wu(uint32_t t, uint32_t m, uint32_t p);
 extern uint64_t dhcm_argon2id_mu(uint32_t m);
 
 static int argon2id_hash(const uint8_t* input, size_t input_len, const void* params, uint8_t* output) {
-    if (!params) return -1;
     const Argon2Params* p = (const Argon2Params*)params;
+    if (!p) {
+        size_t len = 0;
+        argon2id_get_default_params((void**)&p, &len);
+        if (!p) return -1;
+    }
     
     // Use input as password. Use a fixed salt for now (or part of input).
     // Using a fixed salt is secure enough for PoW if the input (nonce) is unique.
@@ -41,39 +49,41 @@ static int argon2id_hash(const uint8_t* input, size_t input_len, const void* par
     // But here we only have the concatenated input.
     // Let's use the input as salt too? No, salt should be distinct.
     
-    return leyline_argon2id(input, input_len, salt, sizeof(salt), 
-                           p->iterations, p->memory_kib, p->threads, 
-                           output, p->out_len);
+    LeylineArgon2Params lp = {
+        .t_cost = p->iterations,
+        .m_cost_kb = p->memory_kib,
+        .parallelism = p->threads
+    };
+    return leyline_argon2id(input, input_len, salt, sizeof(salt), &lp, output, p->out_len);
 }
 
 static int argon2id_get_wu(uint32_t difficulty_bits, uint64_t* out_wu) {
-    // This requires params to calculate WU, but the signature doesn't provide params!
-    // The signature `get_wu(difficulty_bits, out_wu)` is for DHCM to ESTIMATE cost.
-    // But Argon2 cost depends on params, not just difficulty.
-    // Wait, `POWChallenge` has `wu` field which is pre-calculated by Server using DHCM.
-    // The `get_wu` in adapter is likely used by Server to Calculate that value.
-    // But Server knows the params it chose.
-    // The interface `get_wu` taking only `difficulty_bits` implies the adapter knows default params?
-    // Or the interface is insufficient for Argon2.
-    // The plan example for SHA256 used `dhcm_calculate`.
+    (void)difficulty_bits; // Not used for memory-hard cost model
     
-    // For Argon2, cost is dominated by memory/time params, not difficulty bits (which just checks output).
-    // The WU is `t * m * p * constant`.
-    // The `get_wu` interface seems designed for Hash functions where cost is fixed per hash.
-    // For Argon2, we probably need a different way to calculate WU based on chosen params.
+    // Use default params to estimate cost
+    Argon2Params* params;
+    size_t len;
+    argon2id_get_default_params((void**)&params, &len);
     
-    // However, since I must implement the interface:
-    // I'll return 0 or a default, assuming the caller (Server) calls DHCM directly 
-    // with the params it selected, rather than using this adapter method.
-    // Or, this adapter method assumes "standard" parameters.
-    
-    *out_wu = 0; // Should be calculated via DHCM with specific params
+    if (params) {
+        *out_wu = dhcm_argon2id_wu(params->iterations, params->memory_kib, params->threads);
+    } else {
+        *out_wu = 0;
+    }
     return 0;
 }
 
 static int argon2id_get_mu(uint64_t* out_mu) {
-    // Similarly, depends on params.
-    *out_mu = 0;
+    // Use default params to estimate memory usage
+    Argon2Params* params;
+    size_t len;
+    argon2id_get_default_params((void**)&params, &len);
+    
+    if (params) {
+        *out_mu = dhcm_argon2id_mu(params->memory_kib);
+    } else {
+        *out_mu = 0;
+    }
     return 0;
 }
 

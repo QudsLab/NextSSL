@@ -11,8 +11,20 @@ uint64_t dhcm_sha256_wu(size_t input_size) {
     return 1000 + (input_size * 10);
 }
 
+uint64_t dhcm_sha512_wu(size_t input_size) {
+    return 1400 + (input_size * 14);
+}
+
 uint64_t dhcm_blake3_wu(size_t input_size) {
     return 800 + (input_size * 8); // Faster than SHA256
+}
+
+uint64_t dhcm_blake2b_wu(size_t input_size) {
+    return 900 + (input_size * 9);
+}
+
+uint64_t dhcm_blake2s_wu(size_t input_size) {
+    return 850 + (input_size * 8);
 }
 
 // --- DHCM Primitive Memory Hard ---
@@ -144,6 +156,7 @@ int leyline_blake3(const uint8_t* input, size_t len, uint8_t* output) {
 
 // --- Hash Primitive Memory Hard ---
 
+#ifndef POW_ENABLE_PRIMITIVE_MEMORY_HARD
 int leyline_argon2id(const void* pwd, size_t pwdlen, const void* salt, size_t saltlen, 
                     uint32_t t_cost, uint32_t m_cost, uint32_t parallelism, 
                     void* output, size_t outlen) {
@@ -168,6 +181,7 @@ int leyline_argon2d(const void* pwd, size_t pwdlen, const void* salt, size_t sal
                     void* output, size_t outlen) {
     return leyline_argon2id(pwd, pwdlen, salt, saltlen, t_cost, m_cost, parallelism, output, outlen);
 }
+#endif
 
 // --- Hash Primitive Sponge XOF ---
 

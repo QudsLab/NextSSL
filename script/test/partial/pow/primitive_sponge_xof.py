@@ -4,6 +4,26 @@ import sys
 import time
 from script.core import console
 
+def leading_zero_bits(data):
+    count = 0
+    for b in data:
+        if b == 0:
+            count += 8
+            continue
+        for i in range(8):
+            if b & (0x80 >> i):
+                return count + i
+        return count + 8
+    return count
+
+def bytes_to_bin(data):
+    return " ".join(f"{b:08b}" for b in data)
+
+def prefix_bits(data, bits):
+    if bits <= 0:
+        return ""
+    return "".join(f"{b:08b}" for b in data)[:bits]
+
 def main():
     """Test server + client + combined DLLs for primitive_sponge_xof algorithms."""
     
@@ -96,85 +116,96 @@ def main():
     config.challenge_ttl_seconds = 60
 
     algos = ["sha3_256", "sha3_512", "keccak_256", "shake128", "shake256"]
+    difficulties = [1, 4]
 
     for algo in algos:
-        console.print_step(f"Testing {algo}...")
+        for difficulty in difficulties:
+            console.print_step(f"Testing {algo} (Diff: {difficulty})...")
         
-        # 2. Generate Challenge
-        challenge = POWChallenge()
-        context_str = "HelloWorld"
-        context_len = len(context_str)
-        context = (ctypes.c_uint8 * 256)()
-        for i in range(context_len):
-            context[i] = ord(context_str[i])
+            challenge = POWChallenge()
+            context_str = "HelloWorld"
+            context_len = len(context_str)
+            context = (ctypes.c_uint8 * 256)()
+            for i in range(context_len):
+                context[i] = ord(context_str[i])
         
-        console.print_info(f"Generating challenge ({algo})...")
-        ret = server_dll.leyline_pow_server_generate_challenge(
-            ctypes.byref(config),
-            algo.encode('utf-8'),
-            context,
-            context_len,
-            config.default_difficulty_bits,
-            ctypes.byref(challenge)
-        )
-        
-        if ret != 0:
-            console.print_fail(f"Failed to generate challenge", expected=0, got=ret)
-            continue
+            console.print_info(f"Generating challenge ({algo})...")
+            ret = server_dll.leyline_pow_server_generate_challenge(
+                ctypes.byref(config),
+                algo.encode('utf-8'),
+                context,
+                context_len,
+                difficulty,
+                ctypes.byref(challenge)
+            )
+            
+            if ret != 0:
+                console.print_fail(f"Failed to generate challenge", expected=0, got=ret)
+                continue
             
         # Log Challenge Details
-        console.print_info(f"Challenge Generated:")
-        console.print_info(f"  ID: {bytes(challenge.challenge_id).hex()}")
-        console.print_info(f"  Algorithm: {challenge.algorithm_id.decode('utf-8')}")
-        console.print_info(f"  Difficulty: {challenge.difficulty_bits}")
-        console.print_info(f"  Target: {bytes(challenge.target[:challenge.target_len]).hex()}")
-        console.print_info(f"  Context (Hex): {bytes(challenge.context[:challenge.context_len]).hex()}")
-        console.print_info(f"  Context (Str): {bytes(challenge.context[:challenge.context_len]).decode('utf-8', errors='replace')}")
-        console.print_info(f"  WU: {challenge.wu}")
-        console.print_info(f"  MU: {challenge.mu}")
+            console.print_info(f"Challenge Generated:")
+            console.print_info(f"  ID: {bytes(challenge.challenge_id).hex()}")
+            console.print_info(f"  Algorithm: {challenge.algorithm_id.decode('utf-8')}")
+            console.print_info(f"  Difficulty: {challenge.difficulty_bits}")
+            target_bytes = bytes(challenge.target[:challenge.target_len])
+            console.print_info(f"  Target: {target_bytes.hex()}")
+            console.print_info(f"  Target (Bin): {bytes_to_bin(target_bytes)}")
+            console.print_info(f"  Target Prefix Bits: {prefix_bits(target_bytes, challenge.difficulty_bits)}")
+            console.print_info(f"  Context (Hex): {bytes(challenge.context[:challenge.context_len]).hex()}")
+            console.print_info(f"  Context (Str): {bytes(challenge.context[:challenge.context_len]).decode('utf-8', errors='replace')}")
+            console.print_info(f"  WU: {challenge.wu}")
+            console.print_info(f"  MU: {challenge.mu}")
 
         # 3. Solve
-        console.print_info(f"Solving challenge...")
-        solution = POWSolution()
-        
-        start = time.time()
-        ret = client_dll.leyline_pow_client_solve(
-            ctypes.byref(challenge),
-            ctypes.byref(solution)
-        )
-        end = time.time()
-        
-        if ret != 0:
-            console.print_fail(f"Failed to solve challenge", expected=0, got=ret)
-            continue
+            console.print_info(f"Solving challenge...")
+            solution = POWSolution()
             
-        console.print_info(f"Solution found in {solution.solve_time_seconds:.4f}s (Attempts: {solution.attempts})")
-        console.print_info(f"  Nonce: {solution.nonce}")
-        console.print_info(f"  Hash: {bytes(solution.hash_output[:solution.hash_output_len]).hex()}")
+            start = time.time()
+            ret = client_dll.leyline_pow_client_solve(
+                ctypes.byref(challenge),
+                ctypes.byref(solution)
+            )
+            end = time.time()
+            
+            if ret != 0:
+                console.print_fail(f"Failed to solve challenge", expected=0, got=ret)
+                continue
+                
+            console.print_info(f"Solution found in {solution.solve_time_seconds:.4f}s (Attempts: {solution.attempts})")
+            console.print_info(f"  Nonce: {solution.nonce}")
+            hash_bytes = bytes(solution.hash_output[:solution.hash_output_len])
+            console.print_info(f"  Hash: {hash_bytes.hex()}")
+            console.print_info(f"  Hash (Bin): {bytes_to_bin(hash_bytes)}")
+            console.print_info(f"  Hash Prefix Bits: {prefix_bits(hash_bytes, challenge.difficulty_bits)}")
+            lz = leading_zero_bits(hash_bytes)
+            if lz < challenge.difficulty_bits:
+                console.print_fail(f"Difficulty check failed", expected=challenge.difficulty_bits, got=lz)
+                return 1
         
         # Log the full input string for verification
-        input_str = f"{context_str}{solution.nonce}"
-        console.print_info(f"  Verify Input String: \"{input_str}\"")
+            input_str = f"{context_str}{solution.nonce}"
+            console.print_info(f"  Verify Input String: \"{input_str}\"")
 
         # 4. Verify
-        console.print_info(f"Verifying solution...")
-        is_valid = ctypes.c_bool(False)
-        
-        ret = server_dll.leyline_pow_server_verify_solution(
-            ctypes.byref(challenge),
-            ctypes.byref(solution),
-            ctypes.byref(is_valid)
-        )
-        
-        if ret != 0:
-            console.print_fail(f"Server verify error", expected=0, got=ret)
-            return 1
+            console.print_info(f"Verifying solution...")
+            is_valid = ctypes.c_bool(False)
             
-        if is_valid.value:
-            console.print_pass(f"VERIFICATION PASSED for {algo}!")
-        else:
-            console.print_fail(f"VERIFICATION FAILED for {algo}!")
-            return 1
+            ret = server_dll.leyline_pow_server_verify_solution(
+                ctypes.byref(challenge),
+                ctypes.byref(solution),
+                ctypes.byref(is_valid)
+            )
+            
+            if ret != 0:
+                console.print_fail(f"Server verify error", expected=0, got=ret)
+                return 1
+                
+            if is_valid.value:
+                console.print_pass(f"VERIFICATION PASSED for {algo}!")
+            else:
+                console.print_fail(f"VERIFICATION FAILED for {algo}!")
+                return 1
 
     return 0
 

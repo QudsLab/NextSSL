@@ -5,6 +5,26 @@ import time
 import threading
 from script.core import console
 
+def leading_zero_bits(data):
+    count = 0
+    for b in data:
+        if b == 0:
+            count += 8
+            continue
+        for i in range(8):
+            if b & (0x80 >> i):
+                return count + i
+        return count + 8
+    return count
+
+def bytes_to_bin(data):
+    return " ".join(f"{b:08b}" for b in data)
+
+def prefix_bits(data, bits):
+    if bits <= 0:
+        return ""
+    return "".join(f"{b:08b}" for b in data)[:bits]
+
 # --- Structures ---
 class POWChallenge(ctypes.Structure):
     _fields_ = [
@@ -118,6 +138,10 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
             continue
             
         console.log_data(f"{algo}_challenge_id", bytes(challenge.challenge_id).hex())
+        target_bytes = bytes(challenge.target[:challenge.target_len])
+        console.print_info(f"Target (Hex): {target_bytes.hex()}")
+        console.print_info(f"Target (Bin): {bytes_to_bin(target_bytes)}")
+        console.print_info(f"Target Prefix Bits: {prefix_bits(target_bytes, challenge.difficulty_bits)}")
         
         # 2. Client Solve
         solution = POWSolution()
@@ -141,7 +165,16 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
             success = False
             continue
             
-        # 3. Server Verify
+        hash_bytes = bytes(solution.hash_output[:solution.hash_output_len])
+        console.print_info(f"Hash (Hex): {hash_bytes.hex()}")
+        console.print_info(f"Hash (Bin): {bytes_to_bin(hash_bytes)}")
+        console.print_info(f"Hash Prefix Bits: {prefix_bits(hash_bytes, challenge.difficulty_bits)}")
+        lz = leading_zero_bits(hash_bytes)
+        if lz < challenge.difficulty_bits:
+            console.print_fail(f"Difficulty check failed for {algo}", expected=challenge.difficulty_bits, got=lz)
+            success = False
+            continue
+            
         is_valid = ctypes.c_bool(False)
         ret = server_dll.leyline_pow_server_verify_solution(
             ctypes.byref(challenge), 
@@ -161,14 +194,19 @@ def main():
     console.print_header("=== Starting PoW Primitive Base Test ===")
     
     algos = [
-        'sha256', 'blake3', 
-        'argon2id', 'argon2i', 'argon2d', 
+        'sha256', 'sha512', 'blake3', 'blake2b', 'blake2s',
+        'argon2id', 'argon2i', 'argon2d',
         'shake128', 'shake256', 'sha3_256', 'sha3_512', 'keccak_256'
     ]
+    difficulties = [1, 4]
     
     server, client = load_dll_pair()
     if server and client:
-        if boss_control_loop(server, client, algos, difficulty=1):
+        all_ok = True
+        for difficulty in difficulties:
+            if not boss_control_loop(server, client, algos, difficulty=difficulty):
+                all_ok = False
+        if all_ok:
             return 0
     return 1
 

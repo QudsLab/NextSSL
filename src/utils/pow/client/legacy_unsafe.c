@@ -1,4 +1,5 @@
 #include "../../../PoW/client/solver.h"
+#include "../../../PoW/client/limits.h"
 #include <string.h>
 
 #ifdef _WIN32

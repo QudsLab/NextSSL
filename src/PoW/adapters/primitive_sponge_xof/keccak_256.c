@@ -1,12 +1,11 @@
 #include "../../core/pow_types.h"
-#include <string.h>
-
-extern int leyline_keccak_256(const uint8_t* input, size_t len, uint8_t* output);
+#include "../../../primitives/hash/sponge_xof/sha3/sha3.h"
 extern uint64_t dhcm_keccak_256_wu(size_t input_size);
 
-static int keccak_256_hash(const uint8_t* input, size_t input_len, const void* params, uint8_t* output) {
+static int pow_keccak_256_hash(const uint8_t* input, size_t input_len, const void* params, uint8_t* output) {
     (void)params;
-    return leyline_keccak_256(input, input_len, output);
+    keccak_256_hash(input, input_len, output);
+    return 0;
 }
 
 static int keccak_256_get_wu(uint32_t difficulty_bits, uint64_t* out_wu) {
@@ -21,7 +20,7 @@ static int keccak_256_get_mu(uint64_t* out_mu) {
 }
 
 static POWAlgoAdapter keccak_256_adapter = {
-    .hash = keccak_256_hash,
+    .hash = pow_keccak_256_hash,
     .get_wu = keccak_256_get_wu,
     .get_mu = keccak_256_get_mu
 };

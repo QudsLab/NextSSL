@@ -17,6 +17,15 @@ def build(builder: Builder):
     # Add Mock Dependencies
     sources.append(os.path.join(src_dir, 'PoW/mock_deps.c'))
     
+    # Add Real Hash Primitive Sources (Argon2)
+    sources.extend(builder.get_sources([
+        os.path.join(src_dir, 'primitives', 'hash', 'memory_hard')
+    ], recursive=True))
+    
+    hash_wrapper = os.path.join(src_dir, 'utils', 'hash', 'primitive_memory_hard.c')
+    if os.path.exists(hash_wrapper):
+        sources.append(hash_wrapper)
+
     # Wrapper
     wrapper = os.path.join(src_dir, 'utils/pow/server/primitive_memory_hard.c')
     if os.path.exists(wrapper):
