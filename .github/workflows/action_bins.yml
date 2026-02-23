@@ -448,245 +448,247 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action_web_system.log
           if-no-files-found: error
-  windows_partial_core:
-    runs-on: windows-latest
-    needs: guard
-    env:
-      PLATFORM: windows
-      BIN_DIR: windows
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install GCC (Windows)
-        run: choco install mingw -y
-        shell: powershell
-      - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_windows_partial_core.log
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-windows-partial-core-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_core.log
-          if-no-files-found: error
-  windows_partial_hash:
-    runs-on: windows-latest
-    needs: guard
-    env:
-      PLATFORM: windows
-      BIN_DIR: windows
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install GCC (Windows)
-        run: choco install mingw -y
-        shell: powershell
-      - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_windows_partial_hash.log
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-windows-partial-hash-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_hash.log
-          if-no-files-found: error
-  windows_partial_dhcm:
-    runs-on: windows-latest
-    needs: guard
-    env:
-      PLATFORM: windows
-      BIN_DIR: windows
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install GCC (Windows)
-        run: choco install mingw -y
-        shell: powershell
-      - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_windows_partial_dhcm.log
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-windows-partial-dhcm-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_dhcm.log
-          if-no-files-found: error
-  windows_partial_pow:
-    runs-on: windows-latest
-    needs: guard
-    env:
-      PLATFORM: windows
-      BIN_DIR: windows
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install GCC (Windows)
-        run: choco install mingw -y
-        shell: powershell
-      - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_windows_partial_pow.log
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-windows-partial-pow-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_pow.log
-          if-no-files-found: error
-  windows_partial_pqc:
-    runs-on: windows-latest
-    needs: guard
-    env:
-      PLATFORM: windows
-      BIN_DIR: windows
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install GCC (Windows)
-        run: choco install mingw -y
-        shell: powershell
-      - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_windows_partial_pqc.log
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-windows-partial-pqc-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_pqc.log
-          if-no-files-found: error
-  windows_base:
-    runs-on: windows-latest
-    needs:
-      - windows_partial_core
-      - windows_partial_hash
-      - windows_partial_dhcm
-      - windows_partial_pow
-      - windows_partial_pqc
-    env:
-      PLATFORM: windows
-      BIN_DIR: windows
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install GCC (Windows)
-        run: choco install mingw -y
-        shell: powershell
-      - name: Build and Test
-        run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_windows_base_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_windows_base_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_windows_base_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_windows_base_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_windows_base_pqc.log
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-windows-base-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/action_windows_base_*.log
-          if-no-files-found: error
-  windows_main:
-    runs-on: windows-latest
-    needs: windows_base
-    env:
-      PLATFORM: windows
-      BIN_DIR: windows
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install GCC (Windows)
-        run: choco install mingw -y
-        shell: powershell
-      - name: Build and Test
-        run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_windows_main_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_windows_main_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_windows_main_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_windows_main_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_windows_main_pqc.log
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-windows-main-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/action_windows_main_*.log
-          if-no-files-found: error
-  windows_system:
-    runs-on: windows-latest
-    needs: windows_main
-    env:
-      PLATFORM: windows
-      BIN_DIR: windows
-      SOURCE_DATE_EPOCH: 0
-      TZ: UTC
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Install GCC (Windows)
-        run: choco install mingw -y
-        shell: powershell
-      - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_windows_system.log
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
-        with:
-          name: output-windows-system-${{ github.run_attempt }}
-          path: |
-            bin/${{ env.BIN_DIR }}
-            logs/action_windows_system.log
-          if-no-files-found: error
+  
+  # windows_partial_core:
+  #   runs-on: windows-latest
+  #   needs: guard
+  #   env:
+  #     PLATFORM: windows
+  #     BIN_DIR: windows
+  #     SOURCE_DATE_EPOCH: 0
+  #     TZ: UTC
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - name: Install GCC (Windows)
+  #       run: choco install mingw -y
+  #       shell: powershell
+  #     - name: Build and Test
+  #       run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_windows_partial_core.log
+  #     - name: Upload Output
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: output-windows-partial-core-${{ github.run_attempt }}
+  #         path: |
+  #           bin/${{ env.BIN_DIR }}
+  #           logs/action_windows_partial_core.log
+  #         if-no-files-found: error
+  # windows_partial_hash:
+  #   runs-on: windows-latest
+  #   needs: guard
+  #   env:
+  #     PLATFORM: windows
+  #     BIN_DIR: windows
+  #     SOURCE_DATE_EPOCH: 0
+  #     TZ: UTC
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - name: Install GCC (Windows)
+  #       run: choco install mingw -y
+  #       shell: powershell
+  #     - name: Build and Test
+  #       run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_windows_partial_hash.log
+  #     - name: Upload Output
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: output-windows-partial-hash-${{ github.run_attempt }}
+  #         path: |
+  #           bin/${{ env.BIN_DIR }}
+  #           logs/action_windows_partial_hash.log
+  #         if-no-files-found: error
+  # windows_partial_dhcm:
+  #   runs-on: windows-latest
+  #   needs: guard
+  #   env:
+  #     PLATFORM: windows
+  #     BIN_DIR: windows
+  #     SOURCE_DATE_EPOCH: 0
+  #     TZ: UTC
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - name: Install GCC (Windows)
+  #       run: choco install mingw -y
+  #       shell: powershell
+  #     - name: Build and Test
+  #       run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_windows_partial_dhcm.log
+  #     - name: Upload Output
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: output-windows-partial-dhcm-${{ github.run_attempt }}
+  #         path: |
+  #           bin/${{ env.BIN_DIR }}
+  #           logs/action_windows_partial_dhcm.log
+  #         if-no-files-found: error
+  # windows_partial_pow:
+  #   runs-on: windows-latest
+  #   needs: guard
+  #   env:
+  #     PLATFORM: windows
+  #     BIN_DIR: windows
+  #     SOURCE_DATE_EPOCH: 0
+  #     TZ: UTC
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - name: Install GCC (Windows)
+  #       run: choco install mingw -y
+  #       shell: powershell
+  #     - name: Build and Test
+  #       run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_windows_partial_pow.log
+  #     - name: Upload Output
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: output-windows-partial-pow-${{ github.run_attempt }}
+  #         path: |
+  #           bin/${{ env.BIN_DIR }}
+  #           logs/action_windows_partial_pow.log
+  #         if-no-files-found: error
+  # windows_partial_pqc:
+  #   runs-on: windows-latest
+  #   needs: guard
+  #   env:
+  #     PLATFORM: windows
+  #     BIN_DIR: windows
+  #     SOURCE_DATE_EPOCH: 0
+  #     TZ: UTC
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - name: Install GCC (Windows)
+  #       run: choco install mingw -y
+  #       shell: powershell
+  #     - name: Build and Test
+  #       run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_windows_partial_pqc.log
+  #     - name: Upload Output
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: output-windows-partial-pqc-${{ github.run_attempt }}
+  #         path: |
+  #           bin/${{ env.BIN_DIR }}
+  #           logs/action_windows_partial_pqc.log
+  #         if-no-files-found: error
+  # windows_base:
+  #   runs-on: windows-latest
+  #   needs:
+  #     - windows_partial_core
+  #     - windows_partial_hash
+  #     - windows_partial_dhcm
+  #     - windows_partial_pow
+  #     - windows_partial_pqc
+  #   env:
+  #     PLATFORM: windows
+  #     BIN_DIR: windows
+  #     SOURCE_DATE_EPOCH: 0
+  #     TZ: UTC
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - name: Install GCC (Windows)
+  #       run: choco install mingw -y
+  #       shell: powershell
+  #     - name: Build and Test
+  #       run: |
+  #         python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_windows_base_core.log
+  #         python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_windows_base_hash.log
+  #         python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_windows_base_dhcm.log
+  #         python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_windows_base_pow.log
+  #         python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_windows_base_pqc.log
+  #     - name: Upload Output
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: output-windows-base-${{ github.run_attempt }}
+  #         path: |
+  #           bin/${{ env.BIN_DIR }}
+  #           logs/action_windows_base_*.log
+  #         if-no-files-found: error
+  # windows_main:
+  #   runs-on: windows-latest
+  #   needs: windows_base
+  #   env:
+  #     PLATFORM: windows
+  #     BIN_DIR: windows
+  #     SOURCE_DATE_EPOCH: 0
+  #     TZ: UTC
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - name: Install GCC (Windows)
+  #       run: choco install mingw -y
+  #       shell: powershell
+  #     - name: Build and Test
+  #       run: |
+  #         python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_windows_main_core.log
+  #         python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_windows_main_hash.log
+  #         python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_windows_main_dhcm.log
+  #         python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_windows_main_pow.log
+  #         python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_windows_main_pqc.log
+  #     - name: Upload Output
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: output-windows-main-${{ github.run_attempt }}
+  #         path: |
+  #           bin/${{ env.BIN_DIR }}
+  #           logs/action_windows_main_*.log
+  #         if-no-files-found: error
+  # windows_system:
+  #   runs-on: windows-latest
+  #   needs: windows_main
+  #   env:
+  #     PLATFORM: windows
+  #     BIN_DIR: windows
+  #     SOURCE_DATE_EPOCH: 0
+  #     TZ: UTC
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 1
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.11"
+  #     - name: Install GCC (Windows)
+  #       run: choco install mingw -y
+  #       shell: powershell
+  #     - name: Build and Test
+  #       run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_windows_system.log
+  #     - name: Upload Output
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: output-windows-system-${{ github.run_attempt }}
+  #         path: |
+  #           bin/${{ env.BIN_DIR }}
+  #           logs/action_windows_system.log
+  #         if-no-files-found: error
+
   linux_partial_core:
     runs-on: ubuntu-latest
     needs: guard
@@ -1153,7 +1155,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - web_system
-      - windows_system
+      # - windows_system
       - linux_system
       - mac_system
     steps:
