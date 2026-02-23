@@ -1,7 +1,0 @@
-2026-02-23 21:10:28,540 - ERROR - Compilation failed for dhcm_legacy:
-2026-02-23 21:10:28,541 - ERROR - Undefined symbols for architecture arm64:
-  "_exp2", referenced from:
-      _dhcm_pow2 in dhcm_math-c77870.o
-ld: symbol(s) not found for architecture arm64
-clang: error: linker command failed with exit code 1 (use -v to see invocation)
-
