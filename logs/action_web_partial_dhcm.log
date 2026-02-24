@@ -28,3 +28,18 @@
 2026-02-24 00:33:26,403 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/primitive_fast.wasm
 2026-02-24 00:33:26,408 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/primitive_memory_hard.wasm
 2026-02-24 00:33:26,413 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/primitive_sponge_xof.wasm
+2026-02-24 01:30:38,674 - INFO - Successfully built primitive_fast
+2026-02-24 01:30:38,991 - INFO - Successfully built primitive_memory_hard
+2026-02-24 01:30:39,335 - INFO - Successfully built primitive_sponge_xof
+2026-02-24 01:30:39,673 - INFO - Successfully built legacy_alive
+2026-02-24 01:30:40,038 - INFO - Successfully built legacy_unsafe
+2026-02-24 01:30:40,039 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/legacy_alive.wasm
+2026-02-24 01:30:40,039 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/legacy_unsafe.wasm
+2026-02-24 01:30:40,039 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/primitive_fast.wasm
+2026-02-24 01:30:40,039 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/primitive_memory_hard.wasm
+2026-02-24 01:30:40,039 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/primitive_sponge_xof.wasm
+2026-02-24 01:30:40,047 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/legacy_alive.wasm
+2026-02-24 01:30:40,052 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/legacy_unsafe.wasm
+2026-02-24 01:30:40,057 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/primitive_fast.wasm
+2026-02-24 01:30:40,063 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/primitive_memory_hard.wasm
+2026-02-24 01:30:40,067 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/dhcm/primitive_sponge_xof.wasm
