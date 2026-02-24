@@ -755,8 +755,74 @@ def run_test(args):
                     console.print_fail(f"  - {name} FAILED")
         return 0 if failed_count == 0 else 1
 
+def run_python_release(args):
+    """Handle Python package release workflow"""
+    console = None
+    try:
+        from script.core import console as _console
+        console = _console
+    except:
+        pass
+    
+    # Determine mode
+    mode = 'release'
+    if args.test:
+        mode = 'test'
+    elif args.beta:
+        mode = 'beta'
+    elif args.alpha:
+        mode = 'alpha'
+    
+    # Build command for release_meta.py
+    cmd = [
+        sys.executable,
+        "libs/python/tools/release_meta.py",
+        "--mode", mode,
+        "--force", str(args.force_release).lower()
+    ]
+    
+    # Add custom version if provided
+    if args.version:
+        cmd.extend(["--version", args.version])
+    
+    if console:
+        console.print_header(f"Python Package Release - Mode: {mode}")
+        console.print_step("Running release metadata tool...")
+    
+    # Run release_meta.py to get version info
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    
+    if result.returncode != 0:
+        if console:
+            console.print_fail(f"Release metadata failed: {result.stderr}")
+        else:
+            print(f"ERROR: {result.stderr}", file=sys.stderr)
+        return 1
+    
+    if console:
+        console.print_pass("Release metadata generated")
+        console.print_info("Output:")
+        for line in result.stdout.strip().split('\n'):
+            console.print_info(f"  {line}")
+    else:
+        print(result.stdout.strip())
+    
+    return 0
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="NextSSL Build & Test Runner")
+    subparsers = parser.add_subparsers(dest='command', help='Command to run')
+    
+    # Python release subcommand
+    python_parser = subparsers.add_parser('python', help='Python package release operations')
+    python_parser.add_argument('--test', action='store_true', help='Test release (publish to TestPyPI)')
+    python_parser.add_argument('--release', action='store_true', help='Production release (publish to PyPI)')
+    python_parser.add_argument('--beta', action='store_true', help='Beta release')
+    python_parser.add_argument('--alpha', action='store_true', help='Alpha release')
+    python_parser.add_argument('--v', '--version', dest='version', type=str, help='Custom version (e.g., 0.0.2)')
+    python_parser.add_argument('--force_release', action='store_true', help='Force beta/alpha to publish')
+    
+    # Legacy build/test arguments (backward compatibility)
     parser.add_argument('--build', help="Build target (e.g., hash, hash:partial)")
     parser.add_argument('--test', help="Test target (e.g., hash, hash:partial)")
     parser.add_argument('--platform', type=str, choices=['windows', 'linux', 'mac', 'web'], help='Platform output selector')
@@ -770,13 +836,18 @@ if __name__ == "__main__":
     
     from script.core import console
 
+    # Configure console colors
+    console.set_color(not args.no_color)
+
+    # Handle python subcommand
+    if args.command == 'python':
+        sys.exit(run_python_release(args))
+    
+    # Legacy build/test workflow (backward compatibility)
     # Check for no-args behavior: default to build all + test all
     if not args.build and not args.test:
         args.build = 'all'
         args.test = 'all'
-    
-    # Configure console colors
-    console.set_color(not args.no_color)
 
     # Record start time
     start_time = time.time()

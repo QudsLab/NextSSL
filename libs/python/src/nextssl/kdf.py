@@ -2,7 +2,7 @@
 import ctypes
 from enum import IntEnum
 from typing import Optional
-from .._loader import get_loader
+from ._loader import get_loader
 
 
 class KDFAlgorithm(IntEnum):
