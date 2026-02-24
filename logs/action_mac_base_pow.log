@@ -1676,3 +1676,7 @@
 2026-02-24 00:37:04,183 - INFO - [INFO] Hash Prefix Bits: 0000
 2026-02-24 00:37:04,183 - INFO - [PASS] ripemd320 verified successfully.
 2026-02-24 00:37:04,183 - INFO - [PASS] ALL TESTS PASSED
+2026-02-24 02:00:53,633 - INFO - Successfully built pow_server_primitive
+2026-02-24 02:00:55,632 - INFO - Successfully built pow_client_primitive
+2026-02-24 02:00:56,975 - INFO - Successfully built pow_server_legacy
+2026-02-24 02:00:58,503 - INFO - Successfully built pow_client_legacy
