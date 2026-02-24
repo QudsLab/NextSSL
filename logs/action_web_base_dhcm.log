@@ -4,3 +4,9 @@
 2026-02-23 23:52:24,792 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/dhcm_primitive.wasm
 2026-02-23 23:52:24,799 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/dhcm_legacy.wasm
 2026-02-23 23:52:24,804 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/dhcm_primitive.wasm
+2026-02-24 00:34:11,267 - INFO - Successfully built dhcm_primitive
+2026-02-24 00:34:11,695 - INFO - Successfully built dhcm_legacy
+2026-02-24 00:34:11,696 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/dhcm_legacy.wasm
+2026-02-24 00:34:11,696 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/dhcm_primitive.wasm
+2026-02-24 00:34:11,703 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/dhcm_legacy.wasm
+2026-02-24 00:34:11,709 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/dhcm_primitive.wasm
