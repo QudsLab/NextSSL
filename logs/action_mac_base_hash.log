@@ -1,0 +1,21 @@
+2026-02-23 23:55:31,209 - INFO - Successfully built hash_primitive
+2026-02-23 23:55:31,968 - INFO - Successfully built hash_legacy
+2026-02-23 23:55:31,968 - INFO - === Running 2 test suites... ===
+2026-02-23 23:55:31,969 - INFO - -> Running script.test.base.hash_primitive_main
+2026-02-23 23:55:31,969 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/base/hash_primitive.dylib
+2026-02-23 23:55:31,970 - INFO - [PASS] DLL loaded successfully
+2026-02-23 23:55:31,970 - INFO - [PASS] All key symbols present.
+2026-02-23 23:55:31,970 - INFO - [PASS] SHA-256 (Fast category)
+2026-02-23 23:55:31,970 - INFO -        Hash (32 bytes): ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
+2026-02-23 23:55:31,970 - INFO - [PASS] SHA3-256 (Sponge category)
+2026-02-23 23:55:31,970 - INFO -        Hash (32 bytes): 3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532
+2026-02-23 23:55:31,970 - INFO - [INFO] Results: 2 passed, 0 failed
+2026-02-23 23:55:31,970 - INFO - -> Running script.test.base.hash_legacy_main
+2026-02-23 23:55:31,970 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/base/hash_legacy.dylib
+2026-02-23 23:55:31,971 - INFO - [PASS] DLL loaded successfully
+2026-02-23 23:55:31,971 - INFO - [PASS] MD5 (Alive category)
+2026-02-23 23:55:31,971 - INFO -        Hash (16 bytes): 900150983cd24fb0d6963f7d28e17f72
+2026-02-23 23:55:31,971 - INFO - [PASS] MD2 (Unsafe category)
+2026-02-23 23:55:31,971 - INFO -        Hash (16 bytes): da853b0d3f88d99b30283a69e6ded6bb
+2026-02-23 23:55:31,971 - INFO - [INFO] Results: 2 passed, 0 failed
+2026-02-23 23:55:31,971 - INFO - [PASS] ALL TESTS PASSED

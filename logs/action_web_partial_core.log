@@ -1,0 +1,15 @@
+2026-02-23 23:51:36,099 - INFO - Successfully built aes_modes
+2026-02-23 23:51:36,595 - INFO - Successfully built aes_aead
+2026-02-23 23:51:36,907 - INFO - Successfully built stream_aead
+2026-02-23 23:51:38,041 - INFO - Successfully built macs
+2026-02-23 23:51:39,591 - INFO - Successfully built ecc
+2026-02-23 23:51:39,591 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/aes_aead.wasm
+2026-02-23 23:51:39,591 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/aes_modes.wasm
+2026-02-23 23:51:39,591 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/ecc.wasm
+2026-02-23 23:51:39,592 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/macs.wasm
+2026-02-23 23:51:39,592 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/stream_aead.wasm
+2026-02-23 23:51:39,600 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/aes_aead.wasm
+2026-02-23 23:51:39,605 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/aes_modes.wasm
+2026-02-23 23:51:39,610 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/ecc.wasm
+2026-02-23 23:51:39,615 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/macs.wasm
+2026-02-23 23:51:39,621 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/core/stream_aead.wasm

@@ -1,0 +1,7 @@
+2026-02-23 23:53:22,747 - INFO - Successfully built pow_server
+2026-02-23 23:53:25,793 - INFO - Successfully built pow_client
+2026-02-23 23:53:28,813 - INFO - Successfully built pow_combined
+2026-02-23 23:53:28,813 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/main/pow_client.wasm
+2026-02-23 23:53:28,814 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/main/pow_server.wasm
+2026-02-23 23:53:28,819 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/main/pow_client.wasm
+2026-02-23 23:53:28,824 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/main/pow_server.wasm

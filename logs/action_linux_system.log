@@ -1,0 +1,12 @@
+2026-02-24 00:00:29,298 - INFO - Successfully built main
+2026-02-24 00:00:29,299 - INFO - === Running 1 test suites... ===
+2026-02-24 00:00:29,299 - INFO - -> Running script.test.main.system
+2026-02-24 00:00:29,299 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/main.so
+2026-02-24 00:00:29,299 - INFO - [PASS] DLL Loaded
+2026-02-24 00:00:29,300 - INFO - [PASS] SHA256 OK
+2026-02-24 00:00:29,300 - INFO - [PASS] DHCM OK
+2026-02-24 00:00:29,300 - INFO - [PASS] PoW symbols OK
+2026-02-24 00:00:29,300 - INFO - [PASS] PQC symbols OK
+2026-02-24 00:00:29,300 - INFO - [PASS] AES-CBC OK
+2026-02-24 00:00:29,300 - INFO - [PASS] Main unified DLL OK
+2026-02-24 00:00:29,300 - INFO - [PASS] ALL TESTS PASSED
