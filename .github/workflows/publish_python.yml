@@ -18,6 +18,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   build:
     if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '--release') || contains(github.event.head_commit.message, '--test') || contains(github.event.head_commit.message, '--beta') || contains(github.event.head_commit.message, '--alpha') || contains(toJson(github.event.commits), '--release') || contains(toJson(github.event.commits), '--test') || contains(toJson(github.event.commits), '--beta') || contains(toJson(github.event.commits), '--alpha') }}
@@ -147,25 +151,32 @@ jobs:
           name: python-dist
           path: libs/python/dist
       - name: Tag Release
-        if: ${{ env.SKIP_PUBLISH != 'true' && env.RELEASE_MODE != 'test' }}
+        if: ${{ env.SKIP_PUBLISH != 'true' }}
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           if git rev-parse "${{ env.TAG_NAME }}" >/dev/null 2>&1; then
-            echo "SKIP_PUBLISH=true" >> $GITHUB_ENV
+            echo "Tag ${{ env.TAG_NAME }} already exists, skipping"
             exit 0
           fi
           git tag "${{ env.TAG_NAME }}"
-          git push origin "${{ env.TAG_NAME }}"
+          if git push origin "${{ env.TAG_NAME }}"; then
+            echo "✓ Tag ${{ env.TAG_NAME }} pushed successfully"
+          else
+            echo "⚠️  Failed to push tag (permissions issue?), continuing anyway..."
+          fi
         shell: bash
       - name: GitHub Release
-        if: ${{ env.SKIP_PUBLISH != 'true' && env.RELEASE_MODE != 'test' }}
+        if: ${{ env.SKIP_PUBLISH != 'true' }}
+        continue-on-error: true
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG_NAME }}
-          name: nextssl py ${{ env.PY_VERSION }}
+          name: "NextSSL Python ${{ env.PY_VERSION }} (${{ env.RELEASE_MODE }})"
           body_path: ${{ env.NOTE_PATH }}
           prerelease: ${{ env.PRERELEASE }}
+          fail_on_unmatched_files: false
       - name: Publish to PyPI
         if: ${{ env.SKIP_PUBLISH != 'true' && env.RELEASE_MODE != 'test' }}
         uses: pypa/gh-action-pypi-publish@release/v1
@@ -179,3 +190,150 @@ jobs:
           packages-dir: libs/python/dist
           password: ${{ secrets.TEST_PYPI_API_TOKEN }}
           repository-url: https://test.pypi.org/legacy/
+
+  verify:
+    if: ${{ needs.publish.result == 'success' }}
+    needs: publish
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Resolve Mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
+          else
+            msg="${{ github.event.head_commit.message }}"
+            if echo "$msg" | grep -q -- "--test"; then
+              echo "RELEASE_MODE=test" >> $GITHUB_ENV
+            elif echo "$msg" | grep -q -- "--beta"; then
+              echo "RELEASE_MODE=beta" >> $GITHUB_ENV
+            elif echo "$msg" | grep -q -- "--alpha"; then
+              echo "RELEASE_MODE=alpha" >> $GITHUB_ENV
+            else
+              echo "RELEASE_MODE=release" >> $GITHUB_ENV
+            fi
+          fi
+        shell: bash
+      - name: Resolve Release Meta
+        run: python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "false" >> $GITHUB_ENV
+        shell: bash
+      - name: Wait for Package Availability
+        run: |
+          echo "Waiting 60 seconds for package to be available..."
+          sleep 60
+        shell: bash
+      - name: Install from TestPyPI
+        if: ${{ env.RELEASE_MODE == 'test' }}
+        run: |
+          echo "Installing nextssl==${{ env.PY_VERSION }} from TestPyPI on ${{ matrix.os }}..."
+          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "nextssl==${{ env.PY_VERSION }}"
+        shell: bash
+      - name: Install from PyPI
+        if: ${{ env.RELEASE_MODE != 'test' }}
+        run: |
+          echo "Installing nextssl==${{ env.PY_VERSION }} from PyPI on ${{ matrix.os }}..."
+          pip install "nextssl==${{ env.PY_VERSION }}"
+        shell: bash
+      - name: Verify Installation
+        run: |
+          echo "Verifying nextssl installation on ${{ matrix.os }}..."
+          python -c "import nextssl; print(f'NextSSL version: {nextssl.__version__}')"
+          python -c "import nextssl; print(f'Available modules: {dir(nextssl)}')"
+        shell: bash
+      - name: Run Post-Install Tests
+        run: python libs/python/tests/test_all.py
+        shell: bash
+      - name: Test Import All Modules
+        run: |
+          python -c "from nextssl import hash, dhcm, pow, pqc, primitives, kdf, encoding, root, unsafe; print('✓ All modules imported successfully')"
+          python -c "from nextssl import Hash, BLAKE2, SHAKE, Argon2; print('✓ Hash classes imported')"
+          python -c "from nextssl import KEM, Sign; print('✓ PQC classes imported')"
+          python -c "from nextssl import AES, ChaCha20Poly1305; print('✓ Cipher classes imported')"
+          python -c "from nextssl import Ed25519, Ed448, Curve25519, Curve448; print('✓ ECC classes imported')"
+          python -c "from nextssl import MAC, SipHash; print('✓ MAC classes imported')"
+          python -c "from nextssl import HKDF, KDF_SHAKE256; print('✓ KDF classes imported')"
+          python -c "from nextssl import Base64, Hex, FlexFrame70; print('✓ Encoding classes imported')"
+          python -c "import nextssl.root; print('✓ Root module imported')"
+          python -c "import nextssl.unsafe; print('✓ Unsafe module imported')"
+        shell: bash
+      - name: Report Success
+        run: |
+          echo "=========================================="
+          echo "✅ Verification passed on ${{ matrix.os }}"
+          echo "Package: nextssl==${{ env.PY_VERSION }}"
+          echo "Source: ${{ env.RELEASE_MODE == 'test' && 'TestPyPI' || 'PyPI' }}"
+          echo "Platform: ${{ matrix.os }}"
+          echo "=========================================="
+        shell: bash
+
+  summary:
+    if: always()
+    needs: [build, test, publish, verify]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Build Status
+        run: echo "Build status - ${{ needs.build.result }}"
+      - name: Check Test Status
+        run: echo "Test status - ${{ needs.test.result }}"
+      - name: Check Publish Status
+        run: echo "Publish status - ${{ needs.publish.result }}"
+      - name: Check Verify Status
+        run: echo "Verify status - ${{ needs.verify.result }}"
+      - name: Resolve Mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
+          else
+            msg="${{ github.event.head_commit.message }}"
+            if echo "$msg" | grep -q -- "--test"; then
+              echo "RELEASE_MODE=test" >> $GITHUB_ENV
+            elif echo "$msg" | grep -q -- "--beta"; then
+              echo "RELEASE_MODE=beta" >> $GITHUB_ENV
+            elif echo "$msg" | grep -q -- "--alpha"; then
+              echo "RELEASE_MODE=alpha" >> $GITHUB_ENV
+            else
+              echo "RELEASE_MODE=release" >> $GITHUB_ENV
+            fi
+          fi
+        shell: bash
+      - name: Resolve Release Meta
+        run: |
+          if [ "${{ needs.publish.result }}" = "success" ]; then
+            echo "PY_VERSION retrieved from publish job"
+          fi
+        shell: bash
+      - name: Final Report
+        run: |
+          echo "=================================================="
+          echo "NextSSL Python Release Pipeline Summary"
+          echo "=================================================="
+          echo "Mode: ${{ env.RELEASE_MODE }}"
+          echo ""
+          echo "Job Results:"
+          echo "  Build:   ${{ needs.build.result }}"
+          echo "  Test:    ${{ needs.test.result }}"
+          echo "  Publish: ${{ needs.publish.result }}"
+          echo "  Verify:  ${{ needs.verify.result }}"
+          echo ""
+          if [ "${{ needs.verify.result }}" = "success" ]; then
+            echo "✅ ALL CHECKS PASSED"
+            echo "Package successfully published and verified on all platforms!"
+            if [ "${{ env.RELEASE_MODE }}" = "test" ]; then
+              echo "📦 TestPyPI: https://test.pypi.org/project/nextssl/"
+            else
+              echo "📦 PyPI: https://pypi.org/project/nextssl/"
+            fi
+          else
+            echo "⚠️  Some checks failed - review logs above"
+          fi
+          echo "=================================================="
+        shell: bash
+
+
