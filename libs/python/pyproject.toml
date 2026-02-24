@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nextssl"
+dynamic = ["version"]
+description = "NextSSL Python bindings"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{ name = "NextSSL" }]
+license = { file = "LICENSE" }
+keywords = ["crypto", "pqc", "security", "nextssl"]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "nextssl.__version__" }

@@ -21,6 +21,7 @@ NextSSL is a comprehensive, modular cryptographic library designed for the post-
 
 - **[Algorithm Catalog](ALGORITHM.md)**: A complete reference of every supported algorithm, variant, and API signature.
 - **[Source Map](SOURCE.md)**: A detailed navigation guide to the source code directory structure.
+- **[Release Notes](note/vBeta.md)**: Rolling notes for the current beta release.
 
 ## 🚀 Key Features
 
@@ -30,6 +31,7 @@ NextSSL is a comprehensive, modular cryptographic library designed for the post-
 - **Elliptic Curves**: Comprehensive ECC suite including Ed25519, X25519, Curve448, and Ristretto255.
 - **Modular Architecture**: Granular build system allowing for partial, base, or full library compilation.
 - **Python Integration**: Built-in Python test runner and build system.
+- **Python Package**: PyPI package source lives in /libs/python.
 
 ## 🛠️ Build & Test
 
