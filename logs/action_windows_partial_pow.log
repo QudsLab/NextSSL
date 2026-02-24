@@ -3092,3 +3092,4 @@
 2026-02-24 02:09:45,818 - INFO - [INFO] Hash Prefix Bits: 0000
 2026-02-24 02:09:45,818 - INFO - [PASS] ripemd320 verified successfully.
 2026-02-24 02:09:45,818 - INFO - [PASS] ALL TESTS PASSED
+2026-02-24 02:39:31,516 - INFO - Successfully built primitive_fast
