@@ -418,3 +418,108 @@
 2026-02-24 01:57:10,949 - INFO -        Hash (40 bytes): 22d65d5661536cdc75c1fdf5c6de7b41b9f27325ebc61e8557177d705a0ec880151c3a32a00899b8
 2026-02-24 01:57:10,949 - INFO - [INFO] Results: 10 passed, 0 failed
 2026-02-24 01:57:10,949 - INFO - [PASS] ALL TESTS PASSED
+2026-02-24 02:07:37,792 - INFO - Successfully built primitive_fast
+2026-02-24 02:07:38,142 - INFO - Successfully built primitive_memory_hard
+2026-02-24 02:07:38,423 - INFO - Successfully built primitive_sponge_xof
+2026-02-24 02:07:38,763 - INFO - Successfully built legacy_alive
+2026-02-24 02:07:39,085 - INFO - Successfully built legacy_unsafe
+2026-02-24 02:07:39,085 - INFO - === Running 5 test suites... ===
+2026-02-24 02:07:39,085 - INFO - -> Running script.test.partial.hash.primitive_fast
+2026-02-24 02:07:39,086 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/hash/primitive_fast.dylib
+2026-02-24 02:07:39,086 - INFO - [PASS] DLL loaded successfully
+2026-02-24 02:07:39,086 - INFO - [PASS] SHA-256 empty
+2026-02-24 02:07:39,086 - INFO -        Hash (32 bytes): e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2026-02-24 02:07:39,086 - INFO - [PASS] SHA-256 'abc'
+2026-02-24 02:07:39,086 - INFO -        Hash (32 bytes): ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
+2026-02-24 02:07:39,086 - INFO - [PASS] SHA-512 empty
+2026-02-24 02:07:39,086 - INFO -        Hash (64 bytes): cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e
+2026-02-24 02:07:39,086 - INFO - [PASS] SHA-512 'abc'
+2026-02-24 02:07:39,086 - INFO -        Hash (64 bytes): ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f
+2026-02-24 02:07:39,086 - INFO - [PASS] BLAKE3 empty
+2026-02-24 02:07:39,086 - INFO -        Hash (32 bytes): af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262
+2026-02-24 02:07:39,086 - INFO - [PASS] BLAKE3 'abc'
+2026-02-24 02:07:39,086 - INFO -        Hash (32 bytes): 6437b3ac38465133ffb63b75273a8db548c558465d79db03fd359c6cd5bd9d85
+2026-02-24 02:07:39,086 - INFO - [PASS] BLAKE2b empty (32B)
+2026-02-24 02:07:39,086 - INFO -        Hash (32 bytes): 0e5751c026e543b2e8ab2eb06099daa1d1e5df47778f7787faab45cdf12fe3a8
+2026-02-24 02:07:39,087 - INFO - [PASS] BLAKE2s empty (32B)
+2026-02-24 02:07:39,087 - INFO -        Hash (32 bytes): 69217a3079908094e11121d042354a7c1f55b6482ca1a51e1b250dfd1ed0eef9
+2026-02-24 02:07:39,087 - INFO - [PASS] SHA-224 empty
+2026-02-24 02:07:39,087 - INFO -        Hash (28 bytes): d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f
+2026-02-24 02:07:39,087 - INFO - [PASS] SHA-224 'abc'
+2026-02-24 02:07:39,087 - INFO -        Hash (28 bytes): 23097d223405d8228642a477bda255b32aadbce4bda0b3f7e36c9da7
+2026-02-24 02:07:39,087 - INFO - [PASS] SHA-384 'abc'
+2026-02-24 02:07:39,087 - INFO -        Hash (48 bytes): cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed8086072ba1e7cc2358baeca134c825a7
+2026-02-24 02:07:39,087 - INFO - [INFO] Results: 11 passed, 0 failed
+2026-02-24 02:07:39,087 - INFO - -> Running script.test.partial.hash.primitive_memory_hard
+2026-02-24 02:07:39,087 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/hash/primitive_memory_hard.dylib
+2026-02-24 02:07:39,087 - INFO - [PASS] DLL loaded successfully
+2026-02-24 02:07:39,087 - INFO - [PASS] Argon2id (t=2, m=16, p=1, out=32)
+2026-02-24 02:07:39,087 - INFO -        Hash (32 bytes): 058202c0723cd88c24408ccac1cbf828dee63bcf3843a150ea364a1e0b4e1ff8
+2026-02-24 02:07:39,087 - INFO - [PASS] Argon2id (t=2, m=16, p=1, out=64)
+2026-02-24 02:07:39,087 - INFO -        Hash (64 bytes): 6d476f01ce2ad5c1b6586c0fd4a1c32f58fae9efee8678db81dca8ab730ad3121acd886ff3b187a889689cf3c7d58ed7ff3f0ab90db8df7eafd92cdea792db67
+2026-02-24 02:07:39,087 - INFO - [PASS] Argon2id (t=2, m=16, p=1, out=16)
+2026-02-24 02:07:39,087 - INFO -        Hash (16 bytes): f7b15c4365eb5d1181bb5eb520336485
+2026-02-24 02:07:39,087 - INFO - [PASS] Argon2i (t=2, m=16, p=1, out=32)
+2026-02-24 02:07:39,087 - INFO -        Hash (32 bytes): 03df1d13e10203bcc663405e31ab1687939730c9152459bca28fd10c23e38f50
+2026-02-24 02:07:39,087 - INFO - [PASS] Argon2d (t=2, m=16, p=1, out=32)
+2026-02-24 02:07:39,088 - INFO -        Hash (32 bytes): e742c05880c44c4df5fe79937be77897a6e41ca758affc42301f1e4040e35bd2
+2026-02-24 02:07:39,088 - INFO - [INFO] Results: 5 passed, 0 failed
+2026-02-24 02:07:39,088 - INFO - -> Running script.test.partial.hash.primitive_sponge_xof
+2026-02-24 02:07:39,088 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/hash/primitive_sponge_xof.dylib
+2026-02-24 02:07:39,088 - INFO - [PASS] DLL loaded successfully
+2026-02-24 02:07:39,088 - INFO - [PASS] SHA3-256 empty
+2026-02-24 02:07:39,088 - INFO -        Hash (32 bytes): a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a
+2026-02-24 02:07:39,088 - INFO - [PASS] SHA3-256 'abc'
+2026-02-24 02:07:39,088 - INFO -        Hash (32 bytes): 3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532
+2026-02-24 02:07:39,088 - INFO - [PASS] SHA3-512 'abc'
+2026-02-24 02:07:39,088 - INFO -        Hash (64 bytes): b751850b1a57168a5693cd924b6b096e08f621827444f70d884f5d0240d2712e10e116e9192af3c91a7ec57647e3934057340b4cf408d5a56592f8274eec53f0
+2026-02-24 02:07:39,088 - INFO - [PASS] Keccak-256 empty
+2026-02-24 02:07:39,088 - INFO -        Hash (32 bytes): c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
+2026-02-24 02:07:39,088 - INFO - [PASS] SHAKE-128 empty (32B)
+2026-02-24 02:07:39,088 - INFO -        Hash (32 bytes): 7f9c2ba4e88f827d616045507605853ed73b8093f6efbc88eb1a6eacfa66ef26
+2026-02-24 02:07:39,088 - INFO - [PASS] SHAKE-256 empty (32B)
+2026-02-24 02:07:39,088 - INFO -        Hash (32 bytes): 46b9dd2b0ba88d13233b3feb743eeb243fcd52ea62b81b82b50c27646ed5762f
+2026-02-24 02:07:39,088 - INFO - [INFO] Results: 6 passed, 0 failed
+2026-02-24 02:07:39,088 - INFO - -> Running script.test.partial.hash.legacy_alive
+2026-02-24 02:07:39,088 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/hash/legacy_alive.dylib
+2026-02-24 02:07:39,089 - INFO - [PASS] DLL loaded successfully
+2026-02-24 02:07:39,089 - INFO - [PASS] MD5 empty
+2026-02-24 02:07:39,089 - INFO -        Hash (16 bytes): d41d8cd98f00b204e9800998ecf8427e
+2026-02-24 02:07:39,089 - INFO - [PASS] MD5 'abc'
+2026-02-24 02:07:39,089 - INFO -        Hash (16 bytes): 900150983cd24fb0d6963f7d28e17f72
+2026-02-24 02:07:39,089 - INFO - [PASS] MD5 'The quick brown fox jumps over the lazy dog'
+2026-02-24 02:07:39,089 - INFO -        Hash (16 bytes): 9e107d9d372bb6826bd81d3542a419d6
+2026-02-24 02:07:39,089 - INFO - [PASS] SHA-1 empty
+2026-02-24 02:07:39,089 - INFO -        Hash (20 bytes): da39a3ee5e6b4b0d3255bfef95601890afd80709
+2026-02-24 02:07:39,089 - INFO - [PASS] SHA-1 'abc'
+2026-02-24 02:07:39,089 - INFO -        Hash (20 bytes): a9993e364706816aba3e25717850c26c9cd0d89d
+2026-02-24 02:07:39,089 - INFO - [PASS] RIPEMD-160 empty
+2026-02-24 02:07:39,089 - INFO -        Hash (20 bytes): 9c1185a5c5e9fc54612808977ee8f548b2258d31
+2026-02-24 02:07:39,089 - INFO - [PASS] RIPEMD-160 'abc'
+2026-02-24 02:07:39,089 - INFO -        Hash (20 bytes): 8eb208f7e05d987a9b044a8e98c6b087f15a0bfc
+2026-02-24 02:07:39,089 - INFO - [INFO] Results: 7 passed, 0 failed
+2026-02-24 02:07:39,089 - INFO - -> Running script.test.partial.hash.legacy_unsafe
+2026-02-24 02:07:39,089 - INFO - [INFO] Loading DLL: /Users/runner/work/NextSSL/NextSSL/bin/mac/partial/hash/legacy_unsafe.dylib
+2026-02-24 02:07:39,089 - INFO - [PASS] DLL loaded successfully
+2026-02-24 02:07:39,089 - INFO - [PASS] MD2 empty
+2026-02-24 02:07:39,089 - INFO -        Hash (16 bytes): 8350e5a3e24c153df2275c9f80692773
+2026-02-24 02:07:39,089 - INFO - [PASS] MD2 'abc'
+2026-02-24 02:07:39,089 - INFO -        Hash (16 bytes): da853b0d3f88d99b30283a69e6ded6bb
+2026-02-24 02:07:39,089 - INFO - [PASS] MD4 empty
+2026-02-24 02:07:39,089 - INFO -        Hash (16 bytes): 31d6cfe0d16ae931b73c59d7e0c089c0
+2026-02-24 02:07:39,089 - INFO - [PASS] MD4 'abc'
+2026-02-24 02:07:39,089 - INFO -        Hash (16 bytes): a448017aaf21d8525fc10ae87aa6729d
+2026-02-24 02:07:39,089 - INFO - [PASS] SHA-0 'abc'
+2026-02-24 02:07:39,090 - INFO -        Hash (20 bytes): 0164b8a914cd2a5e74c4f7ff082c4d97f1edf880
+2026-02-24 02:07:39,090 - INFO - [PASS] HAS-160 empty
+2026-02-24 02:07:39,090 - INFO -        Hash (20 bytes): 307964ef34151d37c8047adec7ab50f4ff89762d
+2026-02-24 02:07:39,090 - INFO - [PASS] RIPEMD-128 empty
+2026-02-24 02:07:39,090 - INFO -        Hash (16 bytes): cdf26213a150dc3ecb610f18f6b38b46
+2026-02-24 02:07:39,090 - INFO - [PASS] RIPEMD-128 'abc'
+2026-02-24 02:07:39,090 - INFO -        Hash (16 bytes): c14a12199c66e4ba84636b0f69144c77
+2026-02-24 02:07:39,090 - INFO - [PASS] RIPEMD-256 empty
+2026-02-24 02:07:39,090 - INFO -        Hash (32 bytes): 02ba4c4e5f8ecd1877fc52d64d30e37a2d9774fb1e5d026380ae0168e3c5522d
+2026-02-24 02:07:39,090 - INFO - [PASS] RIPEMD-320 empty
+2026-02-24 02:07:39,090 - INFO -        Hash (40 bytes): 22d65d5661536cdc75c1fdf5c6de7b41b9f27325ebc61e8557177d705a0ec880151c3a32a00899b8
+2026-02-24 02:07:39,090 - INFO - [INFO] Results: 10 passed, 0 failed
+2026-02-24 02:07:39,090 - INFO - [PASS] ALL TESTS PASSED

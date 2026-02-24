@@ -1,0 +1,12 @@
+2026-02-24 02:19:57,150 - INFO - Successfully built dhcm
+2026-02-24 02:19:57,150 - INFO - === Running 1 test suites... ===
+2026-02-24 02:19:57,150 - INFO - -> Running script.test.main.dhcm
+2026-02-24 02:19:57,152 - INFO - -> Loading D:\a\NextSSL\NextSSL\bin\windows\main\dhcm.dll
+2026-02-24 02:19:57,152 - INFO - [PASS] DLL Loaded
+2026-02-24 02:19:57,152 - INFO - [PASS] SHA-256 OK
+2026-02-24 02:19:57,152 - INFO - [PASS] Argon2id OK
+2026-02-24 02:19:57,152 - INFO - [PASS] SHA3-256 OK
+2026-02-24 02:19:57,152 - INFO - [PASS] MD5 OK
+2026-02-24 02:19:57,152 - INFO - [PASS] MD2 OK
+2026-02-24 02:19:57,152 - INFO - [PASS] DHCM Main: 5 passed
+2026-02-24 02:19:57,154 - INFO - [PASS] ALL TESTS PASSED

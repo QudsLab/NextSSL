@@ -1,0 +1,15 @@
+2026-02-24 02:19:46,309 - INFO - Successfully built core
+2026-02-24 02:19:46,311 - INFO - === Running 1 test suites... ===
+2026-02-24 02:19:46,311 - INFO - -> Running script.test.main.core
+2026-02-24 02:19:46,311 - INFO - -> Loading D:\a\NextSSL\NextSSL\bin\windows\main\core.dll
+2026-02-24 02:19:46,313 - INFO - [PASS] DLL Loaded
+2026-02-24 02:19:46,313 - INFO - -> Verifying AES-CBC
+2026-02-24 02:19:46,313 - INFO - [PASS] AES-CBC OK
+2026-02-24 02:19:46,313 - INFO - -> Verifying AES-GCM
+2026-02-24 02:19:46,313 - INFO - [PASS] AES-GCM OK
+2026-02-24 02:19:46,313 - INFO - -> Verifying ChaCha20-Poly1305
+2026-02-24 02:19:46,313 - INFO - -> Verifying HMAC-SHA256
+2026-02-24 02:19:46,314 - INFO - -> Verifying Ed25519
+2026-02-24 02:19:46,314 - INFO - [PASS] Ed25519 OK
+2026-02-24 02:19:46,314 - INFO - [PASS] Core Main: 5 passed
+2026-02-24 02:19:46,314 - INFO - [PASS] ALL TESTS PASSED
