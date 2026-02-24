@@ -10,7 +10,7 @@ on:
       platforms:
         description: "Comma-separated platforms to run (web,linux,mac,windows)"
         required: false
-        default: "web,linux,mac"
+        default: "web,linux,mac,windows"
       tiers:
         description: "Comma-separated tiers to run (partial,base,main,system)"
         required: false
