@@ -10,10 +10,6 @@ on:
         description: "force alpha/beta publish"
         required: false
         default: "false"
-      custom_version:
-        description: "custom version (e.g., 0.0.2)"
-        required: false
-        default: ""
   push:
     branches:
       - main
@@ -42,7 +38,6 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
             echo "FORCE_RELEASE=${{ inputs.force_release }}" >> $GITHUB_ENV
-            echo "CUSTOM_VERSION=${{ inputs.custom_version }}" >> $GITHUB_ENV
           else
             msg="${{ github.event.head_commit.message }}"
             if echo "$msg" | grep -q -- "--test"; then
@@ -59,9 +54,11 @@ jobs:
             else
               echo "FORCE_RELEASE=false" >> $GITHUB_ENV
             fi
-            # Extract custom version from commit message (--v X.Y.Z)
-            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)\S+' || echo "")
-            echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
+            # Extract custom version: --v X.Y.Z or --version X.Y.Z
+            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)[\d.]+|(?<=--version\s)[\d.]+' | head -1)
+            if [ -n "$custom_ver" ]; then
+              echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
+            fi
           fi
         shell: bash
       - name: Resolve Release Meta
@@ -122,7 +119,6 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
             echo "FORCE_RELEASE=${{ inputs.force_release }}" >> $GITHUB_ENV
-            echo "CUSTOM_VERSION=${{ inputs.custom_version }}" >> $GITHUB_ENV
           else
             msg="${{ github.event.head_commit.message }}"
             if echo "$msg" | grep -q -- "--test"; then
@@ -139,9 +135,11 @@ jobs:
             else
               echo "FORCE_RELEASE=false" >> $GITHUB_ENV
             fi
-            # Extract custom version from commit message (--v X.Y.Z)
-            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)\S+' || echo "")
-            echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
+            # Extract custom version: --v X.Y.Z or --version X.Y.Z
+            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)[\d.]+|(?<=--version\s)[\d.]+' | head -1)
+            if [ -n "$custom_ver" ]; then
+              echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
+            fi
           fi
         shell: bash
       - name: Resolve Release Meta
@@ -230,7 +228,6 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
-            echo "CUSTOM_VERSION=${{ inputs.custom_version }}" >> $GITHUB_ENV
           else
             msg="${{ github.event.head_commit.message }}"
             if echo "$msg" | grep -q -- "--test"; then
@@ -242,9 +239,11 @@ jobs:
             else
               echo "RELEASE_MODE=release" >> $GITHUB_ENV
             fi
-            # Extract custom version from commit message (--v X.Y.Z)
-            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)\S+' || echo "")
-            echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
+            # Extract custom version: --v X.Y.Z or --version X.Y.Z
+            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)[\d.]+|(?<=--version\s)[\d.]+' | head -1)
+            if [ -n "$custom_ver" ]; then
+              echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
+            fi
           fi
         shell: bash
       - name: Resolve Release Meta
@@ -321,7 +320,6 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
-            echo "CUSTOM_VERSION=${{ inputs.custom_version }}" >> $GITHUB_ENV
           else
             msg="${{ github.event.head_commit.message }}"
             if echo "$msg" | grep -q -- "--test"; then
@@ -333,9 +331,6 @@ jobs:
             else
               echo "RELEASE_MODE=release" >> $GITHUB_ENV
             fi
-            # Extract custom version from commit message (--v X.Y.Z)
-            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)\S+' || echo "")
-            echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
           fi
         shell: bash
       - name: Resolve Release Meta

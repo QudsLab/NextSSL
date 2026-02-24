@@ -16,3 +16,10 @@ PROMPT.md
 *.pyc
 /.bin
 /extra/note
+
+# Python build artifacts
+*.egg-info
+__pycache__
+/libs/python/dist/
+/libs/python/build/
+/libs/python/src/**/*.egg-info/

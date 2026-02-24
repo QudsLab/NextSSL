@@ -51,7 +51,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", required=True)
     parser.add_argument("--force", default="false")
-    parser.add_argument("--version", type=str, help="Custom version (e.g., 0.0.2)")
+    parser.add_argument("--version", default=None, help="Custom version (e.g., 0.0.2)")
     args = parser.parse_args()
 
     repo_root = Path(__file__).resolve().parents[3]
@@ -67,40 +67,29 @@ def main():
     if mode not in prefixes:
         raise RuntimeError(f"Unknown mode: {mode}")
 
-    # If custom version provided, use it
+    # Use custom version if provided
     if args.version:
-        # Parse custom version
-        custom_parts = args.version.strip().lstrip('v').replace('_', '.').split('.')
-        version = tuple(int(p) for p in custom_parts if p.isdigit())
-        if not version or len(version) < 3:
-            raise RuntimeError(f"Invalid version format: {args.version}. Expected: X.Y.Z or X_Y_Z")
-        
-        # Create a synthetic note path for reporting (won't be used but needed for metadata)
-        note_filename = f"{prefixes[mode]}{args.version.replace('.', '_')}.md"
-        note_path = note_dir / note_filename
-        
-        # Validate against main version if in release mode
-        main_tag = latest_tag("v", repo_root)
-        main_version = parse_version(main_tag) if main_tag else None
-        if mode == "release" and main_version and version <= main_version:
-            raise RuntimeError(f"Custom version {version} must be greater than current release {main_version}")
+        version_parts = args.version.split(".")
+        version = tuple(int(x) for x in version_parts)
+        note_path = None  # Custom version doesn't require note file
     else:
-        # File-based version lookup (original behavior)
+        # Find version from note file
         version, note_path = find_note(note_dir, prefixes[mode])
         if not note_path:
             raise RuntimeError(f"No release note found for {mode}")
 
-        main_tag = latest_tag("v", repo_root)
-        main_version = parse_version(main_tag) if main_tag else None
-        if main_version and version and version > main_version:
-            raise RuntimeError("Release note version exceeds main release tag")
+    main_tag = latest_tag("v", repo_root)
+    main_version = parse_version(main_tag) if main_tag else None
+    if main_version and version and version > main_version:
+        raise RuntimeError("Release note version exceeds main release tag")
 
     version_str = ".".join(str(x) for x in version)
     prerelease = mode in {"test", "beta", "alpha"}
     skip_publish = (mode in {"beta", "alpha"}) and args.force.lower() != "true"
 
     print(f"PY_VERSION={version_str}")
-    print(f"NOTE_PATH={note_path.as_posix()}")
+    if note_path:
+        print(f"NOTE_PATH={note_path.as_posix()}")
     print(f"RELEASE_MODE={mode}")
     print(f"PRERELEASE={'true' if prerelease else 'false'}")
     print(f"SKIP_PUBLISH={'true' if skip_publish else 'false'}")
