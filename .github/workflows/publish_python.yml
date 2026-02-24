@@ -65,9 +65,10 @@ jobs:
         run: python -m pip install --upgrade pip build
       - name: Build Wheels
         uses: pypa/cibuildwheel@v2.16.2
+        with:
+          package-dir: libs/python
+          output-dir: libs/python/dist
         env:
-          CIBW_PACKAGE_DIR: libs/python
-          CIBW_OUTPUT_DIR: libs/python/dist
           CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-*"
       - name: Build Sdist
         run: python -m build --sdist --outdir libs/python/dist libs/python

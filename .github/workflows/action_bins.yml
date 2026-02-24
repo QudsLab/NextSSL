@@ -1244,6 +1244,10 @@ jobs:
           path: .
           merge-multiple: true
           if-no-files-found: ignore
+      - name: Cleanup RSP Files
+        run: |
+          find bin -type f -name '*.rsp' -delete 2>/dev/null || true
+        shell: bash
       - name: Commit Outputs
         run: |
           git config user.name "github-actions[bot]"
