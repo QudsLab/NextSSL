@@ -15,3 +15,20 @@
 2026-02-24 02:16:45,538 - INFO - [PASS] MD2 OK
 2026-02-24 02:16:45,538 - INFO - [PASS] DHCM Base Legacy: 2 passed
 2026-02-24 02:16:45,538 - INFO - [PASS] ALL TESTS PASSED
+2026-02-24 17:42:20,821 - INFO - Successfully built dhcm_primitive
+2026-02-24 17:42:21,645 - INFO - Successfully built dhcm_legacy
+2026-02-24 17:42:21,645 - INFO - === Running 2 test suites... ===
+2026-02-24 17:42:21,645 - INFO - -> Running script.test.base.dhcm_primitive_main
+2026-02-24 17:42:21,645 - INFO - -> Loading D:\a\NextSSL\NextSSL\bin\windows\base\dhcm_primitive.dll
+2026-02-24 17:42:21,646 - INFO - [PASS] DLL Loaded
+2026-02-24 17:42:21,647 - INFO - [PASS] SHA-256 OK
+2026-02-24 17:42:21,647 - INFO - [PASS] Argon2id OK
+2026-02-24 17:42:21,647 - INFO - [PASS] SHA3-256 OK
+2026-02-24 17:42:21,647 - INFO - [PASS] DHCM Base Primitive: 3 passed
+2026-02-24 17:42:21,647 - INFO - -> Running script.test.base.dhcm_legacy_main
+2026-02-24 17:42:21,647 - INFO - -> Loading D:\a\NextSSL\NextSSL\bin\windows\base\dhcm_legacy.dll
+2026-02-24 17:42:21,647 - INFO - [PASS] DLL Loaded
+2026-02-24 17:42:21,647 - INFO - [PASS] MD5 OK
+2026-02-24 17:42:21,648 - INFO - [PASS] MD2 OK
+2026-02-24 17:42:21,648 - INFO - [PASS] DHCM Base Legacy: 2 passed
+2026-02-24 17:42:21,648 - INFO - [PASS] ALL TESTS PASSED
