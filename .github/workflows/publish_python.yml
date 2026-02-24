@@ -14,6 +14,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '--release') || contains(github.event.head_commit.message, '--test') || contains(github.event.head_commit.message, '--beta') || contains(github.event.head_commit.message, '--alpha') || contains(toJson(github.event.commits), '--release') || contains(toJson(github.event.commits), '--test') || contains(toJson(github.event.commits), '--beta') || contains(toJson(github.event.commits), '--alpha') }}

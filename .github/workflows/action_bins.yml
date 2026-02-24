@@ -17,10 +17,13 @@ on:
         default: "partial,base,main,system"
 permissions:
   contents: write
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   guard:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, '--na') && !contains(toJson(github.event.commits), '--na') }}
+    if: ${{ !contains(github.event.head_commit.message, '--ng') && !contains(toJson(github.event.commits), '--ng') }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -1225,7 +1228,7 @@ jobs:
           if-no-files-found: warn
   commit:
     runs-on: ubuntu-latest
-    if: always()
+    if: ${{ !cancelled() && (needs.web_system.result == 'success' || needs.windows_system.result == 'success' || needs.linux_system.result == 'success' || needs.mac_system.result == 'success') }}
     needs:
       - web_system
       - windows_system
