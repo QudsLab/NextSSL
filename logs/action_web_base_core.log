@@ -7,3 +7,12 @@
 2026-02-23 23:52:21,110 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_cipher_main.wasm
 2026-02-23 23:52:21,115 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_ecc_main.wasm
 2026-02-23 23:52:21,120 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_mac_main.wasm
+2026-02-24 00:34:05,409 - INFO - Successfully built core_cipher_main
+2026-02-24 00:34:06,574 - INFO - Successfully built core_mac_main
+2026-02-24 00:34:07,994 - INFO - Successfully built core_ecc_main
+2026-02-24 00:34:07,995 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_cipher_main.wasm
+2026-02-24 00:34:07,995 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_ecc_main.wasm
+2026-02-24 00:34:07,995 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_mac_main.wasm
+2026-02-24 00:34:08,003 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_cipher_main.wasm
+2026-02-24 00:34:08,008 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_ecc_main.wasm
+2026-02-24 00:34:08,013 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/core_mac_main.wasm
