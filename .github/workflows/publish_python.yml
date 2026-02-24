@@ -135,8 +135,8 @@ jobs:
             else
               echo "FORCE_RELEASE=false" >> $GITHUB_ENV
             fi
-            # Extract custom version: --v X.Y.Z or --version X.Y.Z
-            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)[\d.]+|(?<=--version\s)[\d.]+' | head -1)
+            # Extract custom version: --v X.Y.Z or --version X.Y.Z (portable)
+            custom_ver=$(python -c "import re, sys; msg='$msg'; m=re.search(r'--(?:v|version)\s+([\d.]+)', msg); print(m.group(1) if m else '')")
             if [ -n "$custom_ver" ]; then
               echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
             fi
@@ -187,6 +187,12 @@ jobs:
             echo "⚠️  Failed to push tag (permissions issue?), continuing anyway..."
           fi
         shell: bash
+      - name: Create Release Notes (Custom Version)
+        if: ${{ env.SKIP_PUBLISH != 'true' && env.CUSTOM_VERSION != '' }}
+        run: |
+          echo "Release ${{ env.PY_VERSION }} for ${{ env.RELEASE_MODE }} mode" > /tmp/custom_release.md
+          echo "NOTE_PATH=/tmp/custom_release.md" >> $GITHUB_ENV
+        shell: bash
       - name: GitHub Release
         if: ${{ env.SKIP_PUBLISH != 'true' }}
         continue-on-error: true
@@ -197,18 +203,16 @@ jobs:
           body_path: ${{ env.NOTE_PATH }}
           prerelease: ${{ env.PRERELEASE }}
           fail_on_unmatched_files: false
-      - name: Publish to PyPI
+      - name: Publish to PyPI (Trusted Publishing)
         if: ${{ env.SKIP_PUBLISH != 'true' && env.RELEASE_MODE != 'test' }}
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: libs/python/dist
-          password: ${{ secrets.PYPI_API_TOKEN }}
-      - name: Publish to TestPyPI
+      - name: Publish to TestPyPI (Trusted Publishing)
         if: ${{ env.SKIP_PUBLISH != 'true' && env.RELEASE_MODE == 'test' }}
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: libs/python/dist
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
           repository-url: https://test.pypi.org/legacy/
 
   verify:
@@ -239,8 +243,8 @@ jobs:
             else
               echo "RELEASE_MODE=release" >> $GITHUB_ENV
             fi
-            # Extract custom version: --v X.Y.Z or --version X.Y.Z
-            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)[\d.]+|(?<=--version\s)[\d.]+' | head -1)
+            # Extract custom version: --v X.Y.Z or --version X.Y.Z (portable)
+            custom_ver=$(python -c "import re, sys; msg='$msg'; m=re.search(r'--(?:v|version)\s+([\d.]+)', msg); print(m.group(1) if m else '')")
             if [ -n "$custom_ver" ]; then
               echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
             fi
