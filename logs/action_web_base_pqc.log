@@ -10,3 +10,9 @@
 2026-02-24 00:34:41,869 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/pqc_sign_main.wasm
 2026-02-24 00:34:41,875 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/pqc_kem_main.wasm
 2026-02-24 00:34:41,880 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/pqc_sign_main.wasm
+2026-02-24 01:58:22,466 - INFO - Successfully built pqc_kem_main
+2026-02-24 01:58:32,622 - INFO - Successfully built pqc_sign_main
+2026-02-24 01:58:32,622 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/pqc_kem_main.wasm
+2026-02-24 01:58:32,623 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/pqc_sign_main.wasm
+2026-02-24 01:58:32,628 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/pqc_kem_main.wasm
+2026-02-24 01:58:32,633 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/pqc_sign_main.wasm

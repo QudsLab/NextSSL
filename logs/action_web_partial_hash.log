@@ -43,3 +43,18 @@
 2026-02-24 01:31:02,643 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/primitive_fast.wasm
 2026-02-24 01:31:02,648 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/primitive_memory_hard.wasm
 2026-02-24 01:31:02,690 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/primitive_sponge_xof.wasm
+2026-02-24 01:57:14,854 - INFO - Successfully built primitive_fast
+2026-02-24 01:57:15,423 - INFO - Successfully built primitive_memory_hard
+2026-02-24 01:57:15,887 - INFO - Successfully built primitive_sponge_xof
+2026-02-24 01:57:16,553 - INFO - Successfully built legacy_alive
+2026-02-24 01:57:17,235 - INFO - Successfully built legacy_unsafe
+2026-02-24 01:57:17,235 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/legacy_alive.wasm
+2026-02-24 01:57:17,236 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/legacy_unsafe.wasm
+2026-02-24 01:57:17,236 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/primitive_fast.wasm
+2026-02-24 01:57:17,236 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/primitive_memory_hard.wasm
+2026-02-24 01:57:17,236 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/primitive_sponge_xof.wasm
+2026-02-24 01:57:17,243 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/legacy_alive.wasm
+2026-02-24 01:57:17,250 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/legacy_unsafe.wasm
+2026-02-24 01:57:17,255 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/primitive_fast.wasm
+2026-02-24 01:57:17,260 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/primitive_memory_hard.wasm
+2026-02-24 01:57:17,265 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/hash/primitive_sponge_xof.wasm

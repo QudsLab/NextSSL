@@ -133,3 +133,48 @@
 2026-02-24 01:30:53,783 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/legacy_unsafe.wasm
 2026-02-24 01:30:53,788 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/legacy_unsafe.wasm
 2026-02-24 01:30:53,793 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/legacy_unsafe.wasm
+2026-02-24 01:57:13,724 - INFO - Successfully built primitive_fast
+2026-02-24 01:57:15,004 - INFO - Successfully built primitive_fast
+2026-02-24 01:57:16,593 - INFO - Successfully built primitive_fast
+2026-02-24 01:57:17,457 - INFO - Successfully built primitive_memory_hard
+2026-02-24 01:57:18,338 - INFO - Successfully built primitive_memory_hard
+2026-02-24 01:57:19,259 - INFO - Successfully built primitive_memory_hard
+2026-02-24 01:57:20,017 - INFO - Successfully built primitive_sponge_xof
+2026-02-24 01:57:20,801 - INFO - Successfully built primitive_sponge_xof
+2026-02-24 01:57:21,636 - INFO - Successfully built primitive_sponge_xof
+2026-02-24 01:57:22,474 - INFO - Successfully built legacy_alive
+2026-02-24 01:57:23,326 - INFO - Successfully built legacy_alive
+2026-02-24 01:57:24,226 - INFO - Successfully built legacy_alive
+2026-02-24 01:57:25,219 - INFO - Successfully built legacy_unsafe
+2026-02-24 01:57:26,224 - INFO - Successfully built legacy_unsafe
+2026-02-24 01:57:27,272 - INFO - Successfully built legacy_unsafe
+2026-02-24 01:57:27,272 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/primitive_fast.wasm
+2026-02-24 01:57:27,272 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/primitive_fast.wasm
+2026-02-24 01:57:27,272 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/primitive_fast.wasm
+2026-02-24 01:57:27,272 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/primitive_memory_hard.wasm
+2026-02-24 01:57:27,272 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/primitive_memory_hard.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/primitive_memory_hard.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/primitive_sponge_xof.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/primitive_sponge_xof.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/primitive_sponge_xof.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/legacy_alive.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/legacy_alive.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/legacy_alive.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/legacy_unsafe.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/legacy_unsafe.wasm
+2026-02-24 01:57:27,273 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/legacy_unsafe.wasm
+2026-02-24 01:57:27,281 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/primitive_fast.wasm
+2026-02-24 01:57:27,286 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/primitive_fast.wasm
+2026-02-24 01:57:27,291 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/primitive_fast.wasm
+2026-02-24 01:57:27,296 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/primitive_memory_hard.wasm
+2026-02-24 01:57:27,301 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/primitive_memory_hard.wasm
+2026-02-24 01:57:27,305 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/primitive_memory_hard.wasm
+2026-02-24 01:57:27,310 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/primitive_sponge_xof.wasm
+2026-02-24 01:57:27,315 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/primitive_sponge_xof.wasm
+2026-02-24 01:57:27,320 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/primitive_sponge_xof.wasm
+2026-02-24 01:57:27,325 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/legacy_alive.wasm
+2026-02-24 01:57:27,330 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/legacy_alive.wasm
+2026-02-24 01:57:27,334 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/legacy_alive.wasm
+2026-02-24 01:57:27,339 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/server/legacy_unsafe.wasm
+2026-02-24 01:57:27,344 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/client/legacy_unsafe.wasm
+2026-02-24 01:57:27,349 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pow/combined/legacy_unsafe.wasm
