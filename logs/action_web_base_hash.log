@@ -34,3 +34,9 @@
 2026-02-24 17:33:24,118 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_primitive.wasm
 2026-02-24 17:33:24,126 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_legacy.wasm
 2026-02-24 17:33:24,133 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_primitive.wasm
+2026-02-24 23:53:17,098 - INFO - Successfully built hash_primitive
+2026-02-24 23:53:18,065 - INFO - Successfully built hash_legacy
+2026-02-24 23:53:18,065 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_legacy.wasm
+2026-02-24 23:53:18,065 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_primitive.wasm
+2026-02-24 23:53:18,070 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_legacy.wasm
+2026-02-24 23:53:18,074 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/hash_primitive.wasm
