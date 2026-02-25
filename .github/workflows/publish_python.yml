@@ -183,9 +183,9 @@ jobs:
           fi
           git tag "${{ env.TAG_NAME }}"
           if git push origin "${{ env.TAG_NAME }}"; then
-            echo "✓ Tag ${{ env.TAG_NAME }} pushed successfully"
+            echo "[PASS] Tag ${{ env.TAG_NAME }} pushed successfully"
           else
-            echo "⚠️  Failed to push tag (permissions issue?), continuing anyway..."
+            echo "[WARN] Failed to push tag (permissions issue?), continuing anyway..."
           fi
         shell: bash
       - name: Create Release Notes (Custom Version)
@@ -291,21 +291,21 @@ jobs:
         shell: bash
       - name: Test Import All Modules
         run: |
-          python -c "from nextssl import hash, dhcm, pow, pqc, primitives, kdf, encoding, root, unsafe; print('✓ All modules imported successfully')"
-          python -c "from nextssl import Hash, BLAKE2, SHAKE, Argon2; print('✓ Hash classes imported')"
-          python -c "from nextssl import KEM, Sign; print('✓ PQC classes imported')"
-          python -c "from nextssl import AES, ChaCha20Poly1305; print('✓ Cipher classes imported')"
-          python -c "from nextssl import Ed25519, Ed448, Curve25519, Curve448; print('✓ ECC classes imported')"
-          python -c "from nextssl import MAC, SipHash; print('✓ MAC classes imported')"
-          python -c "from nextssl import HKDF, KDF_SHAKE256; print('✓ KDF classes imported')"
-          python -c "from nextssl import Base64, Hex, FlexFrame70; print('✓ Encoding classes imported')"
-          python -c "import nextssl.root; print('✓ Root module imported')"
-          python -c "import nextssl.unsafe; print('✓ Unsafe module imported')"
+          python -c "from nextssl import hash, dhcm, pow, pqc, primitives, kdf, encoding, root, unsafe; print('[PASS] All modules imported successfully')"
+          python -c "from nextssl import Hash, BLAKE2, SHAKE, Argon2; print('[PASS] Hash classes imported')"
+          python -c "from nextssl import KEM, Sign; print('[PASS] PQC classes imported')"
+          python -c "from nextssl import AES, ChaCha20Poly1305; print('[PASS] Cipher classes imported')"
+          python -c "from nextssl import Ed25519, Ed448, Curve25519, Curve448; print('[PASS] ECC classes imported')"
+          python -c "from nextssl import MAC, SipHash; print('[PASS] MAC classes imported')"
+          python -c "from nextssl import HKDF, KDF_SHAKE256; print('[PASS] KDF classes imported')"
+          python -c "from nextssl import Base64, Hex, FlexFrame70; print('[PASS] Encoding classes imported')"
+          python -c "import nextssl.root; print('[PASS] Root module imported')"
+          python -c "import nextssl.unsafe; print('[PASS] Unsafe module imported')"
         shell: bash
       - name: Report Success
         run: |
           echo "=========================================="
-          echo "✅ Verification passed on ${{ matrix.os }}"
+          echo "[SUCCESS] Verification passed on ${{ matrix.os }}"
           echo "Package: nextssl==${{ env.PY_VERSION }}"
           echo "Source: ${{ env.RELEASE_MODE == 'test' && 'TestPyPI' || 'PyPI' }}"
           echo "Platform: ${{ matrix.os }}"
@@ -362,15 +362,15 @@ jobs:
           echo "  Verify:  ${{ needs.verify.result }}"
           echo ""
           if [ "${{ needs.verify.result }}" = "success" ]; then
-            echo "✅ ALL CHECKS PASSED"
+            echo "[SUCCESS] ALL CHECKS PASSED"
             echo "Package successfully published and verified on all platforms!"
             if [ "${{ env.RELEASE_MODE }}" = "test" ]; then
-              echo "📦 TestPyPI: https://test.pypi.org/project/nextssl/"
+              echo "[PACKAGE] TestPyPI: https://test.pypi.org/project/nextssl/"
             else
-              echo "📦 PyPI: https://pypi.org/project/nextssl/"
+              echo "[PACKAGE] PyPI: https://pypi.org/project/nextssl/"
             fi
           else
-            echo "⚠️  Some checks failed - review logs above"
+            echo "[WARN] Some checks failed - review logs above"
           fi
           echo "=================================================="
         shell: bash
