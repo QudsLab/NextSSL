@@ -54,8 +54,8 @@ jobs:
             else
               echo "FORCE_RELEASE=false" >> $GITHUB_ENV
             fi
-            # Extract custom version: --v X.Y.Z or --version X.Y.Z
-            custom_ver=$(echo "$msg" | grep -oP '(?<=--v\s)[\d.]+|(?<=--version\s)[\d.]+' | head -1)
+            # Extract custom version: --v X.Y.Z or --version X.Y.Z (portable)
+            custom_ver=$(python -c "import re, sys; msg='$msg'; m=re.search(r'--(?:v|version)\s+([\d.]+)', msg); print(m.group(1) if m else '')")
             if [ -n "$custom_ver" ]; then
               echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
             fi
@@ -68,6 +68,7 @@ jobs:
           else
             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "${{ env.FORCE_RELEASE }}" >> $GITHUB_ENV
           fi
+        shell: bash
       - name: Set Version
         run: python libs/python/tools/version.py --set "${{ env.PY_VERSION }}"
         shell: bash
