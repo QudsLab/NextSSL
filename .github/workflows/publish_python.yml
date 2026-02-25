@@ -275,44 +275,59 @@ jobs:
             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "false" >> $GITHUB_ENV
           fi
         shell: bash
-      - name: Wait for Package Availability
+      - name: Wait and Poll for Package Availability
         run: |
-          echo "Waiting 60 seconds for package to be available..."
-          sleep 60
+          echo "=========================================="
+          echo "Polling for nextssl==${{ env.PY_VERSION }} availability..."
+          echo "=========================================="
+          MAX_ATTEMPTS=20
+          SLEEP_INTERVAL=15
+          ATTEMPT=0
+          if [ "${{ env.RELEASE_MODE }}" = "test" ]; then
+            INDEX_URL="--index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/"
+            SOURCE="TestPyPI"
+          else
+            INDEX_URL=""
+            SOURCE="PyPI"
+          fi
+          while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+            ATTEMPT=$((ATTEMPT + 1))
+            echo "[Attempt $ATTEMPT/$MAX_ATTEMPTS] Checking $SOURCE for nextssl==${{ env.PY_VERSION }}..."
+            if pip install --dry-run $INDEX_URL "nextssl==${{ env.PY_VERSION }}" 2>/dev/null; then
+              echo "[FOUND] Package nextssl==${{ env.PY_VERSION }} is available on $SOURCE after $((ATTEMPT * SLEEP_INTERVAL)) seconds"
+              break
+            fi
+            if [ $ATTEMPT -eq $MAX_ATTEMPTS ]; then
+              echo "[FATAL] Package nextssl==${{ env.PY_VERSION }} not found on $SOURCE after $((MAX_ATTEMPTS * SLEEP_INTERVAL)) seconds"
+              echo "Available versions:"
+              pip install $INDEX_URL "nextssl==0.0.0.0.0.0.invalid" 2>&1 | grep "from versions:" || true
+              exit 1
+            fi
+            echo "  Not yet available, sleeping ${SLEEP_INTERVAL}s..."
+            sleep $SLEEP_INTERVAL
+          done
         shell: bash
       - name: Install from TestPyPI
         if: ${{ env.RELEASE_MODE == 'test' }}
         run: |
+          echo "=========================================="
           echo "Installing nextssl==${{ env.PY_VERSION }} from TestPyPI on ${{ matrix.os }}..."
+          echo "=========================================="
           pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "nextssl==${{ env.PY_VERSION }}"
         shell: bash
       - name: Install from PyPI
         if: ${{ env.RELEASE_MODE != 'test' }}
         run: |
+          echo "=========================================="
           echo "Installing nextssl==${{ env.PY_VERSION }} from PyPI on ${{ matrix.os }}..."
+          echo "=========================================="
           pip install "nextssl==${{ env.PY_VERSION }}"
         shell: bash
-      - name: Verify Installation
-        run: |
-          echo "Verifying nextssl installation on ${{ matrix.os }}..."
-          python -c "import nextssl; print(f'NextSSL version: {nextssl.__version__}')"
-          python -c "import nextssl; print(f'Available modules: {dir(nextssl)}')"
+      - name: Verify Installation and Print Hashes
+        run: python libs/python/tests/verify_install.py --version "${{ env.PY_VERSION }}"
         shell: bash
       - name: Run Post-Install Tests
         run: python libs/python/tests/test_all.py
-        shell: bash
-      - name: Test Import All Modules
-        run: |
-          python -c "from nextssl import hash, dhcm, pow, pqc, primitives, kdf, encoding, root, unsafe; print('[PASS] All modules imported successfully')"
-          python -c "from nextssl import Hash, BLAKE2, SHAKE, Argon2; print('[PASS] Hash classes imported')"
-          python -c "from nextssl import KEM, Sign; print('[PASS] PQC classes imported')"
-          python -c "from nextssl import AES, ChaCha20Poly1305; print('[PASS] Cipher classes imported')"
-          python -c "from nextssl import Ed25519, Ed448, Curve25519, Curve448; print('[PASS] ECC classes imported')"
-          python -c "from nextssl import MAC, SipHash; print('[PASS] MAC classes imported')"
-          python -c "from nextssl import HKDF, KDF_SHAKE256; print('[PASS] KDF classes imported')"
-          python -c "from nextssl import Base64, Hex, FlexFrame70; print('[PASS] Encoding classes imported')"
-          python -c "import nextssl.root; print('[PASS] Root module imported')"
-          python -c "import nextssl.unsafe; print('[PASS] Unsafe module imported')"
         shell: bash
       - name: Report Success
         run: |
@@ -321,6 +336,9 @@ jobs:
           echo "Package: nextssl==${{ env.PY_VERSION }}"
           echo "Source: ${{ env.RELEASE_MODE == 'test' && 'TestPyPI' || 'PyPI' }}"
           echo "Platform: ${{ matrix.os }}"
+          echo "Python: $(python --version)"
+          echo "pip: $(pip --version)"
+          echo "Time: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           echo "=========================================="
         shell: bash
 
@@ -386,5 +404,3 @@ jobs:
           fi
           echo "=================================================="
         shell: bash
-
-
