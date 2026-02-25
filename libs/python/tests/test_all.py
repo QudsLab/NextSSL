@@ -20,11 +20,11 @@ def check_c_binaries():
         # Try to create a simple hash object
         h = Hash(HashAlgorithm.SHA256)
         C_BINARIES_AVAILABLE = True
-        print("  ℹ C binaries detected - running full functionality tests")
+        print("  â„¹ C binaries detected - running full functionality tests")
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
             C_BINARIES_AVAILABLE = False
-            print("  ℹ C binaries not available - running structure validation only")
+            print("  â„¹ C binaries not available - running structure validation only")
         else:
             raise
     except Exception:
@@ -39,11 +39,11 @@ def test_imports():
     try:
         import nextssl
         from nextssl import hash, dhcm, pow, pqc, primitives, kdf, encoding, root, unsafe
-        print("  ✓ All modules imported successfully")
+        print("  [PASS] All modules imported successfully")
         check_c_binaries()  # Check binary availability once
         return True
     except Exception as e:
-        print(f"  ✗ Import failed: {e}")
+        print(f"  [FAIL] Import failed: {e}")
         traceback.print_exc()
         return False
 
@@ -82,22 +82,22 @@ def test_hash_algorithms():
             argon2d = Argon2(variant='d')
             assert argon2d.variant == 'd'
             
-            print(f"  ✓ Tested {len(algorithms)} hash algorithms with full functionality")
+            print(f"  [PASS] Tested {len(algorithms)} hash algorithms with full functionality")
         else:
             # Structure validation only
             for algo in algorithms:
                 assert isinstance(algo.value, int)
             assert callable(Hash) and callable(BLAKE2) and callable(SHAKE) and callable(Argon2)
-            print(f"  ✓ Verified {len(algorithms)} hash algorithms (structure only)")
+            print(f"  [PASS] Verified {len(algorithms)} hash algorithms (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ Hash test failed: {e}")
+        print(f"  [FAIL] Hash test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -122,22 +122,22 @@ def test_pqc_kem_algorithms():
                 assert kem.public_key_size > 0
                 assert kem.secret_key_size > 0
                 assert kem.ciphertext_size > 0
-            print(f"  ✓ Tested {len(algorithms)} KEM algorithms with full functionality")
+            print(f"  [PASS] Tested {len(algorithms)} KEM algorithms with full functionality")
         else:
             # Structure validation only
             for algo in algorithms:
                 assert isinstance(algo.value, int)
             assert callable(KEM)
-            print(f"  ✓ Verified {len(algorithms)} KEM algorithms (structure only)")
+            print(f"  [PASS] Verified {len(algorithms)} KEM algorithms (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ PQC KEM test failed: {e}")
+        print(f"  [FAIL] PQC KEM test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -163,22 +163,22 @@ def test_pqc_sign_algorithms():
                 assert signer.public_key_size > 0
                 assert signer.secret_key_size > 0
                 assert signer.signature_size > 0
-            print(f"  ✓ Tested {len(algorithms)} signature algorithms with full functionality")
+            print(f"  [PASS] Tested {len(algorithms)} signature algorithms with full functionality")
         else:
             # Structure validation only
             for algo in algorithms:
                 assert isinstance(algo.value, int)
             assert callable(Sign)
-            print(f"  ✓ Verified {len(algorithms)} signature algorithms (structure only)")
+            print(f"  [PASS] Verified {len(algorithms)} signature algorithms (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ PQC signature test failed: {e}")
+        print(f"  [FAIL] PQC signature test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -205,22 +205,22 @@ def test_aes_modes():
             # Test ChaCha20-Poly1305
             chacha = ChaCha20Poly1305()
             assert chacha is not None
-            print(f"  ✓ Tested {len(modes)} AES modes + ChaCha20-Poly1305 with full functionality")
+            print(f"  [PASS] Tested {len(modes)} AES modes + ChaCha20-Poly1305 with full functionality")
         else:
             # Structure validation only
             for mode in modes:
                 assert isinstance(mode.value, int)
             assert callable(AES) and callable(ChaCha20Poly1305)
-            print(f"  ✓ Verified {len(modes)} AES modes + ChaCha20-Poly1305 (structure only)")
+            print(f"  [PASS] Verified {len(modes)} AES modes + ChaCha20-Poly1305 (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ AES cipher test failed: {e}")
+        print(f"  [FAIL] AES cipher test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -255,22 +255,22 @@ def test_ecc_curves():
             assert ristretto.ELEMENT_SIZE == 32
             
             elligator = Elligator2()
-            print("  ✓ Tested 6 ECC curves with full functionality")
+            print("  [PASS] Tested 6 ECC curves with full functionality")
         else:
             # Structure validation only
             curves = [Ed25519, Ed448, Curve25519, Curve448, Ristretto255, Elligator2]
             for curve_class in curves:
                 assert callable(curve_class)
-            print("  ✓ Verified 6 ECC curves (structure only)")
+            print("  [PASS] Verified 6 ECC curves (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ ECC test failed: {e}")
+        print(f"  [FAIL] ECC test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -297,22 +297,22 @@ def test_mac_algorithms():
             # Test SipHash
             siphash = SipHash(c=2, d=4, output_size=8)
             assert siphash.output_size == 8
-            print(f"  ✓ Tested {len(algorithms)} MAC algorithms + SipHash with full functionality")
+            print(f"  [PASS] Tested {len(algorithms)} MAC algorithms + SipHash with full functionality")
         else:
             # Structure validation only
             for algo in algorithms:
                 assert isinstance(algo.value, int)
             assert callable(MAC) and callable(SipHash)
-            print(f"  ✓ Verified {len(algorithms)} MAC algorithms + SipHash (structure only)")
+            print(f"  [PASS] Verified {len(algorithms)} MAC algorithms + SipHash (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ MAC test failed: {e}")
+        print(f"  [FAIL] MAC test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -342,22 +342,22 @@ def test_kdf_functions():
             # Test TLS 1.3 HKDF
             tls_hkdf = TLS13_HKDF()
             assert tls_hkdf is not None
-            print("  ✓ Tested 5 KDF functions with full functionality")
+            print("  [PASS] Tested 5 KDF functions with full functionality")
         else:
             # Structure validation only
             for algo in algorithms:
                 assert isinstance(algo.value, int)
             assert callable(HKDF) and callable(KDF_SHAKE256) and callable(TLS13_HKDF)
-            print("  ✓ Verified 5 KDF functions (structure only)")
+            print("  [PASS] Verified 5 KDF functions (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ KDF test failed: {e}")
+        print(f"  [FAIL] KDF test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -393,22 +393,22 @@ def test_encoding():
             
             hex_str = hexencode(test_data)
             assert isinstance(hex_str, str)
-            print("  ✓ Tested Base64, Hex, FlexFrame-70 with full functionality")
+            print("  [PASS] Tested Base64, Hex, FlexFrame-70 with full functionality")
         else:
             # Structure validation only
             assert callable(Base64) and callable(Hex) and callable(FlexFrame70)
             assert callable(b64encode) and callable(b64decode)
             assert callable(hexencode) and callable(hexdecode)
-            print("  ✓ Verified encoding utilities (structure only)")
+            print("  [PASS] Verified encoding utilities (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ Encoding test failed: {e}")
+        print(f"  [FAIL] Encoding test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -440,7 +440,7 @@ def test_dhcm():
                 for diff in difficulties:
                     # Structure test - actual computation requires more complex setup
                     pass
-            print(f"  ✓ Tested DHCM with {len(algorithms)} algorithms and {len(difficulties)} difficulty models")
+            print(f"  [PASS] Tested DHCM with {len(algorithms)} algorithms and {len(difficulties)} difficulty models")
         else:
             # Structure validation only
             for algo in algorithms:
@@ -448,16 +448,16 @@ def test_dhcm():
             for diff in difficulties:
                 assert isinstance(diff.value, int)
             assert callable(DHCM)
-            print(f"  ✓ Verified DHCM with {len(algorithms)} algorithms and {len(difficulties)} difficulty models (structure only)")
+            print(f"  [PASS] Verified DHCM with {len(algorithms)} algorithms and {len(difficulties)} difficulty models (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ DHCM test failed: {e}")
+        print(f"  [FAIL] DHCM test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -482,22 +482,22 @@ def test_pow():
                 server = PoWServer(algo)
                 assert client.algorithm == algo
                 assert server.algorithm == algo
-            print(f"  ✓ Tested PoW with {len(algorithms)} algorithms with full functionality")
+            print(f"  [PASS] Tested PoW with {len(algorithms)} algorithms with full functionality")
         else:
             # Structure validation only
             for algo in algorithms:
                 assert isinstance(algo.value, int)
             assert callable(PoWClient) and callable(PoWServer)
-            print(f"  ✓ Verified PoW with {len(algorithms)} algorithms (structure only)")
+            print(f"  [PASS] Verified PoW with {len(algorithms)} algorithms (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ PoW test failed: {e}")
+        print(f"  [FAIL] PoW test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -522,22 +522,22 @@ def test_root_operations():
             assert callable(nextssl.root.reseed_drbg)
             assert callable(nextssl.root.set_udbf)
             assert callable(nextssl.root.clear_udbf)
-            print("  ✓ Tested DRBG and UDBF with full functionality")
+            print("  [PASS] Tested DRBG and UDBF with full functionality")
         else:
             # Structure validation only
             assert callable(DRBG) and callable(UDBF)
             assert callable(nextssl.root.seed_drbg) and callable(nextssl.root.reseed_drbg)
             assert callable(nextssl.root.set_udbf) and callable(nextssl.root.clear_udbf)
-            print("  ✓ Verified DRBG and UDBF (structure only)")
+            print("  [PASS] Verified DRBG and UDBF (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ Root operations test failed: {e}")
+        print(f"  [FAIL] Root operations test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -569,23 +569,23 @@ def test_unsafe_algorithms():
             assert callable(nextssl.unsafe.sha0)
             assert callable(nextssl.unsafe.md4)
             assert callable(nextssl.unsafe.md2)
-            print(f"  ✓ Tested {len(algorithms)} unsafe/legacy algorithms with full functionality")
+            print(f"  [PASS] Tested {len(algorithms)} unsafe/legacy algorithms with full functionality")
         else:
             # Structure validation only
             for algo in algorithms:
                 assert isinstance(algo.value, int)
             assert callable(UnsafeHash)
             assert callable(nextssl.unsafe.md5) and callable(nextssl.unsafe.sha1)
-            print(f"  ✓ Verified {len(algorithms)} unsafe/legacy algorithms (structure only)")
+            print(f"  [PASS] Verified {len(algorithms)} unsafe/legacy algorithms (structure only)")
         
         return True
     except RuntimeError as e:
         if "Could not find NextSSL binaries" in str(e):
-            print(f"  ⚠ Skipped: C binaries not available")
+            print(f"  âš  Skipped: C binaries not available")
             return True
         raise
     except Exception as e:
-        print(f"  ✗ Unsafe algorithms test failed: {e}")
+        print(f"  [FAIL] Unsafe algorithms test failed: {e}")
         traceback.print_exc()
         return False
 
@@ -622,7 +622,7 @@ def main():
             else:
                 failed += 1
         except Exception as e:
-            print(f"\n✗ {name} CRASHED: {e}")
+            print(f"\n[FAIL] {name} CRASHED: {e}")
             traceback.print_exc()
             failed += 1
     
@@ -631,13 +631,14 @@ def main():
     print("=" * 70)
     
     if failed > 0:
-        print("\n⚠️  Some tests failed - this is expected as C API bindings are not yet implemented.")
+        print("\nâš ï¸  Some tests failed - this is expected as C API bindings are not yet implemented.")
         print("   The tests verify that all classes, enums, and structures are properly defined.")
         sys.exit(0)  # Don't fail CI - we're testing structure, not functionality yet
     else:
-        print("\n✅ All tests passed!")
+        print("\n[SUCCESS] All tests passed!")
         sys.exit(0)
 
 
 if __name__ == "__main__":
     main()
+
