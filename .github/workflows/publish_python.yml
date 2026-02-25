@@ -145,11 +145,23 @@ jobs:
         shell: bash
       - name: Resolve Release Meta
         run: |
+          echo "Resolving release metadata..."
           if [ -n "${{ env.CUSTOM_VERSION }}" ]; then
             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "${{ env.FORCE_RELEASE }}" --version "${{ env.CUSTOM_VERSION }}" >> $GITHUB_ENV
           else
             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "${{ env.FORCE_RELEASE }}" >> $GITHUB_ENV
           fi
+        shell: bash
+      - name: Debug Environment Variables
+        run: |
+          echo "=== Release Configuration ==="
+          echo "PY_VERSION: ${{ env.PY_VERSION }}"
+          echo "RELEASE_MODE: ${{ env.RELEASE_MODE }}"
+          echo "SKIP_PUBLISH: ${{ env.SKIP_PUBLISH }}"
+          echo "PRERELEASE: ${{ env.PRERELEASE }}"
+          echo "CUSTOM_VERSION: ${{ env.CUSTOM_VERSION }}"
+          echo "============================"
+        shell: bash
       - name: Set Tag Name
         run: |
           if [ "${{ env.RELEASE_MODE }}" = "test" ]; then

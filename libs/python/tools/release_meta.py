@@ -80,8 +80,9 @@ def main():
 
     main_tag = latest_tag("v", repo_root)
     main_version = parse_version(main_tag) if main_tag else None
-    if main_version and version and version > main_version:
-        raise RuntimeError("Release note version exceeds main release tag")
+    # Only check version constraint for actual releases, not test/beta/alpha
+    if mode == "release" and main_version and version and version <= main_version:
+        raise RuntimeError(f"Release version {version_str} must be greater than current main tag {main_tag}")
 
     version_str = ".".join(str(x) for x in version)
     prerelease = mode in {"test", "beta", "alpha"}
