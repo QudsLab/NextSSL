@@ -74,7 +74,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_web_partial_core.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log bin/action_web_partial_core.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -82,7 +82,7 @@ jobs:
           name: output-web-partial-core-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_web_partial_core.log
+            logs/bin/action_web_partial_core.log
           if-no-files-found: warn
   web_partial_hash:
     runs-on: ubuntu-latest
@@ -128,7 +128,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_web_partial_hash.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log bin/action_web_partial_hash.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -136,7 +136,7 @@ jobs:
           name: output-web-partial-hash-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_web_partial_hash.log
+            logs/bin/action_web_partial_hash.log
           if-no-files-found: warn
   web_partial_dhcm:
     runs-on: ubuntu-latest
@@ -182,7 +182,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_web_partial_dhcm.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log bin/action_web_partial_dhcm.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -190,7 +190,7 @@ jobs:
           name: output-web-partial-dhcm-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_web_partial_dhcm.log
+            logs/bin/action_web_partial_dhcm.log
           if-no-files-found: warn
   web_partial_pow:
     runs-on: ubuntu-latest
@@ -236,7 +236,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_web_partial_pow.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log bin/action_web_partial_pow.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -244,7 +244,7 @@ jobs:
           name: output-web-partial-pow-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_web_partial_pow.log
+            logs/bin/action_web_partial_pow.log
           if-no-files-found: warn
   web_partial_pqc:
     runs-on: ubuntu-latest
@@ -290,7 +290,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_web_partial_pqc.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log bin/action_web_partial_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -298,7 +298,7 @@ jobs:
           name: output-web-partial-pqc-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_web_partial_pqc.log
+            logs/bin/action_web_partial_pqc.log
           if-no-files-found: warn
   web_base:
     runs-on: ubuntu-latest
@@ -350,11 +350,11 @@ jobs:
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_web_base_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_web_base_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_web_base_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_web_base_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_web_base_pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log bin/action_web_base_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log bin/action_web_base_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log bin/action_web_base_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log bin/action_web_base_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log bin/action_web_base_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -362,7 +362,7 @@ jobs:
           name: output-web-base-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_web_base_*.log
+            logs/bin/action_web_base_*.log
           if-no-files-found: warn
   web_main:
     runs-on: ubuntu-latest
@@ -409,11 +409,11 @@ jobs:
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_web_main_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_web_main_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_web_main_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_web_main_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_web_main_pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log bin/action_web_main_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log bin/action_web_main_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log bin/action_web_main_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log bin/action_web_main_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log bin/action_web_main_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -421,7 +421,7 @@ jobs:
           name: output-web-main-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_web_main_*.log
+            logs/bin/action_web_main_*.log
           if-no-files-found: warn
   web_system:
     runs-on: ubuntu-latest
@@ -467,7 +467,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_web_system.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log bin/action_web_system.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -475,7 +475,7 @@ jobs:
           name: output-web-system-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_web_system.log
+            logs/bin/action_web_system.log
           if-no-files-found: warn
   windows_partial_core:
     runs-on: windows-latest
@@ -497,7 +497,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_windows_partial_core.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log bin/action_windows_partial_core.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -505,7 +505,7 @@ jobs:
           name: output-windows-partial-core-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_core.log
+            logs/bin/action_windows_partial_core.log
           if-no-files-found: warn
   windows_partial_hash:
     runs-on: windows-latest
@@ -527,7 +527,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_windows_partial_hash.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log bin/action_windows_partial_hash.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -535,7 +535,7 @@ jobs:
           name: output-windows-partial-hash-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_hash.log
+            logs/bin/action_windows_partial_hash.log
           if-no-files-found: warn
   windows_partial_dhcm:
     runs-on: windows-latest
@@ -557,7 +557,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_windows_partial_dhcm.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log bin/action_windows_partial_dhcm.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -565,7 +565,7 @@ jobs:
           name: output-windows-partial-dhcm-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_dhcm.log
+            logs/bin/action_windows_partial_dhcm.log
           if-no-files-found: warn
   windows_partial_pow:
     runs-on: windows-latest
@@ -587,7 +587,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_windows_partial_pow.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log bin/action_windows_partial_pow.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -595,7 +595,7 @@ jobs:
           name: output-windows-partial-pow-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_pow.log
+            logs/bin/action_windows_partial_pow.log
           if-no-files-found: warn
   windows_partial_pqc:
     runs-on: windows-latest
@@ -617,7 +617,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_windows_partial_pqc.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log bin/action_windows_partial_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -625,7 +625,7 @@ jobs:
           name: output-windows-partial-pqc-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_windows_partial_pqc.log
+            logs/bin/action_windows_partial_pqc.log
           if-no-files-found: warn
   windows_base:
     runs-on: windows-latest
@@ -653,11 +653,11 @@ jobs:
         shell: powershell
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_windows_base_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_windows_base_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_windows_base_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_windows_base_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_windows_base_pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log bin/action_windows_base_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log bin/action_windows_base_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log bin/action_windows_base_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log bin/action_windows_base_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log bin/action_windows_base_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -665,7 +665,7 @@ jobs:
           name: output-windows-base-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_windows_base_*.log
+            logs/bin/action_windows_base_*.log
           if-no-files-found: warn
   windows_main:
     runs-on: windows-latest
@@ -688,11 +688,11 @@ jobs:
         shell: powershell
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_windows_main_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_windows_main_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_windows_main_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_windows_main_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_windows_main_pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log bin/action_windows_main_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log bin/action_windows_main_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log bin/action_windows_main_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log bin/action_windows_main_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log bin/action_windows_main_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -700,7 +700,7 @@ jobs:
           name: output-windows-main-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_windows_main_*.log
+            logs/bin/action_windows_main_*.log
           if-no-files-found: warn
   windows_system:
     runs-on: windows-latest
@@ -722,7 +722,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_windows_system.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log bin/action_windows_system.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -730,7 +730,7 @@ jobs:
           name: output-windows-system-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_windows_system.log
+            logs/bin/action_windows_system.log
           if-no-files-found: warn
   linux_partial_core:
     runs-on: ubuntu-latest
@@ -751,7 +751,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_linux_partial_core.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log bin/action_linux_partial_core.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -759,7 +759,7 @@ jobs:
           name: output-linux-partial-core-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_linux_partial_core.log
+            logs/bin/action_linux_partial_core.log
           if-no-files-found: warn
   linux_partial_hash:
     runs-on: ubuntu-latest
@@ -780,7 +780,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_linux_partial_hash.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log bin/action_linux_partial_hash.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -788,7 +788,7 @@ jobs:
           name: output-linux-partial-hash-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_linux_partial_hash.log
+            logs/bin/action_linux_partial_hash.log
           if-no-files-found: warn
   linux_partial_dhcm:
     runs-on: ubuntu-latest
@@ -809,7 +809,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_linux_partial_dhcm.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log bin/action_linux_partial_dhcm.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -817,7 +817,7 @@ jobs:
           name: output-linux-partial-dhcm-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_linux_partial_dhcm.log
+            logs/bin/action_linux_partial_dhcm.log
           if-no-files-found: warn
   linux_partial_pow:
     runs-on: ubuntu-latest
@@ -838,7 +838,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_linux_partial_pow.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log bin/action_linux_partial_pow.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -846,7 +846,7 @@ jobs:
           name: output-linux-partial-pow-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_linux_partial_pow.log
+            logs/bin/action_linux_partial_pow.log
           if-no-files-found: warn
   linux_partial_pqc:
     runs-on: ubuntu-latest
@@ -867,7 +867,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_linux_partial_pqc.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log bin/action_linux_partial_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -875,7 +875,7 @@ jobs:
           name: output-linux-partial-pqc-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_linux_partial_pqc.log
+            logs/bin/action_linux_partial_pqc.log
           if-no-files-found: warn
   linux_base:
     runs-on: ubuntu-latest
@@ -902,11 +902,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_linux_base_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_linux_base_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_linux_base_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_linux_base_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_linux_base_pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log bin/action_linux_base_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log bin/action_linux_base_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log bin/action_linux_base_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log bin/action_linux_base_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log bin/action_linux_base_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -914,7 +914,7 @@ jobs:
           name: output-linux-base-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_linux_base_*.log
+            logs/bin/action_linux_base_*.log
           if-no-files-found: warn
   linux_main:
     runs-on: ubuntu-latest
@@ -936,11 +936,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_linux_main_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_linux_main_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_linux_main_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_linux_main_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_linux_main_pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log bin/action_linux_main_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log bin/action_linux_main_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log bin/action_linux_main_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log bin/action_linux_main_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log bin/action_linux_main_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -948,7 +948,7 @@ jobs:
           name: output-linux-main-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_linux_main_*.log
+            logs/bin/action_linux_main_*.log
           if-no-files-found: warn
   linux_system:
     runs-on: ubuntu-latest
@@ -969,7 +969,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_linux_system.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log bin/action_linux_system.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -977,7 +977,7 @@ jobs:
           name: output-linux-system-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_linux_system.log
+            logs/bin/action_linux_system.log
           if-no-files-found: warn
   mac_partial_core:
     runs-on: macos-latest
@@ -998,7 +998,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log action_mac_partial_core.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log bin/action_mac_partial_core.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1006,7 +1006,7 @@ jobs:
           name: output-mac-partial-core-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_mac_partial_core.log
+            logs/bin/action_mac_partial_core.log
           if-no-files-found: warn
   mac_partial_hash:
     runs-on: macos-latest
@@ -1027,7 +1027,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log action_mac_partial_hash.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log bin/action_mac_partial_hash.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1035,7 +1035,7 @@ jobs:
           name: output-mac-partial-hash-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_mac_partial_hash.log
+            logs/bin/action_mac_partial_hash.log
           if-no-files-found: warn
   mac_partial_dhcm:
     runs-on: macos-latest
@@ -1056,7 +1056,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log action_mac_partial_dhcm.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log bin/action_mac_partial_dhcm.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1064,7 +1064,7 @@ jobs:
           name: output-mac-partial-dhcm-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_mac_partial_dhcm.log
+            logs/bin/action_mac_partial_dhcm.log
           if-no-files-found: warn
   mac_partial_pow:
     runs-on: macos-latest
@@ -1085,7 +1085,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log action_mac_partial_pow.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log bin/action_mac_partial_pow.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1093,7 +1093,7 @@ jobs:
           name: output-mac-partial-pow-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_mac_partial_pow.log
+            logs/bin/action_mac_partial_pow.log
           if-no-files-found: warn
   mac_partial_pqc:
     runs-on: macos-latest
@@ -1114,7 +1114,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log action_mac_partial_pqc.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log bin/action_mac_partial_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1122,7 +1122,7 @@ jobs:
           name: output-mac-partial-pqc-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_mac_partial_pqc.log
+            logs/bin/action_mac_partial_pqc.log
           if-no-files-found: warn
   mac_base:
     runs-on: macos-latest
@@ -1149,11 +1149,11 @@ jobs:
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log action_mac_base_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log action_mac_base_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log action_mac_base_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log action_mac_base_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log action_mac_base_pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log bin/action_mac_base_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log bin/action_mac_base_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log bin/action_mac_base_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log bin/action_mac_base_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log bin/action_mac_base_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1161,7 +1161,7 @@ jobs:
           name: output-mac-base-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_mac_base_*.log
+            logs/bin/action_mac_base_*.log
           if-no-files-found: warn
   mac_main:
     runs-on: macos-latest
@@ -1183,11 +1183,11 @@ jobs:
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log action_mac_main_core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log action_mac_main_hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log action_mac_main_dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log action_mac_main_pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log action_mac_main_pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log bin/action_mac_main_core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log bin/action_mac_main_hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log bin/action_mac_main_dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log bin/action_mac_main_pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log bin/action_mac_main_pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1195,7 +1195,7 @@ jobs:
           name: output-mac-main-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_mac_main_*.log
+            logs/bin/action_mac_main_*.log
           if-no-files-found: warn
   mac_system:
     runs-on: macos-latest
@@ -1216,7 +1216,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log action_mac_system.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log bin/action_mac_system.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1224,7 +1224,7 @@ jobs:
           name: output-mac-system-${{ github.run_attempt }}
           path: |
             bin/${{ env.BIN_DIR }}
-            logs/action_mac_system.log
+            logs/bin/action_mac_system.log
           if-no-files-found: warn
   commit:
     runs-on: ubuntu-latest
@@ -1259,6 +1259,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          python clear.py
           git add -f bin logs
           if [ -z "$(git status --porcelain)" ]; then
             echo "No changes to commit"
