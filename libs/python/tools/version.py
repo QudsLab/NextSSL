@@ -60,7 +60,20 @@ def compute_version(repo_root):
 def write_version(version, repo_root):
     version_str = ".".join(str(x) for x in version)
     target = repo_root / "libs" / "python" / "src" / "nextssl" / "__init__.py"
-    target.write_text(f'__version__ = "{version_str}"\n', encoding="utf-8")
+    
+    # Read existing file
+    content = target.read_text(encoding="utf-8")
+    
+    # Replace version line using regex
+    new_content = re.sub(
+        r'^__version__\s*=\s*["\'][\d.]+["\']',
+        f'__version__ = "{version_str}"',
+        content,
+        flags=re.MULTILINE
+    )
+    
+    # Write back
+    target.write_text(new_content, encoding="utf-8")
     return version_str
 
 
