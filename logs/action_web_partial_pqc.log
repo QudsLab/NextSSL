@@ -82,3 +82,15 @@
 2026-02-24 17:32:36,147 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/kem_lattice.wasm
 2026-02-24 17:32:36,154 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/sign_hash_based.wasm
 2026-02-24 17:32:36,159 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/sign_lattice.wasm
+2026-02-24 23:52:28,587 - INFO - Successfully built kem_lattice
+2026-02-24 23:52:37,146 - INFO - Successfully built kem_code_based
+2026-02-24 23:52:44,246 - INFO - Successfully built sign_lattice
+2026-02-24 23:52:48,671 - INFO - Successfully built sign_hash_based
+2026-02-24 23:52:48,671 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/kem_code_based.wasm
+2026-02-24 23:52:48,671 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/kem_lattice.wasm
+2026-02-24 23:52:48,671 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/sign_hash_based.wasm
+2026-02-24 23:52:48,671 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/sign_lattice.wasm
+2026-02-24 23:52:48,679 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/kem_code_based.wasm
+2026-02-24 23:52:48,684 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/kem_lattice.wasm
+2026-02-24 23:52:48,691 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/sign_hash_based.wasm
+2026-02-24 23:52:48,697 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/partial/pqc/sign_lattice.wasm

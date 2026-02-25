@@ -20,3 +20,14 @@
 2026-02-24 17:45:55,725 - INFO -        Hash (16 bytes): 900150983cd24fb0d6963f7d28e17f72
 2026-02-24 17:45:55,725 - INFO - [INFO] Results: 2 passed, 0 failed
 2026-02-24 17:45:55,725 - INFO - [PASS] ALL TESTS PASSED
+2026-02-25 00:05:16,868 - INFO - Successfully built hash
+2026-02-25 00:05:16,868 - INFO - === Running 1 test suites... ===
+2026-02-25 00:05:16,870 - INFO - -> Running script.test.main.hash
+2026-02-25 00:05:16,870 - INFO - [INFO] Loading DLL: D:\a\NextSSL\NextSSL\bin\windows\main\hash.dll
+2026-02-25 00:05:16,870 - INFO - [PASS] DLL loaded successfully
+2026-02-25 00:05:16,870 - INFO - [PASS] SHA-256 (Primitive)
+2026-02-25 00:05:16,870 - INFO -        Hash (32 bytes): ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
+2026-02-25 00:05:16,870 - INFO - [PASS] MD5 (Legacy)
+2026-02-25 00:05:16,870 - INFO -        Hash (16 bytes): 900150983cd24fb0d6963f7d28e17f72
+2026-02-25 00:05:16,870 - INFO - [INFO] Results: 2 passed, 0 failed
+2026-02-25 00:05:16,870 - INFO - [PASS] ALL TESTS PASSED

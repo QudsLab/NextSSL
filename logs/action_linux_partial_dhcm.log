@@ -467,3 +467,70 @@
 2026-02-24 17:32:21,891 - INFO - [PASS] MD4 (32B)
 2026-02-24 17:32:21,891 - INFO - [PASS] DHCM Legacy Unsafe: 2 passed
 2026-02-24 17:32:21,891 - INFO - [PASS] ALL TESTS PASSED
+2026-02-24 23:52:31,626 - INFO - Successfully built primitive_fast
+2026-02-24 23:52:31,771 - INFO - Successfully built primitive_memory_hard
+2026-02-24 23:52:31,942 - INFO - Successfully built primitive_sponge_xof
+2026-02-24 23:52:32,109 - INFO - Successfully built legacy_alive
+2026-02-24 23:52:32,305 - INFO - Successfully built legacy_unsafe
+2026-02-24 23:52:32,306 - INFO - === Running 5 test suites... ===
+2026-02-24 23:52:32,306 - INFO - -> Running script.test.partial.dhcm.primitive_fast
+2026-02-24 23:52:32,306 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/partial/dhcm/primitive_fast.so
+2026-02-24 23:52:32,306 - INFO - [PASS] DLL Loaded
+2026-02-24 23:52:32,306 - INFO - -> Testing SHA-256 Cost
+2026-02-24 23:52:32,306 - INFO - [PASS] SHA-256 Cost (64B)
+2026-02-24 23:52:32,306 - INFO - [DATA] SHA-256.algo: SHA-256
+2026-02-24 23:52:32,306 - INFO - [DATA] SHA-256.wu_per_eval: 2000
+2026-02-24 23:52:32,306 - INFO - [DATA] SHA-256.mu_per_eval: 1
+2026-02-24 23:52:32,306 - INFO - [DATA] SHA-256.expected_trials: 1.0
+2026-02-24 23:52:32,306 - INFO - [DATA] SHA-256.total_wu: 2000
+2026-02-24 23:52:32,306 - INFO - -> Testing Target-Based Difficulty (20 bits)
+2026-02-24 23:52:32,306 - INFO - [PASS] Target Difficulty (20 bits)
+2026-02-24 23:52:32,306 - INFO - [DATA] TargetDiff.algo: SHA-256
+2026-02-24 23:52:32,307 - INFO - [DATA] TargetDiff.wu_per_eval: 2000
+2026-02-24 23:52:32,307 - INFO - [DATA] TargetDiff.mu_per_eval: 1
+2026-02-24 23:52:32,307 - INFO - [DATA] TargetDiff.expected_trials: 1048576.0
+2026-02-24 23:52:32,307 - INFO - [DATA] TargetDiff.total_wu: 2097152000
+2026-02-24 23:52:32,307 - INFO - [PASS] DHCM Fast: 2 passed
+2026-02-24 23:52:32,307 - INFO - -> Running script.test.partial.dhcm.primitive_memory_hard
+2026-02-24 23:52:32,307 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/partial/dhcm/primitive_memory_hard.so
+2026-02-24 23:52:32,307 - INFO - [PASS] DLL Loaded
+2026-02-24 23:52:32,307 - INFO - -> Testing Argon2id (Low Memory)
+2026-02-24 23:52:32,307 - INFO - [PASS] Argon2id Low Mem
+2026-02-24 23:52:32,307 - INFO - [DATA] Argon2id_Low.algo: Argon2id
+2026-02-24 23:52:32,307 - INFO - [DATA] Argon2id_Low.wu: 9830400
+2026-02-24 23:52:32,307 - INFO - [DATA] Argon2id_Low.mu: 4096
+2026-02-24 23:52:32,307 - INFO - -> Testing Argon2id (High Memory)
+2026-02-24 23:52:32,307 - INFO - [PASS] Argon2id High Mem
+2026-02-24 23:52:32,307 - INFO - [DATA] Argon2id_High.algo: Argon2id
+2026-02-24 23:52:32,307 - INFO - [DATA] Argon2id_High.wu: 629145600
+2026-02-24 23:52:32,307 - INFO - [DATA] Argon2id_High.mu: 65536
+2026-02-24 23:52:32,307 - INFO - [PASS] DHCM MemHard: 2 passed
+2026-02-24 23:52:32,308 - INFO - -> Running script.test.partial.dhcm.primitive_sponge_xof
+2026-02-24 23:52:32,308 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/partial/dhcm/primitive_sponge_xof.so
+2026-02-24 23:52:32,308 - INFO - [PASS] DLL Loaded
+2026-02-24 23:52:32,308 - INFO - -> Testing SHA3-256 (64B)
+2026-02-24 23:52:32,308 - INFO - [PASS] SHA3-256 (64B)
+2026-02-24 23:52:32,308 - INFO - [DATA] SHA3_256.algo: SHA3-256
+2026-02-24 23:52:32,308 - INFO - [DATA] SHA3_256.wu: 1500
+2026-02-24 23:52:32,308 - INFO - -> Testing SHAKE-128 (200B Output)
+2026-02-24 23:52:32,308 - INFO - [PASS] SHAKE-128 (200B)
+2026-02-24 23:52:32,308 - INFO - [DATA] SHAKE128.algo: SHAKE-128
+2026-02-24 23:52:32,308 - INFO - [DATA] SHAKE128.wu: 2800
+2026-02-24 23:52:32,308 - INFO - [PASS] DHCM Sponge: 2 passed
+2026-02-24 23:52:32,308 - INFO - -> Running script.test.partial.dhcm.legacy_alive
+2026-02-24 23:52:32,308 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/partial/dhcm/legacy_alive.so
+2026-02-24 23:52:32,309 - INFO - [PASS] DLL Loaded
+2026-02-24 23:52:32,309 - INFO - -> Testing MD5
+2026-02-24 23:52:32,309 - INFO - [PASS] MD5 (32B)
+2026-02-24 23:52:32,309 - INFO - -> Testing SHA-1
+2026-02-24 23:52:32,309 - INFO - [PASS] SHA-1 (32B)
+2026-02-24 23:52:32,309 - INFO - [PASS] DHCM Legacy Alive: 2 passed
+2026-02-24 23:52:32,309 - INFO - -> Running script.test.partial.dhcm.legacy_unsafe
+2026-02-24 23:52:32,309 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/partial/dhcm/legacy_unsafe.so
+2026-02-24 23:52:32,309 - INFO - [PASS] DLL Loaded
+2026-02-24 23:52:32,309 - INFO - -> Testing MD2
+2026-02-24 23:52:32,309 - INFO - [PASS] MD2 (16B)
+2026-02-24 23:52:32,309 - INFO - -> Testing MD4
+2026-02-24 23:52:32,309 - INFO - [PASS] MD4 (32B)
+2026-02-24 23:52:32,309 - INFO - [PASS] DHCM Legacy Unsafe: 2 passed
+2026-02-24 23:52:32,309 - INFO - [PASS] ALL TESTS PASSED
