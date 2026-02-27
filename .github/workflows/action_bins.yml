@@ -23,7 +23,8 @@ concurrency:
 jobs:
   guard:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, '--ng') && !contains(toJson(github.event.commits), '--ng') }}
+    # Only run if: workflow_dispatch OR --gen flag OR --v X.Y.Z with publish flags
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '--gen') || (contains(github.event.head_commit.message, '--v ') && (contains(github.event.head_commit.message, '--test') || contains(github.event.head_commit.message, '--beta') || contains(github.event.head_commit.message, '--release'))) }}
     steps:
       - uses: actions/checkout@v4
         with:
