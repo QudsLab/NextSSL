@@ -24,3 +24,5 @@ __pycache__
 /libs/python/build/
 /libs/python/src/**/*.egg-info/
 note/TEST_PLAN.md
+note/COPILOT_SYSTEM_PROMPT.MD
+/note
