@@ -11,26 +11,32 @@ from script.core import Config, Logger, Builder
 
 from script.gen.partial.hash import primitive_fast, primitive_memory_hard, primitive_sponge_xof, legacy_alive, legacy_unsafe
 from script.gen.base import hash_primitive_main, hash_legacy_main
-from script.gen.main import hash as hash_main
+from script.gen.main.full import hash as hash_main
 
 from script.gen.partial.pqc import kem_lattice, kem_code_based, sign_lattice, sign_hash_based
 from script.gen.base import pqc_kem_main, pqc_sign_main
-from script.gen.main import pqc as pqc_main
+from script.gen.main.full import pqc as pqc_main
 
 from script.gen.partial.core import aes_modes, aes_aead, stream_aead, macs, ecc
 from script.gen.base import core_cipher_main, core_mac_main, core_ecc_main
-from script.gen.main import core as core_main
-from script.gen.main import system as system_main
+from script.gen.main.full import core as core_main
 
 from script.gen.partial.dhcm import primitive_fast as dhcm_primitive_fast, primitive_memory_hard as dhcm_primitive_memory_hard, primitive_sponge_xof as dhcm_primitive_sponge_xof, legacy_alive as dhcm_legacy_alive, legacy_unsafe as dhcm_legacy_unsafe
 from script.gen.base import dhcm_primitive_main, dhcm_legacy_main
-from script.gen.main import dhcm as dhcm_main
+from script.gen.main.full import dhcm as dhcm_main
+
+# Primary Layer (Layer 4) - Full and Lite  
+from script.gen.primary.full import system as system_main
+from script.gen.primary.lite import system as lite_system
+
+# Lite Variant Modules (Layer 3)
+from script.gen.main.lite import hash as lite_hash, aead as lite_aead, password as lite_password, keyexchange as lite_keyexchange, signature as lite_signature, pqc as lite_pqc, pow as lite_pow
 
 from script.gen.partial.pow.server import primitive_fast as pow_server_primitive_fast, primitive_memory_hard as pow_server_primitive_memory_hard, primitive_sponge_xof as pow_server_primitive_sponge_xof, legacy_alive as pow_server_legacy_alive, legacy_unsafe as pow_server_legacy_unsafe
 from script.gen.partial.pow.client import primitive_fast as pow_client_primitive_fast, primitive_memory_hard as pow_client_primitive_memory_hard, primitive_sponge_xof as pow_client_primitive_sponge_xof, legacy_alive as pow_client_legacy_alive, legacy_unsafe as pow_client_legacy_unsafe
 from script.gen.partial.pow.combined import primitive_fast as pow_combined_primitive_fast, primitive_memory_hard as pow_combined_primitive_memory_hard, primitive_sponge_xof as pow_combined_primitive_sponge_xof, legacy_alive as pow_combined_legacy_alive, legacy_unsafe as pow_combined_legacy_unsafe
 from script.gen.base import pow_primitive, pow_legacy, pow_combined as pow_combined_base
-from script.gen.main import pow as pow_main, pow_combined as pow_combined_main
+from script.gen.main.full import pow as pow_main, pow_combined as pow_combined_main
 
 from script.test.partial.pow import primitive_fast as test_pow_primitive_fast
 from script.test.partial.pow import primitive_memory_hard as test_pow_primitive_memory_hard
@@ -42,9 +48,8 @@ from script.test.partial.pow.combined import primitive_memory_hard as test_pow_c
 from script.test.partial.pow.combined import primitive_sponge_xof as test_pow_combined_primitive_sponge_xof
 from script.test.partial.pow.combined import legacy_alive as test_pow_combined_legacy_alive
 from script.test.partial.pow.combined import legacy_unsafe as test_pow_combined_legacy_unsafe
-from script.test.suites import pow_integration as test_pow_integration
 from script.test.base import pow_primitive as test_pow_primitive, pow_legacy as test_pow_legacy, pow_combined as test_pow_combined_base
-from script.test.main import pow as test_pow_main, pow_combined as test_pow_combined_main
+from script.test.main.full import pow as test_pow_main, pow_combined as test_pow_combined_main
 from script.test.partial.hash import primitive_fast as test_primitive_fast
 from script.test.partial.hash import primitive_memory_hard as test_primitive_memory_hard
 from script.test.partial.hash import primitive_sponge_xof as test_primitive_sponge_xof
@@ -52,7 +57,7 @@ from script.test.partial.hash import legacy_alive as test_legacy_alive
 from script.test.partial.hash import legacy_unsafe as test_legacy_unsafe
 from script.test.base import hash_primitive_main as test_hash_primitive_main
 from script.test.base import hash_legacy_main as test_hash_legacy_main
-from script.test.main import hash as test_hash_main
+from script.test.main.full import hash as test_hash_main
 
 from script.test.partial.pqc import kem_lattice as test_kem_lattice
 from script.test.partial.pqc import kem_code_based as test_kem_code_based
@@ -60,7 +65,7 @@ from script.test.partial.pqc import sign_lattice as test_sign_lattice
 from script.test.partial.pqc import sign_hash_based as test_sign_hash_based
 from script.test.base import pqc_kem_main as test_pqc_kem_main
 from script.test.base import pqc_sign_main as test_pqc_sign_main
-from script.test.main import pqc as test_pqc_main
+from script.test.main.full import pqc as test_pqc_main
 
 from script.test.partial.core import aes_modes as test_aes_modes
 from script.test.partial.core import aes_aead as test_aes_aead
@@ -70,8 +75,13 @@ from script.test.partial.core import ecc as test_ecc
 from script.test.base import core_cipher_main as test_core_cipher_main
 from script.test.base import core_mac_main as test_core_mac_main
 from script.test.base import core_ecc_main as test_core_ecc_main
-from script.test.main import core as test_core_main
-from script.test.main import system as test_system_main
+from script.test.main.full import core as test_core_main
+
+# Primary Layer Tests
+from script.test.primary.full import system as test_system_main
+
+# Lite Variant Tests
+from script.test.main.lite import hash as test_lite_hash
 
 from script.test.partial.dhcm import primitive_fast as test_dhcm_primitive_fast
 from script.test.partial.dhcm import primitive_memory_hard as test_dhcm_primitive_memory_hard
@@ -80,7 +90,7 @@ from script.test.partial.dhcm import legacy_alive as test_dhcm_legacy_alive
 from script.test.partial.dhcm import legacy_unsafe as test_dhcm_legacy_unsafe
 from script.test.base import dhcm_primitive_main as test_dhcm_primitive_main
 from script.test.base import dhcm_legacy_main as test_dhcm_legacy_main
-from script.test.main import dhcm as test_dhcm_main
+from script.test.main.full import dhcm as test_dhcm_main
 
 PLATFORM_LIB_EXT = {
     'windows': '.dll',
@@ -116,13 +126,6 @@ def create_config(args):
     if lib_ext:
         os.environ['LEYLINE_LIB_EXT'] = lib_ext
     return Config(bin_dir=bin_dir, log_dir=log_dir, lib_ext=lib_ext)
-
-def get_action_log_path(config, action_log):
-    if not action_log:
-        return None
-    if os.path.isabs(action_log):
-        return action_log
-    return os.path.join(config.log_dir, action_log)
 
 def pick_module_by_name(name, modules):
     for module in modules:
@@ -296,9 +299,12 @@ def run_web_test(config, selector):
 def run_build(args):
     config = create_config(args)
     target = args.build
+    platform = args.platform if hasattr(args, 'platform') else Platform.get_os()
+    variant = args.variant if hasattr(args, 'variant') else 'full'
     
-    action_log_path = get_action_log_path(config, args.action_log)
-    log_path = action_log_path or config.get_log_path('runner', 'build')
+    # Use new runner log structure
+    action_type = getattr(args, 'action', None)
+    log_path = config.get_runner_log_path(action_type)
     with Logger(log_path) as logger:
         builder = Builder(config, logger)
         build_ok = True
@@ -323,6 +329,9 @@ def run_build(args):
         core_base = [core_cipher_main, core_mac_main, core_ecc_main]
         core_main_list = [core_main]
         system_main_list = [system_main]
+
+        # Lite Variant Modules (8 core algorithms)
+        lite_main_list = [lite_hash, lite_aead, lite_password, lite_keyexchange, lite_signature, lite_pqc, lite_pow, lite_system]
 
         # DHCM Modules
         dhcm_partial = [dhcm_primitive_fast, dhcm_primitive_memory_hard, dhcm_primitive_sponge_xof, dhcm_legacy_alive, dhcm_legacy_unsafe]
@@ -375,14 +384,32 @@ def run_build(args):
         build_dhcm = False
         build_pow = False
         build_system = False
+        build_lite = False
+        
+        # Handle variant flag
+        # Determine variant (default to both when building all)
+        variant = args.variant if hasattr(args, 'variant') else ('both' if target == 'all' else 'full')
         
         if target == 'all':
-            build_hash = True
-            build_pqc = True
-            build_core = True
-            build_dhcm = True
-            build_pow = True
-            build_system = True
+            if variant == 'lite':
+                build_lite = True
+            elif variant == 'full':
+                build_hash = True
+                build_pqc = True
+                build_core = True
+                build_dhcm = True
+                build_pow = True
+                build_system = True
+            elif variant == 'both':
+                build_hash = True
+                build_pqc = True
+                build_core = True
+                build_dhcm = True
+                build_pow = True
+                build_system = True
+                build_lite = True
+        elif target == 'lite':
+            build_lite = True
         elif target == 'hash':
             build_hash = True
         elif target == 'pqc':
@@ -506,6 +533,19 @@ def run_build(args):
                 logger.error(f"Unknown target: {target}")
                 build_ok = False
             return build_ok
+        elif target.startswith('lite:'):
+            # Specific lite target
+            if target == 'lite:main':
+                build_list(lite_main_list)
+            else:
+                name = target.split(':')[-1]
+                module = pick_module_by_name(name, lite_main_list)
+                if module:
+                    build_list([module])
+                else:
+                    logger.error(f"Unknown target: {target}")
+                    build_ok = False
+            return build_ok
         else:
             logger.error(f"Unknown build target: {target}")
             return False
@@ -533,13 +573,21 @@ def run_build(args):
         if build_system:
             logger.info("Building System targets...")
             build_list(system_main_list)
+        
+        if build_lite:
+            logger.info("Building Lite variant...")
+            build_list(lite_main_list)
+        
         return build_ok
 
 def run_test(args):
     config = create_config(args)
+    platform = args.platform if hasattr(args, 'platform') else Platform.get_os()
+    variant = args.variant if hasattr(args, 'variant') else 'full'
     
-    action_log_path = get_action_log_path(config, args.action_log)
-    log_path = action_log_path or config.get_log_path('runner', 'test')
+    # Use new runner log structure
+    action_type = getattr(args, 'action', None)
+    log_path = config.get_runner_log_path(action_type)
     with Logger(log_path, console_output=False) as logger:
         from script.core import console
         console.set_logger(logger)
@@ -576,6 +624,9 @@ def run_test(args):
         core_main_list = [test_core_main]
         system_main_list = [test_system_main]
 
+        # Lite Variant Tests
+        lite_hash_list = [test_lite_hash]
+
         # DHCM Tests
         dhcm_partial = [
             test_dhcm_primitive_fast, test_dhcm_primitive_memory_hard, test_dhcm_primitive_sponge_xof,
@@ -599,7 +650,6 @@ def run_test(args):
         ]
         pow_base = [test_pow_primitive, test_pow_legacy, test_pow_combined_base]
         pow_main_list = [test_pow_main, test_pow_combined_main]
-        pow_suites = [test_pow_integration]
         pow_partial_map = {
             ('server', 'primitive_fast'): test_pow_primitive_fast,
             ('server', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
@@ -640,6 +690,7 @@ def run_test(args):
         run_dhcm = False
         run_pow = False
         run_system = False
+        run_lite = False
 
         if target == 'all':
             run_hash = True
@@ -648,6 +699,7 @@ def run_test(args):
             run_dhcm = True
             run_pow = True
             run_system = True
+            # Don't auto-run lite with 'all' - it's variant-specific
         elif target == 'hash':
             run_hash = True
         elif target == 'pqc':
@@ -696,7 +748,6 @@ def run_test(args):
             if target == 'pow:partial': test_modules = pow_partial
             elif target == 'pow:base': test_modules = pow_base
             elif target == 'pow:main': test_modules = pow_main_list
-            elif target == 'pow:integration': test_modules = pow_suites
             else:
                 parts = target.split(':')
                 module = None
@@ -713,6 +764,15 @@ def run_test(args):
         elif target.startswith('system:'):
             if target == 'system:main':
                 test_modules = system_main_list
+        elif target.startswith('lite:'):
+            # Lite variant tests (e.g., lite:hash)
+            if target == 'lite:hash':
+                test_modules = lite_hash_list
+            elif target == 'lite:all':
+                run_lite = True
+            else:
+                console.print_fail(f"Unknown lite test: {target}")
+                return
         else:
             console.print_fail(f"Unknown test target: {target}")
             return
@@ -726,9 +786,11 @@ def run_test(args):
         if run_dhcm:
             test_modules.extend(dhcm_partial + dhcm_base + dhcm_main_list)
         if run_pow:
-            test_modules.extend(pow_partial + pow_base + pow_main_list + pow_suites)
+            test_modules.extend(pow_partial + pow_base + pow_main_list)
         if run_system:
             test_modules.extend(system_main_list)
+        if run_lite:
+            test_modules.extend(lite_hash_list)
 
         console.print_header(f"Running {len(test_modules)} test suites...")
         
@@ -760,7 +822,9 @@ if __name__ == "__main__":
     parser.add_argument('--build', help="Build target (e.g., hash, hash:partial)")
     parser.add_argument('--test', help="Test target (e.g., hash, hash:partial)")
     parser.add_argument('--platform', type=str, choices=['windows', 'linux', 'mac', 'web'], help='Platform output selector')
-    parser.add_argument('--action-log', type=str, help='Action log filename or path')
+    parser.add_argument('--variant', type=str, choices=['lite', 'full', 'both'], default='both', 
+                        help='Build variant: lite (9 algorithms ~500KB), full (all algorithms ~5MB), or both')
+    parser.add_argument('--action', type=str, help='GitHub action type (stores logs in logs/bin/{action}/)')
     parser.add_argument('--bin-root', type=str, help='Override bin output root')
     parser.add_argument('--log-root', type=str, help='Override log output root')
     parser.add_argument('--lib-ext', type=str, help='Override output library extension')

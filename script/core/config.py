@@ -26,7 +26,7 @@ class Config:
         
         self.excluded_dirs = [
             'test', 'bench', 'gen_kat', 'sphincs', 'avx2', 'aarch64', 
-            'keccak4x', 'keccak2x', 'examples', 'script', 'external_sources'
+            'keccak4x', 'keccak2x', 'examples', 'script', 'external_sources', 'optional', 'pow'
         ]
         
         self.excluded_files = [
@@ -46,11 +46,67 @@ class Config:
         if Platform.get_os() == 'macos':
             self.macros.append('BLAKE3_USE_NEON=0')
 
-    def get_log_path(self, tier, name, timed=True):
-        os.makedirs(self.log_dir, exist_ok=True)
+    def get_log_path(self, tier, name, timed=True, variant=None, platform=None):
+        """
+        Generate log path matching bin structure
+        
+        Args:
+            tier: Layer tier (partial, base, main, primary)
+            name: Module name
+            timed: Whether to include timestamp
+            variant: Build variant (full, lite) - optional
+            platform: Target platform - optional
+        
+        Returns:
+            Log file path matching bin/{platform}/{tier}/{variant}/
+        """
+        # Build log directory matching bin structure
+        log_parts = [self.log_dir]
+        
+        if platform:
+            log_parts.append(platform)
+        
+        log_parts.append(tier)
+        
+        if variant:
+            log_parts.append(variant)
+        
+        log_subdir = os.path.join(*log_parts)
+        os.makedirs(log_subdir, exist_ok=True)
+        
+        # Generate filename
         if timed:
-            return os.path.join(self.log_dir, f"{time.strftime('%Y%m%d_%H%M%S')}_{tier}_{name}.log")
-        return os.path.join(self.log_dir, f"{tier}_{name}.log")
+            filename = f"{name}_{time.strftime('%Y%m%d_%H%M%S')}.log"
+        else:
+            filename = f"{name}.log"
+        
+        return os.path.join(log_subdir, filename)
+    
+    def get_runner_log_path(self, action_type=None):
+        """
+        Generate runner log path
+        
+        For normal runs: logs/run/YYYY-MM-DD-HH-MM-SS_runner.log
+        For GitHub actions: logs/bin/{action_type}/...
+        
+        Args:
+            action_type: If provided, creates GitHub action log structure
+        
+        Returns:
+            Log file path
+        """
+        timestamp = time.strftime('%Y-%m-%d-%H-%M-%S')
+        
+        if action_type:
+            # GitHub action logs: logs/bin/{action_type}/
+            log_dir = os.path.join(self.log_dir, 'bin', action_type)
+            os.makedirs(log_dir, exist_ok=True)
+            return os.path.join(log_dir, f"{timestamp}_runner.log")
+        else:
+            # Normal runs: logs/run/YYYY-MM-DD-HH-MM-SS_runner.log
+            log_dir = os.path.join(self.log_dir, 'run')
+            os.makedirs(log_dir, exist_ok=True)
+            return os.path.join(log_dir, f"{timestamp}_runner.log")
 
     def get_shared_lib_ext(self):
         if self.lib_ext:
