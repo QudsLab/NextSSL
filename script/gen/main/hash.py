@@ -25,7 +25,7 @@ def build(builder: Builder):
             
     return builder.build_target('hash', sources, 
                                 extra_libs=['-lpthread'], 
-                                output_subdir='main/full')
+                                output_subdir='main')
 
 if __name__ == "__main__":
     config = Config()

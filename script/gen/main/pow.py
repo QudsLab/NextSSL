@@ -67,7 +67,7 @@ def build(builder: Builder):
         'pow_server',
         server_sources,
         extra_libs=['-lpthread'],
-        output_subdir='main/full',
+        output_subdir='main',
         macros=[
             'POW_ENABLE_SERVER', 
             'POW_ENABLE_PRIMITIVE_FAST',
@@ -97,7 +97,7 @@ def build(builder: Builder):
         'pow_client',
         client_sources,
         extra_libs=['-lpthread'],
-        output_subdir='main/full',
+        output_subdir='main',
         macros=[
             'POW_ENABLE_CLIENT', 
             'POW_ENABLE_PRIMITIVE_FAST',

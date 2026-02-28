@@ -11,7 +11,7 @@ def main():
     """Run tests for core.dll (Main Tier)."""
     try:
         config = Config()
-        DLL_PATH = config.get_lib_path('main', 'core', 'full')
+        DLL_PATH = config.get_lib_path('main', 'core')
 
         console.print_step(f"Loading {DLL_PATH}")
         if not os.path.exists(DLL_PATH):

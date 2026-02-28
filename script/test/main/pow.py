@@ -66,8 +66,8 @@ class POWConfig(ctypes.Structure):
 
 def load_dll_pair():
     config = Config()
-    server_path = config.get_lib_path('main', 'pow_server', 'full')
-    client_path = config.get_lib_path('main', 'pow_client', 'full')
+    server_path = config.get_lib_path('main', 'pow_server')
+    client_path = config.get_lib_path('main', 'pow_client')
     
     if not os.path.exists(server_path) or not os.path.exists(client_path):
         console.print_warn(f"Skipping Main Tier: DLLs not found at {server_path}")

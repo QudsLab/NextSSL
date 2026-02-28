@@ -13,15 +13,19 @@ int nextssl_lite_x25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
     if (!public_key || !secret_key) {
         return -1;  // NEXTSSL_ERROR_INVALID_PARAMETER
     }
-    
-    // Generate random seed (should use proper CSPRNG in production)
+
+    /* ed25519_create_keypair writes 64 bytes to secret_key (seed||pubkey).
+     * Use an internal 64-byte buffer, then copy only the 32-byte private
+     * scalar into the caller's buffer.                                   */
     unsigned char seed[32];
-    // For now, assume secret_key contains the seed
-    memcpy(seed, secret_key, 32);
-    
-    // Create Ed25519 keypair (can be used for X25519)
-    ed25519_create_keypair(public_key, secret_key, seed);
-    
+    unsigned char sk_full[64];
+
+    ed25519_create_seed(seed);
+    ed25519_create_keypair(public_key, sk_full, seed);
+
+    /* sk_full[0..31] is the clamped Curve25519 scalar used by key_exchange */
+    memcpy(secret_key, sk_full, 32);
+
     return 0;
 }
 

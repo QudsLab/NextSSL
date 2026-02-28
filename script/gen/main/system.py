@@ -162,13 +162,13 @@ def build(builder: Builder):
     ]
 
     return builder.build_target(
-        'system',
+        'main',
         list(sources),
         includes=includes,
         macros=macros,
         remove_macros=['EXCLUDE_SPHINCS'],
         extra_libs=['-lpthread'],
-        output_subdir='primary/full'
+        output_subdir='primary'
     )
 
 if __name__ == "__main__":

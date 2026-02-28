@@ -55,7 +55,7 @@ def build(builder: Builder):
         'pow_combined',
         combined_sources,
         extra_libs=['-lpthread'],
-        output_subdir='main/full',
+        output_subdir='main',
         macros=[
             'POW_ENABLE_SERVER', 
             'POW_ENABLE_CLIENT',

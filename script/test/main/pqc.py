@@ -7,7 +7,7 @@ def main():
     """Run tests for pqc.dll (Main)."""
     config = Config()
     
-    dll_path = config.get_lib_path('main', 'pqc', 'full')
+    dll_path = config.get_lib_path('main', 'pqc')
     
     console.print_info(f"Loading DLL: {dll_path}")
     if not os.path.exists(dll_path):

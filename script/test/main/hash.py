@@ -11,7 +11,7 @@ def main(color=True):
     console.set_color(color)
 
     config = Config()
-    DLL_PATH = config.get_lib_path('main', 'hash', 'full')
+    DLL_PATH = config.get_lib_path('main', 'hash')
 
     console.print_info(f"Loading DLL: {DLL_PATH}")
     if not os.path.exists(DLL_PATH):

@@ -65,8 +65,9 @@ int nextssl_lite_aead_decrypt(
     
     // Default to AES-256-GCM
     if (!algorithm || strcmp(algorithm, "AES-256-GCM") == 0) {
+        /* AES_GCM_decrypt expects crtxtLen = plaintext length (tag at crtxt+crtxtLen) */
         if (AES_GCM_decrypt(key, nonce, aad, aad_len,
-                           ciphertext, ciphertext_len, plaintext) != 0) {
+                           ciphertext, plaintext_len, plaintext) != 0) {
             return -5;  // NEXTSSL_ERROR_AUTH_FAIL (authentication failed)
         }
         

@@ -65,7 +65,7 @@ class POWConfig(ctypes.Structure):
 
 def load_dll():
     config = Config()
-    dll_path = config.get_lib_path('main', 'pow_combined', 'full')
+    dll_path = config.get_lib_path('main', 'pow_combined')
     
     if not os.path.exists(dll_path):
         console.print_warn(f"Skipping Main Combined: DLL not found at {dll_path}")

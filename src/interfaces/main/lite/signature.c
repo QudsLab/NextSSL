@@ -13,14 +13,20 @@ int nextssl_lite_ed25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
     if (!public_key || !secret_key) {
         return -1;  // NEXTSSL_ERROR_INVALID_PARAMETER
     }
-    
-    // Generate seed (in real use, should use CSPRNG)
+
+    /* ed25519_create_keypair writes SHA-512(seed) clamped to secret_key[0..63]
+     * but does NOT embed the public key in secret_key[32..63].
+     * ed25519_sign expects secret_key[32..63] == public_key, so we fix it. */
     unsigned char seed[32];
-    memcpy(seed, secret_key, 32);  // Assume secret_key contains seed
-    
-    // Generate Ed25519 keypair
-    ed25519_create_keypair(public_key, secret_key, seed);
-    
+    unsigned char pk_tmp[32];
+
+    ed25519_create_seed(seed);
+    ed25519_create_keypair(pk_tmp, secret_key, seed);
+
+    /* Copy public key to output and embed it in secret_key[32..63] */
+    memcpy(public_key, pk_tmp, 32);
+    memcpy(secret_key + 32, pk_tmp, 32);
+
     return 0;
 }
 

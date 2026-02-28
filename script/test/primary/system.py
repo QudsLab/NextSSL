@@ -6,7 +6,7 @@ from script.core import Config, console
 def main():
     try:
         config = Config()
-        dll_path = os.path.join(config.bin_dir, f"main{config.get_shared_lib_ext()}")
+        dll_path = os.path.join(config.bin_dir, 'primary', f"main{config.get_shared_lib_ext()}")
         
         console.print_step(f"Loading {dll_path}")
         if not os.path.exists(dll_path):

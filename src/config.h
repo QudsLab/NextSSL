@@ -68,7 +68,8 @@
  * 
  * These symbols are always visible to library users.
  */
-#if NEXTSSL_COMPILER_MSVC
+#if NEXTSSL_PLATFORM_WINDOWS
+    /* On Windows (MSVC or MinGW/GCC), dllexport/dllimport is required */
     #ifdef NEXTSSL_BUILDING_DLL
         #define NEXTSSL_API __declspec(dllexport)
     #else

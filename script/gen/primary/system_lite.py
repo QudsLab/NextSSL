@@ -46,26 +46,20 @@ def build(builder: Builder):
     ], recursive=True)
 
     # KDF/Password (HKDF, Argon2id) - Use PQCrypto/common for HKDF+HMAC
-    # Add all Argon2id dependencies explicitly to avoid missing argon2_hash
     add_sources([
         os.path.join(src_dir, 'PQCrypto/common/hkdf/'),
         os.path.join(src_dir, 'primitives/hash/memory_hard/Argon2id/'),
         os.path.join(src_dir, 'primitives/hash/memory_hard/utils/'),
         os.path.join(src_dir, 'primitives/hash/memory_hard/blake2/'),
     ], recursive=True)
-    # Sha2 and fips202 without keccak4x to avoid duplicates from common
+    # sha2 and fips202 (needed by Argon2id)
     sha2_path = os.path.join(src_dir, 'PQCrypto/common/sha2.c')
     fips202_path = os.path.join(src_dir, 'PQCrypto/common/fips202.c')
     for p in [sha2_path, fips202_path]:
         if os.path.exists(p):
             sources.add(os.path.normpath(p))
 
-    # Classical Key Exchange (X25519) - Use ed25519 implementation
-    add_sources([
-        os.path.join(src_dir, 'primitives/ecc/ed25519/'),
-    ], recursive=True)
-
-    # Classical Signatures (Ed25519)
+    # Classical Key Exchange + Signatures (X25519, Ed25519 share same lib)
     add_sources([
         os.path.join(src_dir, 'primitives/ecc/ed25519/'),
     ], recursive=True)
@@ -77,10 +71,7 @@ def build(builder: Builder):
         os.path.join(src_dir, 'PQCrypto/common/'),
     ], recursive=True)
 
-    # Lite variants use simplified implementations, not full PoW utils
-    # PoW is handled in the lite wrapper directly
-
-    # Add lite wrappers for all modules (so nextssl.c can call them)
+    # Add lite wrappers for all modules (nextssl.c calls these)
     lite_wrappers = [
         os.path.join(src_dir, 'interfaces/main/lite/hash.c'),
         os.path.join(src_dir, 'interfaces/main/lite/aead.c'),
@@ -96,36 +87,34 @@ def build(builder: Builder):
 
     # Add essential utility wrappers
     utility_wrappers = [
-        os.path.join(src_dir, 'utils/base_encryption.c'),  # AES wrapper
-        os.path.join(src_dir, 'utils/pqc_main.c'),          # PQC wrapper
+        os.path.join(src_dir, 'utils/base_encryption.c'),
+        os.path.join(src_dir, 'utils/pqc_main.c'),
     ]
-    
     for wrapper in utility_wrappers:
         if os.path.exists(wrapper):
             sources.add(os.path.normpath(wrapper))
 
-    # Add Layer 4 primary wrapper (if exists)
+    # Add Layer 4 primary wrapper
     primary_wrapper = os.path.join(src_dir, 'interfaces/primary/lite/nextssl.c')
     if os.path.exists(primary_wrapper):
         sources.add(os.path.normpath(primary_wrapper))
-
-    # Convert set to list for builder
-    sources_list = list(sources)
 
     # Include directories for PQCrypto headers
     includes = [
         os.path.join(src_dir, 'PQCrypto', 'common'),
         os.path.join(src_dir, 'PQCrypto', 'crypto_kem', 'ml-kem-1024', 'clean'),
-        os.path.join(src_dir, 'PQCrypto', 'crypto_sign', 'ml-dsa-87', 'clean')
+        os.path.join(src_dir, 'PQCrypto', 'crypto_sign', 'ml-dsa-87', 'clean'),
     ]
 
     # Build with pthread support
+    # NEXTSSL_BUILDING_DLL ensures NEXTSSL_API expands to __declspec(dllexport) on Windows
     return builder.build_target(
-        'system',
-        sources_list,
+        'main_lite',
+        list(sources),
         extra_libs=['-lpthread'],
         includes=includes,
-        output_subdir='primary/lite'  # Primary layer lite variant
+        output_subdir='primary',
+        macros=['NEXTSSL_BUILDING_DLL']
     )
 
 

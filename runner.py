@@ -11,32 +11,31 @@ from script.core import Config, Logger, Builder
 
 from script.gen.partial.hash import primitive_fast, primitive_memory_hard, primitive_sponge_xof, legacy_alive, legacy_unsafe
 from script.gen.base import hash_primitive_main, hash_legacy_main
-from script.gen.main.full import hash as hash_main
+from script.gen.main import hash as hash_main
 
 from script.gen.partial.pqc import kem_lattice, kem_code_based, sign_lattice, sign_hash_based
 from script.gen.base import pqc_kem_main, pqc_sign_main
-from script.gen.main.full import pqc as pqc_main
+from script.gen.main import pqc as pqc_main
 
 from script.gen.partial.core import aes_modes, aes_aead, stream_aead, macs, ecc
 from script.gen.base import core_cipher_main, core_mac_main, core_ecc_main
-from script.gen.main.full import core as core_main
+from script.gen.main import core as core_main
 
 from script.gen.partial.dhcm import primitive_fast as dhcm_primitive_fast, primitive_memory_hard as dhcm_primitive_memory_hard, primitive_sponge_xof as dhcm_primitive_sponge_xof, legacy_alive as dhcm_legacy_alive, legacy_unsafe as dhcm_legacy_unsafe
 from script.gen.base import dhcm_primitive_main, dhcm_legacy_main
-from script.gen.main.full import dhcm as dhcm_main
+from script.gen.main import dhcm as dhcm_main
 
-# Primary Layer (Layer 4) - Full and Lite  
-from script.gen.primary.full import system as system_main
-from script.gen.primary.lite import system as lite_system
+# Primary Layer (Layer 4) - Full and Lite
+from script.gen.primary import system as system_main
+from script.gen.primary import system_lite as lite_system
 
-# Lite Variant Modules (Layer 3)
-from script.gen.main.lite import hash as lite_hash, aead as lite_aead, password as lite_password, keyexchange as lite_keyexchange, signature as lite_signature, pqc as lite_pqc, pow as lite_pow
+# Lite Variant - only unified system DLL (primary/main_lite)
 
 from script.gen.partial.pow.server import primitive_fast as pow_server_primitive_fast, primitive_memory_hard as pow_server_primitive_memory_hard, primitive_sponge_xof as pow_server_primitive_sponge_xof, legacy_alive as pow_server_legacy_alive, legacy_unsafe as pow_server_legacy_unsafe
 from script.gen.partial.pow.client import primitive_fast as pow_client_primitive_fast, primitive_memory_hard as pow_client_primitive_memory_hard, primitive_sponge_xof as pow_client_primitive_sponge_xof, legacy_alive as pow_client_legacy_alive, legacy_unsafe as pow_client_legacy_unsafe
 from script.gen.partial.pow.combined import primitive_fast as pow_combined_primitive_fast, primitive_memory_hard as pow_combined_primitive_memory_hard, primitive_sponge_xof as pow_combined_primitive_sponge_xof, legacy_alive as pow_combined_legacy_alive, legacy_unsafe as pow_combined_legacy_unsafe
 from script.gen.base import pow_primitive, pow_legacy, pow_combined as pow_combined_base
-from script.gen.main.full import pow as pow_main, pow_combined as pow_combined_main
+from script.gen.main import pow as pow_main, pow_combined as pow_combined_main
 
 from script.test.partial.pow import primitive_fast as test_pow_primitive_fast
 from script.test.partial.pow import primitive_memory_hard as test_pow_primitive_memory_hard
@@ -49,7 +48,7 @@ from script.test.partial.pow.combined import primitive_sponge_xof as test_pow_co
 from script.test.partial.pow.combined import legacy_alive as test_pow_combined_legacy_alive
 from script.test.partial.pow.combined import legacy_unsafe as test_pow_combined_legacy_unsafe
 from script.test.base import pow_primitive as test_pow_primitive, pow_legacy as test_pow_legacy, pow_combined as test_pow_combined_base
-from script.test.main.full import pow as test_pow_main, pow_combined as test_pow_combined_main
+from script.test.main import pow as test_pow_main, pow_combined as test_pow_combined_main
 from script.test.partial.hash import primitive_fast as test_primitive_fast
 from script.test.partial.hash import primitive_memory_hard as test_primitive_memory_hard
 from script.test.partial.hash import primitive_sponge_xof as test_primitive_sponge_xof
@@ -57,7 +56,7 @@ from script.test.partial.hash import legacy_alive as test_legacy_alive
 from script.test.partial.hash import legacy_unsafe as test_legacy_unsafe
 from script.test.base import hash_primitive_main as test_hash_primitive_main
 from script.test.base import hash_legacy_main as test_hash_legacy_main
-from script.test.main.full import hash as test_hash_main
+from script.test.main import hash as test_hash_main
 
 from script.test.partial.pqc import kem_lattice as test_kem_lattice
 from script.test.partial.pqc import kem_code_based as test_kem_code_based
@@ -65,7 +64,7 @@ from script.test.partial.pqc import sign_lattice as test_sign_lattice
 from script.test.partial.pqc import sign_hash_based as test_sign_hash_based
 from script.test.base import pqc_kem_main as test_pqc_kem_main
 from script.test.base import pqc_sign_main as test_pqc_sign_main
-from script.test.main.full import pqc as test_pqc_main
+from script.test.main import pqc as test_pqc_main
 
 from script.test.partial.core import aes_modes as test_aes_modes
 from script.test.partial.core import aes_aead as test_aes_aead
@@ -75,13 +74,13 @@ from script.test.partial.core import ecc as test_ecc
 from script.test.base import core_cipher_main as test_core_cipher_main
 from script.test.base import core_mac_main as test_core_mac_main
 from script.test.base import core_ecc_main as test_core_ecc_main
-from script.test.main.full import core as test_core_main
+from script.test.main import core as test_core_main
 
 # Primary Layer Tests
-from script.test.primary.full import system as test_system_main
+from script.test.primary import system as test_system_main
+from script.test.primary import system_lite as test_system_lite
 
-# Lite Variant Tests
-from script.test.main.lite import hash as test_lite_hash
+# Lite Variant Tests - tested via primary/main_lite
 
 from script.test.partial.dhcm import primitive_fast as test_dhcm_primitive_fast
 from script.test.partial.dhcm import primitive_memory_hard as test_dhcm_primitive_memory_hard
@@ -90,7 +89,7 @@ from script.test.partial.dhcm import legacy_alive as test_dhcm_legacy_alive
 from script.test.partial.dhcm import legacy_unsafe as test_dhcm_legacy_unsafe
 from script.test.base import dhcm_primitive_main as test_dhcm_primitive_main
 from script.test.base import dhcm_legacy_main as test_dhcm_legacy_main
-from script.test.main.full import dhcm as test_dhcm_main
+from script.test.main import dhcm as test_dhcm_main
 
 PLATFORM_LIB_EXT = {
     'windows': '.dll',
@@ -330,8 +329,8 @@ def run_build(args):
         core_main_list = [core_main]
         system_main_list = [system_main]
 
-        # Lite Variant Modules (8 core algorithms)
-        lite_main_list = [lite_hash, lite_aead, lite_password, lite_keyexchange, lite_signature, lite_pqc, lite_pow, lite_system]
+        # Lite Variant - single unified DLL
+        lite_main_list = [lite_system]
 
         # DHCM Modules
         dhcm_partial = [dhcm_primitive_fast, dhcm_primitive_memory_hard, dhcm_primitive_sponge_xof, dhcm_legacy_alive, dhcm_legacy_unsafe]
@@ -624,8 +623,8 @@ def run_test(args):
         core_main_list = [test_core_main]
         system_main_list = [test_system_main]
 
-        # Lite Variant Tests
-        lite_hash_list = [test_lite_hash]
+        # Lite Variant Tests - no individual module tests (single unified DLL)
+        lite_hash_list = [test_system_lite]
 
         # DHCM Tests
         dhcm_partial = [
@@ -699,7 +698,8 @@ def run_test(args):
             run_dhcm = True
             run_pow = True
             run_system = True
-            # Don't auto-run lite with 'all' - it's variant-specific
+            if variant == 'both' or variant == 'lite':
+                run_lite = True
         elif target == 'hash':
             run_hash = True
         elif target == 'pqc':
@@ -765,10 +765,8 @@ def run_test(args):
             if target == 'system:main':
                 test_modules = system_main_list
         elif target.startswith('lite:'):
-            # Lite variant tests (e.g., lite:hash)
-            if target == 'lite:hash':
-                test_modules = lite_hash_list
-            elif target == 'lite:all':
+            # Lite variant tests
+            if target == 'lite:all':
                 run_lite = True
             else:
                 console.print_fail(f"Unknown lite test: {target}")

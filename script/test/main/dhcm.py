@@ -34,7 +34,7 @@ class DHCMResult(ctypes.Structure):
 def main():
     try:
         config = Config()
-        DLL_PATH = config.get_lib_path('main', 'dhcm', 'full')
+        DLL_PATH = config.get_lib_path('main', 'dhcm')
 
         console.print_step(f"Loading {DLL_PATH}")
         if not os.path.exists(DLL_PATH):

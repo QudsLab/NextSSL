@@ -80,7 +80,7 @@ def build(builder: Builder):
     return builder.build_target('core', sources, 
                                 includes=includes,
                                 macros=macros,
-                                output_subdir='main/full')
+                                output_subdir='main')
 
 if __name__ == "__main__":
     from script.core import Config, Logger

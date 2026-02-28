@@ -87,7 +87,7 @@ def build(builder: Builder):
     return builder.build_target(
         'pqc', 
         sources, 
-        output_subdir='main/full',
+        output_subdir='main',
         macros=[
             'ENABLE_ML_KEM', 'ENABLE_HQC', 'ENABLE_MCELIECE',
             'ENABLE_ML_DSA', 'ENABLE_FALCON', 'ENABLE_SPHINCS'

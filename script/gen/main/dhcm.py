@@ -16,7 +16,7 @@ def build(builder: Builder):
     ], recursive=True)
     
     return builder.build_target('dhcm', sources, 
-                                output_subdir='main/full',
+                                output_subdir='main',
                                 macros=['DHCM_VERSION_MAJOR=1', 'DHCM_VERSION_MINOR=0',
                                         'DHCM_ENABLE_PRIMITIVE_FAST',
                                         'DHCM_ENABLE_PRIMITIVE_MEMORY_HARD',
