@@ -154,7 +154,7 @@ def resolve_web_paths(config, selector):
 
     parts = selector.split(':')
     if selector == 'system:main':
-        return [make(None, 'main', root=True)]
+        return [make('primary', 'main')]
 
     if len(parts) < 2:
         return []
