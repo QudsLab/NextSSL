@@ -1,0 +1,17 @@
+2026-03-01 23:10:43,056 - INFO - Successfully built dhcm_primitive
+2026-03-01 23:10:43,345 - INFO - Successfully built dhcm_legacy
+2026-03-01 23:10:43,346 - INFO - === Running 2 test suites... ===
+2026-03-01 23:10:43,346 - INFO - -> Running script.test.base.dhcm_primitive_main
+2026-03-01 23:10:43,346 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/base/dhcm_primitive.so
+2026-03-01 23:10:43,347 - INFO - [PASS] DLL Loaded
+2026-03-01 23:10:43,347 - INFO - [PASS] SHA-256 OK
+2026-03-01 23:10:43,347 - INFO - [PASS] Argon2id OK
+2026-03-01 23:10:43,347 - INFO - [PASS] SHA3-256 OK
+2026-03-01 23:10:43,347 - INFO - [PASS] DHCM Base Primitive: 3 passed
+2026-03-01 23:10:43,347 - INFO - -> Running script.test.base.dhcm_legacy_main
+2026-03-01 23:10:43,347 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/base/dhcm_legacy.so
+2026-03-01 23:10:43,347 - INFO - [PASS] DLL Loaded
+2026-03-01 23:10:43,348 - INFO - [PASS] MD5 OK
+2026-03-01 23:10:43,348 - INFO - [PASS] MD2 OK
+2026-03-01 23:10:43,348 - INFO - [PASS] DHCM Base Legacy: 2 passed
+2026-03-01 23:10:43,348 - INFO - [PASS] ALL TESTS PASSED
