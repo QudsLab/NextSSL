@@ -99,3 +99,10 @@ def log_data(key, value=None):
         msg = f"{key}: {value}"
     log_to_file(f"[INFO] {msg}")
     print(colorize(f"[INFO] {msg}", Colors.BLUE), flush=True)
+
+def log_only(msg):
+    """Write to log file only — no console output.
+    Use for verbose diagnostic lines (binary representations, prefix bits, etc.)
+    that are useful for debugging but noise during normal runs.
+    """
+    log_to_file(f"[INFO] {msg}")

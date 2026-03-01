@@ -122,8 +122,8 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
             
         target_bytes = bytes(challenge.target[:challenge.target_len])
         console.print_info(f"Target (Hex): {target_bytes.hex()}")
-        console.print_info(f"Target (Bin): {bytes_to_bin(target_bytes)}")
-        console.print_info(f"Target Prefix Bits: {prefix_bits(target_bytes, challenge.difficulty_bits)}")
+        console.log_only(f"Target (Bin): {bytes_to_bin(target_bytes)}")
+        console.log_only(f"Target Prefix Bits: {prefix_bits(target_bytes, challenge.difficulty_bits)}")
             
         solution = POWSolution()
         result_container = {'ret': -1}
@@ -148,8 +148,8 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
             
         hash_bytes = bytes(solution.hash_output[:solution.hash_output_len])
         console.print_info(f"Hash (Hex): {hash_bytes.hex()}")
-        console.print_info(f"Hash (Bin): {bytes_to_bin(hash_bytes)}")
-        console.print_info(f"Hash Prefix Bits: {prefix_bits(hash_bytes, challenge.difficulty_bits)}")
+        console.log_only(f"Hash (Bin): {bytes_to_bin(hash_bytes)}")
+        console.log_only(f"Hash Prefix Bits: {prefix_bits(hash_bytes, challenge.difficulty_bits)}")
         lz = leading_zero_bits(hash_bytes)
         if lz < challenge.difficulty_bits:
             console.print_fail(f"Difficulty check failed for {algo}", expected=challenge.difficulty_bits, got=lz)

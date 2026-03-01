@@ -117,8 +117,8 @@ def boss_control_loop(lib, algos, difficulty=1):
             
         target_bytes = bytes(challenge.target[:challenge.target_len])
         console.log_data(f"Target (Hex): {target_bytes.hex()}")
-        console.log_data(f"Target (Bin): {bytes_to_bin(target_bytes)}")
-        console.log_data(f"Target Prefix Bits: {prefix_bits(target_bytes, challenge.difficulty_bits)}")
+        console.log_only(f"Target (Bin): {bytes_to_bin(target_bytes)}")
+        console.log_only(f"Target Prefix Bits: {prefix_bits(target_bytes, challenge.difficulty_bits)}")
         
         solution = POWSolution()
         result_container = {'ret': -1}
@@ -143,8 +143,8 @@ def boss_control_loop(lib, algos, difficulty=1):
             
         hash_bytes = bytes(solution.hash_output[:solution.hash_output_len])
         console.log_data(f"Hash (Hex): {hash_bytes.hex()}")
-        console.log_data(f"Hash (Bin): {bytes_to_bin(hash_bytes)}")
-        console.log_data(f"Hash Prefix Bits: {prefix_bits(hash_bytes, challenge.difficulty_bits)}")
+        console.log_only(f"Hash (Bin): {bytes_to_bin(hash_bytes)}")
+        console.log_only(f"Hash Prefix Bits: {prefix_bits(hash_bytes, challenge.difficulty_bits)}")
         lz = leading_zero_bits(hash_bytes)
         if lz < challenge.difficulty_bits:
             console.print_fail(f"Difficulty check failed for {algo}", expected=challenge.difficulty_bits, got=lz)
