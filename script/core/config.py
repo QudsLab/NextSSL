@@ -3,6 +3,24 @@ import time
 from .platform import Platform
 
 class Config:
+    # ── Per-platform reproducibility identifiers ─────────────────────────────
+    # Change any value here to rotate the identifier for all builds at once.
+    #
+    # Linux .so  — fixed GNU build-id replaces random SHA1; keeps the
+    #              .note.gnu.build-id section present with a stable value.
+    #              Format: 40 lowercase hex digits (SHA1 size).
+    LINUX_SO_BUILD_ID = '00' * 20
+    #
+    # macOS .dylib — fixed UUID written via -Wl,-uuid,<value>.
+    #                LC_UUID must be present for macOS dlopen to load the lib.
+    MACOS_DYLIB_UUID = '00000000-0000-0000-0000-000000000000'
+    #
+    # Windows .dll — no linker-settable UUID in PE/MinGW; reproducibility is
+    #                achieved by suppressing the timestamp field instead.
+    #                List any extra reproducibility flags to append here.
+    WINDOWS_DLL_REPRO_FLAGS = ['--no-insert-timestamp']
+    # ─────────────────────────────────────────────────────────────────────────
+
     def __init__(self, bin_dir=None, log_dir=None, lib_ext=None):
         self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
         self.src_dir = os.path.join(self.project_root, 'src')

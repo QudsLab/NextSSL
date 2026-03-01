@@ -55,11 +55,18 @@ class Builder:
         if lib_ext == '.so':
             if Platform.get_os() == 'linux':
                 args.append('-nostartfiles')
-            args.append('-Wl,--build-id=none')
+            # Fixed build-id keeps .note.gnu.build-id present with a stable value.
+            # Defined centrally in Config.LINUX_SO_BUILD_ID.
+            args.append(f'-Wl,--build-id=0x{Config.LINUX_SO_BUILD_ID}')
         elif lib_ext == '.dll':
-            args.append('-Wl,--no-insert-timestamp')
+            # PE has no linker-settable UUID in GCC/MinGW; suppress timestamp instead.
+            # Extra flags defined centrally in Config.WINDOWS_DLL_REPRO_FLAGS.
+            for flag in Config.WINDOWS_DLL_REPRO_FLAGS:
+                args.append(f'-Wl,{flag}')
         elif lib_ext == '.dylib':
-            args.append('-Wl,-no_uuid')
+            # LC_UUID must be present for macOS dlopen; fixed value = reproducible builds.
+            # UUID is defined centrally in Config.MACOS_DYLIB_UUID.
+            args.append(f'-Wl,-uuid,{Config.MACOS_DYLIB_UUID}')
 
         # Strip embedded timestamps from compiler built-in macros so that
         # identical source always produces bitwise-identical binaries.
