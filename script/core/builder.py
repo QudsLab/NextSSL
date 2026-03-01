@@ -98,7 +98,9 @@ class Builder:
         # Add extra libs (like -lpthread) - usually at the end
         if extra_libs:
             if is_web:
-                args.extend([lib for lib in extra_libs if lib != '-lpthread'])
+                # wasm-ld has no pthreads or Windows-only libs
+                _web_skip = {'-lpthread', '-lbcrypt'}
+                args.extend([lib for lib in extra_libs if lib not in _web_skip])
             else:
                 args.extend(extra_libs)
 
