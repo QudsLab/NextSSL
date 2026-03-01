@@ -3,13 +3,21 @@
 <br/><br/>
 
 
+</br>
+</br>
+
 </div>
 
 
-> ---
-> ⚠️ WARNING
->> This repository is under active development — APIs and features may change without notice.
-> ---
+<div align="center">
+   
+
+### WARNING! This repository is under active development, APIs and features may change without notice.
+
+</div>
+</br>
+</br>
+
 
 
 # NextSSL
