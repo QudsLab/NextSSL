@@ -98,8 +98,8 @@ class Config:
         timestamp = time.strftime('%Y-%m-%d-%H-%M-%S')
         
         if action_type:
-            # GitHub action logs: logs/bin/{action_type}/
-            log_dir = os.path.join(self.log_dir, 'bin', action_type)
+            # GitHub action logs: logs/action/{action_type}/
+            log_dir = os.path.join(self.log_dir, 'action', action_type)
             os.makedirs(log_dir, exist_ok=True)
             return os.path.join(log_dir, f"{timestamp}_runner.log")
         else:
