@@ -265,6 +265,7 @@
 
 /* Default to Lite if nothing specified */
 #if !NEXTSSL_BUILD_LITE && !NEXTSSL_BUILD_FULL
+    #undef  NEXTSSL_BUILD_LITE   /* was set to 0 by the #ifndef guard above */
     #define NEXTSSL_BUILD_LITE 1
 #endif
 
