@@ -7,7 +7,9 @@
  */
 
 /* Mark this translation unit as building the DLL so NEXTSSL_API = dllexport */
-#define NEXTSSL_BUILDING_DLL
+#ifndef NEXTSSL_BUILDING_DLL
+#  define NEXTSSL_BUILDING_DLL
+#endif
 
 #include "nextssl.h"
 #include "../../main/lite/hash.h"
