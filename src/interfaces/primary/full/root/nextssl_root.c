@@ -59,8 +59,7 @@
 #  include <bcrypt.h>
 #  pragma comment(lib, "bcrypt.lib")
 static int _root_rand(uint8_t *buf, size_t len) {
-    return BCryptGenRandom(NULL, buf, (ULONG)len,
-                           BCRYPT_USE_SYSTEM_PREFERRED_RNG) == 0 ? 0 : -1;
+    return BCryptGenRandom(NULL, buf, (ULONG)len, BCRYPT_USE_SYSTEM_PREFERRED_RNG) == 0 ? 0 : -1;
 }
 #elif defined(__APPLE__)
 #  include <unistd.h>
