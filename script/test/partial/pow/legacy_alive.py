@@ -143,17 +143,17 @@ def main():
                 continue
             
             console.print_info(f"Challenge Generated:")
-            console.print_info(f"  ID: {bytes(challenge.challenge_id).hex()}")
-            console.print_info(f"  Algorithm: {challenge.algorithm_id.decode('utf-8')}")
-            console.print_info(f"  Difficulty: {challenge.difficulty_bits}")
+            console.log_data(f"  ID: {bytes(challenge.challenge_id).hex()}")
+            console.log_data(f"  Algorithm: {challenge.algorithm_id.decode('utf-8')}")
+            console.log_data(f"  Difficulty: {challenge.difficulty_bits}")
             target_bytes = bytes(challenge.target[:challenge.target_len])
             console.print_info(f"  Target: {target_bytes.hex()}")
-            console.print_info(f"  Target (Bin): {bytes_to_bin(target_bytes)}")
-            console.print_info(f"  Target Prefix Bits: {prefix_bits(target_bytes, challenge.difficulty_bits)}")
-            console.print_info(f"  Context (Hex): {bytes(challenge.context[:challenge.context_len]).hex()}")
-            console.print_info(f"  Context (Str): {bytes(challenge.context[:challenge.context_len]).decode('utf-8', errors='replace')}")
-            console.print_info(f"  WU: {challenge.wu}")
-            console.print_info(f"  MU: {challenge.mu}")
+            console.log_data(f"  Target (Bin): {bytes_to_bin(target_bytes)}")
+            console.log_data(f"  Target Prefix Bits: {prefix_bits(target_bytes, challenge.difficulty_bits)}")
+            console.log_data(f"  Context (Hex): {bytes(challenge.context[:challenge.context_len]).hex()}")
+            console.log_data(f"  Context (Str): {bytes(challenge.context[:challenge.context_len]).decode('utf-8', errors='replace')}")
+            console.log_data(f"  WU: {challenge.wu}")
+            console.log_data(f"  MU: {challenge.mu}")
 
             console.print_info(f"Solving challenge...")
             solution = POWSolution()
@@ -170,11 +170,11 @@ def main():
                 continue
                 
             console.print_info(f"Solution found in {solution.solve_time_seconds:.4f}s (Attempts: {solution.attempts})")
-            console.print_info(f"  Nonce: {solution.nonce}")
+            console.log_data(f"  Nonce: {solution.nonce}")
             hash_bytes = bytes(solution.hash_output[:solution.hash_output_len])
             console.print_info(f"  Hash: {hash_bytes.hex()}")
-            console.print_info(f"  Hash (Bin): {bytes_to_bin(hash_bytes)}")
-            console.print_info(f"  Hash Prefix Bits: {prefix_bits(hash_bytes, challenge.difficulty_bits)}")
+            console.log_data(f"  Hash (Bin): {bytes_to_bin(hash_bytes)}")
+            console.log_data(f"  Hash Prefix Bits: {prefix_bits(hash_bytes, challenge.difficulty_bits)}")
             lz = leading_zero_bits(hash_bytes)
             if lz < challenge.difficulty_bits:
                 console.print_fail(f"Difficulty check failed", expected=challenge.difficulty_bits, got=lz)
