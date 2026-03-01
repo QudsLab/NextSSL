@@ -1,0 +1,34 @@
+2026-03-01 09:01:36,427 - ERROR - Compilation failed for main:
+2026-03-01 09:01:36,427 - ERROR - /Users/runner/work/NextSSL/NextSSL/src/PoW/core/pow_parser.c:70:10: warning: unused variable 'json_str' [-Wunused-variable]
+   70 |     char json_str[4096];
+      |          ^~~~~~~~
+1 warning generated.
+In file included from /Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/root/nextssl_root.c:21:
+In file included from /Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/root/nextssl_root.h:31:
+/Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/root/../../../../config.h:268:13: warning: 'NEXTSSL_BUILD_LITE' macro redefined [-Wmacro-redefined]
+  268 |     #define NEXTSSL_BUILD_LITE 1
+      |             ^
+/Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/root/../../../../config.h:249:13: note: previous definition is here
+  249 |     #define NEXTSSL_BUILD_LITE 0
+      |             ^
+/Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/root/nextssl_root.c:68:12: error: call to undeclared function 'getrandom'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   68 |     return getrandom(buf, len, 0) == (ssize_t)len ? 0 : -1;
+      |            ^
+1 warning and 1 error generated.
+/Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/nextssl.c:15:9: warning: 'NEXTSSL_BUILDING_DLL' macro redefined [-Wmacro-redefined]
+   15 | #define NEXTSSL_BUILDING_DLL
+      |         ^
+<command line>:32:9: note: previous definition is here
+   32 | #define NEXTSSL_BUILDING_DLL 1
+      |         ^
+In file included from /Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/nextssl.c:17:
+In file included from /Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/nextssl.h:452:
+In file included from /Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/root/nextssl_root.h:31:
+/Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/root/../../../../config.h:268:13: warning: 'NEXTSSL_BUILD_LITE' macro redefined [-Wmacro-redefined]
+  268 |     #define NEXTSSL_BUILD_LITE 1
+      |             ^
+/Users/runner/work/NextSSL/NextSSL/src/interfaces/primary/full/root/../../../../config.h:249:13: note: previous definition is here
+  249 |     #define NEXTSSL_BUILD_LITE 0
+      |             ^
+2 warnings generated.
+
