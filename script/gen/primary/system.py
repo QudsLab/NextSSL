@@ -185,13 +185,17 @@ def build(builder: Builder):
         'NEXTSSL_BUILDING_DLL',
     ]
 
+    extra_libs = ['-lpthread']
+    if builder.config.lib_ext == '.dll':   # bcrypt is Windows-only
+        extra_libs.append('-lbcrypt')
+
     return builder.build_target(
         'main',
         list(sources),
         includes=includes,
         macros=macros,
         remove_macros=['EXCLUDE_SPHINCS'],
-        extra_libs=['-lpthread', '-lbcrypt'],
+        extra_libs=extra_libs,
         output_subdir='primary'
     )
 

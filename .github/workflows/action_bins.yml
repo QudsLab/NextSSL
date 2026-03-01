@@ -98,7 +98,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_partial_hash:
@@ -157,7 +159,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_partial_dhcm:
@@ -216,7 +220,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_partial_pow:
@@ -275,7 +281,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_partial_pqc:
@@ -334,7 +342,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_base:
@@ -403,7 +413,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_main:
@@ -467,7 +479,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_system:
@@ -526,7 +540,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_core:
@@ -561,7 +577,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_hash:
@@ -596,7 +614,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_dhcm:
@@ -631,7 +651,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_pow:
@@ -666,7 +688,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_pqc:
@@ -701,7 +725,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_base:
@@ -746,7 +772,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_main:
@@ -786,7 +814,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_system:
@@ -821,7 +851,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_core:
@@ -855,7 +887,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_hash:
@@ -889,7 +923,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_dhcm:
@@ -923,7 +959,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_pow:
@@ -957,7 +995,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_pqc:
@@ -991,7 +1031,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_base:
@@ -1035,7 +1077,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_main:
@@ -1074,7 +1118,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_system:
@@ -1108,7 +1154,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_core:
@@ -1142,7 +1190,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_hash:
@@ -1176,7 +1226,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_dhcm:
@@ -1210,7 +1262,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_pow:
@@ -1244,7 +1298,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_pqc:
@@ -1278,7 +1334,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_base:
@@ -1322,7 +1380,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_main:
@@ -1361,7 +1421,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_system:
@@ -1395,7 +1457,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
-        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   commit:

@@ -124,10 +124,14 @@ def build(builder: Builder):
     # Build with pthread support
     # NEXTSSL_BUILDING_DLL ensures NEXTSSL_API expands to __declspec(dllexport) on Windows
     # NEXTSSL_BUILD_LITE restricts profile enum to 3 profiles (MODERN, COMPLIANCE, PQC)
+    extra_libs = ['-lpthread']
+    if builder.config.lib_ext == '.dll':   # bcrypt is Windows-only
+        extra_libs.append('-lbcrypt')
+
     return builder.build_target(
         'main_lite',
         list(sources),
-        extra_libs=['-lpthread', '-lbcrypt'],
+        extra_libs=extra_libs,
         includes=includes,
         output_subdir='primary',
         macros=['NEXTSSL_BUILDING_DLL', 'NEXTSSL_BUILD_LITE']
