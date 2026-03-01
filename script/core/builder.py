@@ -59,7 +59,16 @@ class Builder:
         elif lib_ext == '.dll':
             args.append('-Wl,--no-insert-timestamp')
         elif lib_ext == '.dylib':
-            pass
+            args.append('-Wl,-no_uuid')
+
+        # Strip embedded timestamps from compiler built-in macros so that
+        # identical source always produces bitwise-identical binaries.
+        args += [
+            '-Wno-builtin-macro-redefined',
+            '-D__DATE__=',
+            '-D__TIME__=',
+            '-D__TIMESTAMP__=',
+        ]
         
         # Add includes
         for inc in self.config.includes:
@@ -115,8 +124,8 @@ class Builder:
                         clean_arg = f'"{clean_arg}"'
                     f.write(clean_arg + '\n')
         except Exception as e:
-             self.logger.error(f"Failed to write response file: {e}")
-             return False
+            self.logger.error(f"Failed to write response file: {e}")
+            return False
 
         cmd = [compiler, f'@{rsp_file}']
         

@@ -15,11 +15,21 @@ on:
         description: "Comma-separated tiers to run (partial,base,main,system)"
         required: false
         default: "partial,base,main,system"
+      load_mode:
+        description: "Test load mode: gen (default), genAll (all tests), genQuick (header-only fast)"
+        required: false
+        default: "gen"
 permissions:
   contents: write
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+env:
+  LOAD_MODE: >-
+    ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.load_mode != '' && github.event.inputs.load_mode) ||
+        (contains(github.event.head_commit.message, '--genAll') && 'genAll') ||
+        (contains(github.event.head_commit.message, '--genQuick') && 'genQuick') ||
+        'gen' }}
 jobs:
   guard:
     runs-on: ubuntu-latest
@@ -75,7 +85,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log logs/action/web/partial/core.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/core.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -129,7 +139,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log logs/action/web/partial/hash.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/hash.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -183,7 +193,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log logs/action/web/partial/dhcm.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/dhcm.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -237,7 +247,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log logs/action/web/partial/pow.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/pow.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -291,7 +301,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log logs/action/web/partial/pqc.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -351,11 +361,11 @@ jobs:
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log logs/action/web/base/core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log logs/action/web/base/hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log logs/action/web/base/dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log logs/action/web/base/pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log logs/action/web/base/pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -410,11 +420,11 @@ jobs:
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log logs/action/web/main/core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log logs/action/web/main/hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log logs/action/web/main/dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log logs/action/web/main/pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log logs/action/web/main/pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -468,7 +478,7 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log logs/action/web/system.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/system.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -498,7 +508,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log logs/action/windows/partial/core.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/core.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -528,7 +538,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log logs/action/windows/partial/hash.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/hash.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -558,7 +568,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log logs/action/windows/partial/dhcm.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/dhcm.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -588,7 +598,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log logs/action/windows/partial/pow.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/pow.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -618,7 +628,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log logs/action/windows/partial/pqc.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -654,11 +664,11 @@ jobs:
         shell: powershell
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log logs/action/windows/base/core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log logs/action/windows/base/hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log logs/action/windows/base/dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log logs/action/windows/base/pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log logs/action/windows/base/pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -689,11 +699,11 @@ jobs:
         shell: powershell
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log logs/action/windows/main/core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log logs/action/windows/main/hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log logs/action/windows/main/dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log logs/action/windows/main/pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log logs/action/windows/main/pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -723,7 +733,7 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log logs/action/windows/system.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/system.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -752,7 +762,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log logs/action/linux/partial/core.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/core.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -781,7 +791,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log logs/action/linux/partial/hash.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/hash.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -810,7 +820,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log logs/action/linux/partial/dhcm.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/dhcm.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -839,7 +849,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log logs/action/linux/partial/pow.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/pow.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -868,7 +878,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log logs/action/linux/partial/pqc.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -903,11 +913,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log logs/action/linux/base/core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log logs/action/linux/base/hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log logs/action/linux/base/dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log logs/action/linux/base/pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log logs/action/linux/base/pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -937,11 +947,11 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log logs/action/linux/main/core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log logs/action/linux/main/hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log logs/action/linux/main/dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log logs/action/linux/main/pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log logs/action/linux/main/pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -970,7 +980,7 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log logs/action/linux/system.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/system.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -999,7 +1009,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --action-log logs/action/mac/partial/core.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/core.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1028,7 +1038,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --action-log logs/action/mac/partial/hash.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/hash.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1057,7 +1067,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --action-log logs/action/mac/partial/dhcm.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/dhcm.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1086,7 +1096,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --action-log logs/action/mac/partial/pow.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/pow.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1115,7 +1125,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --action-log logs/action/mac/partial/pqc.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1150,11 +1160,11 @@ jobs:
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --action-log logs/action/mac/base/core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --action-log logs/action/mac/base/hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --action-log logs/action/mac/base/dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --action-log logs/action/mac/base/pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --action-log logs/action/mac/base/pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1184,11 +1194,11 @@ jobs:
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
         run: |
-          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --action-log logs/action/mac/main/core.log
-          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --action-log logs/action/mac/main/hash.log
-          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --action-log logs/action/mac/main/dhcm.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --action-log logs/action/mac/main/pow.log
-          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --action-log logs/action/mac/main/pqc.log
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/pqc.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1217,7 +1227,7 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --action-log logs/action/mac/system.log
+        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/system.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4

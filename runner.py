@@ -98,6 +98,122 @@ PLATFORM_LIB_EXT = {
     'web': '.wasm'
 }
 
+# ── Load-map integration ───────────────────────────────────────────────────────
+from script.core.load import LOAD_MAP, LOAD_MAP_ALL, LOAD_MAP_QUICK
+
+_LOAD_MAPS = {
+    'gen':      LOAD_MAP,
+    'genAll':   LOAD_MAP_ALL,
+    'genQuick': LOAD_MAP_QUICK,
+}
+
+# Maps load.py module_path → imported test module object
+# Updated whenever test imports change in runner.py
+_MODULE_REGISTRY = {
+    # partial / hash
+    'partial/hash/primitive_fast':        test_primitive_fast,
+    'partial/hash/primitive_memory_hard': test_primitive_memory_hard,
+    'partial/hash/primitive_sponge_xof':  test_primitive_sponge_xof,
+    'partial/hash/legacy_alive':          test_legacy_alive,
+    'partial/hash/legacy_unsafe':         test_legacy_unsafe,
+    # partial / pqc
+    'partial/pqc/kem_lattice':            test_kem_lattice,
+    'partial/pqc/kem_code_based':         test_kem_code_based,
+    'partial/pqc/sign_lattice':           test_sign_lattice,
+    'partial/pqc/sign_hash_based':        test_sign_hash_based,
+    # partial / core
+    'partial/core/aes_modes':             test_aes_modes,
+    'partial/core/aes_aead':              test_aes_aead,
+    'partial/core/stream_aead':           test_stream_aead,
+    'partial/core/macs':                  test_macs,
+    'partial/core/ecc':                   test_ecc,
+    # partial / dhcm
+    'partial/dhcm/primitive_fast':        test_dhcm_primitive_fast,
+    'partial/dhcm/primitive_memory_hard': test_dhcm_primitive_memory_hard,
+    'partial/dhcm/primitive_sponge_xof':  test_dhcm_primitive_sponge_xof,
+    'partial/dhcm/legacy_alive':          test_dhcm_legacy_alive,
+    'partial/dhcm/legacy_unsafe':         test_dhcm_legacy_unsafe,
+    # partial / pow
+    'partial/pow/primitive_fast':         test_pow_primitive_fast,
+    'partial/pow/primitive_memory_hard':  test_pow_primitive_memory_hard,
+    'partial/pow/primitive_sponge_xof':   test_pow_primitive_sponge_xof,
+    'partial/pow/legacy_alive':           test_pow_legacy_alive,
+    'partial/pow/legacy_unsafe':          test_pow_legacy_unsafe,
+    # base
+    'base/hash_primitive_main':           test_hash_primitive_main,
+    'base/hash_legacy_main':              test_hash_legacy_main,
+    'base/pqc_kem_main':                  test_pqc_kem_main,
+    'base/pqc_sign_main':                 test_pqc_sign_main,
+    'base/core_cipher_main':              test_core_cipher_main,
+    'base/core_mac_main':                 test_core_mac_main,
+    'base/core_ecc_main':                 test_core_ecc_main,
+    'base/dhcm_primitive_main':           test_dhcm_primitive_main,
+    'base/dhcm_legacy_main':              test_dhcm_legacy_main,
+    'base/pow_primitive':                 test_pow_primitive,
+    'base/pow_combined':                  test_pow_combined_base,
+    # main
+    'main/hash':                          test_hash_main,
+    'main/pqc':                           test_pqc_main,
+    'main/core':                          test_core_main,
+    'main/dhcm':                          test_dhcm_main,
+    'main/pow':                           test_pow_main,
+    'main/pow_combined':                  test_pow_combined_main,
+    # primary
+    'primary/system':                     test_system_main,
+    'primary/system_lite':                test_system_lite,
+}
+
+
+def _resolve_modules_from_map(load_map, target):
+    """Return ordered list of test modules for group:tier from a LOAD_MAP.
+
+    Returns None if the target format is not group:tier (caller falls back to
+    legacy dispatch).  Returns an empty list if the map says build-only for
+    every module in this tier×group.
+    """
+    parts = target.split(':')
+    if len(parts) < 2:
+        return None
+
+    group, tier = parts[0], parts[1]
+
+    # system:main lives in load_map['primary']
+    map_tier = 'primary' if (group == 'system' or tier == 'system') else tier
+    if map_tier not in load_map:
+        return None
+
+    tier_map = load_map[map_tier]
+
+    # Build the filter for this group within the tier
+    if map_tier == 'primary':
+        filtered = {k: v for k, v in tier_map.items() if 'system' in k}
+    elif map_tier == 'partial':
+        prefix = f'partial/{group}/'
+        filtered = {k: v for k, v in tier_map.items() if k.startswith(prefix)}
+    elif map_tier == 'base':
+        filtered = {k: v for k, v in tier_map.items()
+                    if k.startswith(f'base/{group}_') or k == f'base/{group}'}
+    elif map_tier == 'main':
+        filtered = {k: v for k, v in tier_map.items()
+                    if k == f'main/{group}'
+                    or k.startswith(f'main/{group}_')
+                    or k.startswith(f'main/{group}/')}
+    else:
+        return None
+
+    modules = []
+    seen_ids = set()
+    for mod_path, test_keys in filtered.items():
+        if not test_keys:
+            # build-only marker — no tests for this module in this map
+            continue
+        module = _MODULE_REGISTRY.get(mod_path)
+        if module is not None and id(module) not in seen_ids:
+            modules.append(module)
+            seen_ids.add(id(module))
+
+    return modules
+
 def resolve_platform_settings(platform, project_root):
     if not platform:
         return None, None
@@ -611,196 +727,209 @@ def run_test(args):
             res = run_web_test(config, target)
             results.append((target, res))
             return res
-    
-        # Hash Tests
-        hash_partial = [
-            test_primitive_fast, test_primitive_memory_hard, test_primitive_sponge_xof, 
-            test_legacy_alive, test_legacy_unsafe
-        ]
-        hash_base = [test_hash_primitive_main, test_hash_legacy_main]
-        hash_main_list = [test_hash_main]
+
+        # ── Load-map dispatch (--load-mode gen|genAll|genQuick) ───────────────
+        load_mode = getattr(args, 'load_mode', None) or 'gen'
+        if load_mode in _LOAD_MAPS:
+            resolved = _resolve_modules_from_map(_LOAD_MAPS[load_mode], target)
+            if resolved is not None:
+                if not resolved:
+                    console.print_step(f"[LOAD] {target} is build-only in {load_mode} map — skipping tests")
+                    return 0
+                test_modules = resolved
+                # jump directly to the run loop below
+            # else: unrecognised format, fall through to legacy dispatch below
+
+
+        if not test_modules:
+            hash_partial = [
+                test_primitive_fast, test_primitive_memory_hard, test_primitive_sponge_xof, 
+                test_legacy_alive, test_legacy_unsafe
+            ]
+            hash_base = [test_hash_primitive_main, test_hash_legacy_main]
+            hash_main_list = [test_hash_main]
         
-        # PQC Tests
-        pqc_partial = [
-            test_kem_lattice, test_kem_code_based, test_sign_lattice, test_sign_hash_based
-        ]
-        pqc_base = [test_pqc_kem_main, test_pqc_sign_main]
-        pqc_main_list = [test_pqc_main]
+            # PQC Tests
+            pqc_partial = [
+                test_kem_lattice, test_kem_code_based, test_sign_lattice, test_sign_hash_based
+            ]
+            pqc_base = [test_pqc_kem_main, test_pqc_sign_main]
+            pqc_main_list = [test_pqc_main]
 
-        # Core Tests
-        core_partial = [
-            test_aes_modes, test_aes_aead, test_stream_aead, test_macs, test_ecc
-        ]
-        core_base = [test_core_cipher_main, test_core_mac_main, test_core_ecc_main]
-        core_main_list = [test_core_main]
-        system_main_list = [test_system_main]
+            # Core Tests
+            core_partial = [
+                test_aes_modes, test_aes_aead, test_stream_aead, test_macs, test_ecc
+            ]
+            core_base = [test_core_cipher_main, test_core_mac_main, test_core_ecc_main]
+            core_main_list = [test_core_main]
+            system_main_list = [test_system_main]
 
-        # Lite Variant Tests - no individual module tests (single unified DLL)
-        lite_hash_list = [test_system_lite]
+            # Lite Variant Tests - no individual module tests (single unified DLL)
+            lite_hash_list = [test_system_lite]
 
-        # DHCM Tests
-        dhcm_partial = [
-            test_dhcm_primitive_fast, test_dhcm_primitive_memory_hard, test_dhcm_primitive_sponge_xof,
-            test_dhcm_legacy_alive, test_dhcm_legacy_unsafe
-        ]
-        dhcm_base = [test_dhcm_primitive_main, test_dhcm_legacy_main]
-        dhcm_main_list = [test_dhcm_main]
+            # DHCM Tests
+            dhcm_partial = [
+                test_dhcm_primitive_fast, test_dhcm_primitive_memory_hard, test_dhcm_primitive_sponge_xof,
+                test_dhcm_legacy_alive, test_dhcm_legacy_unsafe
+            ]
+            dhcm_base = [test_dhcm_primitive_main, test_dhcm_legacy_main]
+            dhcm_main_list = [test_dhcm_main]
 
-        # PoW Tests
-        pow_partial = [
-            test_pow_primitive_fast,
-            test_pow_primitive_memory_hard,
-            test_pow_primitive_sponge_xof,
-            test_pow_legacy_alive,
-            test_pow_legacy_unsafe,
-            test_pow_combined_primitive_fast,
-            test_pow_combined_primitive_memory_hard,
-            test_pow_combined_primitive_sponge_xof,
-            test_pow_combined_legacy_alive,
-            test_pow_combined_legacy_unsafe
-        ]
-        pow_base = [test_pow_primitive, test_pow_legacy, test_pow_combined_base]
-        pow_main_list = [test_pow_main, test_pow_combined_main]
-        pow_partial_map = {
-            ('server', 'primitive_fast'): test_pow_primitive_fast,
-            ('server', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
-            ('server', 'primitive_sponge_xof'): test_pow_primitive_sponge_xof,
-            ('server', 'legacy_alive'): test_pow_legacy_alive,
-            ('server', 'legacy_unsafe'): test_pow_legacy_unsafe,
-            ('client', 'primitive_fast'): test_pow_primitive_fast,
-            ('client', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
-            ('client', 'primitive_sponge_xof'): test_pow_primitive_sponge_xof,
-            ('client', 'legacy_alive'): test_pow_legacy_alive,
-            ('client', 'legacy_unsafe'): test_pow_legacy_unsafe,
-            ('combined', 'primitive_fast'): test_pow_combined_primitive_fast,
-            ('combined', 'primitive_memory_hard'): test_pow_combined_primitive_memory_hard,
-            ('combined', 'primitive_sponge_xof'): test_pow_combined_primitive_sponge_xof,
-            ('combined', 'legacy_alive'): test_pow_combined_legacy_alive,
-            ('combined', 'legacy_unsafe'): test_pow_combined_legacy_unsafe,
-            ('pair', 'primitive_fast'): test_pow_primitive_fast,
-            ('pair', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
-            ('pair', 'primitive_sponge_xof'): test_pow_primitive_sponge_xof,
-            ('pair', 'legacy_alive'): test_pow_legacy_alive,
-            ('pair', 'legacy_unsafe'): test_pow_legacy_unsafe
-        }
-        pow_base_map = {
-            'primitive': test_pow_primitive,
-            'legacy': test_pow_legacy,
-            'combined': test_pow_combined_base
-        }
-        pow_main_map = {
-            'combined': test_pow_combined_main,
-            'pair': test_pow_main,
-            'client': test_pow_main,
-            'server': test_pow_main
-        }
+            # PoW Tests
+            pow_partial = [
+                test_pow_primitive_fast,
+                test_pow_primitive_memory_hard,
+                test_pow_primitive_sponge_xof,
+                test_pow_legacy_alive,
+                test_pow_legacy_unsafe,
+                test_pow_combined_primitive_fast,
+                test_pow_combined_primitive_memory_hard,
+                test_pow_combined_primitive_sponge_xof,
+                test_pow_combined_legacy_alive,
+                test_pow_combined_legacy_unsafe
+            ]
+            pow_base = [test_pow_primitive, test_pow_legacy, test_pow_combined_base]
+            pow_main_list = [test_pow_main, test_pow_combined_main]
+            pow_partial_map = {
+                ('server', 'primitive_fast'): test_pow_primitive_fast,
+                ('server', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
+                ('server', 'primitive_sponge_xof'): test_pow_primitive_sponge_xof,
+                ('server', 'legacy_alive'): test_pow_legacy_alive,
+                ('server', 'legacy_unsafe'): test_pow_legacy_unsafe,
+                ('client', 'primitive_fast'): test_pow_primitive_fast,
+                ('client', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
+                ('client', 'primitive_sponge_xof'): test_pow_primitive_sponge_xof,
+                ('client', 'legacy_alive'): test_pow_legacy_alive,
+                ('client', 'legacy_unsafe'): test_pow_legacy_unsafe,
+                ('combined', 'primitive_fast'): test_pow_combined_primitive_fast,
+                ('combined', 'primitive_memory_hard'): test_pow_combined_primitive_memory_hard,
+                ('combined', 'primitive_sponge_xof'): test_pow_combined_primitive_sponge_xof,
+                ('combined', 'legacy_alive'): test_pow_combined_legacy_alive,
+                ('combined', 'legacy_unsafe'): test_pow_combined_legacy_unsafe,
+                ('pair', 'primitive_fast'): test_pow_primitive_fast,
+                ('pair', 'primitive_memory_hard'): test_pow_primitive_memory_hard,
+                ('pair', 'primitive_sponge_xof'): test_pow_primitive_sponge_xof,
+                ('pair', 'legacy_alive'): test_pow_legacy_alive,
+                ('pair', 'legacy_unsafe'): test_pow_legacy_unsafe
+            }
+            pow_base_map = {
+                'primitive': test_pow_primitive,
+                'legacy': test_pow_legacy,
+                'combined': test_pow_combined_base
+            }
+            pow_main_map = {
+                'combined': test_pow_combined_main,
+                'pair': test_pow_main,
+                'client': test_pow_main,
+                'server': test_pow_main
+            }
 
-        run_hash = False
-        run_pqc = False
-        run_core = False
-        run_dhcm = False
-        run_pow = False
-        run_system = False
-        run_lite = False
+            run_hash = False
+            run_pqc = False
+            run_core = False
+            run_dhcm = False
+            run_pow = False
+            run_system = False
+            run_lite = False
 
-        if target == 'all':
-            run_hash = True
-            run_pqc = True
-            run_core = True
-            run_dhcm = True
-            run_pow = True
-            run_system = True
-            if variant == 'both' or variant == 'lite':
-                run_lite = True
-        elif target == 'hash':
-            run_hash = True
-        elif target == 'pqc':
-            run_pqc = True
-        elif target == 'core':
-            run_core = True
-        elif target == 'dhcm':
-            run_dhcm = True
-        elif target == 'pow':
-            run_pow = True
-        elif target == 'system':
-            run_system = True
-        elif target.startswith('hash:'):
-            if target == 'hash:partial': test_modules = hash_partial
-            elif target == 'hash:base': test_modules = hash_base
-            elif target == 'hash:main': test_modules = hash_main_list
+            if target == 'all':
+                run_hash = True
+                run_pqc = True
+                run_core = True
+                run_dhcm = True
+                run_pow = True
+                run_system = True
+                if variant == 'both' or variant == 'lite':
+                    run_lite = True
+            elif target == 'hash':
+                run_hash = True
+            elif target == 'pqc':
+                run_pqc = True
+            elif target == 'core':
+                run_core = True
+            elif target == 'dhcm':
+                run_dhcm = True
+            elif target == 'pow':
+                run_pow = True
+            elif target == 'system':
+                run_system = True
+            elif target.startswith('hash:'):
+                if target == 'hash:partial': test_modules = hash_partial
+                elif target == 'hash:base': test_modules = hash_base
+                elif target == 'hash:main': test_modules = hash_main_list
+                else:
+                    name = target.split(':')[-1]
+                    module = pick_module_by_name(name, hash_partial + hash_base + hash_main_list)
+                    test_modules = [module] if module else []
+            elif target.startswith('pqc:'):
+                if target == 'pqc:partial': test_modules = pqc_partial
+                elif target == 'pqc:base': test_modules = pqc_base
+                elif target == 'pqc:main': test_modules = pqc_main_list
+                else:
+                    name = target.split(':')[-1]
+                    module = pick_module_by_name(name, pqc_partial + pqc_base + pqc_main_list)
+                    test_modules = [module] if module else []
+            elif target.startswith('core:'):
+                if target == 'core:partial': test_modules = core_partial
+                elif target == 'core:base': test_modules = core_base
+                elif target == 'core:main': test_modules = core_main_list
+                else:
+                    name = target.split(':')[-1]
+                    module = pick_module_by_name(name, core_partial + core_base + core_main_list)
+                    test_modules = [module] if module else []
+            elif target.startswith('dhcm:'):
+                if target == 'dhcm:partial': test_modules = dhcm_partial
+                elif target == 'dhcm:base': test_modules = dhcm_base
+                elif target == 'dhcm:main': test_modules = dhcm_main_list
+                else:
+                    name = target.split(':')[-1]
+                    module = pick_module_by_name(name, dhcm_partial + dhcm_base + dhcm_main_list)
+                    test_modules = [module] if module else []
+            elif target.startswith('pow:'):
+                if target == 'pow:partial': test_modules = pow_partial
+                elif target == 'pow:base': test_modules = pow_base
+                elif target == 'pow:main': test_modules = pow_main_list
+                else:
+                    parts = target.split(':')
+                    module = None
+                    if len(parts) >= 3 and parts[1] == 'partial':
+                        if len(parts) >= 4:
+                            module = pow_partial_map.get((parts[2], parts[3]))
+                        else:
+                            module = pick_module_by_name(parts[2], pow_partial)
+                    elif len(parts) >= 3 and parts[1] == 'base':
+                        module = pow_base_map.get(parts[2])
+                    elif len(parts) >= 3 and parts[1] == 'main':
+                        module = pow_main_map.get(parts[2])
+                    test_modules = [module] if module else []
+            elif target.startswith('system:'):
+                if target == 'system:main':
+                    test_modules = system_main_list
+            elif target.startswith('lite:'):
+                # Lite variant tests
+                if target == 'lite:all':
+                    run_lite = True
+                else:
+                    console.print_fail(f"Unknown lite test: {target}")
+                    return
             else:
-                name = target.split(':')[-1]
-                module = pick_module_by_name(name, hash_partial + hash_base + hash_main_list)
-                test_modules = [module] if module else []
-        elif target.startswith('pqc:'):
-            if target == 'pqc:partial': test_modules = pqc_partial
-            elif target == 'pqc:base': test_modules = pqc_base
-            elif target == 'pqc:main': test_modules = pqc_main_list
-            else:
-                name = target.split(':')[-1]
-                module = pick_module_by_name(name, pqc_partial + pqc_base + pqc_main_list)
-                test_modules = [module] if module else []
-        elif target.startswith('core:'):
-            if target == 'core:partial': test_modules = core_partial
-            elif target == 'core:base': test_modules = core_base
-            elif target == 'core:main': test_modules = core_main_list
-            else:
-                name = target.split(':')[-1]
-                module = pick_module_by_name(name, core_partial + core_base + core_main_list)
-                test_modules = [module] if module else []
-        elif target.startswith('dhcm:'):
-            if target == 'dhcm:partial': test_modules = dhcm_partial
-            elif target == 'dhcm:base': test_modules = dhcm_base
-            elif target == 'dhcm:main': test_modules = dhcm_main_list
-            else:
-                name = target.split(':')[-1]
-                module = pick_module_by_name(name, dhcm_partial + dhcm_base + dhcm_main_list)
-                test_modules = [module] if module else []
-        elif target.startswith('pow:'):
-            if target == 'pow:partial': test_modules = pow_partial
-            elif target == 'pow:base': test_modules = pow_base
-            elif target == 'pow:main': test_modules = pow_main_list
-            else:
-                parts = target.split(':')
-                module = None
-                if len(parts) >= 3 and parts[1] == 'partial':
-                    if len(parts) >= 4:
-                        module = pow_partial_map.get((parts[2], parts[3]))
-                    else:
-                        module = pick_module_by_name(parts[2], pow_partial)
-                elif len(parts) >= 3 and parts[1] == 'base':
-                    module = pow_base_map.get(parts[2])
-                elif len(parts) >= 3 and parts[1] == 'main':
-                    module = pow_main_map.get(parts[2])
-                test_modules = [module] if module else []
-        elif target.startswith('system:'):
-            if target == 'system:main':
-                test_modules = system_main_list
-        elif target.startswith('lite:'):
-            # Lite variant tests
-            if target == 'lite:all':
-                run_lite = True
-            else:
-                console.print_fail(f"Unknown lite test: {target}")
+                console.print_fail(f"Unknown test target: {target}")
                 return
-        else:
-            console.print_fail(f"Unknown test target: {target}")
-            return
 
-        if run_hash:
-            test_modules.extend(hash_partial + hash_base + hash_main_list)
-        if run_pqc:
-            test_modules.extend(pqc_partial + pqc_base + pqc_main_list)
-        if run_core:
-            test_modules.extend(core_partial + core_base + core_main_list)
-        if run_dhcm:
-            test_modules.extend(dhcm_partial + dhcm_base + dhcm_main_list)
-        if run_pow:
-            test_modules.extend(pow_partial + pow_base + pow_main_list)
-        if run_system:
-            test_modules.extend(system_main_list)
-        if run_lite:
-            test_modules.extend(lite_hash_list)
+            if run_hash:
+                test_modules.extend(hash_partial + hash_base + hash_main_list)
+            if run_pqc:
+                test_modules.extend(pqc_partial + pqc_base + pqc_main_list)
+            if run_core:
+                test_modules.extend(core_partial + core_base + core_main_list)
+            if run_dhcm:
+                test_modules.extend(dhcm_partial + dhcm_base + dhcm_main_list)
+            if run_pow:
+                test_modules.extend(pow_partial + pow_base + pow_main_list)
+            if run_system:
+                test_modules.extend(system_main_list)
+            if run_lite:
+                test_modules.extend(lite_hash_list)
 
         console.print_header(f"Running {len(test_modules)} test suites...")
         
@@ -840,6 +969,9 @@ if __name__ == "__main__":
     parser.add_argument('--log-root', type=str, help='Override log output root')
     parser.add_argument('--lib-ext', type=str, help='Override output library extension')
     parser.add_argument('--no-color', action='store_true', help="Disable colored output")
+    parser.add_argument('--load-mode', type=str, dest='load_mode',
+                        choices=['gen', 'genAll', 'genQuick'], default='gen',
+                        help='Test load mode: gen=default LOAD_MAP, genAll=LOAD_MAP_ALL, genQuick=LOAD_MAP_QUICK')
     
     args = parser.parse_args()
     
