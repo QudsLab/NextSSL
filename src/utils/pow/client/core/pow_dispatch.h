@@ -1,5 +1,5 @@
-#ifndef LEYLINE_POW_DISPATCH_H
-#define LEYLINE_POW_DISPATCH_H
+#ifndef nextssl_POW_DISPATCH_H
+#define nextssl_POW_DISPATCH_H
 
 #include "pow_hash_types.h"
 

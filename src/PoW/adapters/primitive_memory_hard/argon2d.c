@@ -5,7 +5,7 @@
 
 static int argon2d_get_default_params(void** out_params, size_t* out_len);
 
-extern int leyline_argon2d(const uint8_t *pwd, size_t pwd_len, 
+extern int nextssl_argon2d(const uint8_t *pwd, size_t pwd_len, 
                            const uint8_t *salt, size_t salt_len,
                            const LeylineArgon2Params *params,
                            uint8_t *out, size_t out_len);
@@ -28,7 +28,7 @@ static int argon2d_hash(const uint8_t* input, size_t input_len, const void* para
         .m_cost_kb = p->memory_kib,
         .parallelism = p->threads
     };
-    return leyline_argon2d(input, input_len, salt, sizeof(salt), &lp, output, p->out_len);
+    return nextssl_argon2d(input, input_len, salt, sizeof(salt), &lp, output, p->out_len);
 }
 
 static int argon2d_get_wu(uint32_t difficulty_bits, uint64_t* out_wu) {

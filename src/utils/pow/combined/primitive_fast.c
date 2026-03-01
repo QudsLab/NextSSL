@@ -10,7 +10,7 @@
 #endif
 
 // Server Exports
-EXPORT int leyline_pow_server_generate_challenge(
+EXPORT int nextssl_pow_server_generate_challenge(
     POWConfig* config,
     const char* algorithm_id,
     const uint8_t* context_data,
@@ -21,7 +21,7 @@ EXPORT int leyline_pow_server_generate_challenge(
     return pow_server_generate_challenge(config, algorithm_id, context_data, context_len, difficulty_bits, out_challenge);
 }
 
-EXPORT int leyline_pow_server_verify_solution(
+EXPORT int nextssl_pow_server_verify_solution(
     POWChallenge* challenge,
     POWSolution* solution,
     bool* out_valid
@@ -30,14 +30,14 @@ EXPORT int leyline_pow_server_verify_solution(
 }
 
 // Client Exports
-EXPORT int leyline_pow_client_solve(
+EXPORT int nextssl_pow_client_solve(
     POWChallenge* challenge,
     POWSolution* out_solution
 ) {
     return pow_client_solve(challenge, out_solution);
 }
 
-EXPORT int leyline_pow_client_check_limits(
+EXPORT int nextssl_pow_client_check_limits(
     POWChallenge* challenge,
     uint64_t max_wu,
     uint64_t max_mu,
@@ -47,7 +47,7 @@ EXPORT int leyline_pow_client_check_limits(
     return pow_client_check_limits(challenge, max_wu, max_mu, max_time_seconds, out_acceptable);
 }
 
-EXPORT int leyline_pow_client_parse_challenge(
+EXPORT int nextssl_pow_client_parse_challenge(
     const char* challenge_base64,
     POWChallenge* out_challenge
 ) {

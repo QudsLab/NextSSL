@@ -17,6 +17,8 @@
 #include "../../main/lite/signature.h"
 #include "../../main/lite/pqc.h"
 #include "../../main/lite/pow.h"
+/* Profile-based configuration system */
+#include "../../../config/config.h"
 #include <string.h>
 
 #if defined(_WIN32) || defined(_WIN64)
@@ -38,11 +40,20 @@ static int os_random(uint8_t *buf, size_t len) {
 #endif
 
 // ============================================================================
-// Hash Functions (defaults to SHA-256)
+// Hash Functions (profile-dispatched, falls back to SHA-256)
 // ============================================================================
 
 NEXTSSL_API int nextssl_hash(const uint8_t *data, size_t len, uint8_t *output) {
-    return nextssl_lite_hash("SHA-256", data, len, output);
+    const nextssl_config_t *cfg = nextssl_config_get_or_default();
+    switch (cfg->default_hash) {
+        case NEXTSSL_HASH_SHA512:
+            return nextssl_lite_hash("SHA-512", data, len, output);
+        case NEXTSSL_HASH_BLAKE3:
+            return nextssl_lite_hash("BLAKE3",  data, len, output);
+        case NEXTSSL_HASH_SHA256:
+        default:
+            return nextssl_lite_hash("SHA-256", data, len, output);
+    }
 }
 
 NEXTSSL_API int nextssl_hash_ex(const char *algorithm, const uint8_t *data, size_t len, uint8_t *output) {
@@ -50,8 +61,15 @@ NEXTSSL_API int nextssl_hash_ex(const char *algorithm, const uint8_t *data, size
 }
 
 // ============================================================================
-// Encryption Functions (defaults to AES-256-GCM)
+// Encryption Functions (profile-dispatched, falls back to AES-256-GCM)
 // ============================================================================
+
+static const char* _lite_aead_name(void) {
+    const nextssl_config_t *cfg = nextssl_config_get_or_default();
+    return (cfg->default_aead == NEXTSSL_AEAD_CHACHA20_POLY1305)
+               ? "ChaCha20-Poly1305"
+               : "AES-256-GCM";
+}
 
 NEXTSSL_API int nextssl_encrypt(
     const uint8_t *key,
@@ -60,7 +78,7 @@ NEXTSSL_API int nextssl_encrypt(
     size_t plen,
     uint8_t *ciphertext
 ) {
-    return nextssl_lite_aead_encrypt("AES-256-GCM", key, nonce, NULL, 0, plaintext, plen, ciphertext);
+    return nextssl_lite_aead_encrypt(_lite_aead_name(), key, nonce, NULL, 0, plaintext, plen, ciphertext);
 }
 
 NEXTSSL_API int nextssl_decrypt(
@@ -70,7 +88,7 @@ NEXTSSL_API int nextssl_decrypt(
     size_t clen,
     uint8_t *plaintext
 ) {
-    return nextssl_lite_aead_decrypt("AES-256-GCM", key, nonce, NULL, 0, ciphertext, clen, plaintext);
+    return nextssl_lite_aead_decrypt(_lite_aead_name(), key, nonce, NULL, 0, ciphertext, clen, plaintext);
 }
 
 NEXTSSL_API int nextssl_encrypt_ex(
@@ -280,14 +298,40 @@ NEXTSSL_API const char* nextssl_version(void) {
     return "NextSSL v0.1.0-beta-lite";
 }
 
+NEXTSSL_API const char* nextssl_variant(void) {
+    return "lite";
+}
+
+NEXTSSL_API const char* nextssl_security_level(void) {
+    return nextssl_config_security_level();
+}
+
 NEXTSSL_API int nextssl_has_algorithm(const char *algorithm) {
-    return nextssl_lite_hash_available(algorithm) ||
-           nextssl_lite_pqc_available();
+    if (!algorithm) return 0;
+    /* Hash */
+    if (strcmp(algorithm, "SHA-256") == 0 ||
+        strcmp(algorithm, "SHA-512") == 0 ||
+        strcmp(algorithm, "BLAKE3")  == 0) return 1;
+    /* AEAD */
+    if (strcmp(algorithm, "AES-256-GCM") == 0 ||
+        strcmp(algorithm, "ChaCha20-Poly1305") == 0) return 1;
+    /* KDF */
+    if (strcmp(algorithm, "Argon2id") == 0 ||
+        strcmp(algorithm, "HKDF")     == 0) return 1;
+    /* Key exchange */
+    if (strcmp(algorithm, "X25519")      == 0 ||
+        strcmp(algorithm, "Kyber1024")   == 0 ||
+        strcmp(algorithm, "ML-KEM-1024") == 0) return 1;
+    /* Signatures */
+    if (strcmp(algorithm, "Ed25519")    == 0 ||
+        strcmp(algorithm, "Dilithium5") == 0 ||
+        strcmp(algorithm, "ML-DSA-87")  == 0) return 1;
+    return 0;
 }
 
 NEXTSSL_API int nextssl_list_algorithms(char *buffer, size_t size) {
     const char *algos = "SHA-256,SHA-512,BLAKE3,AES-256-GCM,ChaCha20-Poly1305,"
-                        "Argon2id,HKDF,X25519,Kyber1024,Ed25519,Dilithium5";
+                        "Argon2id,HKDF,X25519,ML-KEM-1024,Ed25519,ML-DSA-87";
     if (buffer && size > 0) {
         size_t n = strlen(algos);
         if (n >= size) n = size - 1;
@@ -297,10 +341,49 @@ NEXTSSL_API int nextssl_list_algorithms(char *buffer, size_t size) {
     return 9;
 }
 
-NEXTSSL_API int nextssl_init(void) {
+/*
+ * nextssl_init(profile)
+ *
+ * profile: 0 = MODERN (default, SHA-256 / AES-256-GCM / Ed25519 / X25519)
+ *           1 = COMPLIANCE (FIPS/NIST aligned)
+ *           2 = PQC (BLAKE3 / ML-DSA-87 / ML-KEM-1024, post-quantum only)
+ *
+ * Config is immutable after the first successful call.
+ * Calling again returns 0 (already initialized) without error.
+ */
+NEXTSSL_API int nextssl_init(int profile) {
+    if ((unsigned)profile >= (unsigned)NEXTSSL_PROFILE_MAX) {
+        profile = NEXTSSL_PROFILE_MODERN;
+    }
+    /* Lite only supports the three common profiles */
+    if (profile != NEXTSSL_PROFILE_MODERN &&
+        profile != NEXTSSL_PROFILE_COMPLIANCE &&
+        profile != NEXTSSL_PROFILE_PQC) {
+        return -1;  /* Profile not available in lite */
+    }
+    const nextssl_config_t *cfg = nextssl_config_init((nextssl_profile_t)profile);
+    /* NULL means already initialized — that is not an error here */
+    return (cfg != NULL || nextssl_config_get() != NULL) ? 0 : -1;
+}
+
+NEXTSSL_API int nextssl_init_custom(const nextssl_custom_profile_t *profile) {
+    if (profile == NULL) return -1;
+    nextssl_profile_custom_t internal;
+    internal.hash  = (nextssl_hash_algo_t)profile->hash;
+    internal.aead  = (nextssl_aead_algo_t)profile->aead;
+    internal.kdf   = (nextssl_kdf_algo_t)profile->kdf;
+    internal.sign  = (nextssl_sign_algo_t)profile->sign;
+    internal.kem   = (nextssl_kem_algo_t)profile->kem;
+    internal.name  = profile->name;
+    const nextssl_config_t *cfg = nextssl_config_init_custom(&internal);
+    if (cfg == NULL) {
+        /* Check if already initialized (not an error) vs invalid algo */
+        return (nextssl_config_get() != NULL) ? -2 : -3;
+    }
     return 0;
 }
 
 NEXTSSL_API void nextssl_cleanup(void) {
-    /* Nothing to clean up for lite variant */
+    /* Reset config so a subsequent nextssl_init() is accepted */
+    nextssl_config_reset();
 }

@@ -26,7 +26,7 @@ def main(color=True):
     
     console.print_pass("DLL loaded successfully")
 
-    symbols = ['leyline_sha256', 'leyline_md5']
+    symbols = ['nextssl_sha256', 'nextssl_md5']
     
     missing = []
     for s in symbols:
@@ -41,10 +41,10 @@ def main(color=True):
     failed = 0
     
     # Check SHA-256 (Primitive)
-    lib.leyline_sha256.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
-    lib.leyline_sha256.restype = None
+    lib.nextssl_sha256.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
+    lib.nextssl_sha256.restype = None
     digest = ctypes.create_string_buffer(32)
-    lib.leyline_sha256(b"abc", 3, digest)
+    lib.nextssl_sha256(b"abc", 3, digest)
     if digest.raw.hex() == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad":
         console.print_pass("SHA-256 (Primitive)")
         msg = f"       Hash (32 bytes): {digest.raw.hex()}"
@@ -56,10 +56,10 @@ def main(color=True):
         failed += 1
 
     # Check MD5 (Legacy)
-    lib.leyline_md5.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
-    lib.leyline_md5.restype = ctypes.c_int
+    lib.nextssl_md5.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
+    lib.nextssl_md5.restype = ctypes.c_int
     digest = ctypes.create_string_buffer(16)
-    lib.leyline_md5(b"abc", 3, digest)
+    lib.nextssl_md5(b"abc", 3, digest)
     if digest.raw.hex() == "900150983cd24fb0d6963f7d28e17f72":
         console.print_pass("MD5 (Legacy)")
         msg = f"       Hash (16 bytes): {digest.raw.hex()}"

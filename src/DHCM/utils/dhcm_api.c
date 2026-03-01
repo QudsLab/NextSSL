@@ -2,11 +2,11 @@
 #include "../core/dhcm_core.h"
 #include "../core/dhcm_difficulty.h"
 
-int leyline_dhcm_calculate(const DHCMParams *params, DHCMResult *result) {
+int nextssl_dhcm_calculate(const DHCMParams *params, DHCMResult *result) {
     return dhcm_core_calculate(params, result);
 }
 
-int leyline_dhcm_get_algorithm_info(DHCMAlgorithm algo, const char **name, uint64_t *base_wu, size_t *block_size) {
+int nextssl_dhcm_get_algorithm_info(DHCMAlgorithm algo, const char **name, uint64_t *base_wu, size_t *block_size) {
     // This is a simplified version. Real implementation might need lookup tables.
     // For now, we reuse core calculate to get name.
     DHCMResult res;
@@ -27,6 +27,6 @@ int leyline_dhcm_get_algorithm_info(DHCMAlgorithm algo, const char **name, uint6
     return 0;
 }
 
-double leyline_dhcm_expected_trials(DHCMDifficultyModel model, uint32_t target_zeros) {
+double nextssl_dhcm_expected_trials(DHCMDifficultyModel model, uint32_t target_zeros) {
     return dhcm_calculate_expected_trials(model, target_zeros);
 }

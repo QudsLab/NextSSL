@@ -6,8 +6,8 @@
 // Forward declarations
 static int argon2id_get_default_params(void** out_params, size_t* out_len);
 
-// Assuming leyline_argon2id signature:
-// int leyline_argon2id(const void* pwd, size_t pwd_len, const void* salt, size_t salt_len, 
+// Assuming nextssl_argon2id signature:
+// int nextssl_argon2id(const void* pwd, size_t pwd_len, const void* salt, size_t salt_len, 
 //                      uint32_t t, uint32_t m, uint32_t p, void* out, size_t out_len);
 // But PoW context usually puts everything in "input" (context || nonce).
 // For Argon2, we treat "input" as the message (password) and use a fixed salt or empty salt?
@@ -22,7 +22,7 @@ static int argon2id_get_default_params(void** out_params, size_t* out_len);
 // OR better: The adapter implementation decides.
 // For this implementation, I will use `input` as Password and a zero-salt or specific salt.
 
-extern int leyline_argon2id(const uint8_t *pwd, size_t pwd_len, 
+extern int nextssl_argon2id(const uint8_t *pwd, size_t pwd_len, 
                             const uint8_t *salt, size_t salt_len,
                             const LeylineArgon2Params *params,
                             uint8_t *out, size_t out_len);
@@ -54,7 +54,7 @@ static int argon2id_hash(const uint8_t* input, size_t input_len, const void* par
         .m_cost_kb = p->memory_kib,
         .parallelism = p->threads
     };
-    return leyline_argon2id(input, input_len, salt, sizeof(salt), &lp, output, p->out_len);
+    return nextssl_argon2id(input, input_len, salt, sizeof(salt), &lp, output, p->out_len);
 }
 
 static int argon2id_get_wu(uint32_t difficulty_bits, uint64_t* out_wu) {

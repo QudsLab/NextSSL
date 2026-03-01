@@ -1,5 +1,5 @@
-#ifndef LEYLINE_POW_SERVER_H
-#define LEYLINE_POW_SERVER_H
+#ifndef nextssl_POW_SERVER_H
+#define nextssl_POW_SERVER_H
 
 #include "pow_protocol.h"
 
@@ -35,4 +35,4 @@ int pow_server_verify(const PoWChallenge *c, const uint8_t *nonce, size_t nonce_
 }
 #endif
 
-#endif // LEYLINE_POW_SERVER_H
+#endif // nextssl_POW_SERVER_H

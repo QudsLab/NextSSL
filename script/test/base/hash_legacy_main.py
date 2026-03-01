@@ -26,7 +26,7 @@ def main(color=True):
     
     console.print_pass("DLL loaded successfully")
 
-    symbols = ['leyline_md5', 'leyline_md2']
+    symbols = ['nextssl_md5', 'nextssl_md2']
     
     missing = []
     for s in symbols:
@@ -41,10 +41,10 @@ def main(color=True):
     failed = 0
     
     # MD5 (Alive)
-    lib.leyline_md5.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
-    lib.leyline_md5.restype = ctypes.c_int
+    lib.nextssl_md5.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
+    lib.nextssl_md5.restype = ctypes.c_int
     digest = ctypes.create_string_buffer(16)
-    lib.leyline_md5(b"abc", 3, digest)
+    lib.nextssl_md5(b"abc", 3, digest)
     if digest.raw.hex() == "900150983cd24fb0d6963f7d28e17f72":
         console.print_pass("MD5 (Alive category)")
         msg = f"       Hash (16 bytes): {digest.raw.hex()}"
@@ -56,10 +56,10 @@ def main(color=True):
         failed += 1
 
     # MD2 (Unsafe)
-    lib.leyline_md2.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
-    lib.leyline_md2.restype = ctypes.c_int
+    lib.nextssl_md2.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
+    lib.nextssl_md2.restype = ctypes.c_int
     digest = ctypes.create_string_buffer(16)
-    lib.leyline_md2(b"abc", 3, digest)
+    lib.nextssl_md2(b"abc", 3, digest)
     if digest.raw.hex() == "da853b0d3f88d99b30283a69e6ded6bb":
         console.print_pass("MD2 (Unsafe category)")
         msg = f"       Hash (16 bytes): {digest.raw.hex()}"

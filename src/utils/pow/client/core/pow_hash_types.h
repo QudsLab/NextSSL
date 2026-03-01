@@ -1,5 +1,5 @@
-#ifndef LEYLINE_POW_HASH_TYPES_H
-#define LEYLINE_POW_HASH_TYPES_H
+#ifndef nextssl_POW_HASH_TYPES_H
+#define nextssl_POW_HASH_TYPES_H
 
 #include "pow_protocol.h"
 

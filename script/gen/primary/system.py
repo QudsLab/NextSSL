@@ -115,6 +115,25 @@ def build(builder: Builder):
     if os.path.exists(pqc_wrapper):
         sources.add(os.path.normpath(pqc_wrapper))
 
+    # Add Layer 4 primary wrapper (full variant)
+    primary_wrapper = os.path.join(src_dir, 'interfaces/primary/full/nextssl.c')
+    if os.path.exists(primary_wrapper):
+        sources.add(os.path.normpath(primary_wrapper))
+
+    # Add root/ explicit-algorithm interface
+    root_wrapper = os.path.join(src_dir, 'interfaces/primary/full/root/nextssl_root.c')
+    if os.path.exists(root_wrapper):
+        sources.add(os.path.normpath(root_wrapper))
+
+    # Add profile-based configuration system
+    config_sources = [
+        os.path.join(src_dir, 'config/config.c'),
+        os.path.join(src_dir, 'config/profiles/profiles_common.c'),
+    ]
+    for cs in config_sources:
+        if os.path.exists(cs):
+            sources.add(os.path.normpath(cs))
+
     includes = [
         os.path.join(src_dir, 'primitives/cipher/aes_core'),
         os.path.join(src_dir, 'primitives/cipher'),
@@ -131,6 +150,10 @@ def build(builder: Builder):
         os.path.join(src_dir, 'PQCrypto/crypto_sign'),
         os.path.join(src_dir, 'PQCrypto/common'),
         os.path.join(src_dir, 'utils/pqc'),
+        os.path.join(src_dir, 'PQCrypto/crypto_kem/ml-kem-768/clean'),
+        os.path.join(src_dir, 'PQCrypto/crypto_sign/ml-dsa-65/clean'),
+        os.path.join(src_dir, 'PQCrypto/crypto_sign/ml-dsa-87/clean'),
+        os.path.join(src_dir, 'interfaces/primary/full/root'),
         src_dir,
     ]
 
@@ -158,7 +181,8 @@ def build(builder: Builder):
         'ENABLE_MCELIECE',
         'ENABLE_ML_DSA',
         'ENABLE_FALCON',
-        'ENABLE_SPHINCS'
+        'ENABLE_SPHINCS',
+        'NEXTSSL_BUILDING_DLL',
     ]
 
     return builder.build_target(
@@ -167,7 +191,7 @@ def build(builder: Builder):
         includes=includes,
         macros=macros,
         remove_macros=['EXCLUDE_SPHINCS'],
-        extra_libs=['-lpthread'],
+        extra_libs=['-lpthread', '-lbcrypt'],
         output_subdir='primary'
     )
 

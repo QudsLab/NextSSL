@@ -15,8 +15,8 @@
  * @date 2026-02-28
  */
 
-#ifndef NEXTSSL_CONFIG_H
-#define NEXTSSL_CONFIG_H
+#ifndef NEXTSSL_PROFILES_CONFIG_H
+#define NEXTSSL_PROFILES_CONFIG_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -234,6 +234,62 @@ const char* nextssl_config_profile_name(nextssl_profile_t profile);
  */
 int nextssl_config_validate_algo(const char *algo_type, int algo_id);
 
+/**
+ * @brief Initialize configuration, or return existing config if already initialized
+ *
+ * Unlike nextssl_config_init() which returns NULL on second call, this
+ * auto-initializes to MODERN and returns the active config even if called
+ * without an explicit nextssl_init(). Used internally by default-path functions.
+ *
+ * @return Pointer to immutable config, never NULL
+ */
+const nextssl_config_t* nextssl_config_get_or_default(void);
+
+/**
+ * @brief Reset configuration to uninitialized state
+ *
+ * Clears the magic guard so a subsequent nextssl_config_init() or
+ * nextssl_config_init_custom() call is accepted.  Called by nextssl_cleanup().
+ */
+void nextssl_config_reset(void);
+
+/* ========================================================================
+ * CUSTOM PROFILE API
+ * ======================================================================== */
+
+/**
+ * @brief Custom profile descriptor — fill before calling nextssl_config_init_custom()
+ *
+ * Set each field to the desired algorithm.  All five must be set unless you
+ * supply a base profile via nextssl_config_init() first; this struct REPLACES
+ * the active config entirely, it does not delta-patch it.
+ *
+ * Validation rules:
+ *   - Every algorithm must be compiled into this build variant (lite vs full).
+ *   - In NEXTSSL_BUILD_LITE, any full-only enum value (> the _MAX guards) is
+ *     rejected with NEXTSSL_CONFIG_ERR_ALGO_UNAVAIL.
+ *   - Config becomes immutable after a successful call, same as nextssl_config_init().
+ */
+typedef struct {
+    nextssl_hash_algo_t  hash;   /**< e.g. NEXTSSL_HASH_SHA256, NEXTSSL_HASH_MD5 (full only) */
+    nextssl_aead_algo_t  aead;   /**< e.g. NEXTSSL_AEAD_AES_256_GCM */
+    nextssl_kdf_algo_t   kdf;    /**< e.g. NEXTSSL_KDF_ARGON2ID */
+    nextssl_sign_algo_t  sign;   /**< e.g. NEXTSSL_SIGN_ED25519 */
+    nextssl_kem_algo_t   kem;    /**< e.g. NEXTSSL_KEM_ML_KEM_1024 */
+    const char          *name;   /**< Optional label shown by nextssl_config_profile_name() */
+} nextssl_profile_custom_t;
+
+/**
+ * @brief Initialize configuration with a user-defined custom profile
+ *
+ * Validates that every selected algorithm is compiled into this build.
+ * On success, config is locked — no further changes are possible.
+ *
+ * @param custom  Pointer to a fully-populated custom profile descriptor
+ * @return Pointer to immutable config, or NULL on error (already init, invalid algo)
+ */
+const nextssl_config_t* nextssl_config_init_custom(const nextssl_profile_custom_t *custom);
+
 /* Error codes */
 #define NEXTSSL_CONFIG_SUCCESS           0
 #define NEXTSSL_CONFIG_ERR_NOT_INIT     -1
@@ -246,4 +302,4 @@ int nextssl_config_validate_algo(const char *algo_type, int algo_id);
 }
 #endif
 
-#endif /* NEXTSSL_CONFIG_H */
+#endif /* NEXTSSL_PROFILES_CONFIG_H */

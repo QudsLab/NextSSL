@@ -78,6 +78,12 @@ const char* nextssl_version(void);
  */
 const char* nextssl_variant(void);
 
+/**
+ * Get security level of the active configuration profile
+ * @return "modern-safe", "compliance-safe", "post-quantum", etc.
+ */
+const char* nextssl_security_level(void);
+
 /* ========== Core Cryptography ========== */
 
 /**
@@ -341,14 +347,90 @@ void nextssl_secure_zero(void *data, size_t length);
 int nextssl_constant_compare(
     const void *a, const void *b, size_t length);
 
+/**
+ * @brief Algorithm IDs for custom profiles
+ *
+ * These match the internal NEXTSSL_HASH_x/NEXTSSL_AEAD_x/... enum values.
+ * Full variant accepts the complete set including legacy/extended IDs.
+ */
+#define NEXTSSL_HASH_ID_SHA256   0
+#define NEXTSSL_HASH_ID_SHA512   1
+#define NEXTSSL_HASH_ID_BLAKE3   2
+#define NEXTSSL_HASH_ID_SHA384   3
+#define NEXTSSL_HASH_ID_SHA1     4
+#define NEXTSSL_HASH_ID_MD5      5
+#define NEXTSSL_HASH_ID_BLAKE2B  6
+
+#define NEXTSSL_AEAD_ID_AES256GCM        0
+#define NEXTSSL_AEAD_ID_CHACHA20POLY1305 1
+#define NEXTSSL_AEAD_ID_AES128GCM        2
+#define NEXTSSL_AEAD_ID_AES256CCM        3
+#define NEXTSSL_AEAD_ID_AEGIS256         5
+
+#define NEXTSSL_KDF_ID_HKDF_SHA256  0
+#define NEXTSSL_KDF_ID_ARGON2ID     1
+#define NEXTSSL_KDF_ID_HKDF_SHA512  2
+#define NEXTSSL_KDF_ID_ARGON2I      3
+#define NEXTSSL_KDF_ID_SCRYPT       5
+#define NEXTSSL_KDF_ID_PBKDF2       6
+
+#define NEXTSSL_SIGN_ID_ED25519    0
+#define NEXTSSL_SIGN_ID_ML_DSA_87  1
+#define NEXTSSL_SIGN_ID_ML_DSA_65  3
+#define NEXTSSL_SIGN_ID_ML_DSA_44  4
+#define NEXTSSL_SIGN_ID_ECDSA_P256 8
+#define NEXTSSL_SIGN_ID_RSA3072PSS 10
+
+#define NEXTSSL_KEM_ID_X25519      0
+#define NEXTSSL_KEM_ID_ML_KEM_1024 1
+#define NEXTSSL_KEM_ID_ML_KEM_768  3
+#define NEXTSSL_KEM_ID_ML_KEM_512  4
+
+/**
+ * @brief Custom profile descriptor — pass to nextssl_init_custom()
+ *
+ * Set each field to its algorithm ID constant above.
+ * Config becomes immutable after nextssl_init_custom() returns 0.
+ */
+typedef struct {
+    int hash;          /**< Hash algorithm ID */
+    int aead;          /**< AEAD cipher ID */
+    int kdf;           /**< Key derivation function ID */
+    int sign;          /**< Signature algorithm ID */
+    int kem;           /**< Key exchange/KEM algorithm ID */
+    const char *name;  /**< Optional label (NULL = "Custom") */
+} nextssl_custom_profile_t;
+
 /* ========== Initialization & Testing ========== */
 
 /**
  * Initialize NextSSL (optional, auto-called on first use)
- * 
+ *
+ * Profiles:
+ *   0 = MODERN       (default: SHA-256 / AES-256-GCM / Ed25519 / X25519)
+ *   1 = COMPLIANCE   (FIPS/NIST aligned)
+ *   2 = PQC          (post-quantum)
+ *   3 = COMPATIBILITY (includes legacy)
+ *   4 = EMBEDDED     (ChaCha20-Poly1305, small footprint)
+ *   5 = RESEARCH     (all algorithms, experimental)
+ *
+ * @param profile  Security profile index (0 = default MODERN)
  * @return 0 on success, negative on error
  */
-int nextssl_init(void);
+int nextssl_init(int profile);
+
+/**
+ * @brief Initialize NextSSL with a fully custom algorithm profile
+ *
+ * Builds the config from the provided descriptor. All five fields must be
+ * set. Rejects Algorithm IDs not compiled into this variant.
+ * Config is immutable after a successful call.
+ *
+ * @param profile  Pointer to filled nextssl_custom_profile_t
+ * @return 0 on success, -1 if profile is NULL, -2 if already initialized,
+ *         -3 if any algorithm ID is invalid/unavailable in this build
+ */
+int nextssl_init_custom(const nextssl_custom_profile_t *profile);
 
 /**
  * Run comprehensive self-tests
@@ -365,5 +447,8 @@ void nextssl_cleanup(void);
 #ifdef __cplusplus
 }
 #endif
+
+/* Explicit-algorithm interface (bypasses profile dispatch) */
+#include "root/nextssl_root.h"
 
 #endif /* NEXTSSL_H */

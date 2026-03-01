@@ -1,5 +1,5 @@
-#ifndef LEYLINE_LEGACY_UNSAFE_H
-#define LEYLINE_LEGACY_UNSAFE_H
+#ifndef nextssl_LEGACY_UNSAFE_H
+#define nextssl_LEGACY_UNSAFE_H
 
 #ifdef _WIN32
     #define EXPORT __declspec(dllexport)
@@ -18,16 +18,16 @@ extern "C" {
 // These algorithms are considered cryptographically broken.
 // Included only for backward compatibility with ancient systems.
 
-EXPORT int leyline_md2(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_md4(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_sha0(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_ripemd128(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_ripemd256(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_ripemd320(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_has160(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_md2(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_md4(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_sha0(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_ripemd128(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_ripemd256(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_ripemd320(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_has160(const uint8_t *msg, size_t len, uint8_t *out);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // LEYLINE_LEGACY_UNSAFE_H
+#endif // nextssl_LEGACY_UNSAFE_H

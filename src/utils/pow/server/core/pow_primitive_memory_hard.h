@@ -1,5 +1,5 @@
-#ifndef LEYLINE_POW_PRIMITIVE_MEMORY_HARD_H
-#define LEYLINE_POW_PRIMITIVE_MEMORY_HARD_H
+#ifndef nextssl_POW_PRIMITIVE_MEMORY_HARD_H
+#define nextssl_POW_PRIMITIVE_MEMORY_HARD_H
 
 #include "pow_hash_types.h"
 

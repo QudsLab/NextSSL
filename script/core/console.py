@@ -88,6 +88,14 @@ def print_step(msg):
     log_to_file(f"-> {msg}")
     print(colorize(f"-> {msg}", Colors.CYAN), flush=True)
 
-def log_data(key, value):
-    """Log structured data to file only, not to console."""
-    log_to_file(f"[DATA] {key}: {value}")
+def log_data(key, value=None):
+    """Log structured data.  Can be called as:
+      log_data(label, value)  -> prints '[INFO] label: value'
+      log_data(message)       -> prints '[INFO] message'  (PoW / legacy callers)
+    """
+    if value is None:
+        msg = str(key)
+    else:
+        msg = f"{key}: {value}"
+    log_to_file(f"[INFO] {msg}")
+    print(colorize(f"[INFO] {msg}", Colors.BLUE), flush=True)

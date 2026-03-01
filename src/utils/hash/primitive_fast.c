@@ -6,27 +6,27 @@
 #include "../../primitives/hash/fast/blake2b/blake2b.h"
 #include "../../primitives/hash/fast/blake2s/blake2s.h"
 
-int leyline_sha224(const uint8_t *msg, size_t len, uint8_t *out) {
+int nextssl_sha224(const uint8_t *msg, size_t len, uint8_t *out) {
     sha224_hash(msg, len, out);
     return 0;
 }
 
-int leyline_sha256(const uint8_t *msg, size_t len, uint8_t *out) {
+int nextssl_sha256(const uint8_t *msg, size_t len, uint8_t *out) {
     sha256(msg, len, out);
     return 0;
 }
 
-int leyline_sha384(const uint8_t *msg, size_t len, uint8_t *out) {
+int nextssl_sha384(const uint8_t *msg, size_t len, uint8_t *out) {
     sha384_hash(msg, len, out);
     return 0;
 }
 
-int leyline_sha512(const uint8_t *msg, size_t len, uint8_t *out) {
+int nextssl_sha512(const uint8_t *msg, size_t len, uint8_t *out) {
     sha512_hash(msg, len, out);
     return 0;
 }
 
-int leyline_blake3(const uint8_t *msg, size_t len, uint8_t *out) {
+int nextssl_blake3(const uint8_t *msg, size_t len, uint8_t *out) {
     blake3_hasher hasher;
     blake3_hasher_init(&hasher);
     blake3_hasher_update(&hasher, msg, len);
@@ -34,7 +34,7 @@ int leyline_blake3(const uint8_t *msg, size_t len, uint8_t *out) {
     return 0;
 }
 
-int leyline_blake2b(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len) {
+int nextssl_blake2b(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len) {
     BLAKE2B_CTX ctx;
     blake2b_init(&ctx, out_len);
     blake2b_update(&ctx, msg, len);
@@ -42,7 +42,7 @@ int leyline_blake2b(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len
     return 0;
 }
 
-int leyline_blake2s(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len) {
+int nextssl_blake2s(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len) {
     BLAKE2S_CTX ctx;
     blake2s_init(&ctx, out_len);
     blake2s_update(&ctx, msg, len);

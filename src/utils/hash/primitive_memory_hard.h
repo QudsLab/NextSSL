@@ -1,5 +1,5 @@
-#ifndef LEYLINE_PRIMITIVE_MEMORY_HARD_H
-#define LEYLINE_PRIMITIVE_MEMORY_HARD_H
+#ifndef nextssl_PRIMITIVE_MEMORY_HARD_H
+#define nextssl_PRIMITIVE_MEMORY_HARD_H
 
 #ifdef _WIN32
     #define EXPORT __declspec(dllexport)
@@ -22,17 +22,17 @@ typedef struct {
 } LeylineArgon2Params;
 
 // --- Argon2 Family ---
-EXPORT int leyline_argon2id(const uint8_t *pwd, size_t pwd_len, 
+EXPORT int nextssl_argon2id(const uint8_t *pwd, size_t pwd_len, 
                             const uint8_t *salt, size_t salt_len,
                             const LeylineArgon2Params *params,
                             uint8_t *out, size_t out_len);
 
-EXPORT int leyline_argon2i(const uint8_t *pwd, size_t pwd_len, 
+EXPORT int nextssl_argon2i(const uint8_t *pwd, size_t pwd_len, 
                            const uint8_t *salt, size_t salt_len,
                            const LeylineArgon2Params *params,
                            uint8_t *out, size_t out_len);
 
-EXPORT int leyline_argon2d(const uint8_t *pwd, size_t pwd_len, 
+EXPORT int nextssl_argon2d(const uint8_t *pwd, size_t pwd_len, 
                            const uint8_t *salt, size_t salt_len,
                            const LeylineArgon2Params *params,
                            uint8_t *out, size_t out_len);
@@ -41,4 +41,4 @@ EXPORT int leyline_argon2d(const uint8_t *pwd, size_t pwd_len,
 }
 #endif
 
-#endif // LEYLINE_PRIMITIVE_MEMORY_HARD_H
+#endif // nextssl_PRIMITIVE_MEMORY_HARD_H

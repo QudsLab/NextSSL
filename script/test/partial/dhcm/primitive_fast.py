@@ -48,8 +48,8 @@ def main():
         console.print_pass("DLL Loaded")
 
         # Define function signatures
-        lib.leyline_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
-        lib.leyline_dhcm_calculate.restype = ctypes.c_int
+        lib.nextssl_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
+        lib.nextssl_dhcm_calculate.restype = ctypes.c_int
 
         passed = 0
         failed = 0
@@ -74,7 +74,7 @@ def main():
         )
         res = DHCMResult()
         
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
             # SHA-256 Base=1000, 64 bytes input -> 2 blocks -> 2000 WU (approx)
             # My formula: 1 + (64/64) = 2 blocks. 1000 * 2 = 2000 WU.
             if res.work_units_per_eval == 2000:
@@ -96,7 +96,7 @@ def main():
         params.difficulty_model = 1 # DHCM_DIFFICULTY_TARGET_BASED
         params.target_leading_zeros = 20
         
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
             expected_trials = 1048576.0 # 2^20
             if abs(res.expected_trials - expected_trials) < 1.0:
                 console.print_pass("Target Difficulty (20 bits)")

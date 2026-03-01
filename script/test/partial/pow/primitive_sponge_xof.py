@@ -89,21 +89,21 @@ def main():
         ]
 
     # Setup function signatures
-    server_dll.leyline_pow_server_generate_challenge.argtypes = [
+    server_dll.nextssl_pow_server_generate_challenge.argtypes = [
         ctypes.POINTER(POWConfig), ctypes.c_char_p, ctypes.POINTER(ctypes.c_uint8), 
         ctypes.c_size_t, ctypes.c_uint32, ctypes.POINTER(POWChallenge)
     ]
-    server_dll.leyline_pow_server_generate_challenge.restype = ctypes.c_int
+    server_dll.nextssl_pow_server_generate_challenge.restype = ctypes.c_int
 
-    server_dll.leyline_pow_server_verify_solution.argtypes = [
+    server_dll.nextssl_pow_server_verify_solution.argtypes = [
         ctypes.POINTER(POWChallenge), ctypes.POINTER(POWSolution), ctypes.POINTER(ctypes.c_bool)
     ]
-    server_dll.leyline_pow_server_verify_solution.restype = ctypes.c_int
+    server_dll.nextssl_pow_server_verify_solution.restype = ctypes.c_int
 
-    client_dll.leyline_pow_client_solve.argtypes = [
+    client_dll.nextssl_pow_client_solve.argtypes = [
         ctypes.POINTER(POWChallenge), ctypes.POINTER(POWSolution)
     ]
-    client_dll.leyline_pow_client_solve.restype = ctypes.c_int
+    client_dll.nextssl_pow_client_solve.restype = ctypes.c_int
 
     # --- Test Logic ---
     console.print_header("Starting Primitive Sponge XOF PoW Test")
@@ -129,7 +129,7 @@ def main():
                 context[i] = ord(context_str[i])
         
             console.print_info(f"Generating challenge ({algo})...")
-            ret = server_dll.leyline_pow_server_generate_challenge(
+            ret = server_dll.nextssl_pow_server_generate_challenge(
                 ctypes.byref(config),
                 algo.encode('utf-8'),
                 context,
@@ -161,7 +161,7 @@ def main():
             solution = POWSolution()
             
             start = time.time()
-            ret = client_dll.leyline_pow_client_solve(
+            ret = client_dll.nextssl_pow_client_solve(
                 ctypes.byref(challenge),
                 ctypes.byref(solution)
             )
@@ -190,7 +190,7 @@ def main():
             console.print_info(f"Verifying solution...")
             is_valid = ctypes.c_bool(False)
             
-            ret = server_dll.leyline_pow_server_verify_solution(
+            ret = server_dll.nextssl_pow_server_verify_solution(
                 ctypes.byref(challenge),
                 ctypes.byref(solution),
                 ctypes.byref(is_valid)

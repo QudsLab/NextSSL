@@ -44,8 +44,8 @@ def main():
         lib = ctypes.CDLL(DLL_PATH)
         console.print_pass("DLL Loaded")
 
-        lib.leyline_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
-        lib.leyline_dhcm_calculate.restype = ctypes.c_int
+        lib.nextssl_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
+        lib.nextssl_dhcm_calculate.restype = ctypes.c_int
 
         passed = 0
         failed = 0
@@ -53,7 +53,7 @@ def main():
 
         # 1. SHA-256 (Fast)
         params = DHCMParams(algorithm=0x0100, input_size=64)
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0 and res.work_units_per_eval == 2000:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0 and res.work_units_per_eval == 2000:
             console.print_pass("SHA-256 OK")
             passed += 1
         else:
@@ -62,7 +62,7 @@ def main():
 
         # 2. Argon2id (MemHard)
         params = DHCMParams(algorithm=0x0200, difficulty_model=2, iterations=3, memory_kb=4096, parallelism=1)
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0 and res.work_units_per_eval == 9830400:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0 and res.work_units_per_eval == 9830400:
             console.print_pass("Argon2id OK")
             passed += 1
         else:
@@ -71,7 +71,7 @@ def main():
 
         # 3. SHA3-256 (Sponge)
         params = DHCMParams(algorithm=0x0300, input_size=64)
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0 and res.work_units_per_eval == 1500:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0 and res.work_units_per_eval == 1500:
             console.print_pass("SHA3-256 OK")
             passed += 1
         else:

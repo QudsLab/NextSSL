@@ -1,3 +1,3 @@
-int leyline_wasm_selftest(void) {
+int nextssl_wasm_selftest(void) {
     return 0;
 }

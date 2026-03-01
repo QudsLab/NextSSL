@@ -111,19 +111,19 @@ def resolve_platform_settings(platform, project_root):
 
 def create_config(args):
     project_root = os.path.abspath(os.path.dirname(__file__))
-    platform = args.platform or os.getenv('LEYLINE_PLATFORM')
+    platform = args.platform or os.getenv('NEXTSSL_PLATFORM')
     bin_dir, lib_ext = resolve_platform_settings(platform, project_root)
     if args.bin_root:
         bin_dir = os.path.abspath(os.path.join(project_root, args.bin_root)) if not os.path.isabs(args.bin_root) else args.bin_root
     log_dir = args.log_root or os.path.join(project_root, 'logs')
     lib_ext = args.lib_ext or lib_ext
     if bin_dir:
-        os.environ['LEYLINE_BIN_DIR'] = bin_dir
+        os.environ['NEXTSSL_BIN_DIR'] = bin_dir
     if log_dir:
         os.makedirs(log_dir, exist_ok=True)
-        os.environ['LEYLINE_LOG_DIR'] = log_dir
+        os.environ['NEXTSSL_LOG_DIR'] = log_dir
     if lib_ext:
-        os.environ['LEYLINE_LIB_EXT'] = lib_ext
+        os.environ['NEXTSSL_LIB_EXT'] = lib_ext
     return Config(bin_dir=bin_dir, log_dir=log_dir, lib_ext=lib_ext)
 
 def pick_module_by_name(name, modules):
@@ -278,7 +278,7 @@ def run_web_test(config, selector):
     for path in paths:
         try:
             result = subprocess.run(
-                ['wasmtime', '--invoke', 'leyline_wasm_selftest', path],
+                ['wasmtime', '--invoke', 'nextssl_wasm_selftest', path],
                 capture_output=True,
                 text=True
             )
@@ -302,8 +302,14 @@ def run_build(args):
     variant = args.variant if hasattr(args, 'variant') else 'full'
     
     # Use new runner log structure
-    action_type = getattr(args, 'action', None)
-    log_path = config.get_runner_log_path(action_type)
+    action_log = getattr(args, 'action_log', None)
+    if action_log:
+        project_root = os.path.abspath(os.path.dirname(__file__))
+        log_path = action_log if os.path.isabs(action_log) else os.path.join(project_root, action_log)
+        os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    else:
+        action_type = getattr(args, 'action', None)
+        log_path = config.get_runner_log_path(action_type)
     with Logger(log_path) as logger:
         builder = Builder(config, logger)
         build_ok = True
@@ -585,8 +591,14 @@ def run_test(args):
     variant = args.variant if hasattr(args, 'variant') else 'full'
     
     # Use new runner log structure
-    action_type = getattr(args, 'action', None)
-    log_path = config.get_runner_log_path(action_type)
+    action_log = getattr(args, 'action_log', None)
+    if action_log:
+        project_root = os.path.abspath(os.path.dirname(__file__))
+        log_path = action_log if os.path.isabs(action_log) else os.path.join(project_root, action_log)
+        os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    else:
+        action_type = getattr(args, 'action', None)
+        log_path = config.get_runner_log_path(action_type)
     with Logger(log_path, console_output=False) as logger:
         from script.core import console
         console.set_logger(logger)
@@ -822,7 +834,8 @@ if __name__ == "__main__":
     parser.add_argument('--platform', type=str, choices=['windows', 'linux', 'mac', 'web'], help='Platform output selector')
     parser.add_argument('--variant', type=str, choices=['lite', 'full', 'both'], default='both', 
                         help='Build variant: lite (9 algorithms ~500KB), full (all algorithms ~5MB), or both')
-    parser.add_argument('--action', type=str, help='GitHub action type (stores logs in logs/bin/{action}/)')
+    parser.add_argument('--action', type=str, help='GitHub action type (stores logs in logs/action/{action}/)')
+    parser.add_argument('--action-log', type=str, dest='action_log', help='Write the runner log to this exact file path (e.g. logs/action/web/partial/core.log)')
     parser.add_argument('--bin-root', type=str, help='Override bin output root')
     parser.add_argument('--log-root', type=str, help='Override log output root')
     parser.add_argument('--lib-ext', type=str, help='Override output library extension')

@@ -77,21 +77,21 @@ def load_dll_pair():
         server = ctypes.CDLL(server_path)
         client = ctypes.CDLL(client_path)
         
-        server.leyline_pow_server_generate_challenge.argtypes = [
+        server.nextssl_pow_server_generate_challenge.argtypes = [
             ctypes.POINTER(POWConfig), ctypes.c_char_p, ctypes.POINTER(ctypes.c_uint8), 
             ctypes.c_size_t, ctypes.c_uint32, ctypes.POINTER(POWChallenge)
         ]
-        server.leyline_pow_server_generate_challenge.restype = ctypes.c_int
+        server.nextssl_pow_server_generate_challenge.restype = ctypes.c_int
 
-        server.leyline_pow_server_verify_solution.argtypes = [
+        server.nextssl_pow_server_verify_solution.argtypes = [
             ctypes.POINTER(POWChallenge), ctypes.POINTER(POWSolution), ctypes.POINTER(ctypes.c_bool)
         ]
-        server.leyline_pow_server_verify_solution.restype = ctypes.c_int
+        server.nextssl_pow_server_verify_solution.restype = ctypes.c_int
 
-        client.leyline_pow_client_solve.argtypes = [
+        client.nextssl_pow_client_solve.argtypes = [
             ctypes.POINTER(POWChallenge), ctypes.POINTER(POWSolution)
         ]
-        client.leyline_pow_client_solve.restype = ctypes.c_int
+        client.nextssl_pow_client_solve.restype = ctypes.c_int
         
         return server, client
     except Exception as e:
@@ -112,7 +112,7 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
         context = (ctypes.c_uint8 * 32)(*([0x00]*32))
         
         start_gen = time.time()
-        ret = server_dll.leyline_pow_server_generate_challenge(
+        ret = server_dll.nextssl_pow_server_generate_challenge(
             ctypes.byref(config), algo.encode('utf-8'), context, 32, difficulty, ctypes.byref(challenge)
         )
         if ret != 0:
@@ -128,7 +128,7 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
         solution = POWSolution()
         result_container = {'ret': -1}
         def solve_task():
-            result_container['ret'] = client_dll.leyline_pow_client_solve(ctypes.byref(challenge), ctypes.byref(solution))
+            result_container['ret'] = client_dll.nextssl_pow_client_solve(ctypes.byref(challenge), ctypes.byref(solution))
             
         t = threading.Thread(target=solve_task)
         t.daemon = True
@@ -157,7 +157,7 @@ def boss_control_loop(server_dll, client_dll, algos, difficulty=1):
             continue
             
         is_valid = ctypes.c_bool(False)
-        ret = server_dll.leyline_pow_server_verify_solution(
+        ret = server_dll.nextssl_pow_server_verify_solution(
             ctypes.byref(challenge), ctypes.byref(solution), ctypes.byref(is_valid)
         )
         

@@ -1,5 +1,5 @@
-#ifndef LEYLINE_POW_CLIENT_H
-#define LEYLINE_POW_CLIENT_H
+#ifndef nextssl_POW_CLIENT_H
+#define nextssl_POW_CLIENT_H
 
 #include "pow_protocol.h"
 #include "pow_hash_types.h"
@@ -39,4 +39,4 @@ PoWError pow_client_hash(PoWAlgorithm algo, const PoWHashArgs *args, char *error
 }
 #endif
 
-#endif // LEYLINE_POW_CLIENT_H
+#endif // nextssl_POW_CLIENT_H

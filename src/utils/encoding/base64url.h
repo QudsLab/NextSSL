@@ -1,5 +1,5 @@
-#ifndef LEYLINE_UTILS_ENCODING_BASE64URL_H
-#define LEYLINE_UTILS_ENCODING_BASE64URL_H
+#ifndef nextssl_UTILS_ENCODING_BASE64URL_H
+#define nextssl_UTILS_ENCODING_BASE64URL_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -45,4 +45,4 @@ int base64url_decode(const char *b64, size_t b64_len, uint8_t *bin, size_t bin_l
 }
 #endif
 
-#endif // LEYLINE_UTILS_ENCODING_BASE64URL_H
+#endif // nextssl_UTILS_ENCODING_BASE64URL_H

@@ -10,7 +10,7 @@
 
 #ifndef POW_NO_GENERIC_API
 // Generic API
-EXPORT int leyline_pow_server_generate_challenge(
+EXPORT int nextssl_pow_server_generate_challenge(
     POWConfig* config,
     const char* algorithm_id,
     const uint8_t* context_data,
@@ -21,7 +21,7 @@ EXPORT int leyline_pow_server_generate_challenge(
     return pow_server_generate_challenge(config, algorithm_id, context_data, context_len, difficulty_bits, out_challenge);
 }
 
-EXPORT int leyline_pow_server_verify_solution(
+EXPORT int nextssl_pow_server_verify_solution(
     POWChallenge* challenge,
     POWSolution* solution,
     bool* out_valid
@@ -31,7 +31,7 @@ EXPORT int leyline_pow_server_verify_solution(
 #endif
 
 // Specific convenience wrappers (optional, but good for testing specific DLL capabilities)
-EXPORT int leyline_pow_server_generate_challenge_sha256(
+EXPORT int nextssl_pow_server_generate_challenge_sha256(
     POWConfig* config,
     const uint8_t* context_data,
     size_t context_len,
@@ -41,7 +41,7 @@ EXPORT int leyline_pow_server_generate_challenge_sha256(
     return pow_server_generate_challenge(config, "sha256", context_data, context_len, difficulty_bits, out_challenge);
 }
 
-EXPORT int leyline_pow_server_generate_challenge_blake3(
+EXPORT int nextssl_pow_server_generate_challenge_blake3(
     POWConfig* config,
     const uint8_t* context_data,
     size_t context_len,

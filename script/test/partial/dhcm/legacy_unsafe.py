@@ -44,8 +44,8 @@ def main():
         lib = ctypes.CDLL(DLL_PATH)
         console.print_pass("DLL Loaded")
 
-        lib.leyline_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
-        lib.leyline_dhcm_calculate.restype = ctypes.c_int
+        lib.nextssl_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
+        lib.nextssl_dhcm_calculate.restype = ctypes.c_int
 
         passed = 0
         failed = 0
@@ -61,7 +61,7 @@ def main():
         )
         res = DHCMResult()
         
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
             if res.work_units_per_eval == 2400:
                 console.print_pass("MD2 (16B)")
                 print(f"       WU: {res.work_units_per_eval}")
@@ -80,7 +80,7 @@ def main():
         params.algorithm = 0x0501 # DHCM_MD4
         params.input_size = 32
         
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
             if res.work_units_per_eval == 400:
                 console.print_pass("MD4 (32B)")
                 print(f"       WU: {res.work_units_per_eval}")

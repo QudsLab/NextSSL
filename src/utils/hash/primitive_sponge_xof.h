@@ -1,5 +1,5 @@
-#ifndef LEYLINE_PRIMITIVE_SPONGE_XOF_H
-#define LEYLINE_PRIMITIVE_SPONGE_XOF_H
+#ifndef nextssl_PRIMITIVE_SPONGE_XOF_H
+#define nextssl_PRIMITIVE_SPONGE_XOF_H
 
 #ifdef _WIN32
     #define EXPORT __declspec(dllexport)
@@ -15,16 +15,16 @@ extern "C" {
 #endif
 
 // --- Primitive (Sponge/XOF) ---
-EXPORT int leyline_sha3_224(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_sha3_256(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_sha3_384(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_sha3_512(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_keccak_256(const uint8_t *msg, size_t len, uint8_t *out);
-EXPORT int leyline_shake128(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len);
-EXPORT int leyline_shake256(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len);
+EXPORT int nextssl_sha3_224(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_sha3_256(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_sha3_384(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_sha3_512(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_keccak_256(const uint8_t *msg, size_t len, uint8_t *out);
+EXPORT int nextssl_shake128(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len);
+EXPORT int nextssl_shake256(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // LEYLINE_PRIMITIVE_SPONGE_XOF_H
+#endif // nextssl_PRIMITIVE_SPONGE_XOF_H

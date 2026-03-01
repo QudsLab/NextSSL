@@ -1,5 +1,5 @@
-#ifndef LEYLINE_POW_LEGACY_UNSAFE_H
-#define LEYLINE_POW_LEGACY_UNSAFE_H
+#ifndef nextssl_POW_LEGACY_UNSAFE_H
+#define nextssl_POW_LEGACY_UNSAFE_H
 
 #include "pow_hash_types.h"
 

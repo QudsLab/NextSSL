@@ -34,7 +34,7 @@ def main(color=True):
     console.print_pass("DLL loaded successfully")
 
     # Define function signatures
-    # int leyline_argon2id(const uint8_t *pwd, size_t pwd_len, 
+    # int nextssl_argon2id(const uint8_t *pwd, size_t pwd_len, 
     #                      const uint8_t *salt, size_t salt_len,
     #                      const LeylineArgon2Params *params,
     #                      uint8_t *out, size_t out_len);
@@ -44,14 +44,14 @@ def main(color=True):
            ctypes.POINTER(LeylineArgon2Params), 
            ctypes.c_char_p, ctypes.c_size_t]
     
-    lib.leyline_argon2id.argtypes = sig
-    lib.leyline_argon2id.restype = ctypes.c_int
+    lib.nextssl_argon2id.argtypes = sig
+    lib.nextssl_argon2id.restype = ctypes.c_int
     
-    lib.leyline_argon2i.argtypes = sig
-    lib.leyline_argon2i.restype = ctypes.c_int
+    lib.nextssl_argon2i.argtypes = sig
+    lib.nextssl_argon2i.restype = ctypes.c_int
     
-    lib.leyline_argon2d.argtypes = sig
-    lib.leyline_argon2d.restype = ctypes.c_int
+    lib.nextssl_argon2d.argtypes = sig
+    lib.nextssl_argon2d.restype = ctypes.c_int
 
     passed = 0
     failed = 0
@@ -102,15 +102,15 @@ def main(color=True):
     # Argon2id Test
     # Test vector: RFC 9106 is complicated, we'll just check it runs without crashing
     # We use small parameters for speed in unit tests, but print the output for manual verification
-    run_test("Argon2id (t=2, m=16, p=1, out=32)", lib.leyline_argon2id, "password", "somesalt", 2, 16, 1, 32, "058202c0723cd88c24408ccac1cbf828dee63bcf3843a150ea364a1e0b4e1ff8")
-    run_test("Argon2id (t=2, m=16, p=1, out=64)", lib.leyline_argon2id, "password", "somesalt", 2, 16, 1, 64, "6d476f01ce2ad5c1b6586c0fd4a1c32f58fae9efee8678db81dca8ab730ad3121acd886ff3b187a889689cf3c7d58ed7ff3f0ab90db8df7eafd92cdea792db67")
-    run_test("Argon2id (t=2, m=16, p=1, out=16)", lib.leyline_argon2id, "password", "somesalt", 2, 16, 1, 16, "f7b15c4365eb5d1181bb5eb520336485")
+    run_test("Argon2id (t=2, m=16, p=1, out=32)", lib.nextssl_argon2id, "password", "somesalt", 2, 16, 1, 32, "058202c0723cd88c24408ccac1cbf828dee63bcf3843a150ea364a1e0b4e1ff8")
+    run_test("Argon2id (t=2, m=16, p=1, out=64)", lib.nextssl_argon2id, "password", "somesalt", 2, 16, 1, 64, "6d476f01ce2ad5c1b6586c0fd4a1c32f58fae9efee8678db81dca8ab730ad3121acd886ff3b187a889689cf3c7d58ed7ff3f0ab90db8df7eafd92cdea792db67")
+    run_test("Argon2id (t=2, m=16, p=1, out=16)", lib.nextssl_argon2id, "password", "somesalt", 2, 16, 1, 16, "f7b15c4365eb5d1181bb5eb520336485")
     
     # Argon2i Test
-    run_test("Argon2i (t=2, m=16, p=1, out=32)", lib.leyline_argon2i, "password", "somesalt", 2, 16, 1, 32, "03df1d13e10203bcc663405e31ab1687939730c9152459bca28fd10c23e38f50")
+    run_test("Argon2i (t=2, m=16, p=1, out=32)", lib.nextssl_argon2i, "password", "somesalt", 2, 16, 1, 32, "03df1d13e10203bcc663405e31ab1687939730c9152459bca28fd10c23e38f50")
 
     # Argon2d Test
-    run_test("Argon2d (t=2, m=16, p=1, out=32)", lib.leyline_argon2d, "password", "somesalt", 2, 16, 1, 32, "e742c05880c44c4df5fe79937be77897a6e41ca758affc42301f1e4040e35bd2")
+    run_test("Argon2d (t=2, m=16, p=1, out=32)", lib.nextssl_argon2d, "password", "somesalt", 2, 16, 1, 32, "e742c05880c44c4df5fe79937be77897a6e41ca758affc42301f1e4040e35bd2")
 
     print(f"\n{'='*50}")
     console.print_info(f"Results: {passed} passed, {failed} failed")

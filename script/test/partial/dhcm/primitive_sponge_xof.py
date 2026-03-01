@@ -44,8 +44,8 @@ def main():
         lib = ctypes.CDLL(DLL_PATH)
         console.print_pass("DLL Loaded")
 
-        lib.leyline_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
-        lib.leyline_dhcm_calculate.restype = ctypes.c_int
+        lib.nextssl_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
+        lib.nextssl_dhcm_calculate.restype = ctypes.c_int
 
         passed = 0
         failed = 0
@@ -65,7 +65,7 @@ def main():
         )
         res = DHCMResult()
         
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
             # 1 block -> 1500 WU
             if res.work_units_per_eval == 1500:
                 console.print_pass("SHA3-256 (64B)")
@@ -87,7 +87,7 @@ def main():
         params.input_size = 32
         params.output_size = 200 # > 168 (Rate)
         
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
             # Absorb: 1 block (32 <= 168)
             # Squeeze: 200 > 168. Extra squeeze needed.
             # Total: 1 absorb + 1 squeeze = 2 ops.

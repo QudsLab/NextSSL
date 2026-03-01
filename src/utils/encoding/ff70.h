@@ -1,5 +1,5 @@
-#ifndef LEYLINE_UTILS_ENCODING_FF70_H
-#define LEYLINE_UTILS_ENCODING_FF70_H
+#ifndef nextssl_UTILS_ENCODING_FF70_H
+#define nextssl_UTILS_ENCODING_FF70_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -55,4 +55,4 @@ void ff70_frame_free(ff70_frame_t *frame);
 }
 #endif
 
-#endif // LEYLINE_UTILS_ENCODING_FF70_H
+#endif // nextssl_UTILS_ENCODING_FF70_H

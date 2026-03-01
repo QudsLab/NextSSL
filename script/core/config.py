@@ -6,9 +6,9 @@ class Config:
     def __init__(self, bin_dir=None, log_dir=None, lib_ext=None):
         self.project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
         self.src_dir = os.path.join(self.project_root, 'src')
-        env_bin_dir = os.getenv('LEYLINE_BIN_DIR')
-        env_log_dir = os.getenv('LEYLINE_LOG_DIR')
-        env_lib_ext = os.getenv('LEYLINE_LIB_EXT')
+        env_bin_dir = os.getenv('NEXTSSL_BIN_DIR')
+        env_log_dir = os.getenv('NEXTSSL_LOG_DIR')
+        env_lib_ext = os.getenv('NEXTSSL_LIB_EXT')
         self.bin_dir = env_bin_dir or bin_dir or os.path.join(self.project_root, 'bin')
         self.log_dir = env_log_dir or log_dir or os.path.join(self.project_root, 'logs')
         self.lib_ext = env_lib_ext or lib_ext

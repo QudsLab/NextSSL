@@ -1,5 +1,5 @@
-#ifndef LEYLINE_POW_PRIMITIVE_SPONGE_XOF_H
-#define LEYLINE_POW_PRIMITIVE_SPONGE_XOF_H
+#ifndef nextssl_POW_PRIMITIVE_SPONGE_XOF_H
+#define nextssl_POW_PRIMITIVE_SPONGE_XOF_H
 
 #include "pow_hash_types.h"
 

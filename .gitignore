@@ -27,3 +27,16 @@ note/TEST_PLAN.md
 note/COPILOT_SYSTEM_PROMPT.MD
 /note
 /build
+run_all_tests.ps1
+/.vscode
+security_test.py
+verify_build_env.py
+BUILD.md
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+CHANGELOG.md
+CHANGELOG.md
+CHANGELOG.md
+.github/prompts/claude.md
+.github/workflows/ci.yml
+.github/prompts/savePrompt.prompt.md

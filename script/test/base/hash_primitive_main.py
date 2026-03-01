@@ -35,9 +35,9 @@ def main(color=True):
     # For brevity in this implementation, I will just check if symbols exist to verify combination
     
     symbols = [
-        'leyline_sha256', 'leyline_blake3', # fast
-        'leyline_argon2id',                 # memory_hard
-        'leyline_sha3_256', 'leyline_shake256' # sponge
+        'nextssl_sha256', 'nextssl_blake3', # fast
+        'nextssl_argon2id',                 # memory_hard
+        'nextssl_sha3_256', 'nextssl_shake256' # sponge
     ]
     
     missing = []
@@ -60,10 +60,10 @@ def main(color=True):
     failed = 0
     
     # SHA-256 (Fast)
-    lib.leyline_sha256.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
-    lib.leyline_sha256.restype = None
+    lib.nextssl_sha256.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
+    lib.nextssl_sha256.restype = None
     digest = ctypes.create_string_buffer(32)
-    lib.leyline_sha256(b"abc", 3, digest)
+    lib.nextssl_sha256(b"abc", 3, digest)
     if digest.raw.hex() == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad":
         console.print_pass("SHA-256 (Fast category)")
         msg = f"       Hash (32 bytes): {digest.raw.hex()}"
@@ -75,10 +75,10 @@ def main(color=True):
         failed += 1
 
     # SHA3-256 (Sponge)
-    lib.leyline_sha3_256.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
-    lib.leyline_sha3_256.restype = None
+    lib.nextssl_sha3_256.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_char_p]
+    lib.nextssl_sha3_256.restype = None
     digest = ctypes.create_string_buffer(32)
-    lib.leyline_sha3_256(b"abc", 3, digest)
+    lib.nextssl_sha3_256(b"abc", 3, digest)
     if digest.raw.hex() == "3a985da74fe225b2045c172d6bd390bd855f086e3e9d525b46bfe24511431532":
         console.print_pass("SHA3-256 (Sponge category)")
         msg = f"       Hash (32 bytes): {digest.raw.hex()}"

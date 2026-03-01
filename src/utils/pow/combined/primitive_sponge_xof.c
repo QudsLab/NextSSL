@@ -10,7 +10,7 @@
 #endif
 
 // Server Exports
-EXPORT int leyline_pow_server_generate_challenge(
+EXPORT int nextssl_pow_server_generate_challenge(
     POWConfig* config,
     const char* algorithm_id,
     const uint8_t* context_data,
@@ -21,7 +21,7 @@ EXPORT int leyline_pow_server_generate_challenge(
     return pow_server_generate_challenge(config, algorithm_id, context_data, context_len, difficulty_bits, out_challenge);
 }
 
-EXPORT int leyline_pow_server_verify_solution(
+EXPORT int nextssl_pow_server_verify_solution(
     POWChallenge* challenge,
     POWSolution* solution,
     bool* out_valid
@@ -29,7 +29,7 @@ EXPORT int leyline_pow_server_verify_solution(
     return pow_server_verify_solution(challenge, solution, out_valid);
 }
 
-EXPORT int leyline_pow_server_generate_challenge_sha3_256(
+EXPORT int nextssl_pow_server_generate_challenge_sha3_256(
     POWConfig* config,
     const uint8_t* context_data,
     size_t context_len,
@@ -40,14 +40,14 @@ EXPORT int leyline_pow_server_generate_challenge_sha3_256(
 }
 
 // Client Exports
-EXPORT int leyline_pow_client_solve(
+EXPORT int nextssl_pow_client_solve(
     POWChallenge* challenge,
     POWSolution* solution
 ) {
     return pow_client_solve(challenge, solution);
 }
 
-EXPORT int leyline_pow_client_solve_sha3_256(
+EXPORT int nextssl_pow_client_solve_sha3_256(
     POWChallenge* challenge,
     POWSolution* solution
 ) {

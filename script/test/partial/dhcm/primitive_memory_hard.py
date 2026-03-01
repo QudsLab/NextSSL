@@ -44,8 +44,8 @@ def main():
         lib = ctypes.CDLL(DLL_PATH)
         console.print_pass("DLL Loaded")
 
-        lib.leyline_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
-        lib.leyline_dhcm_calculate.restype = ctypes.c_int
+        lib.nextssl_dhcm_calculate.argtypes = [ctypes.POINTER(DHCMParams), ctypes.POINTER(DHCMResult)]
+        lib.nextssl_dhcm_calculate.restype = ctypes.c_int
 
         passed = 0
         failed = 0
@@ -70,7 +70,7 @@ def main():
         )
         res = DHCMResult()
         
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
             # Expected WU = 3 * 4096 * 1 * 800 = 9,830,400
             expected_wu = 3 * 4096 * 1 * 800
             if res.work_units_per_eval == expected_wu:
@@ -93,7 +93,7 @@ def main():
         params.memory_kb = 65536
         params.parallelism = 4
         
-        if lib.leyline_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
+        if lib.nextssl_dhcm_calculate(ctypes.byref(params), ctypes.byref(res)) == 0:
             # Expected WU = 3 * 65536 * 4 * 800 = 629,145,600
             expected_wu = 3 * 65536 * 4 * 800
             if res.work_units_per_eval == expected_wu:

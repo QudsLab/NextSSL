@@ -1,5 +1,5 @@
-#ifndef LEYLINE_POW_PROTOCOL_H
-#define LEYLINE_POW_PROTOCOL_H
+#ifndef nextssl_POW_PROTOCOL_H
+#define nextssl_POW_PROTOCOL_H
 
 #include <stdint.h>
 #include <stddef.h>
@@ -108,4 +108,4 @@ int pow_challenge_decode(const char *b64_str, PoWChallenge *out_c);
 }
 #endif
 
-#endif // LEYLINE_POW_PROTOCOL_H
+#endif // nextssl_POW_PROTOCOL_H

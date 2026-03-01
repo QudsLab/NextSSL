@@ -158,8 +158,11 @@ const nextssl_config_t* nextssl_config_get(void) {
     if (g_config.initialized != NEXTSSL_CONFIG_MAGIC) {
         return NULL;  /* Not initialized */
     }
-    
     return &g_config;
+}
+
+void nextssl_config_reset(void) {
+    g_config.initialized = 0;  /* Clear magic — allows re-init */
 }
 
 bool nextssl_config_algo_available(const char *algo_type, int algo_id) {
@@ -242,6 +245,8 @@ const char* nextssl_config_security_level(void) {
         case NEXTSSL_PROFILE_RESEARCH:
             return "research-experimental";
 #endif
+        case NEXTSSL_PROFILE_MAX:  /* sentinel used for custom profiles */
+            return "custom";
         default:
             return "unknown";
     }
@@ -283,25 +288,82 @@ int nextssl_config_validate_algo(const char *algo_type, int algo_id) {
     /* In strict mode, reject legacy algorithms */
     if (cfg->strict_mode && !cfg->allow_legacy) {
         if (strcmp(algo_type, "hash") == 0) {
+#ifndef NEXTSSL_BUILD_LITE
             if (algo_id == NEXTSSL_HASH_SHA1 || algo_id == NEXTSSL_HASH_MD5) {
                 return NEXTSSL_CONFIG_ERR_ALGO_BLOCKED;
             }
+#endif
         }
     }
     
     /* In PQC-only mode, require post-quantum algorithms */
     if (cfg->pqc_only) {
         if (strcmp(algo_type, "sign") == 0) {
+#ifndef NEXTSSL_BUILD_LITE
             if (algo_id == NEXTSSL_SIGN_ED25519 || algo_id == NEXTSSL_SIGN_ED448) {
+#else
+            if (algo_id == NEXTSSL_SIGN_ED25519) {
+#endif
                 return NEXTSSL_CONFIG_ERR_ALGO_BLOCKED;  /* Classical only */
             }
         }
         if (strcmp(algo_type, "kem") == 0) {
+#ifndef NEXTSSL_BUILD_LITE
             if (algo_id == NEXTSSL_KEM_X25519 || algo_id == NEXTSSL_KEM_X448) {
+#else
+            if (algo_id == NEXTSSL_KEM_X25519) {
+#endif
                 return NEXTSSL_CONFIG_ERR_ALGO_BLOCKED;  /* Classical only */
             }
         }
     }
     
     return NEXTSSL_CONFIG_SUCCESS;
+}
+
+/* ========================================================================
+ * EXTENDED API
+ * ======================================================================== */
+
+const nextssl_config_t* nextssl_config_get_or_default(void) {
+    if (g_config.initialized == NEXTSSL_CONFIG_MAGIC) {
+        return &g_config;
+    }
+    /* Auto-initialise to MODERN so default-path callers always get a config */
+    return nextssl_config_init(NEXTSSL_PROFILE_MODERN);
+}
+
+const nextssl_config_t* nextssl_config_init_custom(const nextssl_profile_custom_t *custom) {
+    if (custom == NULL) {
+        return NULL;
+    }
+    if (g_config.initialized == NEXTSSL_CONFIG_MAGIC) {
+        return NULL;  /* already initialized — config is immutable */
+    }
+
+    /* Validate every algorithm against compile-time availability tables.
+     * In NEXTSSL_BUILD_LITE the full-only enum symbols don't exist, but a
+     * caller could still pass their numeric value — the availability check
+     * will reject them because they are not in the lite table. */
+    if (!nextssl_config_algo_available("hash", (int)custom->hash)) return NULL;
+    if (!nextssl_config_algo_available("aead", (int)custom->aead)) return NULL;
+    if (!nextssl_config_algo_available("kdf",  (int)custom->kdf))  return NULL;
+    if (!nextssl_config_algo_available("sign", (int)custom->sign)) return NULL;
+    if (!nextssl_config_algo_available("kem",  (int)custom->kem))  return NULL;
+
+    /* Build the config manually — NEXTSSL_PROFILE_MAX is the custom sentinel */
+    g_config.profile      = NEXTSSL_PROFILE_MAX;
+    g_config.default_hash = custom->hash;
+    g_config.default_aead = custom->aead;
+    g_config.default_kdf  = custom->kdf;
+    g_config.default_sign = custom->sign;
+    g_config.default_kem  = custom->kem;
+    g_config.profile_name = (custom->name != NULL) ? custom->name : "Custom";
+    /* Security flags — user explicitly chose algorithms, allow anything */
+    g_config.strict_mode  = false;
+    g_config.allow_legacy = true;
+    g_config.pqc_only     = false;
+
+    g_config.initialized = NEXTSSL_CONFIG_MAGIC;
+    return &g_config;
 }

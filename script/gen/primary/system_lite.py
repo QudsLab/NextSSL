@@ -99,22 +99,38 @@ def build(builder: Builder):
     if os.path.exists(primary_wrapper):
         sources.add(os.path.normpath(primary_wrapper))
 
+    # Add root/ explicit-algorithm interface
+    root_wrapper = os.path.join(src_dir, 'interfaces/primary/lite/root/nextssl_root.c')
+    if os.path.exists(root_wrapper):
+        sources.add(os.path.normpath(root_wrapper))
+
+    # Add profile-based configuration system (config.c + profiles_common.c)
+    config_sources = [
+        os.path.join(src_dir, 'config/config.c'),
+        os.path.join(src_dir, 'config/profiles/profiles_common.c'),
+    ]
+    for cs in config_sources:
+        if os.path.exists(cs):
+            sources.add(os.path.normpath(cs))
+
     # Include directories for PQCrypto headers
     includes = [
         os.path.join(src_dir, 'PQCrypto', 'common'),
         os.path.join(src_dir, 'PQCrypto', 'crypto_kem', 'ml-kem-1024', 'clean'),
         os.path.join(src_dir, 'PQCrypto', 'crypto_sign', 'ml-dsa-87', 'clean'),
+        os.path.join(src_dir, 'interfaces', 'primary', 'lite', 'root'),
     ]
 
     # Build with pthread support
     # NEXTSSL_BUILDING_DLL ensures NEXTSSL_API expands to __declspec(dllexport) on Windows
+    # NEXTSSL_BUILD_LITE restricts profile enum to 3 profiles (MODERN, COMPLIANCE, PQC)
     return builder.build_target(
         'main_lite',
         list(sources),
-        extra_libs=['-lpthread'],
+        extra_libs=['-lpthread', '-lbcrypt'],
         includes=includes,
         output_subdir='primary',
-        macros=['NEXTSSL_BUILDING_DLL']
+        macros=['NEXTSSL_BUILDING_DLL', 'NEXTSSL_BUILD_LITE']
     )
 
 

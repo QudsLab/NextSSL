@@ -1,5 +1,5 @@
-#ifndef LEYLINE_POW_CALC_INTERFACE_H
-#define LEYLINE_POW_CALC_INTERFACE_H
+#ifndef nextssl_POW_CALC_INTERFACE_H
+#define nextssl_POW_CALC_INTERFACE_H
 
 #include "pow_protocol.h"
 #include <stddef.h>
@@ -27,4 +27,4 @@ double pow_calc_cost(PoWAlgorithm algo, const PoWComplexityArgs *args);
 }
 #endif
 
-#endif // LEYLINE_POW_CALC_INTERFACE_H
+#endif // nextssl_POW_CALC_INTERFACE_H
