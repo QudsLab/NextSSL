@@ -11,9 +11,15 @@ class Config:
     #              Format: 40 lowercase hex digits (SHA1 size).
     LINUX_SO_BUILD_ID = '00' * 20
     #
-    # macOS .dylib — fixed UUID written via -Wl,-uuid,<value>.
-    #                LC_UUID must be present for macOS dlopen to load the lib.
-    MACOS_DYLIB_UUID = '00000000-0000-0000-0000-000000000000'
+    # macOS .dylib — macOS ld always generates LC_UUID automatically, which
+    #                 is required for dlopen. The -uuid linker flag is not
+    #                 reliably supported across ld versions (GH Actions runners
+    #                 reject it), so no UUID flag is passed.
+    #                 NOTE: macOS .dylib files are NOT bitwise-reproducible
+    #                 between rebuilds due to the random UUID Apple ld embeds.
+    #                 Set to a non-empty string to attempt forcing a fixed UUID
+    #                 (only works on newer Apple ld builds).
+    MACOS_DYLIB_UUID = ''  # '' = let ld generate naturally
     #
     # Windows .dll — no linker-settable UUID in PE/MinGW; reproducibility is
     #                achieved by suppressing the timestamp field instead.

@@ -21,6 +21,7 @@ on:
         default: "gen"
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -95,6 +96,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/core.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_partial_hash:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -149,6 +155,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/hash.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_partial_dhcm:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -203,6 +214,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/dhcm.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_partial_pow:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -257,6 +273,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/pow.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_partial_pqc:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -311,6 +332,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/pqc.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_base:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
@@ -375,6 +401,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/web/base/
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_main:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
@@ -434,6 +465,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/web/main/
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   web_system:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
@@ -488,6 +524,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/web/system.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_core:
     runs-on: windows-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -518,6 +559,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/core.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_hash:
     runs-on: windows-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -548,6 +594,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/hash.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_dhcm:
     runs-on: windows-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -578,6 +629,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/dhcm.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_pow:
     runs-on: windows-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -608,6 +664,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/pow.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_partial_pqc:
     runs-on: windows-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -638,6 +699,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/pqc.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_base:
     runs-on: windows-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
@@ -678,6 +744,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/windows/base/
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_main:
     runs-on: windows-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
@@ -713,6 +784,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/windows/main/
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   windows_system:
     runs-on: windows-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
@@ -743,6 +819,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/windows/system.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_core:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -772,6 +853,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/core.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_hash:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -801,6 +887,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/hash.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_dhcm:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -830,6 +921,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/dhcm.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_pow:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -859,6 +955,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/pow.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_partial_pqc:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -888,6 +989,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/pqc.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_base:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
@@ -927,6 +1033,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/linux/base/
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_main:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
@@ -961,6 +1072,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/linux/main/
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   linux_system:
     runs-on: ubuntu-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
@@ -990,6 +1106,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/linux/system.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_core:
     runs-on: macos-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -1019,6 +1140,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/core.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_hash:
     runs-on: macos-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -1048,6 +1174,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/hash.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_dhcm:
     runs-on: macos-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -1077,6 +1208,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/dhcm.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_pow:
     runs-on: macos-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -1106,6 +1242,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/pow.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_partial_pqc:
     runs-on: macos-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
@@ -1135,6 +1276,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/pqc.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_base:
     runs-on: macos-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
@@ -1174,6 +1320,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/mac/base/
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_main:
     runs-on: macos-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
@@ -1208,6 +1359,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/mac/main/
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   mac_system:
     runs-on: macos-latest
     if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
@@ -1237,6 +1393,11 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/mac/system.log
           if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        run: gh run cancel ${{ github.run_id }} --repo ${{ github.repository }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   commit:
     runs-on: ubuntu-latest
     if: ${{ !cancelled() && (needs.web_system.result == 'success' || needs.windows_system.result == 'success' || needs.linux_system.result == 'success' || needs.mac_system.result == 'success') }}

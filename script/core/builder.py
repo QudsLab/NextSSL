@@ -64,9 +64,11 @@ class Builder:
             for flag in Config.WINDOWS_DLL_REPRO_FLAGS:
                 args.append(f'-Wl,{flag}')
         elif lib_ext == '.dylib':
-            # LC_UUID must be present for macOS dlopen; fixed value = reproducible builds.
-            # UUID is defined centrally in Config.MACOS_DYLIB_UUID.
-            args.append(f'-Wl,-uuid,{Config.MACOS_DYLIB_UUID}')
+            # macOS ld generates LC_UUID automatically (required by dlopen).
+            # Only pass -uuid if a fixed value is configured; not all ld
+            # versions support the flag so the default is to let ld decide.
+            if Config.MACOS_DYLIB_UUID:
+                args.append(f'-Wl,-uuid,{Config.MACOS_DYLIB_UUID}')
 
         # Strip embedded timestamps from compiler built-in macros so that
         # identical source always produces bitwise-identical binaries.
