@@ -1,0 +1,3 @@
+2026-03-01 03:40:54,751 - INFO - Successfully built core
+2026-03-01 03:40:54,751 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/main/core.wasm
+2026-03-01 03:40:54,760 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/main/core.wasm

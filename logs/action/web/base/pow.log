@@ -1,0 +1,15 @@
+2026-03-01 03:40:00,456 - INFO - Successfully built pow_server_primitive
+2026-03-01 03:40:02,623 - INFO - Successfully built pow_client_primitive
+2026-03-01 03:40:04,189 - INFO - Successfully built pow_server_legacy
+2026-03-01 03:40:05,758 - INFO - Successfully built pow_client_legacy
+2026-03-01 03:40:08,982 - INFO - Successfully built pow_combined
+2026-03-01 03:40:08,982 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_client_primitive.wasm
+2026-03-01 03:40:08,982 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_server_primitive.wasm
+2026-03-01 03:40:08,982 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_client_legacy.wasm
+2026-03-01 03:40:08,982 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_server_legacy.wasm
+2026-03-01 03:40:08,982 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_combined.wasm
+2026-03-01 03:40:08,988 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_client_primitive.wasm
+2026-03-01 03:40:08,994 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_server_primitive.wasm
+2026-03-01 03:40:09,000 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_client_legacy.wasm
+2026-03-01 03:40:09,006 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_server_legacy.wasm
+2026-03-01 03:40:09,012 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/base/pow_combined.wasm
