@@ -271,6 +271,8 @@ def resolve_web_paths(config, selector):
     parts = selector.split(':')
     if selector == 'system:main':
         return [make('primary', 'main')]
+    if selector == 'lite:main':
+        return [make('primary', 'main_lite')]
 
     if len(parts) < 2:
         return []
@@ -907,7 +909,9 @@ def run_test(args):
                     test_modules = system_main_list
             elif target.startswith('lite:'):
                 # Lite variant tests
-                if target == 'lite:all':
+                if target == 'lite:main':
+                    test_modules = lite_hash_list
+                elif target == 'lite:all':
                     run_lite = True
                 else:
                     console.print_fail(f"Unknown lite test: {target}")
