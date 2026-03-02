@@ -98,8 +98,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -159,8 +160,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -220,8 +222,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -281,8 +284,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -342,8 +346,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -413,8 +418,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -479,8 +485,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -528,7 +535,10 @@ jobs:
           fi
           echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/system.log
+        shell: bash
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/system.log
+          python runner.py --platform ${{ env.PLATFORM }} --build lite:main --test lite:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/lite.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -537,11 +547,13 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/web/system.log
+            logs/action/web/lite.log
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -577,8 +589,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -614,8 +627,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -651,8 +665,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -688,8 +703,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -725,8 +741,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -772,8 +789,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -814,8 +832,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -839,7 +858,10 @@ jobs:
         run: choco install mingw -y
         shell: powershell
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/system.log
+        shell: bash
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/system.log
+          python runner.py --platform ${{ env.PLATFORM }} --build lite:main --test lite:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/lite.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -848,11 +870,13 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/windows/system.log
+            logs/action/windows/lite.log
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -887,8 +911,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -923,8 +948,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -959,8 +985,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -995,8 +1022,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1031,8 +1059,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1077,8 +1106,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1118,8 +1148,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1142,7 +1173,10 @@ jobs:
       - name: Install GCC (Linux)
         run: sudo apt-get update && sudo apt-get install -y build-essential
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/system.log
+        shell: bash
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/system.log
+          python runner.py --platform ${{ env.PLATFORM }} --build lite:main --test lite:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/lite.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1151,11 +1185,13 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/linux/system.log
+            logs/action/linux/lite.log
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1190,8 +1226,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1226,8 +1263,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1262,8 +1300,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1298,8 +1337,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1334,8 +1374,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1380,8 +1421,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1421,8 +1463,9 @@ jobs:
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1445,7 +1488,10 @@ jobs:
       - name: Install GCC (mac)
         run: brew list gcc >/dev/null 2>&1 || brew install gcc
       - name: Build and Test
-        run: python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/system.log
+        shell: bash
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/system.log
+          python runner.py --platform ${{ env.PLATFORM }} --build lite:main --test lite:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/lite.log
       - name: Upload Output
         if: always()
         uses: actions/upload-artifact@v4
@@ -1454,11 +1500,13 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/mac/system.log
+            logs/action/mac/lite.log
           if-no-files-found: warn
       - name: Cancel run on failure
         if: failure()
+        shell: bash
         run: |
-          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} &
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
           exit 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1491,6 +1539,9 @@ jobs:
           echo "Compressed large log files:"
           find logs -type f -name '*.log.gz' -exec ls -lh {} \;
         shell: bash
+      - name: Generate Bin Index
+        shell: bash
+        run: python roll_checksum.py
       - name: Commit Outputs
         run: |
           git config user.name "github-actions[bot]"
