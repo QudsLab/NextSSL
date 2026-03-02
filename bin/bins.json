@@ -78,7 +78,8 @@
       }
     },
     "primary": {
-      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/primary/main.so"
+      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/primary/main.so",
+      "main_lite": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/primary/main_lite.so"
     }
   },
   "mac": {
@@ -160,7 +161,8 @@
       }
     },
     "primary": {
-      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/primary/main.dylib"
+      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/primary/main.dylib",
+      "main_lite": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/primary/main_lite.dylib"
     }
   },
   "web": {
@@ -242,7 +244,8 @@
       }
     },
     "primary": {
-      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/primary/main.wasm"
+      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/primary/main.wasm",
+      "main_lite": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/primary/main_lite.wasm"
     }
   },
   "windows": {
