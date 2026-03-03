@@ -337,52 +337,49 @@ jobs:
 
 # -- 3.5. Verify published package on each platform ------------------------
   verify-testpkg:
-    needs: publish-test
+    # Needs both publish-test (to wait for upload) and parse (for version output).
+    needs: [parse, publish-test]
     if: needs.parse.outputs.pip_test == 'true' && needs.parse.outputs.no_release != 'true'
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: ubuntu-latest
-            pkg: manylinux_2_17_x86_64
           - os: windows-latest
-            pkg: win_amd64
           - os: macos-latest
-            pkg: macosx_10_9_x86_64
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/checkout@v4   # needed to access test/smoke.py
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install basic tools
-        run: python -m pip install --upgrade pip setuptools wheel
+      - name: Install pytest
+        run: python -m pip install --upgrade pip pytest
 
       - name: Install from TestPyPI
+        shell: bash
         run: |
           VER="${{ needs.parse.outputs.version }}"
           if [ -n "$VER" ]; then
             pip install --index-url https://test.pypi.org/simple --no-deps \
-              nextssl=="$VER"
+              "nextssl==$VER"
           else
-            echo "[WARN] parse did not provide version; installing latest from TestPyPI"
+            echo "[WARN] no version provided — installing latest nextssl from TestPyPI"
             pip install --index-url https://test.pypi.org/simple --no-deps nextssl
           fi
 
-      - name: Smoke check import and random
-        run: |
-          python - <<'PYCODE'
-          import nextssl
-          assert isinstance(nextssl.version(), str)
-          assert len(nextssl.random_bytes(8)) == 8
-          print('verify ok')
-          PYCODE
-
       - name: Print installed version
-        run: |
-          python - <<'PYCODE'
-          import nextssl, sys
-          print('installed wheel version:', nextssl.__version__)
-          PYCODE
+        shell: bash
+        run: python -c "import nextssl; print('installed:', nextssl.__version__)"
+
+      # Run smoke.py with --noconftest so conftest.py does NOT inject the local
+      # source tree into sys.path.  This guarantees we exercise the pip-installed
+      # wheel, not repo source code.
+      - name: Run smoke tests against installed wheel
+        shell: bash
+        run: pytest test/smoke.py --noconftest -v --tb=short
 
 # -- 4. Publish to PyPI + create GitHub release ------------------------------
   publish-live:

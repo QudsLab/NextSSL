@@ -1,7 +1,13 @@
-"""Minimal smoke tests designed for post-publish verification.
+"""Post-publish smoke tests for the installed nextssl wheel.
 
-These exercises are intentionally tiny so that the verification job can run
-quickly yet still exercise the installed wheel.
+Exercises every major API surface (info, lifecycle, RNG, hash,
+cipher, KDF, password, utilities) with minimal assertions to catch
+broken wheels fast.
+
+Run against a pip-installed package (not repo source):
+    pytest test/smoke.py --noconftest -v
+The --noconftest flag prevents conftest.py from injecting the local
+src tree, ensuring the imported nextssl is the installed wheel.
 """
 
 import nextssl
