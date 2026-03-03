@@ -1,16 +1,16 @@
 ﻿name: Publish Python
 
 # Triggered on every push to main.
-# Flags in the commit message control what happens:
+# Flags in the commit message control what happens (all case-insensitive):
 #
 #   --v X.Y.Z  or  --version X.Y.Z   -> set the package version before building
-#   --PipTest                         -> publish to TestPyPI after tests pass
-#   --pipLive                         -> publish to PyPI + create GitHub release
-#   --noRelease                       -> build and test only -- no publishing,
+#   --PipTest  (or --piptest etc.)    -> publish to TestPyPI after tests pass
+#   --pipLive  (or --piplive etc.)    -> publish to PyPI + create GitHub release
+#   --noRelease (or --norelease etc.) -> build and test only -- no publishing,
 #                                       no tags, no releases (even if --v set)
 #
-# --PipTest and --pipLive can be combined with --noRelease if you only want to
-# verify the build pipeline without actually publishing anything.
+# If --PipTest is given without --v, the version is auto-set to
+# <current>.devN where N is the git commit count (unique per push).
 #
 # Changelog: place  note/changelog/<X_Y_Z>.md  before pushing --pipLive.
 #            e.g.  note/changelog/0_1_0.md  for version 0.1.0
@@ -58,9 +58,11 @@ jobs:
           print(m.group(1) if m else '')
           " "$MSG")
 
-          PIP_TEST=$(echo "$MSG"   | grep -q -- '--PipTest'   && echo true || echo false)
-          PIP_LIVE=$(echo "$MSG"   | grep -q -- '--pipLive'   && echo true || echo false)
-          NO_RELEASE=$(echo "$MSG" | grep -q -- '--noRelease' && echo true || echo false)
+          # All flags are matched case-insensitively so --pipTest / --PipTest
+          # / --PIPTEST all work the same way.
+          PIP_TEST=$(echo "$MSG"   | grep -qi -- '--piptest'   && echo true || echo false)
+          PIP_LIVE=$(echo "$MSG"   | grep -qi -- '--piplive'   && echo true || echo false)
+          NO_RELEASE=$(echo "$MSG" | grep -qi -- '--norelease' && echo true || echo false)
 
           # When --PipTest is used without an explicit version, auto-build a
           # unique dev version: take the base version from pyproject.toml and
@@ -183,11 +185,11 @@ jobs:
         shell: bash
         run: |
           cd libs/python
+          # setup.py overrides get_tag() -> py3-none-<plat>, so no extra
+          # --python-tag / --abi-tag flags needed here.
           python setup.py bdist_wheel \
-            --python-tag py3 \
-            --abi-tag     none \
-            --plat-name   ${{ matrix.plat_tag }} \
-            --dist-dir    dist
+            --plat-name ${{ matrix.plat_tag }} \
+            --dist-dir  dist
           echo "[OK] Wheel built:"
           ls dist/
 
