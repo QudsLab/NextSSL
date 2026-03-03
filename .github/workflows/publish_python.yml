@@ -1,438 +1,312 @@
-# name: Publish Python
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       mode:
-#         description: "release | test | beta | alpha"
-#         required: false
-#         default: "release"
-#       force_release:
-#         description: "force alpha/beta publish"
-#         required: false
-#         default: "false"
-#   push:
-#     branches:
-#       - main
+﻿name: Publish Python
 
-# concurrency:
-#   group: ${{ github.workflow }}-${{ github.ref }}
-#   cancel-in-progress: true
+# Triggered on every push to main.
+# Flags in the commit message control what happens:
+#
+#   --v X.Y.Z  or  --version X.Y.Z   -> set the package version before building
+#   --PipTest                         -> publish to TestPyPI after tests pass
+#   --pipLive                         -> publish to PyPI + create GitHub release
+#   --noRelease                       -> build and test only -- no publishing,
+#                                       no tags, no releases (even if --v set)
+#
+# --PipTest and --pipLive can be combined with --noRelease if you only want to
+# verify the build pipeline without actually publishing anything.
+#
+# Changelog: place  note/changelog/<X_Y_Z>.md  before pushing --pipLive.
+#            e.g.  note/changelog/0_1_0.md  for version 0.1.0
 
-# permissions:
-#   contents: write
-#   id-token: write
+on:
+  push:
+    branches:
+      - main
 
-# jobs:
-#   # Quick test-only job (--test without --v X.Y.Z)
-#   test-only:
-#     if: ${{ contains(github.event.head_commit.message, '--test') && !contains(github.event.head_commit.message, '--v ') && !contains(github.event.head_commit.message, '--version ') }}
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: actions/setup-python@v5
-#         with:
-#           python-version: "3.11"
-#       - name: Install Package in Editable Mode
-#         run: |
-#           cd libs/python
-#           pip install -e .
-#       - name: Run Tests
-#         run: python tests/test_all.py
-#       - name: Upload Test Logs
-#         if: always()
-#         uses: actions/upload-artifact@v4
-#         with:
-#           name: test-logs-only
-#           path: logs/test/
-#           if-no-files-found: warn
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
-#   build:
-#     if: ${{ github.event_name == 'workflow_dispatch' || (contains(github.event.head_commit.message, '--v ') || contains(github.event.head_commit.message, '--version ')) && (contains(github.event.head_commit.message, '--release') || contains(github.event.head_commit.message, '--test') || contains(github.event.head_commit.message, '--beta') || contains(github.event.head_commit.message, '--alpha')) }}
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0
-#       - uses: actions/setup-python@v5
-#         with:
-#           python-version: "3.11"
-#       - name: Resolve Mode
-#         run: |
-#           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-#             echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
-#             echo "FORCE_RELEASE=${{ inputs.force_release }}" >> $GITHUB_ENV
-#           else
-#             msg="${{ github.event.head_commit.message }}"
-#             if echo "$msg" | grep -q -- "--test"; then
-#               echo "RELEASE_MODE=test" >> $GITHUB_ENV
-#             elif echo "$msg" | grep -q -- "--beta"; then
-#               echo "RELEASE_MODE=beta" >> $GITHUB_ENV
-#             elif echo "$msg" | grep -q -- "--alpha"; then
-#               echo "RELEASE_MODE=alpha" >> $GITHUB_ENV
-#             else
-#               echo "RELEASE_MODE=release" >> $GITHUB_ENV
-#             fi
-#             if echo "$msg" | grep -q -- "--force_release"; then
-#               echo "FORCE_RELEASE=true" >> $GITHUB_ENV
-#             else
-#               echo "FORCE_RELEASE=false" >> $GITHUB_ENV
-#             fi
-#             # Extract custom version: --v X.Y.Z or --version X.Y.Z (portable)
-#             custom_ver=$(python -c "import re, sys; msg='$msg'; m=re.search(r'--(?:v|version)\s+([\d.]+)', msg); print(m.group(1) if m else '')")
-#             if [ -n "$custom_ver" ]; then
-#               echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
-#             fi
-#           fi
-#         shell: bash
-#       - name: Resolve Release Meta
-#         run: |
-#           if [ -n "${{ env.CUSTOM_VERSION }}" ]; then
-#             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "${{ env.FORCE_RELEASE }}" --version "${{ env.CUSTOM_VERSION }}" >> $GITHUB_ENV
-#           else
-#             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "${{ env.FORCE_RELEASE }}" >> $GITHUB_ENV
-#           fi
-#         shell: bash
-#       - name: Set Version
-#         run: python libs/python/tools/version.py --set "${{ env.PY_VERSION }}"
-#         shell: bash
-#       - name: Install Build Tools
-#         run: python -m pip install --upgrade pip build
-#       - name: Clear PyCache
-#         run: python clear.py
-#       - name: Build Pure Python Wheel and Sdist
-#         run: python -m build --outdir libs/python/dist libs/python
-#         shell: bash
-#       - name: Upload Wheels
-#         uses: actions/upload-artifact@v4
-#         with:
-#           name: python-dist
-#           path: libs/python/dist
-#           if-no-files-found: error
+permissions:
+  contents: write
+  id-token: write
 
-#   test:
-#     if: ${{ github.event_name == 'workflow_dispatch' || (contains(github.event.head_commit.message, '--v ') || contains(github.event.head_commit.message, '--version ')) && (contains(github.event.head_commit.message, '--release') || contains(github.event.head_commit.message, '--test') || contains(github.event.head_commit.message, '--beta') || contains(github.event.head_commit.message, '--alpha')) }}
-#     needs: build
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: actions/setup-python@v5
-#         with:
-#           python-version: "3.11"
-#       - name: Download Wheels
-#         uses: actions/download-artifact@v4
-#         with:
-#           name: python-dist
-#           path: dist
-#       - name: Install Package
-#         run: pip install dist/*.whl
-#       - name: Run Tests
-#         run: python tests/test_all.py
-#         shell: bash
-#       - name: Upload Test Logs
-#         if: always()
-#         uses: actions/upload-artifact@v4
-#         with:
-#           name: test-logs
-#           path: logs/test/
-#           if-no-files-found: warn
+# -----------------------------------------------------------------------------
+jobs:
 
-#   publish:
-#     if: ${{ github.event_name == 'workflow_dispatch' || ((contains(github.event.head_commit.message, '--v ') || contains(github.event.head_commit.message, '--version ')) && (contains(github.event.head_commit.message, '--release') || contains(github.event.head_commit.message, '--test') || contains(github.event.head_commit.message, '--beta') || contains(github.event.head_commit.message, '--alpha')) && needs.test.result == 'success') }}
-#     runs-on: ubuntu-latest
-#     needs: test
-#     steps:
-#       - uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0
-#       - uses: actions/setup-python@v5
-#         with:
-#           python-version: "3.11"
-#       - name: Resolve Mode
-#         run: |
-#           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-#             echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
-#             echo "FORCE_RELEASE=${{ inputs.force_release }}" >> $GITHUB_ENV
-#           else
-#             msg="${{ github.event.head_commit.message }}"
-#             if echo "$msg" | grep -q -- "--test"; then
-#               echo "RELEASE_MODE=test" >> $GITHUB_ENV
-#             elif echo "$msg" | grep -q -- "--beta"; then
-#               echo "RELEASE_MODE=beta" >> $GITHUB_ENV
-#             elif echo "$msg" | grep -q -- "--alpha"; then
-#               echo "RELEASE_MODE=alpha" >> $GITHUB_ENV
-#             else
-#               echo "RELEASE_MODE=release" >> $GITHUB_ENV
-#             fi
-#             if echo "$msg" | grep -q -- "--force_release"; then
-#               echo "FORCE_RELEASE=true" >> $GITHUB_ENV
-#             else
-#               echo "FORCE_RELEASE=false" >> $GITHUB_ENV
-#             fi
-#             # Extract custom version: --v X.Y.Z or --version X.Y.Z (portable)
-#             custom_ver=$(python -c "import re, sys; msg='$msg'; m=re.search(r'--(?:v|version)\s+([\d.]+)', msg); print(m.group(1) if m else '')")
-#             if [ -n "$custom_ver" ]; then
-#               echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
-#             fi
-#           fi
-#         shell: bash
-#       - name: Resolve Release Meta
-#         run: |
-#           echo "Resolving release metadata..."
-#           if [ -n "${{ env.CUSTOM_VERSION }}" ]; then
-#             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "${{ env.FORCE_RELEASE }}" --version "${{ env.CUSTOM_VERSION }}" >> $GITHUB_ENV
-#           else
-#             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "${{ env.FORCE_RELEASE }}" >> $GITHUB_ENV
-#           fi
-#         shell: bash
-#       - name: Debug Environment Variables
-#         run: |
-#           echo "=== Release Configuration ==="
-#           echo "PY_VERSION: ${{ env.PY_VERSION }}"
-#           echo "RELEASE_MODE: ${{ env.RELEASE_MODE }}"
-#           echo "SKIP_PUBLISH: ${{ env.SKIP_PUBLISH }}"
-#           echo "PRERELEASE: ${{ env.PRERELEASE }}"
-#           echo "CUSTOM_VERSION: ${{ env.CUSTOM_VERSION }}"
-#           echo "============================"
-#         shell: bash
-#       - name: Set Tag Name
-#         run: |
-#           if [ "${{ env.RELEASE_MODE }}" = "test" ]; then
-#             echo "TAG_NAME=py-test-v${{ env.PY_VERSION }}" >> $GITHUB_ENV
-#           elif [ "${{ env.RELEASE_MODE }}" = "beta" ]; then
-#             echo "TAG_NAME=py-beta-v${{ env.PY_VERSION }}" >> $GITHUB_ENV
-#           elif [ "${{ env.RELEASE_MODE }}" = "alpha" ]; then
-#             echo "TAG_NAME=py-alpha-v${{ env.PY_VERSION }}" >> $GITHUB_ENV
-#           else
-#             echo "TAG_NAME=py-v${{ env.PY_VERSION }}" >> $GITHUB_ENV
-#           fi
-#         shell: bash
-#       - name: Set Version
-#         run: |
-#           python libs/python/tools/version.py --set "${{ env.PY_VERSION }}"
-#         shell: bash
-#       - name: Download Wheels
-#         uses: actions/download-artifact@v4
-#         with:
-#           name: python-dist
-#           path: libs/python/dist
-#       - name: Tag Release
-#         if: ${{ env.SKIP_PUBLISH != 'true' }}
-#         continue-on-error: true
-#         run: |
-#           git config user.name "github-actions[bot]"
-#           git config user.email "github-actions[bot]@users.noreply.github.com"
-#           if git rev-parse "${{ env.TAG_NAME }}" >/dev/null 2>&1; then
-#             echo "Tag ${{ env.TAG_NAME }} already exists, skipping"
-#             exit 0
-#           fi
-#           git tag "${{ env.TAG_NAME }}"
-#           if git push origin "${{ env.TAG_NAME }}"; then
-#             echo "[PASS] Tag ${{ env.TAG_NAME }} pushed successfully"
-#           else
-#             echo "[WARN] Failed to push tag (permissions issue?), continuing anyway..."
-#           fi
-#         shell: bash
-#       - name: Create Release Notes (Custom Version)
-#         if: ${{ env.SKIP_PUBLISH != 'true' && env.CUSTOM_VERSION != '' }}
-#         run: |
-#           echo "Release ${{ env.PY_VERSION }} for ${{ env.RELEASE_MODE }} mode" > /tmp/custom_release.md
-#           echo "NOTE_PATH=/tmp/custom_release.md" >> $GITHUB_ENV
-#         shell: bash
-#       - name: GitHub Release
-#         if: ${{ env.SKIP_PUBLISH != 'true' }}
-#         continue-on-error: true
-#         uses: softprops/action-gh-release@v2
-#         with:
-#           tag_name: ${{ env.TAG_NAME }}
-#           name: "NextSSL Python ${{ env.PY_VERSION }} (${{ env.RELEASE_MODE }})"
-#           body_path: ${{ env.NOTE_PATH }}
-#           prerelease: ${{ env.PRERELEASE }}
-#           fail_on_unmatched_files: false
-#       - name: Publish to PyPI (Trusted Publishing)
-#         if: ${{ env.SKIP_PUBLISH != 'true' && env.RELEASE_MODE != 'test' }}
-#         uses: pypa/gh-action-pypi-publish@release/v1
-#         with:
-#           packages-dir: libs/python/dist
-#           skip-existing: true
-#           verbose: true
-#       - name: Publish to TestPyPI (Trusted Publishing)
-#         if: ${{ env.SKIP_PUBLISH != 'true' && env.RELEASE_MODE == 'test' }}
-#         uses: pypa/gh-action-pypi-publish@release/v1
-#         with:
-#           packages-dir: libs/python/dist
-#           repository-url: https://test.pypi.org/legacy/
-#           skip-existing: true
-#           verbose: true
+# -- 1. Parse commit message flags --------------------------------------------
+  parse:
+    runs-on: ubuntu-latest
+    outputs:
+      version:     ${{ steps.p.outputs.version }}
+      has_version: ${{ steps.p.outputs.has_version }}
+      pip_test:    ${{ steps.p.outputs.pip_test }}
+      pip_live:    ${{ steps.p.outputs.pip_live }}
+      no_release:  ${{ steps.p.outputs.no_release }}
+      should_run:  ${{ steps.p.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # needed for git rev-list --count
 
-#   verify:
-#     if: ${{ needs.publish.result == 'success' }}
-#     needs: publish
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         os: [ubuntu-latest, macos-latest, windows-latest]
-#     runs-on: ${{ matrix.os }}
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: actions/setup-python@v5
-#         with:
-#           python-version: "3.11"
-#       - name: Resolve Mode
-#         run: |
-#           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-#             echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
-#           else
-#             msg="${{ github.event.head_commit.message }}"
-#             if echo "$msg" | grep -q -- "--test"; then
-#               echo "RELEASE_MODE=test" >> $GITHUB_ENV
-#             elif echo "$msg" | grep -q -- "--beta"; then
-#               echo "RELEASE_MODE=beta" >> $GITHUB_ENV
-#             elif echo "$msg" | grep -q -- "--alpha"; then
-#               echo "RELEASE_MODE=alpha" >> $GITHUB_ENV
-#             else
-#               echo "RELEASE_MODE=release" >> $GITHUB_ENV
-#             fi
-#             # Extract custom version: --v X.Y.Z or --version X.Y.Z (portable)
-#             custom_ver=$(python -c "import re, sys; msg='$msg'; m=re.search(r'--(?:v|version)\s+([\d.]+)', msg); print(m.group(1) if m else '')")
-#             if [ -n "$custom_ver" ]; then
-#               echo "CUSTOM_VERSION=$custom_ver" >> $GITHUB_ENV
-#             fi
-#           fi
-#         shell: bash
-#       - name: Resolve Release Meta
-#         run: |
-#           if [ -n "${{ env.CUSTOM_VERSION }}" ]; then
-#             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "false" --version "${{ env.CUSTOM_VERSION }}" >> $GITHUB_ENV
-#           else
-#             python libs/python/tools/release_meta.py --mode "${{ env.RELEASE_MODE }}" --force "false" >> $GITHUB_ENV
-#           fi
-#         shell: bash
-#       - name: Wait and Poll for Package Availability
-#         run: |
-#           echo "=========================================="
-#           echo "Polling for nextssl==${{ env.PY_VERSION }} availability..."
-#           echo "=========================================="
-#           MAX_ATTEMPTS=20
-#           SLEEP_INTERVAL=15
-#           ATTEMPT=0
-#           if [ "${{ env.RELEASE_MODE }}" = "test" ]; then
-#             INDEX_URL="--index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/"
-#             SOURCE="TestPyPI"
-#           else
-#             INDEX_URL=""
-#             SOURCE="PyPI"
-#           fi
-#           while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
-#             ATTEMPT=$((ATTEMPT + 1))
-#             echo "[Attempt $ATTEMPT/$MAX_ATTEMPTS] Checking $SOURCE for nextssl==${{ env.PY_VERSION }}..."
-#             if pip install --dry-run $INDEX_URL "nextssl==${{ env.PY_VERSION }}" 2>/dev/null; then
-#               echo "[FOUND] Package nextssl==${{ env.PY_VERSION }} is available on $SOURCE after $((ATTEMPT * SLEEP_INTERVAL)) seconds"
-#               break
-#             fi
-#             if [ $ATTEMPT -eq $MAX_ATTEMPTS ]; then
-#               echo "[FATAL] Package nextssl==${{ env.PY_VERSION }} not found on $SOURCE after $((MAX_ATTEMPTS * SLEEP_INTERVAL)) seconds"
-#               echo "Available versions:"
-#               pip install $INDEX_URL "nextssl==0.0.0.0.0.0.invalid" 2>&1 | grep "from versions:" || true
-#               exit 1
-#             fi
-#             echo "  Not yet available, sleeping ${SLEEP_INTERVAL}s..."
-#             sleep $SLEEP_INTERVAL
-#           done
-#         shell: bash
-#       - name: Install from TestPyPI
-#         if: ${{ env.RELEASE_MODE == 'test' }}
-#         run: |
-#           echo "=========================================="
-#           echo "Installing nextssl==${{ env.PY_VERSION }} from TestPyPI on ${{ matrix.os }}..."
-#           echo "=========================================="
-#           pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ "nextssl==${{ env.PY_VERSION }}"
-#         shell: bash
-#       - name: Install from PyPI
-#         if: ${{ env.RELEASE_MODE != 'test' }}
-#         run: |
-#           echo "=========================================="
-#           echo "Installing nextssl==${{ env.PY_VERSION }} from PyPI on ${{ matrix.os }}..."
-#           echo "=========================================="
-#           pip install "nextssl==${{ env.PY_VERSION }}"
-#         shell: bash
-#       - name: Verify Installation and Print Hashes
-#         run: python libs/python/tests/verify_install.py --version "${{ env.PY_VERSION }}"
-#         shell: bash
-#       - name: Run Post-Install Tests
-#         run: python tests/test_all.py
-#         shell: bash
-#       - name: Report Success
-#         run: |
-#           echo "=========================================="
-#           echo "[SUCCESS] Verification passed on ${{ matrix.os }}"
-#           echo "Package: nextssl==${{ env.PY_VERSION }}"
-#           echo "Source: ${{ env.RELEASE_MODE == 'test' && 'TestPyPI' || 'PyPI' }}"
-#           echo "Platform: ${{ matrix.os }}"
-#           echo "Python: $(python --version)"
-#           echo "pip: $(pip --version)"
-#           echo "Time: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-#           echo "=========================================="
-#         shell: bash
+      - name: Parse commit message
+        id: p
+        shell: bash
+        run: |
+          MSG="${{ github.event.head_commit.message }}"
 
-#   summary:
-#     if: always()
-#     needs: [build, test, publish, verify]
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check Build Status
-#         run: echo "Build status - ${{ needs.build.result }}"
-#       - name: Check Test Status
-#         run: echo "Test status - ${{ needs.test.result }}"
-#       - name: Check Publish Status
-#         run: echo "Publish status - ${{ needs.publish.result }}"
-#       - name: Check Verify Status
-#         run: echo "Verify status - ${{ needs.verify.result }}"
-#       - name: Resolve Mode
-#         run: |
-#           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-#             echo "RELEASE_MODE=${{ inputs.mode }}" >> $GITHUB_ENV
-#           else
-#             msg="${{ github.event.head_commit.message }}"
-#             if echo "$msg" | grep -q -- "--test"; then
-#               echo "RELEASE_MODE=test" >> $GITHUB_ENV
-#             elif echo "$msg" | grep -q -- "--beta"; then
-#               echo "RELEASE_MODE=beta" >> $GITHUB_ENV
-#             elif echo "$msg" | grep -q -- "--alpha"; then
-#               echo "RELEASE_MODE=alpha" >> $GITHUB_ENV
-#             else
-#               echo "RELEASE_MODE=release" >> $GITHUB_ENV
-#             fi
-#           fi
-#         shell: bash
-#       - name: Resolve Release Meta
-#         run: |
-#           if [ "${{ needs.publish.result }}" = "success" ]; then
-#             echo "PY_VERSION retrieved from publish job"
-#           fi
-#         shell: bash
-#       - name: Final Report
-#         run: |
-#           echo "=================================================="
-#           echo "NextSSL Python Release Pipeline Summary"
-#           echo "=================================================="
-#           echo "Mode: ${{ env.RELEASE_MODE }}"
-#           echo ""
-#           echo "Job Results:"
-#           echo "  Build:   ${{ needs.build.result }}"
-#           echo "  Test:    ${{ needs.test.result }}"
-#           echo "  Publish: ${{ needs.publish.result }}"
-#           echo "  Verify:  ${{ needs.verify.result }}"
-#           echo ""
-#           if [ "${{ needs.verify.result }}" = "success" ]; then
-#             echo "[SUCCESS] ALL CHECKS PASSED"
-#             echo "Package successfully published and verified on all platforms!"
-#             if [ "${{ env.RELEASE_MODE }}" = "test" ]; then
-#               echo "[PACKAGE] TestPyPI: https://test.pypi.org/project/nextssl/"
-#             else
-#               echo "[PACKAGE] PyPI: https://pypi.org/project/nextssl/"
-#             fi
-#           else
-#             echo "[WARN] Some checks failed - review logs above"
-#           fi
-#           echo "=================================================="
-#         shell: bash
+          VERSION=$(python3 -c "
+          import re, sys
+          m = re.search(r'--(?:v|version)\s+([\d]+(?:\.[\d]+)*)', sys.argv[1])
+          print(m.group(1) if m else '')
+          " "$MSG")
+
+          PIP_TEST=$(echo "$MSG"   | grep -q -- '--PipTest'   && echo true || echo false)
+          PIP_LIVE=$(echo "$MSG"   | grep -q -- '--pipLive'   && echo true || echo false)
+          NO_RELEASE=$(echo "$MSG" | grep -q -- '--noRelease' && echo true || echo false)
+
+          # When --PipTest is used without an explicit version, auto-build a
+          # unique dev version: take the base version from pyproject.toml and
+          # append .devN where N is the current git commit count.
+          # This ensures every push produces a distinct wheel on TestPyPI and
+          # avoids silent skip-existing collisions.
+          if [ "$PIP_TEST" = true ] && [ -z "$VERSION" ]; then
+            BASE_VER=$(python3 -c "
+          import re
+          with open('libs/python/pyproject.toml') as f:
+              m = re.search(r'^version\s*=\s*\"([^\"]+)\"', f.read(), re.MULTILINE)
+          print(m.group(1).split('-')[0] if m else '0.0.1')
+          ")
+            COMMIT_N=$(git rev-list --count HEAD)
+            VERSION="${BASE_VER}.dev${COMMIT_N}"
+            echo "[INFO] No --v flag — using auto dev version: $VERSION"
+          fi
+
+          HAS_VERSION=$([ -n "$VERSION" ] && echo true || echo false)
+
+          if [ "$HAS_VERSION" = true ] || [ "$PIP_TEST" = true ] || [ "$PIP_LIVE" = true ]; then
+            SHOULD_RUN=true
+          else
+            SHOULD_RUN=false
+          fi
+
+          echo "version=$VERSION"         >> $GITHUB_OUTPUT
+          echo "has_version=$HAS_VERSION" >> $GITHUB_OUTPUT
+          echo "pip_test=$PIP_TEST"       >> $GITHUB_OUTPUT
+          echo "pip_live=$PIP_LIVE"       >> $GITHUB_OUTPUT
+          echo "no_release=$NO_RELEASE"   >> $GITHUB_OUTPUT
+          echo "should_run=$SHOULD_RUN"   >> $GITHUB_OUTPUT
+
+          echo "=== Parsed flags ==="
+          echo "  version     : $VERSION"
+          echo "  has_version : $HAS_VERSION"
+          echo "  pip_test    : $PIP_TEST"
+          echo "  pip_live    : $PIP_LIVE"
+          echo "  no_release  : $NO_RELEASE"
+          echo "  should_run  : $SHOULD_RUN"
+
+# -- 2. Build C library, run tests, produce platform wheels ------------------
+  build:
+    needs: parse
+    if: needs.parse.outputs.should_run == 'true'
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            lib_ext: .so
+            plat_tag: linux_x86_64
+
+          - os: windows-latest
+            platform: windows
+            lib_ext: .dll
+            plat_tag: win_amd64
+
+          - os: macos-latest
+            platform: mac
+            lib_ext: .dylib
+            plat_tag: macosx_10_9_x86_64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install GCC (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install -y gcc
+
+      - name: Install Python build tools
+        run: python -m pip install --upgrade pip setuptools wheel pytest
+
+      - name: Set version in pyproject.toml
+        if: needs.parse.outputs.has_version == 'true'
+        shell: bash
+        run: python libs/python/tools/version.py --set "${{ needs.parse.outputs.version }}"
+
+      - name: Build C library
+        shell: bash
+        run: |
+          python runner.py \
+            --build system:main \
+            --platform ${{ matrix.platform }} \
+            --lib-ext  ${{ matrix.lib_ext }} \
+            --no-color
+
+      - name: Bundle native binary into package
+        shell: bash
+        run: |
+          mkdir -p libs/python/src/nextssl/lib
+
+          BIN=$(find bin/${{ matrix.platform }}/primary \
+                     -name "main${{ matrix.lib_ext }}" \
+                     2>/dev/null | head -1)
+
+          if [ -z "$BIN" ]; then
+            echo "[ERROR] Compiled binary not found under bin/${{ matrix.platform }}/primary/"
+            echo "Expected: main${{ matrix.lib_ext }}"
+            ls -R bin/${{ matrix.platform }}/ || true
+            exit 1
+          fi
+
+          cp "$BIN" "libs/python/src/nextssl/lib/nextssl${{ matrix.lib_ext }}"
+          echo "[OK] Bundled: $BIN -> libs/python/src/nextssl/lib/nextssl${{ matrix.lib_ext }}"
+
+      - name: Run Python tests
+        shell: bash
+        run: python -m pytest test/ -v --tb=short
+
+      - name: Build platform wheel
+        shell: bash
+        run: |
+          cd libs/python
+          python setup.py bdist_wheel \
+            --python-tag py3 \
+            --abi-tag     none \
+            --plat-name   ${{ matrix.plat_tag }} \
+            --dist-dir    dist
+          echo "[OK] Wheel built:"
+          ls dist/
+
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel-${{ matrix.platform }}
+          path: libs/python/dist/*.whl
+          if-no-files-found: error
+
+# -- 3. Publish to TestPyPI --------------------------------------------------
+  publish-test:
+    needs: [parse, build]
+    if: |
+      needs.build.result == 'success' &&
+      needs.parse.outputs.pip_test == 'true' &&
+      needs.parse.outputs.no_release != 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all platform wheels
+        uses: actions/download-artifact@v4
+        with:
+          pattern: wheel-*
+          path: dist
+          merge-multiple: true
+
+      - name: List wheels to publish
+        run: ls -lh dist/
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+          verbose: true
+
+# -- 4. Publish to PyPI + create GitHub release ------------------------------
+  publish-live:
+    needs: [parse, build]
+    if: |
+      needs.build.result == 'success' &&
+      needs.parse.outputs.pip_live == 'true' &&
+      needs.parse.outputs.no_release != 'true' &&
+      needs.parse.outputs.has_version == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Download all platform wheels
+        uses: actions/download-artifact@v4
+        with:
+          pattern: wheel-*
+          path: dist
+          merge-multiple: true
+
+      - name: List wheels to publish
+        run: ls -lh dist/
+
+      - name: Find changelog file
+        id: notes
+        shell: bash
+        run: |
+          VER="${{ needs.parse.outputs.version }}"
+          SLUG=$(echo "$VER" | tr '.' '_')
+          NOTE_PATH="note/changelog/${SLUG}.md"
+
+          if [ -f "$NOTE_PATH" ]; then
+            echo "path=$NOTE_PATH" >> $GITHUB_OUTPUT
+            echo "[OK] Using changelog: $NOTE_PATH"
+          else
+            printf "Release %s\n" "$VER" > /tmp/release_notes.md
+            echo "path=/tmp/release_notes.md" >> $GITHUB_OUTPUT
+            echo "[WARN] No changelog at $NOTE_PATH -- using placeholder"
+          fi
+
+      - name: Create git tag
+        shell: bash
+        run: |
+          VER="${{ needs.parse.outputs.version }}"
+          TAG="py-v${VER}"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "[SKIP] Tag $TAG already exists"
+          else
+            git tag "$TAG"
+            git push origin "$TAG" \
+              && echo "[OK] Tag $TAG pushed" \
+              || echo "[WARN] Failed to push tag -- continuing anyway"
+          fi
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          VER="${{ needs.parse.outputs.version }}"
+          TAG="py-v${VER}"
+
+          gh release create "$TAG" dist/*.whl \
+            --title "NextSSL Python $VER" \
+            --notes-file "${{ steps.notes.outputs.path }}" \
+          && echo "[OK] GitHub release created: $TAG" \
+          || echo "[WARN] Release creation failed (may already exist)"
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
+          skip-existing: true
+          verbose: true

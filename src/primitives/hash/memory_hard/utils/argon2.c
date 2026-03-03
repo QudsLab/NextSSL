@@ -184,6 +184,16 @@ int argon2_verify(const char *encoded, const void *pwd, const size_t pwdlen,
     ctx.pwd = CONST_CAST(uint8_t *)pwd;
     ctx.pwdlen = (uint32_t)pwdlen;
 
+    /* Pre-allocate salt and hash buffers so decode_string can write into them.
+     * 256 bytes covers any realistic salt (max 16 B) and hash (max 64 B). */
+    ctx.salt = (uint8_t *)malloc(256);
+    if (!ctx.salt) return ARGON2_MEMORY_ALLOCATION_ERROR;
+    ctx.saltlen = 256;
+
+    ctx.out = (uint8_t *)malloc(256);
+    if (!ctx.out) { free(ctx.salt); return ARGON2_MEMORY_ALLOCATION_ERROR; }
+    ctx.outlen = 256;
+
     ret = decode_string(&ctx, encoded, type);
     if (ret != ARGON2_OK) {
         return ret;
