@@ -366,14 +366,13 @@ jobs:
           PKG="${PKG:-nextssl}"
           INDEX="--index-url https://test.pypi.org/simple"
 
-          # --platform only works reliably as a download hint, not a direct
-          # install flag on cross-arch runners.  On macOS-arm64 we therefore:
-          #   1) pip download  the x86_64 wheel into a temp dir
-          #   2) pip install   that local .whl (Rosetta 2 runs it fine)
-          # On Linux/Windows a normal pip install is sufficient.
+          # macOS-latest (macos-14+) is arm64 but we only publish an x86_64
+          # wheel.  pip install refuses cross-arch wheels unless we use
+          # --target, which skips the platform-tag compatibility check.
+          # Rosetta 2 runs the x86_64 library transparently at test time.
           if [[ "$(uname)" == "Darwin" ]]; then
-            mkdir -p /tmp/wheel_dl
-            # TestPyPI may take a moment to index; retry up to 5 times.
+            TARGET_DIR="/tmp/nextssl_site"
+            mkdir -p "$TARGET_DIR"
             for attempt in 1 2 3 4 5; do
               pip download $INDEX \
                 --platform macosx_10_9_x86_64 \
@@ -385,7 +384,10 @@ jobs:
               echo "[WARN] attempt $attempt failed; retrying in 15s…"
               sleep 15
             done
-            pip install --no-deps /tmp/wheel_dl/nextssl-*.whl
+            # --target bypasses the platform-compatibility check on local files
+            pip install --no-deps --target "$TARGET_DIR" \
+              /tmp/wheel_dl/nextssl-*.whl
+            echo "PYTHONPATH=$TARGET_DIR:$PYTHONPATH" >> "$GITHUB_ENV"
           else
             for attempt in 1 2 3 4 5; do
               pip install $INDEX --no-deps --pre "$PKG" && break
