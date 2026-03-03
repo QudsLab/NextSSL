@@ -253,7 +253,7 @@ jobs:
   build-mac:
     needs: parse
     if: needs.parse.outputs.should_run == 'true'
-    runs-on: macos-13   # Intel x86_64 — matches our macosx_10_9_x86_64 wheel tag
+    runs-on: macos-latest   # arm64 (Apple Silicon) — macos-13 Intel was deprecated Dec 2025
 
     steps:
       - uses: actions/checkout@v4
@@ -295,7 +295,7 @@ jobs:
         shell: bash
         run: |
           cd libs/python
-          python setup.py bdist_wheel --plat-name macosx_10_9_x86_64 --dist-dir dist
+          python setup.py bdist_wheel --plat-name macosx_14_0_arm64 --dist-dir dist
           ls dist/
 
       - name: Upload wheel artifact
@@ -346,7 +346,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: windows-latest
-          - os: macos-13   # last Intel (x86_64) runner — matches our macosx_10_9_x86_64 wheel
+          - os: macos-latest   # arm64 — macos-13 Intel deprecated Dec 2025
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4   # needed to access test/smoke.py
