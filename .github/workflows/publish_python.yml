@@ -253,7 +253,7 @@ jobs:
   build-mac:
     needs: parse
     if: needs.parse.outputs.should_run == 'true'
-    runs-on: macos-latest
+    runs-on: macos-13   # Intel x86_64 — matches our macosx_10_9_x86_64 wheel tag
 
     steps:
       - uses: actions/checkout@v4
@@ -346,7 +346,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: windows-latest
-          - os: macos-latest
+          - os: macos-13   # last Intel (x86_64) runner — matches our macosx_10_9_x86_64 wheel
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4   # needed to access test/smoke.py
@@ -366,35 +366,12 @@ jobs:
           PKG="${PKG:-nextssl}"
           INDEX="--index-url https://test.pypi.org/simple"
 
-          # macOS-latest (macos-14+) is arm64 but we only publish an x86_64
-          # wheel.  pip install refuses cross-arch wheels unless we use
-          # --target, which skips the platform-tag compatibility check.
-          # Rosetta 2 runs the x86_64 library transparently at test time.
-          if [[ "$(uname)" == "Darwin" ]]; then
-            TARGET_DIR="/tmp/nextssl_site"
-            mkdir -p "$TARGET_DIR"
-            for attempt in 1 2 3 4 5; do
-              pip download $INDEX \
-                --platform macosx_10_9_x86_64 \
-                --python-version 311 \
-                --only-binary :all: \
-                --pre --no-deps \
-                --dest /tmp/wheel_dl \
-                "$PKG" && break
-              echo "[WARN] attempt $attempt failed; retrying in 15s…"
-              sleep 15
-            done
-            # --target bypasses the platform-compatibility check on local files
-            pip install --no-deps --target "$TARGET_DIR" \
-              /tmp/wheel_dl/nextssl-*.whl
-            echo "PYTHONPATH=$TARGET_DIR:$PYTHONPATH" >> "$GITHUB_ENV"
-          else
-            for attempt in 1 2 3 4 5; do
-              pip install $INDEX --no-deps --pre "$PKG" && break
-              echo "[WARN] attempt $attempt failed; retrying in 15s…"
-              sleep 15
-            done
-          fi
+          # TestPyPI may take a moment to index a freshly uploaded release.
+          for attempt in 1 2 3 4 5; do
+            pip install $INDEX --no-deps --pre "$PKG" && break
+            echo "[WARN] attempt $attempt failed; retrying in 15s…"
+            sleep 15
+          done
 
       - name: Print installed version
         shell: bash
