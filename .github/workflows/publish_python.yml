@@ -116,7 +116,8 @@ jobs:
           - os: ubuntu-latest
             platform: linux
             lib_ext: .so
-            plat_tag: linux_x86_64
+            # PyPI rejects generic linux_x86_64; use manylinux_2_17_x86_64
+            plat_tag: manylinux_2_17_x86_64
 
           - os: windows-latest
             platform: windows
