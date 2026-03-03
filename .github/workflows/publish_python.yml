@@ -362,28 +362,37 @@ jobs:
         shell: bash
         run: |
           VER="${{ needs.parse.outputs.version }}"
+          PKG="${VER:+nextssl==$VER}"
+          PKG="${PKG:-nextssl}"
+          INDEX="--index-url https://test.pypi.org/simple"
 
-          # On macOS the runner may be arm64 (macos-14+) but the wheel is
-          # x86_64; force the target platform so pip accepts the wheel.
-          # Works under Rosetta 2 at runtime.
-          PLAT_ARGS=""
+          # --platform only works reliably as a download hint, not a direct
+          # install flag on cross-arch runners.  On macOS-arm64 we therefore:
+          #   1) pip download  the x86_64 wheel into a temp dir
+          #   2) pip install   that local .whl (Rosetta 2 runs it fine)
+          # On Linux/Windows a normal pip install is sufficient.
           if [[ "$(uname)" == "Darwin" ]]; then
-            PLAT_ARGS="--platform macosx_10_9_x86_64 --only-binary :all:"
+            mkdir -p /tmp/wheel_dl
+            # TestPyPI may take a moment to index; retry up to 5 times.
+            for attempt in 1 2 3 4 5; do
+              pip download $INDEX \
+                --platform macosx_10_9_x86_64 \
+                --python-version 311 \
+                --only-binary :all: \
+                --pre --no-deps \
+                --dest /tmp/wheel_dl \
+                "$PKG" && break
+              echo "[WARN] attempt $attempt failed; retrying in 15s…"
+              sleep 15
+            done
+            pip install --no-deps /tmp/wheel_dl/nextssl-*.whl
+          else
+            for attempt in 1 2 3 4 5; do
+              pip install $INDEX --no-deps --pre "$PKG" && break
+              echo "[WARN] attempt $attempt failed; retrying in 15s…"
+              sleep 15
+            done
           fi
-
-          # TestPyPI may take up to 30s to index a freshly uploaded release.
-          for attempt in 1 2 3 4 5; do
-            if [ -n "$VER" ]; then
-              pip install --index-url https://test.pypi.org/simple \
-                --no-deps $PLAT_ARGS --pre "nextssl==$VER" && break
-            else
-              echo "[WARN] no version provided — installing latest nextssl from TestPyPI"
-              pip install --index-url https://test.pypi.org/simple \
-                --no-deps $PLAT_ARGS --pre nextssl && break
-            fi
-            echo "[WARN] attempt $attempt failed; retrying in 15s…"
-            sleep 15
-          done
 
       - name: Print installed version
         shell: bash
