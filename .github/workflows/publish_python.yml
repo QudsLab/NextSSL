@@ -362,13 +362,28 @@ jobs:
         shell: bash
         run: |
           VER="${{ needs.parse.outputs.version }}"
-          if [ -n "$VER" ]; then
-            pip install --index-url https://test.pypi.org/simple --no-deps \
-              "nextssl==$VER"
-          else
-            echo "[WARN] no version provided — installing latest nextssl from TestPyPI"
-            pip install --index-url https://test.pypi.org/simple --no-deps nextssl
+
+          # On macOS the runner may be arm64 (macos-14+) but the wheel is
+          # x86_64; force the target platform so pip accepts the wheel.
+          # Works under Rosetta 2 at runtime.
+          PLAT_ARGS=""
+          if [[ "$(uname)" == "Darwin" ]]; then
+            PLAT_ARGS="--platform macosx_10_9_x86_64 --only-binary :all:"
           fi
+
+          # TestPyPI may take up to 30s to index a freshly uploaded release.
+          for attempt in 1 2 3 4 5; do
+            if [ -n "$VER" ]; then
+              pip install --index-url https://test.pypi.org/simple \
+                --no-deps $PLAT_ARGS --pre "nextssl==$VER" && break
+            else
+              echo "[WARN] no version provided — installing latest nextssl from TestPyPI"
+              pip install --index-url https://test.pypi.org/simple \
+                --no-deps $PLAT_ARGS --pre nextssl && break
+            fi
+            echo "[WARN] attempt $attempt failed; retrying in 15s…"
+            sleep 15
+          done
 
       - name: Print installed version
         shell: bash

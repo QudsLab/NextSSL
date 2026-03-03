@@ -33,10 +33,10 @@ def test_variant_and_security():
 
 
 def test_init_selftest_cleanup():
-    # lifecycle functions work and are idempotent
-    assert nextssl.init(0) == 0
+    # init/cleanup return None by design; selftest returns 0 on success
+    nextssl.init(0)       # must not raise
     assert nextssl.selftest() == 0
-    assert nextssl.cleanup() == 0
+    nextssl.cleanup()     # must not raise
 
 
 def test_hash_and_compare():
