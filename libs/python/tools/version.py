@@ -14,7 +14,10 @@ from pathlib import Path
 
 
 def set_version(version: str) -> None:
-    toml_path = Path(__file__).parent.parent / "pyproject.toml"
+    pkg_root = Path(__file__).parent.parent
+
+    # --- pyproject.toml ---
+    toml_path = pkg_root / "pyproject.toml"
     if not toml_path.exists():
         print(f"[ERROR] pyproject.toml not found: {toml_path}", file=sys.stderr)
         sys.exit(1)
@@ -35,6 +38,26 @@ def set_version(version: str) -> None:
 
     toml_path.write_text(new_content, encoding="utf-8")
     print(f"[OK] Version set to {version!r} in {toml_path}")
+
+    # --- src/nextssl/__init__.py ---
+    init_path = pkg_root / "src" / "nextssl" / "__init__.py"
+    if not init_path.exists():
+        print(f"[WARN] __init__.py not found: {init_path}", file=sys.stderr)
+        return
+
+    init_content = init_path.read_text(encoding="utf-8")
+    new_init, n_init = re.subn(
+        r'^(__version__\s*:\s*str\s*=\s*)["\'][^"\']*["\']',
+        rf'\g<1>"{version}"',
+        init_content,
+        flags=re.MULTILINE,
+    )
+    if n_init == 0:
+        print(f"[WARN] No '__version__' assignment found in {init_path}", file=sys.stderr)
+        return
+
+    init_path.write_text(new_init, encoding="utf-8")
+    print(f"[OK] __version__ set to {version!r} in {init_path}")
 
 
 def main() -> None:
