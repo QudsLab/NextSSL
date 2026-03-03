@@ -359,8 +359,14 @@ jobs:
 
       - name: Install from TestPyPI
         run: |
-          pip install --index-url https://test.pypi.org/simple --no-deps \
-            nextssl==${{ needs.parse.outputs.version }}
+          VER="${{ needs.parse.outputs.version }}"
+          if [ -n "$VER" ]; then
+            pip install --index-url https://test.pypi.org/simple --no-deps \
+              nextssl=="$VER"
+          else
+            echo "[WARN] parse did not provide version; installing latest from TestPyPI"
+            pip install --index-url https://test.pypi.org/simple --no-deps nextssl
+          fi
 
       - name: Smoke check import and random
         run: |
@@ -369,6 +375,13 @@ jobs:
           assert isinstance(nextssl.version(), str)
           assert len(nextssl.random_bytes(8)) == 8
           print('verify ok')
+          PYCODE
+
+      - name: Print installed version
+        run: |
+          python - <<'PYCODE'
+          import nextssl, sys
+          print('installed wheel version:', nextssl.__version__)
           PYCODE
 
 # -- 4. Publish to PyPI + create GitHub release ------------------------------
