@@ -101,7 +101,8 @@ class TestVersionConsistency:
         exact match.
         """
         import re as _re
-        py_ver = nextssl.__version__.split("-")[0]   # bare X.Y.Z
+        # Allow Python dev suffix (e.g., 0.0.1.dev130) but compare on base X.Y.Z
+        py_ver = nextssl.__version__.split(".dev", 1)[0].split("-", 1)[0]
         c_raw  = nextssl.version()
         # Extract the first X.Y.Z sequence from the C version string
         m = _re.search(r'(\d+\.\d+\.\d+)', c_raw)
