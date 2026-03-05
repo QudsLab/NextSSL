@@ -2,13 +2,16 @@
 Lite Variant - Layer 4 (Primary) - Unified System Build
 Generates: system_lite.dll (~500KB)
 
-This generator creates the unified lite API that combines all 9 core algorithms:
+This generator creates the unified lite API that combines all 9 core algorithms
+plus the explicit-algorithm root tree and the PoW subsystem (4 lite algorithms):
 - Hash: SHA-256, SHA-512, BLAKE3
 - AEAD: AES-256-GCM, ChaCha20-Poly1305
 - KDF: HKDF, Argon2id
 - Key Exchange: X25519, Kyber1024
 - Signatures: Ed25519, Dilithium5
-- PoW: SHA-256 based
+- PoW: SHA-256, SHA-512, BLAKE3, Argon2id (dispatcher_lite.c, 4 adapters)
+- Root tree: nextssl_root_hash_*, nextssl_root_aead_*, nextssl_root_ecc_*,
+             nextssl_root_pqc_kem_*, nextssl_root_pqc_sign_*, nextssl_root_pow_*
 
 Output: bin/<platform>/system_lite.dll
 """
@@ -99,10 +102,44 @@ def build(builder: Builder):
     if os.path.exists(primary_wrapper):
         sources.add(os.path.normpath(primary_wrapper))
 
-    # Add root/ explicit-algorithm interface
+    # Add root/ explicit-algorithm interface (build anchor stub)
     root_wrapper = os.path.join(src_dir, 'interfaces/primary/lite/root/nextssl_root.c')
     if os.path.exists(root_wrapper):
         sources.add(os.path.normpath(root_wrapper))
+
+    # Add root/ sub-module implementations
+    root_sub_modules = [
+        os.path.join(src_dir, 'interfaces/primary/lite/root/hash/root_hash.c'),
+        os.path.join(src_dir, 'interfaces/primary/lite/root/core/root_aead.c'),
+        os.path.join(src_dir, 'interfaces/primary/lite/root/core/root_ecc.c'),
+        os.path.join(src_dir, 'interfaces/primary/lite/root/pqc/root_pqc_kem.c'),
+        os.path.join(src_dir, 'interfaces/primary/lite/root/pqc/root_pqc_sign.c'),
+        os.path.join(src_dir, 'interfaces/primary/lite/root/pow/root_pow.c'),
+    ]
+    for rm in root_sub_modules:
+        if os.path.exists(rm):
+            sources.add(os.path.normpath(rm))
+
+    # PoW subsystem (lite: sha256/sha512/blake3/argon2id only)
+    add_sources([
+        os.path.join(src_dir, 'PoW/core/'),
+        os.path.join(src_dir, 'PoW/server/'),
+        os.path.join(src_dir, 'PoW/client/'),
+    ], recursive=True)
+    # Lite PoW adapters (4 algorithms only)
+    for pow_adapter in [
+        'primitive_fast/sha256.c',
+        'primitive_fast/sha512.c',
+        'primitive_fast/blake3.c',
+        'primitive_memory_hard/argon2id.c',
+    ]:
+        p = os.path.join(src_dir, 'PoW/adapters/', pow_adapter)
+        if os.path.exists(p):
+            sources.add(os.path.normpath(p))
+    # Lite dispatcher (replaces dispatcher_main.c for lite build)
+    dispatcher_lite = os.path.join(src_dir, 'PoW/adapters/dispatcher_lite.c')
+    if os.path.exists(dispatcher_lite):
+        sources.add(os.path.normpath(dispatcher_lite))
 
     # Add profile-based configuration system (config.c + profiles_common.c)
     config_sources = [
@@ -113,12 +150,15 @@ def build(builder: Builder):
         if os.path.exists(cs):
             sources.add(os.path.normpath(cs))
 
-    # Include directories for PQCrypto headers
+    # Include directories for PQCrypto and PoW headers
     includes = [
         os.path.join(src_dir, 'PQCrypto', 'common'),
         os.path.join(src_dir, 'PQCrypto', 'crypto_kem', 'ml-kem-1024', 'clean'),
         os.path.join(src_dir, 'PQCrypto', 'crypto_sign', 'ml-dsa-87', 'clean'),
         os.path.join(src_dir, 'interfaces', 'primary', 'lite', 'root'),
+        os.path.join(src_dir, 'PoW', 'core'),
+        os.path.join(src_dir, 'primitives', 'cipher', 'aes_core'),
+        os.path.join(src_dir, 'primitives', 'ecc', 'ed25519'),
     ]
 
     # Build with pthread support

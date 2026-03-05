@@ -99,7 +99,7 @@ PLATFORM_LIB_EXT = {
 }
 
 # ── Load-map integration ───────────────────────────────────────────────────────
-from script.core.load import LOAD_MAP, LOAD_MAP_ALL, LOAD_MAP_QUICK
+from script.core.load import LOAD_MAP, LOAD_MAP_ALL, LOAD_MAP_QUICK, PRIMARY_ALWAYS
 
 _LOAD_MAPS = {
     'gen':      LOAD_MAP,
@@ -205,8 +205,9 @@ def _resolve_modules_from_map(load_map, target):
     seen_ids = set()
     for mod_path, test_keys in filtered.items():
         if not test_keys:
-            # build-only marker — no tests for this module in this map
-            continue
+            # build-only marker unless PRIMARY_ALWAYS overrides it
+            if map_tier != 'primary' or not PRIMARY_ALWAYS.get(mod_path):
+                continue
         module = _MODULE_REGISTRY.get(mod_path)
         if module is not None and id(module) not in seen_ids:
             modules.append(module)

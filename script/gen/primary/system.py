@@ -81,7 +81,7 @@ def build(builder: Builder):
             if not p.endswith('dispatcher.c'):
                 sources.add(os.path.normpath(p))
     sources.add(os.path.normpath(os.path.join(src_dir, 'PoW/adapters/dispatcher_main.c')))
-    sources.add(os.path.normpath(os.path.join(src_dir, 'utils/radix/base64.c')))
+    add_sources([os.path.join(src_dir, 'utils/radix/')], recursive=False)  # all radix encoders
 
     add_sources([
         os.path.join(src_dir, 'primitives', 'hash', 'fast'),
@@ -120,10 +120,28 @@ def build(builder: Builder):
     if os.path.exists(primary_wrapper):
         sources.add(os.path.normpath(primary_wrapper))
 
-    # Add root/ explicit-algorithm interface
+    # Add root/ explicit-algorithm interface (anchor stub)
     root_wrapper = os.path.join(src_dir, 'interfaces/primary/full/root/nextssl_root.c')
     if os.path.exists(root_wrapper):
         sources.add(os.path.normpath(root_wrapper))
+
+    # Add root/ sub-group implementations (tree structure)
+    root_sub_files = [
+        'interfaces/primary/full/root/hash/root_hash.c',
+        'interfaces/primary/full/root/core/root_aead.c',
+        'interfaces/primary/full/root/core/root_cipher.c',
+        'interfaces/primary/full/root/core/root_ecc.c',
+        'interfaces/primary/full/root/core/root_mac.c',
+        'interfaces/primary/full/root/pqc/root_pqc_kem.c',
+        'interfaces/primary/full/root/pqc/root_pqc_sign.c',
+        'interfaces/primary/full/root/legacy/root_legacy.c',
+        'interfaces/primary/full/root/radix/root_radix.c',
+        'interfaces/primary/full/root/pow/root_pow.c',
+    ]
+    for rsf in root_sub_files:
+        p = os.path.join(src_dir, rsf)
+        if os.path.exists(p):
+            sources.add(os.path.normpath(p))
 
     # Add profile-based configuration system
     config_sources = [
@@ -161,6 +179,7 @@ def build(builder: Builder):
         ('AES___', '128'),
         ('FF_X', '1'),
         ('HAVE_ED448', '1'),
+        ('HAVE_CURVE448', '1'),
         'DHCM_VERSION_MAJOR=1',
         'DHCM_VERSION_MINOR=0',
         'DHCM_ENABLE_PRIMITIVE_FAST',

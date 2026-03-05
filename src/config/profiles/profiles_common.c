@@ -49,6 +49,7 @@ int nextssl_profile_load(nextssl_profile_t profile, nextssl_config_t *config) {
             config->default_kdf = NEXTSSL_KDF_ARGON2ID;
             config->default_sign = NEXTSSL_SIGN_ED25519;
             config->default_kem = NEXTSSL_KEM_ML_KEM_1024;
+            config->default_pow = NEXTSSL_POW_SHA256;
             config->strict_mode = true;
             config->allow_legacy = false;
             config->pqc_only = false;
@@ -61,6 +62,7 @@ int nextssl_profile_load(nextssl_profile_t profile, nextssl_config_t *config) {
             config->default_kdf = NEXTSSL_KDF_HKDF_SHA256;
             config->default_sign = NEXTSSL_SIGN_ED25519;
             config->default_kem = NEXTSSL_KEM_ML_KEM_1024;
+            config->default_pow = NEXTSSL_POW_SHA256;
             config->strict_mode = true;
             config->allow_legacy = false;
             config->pqc_only = false;
@@ -73,6 +75,7 @@ int nextssl_profile_load(nextssl_profile_t profile, nextssl_config_t *config) {
             config->default_kdf = NEXTSSL_KDF_ARGON2ID;
             config->default_sign = NEXTSSL_SIGN_ML_DSA_87;
             config->default_kem = NEXTSSL_KEM_ML_KEM_1024;
+            config->default_pow = NEXTSSL_POW_BLAKE3;
             config->strict_mode = true;
             config->allow_legacy = false;
             config->pqc_only = true;  /* Require post-quantum */
@@ -86,6 +89,7 @@ int nextssl_profile_load(nextssl_profile_t profile, nextssl_config_t *config) {
             config->default_kdf = NEXTSSL_KDF_PBKDF2;
             config->default_sign = NEXTSSL_SIGN_RSA_3072_PSS;
             config->default_kem = NEXTSSL_KEM_ECDH_P256;
+            config->default_pow = NEXTSSL_POW_SHA1;
             config->strict_mode = false;
             config->allow_legacy = true;
             config->pqc_only = false;
@@ -98,6 +102,7 @@ int nextssl_profile_load(nextssl_profile_t profile, nextssl_config_t *config) {
             config->default_kdf = NEXTSSL_KDF_ARGON2ID;
             config->default_sign = NEXTSSL_SIGN_ED25519;
             config->default_kem = NEXTSSL_KEM_X25519;
+            config->default_pow = NEXTSSL_POW_SHA256;
             config->strict_mode = true;
             config->allow_legacy = false;
             config->pqc_only = false;
@@ -110,6 +115,7 @@ int nextssl_profile_load(nextssl_profile_t profile, nextssl_config_t *config) {
             config->default_kdf = NEXTSSL_KDF_ARGON2ID;
             config->default_sign = NEXTSSL_SIGN_ML_DSA_87;
             config->default_kem = NEXTSSL_KEM_ML_KEM_1024;
+            config->default_pow = NEXTSSL_POW_ARGON2ID;
             config->strict_mode = false;
             config->allow_legacy = true;
             config->pqc_only = false;

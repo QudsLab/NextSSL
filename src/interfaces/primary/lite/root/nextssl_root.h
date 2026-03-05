@@ -1,6 +1,6 @@
 /**
- * @file root/nextssl_root.h
- * @brief NextSSL Lite — Explicit-Algorithm (Root) Interface
+ * @file root/nextssl_root.h (Lite)
+ * @brief NextSSL Lite — Explicit-Algorithm (Root) Umbrella Header
  *
  * Including this header signals that you are operating OUTSIDE the safe
  * default path.  Every function here bypasses the active profile entirely —
@@ -14,12 +14,15 @@
  * Who should NOT use this for normal application code:
  *   - Use nextssl_hash(), nextssl_encrypt(), etc. (the profile-driven defaults)
  *
- * Usage:
- *   #include "nextssl.h"               // safe defaults
- *   #include "root/nextssl_root.h"     // explicit algorithms — path is the warning
+ * Lite variant limits: MD5, SHA-1, legacy AEAD, extended ECC, and extended
+ * PoW algorithms are NOT available here. Use the full variant's root/ for those.
  *
- * Lite variant limits: MD5, SHA-1, legacy AEAD are NOT available here.
- * Use the full variant's root/ for those.
+ * Algorithms available in lite root:
+ *   Hash:  SHA-256, SHA-512, BLAKE3, Argon2id
+ *   AEAD:  AES-256-GCM, ChaCha20-Poly1305
+ *   ECC:   Ed25519 (sign/verify), X25519 (ECDH)
+ *   PQC:   ML-KEM-1024, ML-DSA-87
+ *   PoW:   SHA-256, SHA-512, BLAKE3, Argon2id
  *
  * @version 0.0.1-beta
  */
@@ -29,130 +32,101 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "../../../../config.h"  /* NEXTSSL_API, platform detection */
+
+/* -- Sub-group headers -- */
+#include "hash/root_hash.h"
+#include "core/root_aead.h"
+#include "core/root_ecc.h"
+#include "pqc/root_pqc_kem.h"
+#include "pqc/root_pqc_sign.h"
+#include "pow/root_pow.h"
+
+/* ==========================================================================
+ * Backwards-compatibility aliases (v0.0.1-alpha flat names → tree names)
+ *
+ * These inline wrappers let existing code continue to compile unmodified.
+ * New code should call the nextssl_root_<group>_<algo>_<op>() names directly.
+ *
+ * BREAKING CHANGE NOTES:
+ *   - nextssl_root_argon2id: now requires explicit t/m/p params.
+ *     Compat macro uses hardcoded defaults (t=3, m=65536, p=4).
+ *   - nextssl_root_x25519_keygen: old order was (pk, sk), new is (sk, pk).
+ *     Compat wrapper swaps the args.
+ *   - nextssl_root_mldsa87_verify: old returned 0=valid. New returns 1=valid.
+ *     Compat wrapper re-normalises to old 0=valid convention.
+ * ========================================================================== */
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/* ==========================================================================
- * Hash — Explicit Algorithm
- * ========================================================================== */
+/* Hash compat */
+static inline int nextssl_root_sha256(const uint8_t *d, size_t l, uint8_t o[32])
+    { return nextssl_root_hash_sha256(d, l, o); }
+static inline int nextssl_root_sha512(const uint8_t *d, size_t l, uint8_t o[64])
+    { return nextssl_root_hash_sha512(d, l, o); }
+static inline int nextssl_root_blake3(const uint8_t *d, size_t l,
+                                       uint8_t *o, size_t ol)
+    { return nextssl_root_hash_blake3(d, l, o, ol); }
+/* Argon2id compat — uses original hardcoded defaults */
+static inline int nextssl_root_argon2id(const uint8_t *pw, size_t pwl,
+                                         const uint8_t *salt, size_t saltl,
+                                         uint8_t *out, size_t outl)
+    { return nextssl_root_hash_argon2id(pw, pwl, salt, saltl, 3, 65536, 4, out, outl); }
 
-/**
- * SHA-256: 32-byte output.
- * out must point to at least 32 bytes.
- */
-NEXTSSL_API int nextssl_root_sha256(const uint8_t *data, size_t len,
-                                    uint8_t out[32]);
+/* AEAD compat — old sigs had no aad params (NULL, 0 filled in) */
+static inline int nextssl_root_aes256gcm_encrypt(const uint8_t k[32],
+    const uint8_t n[12], const uint8_t *pt, size_t pl, uint8_t *ct)
+    { return nextssl_root_aead_aesgcm_encrypt(k, n, NULL, 0, pt, pl, ct); }
+static inline int nextssl_root_aes256gcm_decrypt(const uint8_t k[32],
+    const uint8_t n[12], const uint8_t *ct, size_t cl, uint8_t *pt)
+    { return nextssl_root_aead_aesgcm_decrypt(k, n, NULL, 0, ct, cl, pt); }
+static inline int nextssl_root_chacha20_encrypt(const uint8_t k[32],
+    const uint8_t n[12], const uint8_t *pt, size_t pl, uint8_t *ct)
+    { return nextssl_root_aead_chacha20_encrypt(k, n, NULL, 0, pt, pl, ct); }
+static inline int nextssl_root_chacha20_decrypt(const uint8_t k[32],
+    const uint8_t n[12], const uint8_t *ct, size_t cl, uint8_t *pt)
+    { return nextssl_root_aead_chacha20_decrypt(k, n, NULL, 0, ct, cl, pt); }
 
-/**
- * SHA-512: 64-byte output.
- * out must point to at least 64 bytes.
- */
-NEXTSSL_API int nextssl_root_sha512(const uint8_t *data, size_t len,
-                                    uint8_t out[64]);
+/* ECC compat — old x25519_keygen was (pk, sk); new is (sk, pk) */
+static inline int nextssl_root_x25519_keygen(uint8_t pk[32], uint8_t sk[32])
+    { return nextssl_root_ecc_x25519_keygen(sk, pk); }
+static inline int nextssl_root_x25519_exchange(const uint8_t my_sk[32],
+    const uint8_t their_pk[32], uint8_t ss[32])
+    { return nextssl_root_ecc_x25519_exchange(my_sk, their_pk, ss); }
+static inline int nextssl_root_ed25519_keygen(uint8_t pk[32], uint8_t sk[64])
+    { return nextssl_root_ecc_ed25519_keygen(pk, sk); }
+/* old sig: (sig, msg, mlen, sk) */
+static inline int nextssl_root_ed25519_sign(uint8_t sig[64],
+    const uint8_t *msg, size_t mlen, const uint8_t sk[64])
+    { return nextssl_root_ecc_ed25519_sign(sk, msg, mlen, sig); }
+/* old sig: (sig, msg, mlen, pk) */
+static inline int nextssl_root_ed25519_verify(const uint8_t sig[64],
+    const uint8_t *msg, size_t mlen, const uint8_t pk[32])
+    { return nextssl_root_ecc_ed25519_verify(pk, msg, mlen, sig); }
 
-/**
- * BLAKE3: variable output, defaults to 32 bytes (set out_len to desired size).
- * out must point to at least out_len bytes.
- */
-NEXTSSL_API int nextssl_root_blake3(const uint8_t *data, size_t len,
-                                    uint8_t *out, size_t out_len);
+/* PQC KEM compat */
+static inline int nextssl_root_mlkem1024_keygen(uint8_t *pk, uint8_t *sk)
+    { return nextssl_root_pqc_kem_mlkem1024_keygen(pk, sk); }
+static inline int nextssl_root_mlkem1024_encaps(const uint8_t *pk,
+    uint8_t *ct, uint8_t ss[32])
+    { return nextssl_root_pqc_kem_mlkem1024_encaps(pk, ct, ss); }
+/* old decaps: (ct, sk, ss) → new: (sk, ct, ss) */
+static inline int nextssl_root_mlkem1024_decaps(const uint8_t *ct,
+    const uint8_t *sk, uint8_t ss[32])
+    { return nextssl_root_pqc_kem_mlkem1024_decaps(sk, ct, ss); }
 
-/* ==========================================================================
- * AEAD — Explicit Algorithm, Caller Supplies Nonce
- *
- * Output layout:  [ciphertext][16-byte tag]   (No prepended nonce.)
- * ct buffer must be at least  plen + 16  bytes.
- * clen for decrypt must be  plaintext_bytes + 16.
- * ========================================================================== */
-
-NEXTSSL_API int nextssl_root_aes256gcm_encrypt(const uint8_t key[32],
-                                               const uint8_t nonce[12],
-                                               const uint8_t *pt, size_t plen,
-                                               uint8_t *ct);
-
-NEXTSSL_API int nextssl_root_aes256gcm_decrypt(const uint8_t key[32],
-                                               const uint8_t nonce[12],
-                                               const uint8_t *ct, size_t clen,
-                                               uint8_t *pt);
-
-NEXTSSL_API int nextssl_root_chacha20_encrypt(const uint8_t key[32],
-                                              const uint8_t nonce[12],
-                                              const uint8_t *pt, size_t plen,
-                                              uint8_t *ct);
-
-NEXTSSL_API int nextssl_root_chacha20_decrypt(const uint8_t key[32],
-                                              const uint8_t nonce[12],
-                                              const uint8_t *ct, size_t clen,
-                                              uint8_t *pt);
-
-/* ==========================================================================
- * Classical Key Operations
- * ========================================================================== */
-
-/** X25519 keypair: pk=32B, sk=32B */
-NEXTSSL_API int nextssl_root_x25519_keygen(uint8_t pk[32], uint8_t sk[32]);
-
-/** X25519 scalar × basepoint.  my_sk + their_pk → ss (32B). */
-NEXTSSL_API int nextssl_root_x25519_exchange(const uint8_t my_sk[32],
-                                             const uint8_t their_pk[32],
-                                             uint8_t ss[32]);
-
-/** Ed25519 keypair: pk=32B, sk=64B */
-NEXTSSL_API int nextssl_root_ed25519_keygen(uint8_t pk[32], uint8_t sk[64]);
-
-/** Ed25519 sign: sig=64B */
-NEXTSSL_API int nextssl_root_ed25519_sign(uint8_t sig[64],
-                                          const uint8_t *msg, size_t mlen,
-                                          const uint8_t sk[64]);
-
-/** Ed25519 verify: returns 1 valid, 0 invalid */
-NEXTSSL_API int nextssl_root_ed25519_verify(const uint8_t sig[64],
-                                            const uint8_t *msg, size_t mlen,
-                                            const uint8_t pk[32]);
-
-/* ==========================================================================
- * Post-Quantum
- * ========================================================================== */
-
-/** ML-KEM-1024 keypair: pk=1568B, sk=3168B */
-NEXTSSL_API int nextssl_root_mlkem1024_keygen(uint8_t *pk, uint8_t *sk);
-
-/** ML-KEM-1024 encapsulate: writes ct=1568B and ss=32B */
-NEXTSSL_API int nextssl_root_mlkem1024_encaps(const uint8_t *pk,
-                                              uint8_t *ct, uint8_t ss[32]);
-
-/** ML-KEM-1024 decapsulate: ct=1568B → ss=32B */
-NEXTSSL_API int nextssl_root_mlkem1024_decaps(const uint8_t *ct,
-                                              const uint8_t *sk,
-                                              uint8_t ss[32]);
-
-/** ML-DSA-87 keypair: pk=2592B, sk=4864B */
-NEXTSSL_API int nextssl_root_mldsa87_keygen(uint8_t *pk, uint8_t *sk);
-
-/** ML-DSA-87 sign: writes sig (max 4595B), sets *sig_len */
-NEXTSSL_API int nextssl_root_mldsa87_sign(uint8_t *sig, size_t *sig_len,
-                                          const uint8_t *msg, size_t mlen,
-                                          const uint8_t *sk);
-
-/** ML-DSA-87 verify: returns 0 valid, non-zero invalid */
-NEXTSSL_API int nextssl_root_mldsa87_verify(const uint8_t *sig, size_t sig_len,
-                                            const uint8_t *msg, size_t mlen,
-                                            const uint8_t *pk);
-
-/* ==========================================================================
- * Password / KDF
- * ========================================================================== */
-
-/**
- * Argon2id: explicit call with your own salt.
- * Use the profile-driven nextssl_password_hash() if you want auto-salt.
- */
-NEXTSSL_API int nextssl_root_argon2id(const uint8_t *pw, size_t pw_len,
-                                      const uint8_t *salt, size_t salt_len,
-                                      uint8_t *out, size_t out_len);
+/* PQC Sign compat */
+static inline int nextssl_root_mldsa87_keygen(uint8_t *pk, uint8_t *sk)
+    { return nextssl_root_pqc_sign_mldsa87_keygen(pk, sk); }
+/* old sign: (sig, sig_len, msg, mlen, sk) → new: (sk, msg, mlen, sig, sig_len) */
+static inline int nextssl_root_mldsa87_sign(uint8_t *sig, size_t *sig_len,
+    const uint8_t *msg, size_t mlen, const uint8_t *sk)
+    { return nextssl_root_pqc_sign_mldsa87_sign(sk, msg, mlen, sig, sig_len); }
+/* old verify returned 0=valid; new returns 1=valid — re-normalise */
+static inline int nextssl_root_mldsa87_verify(const uint8_t *sig, size_t sig_len,
+    const uint8_t *msg, size_t mlen, const uint8_t *pk)
+    { return nextssl_root_pqc_sign_mldsa87_verify(pk, msg, mlen, sig, sig_len) == 1 ? 0 : -1; }
 
 #ifdef __cplusplus
 }

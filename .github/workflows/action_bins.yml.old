@@ -1,0 +1,1557 @@
+name: Build Bins
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      platforms:
+        description: "Comma-separated platforms to run (web,linux,mac,windows)"
+        required: false
+        default: "web,linux,mac,windows"
+      tiers:
+        description: "Comma-separated tiers to run (partial,base,main,system)"
+        required: false
+        default: "partial,base,main,system"
+      load_mode:
+        description: "Test load mode: gen (default), genAll (all tests), genQuick (header-only fast)"
+        required: false
+        default: "gen"
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  LOAD_MODE: >-
+    ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.load_mode != '' && github.event.inputs.load_mode) ||
+        (contains(github.event.head_commit.message, '--genAll') && 'genAll') ||
+        (contains(github.event.head_commit.message, '--genQuick') && 'genQuick') ||
+        'gen' }}
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    # Only run if: workflow_dispatch OR --gen flag OR --v X.Y.Z with publish flags
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '--gen') || (contains(github.event.head_commit.message, '--v ') && (contains(github.event.head_commit.message, '--test') || contains(github.event.head_commit.message, '--beta') || contains(github.event.head_commit.message, '--release'))) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Guard --no_gen not present
+        run: python -c "import pathlib,sys; root=pathlib.Path('.'); bad=[]; [bad.append(str(p)) for p in root.rglob('*') if p.is_file() and not p.as_posix().startswith('.github/workflows/') and '--no_gen' in p.read_text(errors='ignore')]; print('Found --no_gen in', bad) if bad else None; sys.exit(1 if bad else 0)"
+  web_partial_core:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/core.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-core-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/web/partial/core.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  web_partial_hash:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/hash.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/web/partial/hash.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  web_partial_dhcm:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/dhcm.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/web/partial/dhcm.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  web_partial_pow:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/pow.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/web/partial/pow.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  web_partial_pqc:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/partial/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/web/partial/pqc.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  web_base:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
+    needs:
+      - web_partial_core
+      - web_partial_hash
+      - web_partial_dhcm
+      - web_partial_pow
+      - web_partial_pqc
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/base/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/web/base/
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  web_main:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
+    needs: web_base
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/main/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/web/main/
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  web_system:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',web,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
+    needs: web_main
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk
+          ./emsdk install 3.1.60
+          ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD" >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten" >> $GITHUB_ENV
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup Wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        shell: bash
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/system.log
+          python runner.py --platform ${{ env.PLATFORM }} --build lite:main --test lite:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/web/lite.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/web/system.log
+            logs/action/web/lite.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  windows_partial_core:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/core.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-core-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/windows/partial/core.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  windows_partial_hash:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/hash.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/windows/partial/hash.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  windows_partial_dhcm:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/dhcm.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/windows/partial/dhcm.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  windows_partial_pow:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/pow.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/windows/partial/pow.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  windows_partial_pqc:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/partial/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/windows/partial/pqc.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  windows_base:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
+    needs:
+      - windows_partial_core
+      - windows_partial_hash
+      - windows_partial_dhcm
+      - windows_partial_pow
+      - windows_partial_pqc
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/base/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/windows/base/
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  windows_main:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
+    needs: windows_base
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/main/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/windows/main/
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  windows_system:
+    runs-on: windows-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',windows,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
+    needs: windows_main
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Windows)
+        run: choco install mingw -y
+        shell: powershell
+      - name: Build and Test
+        shell: bash
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/system.log
+          python runner.py --platform ${{ env.PLATFORM }} --build lite:main --test lite:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/windows/lite.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/windows/system.log
+            logs/action/windows/lite.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  linux_partial_core:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/core.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-core-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/linux/partial/core.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  linux_partial_hash:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/hash.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/linux/partial/hash.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  linux_partial_dhcm:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/dhcm.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/linux/partial/dhcm.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  linux_partial_pow:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/pow.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/linux/partial/pow.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  linux_partial_pqc:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/partial/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/linux/partial/pqc.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  linux_base:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
+    needs:
+      - linux_partial_core
+      - linux_partial_hash
+      - linux_partial_dhcm
+      - linux_partial_pow
+      - linux_partial_pqc
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/base/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/linux/base/
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  linux_main:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
+    needs: linux_base
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/main/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/linux/main/
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  linux_system:
+    runs-on: ubuntu-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',linux,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
+    needs: linux_main
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (Linux)
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Build and Test
+        shell: bash
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/system.log
+          python runner.py --platform ${{ env.PLATFORM }} --build lite:main --test lite:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/linux/lite.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/linux/system.log
+            logs/action/linux/lite.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  mac_partial_core:
+    runs-on: macos-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --test core:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/core.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-core-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/mac/partial/core.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  mac_partial_hash:
+    runs-on: macos-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --test hash:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/hash.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/mac/partial/hash.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  mac_partial_dhcm:
+    runs-on: macos-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --test dhcm:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/dhcm.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/mac/partial/dhcm.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  mac_partial_pow:
+    runs-on: macos-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --test pow:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/pow.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/mac/partial/pow.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  mac_partial_pqc:
+    runs-on: macos-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',partial,') }}
+    needs: guard
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --test pqc:partial --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/partial/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/mac/partial/pqc.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  mac_base:
+    runs-on: macos-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',base,') }}
+    needs:
+      - mac_partial_core
+      - mac_partial_hash
+      - mac_partial_dhcm
+      - mac_partial_pow
+      - mac_partial_pqc
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:base --test core:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:base --test hash:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:base --test dhcm:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:base --test pow:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --test pqc:base --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/base/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/mac/base/
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  mac_main:
+    runs-on: macos-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',main,') }}
+    needs: mac_base
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build core:main --test core:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/core.log
+          python runner.py --platform ${{ env.PLATFORM }} --build hash:main --test hash:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/hash.log
+          python runner.py --platform ${{ env.PLATFORM }} --build dhcm:main --test dhcm:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/dhcm.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pow:main --test pow:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/pow.log
+          python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --test pqc:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/main/pqc.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/mac/main/
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  mac_system:
+    runs-on: macos-latest
+    if: ${{ contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.platforms || 'web,linux,mac,windows')), ',mac,') && contains(format(',{0},', (github.event_name == 'workflow_dispatch' && github.event.inputs.tiers || 'partial,base,main,system')), ',system,') }}
+    needs: mac_main
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+      SOURCE_DATE_EPOCH: 0
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install GCC (mac)
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        shell: bash
+        run: |
+          python runner.py --platform ${{ env.PLATFORM }} --build system:main --test system:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/system.log
+          python runner.py --platform ${{ env.PLATFORM }} --build lite:main --test lite:main --load-mode ${{ env.LOAD_MODE }} --action-log logs/action/mac/lite.log
+      - name: Upload Output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}
+            logs/action/mac/system.log
+            logs/action/mac/lite.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  commit:
+    runs-on: ubuntu-latest
+    if: ${{ !cancelled() && (needs.web_system.result == 'success' || needs.windows_system.result == 'success' || needs.linux_system.result == 'success' || needs.mac_system.result == 'success') }}
+    needs:
+      - web_system
+      - windows_system
+      - linux_system
+      - mac_system
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Cleanup RSP Files
+        run: |
+          find bin -type f -name '*.rsp' -delete 2>/dev/null || true
+        shell: bash
+      - name: Compress Large Logs
+        run: |
+          # Compress logs larger than 10MB to avoid GitHub 100MB limit
+          find logs -type f -name '*.log' -size +10M -exec gzip -9 {} \;
+          echo "Compressed large log files:"
+          find logs -type f -name '*.log.gz' -exec ls -lh {} \;
+        shell: bash
+      - name: Generate Bin Index
+        shell: bash
+        run: python roll_checksum.py
+      - name: Commit Outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          python clear.py
+          git add -f bin logs
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Add platform binaries and logs [skip ci]"
+          git pull --rebase -X ours
+          git push

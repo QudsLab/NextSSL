@@ -164,7 +164,7 @@ _ALL4 = ('', '_drbg', '_udbf', '_derand')
 #     Built from master lists — auto-updates when lists change.
 # ─────────────────────────────────────────────────────────────────────────────
 PRIMARY_ALWAYS = {
-    # Full system DLL: one algo per family + profiling ping + smoke
+    # Full system DLL: one algo per family + profiling ping + smoke + root tree
     'primary/system': _h('system',
         'system_profile',       # profiling ping (always first)
         _H_FAST[0],             # sha256
@@ -179,8 +179,14 @@ PRIMARY_ALWAYS = {
         _MLKEM[0],              # mlkem512
         _MLDSA[0],              # mldsa44
         'system_main',          # final integrated smoke
+        'root_hash',            # nextssl_root_hash_* tree (sha256/sha512/blake3/sha3_256/argon2id)
+        'root_aead',            # nextssl_root_aead_* tree (aesgcm/chacha20 + AAD)
+        'root_ecc',             # nextssl_root_ecc_* tree (ed25519 + x25519)
+        'root_pqc',             # nextssl_root_pqc_* tree (mlkem768 + mldsa65/87)
+        'root_pow',             # nextssl_root_pow_* tree (challenge/solve/verify)
+        'root_legacy',          # nextssl_root_legacy_alive_* (sha1, md5, ripemd160)
     ),
-    # Lite system DLL: lighter set + lite smoke
+    # Lite system DLL: lighter set + lite smoke + root tree
     'primary/system_lite': _h('system',
         'system_profile_lite',  # profiling ping
         _H_FAST[0],             # sha256
@@ -188,6 +194,11 @@ PRIMARY_ALWAYS = {
         _C_ECC[0],              # ed25519
         _MLKEM[0],              # mlkem512
         'system_lite',          # unified DLL smoke
+        'root_hash',            # nextssl_root_hash_* tree (sha256/sha512/blake3/argon2id)
+        'root_aead',            # nextssl_root_aead_* tree (aesgcm/chacha20 + AAD)
+        'root_ecc',             # nextssl_root_ecc_* tree (ed25519 + x25519)
+        'root_pqc',             # nextssl_root_pqc_* tree (mlkem1024 + mldsa87)
+        'root_pow',             # nextssl_root_pow_* tree (challenge/solve/verify)
     ),
 }
 

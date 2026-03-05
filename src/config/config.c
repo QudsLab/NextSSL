@@ -41,6 +41,12 @@ static const struct {
     {NEXTSSL_HASH_BLAKE2S, "BLAKE2S", true},
     {NEXTSSL_HASH_SHA3_256, "SHA3-256", true},
     {NEXTSSL_HASH_SHA3_512, "SHA3-512", true},
+    {NEXTSSL_HASH_SHA224, "SHA224", true},
+    {NEXTSSL_HASH_SHA3_224, "SHA3-224", true},
+    {NEXTSSL_HASH_SHA3_384, "SHA3-384", true},
+    {NEXTSSL_HASH_KECCAK256, "KECCAK256", true},
+    {NEXTSSL_HASH_SHAKE128, "SHAKE128", true},
+    {NEXTSSL_HASH_SHAKE256, "SHAKE256", true},
 #endif
 };
 
@@ -119,6 +125,45 @@ static const struct {
     {NEXTSSL_KEM_BIKE_L5, "BIKE-L5", true},
     {NEXTSSL_KEM_ECDH_P256, "ECDH-P256", true},
     {NEXTSSL_KEM_ECDH_P384, "ECDH-P384", true},
+#endif
+};
+
+/* PoW algorithms available in this build */
+static const struct {
+    nextssl_pow_algo_t id;
+    const char *name;   /* dispatcher string ID */
+    bool available;
+} pow_algos[] = {
+    {NEXTSSL_POW_SHA256,   "sha256",   true},
+    {NEXTSSL_POW_SHA512,   "sha512",   true},
+    {NEXTSSL_POW_BLAKE3,   "blake3",   true},
+    {NEXTSSL_POW_ARGON2ID, "argon2id", true},
+
+#ifndef NEXTSSL_BUILD_LITE
+    {NEXTSSL_POW_SHA224,    "sha224",    true},
+    {NEXTSSL_POW_SHA3_224,  "sha3_224",  true},
+    {NEXTSSL_POW_SHA3_256,  "sha3_256",  true},
+    {NEXTSSL_POW_SHA3_384,  "sha3_384",  true},
+    {NEXTSSL_POW_SHA3_512,  "sha3_512",  true},
+    {NEXTSSL_POW_KECCAK256, "keccak_256", true},
+    {NEXTSSL_POW_SHAKE128,  "shake128",  true},
+    {NEXTSSL_POW_SHAKE256,  "shake256",  true},
+    {NEXTSSL_POW_BLAKE2B,   "blake2b",   true},
+    {NEXTSSL_POW_BLAKE2S,   "blake2s",   true},
+    {NEXTSSL_POW_ARGON2I,   "argon2i",   true},
+    {NEXTSSL_POW_ARGON2D,   "argon2d",   true},
+    {NEXTSSL_POW_MD5,       "md5",       true},
+    {NEXTSSL_POW_SHA1,      "sha1",      true},
+    {NEXTSSL_POW_RIPEMD160, "ripemd160", true},
+    {NEXTSSL_POW_WHIRLPOOL, "whirlpool", true},
+    {NEXTSSL_POW_NT,        "nt",        true},
+    {NEXTSSL_POW_MD2,       "md2",       true},
+    {NEXTSSL_POW_MD4,       "md4",       true},
+    {NEXTSSL_POW_SHA0,      "sha0",      true},
+    {NEXTSSL_POW_HAS160,    "has160",    true},
+    {NEXTSSL_POW_RIPEMD128, "ripemd128", true},
+    {NEXTSSL_POW_RIPEMD256, "ripemd256", true},
+    {NEXTSSL_POW_RIPEMD320, "ripemd320", true},
 #endif
 };
 
@@ -217,6 +262,16 @@ bool nextssl_config_algo_available(const char *algo_type, int algo_id) {
         for (size_t i = 0; i < sizeof(kem_algos) / sizeof(kem_algos[0]); i++) {
             if (kem_algos[i].id == algo_id) {
                 return kem_algos[i].available;
+            }
+        }
+    }
+    else if (strcmp(algo_type, "pow") == 0) {
+        if (algo_id < 0 || algo_id >= NEXTSSL_POW_MAX) {
+            return false;
+        }
+        for (size_t i = 0; i < sizeof(pow_algos) / sizeof(pow_algos[0]); i++) {
+            if (pow_algos[i].id == algo_id) {
+                return pow_algos[i].available;
             }
         }
     }
@@ -350,6 +405,7 @@ const nextssl_config_t* nextssl_config_init_custom(const nextssl_profile_custom_
     if (!nextssl_config_algo_available("kdf",  (int)custom->kdf))  return NULL;
     if (!nextssl_config_algo_available("sign", (int)custom->sign)) return NULL;
     if (!nextssl_config_algo_available("kem",  (int)custom->kem))  return NULL;
+    if (!nextssl_config_algo_available("pow",  (int)custom->pow))  return NULL;
 
     /* Build the config manually — NEXTSSL_PROFILE_MAX is the custom sentinel */
     g_config.profile      = NEXTSSL_PROFILE_MAX;
@@ -358,6 +414,7 @@ const nextssl_config_t* nextssl_config_init_custom(const nextssl_profile_custom_
     g_config.default_kdf  = custom->kdf;
     g_config.default_sign = custom->sign;
     g_config.default_kem  = custom->kem;
+    g_config.default_pow  = custom->pow;
     g_config.profile_name = (custom->name != NULL) ? custom->name : "Custom";
     /* Security flags — user explicitly chose algorithms, allow anything */
     g_config.strict_mode  = false;
@@ -366,4 +423,14 @@ const nextssl_config_t* nextssl_config_init_custom(const nextssl_profile_custom_
 
     g_config.initialized = NEXTSSL_CONFIG_MAGIC;
     return &g_config;
+}
+
+const char* nextssl_pow_algo_id(nextssl_pow_algo_t algo) {
+    if ((int)algo < 0 || algo >= NEXTSSL_POW_MAX) return NULL;
+    for (size_t i = 0; i < sizeof(pow_algos) / sizeof(pow_algos[0]); i++) {
+        if (pow_algos[i].id == algo) {
+            return pow_algos[i].name;
+        }
+    }
+    return NULL;
 }

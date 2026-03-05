@@ -67,6 +67,12 @@ typedef enum {
     NEXTSSL_HASH_BLAKE2S,
     NEXTSSL_HASH_SHA3_256,
     NEXTSSL_HASH_SHA3_512,
+    NEXTSSL_HASH_SHA224,
+    NEXTSSL_HASH_SHA3_224,
+    NEXTSSL_HASH_SHA3_384,
+    NEXTSSL_HASH_KECCAK256,
+    NEXTSSL_HASH_SHAKE128,
+    NEXTSSL_HASH_SHAKE256,
 #endif
     
     NEXTSSL_HASH_MAX
@@ -142,6 +148,44 @@ typedef enum {
     NEXTSSL_KEM_MAX
 } nextssl_kem_algo_t;
 
+typedef enum {
+    /* PoW algorithms: lite build subset */
+    NEXTSSL_POW_SHA256 = 0,
+    NEXTSSL_POW_SHA512,
+    NEXTSSL_POW_BLAKE3,
+    NEXTSSL_POW_ARGON2ID,
+
+#ifndef NEXTSSL_BUILD_LITE
+    /* Full-only PoW algorithms */
+    NEXTSSL_POW_SHA224,
+    NEXTSSL_POW_SHA3_224,
+    NEXTSSL_POW_SHA3_256,
+    NEXTSSL_POW_SHA3_384,
+    NEXTSSL_POW_SHA3_512,
+    NEXTSSL_POW_KECCAK256,
+    NEXTSSL_POW_SHAKE128,
+    NEXTSSL_POW_SHAKE256,
+    NEXTSSL_POW_BLAKE2B,
+    NEXTSSL_POW_BLAKE2S,
+    NEXTSSL_POW_ARGON2I,
+    NEXTSSL_POW_ARGON2D,
+    NEXTSSL_POW_MD5,            /* Legacy — not suitable for security-sensitive PoW */
+    NEXTSSL_POW_SHA1,
+    NEXTSSL_POW_RIPEMD160,
+    NEXTSSL_POW_WHIRLPOOL,
+    NEXTSSL_POW_NT,
+    NEXTSSL_POW_MD2,
+    NEXTSSL_POW_MD4,
+    NEXTSSL_POW_SHA0,
+    NEXTSSL_POW_HAS160,
+    NEXTSSL_POW_RIPEMD128,
+    NEXTSSL_POW_RIPEMD256,
+    NEXTSSL_POW_RIPEMD320,
+#endif
+
+    NEXTSSL_POW_MAX
+} nextssl_pow_algo_t;
+
 /* ========================================================================
  * CONFIGURATION STRUCTURE
  * ======================================================================== */
@@ -161,6 +205,7 @@ typedef struct {
     nextssl_kdf_algo_t default_kdf;
     nextssl_sign_algo_t default_sign;
     nextssl_kem_algo_t default_kem;
+    nextssl_pow_algo_t default_pow;  /**< Default PoW algorithm for this profile */
     
     /* Security flags */
     bool strict_mode;                   /**< Reject weak parameters */
@@ -221,6 +266,17 @@ const char* nextssl_config_security_level(void);
 const char* nextssl_config_profile_name(nextssl_profile_t profile);
 
 /**
+ * @brief Convert PoW algorithm enum to dispatcher string ID.
+ *
+ * Returns the string identifier used by pow_adapter_get() (e.g. "sha256").
+ * Returns NULL for invalid or unavailable (lite build) identifiers.
+ *
+ * @param algo  PoW algorithm enum value
+ * @return Static string, or NULL on error
+ */
+const char* nextssl_pow_algo_id(nextssl_pow_algo_t algo);
+
+/**
  * @brief Validate algorithm selection against current profile
  * 
  * Checks if algorithm is:
@@ -276,6 +332,7 @@ typedef struct {
     nextssl_kdf_algo_t   kdf;    /**< e.g. NEXTSSL_KDF_ARGON2ID */
     nextssl_sign_algo_t  sign;   /**< e.g. NEXTSSL_SIGN_ED25519 */
     nextssl_kem_algo_t   kem;    /**< e.g. NEXTSSL_KEM_ML_KEM_1024 */
+    nextssl_pow_algo_t   pow;    /**< e.g. NEXTSSL_POW_SHA256 (informational default) */
     const char          *name;   /**< Optional label shown by nextssl_config_profile_name() */
 } nextssl_profile_custom_t;
 
