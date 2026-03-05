@@ -134,7 +134,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/core.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test core:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/core.log
       - name: Upload Output
@@ -145,7 +146,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/core.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -211,7 +212,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/hash.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test hash:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/hash.log
       - name: Upload Output
@@ -222,7 +224,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/hash.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -288,7 +290,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/dhcm.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test dhcm:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/dhcm.log
       - name: Upload Output
@@ -299,7 +302,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/dhcm.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -365,7 +368,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/pow.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test pow:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/pow.log
       - name: Upload Output
@@ -376,7 +380,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/pow.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -442,7 +446,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test pqc:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/partial/pqc.log
       - name: Upload Output
@@ -453,7 +458,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/web/partial/pqc.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -536,7 +541,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/base/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',2,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',2,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',2,') }}
         run: |
           python runner.py --platform ${{ env.PLATFORM }} --test core:base --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/base/core.log
@@ -552,7 +558,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/web/base/
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -627,7 +633,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/main/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',3,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',3,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',3,') }}
         run: |
           python runner.py --platform ${{ env.PLATFORM }} --test core:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/main/core.log
@@ -643,7 +650,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/web/main/
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -716,7 +723,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build lite:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/web/lite.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',4,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',4,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',4,') }}
         shell: bash
         run: |
@@ -731,7 +739,7 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/web/system.log
             logs/action/web/lite.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -778,7 +786,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/core.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test core:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/core.log
       - name: Upload Output
@@ -789,7 +798,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/core.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -832,7 +841,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/hash.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test hash:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/hash.log
       - name: Upload Output
@@ -843,7 +853,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/hash.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -886,7 +896,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/dhcm.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test dhcm:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/dhcm.log
       - name: Upload Output
@@ -897,7 +908,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/dhcm.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -940,7 +951,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/pow.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test pow:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/pow.log
       - name: Upload Output
@@ -951,7 +963,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/pow.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -994,7 +1006,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test pqc:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/partial/pqc.log
       - name: Upload Output
@@ -1005,7 +1018,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/windows/partial/pqc.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1064,7 +1077,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/base/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',2,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',2,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',2,') }}
         run: |
           python runner.py --platform ${{ env.PLATFORM }} --test core:base --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/base/core.log
@@ -1080,7 +1094,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/windows/base/
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1131,7 +1145,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/main/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',3,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',3,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',3,') }}
         run: |
           python runner.py --platform ${{ env.PLATFORM }} --test core:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/main/core.log
@@ -1147,7 +1162,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/windows/main/
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1196,7 +1211,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build lite:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/windows/lite.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',4,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',4,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',4,') }}
         shell: bash
         run: |
@@ -1211,7 +1227,7 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/windows/system.log
             logs/action/windows/lite.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1257,7 +1273,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/core.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test core:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/core.log
       - name: Upload Output
@@ -1268,7 +1285,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/core.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1310,7 +1327,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/hash.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test hash:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/hash.log
       - name: Upload Output
@@ -1321,7 +1339,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/hash.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1363,7 +1381,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/dhcm.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test dhcm:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/dhcm.log
       - name: Upload Output
@@ -1374,7 +1393,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/dhcm.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1416,7 +1435,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/pow.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test pow:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/pow.log
       - name: Upload Output
@@ -1427,7 +1447,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/pow.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1469,7 +1489,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test pqc:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/partial/pqc.log
       - name: Upload Output
@@ -1480,7 +1501,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/linux/partial/pqc.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1538,7 +1559,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/base/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',2,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',2,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',2,') }}
         run: |
           python runner.py --platform ${{ env.PLATFORM }} --test core:base --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/base/core.log
@@ -1554,7 +1576,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/linux/base/
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1604,7 +1626,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/main/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',3,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',3,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',3,') }}
         run: |
           python runner.py --platform ${{ env.PLATFORM }} --test core:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/main/core.log
@@ -1620,7 +1643,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/linux/main/
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1668,7 +1691,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build lite:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/linux/lite.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',4,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',4,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',4,') }}
         shell: bash
         run: |
@@ -1683,7 +1707,7 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/linux/system.log
             logs/action/linux/lite.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1729,7 +1753,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build core:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/core.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test core:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/core.log
       - name: Upload Output
@@ -1740,7 +1765,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/core.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1782,7 +1807,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build hash:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/hash.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test hash:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/hash.log
       - name: Upload Output
@@ -1793,7 +1819,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/hash.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1835,7 +1861,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build dhcm:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/dhcm.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test dhcm:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/dhcm.log
       - name: Upload Output
@@ -1846,7 +1873,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/dhcm.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1888,7 +1915,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build pow:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/pow.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test pow:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/pow.log
       - name: Upload Output
@@ -1899,7 +1927,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/pow.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -1941,7 +1969,8 @@ jobs:
         run: python runner.py --platform ${{ env.PLATFORM }} --build pqc:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',1,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',1,') }}
         run: python runner.py --platform ${{ env.PLATFORM }} --test pqc:partial --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/partial/pqc.log
       - name: Upload Output
@@ -1952,7 +1981,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/mac/partial/pqc.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -2010,7 +2039,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:base --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/base/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',2,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',2,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',2,') }}
         run: |
           python runner.py --platform ${{ env.PLATFORM }} --test core:base --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/base/core.log
@@ -2026,7 +2056,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/mac/base/
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -2076,7 +2106,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build pqc:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/main/pqc.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',3,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',3,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',3,') }}
         run: |
           python runner.py --platform ${{ env.PLATFORM }} --test core:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/main/core.log
@@ -2092,7 +2123,7 @@ jobs:
           path: |
             bin/${{ env.BIN_DIR }}
             logs/action/mac/main/
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
@@ -2140,7 +2171,8 @@ jobs:
           python runner.py --platform ${{ env.PLATFORM }} --build lite:main --load-mode ${{ needs.parse_layers.outputs.load_mode }} --action-log logs/action/mac/lite.log
       - name: Test
         if: >-
-          ${{ !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',4,')
+          ${{ !failure()
+            && !contains(format(',{0},', needs.parse_layers.outputs.lofb), ',4,')
             && !contains(format(',{0},', needs.parse_layers.outputs.lntt), ',4,') }}
         shell: bash
         run: |
@@ -2155,7 +2187,7 @@ jobs:
             bin/${{ env.BIN_DIR }}
             logs/action/mac/system.log
             logs/action/mac/lite.log
-          if-no-files-found: warn
+          if-no-files-found: ignore
       - name: Cancel run on failure
         if: failure()
         shell: bash
