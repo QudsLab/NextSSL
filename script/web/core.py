@@ -35,7 +35,8 @@ _HMAC_EXPECTED = bytes.fromhex(
 
 # Ed25519 deterministic seed (RFC 8037)
 _ED25519_SEED = bytes.fromhex(
-    "9d61b19deffd5a60ba844af492ec2cc44da4da053d0a5bea7f2311496cabab02c")
+    "9d61b19deffd5a60ba844af492ec2cc4"
+    "4da4da053d0a5bea7f2311496cabab02")
 _ED25519_MSG  = b"hello"
 
 
