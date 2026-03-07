@@ -1,0 +1,38 @@
+{
+  "linux": {
+    "main": {
+      "core": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/main/core.so",
+      "dhcm": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/main/dhcm.so",
+      "hash": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/main/hash.so",
+      "pqc": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/main/pqc.so"
+    },
+    "primary": {
+      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/primary/main.so",
+      "main_lite": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/primary/main_lite.so"
+    }
+  },
+  "mac": {
+    "main": {
+      "core": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/main/core.dylib",
+      "dhcm": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/main/dhcm.dylib",
+      "hash": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/main/hash.dylib",
+      "pqc": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/main/pqc.dylib"
+    },
+    "primary": {
+      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/primary/main.dylib",
+      "main_lite": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/primary/main_lite.dylib"
+    }
+  },
+  "windows": {
+    "main": {
+      "core": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/main/core.dll",
+      "dhcm": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/main/dhcm.dll",
+      "hash": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/main/hash.dll",
+      "pqc": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/main/pqc.dll"
+    },
+    "primary": {
+      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/primary/main.dll",
+      "main_lite": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/primary/main_lite.dll"
+    }
+  }
+}

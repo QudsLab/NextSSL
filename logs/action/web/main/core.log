@@ -1,0 +1,30 @@
+2026-03-07 00:37:20,196 - ERROR - Compilation failed for core:
+2026-03-07 00:37:20,197 - ERROR - shared:INFO: (Emscripten: Running sanity checks)
+/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305/monocypher.c:286:48: warning: shift count >= width of type [-Wshift-count-overflow]
+  286 |     store32_le(len_buf + 4, (uint32_t)(ad_size >> 32));
+      |                                                ^  ~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305/monocypher.c:288:51: warning: shift count >= width of type [-Wshift-count-overflow]
+  288 |     store32_le(len_buf + 12, (uint32_t)(text_size >> 32));
+      |                                                   ^  ~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305/monocypher.c:328:48: warning: shift count >= width of type [-Wshift-count-overflow]
+  328 |     store32_le(len_buf + 4, (uint32_t)(ad_size >> 32));
+      |                                                ^  ~~
+/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305/monocypher.c:330:51: warning: shift count >= width of type [-Wshift-count-overflow]
+  330 |     store32_le(len_buf + 12, (uint32_t)(text_size >> 32));
+      |                                                   ^  ~~
+4 warnings generated.
+/home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c:22:5: error: use of undeclared identifier 'sha256_ctx'
+   22 |     sha256_ctx ctx;
+      |     ^
+/home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c:23:18: error: use of undeclared identifier 'ctx'
+   23 |     sha256_init(&ctx);
+      |                  ^
+/home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c:24:20: error: use of undeclared identifier 'ctx'
+   24 |     sha256_update(&ctx, (const uint8_t *)"abc", 3);
+      |                    ^
+/home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c:25:19: error: use of undeclared identifier 'ctx'
+   25 |     sha256_final(&ctx, digest);
+      |                   ^
+4 errors generated.
+emcc: error: '/home/runner/work/NextSSL/NextSSL/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/home/runner/work/NextSSL/NextSSL/emsdk/upstream/emscripten/cache/sysroot -DEMSCRIPTEN -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O2 -Wall -ffile-prefix-map=.=. -fmacro-prefix-map=.=. -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/include -I/home/runner/work/NextSSL/NextSSL/src/primitives -I/home/runner/work/NextSSL/NextSSL/src/primitives/hash/fast/blake3 -I/home/runner/work/NextSSL/NextSSL/src/primitives/hash/memory_hard/utils -I/home/runner/work/NextSSL/NextSSL/src/legacy/alive -I/home/runner/work/NextSSL/NextSSL/src/legacy/unsafe -I/home/runner/work/NextSSL/NextSSL/src/utils -I/home/runner/work/NextSSL/NextSSL/src/primitives/cipher/aes_core -I/home/runner/work/NextSSL/NextSSL/src/primitives/cipher -I/home/runner/work/NextSSL/NextSSL/src/primitives/aead -I/home/runner/work/NextSSL/NextSSL/src/primitives/mac -I/home/runner/work/NextSSL/NextSSL/src/primitives/aead/chacha20_poly1305 -I/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/ed25519 -I/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/curve448 -I/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/elligator2 -I/home/runner/work/NextSSL/NextSSL/src/primitives/ecc/ristretto255 -I/home/runner/work/NextSSL/NextSSL/src/PQCrypto/common -I/home/runner/work/NextSSL/NextSSL/src/primitives/hash/sponge_xof/shake -I/home/runner/work/NextSSL/NextSSL/src -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -DBLAKE3_NO_THREADING -DBLAKE3_ATOMICS=0 -DEXCLUDE_SPHINCS -DAES___=128 -DFF_X=1 -DHAVE_ED448=1 /home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c -c -o /tmp/emscripten_temp_4di6jtq0/wasm_selftest_43.o' failed (returned 1)
+

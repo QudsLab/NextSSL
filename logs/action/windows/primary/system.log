@@ -1,0 +1,65 @@
+2026-03-07 00:41:33,856 - INFO - Successfully built main
+2026-03-07 00:41:49,369 - INFO - === Running 2 test suites... ===
+2026-03-07 00:41:49,369 - INFO - -> Running script.test.primary.system
+2026-03-07 00:41:49,369 - INFO - -> Loading D:\a\NextSSL\NextSSL\bin\windows\primary\main.dll
+2026-03-07 00:41:49,369 - INFO - [PASS] DLL Loaded
+2026-03-07 00:41:49,369 - INFO - [PASS] SHA256 utility OK
+2026-03-07 00:41:49,371 - INFO - [PASS] DHCM OK
+2026-03-07 00:41:49,371 - INFO - [PASS] nextssl_root_pow challenge/solve/verify (d=4, sha256) OK
+2026-03-07 00:41:49,371 - INFO - [PASS] PQC symbols OK
+2026-03-07 00:41:49,371 - INFO - [PASS] AES-CBC OK
+2026-03-07 00:41:49,371 - INFO - [PASS] nextssl_init(MODERN) + nextssl_hash OK
+2026-03-07 00:41:49,371 - INFO - [PASS] nextssl_encrypt/decrypt round-trip OK
+2026-03-07 00:41:49,371 - INFO - [PASS] nextssl_init_custom + security_level 'custom' OK
+2026-03-07 00:41:49,371 - INFO - [PASS] nextssl_root_hash_sha256 KAT OK
+2026-03-07 00:41:49,371 - INFO - [PASS] nextssl_root_hash_sha512 KAT OK
+2026-03-07 00:41:49,371 - INFO - [PASS] nextssl_root_hash_blake3 KAT OK
+2026-03-07 00:41:49,373 - INFO - [PASS] nextssl_root_hash_sha3_256 KAT OK
+2026-03-07 00:41:49,373 - INFO - [PASS] nextssl_root_legacy_alive_sha1 KAT OK
+2026-03-07 00:41:49,373 - INFO - [PASS] nextssl_root_legacy_alive_md5 KAT OK
+2026-03-07 00:41:49,373 - INFO - [PASS] nextssl_root_aead AES-256-GCM round-trip OK
+2026-03-07 00:41:49,373 - INFO - [PASS] nextssl_root_aead ChaCha20-Poly1305 round-trip OK
+2026-03-07 00:41:49,373 - INFO - [PASS] nextssl_root_ecc_ed25519 sign/verify OK
+2026-03-07 00:41:49,373 - INFO - [PASS] nextssl_root_ecc_x25519 ECDH round-trip OK
+2026-03-07 00:41:49,376 - INFO - [PASS] nextssl_root_pqc_kem_mlkem768 KEM OK
+2026-03-07 00:41:49,377 - INFO - [PASS] nextssl_root_pqc_sign_mldsa65 sign/verify OK
+2026-03-07 00:41:49,378 - INFO - [PASS] nextssl_root_pqc_sign_mldsa87 sign/verify OK
+2026-03-07 00:41:49,438 - INFO - [PASS] nextssl_root_hash_argon2id OK
+2026-03-07 00:41:49,438 - INFO - [PASS] Main unified DLL OK
+2026-03-07 00:41:49,438 - INFO - -> Running script.test.primary.system_lite
+2026-03-07 00:41:49,439 - INFO - -> Loading D:\a\NextSSL\NextSSL\bin\windows\primary\main_lite.dll
+2026-03-07 00:41:49,440 - INFO - [PASS] DLL Loaded
+2026-03-07 00:41:49,440 - INFO - [PASS] nextssl_hash (SHA-256) OK
+2026-03-07 00:41:49,440 - INFO - [PASS] nextssl_encrypt/decrypt (AES-256-GCM) OK
+2026-03-07 00:41:49,580 - INFO - [PASS] nextssl_password_hash/verify (Argon2id) OK
+2026-03-07 00:41:49,580 - INFO - [PASS] nextssl_keygen/keyexchange (X25519) OK
+2026-03-07 00:41:49,581 - INFO - [PASS] nextssl_sign/verify (Ed25519) OK
+2026-03-07 00:41:49,581 - INFO - [PASS] nextssl_pow_solve/verify OK
+2026-03-07 00:41:49,581 - INFO - [PASS] nextssl_variant() == 'lite' OK
+2026-03-07 00:41:49,581 - INFO - [PASS] nextssl_init(MODERN) + security_level OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_init second call idempotent OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_has_algorithm (known algos) OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_has_algorithm (unknown algo) returns 0 OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_hash_ex (SHA-512) OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_encrypt_ex/decrypt_ex (ChaCha20-Poly1305) OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_version() = NextSSL v0.1.0-beta-lite OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_init(PQC) + hash BLAKE3 dispatch OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_init_custom + security_level 'custom' OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_root_hash_sha256 KAT OK
+2026-03-07 00:41:49,582 - INFO - [PASS] nextssl_root_hash_blake3 KAT OK
+2026-03-07 00:41:49,583 - INFO - [PASS] nextssl_root_aead_aesgcm encrypt/decrypt round-trip OK
+2026-03-07 00:41:49,583 - INFO - [PASS] nextssl_root_aead_chacha20 encrypt/decrypt round-trip OK
+2026-03-07 00:41:49,584 - INFO - [PASS] nextssl_root_ecc_ed25519 keygen/sign/verify OK
+2026-03-07 00:41:49,584 - INFO - [PASS] nextssl_root_pqc_sign_mldsa87 keygen/sign/verify OK
+2026-03-07 00:41:49,590 - INFO - [PASS] nextssl_root_hash_argon2id OK
+2026-03-07 00:41:49,590 - INFO - [PASS] nextssl_root_hash_sha512 KAT OK
+2026-03-07 00:41:49,596 - INFO - [PASS] nextssl_root_hash_argon2id (explicit t/m/p) OK
+2026-03-07 00:41:49,596 - INFO - [PASS] nextssl_root_aead_aesgcm encrypt/decrypt with AAD OK
+2026-03-07 00:41:49,596 - INFO - [PASS] nextssl_root_aead_chacha20 encrypt/decrypt with AAD OK
+2026-03-07 00:41:49,596 - INFO - [PASS] nextssl_root_ecc_ed25519_keygen/sign/verify OK
+2026-03-07 00:41:49,598 - INFO - [PASS] nextssl_root_ecc_x25519_keygen/exchange OK
+2026-03-07 00:41:49,598 - INFO - [PASS] nextssl_root_pqc_kem_mlkem1024 keygen/encaps/decaps OK
+2026-03-07 00:41:49,599 - INFO - [PASS] nextssl_root_pqc_sign_mldsa87 keygen/sign/verify OK
+2026-03-07 00:41:49,599 - INFO - [PASS] nextssl_root_pow challenge/solve/verify (d=4, sha256) OK
+2026-03-07 00:41:49,599 - INFO - [PASS] Lite unified DLL OK
+2026-03-07 00:41:49,599 - INFO - [PASS] ALL TESTS PASSED

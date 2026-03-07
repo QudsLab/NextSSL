@@ -1,0 +1,21 @@
+2026-03-07 00:37:20,609 - ERROR - Compilation failed for hash:
+2026-03-07 00:37:20,609 - ERROR - shared:INFO: (Emscripten: Running sanity checks)
+/home/runner/work/NextSSL/NextSSL/src/primitives/hash/fast/sha512/sha512.c:101:27: warning: shift count >= width of type [-Wshift-count-overflow]
+  101 |     ctx->count[1] += (len >> 61);
+      |                           ^  ~~
+1 warning generated.
+/home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c:22:5: error: use of undeclared identifier 'sha256_ctx'
+   22 |     sha256_ctx ctx;
+      |     ^
+/home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c:23:18: error: use of undeclared identifier 'ctx'
+   23 |     sha256_init(&ctx);
+      |                  ^
+/home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c:24:20: error: use of undeclared identifier 'ctx'
+   24 |     sha256_update(&ctx, (const uint8_t *)"abc", 3);
+      |                    ^
+/home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c:25:19: error: use of undeclared identifier 'ctx'
+   25 |     sha256_final(&ctx, digest);
+      |                   ^
+4 errors generated.
+emcc: error: '/home/runner/work/NextSSL/NextSSL/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/home/runner/work/NextSSL/NextSSL/emsdk/upstream/emscripten/cache/sysroot -DEMSCRIPTEN -Werror=implicit-function-declaration -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -O2 -Wall -ffile-prefix-map=.=. -fmacro-prefix-map=.=. -Wno-builtin-macro-redefined -D__DATE__= -D__TIME__= -D__TIMESTAMP__= -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/include -I/home/runner/work/NextSSL/NextSSL/src/primitives -I/home/runner/work/NextSSL/NextSSL/src/primitives/hash/fast/blake3 -I/home/runner/work/NextSSL/NextSSL/src/primitives/hash/memory_hard/utils -I/home/runner/work/NextSSL/NextSSL/src/legacy/alive -I/home/runner/work/NextSSL/NextSSL/src/legacy/unsafe -I/home/runner/work/NextSSL/NextSSL/src/utils -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -DBLAKE3_NO_THREADING -DBLAKE3_ATOMICS=0 -DEXCLUDE_SPHINCS /home/runner/work/NextSSL/NextSSL/src/utils/wasm_selftest.c -c -o /tmp/emscripten_temp_a4pyjwy3/wasm_selftest_41.o' failed (returned 1)
+
