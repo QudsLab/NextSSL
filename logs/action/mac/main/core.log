@@ -1,0 +1,15 @@
+2026-03-07 00:36:56,460 - INFO - Successfully built core
+2026-03-07 00:36:56,548 - INFO - === Running 1 test suites... ===
+2026-03-07 00:36:56,548 - INFO - -> Running script.test.main.core
+2026-03-07 00:36:56,548 - INFO - -> Loading /Users/runner/work/NextSSL/NextSSL/bin/mac/main/core.dylib
+2026-03-07 00:36:56,549 - INFO - [PASS] DLL Loaded
+2026-03-07 00:36:56,549 - INFO - -> Verifying AES-CBC
+2026-03-07 00:36:56,549 - INFO - [PASS] AES-CBC OK
+2026-03-07 00:36:56,549 - INFO - -> Verifying AES-GCM
+2026-03-07 00:36:56,549 - INFO - [PASS] AES-GCM OK
+2026-03-07 00:36:56,549 - INFO - -> Verifying ChaCha20-Poly1305
+2026-03-07 00:36:56,549 - INFO - -> Verifying HMAC-SHA256
+2026-03-07 00:36:56,549 - INFO - -> Verifying Ed25519
+2026-03-07 00:36:56,549 - INFO - [PASS] Ed25519 OK
+2026-03-07 00:36:56,549 - INFO - [PASS] Core Main: 5 passed
+2026-03-07 00:36:56,549 - INFO - [PASS] ALL TESTS PASSED
