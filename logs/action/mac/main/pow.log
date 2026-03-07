@@ -38,3 +38,43 @@ clang: error: linker command failed with exit code 1 (use -v to see invocation)
 2026-03-07 00:36:58,389 - INFO - [PASS] DHCM: 5 passed
 2026-03-07 00:36:58,389 - INFO - [PASS] All PoW+DHCM tests passed
 2026-03-07 00:36:58,389 - INFO - [PASS] ALL TESTS PASSED
+2026-03-07 00:45:25,891 - ERROR - Compilation failed for pow:
+2026-03-07 00:45:25,892 - ERROR - /Users/runner/work/NextSSL/NextSSL/src/PoW/core/pow_parser.c:70:10: warning: unused variable 'json_str' [-Wunused-variable]
+   70 |     char json_str[4096];
+      |          ^~~~~~~~
+1 warning generated.
+duplicate symbol '_nextssl_pow_client_parse_challenge' in:
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/api-cc672c.o
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/main-09e948.o
+duplicate symbol '_nextssl_pow_server_verify_solution' in:
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/api-cdb9fa.o
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/main-09e948.o
+duplicate symbol '_nextssl_pow_server_generate_challenge' in:
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/api-cdb9fa.o
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/main-09e948.o
+duplicate symbol '_nextssl_pow_client_solve' in:
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/api-cc672c.o
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/main-09e948.o
+duplicate symbol '_nextssl_pow_client_check_limits' in:
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/api-cc672c.o
+    /private/var/folders/t5/f77_gwnj6p95qxy9py3fckx00000gn/T/main-09e948.o
+ld: 5 duplicate symbols
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+
+2026-03-07 00:45:26,315 - INFO - Successfully built dhcm
+2026-03-07 00:45:26,410 - INFO - === Running 1 test suites... ===
+2026-03-07 00:45:26,410 - INFO - -> Running script.test.main.pow
+2026-03-07 00:45:26,410 - INFO - === === PoW + DHCM Main Tier Test === ===
+2026-03-07 00:45:26,410 - INFO - === ── PoW pair (server+client) ── ===
+2026-03-07 00:45:26,410 - INFO - [WARN] Skipping PoW pair: DLL not found
+2026-03-07 00:45:26,410 - INFO - === ── PoW combined (single DLL) ── ===
+2026-03-07 00:45:26,410 - INFO - [WARN] Skipping pow combined: DLL not found
+2026-03-07 00:45:26,410 - INFO - === ── DHCM ── ===
+2026-03-07 00:45:26,411 - INFO - [PASS] DHCM SHA-256 OK
+2026-03-07 00:45:26,411 - INFO - [PASS] DHCM Argon2id OK
+2026-03-07 00:45:26,411 - INFO - [PASS] DHCM SHA3-256 OK
+2026-03-07 00:45:26,411 - INFO - [PASS] DHCM MD5 OK
+2026-03-07 00:45:26,411 - INFO - [PASS] DHCM MD2 OK
+2026-03-07 00:45:26,411 - INFO - [PASS] DHCM: 5 passed
+2026-03-07 00:45:26,411 - INFO - [PASS] All PoW+DHCM tests passed
+2026-03-07 00:45:26,411 - INFO - [PASS] ALL TESTS PASSED

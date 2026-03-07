@@ -32,3 +32,37 @@ collect2: error: ld returned 1 exit status
 2026-03-07 00:37:00,267 - INFO - [PASS] DHCM: 5 passed
 2026-03-07 00:37:00,267 - INFO - [PASS] All PoW+DHCM tests passed
 2026-03-07 00:37:00,267 - INFO - [PASS] ALL TESTS PASSED
+2026-03-07 00:45:25,781 - ERROR - Compilation failed for pow:
+2026-03-07 00:45:25,782 - ERROR - /home/runner/work/NextSSL/NextSSL/src/PoW/core/pow_parser.c: In function ‘pow_parser_encode_challenge’:
+/home/runner/work/NextSSL/NextSSL/src/PoW/core/pow_parser.c:70:10: warning: unused variable ‘json_str’ [-Wunused-variable]
+   70 |     char json_str[4096];
+      |          ^~~~~~~~
+/usr/bin/ld: /tmp/ccCv3oPO.o: in function `nextssl_pow_server_generate_challenge':
+main.c:(.text+0x0): multiple definition of `nextssl_pow_server_generate_challenge'; /tmp/cc04oPTX.o:api.c:(.text+0x0): first defined here
+/usr/bin/ld: /tmp/ccCv3oPO.o: in function `nextssl_pow_server_verify_solution':
+main.c:(.text+0x10): multiple definition of `nextssl_pow_server_verify_solution'; /tmp/cc04oPTX.o:api.c:(.text+0x10): first defined here
+/usr/bin/ld: /tmp/ccCv3oPO.o: in function `nextssl_pow_client_solve':
+main.c:(.text+0x20): multiple definition of `nextssl_pow_client_solve'; /tmp/ccGvS6DW.o:api.c:(.text+0x0): first defined here
+/usr/bin/ld: /tmp/ccCv3oPO.o: in function `nextssl_pow_client_check_limits':
+main.c:(.text+0x30): multiple definition of `nextssl_pow_client_check_limits'; /tmp/ccGvS6DW.o:api.c:(.text+0x10): first defined here
+/usr/bin/ld: /tmp/ccCv3oPO.o: in function `nextssl_pow_client_parse_challenge':
+main.c:(.text+0x40): multiple definition of `nextssl_pow_client_parse_challenge'; /tmp/ccGvS6DW.o:api.c:(.text+0x20): first defined here
+collect2: error: ld returned 1 exit status
+
+2026-03-07 00:45:26,270 - INFO - Successfully built dhcm
+2026-03-07 00:45:26,337 - INFO - === Running 1 test suites... ===
+2026-03-07 00:45:26,337 - INFO - -> Running script.test.main.pow
+2026-03-07 00:45:26,337 - INFO - === === PoW + DHCM Main Tier Test === ===
+2026-03-07 00:45:26,337 - INFO - === ── PoW pair (server+client) ── ===
+2026-03-07 00:45:26,337 - INFO - [WARN] Skipping PoW pair: DLL not found
+2026-03-07 00:45:26,337 - INFO - === ── PoW combined (single DLL) ── ===
+2026-03-07 00:45:26,337 - INFO - [WARN] Skipping pow combined: DLL not found
+2026-03-07 00:45:26,337 - INFO - === ── DHCM ── ===
+2026-03-07 00:45:26,338 - INFO - [PASS] DHCM SHA-256 OK
+2026-03-07 00:45:26,338 - INFO - [PASS] DHCM Argon2id OK
+2026-03-07 00:45:26,338 - INFO - [PASS] DHCM SHA3-256 OK
+2026-03-07 00:45:26,338 - INFO - [PASS] DHCM MD5 OK
+2026-03-07 00:45:26,338 - INFO - [PASS] DHCM MD2 OK
+2026-03-07 00:45:26,338 - INFO - [PASS] DHCM: 5 passed
+2026-03-07 00:45:26,338 - INFO - [PASS] All PoW+DHCM tests passed
+2026-03-07 00:45:26,338 - INFO - [PASS] ALL TESTS PASSED

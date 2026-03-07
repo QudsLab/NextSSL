@@ -13,3 +13,18 @@
 2026-03-07 00:36:59,274 - INFO - [PASS] Ed25519 OK
 2026-03-07 00:36:59,274 - INFO - [PASS] Core Main: 5 passed
 2026-03-07 00:36:59,274 - INFO - [PASS] ALL TESTS PASSED
+2026-03-07 00:45:25,523 - INFO - Successfully built core
+2026-03-07 00:45:25,590 - INFO - === Running 1 test suites... ===
+2026-03-07 00:45:25,590 - INFO - -> Running script.test.main.core
+2026-03-07 00:45:25,590 - INFO - -> Loading /home/runner/work/NextSSL/NextSSL/bin/linux/main/core.so
+2026-03-07 00:45:25,591 - INFO - [PASS] DLL Loaded
+2026-03-07 00:45:25,591 - INFO - -> Verifying AES-CBC
+2026-03-07 00:45:25,591 - INFO - [PASS] AES-CBC OK
+2026-03-07 00:45:25,591 - INFO - -> Verifying AES-GCM
+2026-03-07 00:45:25,591 - INFO - [PASS] AES-GCM OK
+2026-03-07 00:45:25,591 - INFO - -> Verifying ChaCha20-Poly1305
+2026-03-07 00:45:25,591 - INFO - -> Verifying HMAC-SHA256
+2026-03-07 00:45:25,591 - INFO - -> Verifying Ed25519
+2026-03-07 00:45:25,591 - INFO - [PASS] Ed25519 OK
+2026-03-07 00:45:25,591 - INFO - [PASS] Core Main: 5 passed
+2026-03-07 00:45:25,592 - INFO - [PASS] ALL TESTS PASSED
