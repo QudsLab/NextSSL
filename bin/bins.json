@@ -4,6 +4,7 @@
       "core": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/main/core.so",
       "dhcm": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/main/dhcm.so",
       "hash": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/main/hash.so",
+      "pow": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/main/pow.so",
       "pqc": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/linux/main/pqc.so"
     },
     "primary": {
@@ -16,6 +17,7 @@
       "core": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/main/core.dylib",
       "dhcm": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/main/dhcm.dylib",
       "hash": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/main/hash.dylib",
+      "pow": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/main/pow.dylib",
       "pqc": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/main/pqc.dylib"
     },
     "primary": {
@@ -23,11 +25,25 @@
       "main_lite": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/mac/primary/main_lite.dylib"
     }
   },
+  "web": {
+    "main": {
+      "core": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/main/core.wasm",
+      "dhcm": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/main/dhcm.wasm",
+      "hash": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/main/hash.wasm",
+      "pow": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/main/pow.wasm",
+      "pqc": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/main/pqc.wasm"
+    },
+    "primary": {
+      "main": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/primary/main.wasm",
+      "main_lite": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/web/primary/main_lite.wasm"
+    }
+  },
   "windows": {
     "main": {
       "core": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/main/core.dll",
       "dhcm": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/main/dhcm.dll",
       "hash": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/main/hash.dll",
+      "pow": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/main/pow.dll",
       "pqc": "https://raw.githubusercontent.com/QudsLab/NextSSL/main/bin/windows/main/pqc.dll"
     },
     "primary": {
