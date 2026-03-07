@@ -7,7 +7,9 @@ _WASM_CORE_EXPORTS = [
     # MAC / KDF
     'pqc_hmac_sha256',
     # ECC
-    'ed25519_create_keypair',
+    'ed25519_create_keypair', 'ed25519_sign', 'ed25519_verify',
+    # Memory allocation — required by Python wasmtime tests in script/web/
+    'malloc', 'free',
 ]
 
 def build(builder: Builder):

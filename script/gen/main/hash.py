@@ -15,6 +15,8 @@ _WASM_HASH_EXPORTS = [
     'nextssl_shake128', 'nextssl_shake256',
     'nextssl_sha1', 'nextssl_md5',
     'nextssl_md2', 'nextssl_md4',
+    # Memory allocation — required by Python wasmtime tests in script/web/
+    'malloc', 'free',
 ]
 
 def build(builder: Builder):
@@ -34,9 +36,9 @@ def build(builder: Builder):
     ], recursive=False) # Non-recursive to just get the wrappers
     
     sources.extend(wrappers)
-            
-    return builder.build_target('hash', sources, 
-                                extra_libs=['-lpthread'], 
+
+    return builder.build_target('hash', sources,
+                                extra_libs=['-lpthread'],
                                 output_subdir='main',
                                 wasm_exports=_WASM_HASH_EXPORTS)
 

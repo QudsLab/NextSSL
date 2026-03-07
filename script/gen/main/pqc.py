@@ -17,6 +17,8 @@ _WASM_PQC_EXPORTS = [
     'pqc_falcon1024_keypair', 'pqc_falcon1024_sign', 'pqc_falcon1024_verify',
     # Util
     'pqc_randombytes', 'pqc_set_mode',
+    # Memory allocation — required by Python wasmtime tests in script/web/
+    'malloc', 'free',
 ]
 
 def build(builder: Builder):
@@ -94,7 +96,7 @@ def build(builder: Builder):
     else:
         builder.logger.error(f"Wrapper not found: {wrapper}")
         return False
-    
+
     # Additional includes for PQC
     includes = [
         os.path.join(src_dir, 'PQCrypto'),

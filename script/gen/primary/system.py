@@ -230,7 +230,12 @@ def build(builder: Builder):
         'nextssl_root_pow_server_challenge', 'nextssl_root_pow_server_verify',
         'nextssl_root_pow_client_solve',
         'nextssl_root_legacy_alive_md5', 'nextssl_root_legacy_alive_sha1',
+        # DHCM cost model (compiled in via DHCM/* sources)
         'nextssl_dhcm_expected_trials',
+        'nextssl_dhcm_calculate',
+        'nextssl_dhcm_get_algorithm_info',
+        # Memory allocation — required by Python wasmtime tests in script/web/
+        'malloc', 'free',
         # Compat
         'AES_CBC_encrypt', 'pqc_mlkem512_keypair',
     ]

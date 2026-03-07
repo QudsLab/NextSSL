@@ -103,6 +103,11 @@ TEST_CATALOG = {
 
     # ── wasm (platform=web) ───────────────────────────────────────────────────
     'wasm.hash_present':      'bin/web/main/hash.wasm   exists & size > 512 B',
+    'wasm.hash_kat':          'hash.wasm   — all 18 algo KATs  (Python/wasmtime)',
+    'wasm.core_kat':          'core.wasm   — AES/ChaCha/HMAC/Ed25519 KATs',
+    'wasm.pqc_kat':           'pqc.wasm    — ML-KEM + HQC + ML-DSA + Falcon round-trips',
+    'wasm.pow_kat':           'pow.wasm    — PoW challenge/solve/verify  (d=4)',
+    'wasm.system_kat':        'main.wasm   — DHCM cost model  (expected_trials/calculate/info)',
     'wasm.core_present':      'bin/web/main/core.wasm   exists & size > 512 B',
     'wasm.pqc_present':       'bin/web/main/pqc.wasm    exists & size > 512 B',
     'wasm.pow_present':       'bin/web/main/pow.wasm    exists & size > 512 B',
@@ -202,6 +207,11 @@ QUICK_MAP = {
     'wasm.dhcm_present':      {'layer': 'web/main/dhcm',        'check': 'file_size'},
     'wasm.main_present':      {'layer': 'web/primary/main',     'check': 'file_size'},
     'wasm.main_lite_present': {'layer': 'web/primary/main_lite','check': 'file_size'},
+    'wasm.hash_kat':          {'layer': 'web/main/hash',        'check': 'wasm_module'},
+    'wasm.core_kat':          {'layer': 'web/main/core',        'check': 'wasm_module'},
+    'wasm.pqc_kat':           {'layer': 'web/main/pqc',         'check': 'wasm_module'},
+    'wasm.pow_kat':           {'layer': 'web/main/pow',         'check': 'wasm_module'},
+    'wasm.system_kat':        {'layer': 'web/primary/main',     'check': 'wasm_module'},
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -308,6 +318,11 @@ FULL_MAP = {
     'wasm.dhcm_selftest':     {'layer': 'web/main/dhcm',        'check': 'wasm_exec', 'module': None},
     'wasm.main_selftest':     {'layer': 'web/primary/main',     'check': 'wasm_exec', 'module': None},
     'wasm.main_lite_selftest':{'layer': 'web/primary/main_lite','check': 'wasm_exec', 'module': None},
+    'wasm.hash_kat':          {'layer': 'web/main/hash',        'check': 'wasm_module', 'module': None},
+    'wasm.core_kat':          {'layer': 'web/main/core',        'check': 'wasm_module', 'module': None},
+    'wasm.pqc_kat':           {'layer': 'web/main/pqc',         'check': 'wasm_module', 'module': None},
+    'wasm.pow_kat':           {'layer': 'web/main/pow',         'check': 'wasm_module', 'module': None},
+    'wasm.system_kat':        {'layer': 'web/primary/main',     'check': 'wasm_module', 'module': None},
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -342,6 +357,12 @@ HYPER_EXTRAS = {
     'wasm.pow_selftest':      {'layer': 'web/main/pow',         'check': 'wasm_exec', 'module': None},
     'wasm.main_selftest':     {'layer': 'web/primary/main',     'check': 'wasm_exec', 'module': None},
     'wasm.main_lite_selftest':{'layer': 'web/primary/main_lite','check': 'wasm_exec', 'module': None},
+    # WASM Python/wasmtime KATs added on top of selftests
+    'wasm.hash_kat':          {'layer': 'web/main/hash',        'check': 'wasm_module', 'module': None},
+    'wasm.core_kat':          {'layer': 'web/main/core',        'check': 'wasm_module', 'module': None},
+    'wasm.pqc_kat':           {'layer': 'web/main/pqc',         'check': 'wasm_module', 'module': None},
+    'wasm.pow_kat':           {'layer': 'web/main/pow',         'check': 'wasm_module', 'module': None},
+    'wasm.system_kat':        {'layer': 'web/primary/main',     'check': 'wasm_module', 'module': None},
 }
 
 HYPER_MAP = {**FULL_MAP, **HYPER_EXTRAS}

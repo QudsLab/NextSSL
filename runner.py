@@ -34,6 +34,13 @@ from script.test.main import core as test_core_main
 from script.test.primary import system as test_system_main
 from script.test.primary import system_lite as test_system_lite
 
+# WASM KAT modules (Python/wasmtime)
+from script.web import hash as web_hash_test
+from script.web import core as web_core_test
+from script.web import pqc as web_pqc_test
+from script.web import pow as web_pow_test
+from script.web import system as web_system_test
+
 PLATFORM_LIB_EXT = {
     'windows': '.dll',
     'linux': '.so',
@@ -62,6 +69,12 @@ _MODULE_REGISTRY = {
     # primary
     'primary/system':                     test_system_main,
     'primary/system_lite':                test_system_lite,
+    # web/wasm (Python/wasmtime KAT modules)
+    'web/main/hash':                      web_hash_test,
+    'web/main/core':                      web_core_test,
+    'web/main/pqc':                       web_pqc_test,
+    'web/main/pow':                       web_pow_test,
+    'web/primary/main':                   web_system_test,
 }
 
 
@@ -226,11 +239,11 @@ def run_mode_test(config, mode_map, label, args):
                             ['wasmtime', '--invoke', 'nextssl_wasm_selftest', wasm_path],
                             capture_output=True, text=True
                         )
-                        ok = (r.returncode == 0)
+                        ok = (r.stdout.strip() == "0")
                         if ok:
                             console.print_pass(f"[{label}] {key}: selftest OK")
                         else:
-                            console.print_fail(f"[{label}] {key}: selftest failed (rc={r.returncode})")
+                            console.print_fail(f"[{label}] {key}: selftest failed (stdout={r.stdout.strip()!r})")
                         results.append((key, ok))
                     except FileNotFoundError:
                         console.print_fail(f"[{label}] {key}: wasmtime not found in PATH")
@@ -238,6 +251,23 @@ def run_mode_test(config, mode_map, label, args):
                     except Exception as e:
                         console.print_fail(f"[{label}] {key}: {e}")
                         results.append((key, False))
+
+                elif check == 'wasm_module':
+                    module = _MODULE_REGISTRY.get(layer)
+                    if module is None:
+                        console.print_fail(f"[{label}] {key}: no web test module for '{layer}'")
+                        results.append((key, False))
+                        continue
+                    try:
+                        ok = (module.main() == 0)
+                    except Exception as exc:
+                        ok = False
+                        console.print_fail(f"[{label}] {layer}: {exc}")
+                    if ok:
+                        console.print_pass(f"[{label}] {key}: WASM KAT OK")
+                    else:
+                        console.print_fail(f"[{label}] {key}: WASM KAT FAILED")
+                    results.append((key, ok))
             continue
 
         # ── Native checks ─────────────────────────────────────────────────────

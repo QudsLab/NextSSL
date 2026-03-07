@@ -2,14 +2,16 @@ import os
 from script.core import Builder
 
 _WASM_POW_EXPORTS = [
+    # PoW server/client API (defined in utils/pow/server + client)
     'nextssl_pow_server_generate_challenge',
     'nextssl_pow_server_verify_solution',
     'nextssl_pow_client_solve',
     'nextssl_pow_client_check_limits',
     'nextssl_pow_client_parse_challenge',
-    'nextssl_dhcm_calculate',
-    'nextssl_dhcm_get_algorithm_info',
-    'nextssl_dhcm_expected_trials',
+    # Memory allocation — required by Python wasmtime tests in script/web/
+    'malloc', 'free',
+    # NOTE: nextssl_dhcm_* are NOT compiled into pow.wasm (only in dhcm.wasm
+    # and system.wasm). They are NOT exported here.
 ]
 
 _POW_MACROS_BASE = [
@@ -79,6 +81,7 @@ def build(builder: Builder):
     for f in ['api.c', 'primitive_fast.c', 'primitive_memory_hard.c',
               'primitive_sponge_xof.c', 'legacy_alive.c', 'legacy_unsafe.c']:
         pow_sources.append(os.path.join(src_dir, 'utils/pow/client', f))
+
     ret_pow = builder.build_target(
         'pow', pow_sources,
         extra_libs=['-lpthread'], output_subdir='main',
