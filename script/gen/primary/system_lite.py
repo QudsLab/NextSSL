@@ -120,26 +120,9 @@ def build(builder: Builder):
         if os.path.exists(rm):
             sources.add(os.path.normpath(rm))
 
-    # PoW subsystem (lite: sha256/sha512/blake3/argon2id only)
-    add_sources([
-        os.path.join(src_dir, 'PoW/core/'),
-        os.path.join(src_dir, 'PoW/server/'),
-        os.path.join(src_dir, 'PoW/client/'),
-    ], recursive=True)
-    # Lite PoW adapters (4 algorithms only)
-    for pow_adapter in [
-        'primitive_fast/sha256.c',
-        'primitive_fast/sha512.c',
-        'primitive_fast/blake3.c',
-        'primitive_memory_hard/argon2id.c',
-    ]:
-        p = os.path.join(src_dir, 'PoW/adapters/', pow_adapter)
-        if os.path.exists(p):
-            sources.add(os.path.normpath(p))
-    # Lite dispatcher (replaces dispatcher_main.c for lite build)
-    dispatcher_lite = os.path.join(src_dir, 'PoW/adapters/dispatcher_lite.c')
-    if os.path.exists(dispatcher_lite):
-        sources.add(os.path.normpath(dispatcher_lite))
+    # NOTE: The full PoW subsystem (PoW/core, PoW/adapters, DHCM) is NOT included
+    # in system_lite. PoW functionality is provided by the self-contained
+    # root_pow.c implementation (SHA-256 token-based PoW, no external deps).
 
     # Add profile-based configuration system (config.c + profiles_common.c)
     config_sources = [
@@ -156,7 +139,6 @@ def build(builder: Builder):
         os.path.join(src_dir, 'PQCrypto', 'crypto_kem', 'ml-kem-1024', 'clean'),
         os.path.join(src_dir, 'PQCrypto', 'crypto_sign', 'ml-dsa-87', 'clean'),
         os.path.join(src_dir, 'interfaces', 'primary', 'lite', 'root'),
-        os.path.join(src_dir, 'PoW', 'core'),
         os.path.join(src_dir, 'primitives', 'cipher', 'aes_core'),
         os.path.join(src_dir, 'primitives', 'ecc', 'ed25519'),
     ]

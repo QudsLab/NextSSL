@@ -210,14 +210,12 @@ PRIMARY_ALWAYS = {
 MAIN_DEFAULT_TESTS = {
     'main/hash': _h('hash', 'hash_main'),
     'main/core': _h('core', 'core_main'),
-    'main/dhcm': _h('dhcm', 'dhcm_main'),
     'main/pow': _h('pow',
         *_d(_PC_FAST[:3],   4),   # combined sha256/sha512/blake3 d4
         *_d(_PC_SPONGE[:2], 4),   # combined sha3_256/sha3_512 d4
         *_d(_PC_MEM[:1], 1, 4),   # combined argon2id d1+d4
-        'pow_main',
+        'pow_main', 'pow_combined_main', 'dhcm_main',
     ),
-    'main/pow_combined': _h('pow', 'pow_combined_main'),
     # McEliece large — core only in default
     # SPHINCS+ fast  — core + DRBG only in default
     'main/pqc': _h('pqc',
@@ -239,10 +237,6 @@ MAIN_SUPER_TESTS = {
         'core_main',
         *_C_MODES, *_C_AEAD_AES, *_C_AEAD_STR, *_C_MAC, *_C_ECC,
     ),
-    'main/dhcm': _h('dhcm',
-        'dhcm_main',
-        *_D_FAST, *_D_MEM, *_D_SPONGE, *_D_L_ALIVE, *_D_L_UNSAFE,
-    ),
     'main/pow': _h('pow',
         *_d(_P_FAST,    1, 4),
         *_d(_P_SPONGE,  1, 4),
@@ -250,9 +244,10 @@ MAIN_SUPER_TESTS = {
         *_d(_PC_FAST,   1, 4),
         *_d(_PC_SPONGE, 1, 4),
         *_d(_PC_MEM,    1, 4),
-        'pow_main',
+        'pow_main', 'pow_combined_main',
+        'dhcm_main',
+        *_D_FAST, *_D_MEM, *_D_SPONGE, *_D_L_ALIVE, *_D_L_UNSAFE,
     ),
-    'main/pow_combined': _h('pow', 'pow_combined_main'),
     # NOTE: PQC in MAIN_SUPER_TESTS covers ALL variants (including those
     # already tested in partial/base).  Use as standalone isolation run,
     # NOT embedded in LOAD_MAP_ALL (which only adds what partial/base didn't).
@@ -271,71 +266,6 @@ MAIN_SUPER_TESTS = {
 # §5  LOAD_MAP — Default / Well-Distributed  (--gen)
 # ─────────────────────────────────────────────────────────────────────────────
 LOAD_MAP = {
-
-    # ── partial ───────────────────────────────────────────────────────────────
-    'partial': {
-        # Hash unit tests
-        'partial/hash/primitive_fast':        _h('hash', *_H_FAST),
-        'partial/hash/primitive_memory_hard': _h('hash', *_H_MEM),
-        'partial/hash/primitive_sponge_xof':  _h('hash', *_H_SPONGE),
-        'partial/hash/legacy_alive':          _h('hash', *_H_L_ALIVE),
-        'partial/hash/legacy_unsafe':         _h('hash', *_H_L_UNSAFE),
-
-        # Core unit tests
-        'partial/core/aes_modes':             _h('core', *_C_MODES),
-        'partial/core/aes_aead':              _h('core', *_C_AEAD_AES),
-        'partial/core/stream_aead':           _h('core', *_C_AEAD_STR),
-        'partial/core/macs':                  _h('core', *_C_MAC),
-        'partial/core/ecc':                   _h('core', *_C_ECC),
-
-        # DHCM unit tests
-        'partial/dhcm/primitive_fast':        _h('dhcm', *_D_FAST),
-        'partial/dhcm/primitive_memory_hard': _h('dhcm', *_D_MEM),
-        'partial/dhcm/primitive_sponge_xof':  _h('dhcm', *_D_SPONGE),
-        'partial/dhcm/legacy_alive':          _h('dhcm', *_D_L_ALIVE),
-        'partial/dhcm/legacy_unsafe':         _h('dhcm', *_D_L_UNSAFE),
-
-        # PoW d1 only in partial; d4 deferred to base
-        'partial/pow/primitive_fast':         _h('pow', *_d(_P_FAST,   1)),
-        'partial/pow/primitive_memory_hard':  _h('pow', *_d(_P_MEM,    1)),
-        'partial/pow/primitive_sponge_xof':   _h('pow', *_d(_P_SPONGE, 1)),
-        'partial/pow/legacy_alive':           _h('pow', *_d(_P_L_ALIVE,  1)),
-        'partial/pow/legacy_unsafe':          _h('pow', *_d(_P_L_UNSAFE, 1)),
-
-        # PQC lattice — all 4 test types; HQC / McEliece / SPHINCS+ deferred
-        'partial/pqc/kem_lattice':            _h('pqc', *_v(_MLKEM,           *_ALL4)),
-        'partial/pqc/sign_lattice':           _h('pqc', *_v(_MLDSA + _FALCON, *_ALL4)),
-    },
-
-    # ── base ──────────────────────────────────────────────────────────────────
-    'base': {
-        # Integration smoke tests
-        'base/hash_primitive_main': _h('hash', 'hash_primitive_main'),
-        'base/hash_legacy_main':    _h('hash', 'hash_legacy_main'),
-        'base/core_cipher_main':    _h('core', 'core_cipher_main'),
-        'base/core_mac_main':       _h('core', 'core_mac_main'),
-        'base/core_ecc_main':       _h('core', 'core_ecc_main'),
-        'base/dhcm_primitive_main': _h('dhcm', 'dhcm_primitive_main'),
-        'base/dhcm_legacy_main':    _h('dhcm', 'dhcm_legacy_main'),
-
-        # PoW d4 + combined d1  (individual d1 already in partial above)
-        'base/pow_primitive': _h('pow',
-            *_d(_P_FAST,   4),
-            *_d(_P_SPONGE, 4),
-            *_d(_P_MEM,    4),
-        ),
-        'base/pow_combined': _h('pow',
-            *_d(_PC_FAST[:3],   1),   # sha256, sha512, blake3 d1
-            *_d(_PC_SPONGE[:2], 1),   # sha3_256, sha3_512 d1
-        ),
-
-        # HQC all 4 test types; McEliece small core+DRBG only in default
-        'base/pqc_kem_main': _h('pqc',
-            *_v(_HQC,        *_ALL4),
-            *_v(_MCELIECE_S, '', '_drbg'),
-            'pqc_kem_main',
-        ),
-    },
 
     'main': MAIN_DEFAULT_TESTS,
 
@@ -360,82 +290,6 @@ LOAD_MAP = {
 # ─────────────────────────────────────────────────────────────────────────────
 LOAD_MAP_ALL = {
 
-    # ── partial ───────────────────────────────────────────────────────────────
-    'partial': {
-        # Hash / Core / DHCM — same as LOAD_MAP (atomic full lists)
-        'partial/hash/primitive_fast':        _h('hash', *_H_FAST),
-        'partial/hash/primitive_memory_hard': _h('hash', *_H_MEM),
-        'partial/hash/primitive_sponge_xof':  _h('hash', *_H_SPONGE),
-        'partial/hash/legacy_alive':          _h('hash', *_H_L_ALIVE),
-        'partial/hash/legacy_unsafe':         _h('hash', *_H_L_UNSAFE),
-
-        'partial/core/aes_modes':             _h('core', *_C_MODES),
-        'partial/core/aes_aead':              _h('core', *_C_AEAD_AES),
-        'partial/core/stream_aead':           _h('core', *_C_AEAD_STR),
-        'partial/core/macs':                  _h('core', *_C_MAC),
-        'partial/core/ecc':                   _h('core', *_C_ECC),
-
-        'partial/dhcm/primitive_fast':        _h('dhcm', *_D_FAST),
-        'partial/dhcm/primitive_memory_hard': _h('dhcm', *_D_MEM),
-        'partial/dhcm/primitive_sponge_xof':  _h('dhcm', *_D_SPONGE),
-        'partial/dhcm/legacy_alive':          _h('dhcm', *_D_L_ALIVE),
-        'partial/dhcm/legacy_unsafe':         _h('dhcm', *_D_L_UNSAFE),
-
-        # PoW d1 only (d4 in base)
-        'partial/pow/primitive_fast':         _h('pow', *_d(_P_FAST,   1)),
-        'partial/pow/primitive_memory_hard':  _h('pow', *_d(_P_MEM,    1)),
-        'partial/pow/primitive_sponge_xof':   _h('pow', *_d(_P_SPONGE, 1)),
-        'partial/pow/legacy_alive':           _h('pow', *_d(_P_L_ALIVE,  1)),
-        'partial/pow/legacy_unsafe':          _h('pow', *_d(_P_L_UNSAFE, 1)),
-
-        # PQC lattice core+DRBG only (UDBF/derand → base)
-        # HQC core only (rest → base)
-        # SPHINCS_F core only (rest → base/main)
-        'partial/pqc/kem_lattice':            _h('pqc', *_v(_MLKEM,           '', '_drbg')),
-        'partial/pqc/kem_code_based':         _h('pqc', *_v(_HQC,             '')),
-        'partial/pqc/sign_lattice':           _h('pqc', *_v(_MLDSA + _FALCON, '', '_drbg')),
-        'partial/pqc/sign_hash_based':        _h('pqc', *_v(_SPHINCS_F,       '')),
-    },
-
-    # ── base ──────────────────────────────────────────────────────────────────
-    'base': {
-        'base/hash_primitive_main': _h('hash', 'hash_primitive_main'),
-        'base/hash_legacy_main':    _h('hash', 'hash_legacy_main'),
-        'base/core_cipher_main':    _h('core', 'core_cipher_main'),
-        'base/core_mac_main':       _h('core', 'core_mac_main'),
-        'base/core_ecc_main':       _h('core', 'core_ecc_main'),
-        'base/dhcm_primitive_main': _h('dhcm', 'dhcm_primitive_main'),
-        'base/dhcm_legacy_main':    _h('dhcm', 'dhcm_legacy_main'),
-
-        # PoW d4 + combined d1+d4  (individual d1 already in partial)
-        'base/pow_primitive': _h('pow',
-            *_d(_P_FAST,   4),
-            *_d(_P_SPONGE, 4),
-            *_d(_P_MEM,    4),
-        ),
-        'base/pow_combined': _h('pow',
-            *_d(_PC_FAST,   1, 4),
-            *_d(_PC_SPONGE, 1, 4),
-            *_d(_PC_MEM,    1),     # argon2 combined d1 only; d4 → main
-        ),
-
-        # Lattice UDBF+derand (core+DRBG were in partial)
-        # HQC DRBG+UDBF+derand (core was in partial)
-        # McEliece small full 4-way
-        # SPHINCS_S core only (slow, deferred from partial)
-        'base/pqc_kem_main': _h('pqc',
-            *_v(_MLKEM,        '_udbf', '_derand'),
-            *_v(_HQC,          '_drbg', '_udbf', '_derand'),
-            *_v(_MCELIECE_S,   *_ALL4),
-            'pqc_kem_main',
-        ),
-        'base/pqc_sign_main': _h('pqc',
-            *_v(_MLDSA + _FALCON, '_udbf', '_derand'),
-            *_v(_SPHINCS_S,       ''),    # core only (drbg/udbf/derand → main)
-            # pqc_sign_main deferred to main/pqc to avoid dup
-        ),
-    },
-
     # ── main ──────────────────────────────────────────────────────────────────
     # Only what partial/base didn't cover:
     #   McEliece large full 4-way
@@ -445,12 +299,10 @@ LOAD_MAP_ALL = {
     'main': {
         'main/hash': _h('hash', 'hash_main'),
         'main/core': _h('core', 'core_main'),
-        'main/dhcm': _h('dhcm', 'dhcm_main'),
         'main/pow': _h('pow',
             *_d(_PC_MEM, 4),        # argon2 combined d4 only (d1 was in base)
-            'pow_main',
+            'pow_main', 'pow_combined_main', 'dhcm_main',
         ),
-        'main/pow_combined': _h('pow', 'pow_combined_main'),
         'main/pqc': _h('pqc',
             *_v(_MCELIECE_L,       *_ALL4),
             *_v(_SPHINCS_F,        '_drbg', '_udbf', '_derand'),
@@ -480,58 +332,10 @@ LOAD_MAP_ALL = {
 # ─────────────────────────────────────────────────────────────────────────────
 LOAD_MAP_QUICK = {
 
-    'partial': {
-        # One algo per hash module — confirms module loads + one path works
-        'partial/hash/primitive_fast':        _h('hash', _H_FAST[0]),        # sha256
-        'partial/hash/primitive_memory_hard': _h('hash', _H_MEM[0]),         # argon2id
-        'partial/hash/primitive_sponge_xof':  _h('hash', _H_SPONGE[0]),      # sha3_256
-        'partial/hash/legacy_alive':          _h('hash', _H_L_ALIVE[0]),     # md5
-        'partial/hash/legacy_unsafe':         _h('hash'),                    # header-only
-
-        'partial/core/aes_modes':             _h('core', _C_MODES[0]),       # aes_cbc
-        'partial/core/aes_aead':              _h('core', *_C_AEAD_AES),      # aes_gcm
-        'partial/core/stream_aead':           _h('core', *_C_AEAD_STR),      # chacha20_poly1305
-        'partial/core/macs':                  _h('core', _C_MAC[1]),         # hmac_sha256
-        'partial/core/ecc':                   _h('core', _C_ECC[0]),         # ed25519
-
-        'partial/dhcm/primitive_fast':        _h('dhcm', _D_FAST[0]),        # dhcm_sha256
-        'partial/dhcm/primitive_memory_hard': _h('dhcm', _D_MEM[0]),         # dhcm_argon2id
-        'partial/dhcm/primitive_sponge_xof':  _h('dhcm', _D_SPONGE[0]),      # dhcm_sha3_256
-        'partial/dhcm/legacy_alive':          _h('dhcm', _D_L_ALIVE[0]),     # dhcm_md5
-        'partial/dhcm/legacy_unsafe':         _h('dhcm'),                    # header-only
-
-        'partial/pow/primitive_fast':         _h('pow', _d(_P_FAST[:1],   1)[0]),  # pow_sha256_d1
-        'partial/pow/primitive_memory_hard':  _h('pow'),                     # header-only (slow)
-        'partial/pow/primitive_sponge_xof':   _h('pow', _d(_P_SPONGE[:1], 1)[0]), # pow_sha3_256_d1
-        'partial/pow/legacy_alive':           _h('pow', _d(_P_L_ALIVE[:1], 1)[0]), # pow_md5_d1
-        'partial/pow/legacy_unsafe':          _h('pow'),                     # header-only
-
-        'partial/pqc/kem_lattice':            _h('pqc', _MLKEM[0]),          # mlkem512
-        'partial/pqc/kem_code_based':         _h('pqc'),                     # header-only (slow)
-        'partial/pqc/sign_lattice':           _h('pqc', _MLDSA[0]),          # mldsa44
-        'partial/pqc/sign_hash_based':        _h('pqc'),                     # header-only (slow)
-    },
-
-    'base': {
-        'base/hash_primitive_main': _h('hash', 'hash_primitive_main'),
-        'base/hash_legacy_main':    _h('hash'),                              # header-only
-        'base/core_cipher_main':    _h('core', 'core_cipher_main'),
-        'base/core_mac_main':       _h('core'),                              # header-only
-        'base/core_ecc_main':       _h('core', 'core_ecc_main'),
-        'base/dhcm_primitive_main': _h('dhcm', 'dhcm_primitive_main'),
-        'base/dhcm_legacy_main':    _h('dhcm'),                              # header-only
-        'base/pow_primitive':       _h('pow',  _d(_P_FAST[:1], 4)[0]),       # pow_sha256_d4
-        'base/pow_combined':        _h('pow',  _d(_PC_FAST[:1], 1)[0]),      # pow_combined_sha256_d1
-        'base/pqc_kem_main':        _h('pqc',  _HQC[0]),                     # hqc128 core only
-        'base/pqc_sign_main':       _h('pqc'),                               # header-only
-    },
-
     'main': {
         'main/hash':         _h('hash', 'hash_main'),
         'main/core':         _h('core', 'core_main'),
-        'main/dhcm':         _h('dhcm', 'dhcm_main'),
-        'main/pow':          _h('pow',  'pow_main'),
-        'main/pow_combined': _h('pow'),                                      # header-only
+        'main/pow':          _h('pow',  'pow_main', 'pow_combined_main', 'dhcm_main'),
         'main/pqc':          _h('pqc',  _SPHINCS_F[0], 'pqc_main'),          # sphincs_sha2_128f
     },
 

@@ -31,7 +31,7 @@ class Builder:
                         sources.append(os.path.join(d, file))
         return sources
 
-    def build_target(self, name, sources, extra_libs=None, output_subdir='', macros=None, remove_macros=None, includes=None):
+    def build_target(self, name, sources, extra_libs=None, output_subdir='', macros=None, remove_macros=None, includes=None, wasm_exports=None):
         if not sources:
             self.logger.error(f"No sources found for target {name}")
             return False
@@ -46,7 +46,24 @@ class Builder:
         is_web = lib_ext == '.wasm'
         compiler = 'emcc' if is_web else 'gcc'
         if is_web:
-            args = ['-O2', '-Wall', '-s', 'WASM=1', '-s', 'STANDALONE_WASM=1', '-Wl,--no-entry', '-s', 'EXPORTED_FUNCTIONS=_nextssl_wasm_selftest']
+            # Build the exported functions list (selftest always included).
+            if wasm_exports is not None:
+                all_exports = list(dict.fromkeys(
+                    ['nextssl_wasm_selftest'] + list(wasm_exports)
+                ))
+            else:
+                all_exports = ['nextssl_wasm_selftest']
+            exports_str = ','.join(f"'_{e}'" for e in all_exports)
+            args = [
+                '-O2', '-Wall',
+                '-s', 'WASM=1',
+                '-s', 'STANDALONE_WASM=1',
+                '-Wl,--no-entry',
+                '-s', f'EXPORTED_FUNCTIONS=[{exports_str}]',
+                '-s', "EXPORTED_RUNTIME_METHODS=['cwrap','getValue']",
+                '-ffile-prefix-map=.=.',
+                '-fmacro-prefix-map=.=.',
+            ]
         else:
             args = ['-shared', '-fPIC', '-O2', '-Wall']
             if Platform.get_os() == 'windows':

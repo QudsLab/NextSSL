@@ -49,10 +49,14 @@ NEXTSSL_API int nextssl_root_ecc_ed25519_verify(const uint8_t pk[32],
 
 NEXTSSL_API int nextssl_root_ecc_x25519_keygen(uint8_t sk[32], uint8_t pk[32]) {
     if (!sk || !pk) return -1;
-    if (_root_rand(sk, 32) != 0) return -1;
-    /* derive pub from scalar: use zero-base multiply */
-    static const uint8_t basepoint[32] = {9};
-    ed25519_key_exchange(pk, basepoint, sk);
+    uint8_t seed[32];
+    uint8_t sk_full[64];
+    if (_root_rand(seed, 32) != 0) return -1;
+    /* Derive the Ed25519 keypair from seed.
+     * pk = Edwards Y public key (compatible with ed25519_key_exchange).
+     * sk = first 32 bytes of the SHA-512 expanded key (the clamped scalar). */
+    ed25519_create_keypair(pk, sk_full, seed);
+    __builtin_memcpy(sk, sk_full, 32);
     return 0;
 }
 

@@ -19,7 +19,7 @@ class ColoredFormatter(logging.Formatter):
         return message
 
 class Logger:
-    def __init__(self, log_path, console_output=True):
+    def __init__(self, log_path=None, console_output=True):
         self.log_path = log_path
         # Use a safe name for the logger to avoid potential issues with paths as names
         logger_name = f"logger_{hash(log_path)}"
@@ -30,17 +30,17 @@ class Logger:
         if self.logger.handlers:
             self.logger.handlers = []
         
-        # File handler
-        try:
-            file_mode = 'a' if os.path.exists(log_path) else 'w'
-            fh = logging.FileHandler(log_path, mode=file_mode, encoding='utf-8')
-            fh.setLevel(logging.DEBUG)
-            file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-            fh.setFormatter(file_formatter)
-            self.logger.addHandler(fh)
-            # print(f"DEBUG: Logging to file {log_path}")
-        except Exception as e:
-            print(f"ERROR: Failed to create log file handler for {log_path}: {e}")
+        # File handler — only when a path is given (--noLog suppresses this)
+        if log_path:
+            try:
+                file_mode = 'a' if os.path.exists(log_path) else 'w'
+                fh = logging.FileHandler(log_path, mode=file_mode, encoding='utf-8')
+                fh.setLevel(logging.DEBUG)
+                file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+                fh.setFormatter(file_formatter)
+                self.logger.addHandler(fh)
+            except Exception as e:
+                print(f"ERROR: Failed to create log file handler for {log_path}: {e}")
         
         if console_output:
             # Console handler

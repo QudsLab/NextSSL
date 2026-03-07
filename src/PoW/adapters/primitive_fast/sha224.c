@@ -3,7 +3,7 @@
 /* SHA-224 has the same block structure as SHA-256; reuse its WU metric. */
 extern uint64_t dhcm_sha256_wu(size_t input_size);
 
-static int sha224_hash(const uint8_t* input, size_t input_len, const void* params, uint8_t* output) {
+static int sha224_adapter_hash(const uint8_t* input, size_t input_len, const void* params, uint8_t* output) {
     (void)params;
     sha224_hash(input, input_len, output);
     return 0;
@@ -22,7 +22,7 @@ static int sha224_get_mu(uint64_t* out_mu) {
 }
 
 static POWAlgoAdapter sha224_adapter = {
-    .hash    = sha224_hash,
+    .hash    = sha224_adapter_hash,
     .get_wu  = sha224_get_wu,
     .get_mu  = sha224_get_mu
 };

@@ -5,7 +5,7 @@
  * Lite build provides: ML-DSA-87 only.
  *
  * Algorithm sizes:
- *   ML-DSA-87: pk = 2592 B, sk = 4896 B, sig = 4595 B (max)
+ *   ML-DSA-87: pk = 2592 B, sk = 4896 B, sig = 4627 B (max)
  *
  * @version 0.0.1-beta
  */
@@ -24,7 +24,7 @@ extern "C" {
 /* ML-DSA-87 size constants */
 #define NEXTSSL_MLDSA87_PK_BYTES     2592
 #define NEXTSSL_MLDSA87_SK_BYTES     4896
-#define NEXTSSL_MLDSA87_SIG_BYTES    4595
+#define NEXTSSL_MLDSA87_SIG_BYTES    4627
 
 NEXTSSL_API int nextssl_root_pqc_sign_mldsa87_keygen(
     uint8_t pk[NEXTSSL_MLDSA87_PK_BYTES],

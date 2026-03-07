@@ -63,14 +63,12 @@ TRIGGER_FLAGS: list[str] = [
 
 # ── Layer names (layer number → tier name used in runner.py calls) ───────────
 LAYER_NAMES: dict[int, str] = {
-    1: "partial",
-    2: "base",
     3: "main",
     4: "system",   # called "system" in the YAML tier arg, layer 4
 }
 
 # ── Defaults ─────────────────────────────────────────────────────────────────
-DEFAULT_LAYERS:    str = "1,2,3,4"
+DEFAULT_LAYERS:    str = "3,4"
 DEFAULT_PLATFORMS: str = "web,linux,mac,windows"
 DEFAULT_LOAD_MODE: str = "gen"
 

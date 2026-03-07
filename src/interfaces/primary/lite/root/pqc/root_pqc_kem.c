@@ -8,7 +8,7 @@
 #endif
 
 #include "root_pqc_kem.h"
-#include "../../../../../PQCrypto/crypto_kem/mlkem1024/clean/api.h"
+#include "../../../../../PQCrypto/crypto_kem/ml-kem-1024/clean/api.h"
 
 NEXTSSL_API int nextssl_root_pqc_kem_mlkem1024_keygen(
     uint8_t pk[NEXTSSL_MLKEM1024_PK_BYTES],

@@ -398,6 +398,7 @@ typedef struct {
     int kdf;           /**< Key derivation function ID */
     int sign;          /**< Signature algorithm ID */
     int kem;           /**< Key exchange/KEM algorithm ID */
+    int pow;           /**< PoW algorithm ID (0 = SHA-256) */
     const char *name;  /**< Optional label (NULL = "Custom") */
 } nextssl_custom_profile_t;
 

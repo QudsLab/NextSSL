@@ -8,7 +8,7 @@
 #endif
 
 #include "root_pqc_sign.h"
-#include "../../../../../PQCrypto/crypto_sign/mldsa87/clean/api.h"
+#include "../../../../../PQCrypto/crypto_sign/ml-dsa-87/clean/api.h"
 
 NEXTSSL_API int nextssl_root_pqc_sign_mldsa87_keygen(
     uint8_t pk[NEXTSSL_MLDSA87_PK_BYTES],

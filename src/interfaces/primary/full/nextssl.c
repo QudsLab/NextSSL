@@ -430,6 +430,7 @@ NEXTSSL_API int nextssl_init_custom(const nextssl_custom_profile_t *profile) {
     internal.kdf   = (nextssl_kdf_algo_t)profile->kdf;
     internal.sign  = (nextssl_sign_algo_t)profile->sign;
     internal.kem   = (nextssl_kem_algo_t)profile->kem;
+    internal.pow   = (nextssl_pow_algo_t)profile->pow;
     internal.name  = profile->name;
     const nextssl_config_t *cfg = nextssl_config_init_custom(&internal);
     if (cfg == NULL) {

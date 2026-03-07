@@ -574,8 +574,8 @@ def main():
 
             pk_d     = ctypes.create_string_buffer(2592)
             sk_d     = ctypes.create_string_buffer(4896)
-            sig_d    = ctypes.create_string_buffer(4595)
-            sig_len  = ctypes.c_size_t(4595)
+            sig_d    = ctypes.create_string_buffer(4627)
+            sig_len  = ctypes.c_size_t(4627)
             msg_d    = b"root mldsa87 test"
             lib.nextssl_root_pqc_sign_mldsa87_keygen(pk_d, sk_d)
             ret_s = lib.nextssl_root_pqc_sign_mldsa87_sign(
@@ -868,8 +868,8 @@ def main():
                 console.print_fail(f"nextssl_root_pqc_sign_mldsa87_keygen failed (ret={ret})")
                 failed += 1
             else:
-                sig_dt  = ctypes.create_string_buffer(4595)
-                sig_len = ctypes.c_size_t(4595)
+                sig_dt  = ctypes.create_string_buffer(4627)
+                sig_len = ctypes.c_size_t(4627)
                 msg_dt  = b"tree mldsa87 test msg"
                 ret_s   = lib.nextssl_root_pqc_sign_mldsa87_sign(
                     sk_dt.raw, msg_dt, len(msg_dt), sig_dt, ctypes.byref(sig_len))

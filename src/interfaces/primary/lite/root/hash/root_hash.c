@@ -23,7 +23,7 @@ NEXTSSL_API int nextssl_root_hash_sha256(const uint8_t *data, size_t len,
 NEXTSSL_API int nextssl_root_hash_sha512(const uint8_t *data, size_t len,
                                           uint8_t out[64]) {
     if (!data || !out) return -1;
-    sha512(data, len, out);
+    sha512_hash(data, len, out);
     return 0;
 }
 

@@ -4,13 +4,8 @@
 
 static const char base64_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-size_t radix_base64_encoded_size(size_t input_len) {
-    return (input_len + 2) / 3 * 4;
-}
-
-size_t radix_base64_decoded_size(size_t input_len) {
-    return (input_len / 4) * 3;
-}
+/* radix_base64_encoded_size and radix_base64_decoded_size are provided by
+   radix_common.c (declared in radix_common.h via base64.h). */
 
 int radix_base64_encode(const uint8_t *input, size_t input_len,
                         char *output, size_t output_len) {
