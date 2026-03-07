@@ -1,6 +1,15 @@
 import os
 from script.core import Builder
 
+_WASM_CORE_EXPORTS = [
+    # Cipher
+    'AES_CBC_encrypt', 'AES_GCM_encrypt', 'ChaCha20_Poly1305_encrypt',
+    # MAC / KDF
+    'pqc_hmac_sha256',
+    # ECC
+    'ed25519_create_keypair',
+]
+
 def build(builder: Builder):
     """Build core.dll (Main Tier) - Complete Classic Crypto Suite."""
     src_dir = builder.config.src_dir
@@ -77,10 +86,11 @@ def build(builder: Builder):
         ('HAVE_ED448', '1'),
     ]
 
-    return builder.build_target('core', sources, 
+    return builder.build_target('core', sources,
                                 includes=includes,
                                 macros=macros,
-                                output_subdir='main')
+                                output_subdir='main',
+                                wasm_exports=_WASM_CORE_EXPORTS)
 
 if __name__ == "__main__":
     from script.core import Config, Logger

@@ -1,6 +1,17 @@
 import os
 from script.core import Builder
 
+_WASM_POW_EXPORTS = [
+    'nextssl_pow_server_generate_challenge',
+    'nextssl_pow_server_verify_solution',
+    'nextssl_pow_client_solve',
+    'nextssl_pow_client_check_limits',
+    'nextssl_pow_client_parse_challenge',
+    'nextssl_dhcm_calculate',
+    'nextssl_dhcm_get_algorithm_info',
+    'nextssl_dhcm_expected_trials',
+]
+
 _POW_MACROS_BASE = [
     'POW_ENABLE_PRIMITIVE_FAST',
     'POW_ENABLE_PRIMITIVE_MEMORY_HARD',
@@ -72,6 +83,7 @@ def build(builder: Builder):
         'pow', pow_sources,
         extra_libs=['-lpthread'], output_subdir='main',
         macros=['POW_ENABLE_SERVER', 'POW_ENABLE_CLIENT'] + _POW_MACROS_BASE,
+        wasm_exports=_WASM_POW_EXPORTS,
     )
 
     # ── 4. dhcm ───────────────────────────────────────────────────────────────

@@ -1,6 +1,24 @@
 import os
 from script.core import Builder, Config, Logger
 
+_WASM_PQC_EXPORTS = [
+    # KEM
+    'pqc_mlkem512_keypair', 'pqc_mlkem512_encaps', 'pqc_mlkem512_decaps',
+    'pqc_mlkem768_keypair', 'pqc_mlkem768_encaps', 'pqc_mlkem768_decaps',
+    'pqc_mlkem1024_keypair', 'pqc_mlkem1024_encaps', 'pqc_mlkem1024_decaps',
+    'pqc_hqc128_keypair', 'pqc_hqc128_encaps', 'pqc_hqc128_decaps',
+    'pqc_hqc192_keypair', 'pqc_hqc192_encaps', 'pqc_hqc192_decaps',
+    'pqc_hqc256_keypair', 'pqc_hqc256_encaps', 'pqc_hqc256_decaps',
+    # Sign
+    'pqc_mldsa44_keypair', 'pqc_mldsa44_sign', 'pqc_mldsa44_verify',
+    'pqc_mldsa65_keypair', 'pqc_mldsa65_sign', 'pqc_mldsa65_verify',
+    'pqc_mldsa87_keypair', 'pqc_mldsa87_sign', 'pqc_mldsa87_verify',
+    'pqc_falcon512_keypair', 'pqc_falcon512_sign', 'pqc_falcon512_verify',
+    'pqc_falcon1024_keypair', 'pqc_falcon1024_sign', 'pqc_falcon1024_verify',
+    # Util
+    'pqc_randombytes', 'pqc_set_mode',
+]
+
 def build(builder: Builder):
     """Build pqc.dll with ALL PQC algorithms."""
     src_dir = builder.config.src_dir
@@ -85,15 +103,16 @@ def build(builder: Builder):
     includes.extend(all_dirs)
 
     return builder.build_target(
-        'pqc', 
-        sources, 
+        'pqc',
+        sources,
         output_subdir='main',
         macros=[
             'ENABLE_ML_KEM', 'ENABLE_HQC', 'ENABLE_MCELIECE',
             'ENABLE_ML_DSA', 'ENABLE_FALCON', 'ENABLE_SPHINCS'
         ],
         remove_macros=['EXCLUDE_SPHINCS'],
-        includes=includes
+        includes=includes,
+        wasm_exports=_WASM_PQC_EXPORTS
     )
 
 if __name__ == "__main__":

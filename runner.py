@@ -177,7 +177,7 @@ def run_mode_test(config, mode_map, label, args):
     from collections import defaultdict
     from script.core import console
 
-    MIN_WASM_SIZE = 512  # bytes — anything ≤ this is a stub / placeholder
+    MIN_WASM_SIZE = 50 * 1024  # bytes — anything under 50 KB is likely a dead-stripped stub
 
     is_web = (config.get_shared_lib_ext() == '.wasm')
 

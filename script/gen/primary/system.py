@@ -208,6 +208,33 @@ def build(builder: Builder):
     if builder.config.lib_ext == '.dll':   # bcrypt is Windows-only
         extra_libs.append('-lbcrypt')
 
+    _WASM_SYSTEM_EXPORTS = [
+        # High-level API
+        'nextssl_init', 'nextssl_init_custom', 'nextssl_cleanup',
+        'nextssl_encrypt', 'nextssl_decrypt', 'nextssl_hash',
+        'nextssl_security_level', 'nextssl_sha256',
+        # Root layer
+        'nextssl_root_hash_sha256', 'nextssl_root_hash_sha512',
+        'nextssl_root_hash_sha3_256', 'nextssl_root_hash_blake3',
+        'nextssl_root_hash_argon2id',
+        'nextssl_root_ecc_ed25519_keygen', 'nextssl_root_ecc_ed25519_sign',
+        'nextssl_root_ecc_ed25519_verify',
+        'nextssl_root_ecc_x25519_keygen', 'nextssl_root_ecc_x25519_exchange',
+        'nextssl_root_pqc_kem_mlkem768_keygen',
+        'nextssl_root_pqc_kem_mlkem768_encaps',
+        'nextssl_root_pqc_kem_mlkem768_decaps',
+        'nextssl_root_pqc_sign_mldsa65_keygen',
+        'nextssl_root_pqc_sign_mldsa65_sign', 'nextssl_root_pqc_sign_mldsa65_verify',
+        'nextssl_root_pqc_sign_mldsa87_keygen',
+        'nextssl_root_pqc_sign_mldsa87_sign', 'nextssl_root_pqc_sign_mldsa87_verify',
+        'nextssl_root_pow_server_challenge', 'nextssl_root_pow_server_verify',
+        'nextssl_root_pow_client_solve',
+        'nextssl_root_legacy_alive_md5', 'nextssl_root_legacy_alive_sha1',
+        'nextssl_dhcm_expected_trials',
+        # Compat
+        'AES_CBC_encrypt', 'pqc_mlkem512_keypair',
+    ]
+
     return builder.build_target(
         'main',
         list(sources),
@@ -215,7 +242,8 @@ def build(builder: Builder):
         macros=macros,
         remove_macros=['EXCLUDE_SPHINCS'],
         extra_libs=extra_libs,
-        output_subdir='primary'
+        output_subdir='primary',
+        wasm_exports=_WASM_SYSTEM_EXPORTS
     )
 
 if __name__ == "__main__":
