@@ -15,11 +15,8 @@ if hasattr(sys.stderr, 'buffer'):
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from script.core import Config, Logger, Builder
-
 from script.gen.main import hash as hash_main
-
 from script.gen.main import pqc as pqc_main
-
 from script.gen.main import core as core_main
 
 # Primary Layer (Layer 4) - Full and Lite
@@ -27,14 +24,10 @@ from script.gen.primary import system as system_main
 from script.gen.primary import system_lite as lite_system
 
 # Lite Variant - only unified system DLL (primary/main_lite)
-
 from script.gen.main import pow as pow_main
-
 from script.test.main import pow as test_pow_main
 from script.test.main import hash as test_hash_main
-
 from script.test.main import pqc as test_pqc_main
-
 from script.test.main import core as test_core_main
 
 # Primary Layer Tests
