@@ -11,7 +11,7 @@ _WASM_HASH_EXPORTS = [
     'nextssl_blake3',
     'nextssl_argon2id', 'nextssl_argon2i', 'nextssl_argon2d',
     'nextssl_sha3_256', 'nextssl_sha3_512',
-    'nextssl_keccak256',
+    'nextssl_keccak_256',
     'nextssl_shake128', 'nextssl_shake256',
     'nextssl_sha1', 'nextssl_md5',
     'nextssl_md2', 'nextssl_md4',

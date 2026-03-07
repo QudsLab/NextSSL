@@ -22,6 +22,9 @@ EXPORT int nextssl_sha512(const uint8_t *msg, size_t len, uint8_t *out);
 EXPORT int nextssl_blake3(const uint8_t *msg, size_t len, uint8_t *out);
 EXPORT int nextssl_blake2b(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len);
 EXPORT int nextssl_blake2s(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len);
+EXPORT void nextssl_sha256_init(void *ctx);
+EXPORT void nextssl_sha256_update(void *ctx, const uint8_t *data, size_t len);
+EXPORT void nextssl_sha256_final(void *ctx, uint8_t *hash);
 
 #ifdef __cplusplus
 }

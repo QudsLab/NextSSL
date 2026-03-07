@@ -49,3 +49,15 @@ int nextssl_blake2s(const uint8_t *msg, size_t len, uint8_t *out, size_t out_len
     blake2s_final(&ctx, out, out_len);
     return 0;
 }
+
+void nextssl_sha256_init(void *ctx) {
+    sha256_init((SHA256_CTX *)ctx);
+}
+
+void nextssl_sha256_update(void *ctx, const uint8_t *data, size_t len) {
+    sha256_update((SHA256_CTX *)ctx, data, len);
+}
+
+void nextssl_sha256_final(void *ctx, uint8_t *hash) {
+    sha256_final((SHA256_CTX *)ctx, hash);
+}

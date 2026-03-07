@@ -68,11 +68,6 @@ def build(builder: Builder):
     for f in ['api.c', 'primitive_fast.c', 'primitive_memory_hard.c',
               'primitive_sponge_xof.c', 'legacy_alive.c', 'legacy_unsafe.c']:
         pow_sources.append(os.path.join(src_dir, 'utils/pow/client', f))
-    # Optional combined wrapper
-    combined_wrapper = os.path.join(src_dir, 'utils/pow/combined/main.c')
-    if os.path.exists(combined_wrapper):
-        pow_sources.append(combined_wrapper)
-
     ret_pow = builder.build_target(
         'pow', pow_sources,
         extra_libs=['-lpthread'], output_subdir='main',
