@@ -29,7 +29,7 @@ static inline int _root_rand(uint8_t *buf, size_t len) {
     return BCryptGenRandom(NULL, buf, (ULONG)len,
                            BCRYPT_USE_SYSTEM_PREFERRED_RNG) == 0 ? 0 : -1;
 }
-#elif defined(__APPLE__)
+#elif defined(__APPLE__) || defined(__EMSCRIPTEN__)
 #  include <sys/random.h>
 static inline int _root_rand(uint8_t *buf, size_t len) {
     size_t off = 0;

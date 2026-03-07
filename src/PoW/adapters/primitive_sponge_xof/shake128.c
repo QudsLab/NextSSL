@@ -1,6 +1,6 @@
 #include "../../core/pow_types.h"
 #include "../../../primitives/hash/sponge_xof/shake/shake.h"
-extern uint64_t dhcm_shake128_wu(size_t input_size);
+extern uint64_t dhcm_shake128_wu(size_t input_size, size_t output_size);
 
 static int pow_shake128_hash(const uint8_t* input, size_t input_len, const void* params, uint8_t* output) {
     (void)params;
@@ -11,7 +11,7 @@ static int pow_shake128_hash(const uint8_t* input, size_t input_len, const void*
 
 static int shake128_get_wu(uint32_t difficulty_bits, uint64_t* out_wu) {
     size_t typical_input_len = 264;
-    *out_wu = dhcm_shake128_wu(typical_input_len);
+    *out_wu = dhcm_shake128_wu(typical_input_len, 32);
     return 0;
 }
 
