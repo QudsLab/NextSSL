@@ -43,16 +43,6 @@ env:
         'gen' }}
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Helper macros (reused in every job)
-# ─────────────────────────────────────────────────────────────────────────────
-
-# Shared checkout step config
-x-checkout: &checkout
-  uses: actions/checkout@v4
-  with:
-    fetch-depth: 1
-
-# ─────────────────────────────────────────────────────────────────────────────
 # guard — parse commit message; gate all downstream jobs
 # ─────────────────────────────────────────────────────────────────────────────
 jobs:
