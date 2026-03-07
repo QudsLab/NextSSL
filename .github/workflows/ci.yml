@@ -1,0 +1,1775 @@
+# NextSSL CI — Build, Test & Release
+#
+# Guard rule: nothing runs unless:
+#   - the commit message contains '--gen' (push), OR
+#   - the workflow is triggered manually (workflow_dispatch)
+#
+# Flag reference:
+#   --gen [platform]         Build all or one platform; commit bins
+#   --genAll                 Override load mode → genAll (--fullTest)
+#   --genQuick               Override load mode → genQuick (--quickTest)
+#   --genRelease [tag]       Implies --gen all; creates GitHub Release
+#   --skipTest               Skip --test step
+#   --noLog                  Forward --noLog to runner.py
+
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+  workflow_dispatch:
+    inputs:
+      platforms:
+        description: "Comma-separated platforms (web,linux,mac,windows)"
+        required: false
+        default: "web,linux,mac,windows"
+      tiers:
+        description: "Comma-separated tiers (partial,base,main,system)"
+        required: false
+        default: "partial,base,main,system"
+      load_mode:
+        description: "Load mode: gen | genAll | genQuick"
+        required: false
+        default: "gen"
+
+env:
+  SOURCE_DATE_EPOCH: 0
+  TZ: UTC
+  LOAD_MODE: >-
+    ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.load_mode != '' && github.event.inputs.load_mode) ||
+        (contains(github.event.head_commit.message, '--genAll') && 'genAll') ||
+        (contains(github.event.head_commit.message, '--genQuick') && 'genQuick') ||
+        'gen' }}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Helper macros (reused in every job)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Shared checkout step config
+x-checkout: &checkout
+  uses: actions/checkout@v4
+  with:
+    fetch-depth: 1
+
+# ─────────────────────────────────────────────────────────────────────────────
+# guard — parse commit message; gate all downstream jobs
+# ─────────────────────────────────────────────────────────────────────────────
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.head_commit.message, '--gen')
+    outputs:
+      gen:           ${{ steps.resolve.outputs.gen }}
+      gen_platforms: ${{ steps.resolve.outputs.gen_platforms }}
+      gen_release:   ${{ steps.resolve.outputs.gen_release }}
+      load_mode:     ${{ steps.resolve.outputs.load_mode }}
+      skip_test:     ${{ steps.resolve.outputs.skip_test }}
+      no_log:        ${{ steps.resolve.outputs.no_log }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - id: parse
+        run: |
+          python script/ci/commit_parser.py \
+            "${{ github.event.head_commit.message }}" >> $GITHUB_OUTPUT
+      - id: resolve
+        shell: bash
+        run: |
+          GEN_RELEASE="${{ steps.parse.outputs.gen_release }}"
+          if [ "$GEN_RELEASE" = "auto" ]; then
+            GEN_RELEASE=$(python script/ci/gen_dev_tag.py --src-dir src)
+          fi
+          # workflow_dispatch always generates
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "gen=true"                                               >> $GITHUB_OUTPUT
+            echo "gen_platforms=${{ github.event.inputs.platforms || 'web,linux,mac,windows' }}" >> $GITHUB_OUTPUT
+          else
+            echo "gen=${{ steps.parse.outputs.gen }}"                    >> $GITHUB_OUTPUT
+            echo "gen_platforms=${{ steps.parse.outputs.gen_platforms }}" >> $GITHUB_OUTPUT
+          fi
+          echo "gen_release=$GEN_RELEASE"                                >> $GITHUB_OUTPUT
+          echo "load_mode=${{ steps.parse.outputs.load_mode }}"          >> $GITHUB_OUTPUT
+          echo "skip_test=${{ steps.parse.outputs.skip_test }}"          >> $GITHUB_OUTPUT
+          echo "no_log=${{ steps.parse.outputs.no_log }}"                >> $GITHUB_OUTPUT
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Platform conditional helpers (inline expressions)
+  # ─────────────────────────────────────────────────────────────────────────
+  # Each job uses a platform+tier conditional guard for workflow_dispatch.
+  # For push events only committed platforms run (via gen_platforms output).
+
+  # ───────────────── WEB: partial tier ─────────────────────────────────────
+
+  web_partial_hash:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'web'))
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Cache emsdk
+        uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - name: Cache wasmtime
+        uses: actions/cache@v4
+        with:
+          path: ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk && ./emsdk install 3.1.60 && ./emsdk activate 3.1.60
+          echo "EMSDK=$PWD"                  >> $GITHUB_ENV
+          echo "EM_CONFIG=$PWD/.emscripten"  >> $GITHUB_ENV
+          echo "$PWD"                        >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten"    >> $GITHUB_PATH
+      - name: Setup wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then
+            curl https://wasmtime.dev/install.sh -sSf | bash
+          fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: |
+          NOLOG="${{ needs.guard.outputs.no_log == 'true' && '--noLog' || '' }}"
+          SKIP="${{ needs.guard.outputs.skip_test }}"
+          python runner.py --platform $PLATFORM --build hash:partial \
+            --action-log logs/action/web/partial/hash.log $NOLOG
+          if [ "$SKIP" != "true" ]; then
+            python runner.py --platform $PLATFORM --test hash:partial \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/web/partial/hash.log $NOLOG
+          fi
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/web/partial/hash.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  web_partial_core:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'web'))
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk && ./emsdk install 3.1.60 && ./emsdk activate 3.1.60
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then curl https://wasmtime.dev/install.sh -sSf | bash; fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: |
+          NOLOG="${{ needs.guard.outputs.no_log == 'true' && '--noLog' || '' }}"
+          SKIP="${{ needs.guard.outputs.skip_test }}"
+          python runner.py --platform $PLATFORM --build core:partial \
+            --action-log logs/action/web/partial/core.log $NOLOG
+          if [ "$SKIP" != "true" ]; then
+            python runner.py --platform $PLATFORM --test core:partial \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/web/partial/core.log $NOLOG
+          fi
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-core-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/web/partial/core.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  web_partial_pqc:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'web'))
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk && ./emsdk install 3.1.60 && ./emsdk activate 3.1.60
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then curl https://wasmtime.dev/install.sh -sSf | bash; fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: |
+          NOLOG="${{ needs.guard.outputs.no_log == 'true' && '--noLog' || '' }}"
+          SKIP="${{ needs.guard.outputs.skip_test }}"
+          python runner.py --platform $PLATFORM --build pqc:partial \
+            --action-log logs/action/web/partial/pqc.log $NOLOG
+          if [ "$SKIP" != "true" ]; then
+            python runner.py --platform $PLATFORM --test pqc:partial \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/web/partial/pqc.log $NOLOG
+          fi
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/web/partial/pqc.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  web_partial_pow:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'web'))
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk && ./emsdk install 3.1.60 && ./emsdk activate 3.1.60
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then curl https://wasmtime.dev/install.sh -sSf | bash; fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: |
+          NOLOG="${{ needs.guard.outputs.no_log == 'true' && '--noLog' || '' }}"
+          SKIP="${{ needs.guard.outputs.skip_test }}"
+          python runner.py --platform $PLATFORM --build pow:partial \
+            --action-log logs/action/web/partial/pow.log $NOLOG
+          if [ "$SKIP" != "true" ]; then
+            python runner.py --platform $PLATFORM --test pow:partial \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/web/partial/pow.log $NOLOG
+          fi
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/web/partial/pow.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  web_partial_dhcm:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'web'))
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk && ./emsdk install 3.1.60 && ./emsdk activate 3.1.60
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then curl https://wasmtime.dev/install.sh -sSf | bash; fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Build and Test
+        run: |
+          NOLOG="${{ needs.guard.outputs.no_log == 'true' && '--noLog' || '' }}"
+          SKIP="${{ needs.guard.outputs.skip_test }}"
+          python runner.py --platform $PLATFORM --build dhcm:partial \
+            --action-log logs/action/web/partial/dhcm.log $NOLOG
+          if [ "$SKIP" != "true" ]; then
+            python runner.py --platform $PLATFORM --test dhcm:partial \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/web/partial/dhcm.log $NOLOG
+          fi
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/web/partial/dhcm.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ───────────────── WEB: base / main / system tiers ────────────────────────
+
+  web_base:
+    runs-on: ubuntu-latest
+    needs: [ web_partial_hash, web_partial_core, web_partial_pqc,
+             web_partial_pow, web_partial_dhcm ]
+    if: >-
+      needs.web_partial_hash.result   == 'success' &&
+      needs.web_partial_core.result   == 'success' &&
+      needs.web_partial_pqc.result    == 'success' &&
+      needs.web_partial_pow.result    == 'success' &&
+      needs.web_partial_dhcm.result   == 'success'
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk && ./emsdk install 3.1.60 && ./emsdk activate 3.1.60
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then curl https://wasmtime.dev/install.sh -sSf | bash; fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Download partial artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test base
+        run: |
+          NOLOG="${{ needs.web_partial_hash.outputs.no_log == 'true' && '--noLog' || '' }}"
+          SKIP_FLAG=""
+          for mod in core hash dhcm pow pqc; do
+            python runner.py --platform $PLATFORM --build ${mod}:base \
+              --action-log logs/action/web/base/${mod}.log $NOLOG
+            if [ "${{ contains(toJson(needs), 'skip_test') }}" != "true" ]; then
+              python runner.py --platform $PLATFORM --test ${mod}:base \
+                --load-mode ${{ env.LOAD_MODE }} \
+                --action-log logs/action/web/base/${mod}.log $NOLOG
+            fi
+          done
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/base/
+            logs/action/web/base/
+          if-no-files-found: warn
+
+  web_main:
+    runs-on: ubuntu-latest
+    needs: web_base
+    if: needs.web_base.result == 'success'
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk && ./emsdk install 3.1.60 && ./emsdk activate 3.1.60
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then curl https://wasmtime.dev/install.sh -sSf | bash; fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Download previous artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test main
+        run: |
+          for mod in core hash dhcm pow pqc; do
+            python runner.py --platform $PLATFORM --build ${mod}:main \
+              --action-log logs/action/web/main/${mod}.log
+            python runner.py --platform $PLATFORM --test ${mod}:main \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/web/main/${mod}.log
+          done
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/main/
+            logs/action/web/main/
+          if-no-files-found: warn
+
+  web_system:
+    runs-on: ubuntu-latest
+    needs: web_main
+    if: needs.web_main.result == 'success'
+    env:
+      PLATFORM: web
+      BIN_DIR: web
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - uses: actions/cache@v4
+        with:
+          path: |
+            emsdk
+            ~/.emscripten_cache
+          key: emsdk-${{ runner.os }}-3.1.60
+      - uses: actions/cache@v4
+        with:
+          path: ~/.wasmtime
+          key: wasmtime-${{ runner.os }}-v1
+      - name: Setup Emscripten
+        run: |
+          if [ ! -d emsdk ]; then git clone https://github.com/emscripten-core/emsdk.git; fi
+          cd emsdk && ./emsdk install 3.1.60 && ./emsdk activate 3.1.60
+          echo "$PWD" >> $GITHUB_PATH
+          echo "$PWD/upstream/emscripten" >> $GITHUB_PATH
+      - name: Setup wasmtime
+        run: |
+          if [ ! -d "$HOME/.wasmtime/bin" ]; then curl https://wasmtime.dev/install.sh -sSf | bash; fi
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+      - name: Download previous artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test system
+        run: |
+          python runner.py --platform $PLATFORM --build system:main \
+            --action-log logs/action/web/system.log
+          python runner.py --platform $PLATFORM --test system:main \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/web/system.log
+          python runner.py --platform $PLATFORM --build lite:main \
+            --action-log logs/action/web/lite.log
+          python runner.py --platform $PLATFORM --test lite:main \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/web/lite.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-web-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/primary/
+            logs/action/web/
+          if-no-files-found: warn
+
+  # ───────────────── LINUX ──────────────────────────────────────────────────
+
+  linux_partial_hash:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'linux'))
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build hash:partial \
+            --action-log logs/action/linux/partial/hash.log
+          python runner.py --platform $PLATFORM --test hash:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/linux/partial/hash.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/linux/partial/hash.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  linux_partial_core:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'linux'))
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build core:partial \
+            --action-log logs/action/linux/partial/core.log
+          python runner.py --platform $PLATFORM --test core:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/linux/partial/core.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-core-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/linux/partial/core.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  linux_partial_pqc:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'linux'))
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build pqc:partial \
+            --action-log logs/action/linux/partial/pqc.log
+          python runner.py --platform $PLATFORM --test pqc:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/linux/partial/pqc.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/linux/partial/pqc.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  linux_partial_pow:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'linux'))
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build pow:partial \
+            --action-log logs/action/linux/partial/pow.log
+          python runner.py --platform $PLATFORM --test pow:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/linux/partial/pow.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/linux/partial/pow.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  linux_partial_dhcm:
+    runs-on: ubuntu-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'linux'))
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: sudo apt-get install -y build-essential
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build dhcm:partial \
+            --action-log logs/action/linux/partial/dhcm.log
+          python runner.py --platform $PLATFORM --test dhcm:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/linux/partial/dhcm.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/linux/partial/dhcm.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  linux_base:
+    runs-on: ubuntu-latest
+    needs: [ linux_partial_hash, linux_partial_core, linux_partial_pqc,
+             linux_partial_pow, linux_partial_dhcm ]
+    if: >-
+      needs.linux_partial_hash.result  == 'success' &&
+      needs.linux_partial_core.result  == 'success' &&
+      needs.linux_partial_pqc.result   == 'success' &&
+      needs.linux_partial_pow.result   == 'success' &&
+      needs.linux_partial_dhcm.result  == 'success'
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: sudo apt-get install -y build-essential
+      - name: Download partial artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test base
+        run: |
+          for mod in core hash dhcm pow pqc; do
+            python runner.py --platform $PLATFORM --build ${mod}:base \
+              --action-log logs/action/linux/base/${mod}.log
+            python runner.py --platform $PLATFORM --test ${mod}:base \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/linux/base/${mod}.log
+          done
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/base/
+            logs/action/linux/base/
+          if-no-files-found: warn
+
+  linux_main:
+    runs-on: ubuntu-latest
+    needs: linux_base
+    if: needs.linux_base.result == 'success'
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: sudo apt-get install -y build-essential
+      - name: Download previous artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test main
+        run: |
+          for mod in core hash dhcm pow pqc; do
+            python runner.py --platform $PLATFORM --build ${mod}:main \
+              --action-log logs/action/linux/main/${mod}.log
+            python runner.py --platform $PLATFORM --test ${mod}:main \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/linux/main/${mod}.log
+          done
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/main/
+            logs/action/linux/main/
+          if-no-files-found: warn
+
+  linux_system:
+    runs-on: ubuntu-latest
+    needs: linux_main
+    if: needs.linux_main.result == 'success'
+    env:
+      PLATFORM: linux
+      BIN_DIR: linux
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: sudo apt-get install -y build-essential
+      - name: Download previous artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test system
+        run: |
+          python runner.py --platform $PLATFORM --build system:main \
+            --action-log logs/action/linux/system.log
+          python runner.py --platform $PLATFORM --test system:main \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/linux/system.log
+          python runner.py --platform $PLATFORM --build lite:main \
+            --action-log logs/action/linux/lite.log
+          python runner.py --platform $PLATFORM --test lite:main \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/linux/lite.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-linux-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/primary/
+            logs/action/linux/
+          if-no-files-found: warn
+
+  # ───────────────── WINDOWS ────────────────────────────────────────────────
+
+  windows_partial_hash:
+    runs-on: windows-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'windows'))
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install MinGW
+        run: choco install mingw -y
+      - name: Build and Test
+        shell: bash
+        run: |
+          python runner.py --platform $PLATFORM --build hash:partial \
+            --action-log logs/action/windows/partial/hash.log
+          python runner.py --platform $PLATFORM --test hash:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/windows/partial/hash.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/windows/partial/hash.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  windows_partial_core:
+    runs-on: windows-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'windows'))
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install MinGW
+        run: choco install mingw -y
+      - name: Build and Test
+        shell: bash
+        run: |
+          python runner.py --platform $PLATFORM --build core:partial \
+            --action-log logs/action/windows/partial/core.log
+          python runner.py --platform $PLATFORM --test core:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/windows/partial/core.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-core-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/windows/partial/core.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  windows_partial_pqc:
+    runs-on: windows-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'windows'))
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install MinGW
+        run: choco install mingw -y
+      - name: Build and Test
+        shell: bash
+        run: |
+          python runner.py --platform $PLATFORM --build pqc:partial \
+            --action-log logs/action/windows/partial/pqc.log
+          python runner.py --platform $PLATFORM --test pqc:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/windows/partial/pqc.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/windows/partial/pqc.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  windows_partial_pow:
+    runs-on: windows-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'windows'))
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install MinGW
+        run: choco install mingw -y
+      - name: Build and Test
+        shell: bash
+        run: |
+          python runner.py --platform $PLATFORM --build pow:partial \
+            --action-log logs/action/windows/partial/pow.log
+          python runner.py --platform $PLATFORM --test pow:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/windows/partial/pow.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/windows/partial/pow.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  windows_partial_dhcm:
+    runs-on: windows-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'windows'))
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install MinGW
+        run: choco install mingw -y
+      - name: Build and Test
+        shell: bash
+        run: |
+          python runner.py --platform $PLATFORM --build dhcm:partial \
+            --action-log logs/action/windows/partial/dhcm.log
+          python runner.py --platform $PLATFORM --test dhcm:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/windows/partial/dhcm.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/windows/partial/dhcm.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  windows_base:
+    runs-on: windows-latest
+    needs: [ windows_partial_hash, windows_partial_core, windows_partial_pqc,
+             windows_partial_pow, windows_partial_dhcm ]
+    if: >-
+      needs.windows_partial_hash.result  == 'success' &&
+      needs.windows_partial_core.result  == 'success' &&
+      needs.windows_partial_pqc.result   == 'success' &&
+      needs.windows_partial_pow.result   == 'success' &&
+      needs.windows_partial_dhcm.result  == 'success'
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install MinGW
+        run: choco install mingw -y
+      - name: Download partial artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test base
+        shell: bash
+        run: |
+          for mod in core hash dhcm pow pqc; do
+            python runner.py --platform $PLATFORM --build ${mod}:base \
+              --action-log logs/action/windows/base/${mod}.log
+            python runner.py --platform $PLATFORM --test ${mod}:base \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/windows/base/${mod}.log
+          done
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/base/
+            logs/action/windows/base/
+          if-no-files-found: warn
+
+  windows_main:
+    runs-on: windows-latest
+    needs: windows_base
+    if: needs.windows_base.result == 'success'
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install MinGW
+        run: choco install mingw -y
+      - name: Download previous artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test main
+        shell: bash
+        run: |
+          for mod in core hash dhcm pow pqc; do
+            python runner.py --platform $PLATFORM --build ${mod}:main \
+              --action-log logs/action/windows/main/${mod}.log
+            python runner.py --platform $PLATFORM --test ${mod}:main \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/windows/main/${mod}.log
+          done
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/main/
+            logs/action/windows/main/
+          if-no-files-found: warn
+
+  windows_system:
+    runs-on: windows-latest
+    needs: windows_main
+    if: needs.windows_main.result == 'success'
+    env:
+      PLATFORM: windows
+      BIN_DIR: windows
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install MinGW
+        run: choco install mingw -y
+      - name: Download previous artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test system
+        shell: bash
+        run: |
+          python runner.py --platform $PLATFORM --build system:main \
+            --action-log logs/action/windows/system.log
+          python runner.py --platform $PLATFORM --test system:main \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/windows/system.log
+          python runner.py --platform $PLATFORM --build lite:main \
+            --action-log logs/action/windows/lite.log
+          python runner.py --platform $PLATFORM --test lite:main \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/windows/lite.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-windows-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/primary/
+            logs/action/windows/
+          if-no-files-found: warn
+
+  # ───────────────── MAC ────────────────────────────────────────────────────
+
+  mac_partial_hash:
+    runs-on: macos-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'mac'))
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build hash:partial \
+            --action-log logs/action/mac/partial/hash.log
+          python runner.py --platform $PLATFORM --test hash:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/mac/partial/hash.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-hash-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/mac/partial/hash.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  mac_partial_core:
+    runs-on: macos-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'mac'))
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build core:partial \
+            --action-log logs/action/mac/partial/core.log
+          python runner.py --platform $PLATFORM --test core:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/mac/partial/core.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-core-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/mac/partial/core.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  mac_partial_pqc:
+    runs-on: macos-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'mac'))
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build pqc:partial \
+            --action-log logs/action/mac/partial/pqc.log
+          python runner.py --platform $PLATFORM --test pqc:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/mac/partial/pqc.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-pqc-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/mac/partial/pqc.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  mac_partial_pow:
+    runs-on: macos-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'mac'))
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build pow:partial \
+            --action-log logs/action/mac/partial/pow.log
+          python runner.py --platform $PLATFORM --test pow:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/mac/partial/pow.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-pow-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/mac/partial/pow.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  mac_partial_dhcm:
+    runs-on: macos-latest
+    needs: guard
+    if: >-
+      needs.guard.outputs.gen == 'true' &&
+      (needs.guard.outputs.gen_platforms == 'all' ||
+       contains(needs.guard.outputs.gen_platforms, 'mac'))
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Build and Test
+        run: |
+          python runner.py --platform $PLATFORM --build dhcm:partial \
+            --action-log logs/action/mac/partial/dhcm.log
+          python runner.py --platform $PLATFORM --test dhcm:partial \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/mac/partial/dhcm.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-partial-dhcm-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/partial/
+            logs/action/mac/partial/dhcm.log
+          if-no-files-found: warn
+      - name: Cancel run on failure
+        if: failure()
+        shell: bash
+        run: |
+          gh run cancel ${{ github.run_id }} --repo ${{ github.repository }} || true
+          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  mac_base:
+    runs-on: macos-latest
+    needs: [ mac_partial_hash, mac_partial_core, mac_partial_pqc,
+             mac_partial_pow, mac_partial_dhcm ]
+    if: >-
+      needs.mac_partial_hash.result  == 'success' &&
+      needs.mac_partial_core.result  == 'success' &&
+      needs.mac_partial_pqc.result   == 'success' &&
+      needs.mac_partial_pow.result   == 'success' &&
+      needs.mac_partial_dhcm.result  == 'success'
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Download partial artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test base
+        run: |
+          for mod in core hash dhcm pow pqc; do
+            python runner.py --platform $PLATFORM --build ${mod}:base \
+              --action-log logs/action/mac/base/${mod}.log
+            python runner.py --platform $PLATFORM --test ${mod}:base \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/mac/base/${mod}.log
+          done
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-base-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/base/
+            logs/action/mac/base/
+          if-no-files-found: warn
+
+  mac_main:
+    runs-on: macos-latest
+    needs: mac_base
+    if: needs.mac_base.result == 'success'
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Download previous artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test main
+        run: |
+          for mod in core hash dhcm pow pqc; do
+            python runner.py --platform $PLATFORM --build ${mod}:main \
+              --action-log logs/action/mac/main/${mod}.log
+            python runner.py --platform $PLATFORM --test ${mod}:main \
+              --load-mode ${{ env.LOAD_MODE }} \
+              --action-log logs/action/mac/main/${mod}.log
+          done
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-main-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/main/
+            logs/action/mac/main/
+          if-no-files-found: warn
+
+  mac_system:
+    runs-on: macos-latest
+    needs: mac_main
+    if: needs.mac_main.result == 'success'
+    env:
+      PLATFORM: mac
+      BIN_DIR: mac
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install GCC
+        run: brew list gcc >/dev/null 2>&1 || brew install gcc
+      - name: Download previous artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Build and Test system
+        run: |
+          python runner.py --platform $PLATFORM --build system:main \
+            --action-log logs/action/mac/system.log
+          python runner.py --platform $PLATFORM --test system:main \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/mac/system.log
+          python runner.py --platform $PLATFORM --build lite:main \
+            --action-log logs/action/mac/lite.log
+          python runner.py --platform $PLATFORM --test lite:main \
+            --load-mode ${{ env.LOAD_MODE }} \
+            --action-log logs/action/mac/lite.log
+      - name: Upload output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-mac-system-${{ github.run_attempt }}
+          path: |
+            bin/${{ env.BIN_DIR }}/primary/
+            logs/action/mac/
+          if-no-files-found: warn
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # commit — download all artifacts, roll checksums, commit bins + logs
+  # ─────────────────────────────────────────────────────────────────────────
+  commit:
+    runs-on: ubuntu-latest
+    needs: [ web_system, linux_system, windows_system, mac_system ]
+    if: >-
+      !cancelled() &&
+      (needs.web_system.result     == 'success' ||
+       needs.linux_system.result   == 'success' ||
+       needs.windows_system.result == 'success' ||
+       needs.mac_system.result     == 'success')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          merge-multiple: true
+          if-no-files-found: ignore
+      - name: Cleanup RSP files
+        shell: bash
+        run: find bin -type f -name '*.rsp' -delete 2>/dev/null || true
+      - name: Compress large logs
+        shell: bash
+        run: find logs -type f -name '*.log' -size +10M -exec gzip -9 {} \; 2>/dev/null || true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Generate bin index
+        shell: bash
+        run: python roll_checksum.py
+      - name: Reproducibility spot-check
+        shell: bash
+        run: |
+          if command -v gcc &>/dev/null; then
+            python runner.py --platform linux --build hash:partial --noLog
+            sha256sum bin/linux/partial/hash.* > /tmp/chk1.txt 2>/dev/null || true
+            python runner.py --platform linux --build hash:partial --noLog
+            sha256sum bin/linux/partial/hash.* > /tmp/chk2.txt 2>/dev/null || true
+            if [ -s /tmp/chk1.txt ] && ! diff -q /tmp/chk1.txt /tmp/chk2.txt; then
+              echo "NON-REPRODUCIBLE BUILD DETECTED"
+              diff /tmp/chk1.txt /tmp/chk2.txt
+              exit 1
+            fi
+          fi
+      - name: Commit outputs
+        shell: bash
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          python clear.py
+          git add -f bin logs
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Add platform binaries and logs [skip ci]"
+          git pull --rebase -X ours
+          git push
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # release — create GitHub Release and versioned bins.json
+  # ─────────────────────────────────────────────────────────────────────────
+  release:
+    runs-on: ubuntu-latest
+    needs: [ guard, commit ]
+    if: >-
+      needs.guard.outputs.gen_release != '' &&
+      needs.commit.result == 'success'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: git pull origin ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Archive versioned bins.json
+        shell: bash
+        run: |
+          TAG=${{ needs.guard.outputs.gen_release }}
+          mkdir -p bin/releases
+          python roll_checksum.py \
+            --bin-dir bin \
+            --repo    ${{ github.repository }} \
+            --branch  $TAG \
+            --out     bin/releases/${TAG}.json
+
+      - name: Update releases/index.json
+        shell: bash
+        run: |
+          python script/ci/update_release_index.py \
+            --tag   "${{ needs.guard.outputs.gen_release }}" \
+            --index bin/releases/index.json \
+            --repo  ${{ github.repository }}
+
+      - name: Commit release index
+        shell: bash
+        run: |
+          TAG=${{ needs.guard.outputs.gen_release }}
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add bin/releases/
+          git commit -m "release: archive ${TAG} bins index [skip ci]"
+          git push
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.guard.outputs.gen_release }}
+          name: "NextSSL ${{ needs.guard.outputs.gen_release }}"
+          body: |
+            Binary release — all platforms.
+            Download index: `bin/releases/${{ needs.guard.outputs.gen_release }}.json`
+          files: |
+            bin/windows/primary/main.dll
+            bin/windows/primary/main_lite.dll
+            bin/linux/primary/main.so
+            bin/linux/primary/main_lite.so
+            bin/mac/primary/main.dylib
+            bin/mac/primary/main_lite.dylib
+            bin/web/primary/main.wasm
+            bin/web/primary/main_lite.wasm
+            bin/releases/${{ needs.guard.outputs.gen_release }}.json

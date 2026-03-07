@@ -37,7 +37,5 @@ CODE_OF_CONDUCT.md
 CHANGELOG.md
 CHANGELOG.md
 CHANGELOG.md
-.github/prompts/claude.md
-.github/workflows/ci.yml
-.github/prompts/savePrompt.prompt.md
 /script_old
+/.github/prompts
