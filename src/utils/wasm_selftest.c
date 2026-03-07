@@ -19,7 +19,7 @@ static const uint8_t ABC_DIGEST[32] = {
 
 int nextssl_wasm_selftest(void) {
     uint8_t digest[32];
-    sha256_ctx ctx;
+    SHA256_CTX ctx;
     sha256_init(&ctx);
     sha256_update(&ctx, (const uint8_t *)"abc", 3);
     sha256_final(&ctx, digest);
