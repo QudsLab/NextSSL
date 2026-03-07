@@ -27,3 +27,4 @@ emcc: error: '/home/runner/work/NextSSL/NextSSL/emsdk/upstream/bin/wasm-ld @/tmp
 2026-03-07 00:58:29,850 - INFO - Successfully built pqc
 2026-03-07 00:58:29,918 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/main/pqc.wasm
 2026-03-07 00:58:29,927 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/main/pqc.wasm
+2026-03-07 01:46:22,297 - INFO - Successfully built pqc
