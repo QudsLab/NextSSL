@@ -27,14 +27,6 @@ extern "C" {
 #define NEXTSSL_DILITHIUM5_SIGNATURE_SIZE   4627
 
 /**
- * @brief Signature algorithms
- */
-typedef enum {
-    NEXTSSL_SIGN_ED25519,      /**< Ed25519 (EdDSA on Curve25519) */
-    NEXTSSL_SIGN_DILITHIUM5    /**< Dilithium5 (NIST FIPS 204) */
-} nextssl_sign_algorithm_t;
-
-/**
  * @brief Generate Ed25519 keypair
  * 
  * @param public_key Output public key (32 bytes)

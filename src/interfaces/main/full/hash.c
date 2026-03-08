@@ -37,5 +37,5 @@ NEXTSSL_MAIN_API int nextssl_hash_fast(
     uint8_t hash[32])
 {
     if (!data || !hash) return -1;
-    return nextssl_base_hash_blake3(data, data_len, hash, 32);
+    return nextssl_base_hash_blake3(data, data_len, hash);
 }

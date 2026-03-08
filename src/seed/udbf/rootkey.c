@@ -1,39 +1,16 @@
 #include "rootkey.h"
 #include "udbf.h"
 #include "../drbg/drbg.h"
+#include "../rng/rng.h"
 #include "../../PQCrypto/common/hkdf/hkdf.h"
 #include <string.h>
 
 /*
  * Root-Key Orchestrator implementation.
  *
- * For ROOTKEY_MODE_OSRNG we use the OS-native entropy source directly
- * without going through the DRBG, so a platform shim is needed here.
+ * For ROOTKEY_MODE_OSRNG we use rng_fill() — the authoritative OS CSPRNG
+ * wrapper — instead of calling platform APIs directly.
  */
-
-/* ---- OS entropy shim ---------------------------------------------------- */
-
-#if defined(_WIN32) || defined(_WIN64)
-# include <windows.h>
-BOOLEAN NTAPI SystemFunction036(PVOID RandomBuffer, ULONG RandomBufferLength);
-static int _os_random(uint8_t *buf, size_t len)
-{
-    return SystemFunction036(buf, (ULONG)len) ? 0 : -1;
-}
-#else
-# include <stdio.h>
-static int _os_random(uint8_t *buf, size_t len)
-{
-    FILE *f = fopen("/dev/urandom", "rb");
-    if (!f) return -1;
-    size_t n = fread(buf, 1, len, f);
-    fclose(f);
-    return (n == len) ? 0 : -1;
-}
-#endif
-
-/* ---- Module-private global DRBG ----------------------------------------- */
-
 static DRBG_CTX s_global_drbg;
 static int      s_drbg_seeded = 0;
 
@@ -43,7 +20,7 @@ static int _ensure_drbg(void)
     if (s_drbg_seeded) return 0;
 
     uint8_t entropy[48];
-    if (_os_random(entropy, sizeof(entropy)) != 0) return -1;
+    if (rng_fill(entropy, sizeof(entropy)) != 0) return -1;
 
     drbg_init(&s_global_drbg, entropy, sizeof(entropy));
 
@@ -101,7 +78,7 @@ int rootkey_get(rootkey_mode_t  mode,
 
     /* ---------------------------------------------------------------------- */
     case ROOTKEY_MODE_OSRNG: {
-        return _os_random(out, out_len);
+        return rng_fill(out, out_len);
     }
 
     /* ---------------------------------------------------------------------- */

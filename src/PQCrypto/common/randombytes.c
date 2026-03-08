@@ -106,7 +106,7 @@ static int randombytes_os(uint8_t *output, size_t n) {
 int randombytes(uint8_t *output, size_t n) {
     /* UDBF path: delegate to common/udbf -- returns error on exhaustion, never zero-fills */
     if (udbf_is_active()) {
-        int ret = udbf_read(output, n);
+        int ret = udbf_read("randombytes", output, n);
         if (ret != 0) {
             /* UDBF_ERR_EXHAUSTED or other error -- do NOT silently fall through */
             return ret;

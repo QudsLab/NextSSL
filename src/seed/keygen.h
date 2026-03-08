@@ -81,6 +81,9 @@ int keygen_x25519(keygen_ctx_t *ctx, uint8_t pk[32], uint8_t sk[32]);
 int keygen_ed448(keygen_ctx_t *ctx, uint8_t pk[57], uint8_t sk[57]);
 int keygen_x448(keygen_ctx_t *ctx, uint8_t pk[56], uint8_t sk[56]);
 
+/* Elligator2 — obfuscated X25519 keypair (hidden[32] + sk[32]) */
+int keygen_elligator2(keygen_ctx_t *ctx, uint8_t hidden[32], uint8_t sk[32]);
+
 /* PQC KEM */
 int keygen_ml_kem_512(keygen_ctx_t *ctx, uint8_t *pk, uint8_t *sk);
 int keygen_ml_kem_768(keygen_ctx_t *ctx, uint8_t *pk, uint8_t *sk);
@@ -149,6 +152,39 @@ int keygen_x25519_password(const uint8_t *pwd, size_t plen,
 int keygen_x25519_hd(const uint8_t *master, size_t mlen, const char *path,
                      uint8_t pk[32], uint8_t sk[32]);
 
+/* Ed448 */
+int keygen_ed448_random(uint8_t pk[57], uint8_t sk[57]);
+int keygen_ed448_drbg(const uint8_t *seed, size_t slen, const char *label,
+                      uint8_t pk[57], uint8_t sk[57]);
+int keygen_ed448_password(const uint8_t *pwd, size_t plen,
+                          const uint8_t *salt, size_t slen,
+                          const keygen_argon2_params_t *params,
+                          uint8_t pk[57], uint8_t sk[57]);
+int keygen_ed448_hd(const uint8_t *master, size_t mlen, const char *path,
+                    uint8_t pk[57], uint8_t sk[57]);
+
+/* X448 */
+int keygen_x448_random(uint8_t pk[56], uint8_t sk[56]);
+int keygen_x448_drbg(const uint8_t *seed, size_t slen, const char *label,
+                     uint8_t pk[56], uint8_t sk[56]);
+int keygen_x448_password(const uint8_t *pwd, size_t plen,
+                         const uint8_t *salt, size_t slen,
+                         const keygen_argon2_params_t *params,
+                         uint8_t pk[56], uint8_t sk[56]);
+int keygen_x448_hd(const uint8_t *master, size_t mlen, const char *path,
+                   uint8_t pk[56], uint8_t sk[56]);
+
+/* Elligator2 */
+int keygen_elligator2_random(uint8_t hidden[32], uint8_t sk[32]);
+int keygen_elligator2_drbg(const uint8_t *seed, size_t slen, const char *label,
+                           uint8_t hidden[32], uint8_t sk[32]);
+int keygen_elligator2_password(const uint8_t *pwd, size_t plen,
+                               const uint8_t *salt, size_t slen,
+                               const keygen_argon2_params_t *params,
+                               uint8_t hidden[32], uint8_t sk[32]);
+int keygen_elligator2_hd(const uint8_t *master, size_t mlen, const char *path,
+                         uint8_t hidden[32], uint8_t sk[32]);
+
 /* ML-KEM-512 */
 int keygen_ml_kem_512_random(uint8_t *pk, uint8_t *sk);
 int keygen_ml_kem_512_drbg(const uint8_t *seed, size_t slen, const char *label,
@@ -157,6 +193,8 @@ int keygen_ml_kem_512_password(const uint8_t *pwd, size_t plen,
                                const uint8_t *salt, size_t slen,
                                const keygen_argon2_params_t *params,
                                uint8_t *pk, uint8_t *sk);
+int keygen_ml_kem_512_hd(const uint8_t *master, size_t mlen, const char *path,
+                         uint8_t *pk, uint8_t *sk);
 
 /* ML-KEM-768 */
 int keygen_ml_kem_768_random(uint8_t *pk, uint8_t *sk);
@@ -166,6 +204,8 @@ int keygen_ml_kem_768_password(const uint8_t *pwd, size_t plen,
                                const uint8_t *salt, size_t slen,
                                const keygen_argon2_params_t *params,
                                uint8_t *pk, uint8_t *sk);
+int keygen_ml_kem_768_hd(const uint8_t *master, size_t mlen, const char *path,
+                         uint8_t *pk, uint8_t *sk);
 
 /* ML-KEM-1024 */
 int keygen_ml_kem_1024_random(uint8_t *pk, uint8_t *sk);
@@ -175,6 +215,8 @@ int keygen_ml_kem_1024_password(const uint8_t *pwd, size_t plen,
                                 const uint8_t *salt, size_t slen,
                                 const keygen_argon2_params_t *params,
                                 uint8_t *pk, uint8_t *sk);
+int keygen_ml_kem_1024_hd(const uint8_t *master, size_t mlen, const char *path,
+                          uint8_t *pk, uint8_t *sk);
 
 /* ML-DSA-44/65/87 */
 int keygen_ml_dsa_44_random(uint8_t *pk, uint8_t *sk);
@@ -184,6 +226,8 @@ int keygen_ml_dsa_44_password(const uint8_t *pwd, size_t plen,
                               const uint8_t *salt, size_t slen,
                               const keygen_argon2_params_t *params,
                               uint8_t *pk, uint8_t *sk);
+int keygen_ml_dsa_44_hd(const uint8_t *master, size_t mlen, const char *path,
+                        uint8_t *pk, uint8_t *sk);
 
 int keygen_ml_dsa_65_random(uint8_t *pk, uint8_t *sk);
 int keygen_ml_dsa_65_drbg(const uint8_t *seed, size_t slen, const char *label,
@@ -192,6 +236,8 @@ int keygen_ml_dsa_65_password(const uint8_t *pwd, size_t plen,
                               const uint8_t *salt, size_t slen,
                               const keygen_argon2_params_t *params,
                               uint8_t *pk, uint8_t *sk);
+int keygen_ml_dsa_65_hd(const uint8_t *master, size_t mlen, const char *path,
+                        uint8_t *pk, uint8_t *sk);
 
 int keygen_ml_dsa_87_random(uint8_t *pk, uint8_t *sk);
 int keygen_ml_dsa_87_drbg(const uint8_t *seed, size_t slen, const char *label,
@@ -200,73 +246,149 @@ int keygen_ml_dsa_87_password(const uint8_t *pwd, size_t plen,
                               const uint8_t *salt, size_t slen,
                               const keygen_argon2_params_t *params,
                               uint8_t *pk, uint8_t *sk);
+int keygen_ml_dsa_87_hd(const uint8_t *master, size_t mlen, const char *path,
+                        uint8_t *pk, uint8_t *sk);
 
 /* Falcon-512/1024 and Falcon-Padded-512/1024 */
 int keygen_falcon_512_random(uint8_t *pk, uint8_t *sk);
 int keygen_falcon_512_drbg(const uint8_t *seed, size_t slen, const char *label,
                            uint8_t *pk, uint8_t *sk);
+int keygen_falcon_512_password(const uint8_t *pwd, size_t plen,
+                               const uint8_t *salt, size_t slen,
+                               const keygen_argon2_params_t *params,
+                               uint8_t *pk, uint8_t *sk);
+int keygen_falcon_512_hd(const uint8_t *master, size_t mlen, const char *path,
+                         uint8_t *pk, uint8_t *sk);
 int keygen_falcon_1024_random(uint8_t *pk, uint8_t *sk);
 int keygen_falcon_1024_drbg(const uint8_t *seed, size_t slen, const char *label,
                             uint8_t *pk, uint8_t *sk);
+int keygen_falcon_1024_password(const uint8_t *pwd, size_t plen,
+                                const uint8_t *salt, size_t slen,
+                                const keygen_argon2_params_t *params,
+                                uint8_t *pk, uint8_t *sk);
+int keygen_falcon_1024_hd(const uint8_t *master, size_t mlen, const char *path,
+                          uint8_t *pk, uint8_t *sk);
 int keygen_falcon_padded_512_random(uint8_t *pk, uint8_t *sk);
 int keygen_falcon_padded_512_drbg(const uint8_t *seed, size_t slen, const char *label,
                                   uint8_t *pk, uint8_t *sk);
+int keygen_falcon_padded_512_password(const uint8_t *pwd, size_t plen,
+                                      const uint8_t *salt, size_t slen,
+                                      const keygen_argon2_params_t *params,
+                                      uint8_t *pk, uint8_t *sk);
+int keygen_falcon_padded_512_hd(const uint8_t *master, size_t mlen, const char *path,
+                                uint8_t *pk, uint8_t *sk);
 int keygen_falcon_padded_1024_random(uint8_t *pk, uint8_t *sk);
 int keygen_falcon_padded_1024_drbg(const uint8_t *seed, size_t slen, const char *label,
                                    uint8_t *pk, uint8_t *sk);
+int keygen_falcon_padded_1024_password(const uint8_t *pwd, size_t plen,
+                                       const uint8_t *salt, size_t slen,
+                                       const keygen_argon2_params_t *params,
+                                       uint8_t *pk, uint8_t *sk);
+int keygen_falcon_padded_1024_hd(const uint8_t *master, size_t mlen, const char *path,
+                                 uint8_t *pk, uint8_t *sk);
 
-/* SPHINCS+, HQC, McEliece — _random and _drbg only (no HD path for PQC) */
+/* SPHINCS+, HQC, McEliece — _random, _drbg, _password, _hd */
 int keygen_sphincs_sha2_128f_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_128f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_128f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_128f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_128s_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_128s_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_128s_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_128s_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_192f_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_192f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_192f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_192f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_192s_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_192s_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_192s_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_192s_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_256f_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_256f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_256f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_256f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_256s_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_sha2_256s_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_256s_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_sha2_256s_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_128f_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_128f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_128f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_128f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_128s_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_128s_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_128s_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_128s_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_192f_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_192f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_192f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_192f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_192s_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_192s_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_192s_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_192s_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_256f_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_256f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_256f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_256f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_256s_random(uint8_t *pk, uint8_t *sk);
 int keygen_sphincs_shake_256s_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_256s_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_sphincs_shake_256s_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 
 int keygen_hqc_128_random(uint8_t *pk, uint8_t *sk);
 int keygen_hqc_128_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_hqc_128_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_hqc_128_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_hqc_192_random(uint8_t *pk, uint8_t *sk);
 int keygen_hqc_192_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_hqc_192_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_hqc_192_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_hqc_256_random(uint8_t *pk, uint8_t *sk);
 int keygen_hqc_256_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_hqc_256_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_hqc_256_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 
 int keygen_mceliece_348864_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_348864_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_348864_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_348864_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_348864f_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_348864f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_348864f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_348864f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_460896_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_460896_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_460896_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_460896_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_460896f_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_460896f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_460896f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_460896f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_6688128_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_6688128_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_6688128_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_6688128_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_6688128f_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_6688128f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_6688128f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_6688128f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_6960119_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_6960119_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_6960119_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_6960119_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_6960119f_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_6960119f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_6960119f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_6960119f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_8192128_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_8192128_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_8192128_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_8192128_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_8192128f_random(uint8_t *pk, uint8_t *sk);
 int keygen_mceliece_8192128f_drbg(const uint8_t *seed, size_t slen, const char *label, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_8192128f_password(const uint8_t *pwd, size_t plen, const uint8_t *salt, size_t slen, const keygen_argon2_params_t *params, uint8_t *pk, uint8_t *sk);
+int keygen_mceliece_8192128f_hd(const uint8_t *master, size_t mlen, const char *path, uint8_t *pk, uint8_t *sk);
 
 #endif /* NEXTSSL_SEED_KEYGEN_H */

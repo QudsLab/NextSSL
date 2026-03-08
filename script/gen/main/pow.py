@@ -1,0 +1,143 @@
+import os
+from script.core import Builder
+
+_WASM_POW_EXPORTS = [
+    # PoW server generic API (defined in utils/pow/server/api.c)
+    'nextssl_pow_server_generate_challenge',
+    'nextssl_pow_server_verify_solution',
+    # PoW server algorithm-specific convenience wrappers
+    # (defined in utils/pow/server/primitive_fast.c,
+    #  primitive_memory_hard.c, primitive_sponge_xof.c)
+    'nextssl_pow_server_generate_challenge_sha256',
+    'nextssl_pow_server_generate_challenge_blake3',
+    'nextssl_pow_server_generate_challenge_argon2id',
+    'nextssl_pow_server_generate_challenge_sha3_256',
+    # PoW client generic API (defined in utils/pow/client/api.c)
+    'nextssl_pow_client_solve',
+    'nextssl_pow_client_check_limits',
+    'nextssl_pow_client_parse_challenge',
+    # PoW client algorithm-specific convenience wrappers
+    # (defined in utils/pow/client/primitive_sponge_xof.c)
+    'nextssl_pow_client_solve_sha3_256',
+    # Memory allocation — required by Python wasmtime tests in script/web/
+    'malloc', 'free',
+    # NOTE: nextssl_dhcm_* are NOT compiled into pow.wasm (only in dhcm.wasm
+    # and system.wasm). They are NOT exported here.
+]
+
+_WASM_DHCM_EXPORTS = [
+    # DHCM public API (defined in DHCM/utils/dhcm_api.c)
+    'nextssl_dhcm_calculate',
+    'nextssl_dhcm_get_algorithm_info',
+    'nextssl_dhcm_expected_trials',
+    # Memory allocation — required by Python wasmtime tests in script/web/
+    'malloc', 'free',
+]
+
+_POW_MACROS_BASE = [
+    'POW_ENABLE_PRIMITIVE_FAST',
+    'POW_ENABLE_PRIMITIVE_MEMORY_HARD',
+    'POW_ENABLE_PRIMITIVE_SPONGE_XOF',
+    'POW_ENABLE_LEGACY_ALIVE',
+    'POW_ENABLE_LEGACY_UNSAFE',
+    'POW_NO_GENERIC_API',
+]
+
+def build(builder: Builder):
+    """Build PoW + DHCM main DLLs: pow (merged server+client), dhcm."""
+    src_dir = builder.config.src_dir
+
+    # ── Shared PoW sources ────────────────────────────────────────────────────
+    core_sources = builder.get_sources([
+        os.path.join(src_dir, 'PoW/core/')
+    ], recursive=True)
+
+    adapter_sources = []
+    adapter_dirs = [
+        os.path.join(src_dir, 'PoW/adapters/primitive_fast/'),
+        os.path.join(src_dir, 'PoW/adapters/primitive_memory_hard/'),
+        os.path.join(src_dir, 'PoW/adapters/primitive_sponge_xof/'),
+        os.path.join(src_dir, 'PoW/adapters/legacy_alive/'),
+        os.path.join(src_dir, 'PoW/adapters/legacy_unsafe/')
+    ]
+    for d in adapter_dirs:
+        adapter_sources.extend(
+            s for s in builder.get_sources([d], recursive=True)
+            if not s.endswith('dispatcher.c')
+        )
+    adapter_sources.append(os.path.join(src_dir, 'PoW/adapters/dispatcher_main.c'))
+
+    hash_sources = builder.get_sources([
+        os.path.join(src_dir, 'primitives', 'hash', 'fast'),
+        os.path.join(src_dir, 'primitives', 'hash', 'sponge_xof'),
+        os.path.join(src_dir, 'primitives', 'hash', 'memory_hard'),
+        os.path.join(src_dir, 'legacy/alive/'),
+        os.path.join(src_dir, 'legacy/unsafe/')
+    ], recursive=True)
+    hash_wrapper = os.path.join(src_dir, 'utils', 'hash', 'primitive_memory_hard.c')
+    if os.path.exists(hash_wrapper):
+        hash_sources.append(hash_wrapper)
+
+    aes_sources = builder.get_sources([
+        os.path.join(src_dir, 'primitives/cipher/aes_core/')
+    ], recursive=True)
+
+    core_sources.append(os.path.join(src_dir, 'common/encoding/radix_common.c'))
+    core_sources.append(os.path.join(src_dir, 'common/encoding/base64.c'))
+    core_sources.append(os.path.join(src_dir, 'PoW/mock_deps.c'))
+    core_sources.append(os.path.join(src_dir, 'PoW/pow_api.c'))
+
+    # ── 1. pow  (server + client merged into a single DLL) ───────────────────
+    pow_sources = (core_sources + adapter_sources + hash_sources + aes_sources
+                   + builder.get_sources([
+                       os.path.join(src_dir, 'PoW/server/'),
+                       os.path.join(src_dir, 'PoW/client/')
+                   ], recursive=True))
+
+    # pow.dll adapters reference nextssl_argon2d/i/id which are exported by hash.dll.
+    lib_ext = builder.config.get_shared_lib_ext()
+    pow_extra = ['-lpthread']
+    if lib_ext != '.wasm':
+        hash_lib = builder.config.get_lib_path('main', 'hash')
+        if os.path.exists(hash_lib):
+            pow_extra.append(hash_lib)
+
+    ret_pow = builder.build_target(
+        'pow', pow_sources,
+        extra_libs=pow_extra, output_subdir='main',
+        macros=['POW_ENABLE_SERVER', 'POW_ENABLE_CLIENT'] + _POW_MACROS_BASE,
+        wasm_exports=_WASM_POW_EXPORTS,
+    )
+
+    # ── 4. dhcm ───────────────────────────────────────────────────────────────
+    dhcm_sources = builder.get_sources([
+        os.path.join(src_dir, 'DHCM/core/'),
+        os.path.join(src_dir, 'DHCM/adapters/primitive_fast/'),
+        os.path.join(src_dir, 'DHCM/adapters/primitive_memory_hard/'),
+        os.path.join(src_dir, 'DHCM/adapters/primitive_sponge_xof/'),
+        os.path.join(src_dir, 'DHCM/adapters/legacy_alive/'),
+        os.path.join(src_dir, 'DHCM/adapters/legacy_unsafe/'),
+        os.path.join(src_dir, 'DHCM/utils/'),
+    ], recursive=True)
+
+    ret_dhcm = builder.build_target(
+        'dhcm', dhcm_sources,
+        output_subdir='main',
+        macros=[
+            'DHCM_VERSION_MAJOR=1', 'DHCM_VERSION_MINOR=0',
+            'DHCM_ENABLE_PRIMITIVE_FAST',
+            'DHCM_ENABLE_PRIMITIVE_MEMORY_HARD',
+            'DHCM_ENABLE_PRIMITIVE_SPONGE_XOF',
+            'DHCM_ENABLE_LEGACY_ALIVE',
+            'DHCM_ENABLE_LEGACY_UNSAFE',
+        ],
+        wasm_exports=_WASM_DHCM_EXPORTS,
+    )
+
+    return ret_pow or ret_dhcm
+
+if __name__ == "__main__":
+    from script.core import Config, Logger
+    config = Config()
+    with Logger(config.get_log_path('main', 'pow')) as logger:
+        build(Builder(config, logger))

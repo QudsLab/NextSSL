@@ -466,7 +466,7 @@ nextssl_partial_core_kdf_selftest(void);
  * 
  * @compliance RFC 5869
  */
-NEXTSSL_CORE_API int NEXTSSL_CORE_KDF_H_AGGREGATEkdf_sha256(
+NEXTSSL_CORE_API int kdf_sha256(
     const uint8_t *ikm, size_t ikm_len,
     const uint8_t *salt, size_t salt_len,
     const uint8_t *info, size_t info_len,
@@ -485,7 +485,7 @@ NEXTSSL_CORE_API int NEXTSSL_CORE_KDF_H_AGGREGATEkdf_sha256(
  * @param okm_len Desired output length (max 16320 bytes)
  * @return 0 on success, negative on error
  */
-NEXTSSL_CORE_API int NEXTSSL_CORE_KDF_H_AGGREGATEkdf_sha512(
+NEXTSSL_CORE_API int kdf_sha512(
     const uint8_t *ikm, size_t ikm_len,
     const uint8_t *salt, size_t salt_len,
     const uint8_t *info, size_t info_len,

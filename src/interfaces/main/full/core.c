@@ -45,7 +45,7 @@ NEXTSSL_MAIN_API int nextssl_derive_key(
     uint8_t *output_key, size_t output_len)
 {
     if (!input_key || !output_key || output_len == 0) return -1;
-    return NEXTSSL_CORE_KDF_H_AGGREGATEkdf_sha256(
+    return kdf_sha256(
         input_key, input_len,
         NULL, 0,
         (const uint8_t *)context, context ? strlen(context) : 0,
@@ -107,7 +107,7 @@ NEXTSSL_MAIN_API int nextssl_mac(
     uint8_t mac[32])
 {
     if (!key || !message || !mac) return -1;
-    return NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha256(key, key_len, message, message_len, mac);
+    return mac_sha256(key, key_len, message, message_len, mac);
 }
 
 NEXTSSL_MAIN_API int nextssl_mac_verify(
@@ -116,7 +116,7 @@ NEXTSSL_MAIN_API int nextssl_mac_verify(
     const uint8_t mac[32])
 {
     if (!key || !message || !mac) return -1;
-    return NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha256_verify(key, key_len, message, message_len, mac);
+    return mac_sha256_verify(key, key_len, message, message_len, mac);
 }
 
 /* ========== Secure memory ========== */

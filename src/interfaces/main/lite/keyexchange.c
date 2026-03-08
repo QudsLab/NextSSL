@@ -6,6 +6,7 @@
 #include "keyexchange.h"
 #include "../../../primitives/ecc/ed25519/ed25519.h"
 #include "../../../PQCrypto/crypto_kem/ml-kem-1024/clean/api.h"
+#include "../../../seed/rng/rng.h"
 #include <string.h>
 
 // X25519 functions
@@ -20,11 +21,13 @@ int nextssl_x25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
     unsigned char seed[32];
     unsigned char sk_full[64];
 
-    ed25519_create_seed(seed);
+    if (rng_fill(seed, 32) != 0) return -1;
     ed25519_create_keypair(public_key, sk_full, seed);
 
     /* sk_full[0..31] is the clamped Curve25519 scalar used by key_exchange */
     memcpy(secret_key, sk_full, 32);
+    memset(seed, 0, 32);
+    memset(sk_full, 0, 64);
 
     return 0;
 }

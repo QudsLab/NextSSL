@@ -9,8 +9,8 @@
  *       Calls rng_fill() — OS random, no DRBG involvement.
  *
  *   CTX_MODE_UDBF:
- *       Delegates to udbf_read(label, out, len) which tracks its own
- *       internal state. Returns -3 on exhaustion.
+ *       Delegates to udbf_ctx_read(&ctx->udbf, label, out, len) on the
+ *       per-instance udbf_ctx_t embedded in the context. Returns -3 on exhaustion.
  *
  *   CTX_MODE_DET (DRBG-backed):
  *       1. Pulls 32 fresh DRBG bytes as IKM.

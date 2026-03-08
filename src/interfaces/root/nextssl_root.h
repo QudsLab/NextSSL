@@ -98,6 +98,66 @@
 #define nextssl_root_ed25519_sign     nextssl_root_ecc_ed25519_sign
 #define nextssl_root_ed25519_verify   nextssl_root_ecc_ed25519_verify
 
+/* ---- Multi-profile / deterministic keygen shortcuts ------------------
+ *
+ * Use any keygen_new_*() factory to create a seed context, then call
+ * these to derive keypairs for any user/session from that seed.
+ *
+ *   keygen_ctx_t *ctx = keygen_new_udbf(entropy, elen, "user_a");
+ *   nextssl_root_keygen_ed25519(ctx, pk, sk); // user A's ed25519 key
+ *   keygen_free(ctx);
+ *
+ * Keygen factories (keygen_new_random / _drbg / _password / _hash /
+ * _kdf / _udbf / _hd) and keygen_free() are all available after
+ * including this header (pulled in via root/core/root_ecc.h).
+ * -------------------------------------------------------------------- */
+
+/* ECC */
+#define nextssl_root_keygen_ed25519           nextssl_root_ecc_ed25519_keygen_ctx
+#define nextssl_root_keygen_x25519            nextssl_root_ecc_x25519_keygen_ctx
+#define nextssl_root_keygen_ed448             nextssl_root_ecc_ed448_keygen_ctx
+#define nextssl_root_keygen_x448              nextssl_root_ecc_x448_keygen_ctx
+#define nextssl_root_keygen_elligator2        nextssl_root_ecc_elligator2_keygen_ctx
+
+/* PQC — KEM */
+#define nextssl_root_keygen_ml_kem_512        keygen_ml_kem_512
+#define nextssl_root_keygen_ml_kem_768        keygen_ml_kem_768
+#define nextssl_root_keygen_ml_kem_1024       keygen_ml_kem_1024
+#define nextssl_root_keygen_hqc_128           keygen_hqc_128
+#define nextssl_root_keygen_hqc_192           keygen_hqc_192
+#define nextssl_root_keygen_hqc_256           keygen_hqc_256
+#define nextssl_root_keygen_mceliece_348864   keygen_mceliece_348864
+#define nextssl_root_keygen_mceliece_348864f  keygen_mceliece_348864f
+#define nextssl_root_keygen_mceliece_460896   keygen_mceliece_460896
+#define nextssl_root_keygen_mceliece_460896f  keygen_mceliece_460896f
+#define nextssl_root_keygen_mceliece_6688128  keygen_mceliece_6688128
+#define nextssl_root_keygen_mceliece_6688128f keygen_mceliece_6688128f
+#define nextssl_root_keygen_mceliece_6960119  keygen_mceliece_6960119
+#define nextssl_root_keygen_mceliece_6960119f keygen_mceliece_6960119f
+#define nextssl_root_keygen_mceliece_8192128  keygen_mceliece_8192128
+#define nextssl_root_keygen_mceliece_8192128f keygen_mceliece_8192128f
+
+/* PQC — Signature */
+#define nextssl_root_keygen_ml_dsa_44             keygen_ml_dsa_44
+#define nextssl_root_keygen_ml_dsa_65             keygen_ml_dsa_65
+#define nextssl_root_keygen_ml_dsa_87             keygen_ml_dsa_87
+#define nextssl_root_keygen_falcon_512            keygen_falcon_512
+#define nextssl_root_keygen_falcon_1024           keygen_falcon_1024
+#define nextssl_root_keygen_falcon_padded_512     keygen_falcon_padded_512
+#define nextssl_root_keygen_falcon_padded_1024    keygen_falcon_padded_1024
+#define nextssl_root_keygen_sphincs_sha2_128f     keygen_sphincs_sha2_128f
+#define nextssl_root_keygen_sphincs_sha2_128s     keygen_sphincs_sha2_128s
+#define nextssl_root_keygen_sphincs_sha2_192f     keygen_sphincs_sha2_192f
+#define nextssl_root_keygen_sphincs_sha2_192s     keygen_sphincs_sha2_192s
+#define nextssl_root_keygen_sphincs_sha2_256f     keygen_sphincs_sha2_256f
+#define nextssl_root_keygen_sphincs_sha2_256s     keygen_sphincs_sha2_256s
+#define nextssl_root_keygen_sphincs_shake_128f    keygen_sphincs_shake_128f
+#define nextssl_root_keygen_sphincs_shake_128s    keygen_sphincs_shake_128s
+#define nextssl_root_keygen_sphincs_shake_192f    keygen_sphincs_shake_192f
+#define nextssl_root_keygen_sphincs_shake_192s    keygen_sphincs_shake_192s
+#define nextssl_root_keygen_sphincs_shake_256f    keygen_sphincs_shake_256f
+#define nextssl_root_keygen_sphincs_shake_256s    keygen_sphincs_shake_256s
+
 /* PQC KEM */
 #define nextssl_root_mlkem768_keygen  nextssl_root_pqc_kem_mlkem768_keygen
 #define nextssl_root_mlkem768_encaps  nextssl_root_pqc_kem_mlkem768_encaps

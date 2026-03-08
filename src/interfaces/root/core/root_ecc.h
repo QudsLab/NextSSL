@@ -17,6 +17,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "../../../config.h"
+#include "../../../seed/keygen.h"  /* keygen_ctx_t — for deterministic/multi-key generation */
 
 #ifdef __cplusplus
 extern "C" {
@@ -120,7 +121,47 @@ NEXTSSL_API int nextssl_root_ecc_elligator2_keygen(uint8_t hidden[32],
                                                     uint8_t seed[32]);
 
 #endif /* NEXTSSL_BUILD_LITE */
+/* -------------------------------------------------------------------------
+ * Context-keyed (multi-profile) variants
+ *
+ * Pass a keygen_ctx_t* created by any keygen_new_*() factory to derive
+ * keypairs deterministically from that seed context.  This is the building
+ * block for per-user, per-session, and HD key trees.
+ *
+ * Example:
+ *   keygen_ctx_t *ctx = keygen_new_udbf(entropy, elen, "user_a");
+ *   nextssl_root_ecc_ed25519_keygen_ctx(ctx, pk, sk);
+ *   keygen_free(ctx);
+ * ---------------------------------------------------------------------- */
 
+/** Ed25519 deterministic keygen from ctx. */
+NEXTSSL_API int nextssl_root_ecc_ed25519_keygen_ctx(keygen_ctx_t *ctx,
+                                                     uint8_t pk[32],
+                                                     uint8_t sk[64]);
+
+/** X25519 deterministic keygen from ctx. */
+NEXTSSL_API int nextssl_root_ecc_x25519_keygen_ctx(keygen_ctx_t *ctx,
+                                                    uint8_t pk[32],
+                                                    uint8_t sk[32]);
+
+#ifndef NEXTSSL_BUILD_LITE
+
+/** Ed448 deterministic keygen from ctx. */
+NEXTSSL_API int nextssl_root_ecc_ed448_keygen_ctx(keygen_ctx_t *ctx,
+                                                   uint8_t pk[57],
+                                                   uint8_t sk[57]);
+
+/** X448 deterministic keygen from ctx. */
+NEXTSSL_API int nextssl_root_ecc_x448_keygen_ctx(keygen_ctx_t *ctx,
+                                                  uint8_t pk[56],
+                                                  uint8_t sk[56]);
+
+/** Elligator2 deterministic keygen from ctx. */
+NEXTSSL_API int nextssl_root_ecc_elligator2_keygen_ctx(keygen_ctx_t *ctx,
+                                                        uint8_t hidden[32],
+                                                        uint8_t sk[32]);
+
+#endif /* NEXTSSL_BUILD_LITE (ctx variants) */
 #ifdef __cplusplus
 }
 #endif

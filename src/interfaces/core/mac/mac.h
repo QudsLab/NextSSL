@@ -417,7 +417,7 @@ nextssl_partial_core_hmac_selftest(nextssl_hmac_algorithm_t algorithm);
  * 
  * @compliance RFC 2104
  */
-NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha256(
+NEXTSSL_CORE_API int mac_sha256(
     const uint8_t *key, size_t key_len,
     const uint8_t *data, size_t data_len,
     uint8_t mac[32]);
@@ -434,7 +434,7 @@ NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha256(
  * 
  * @security Constant-time comparison
  */
-NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha256_verify(
+NEXTSSL_CORE_API int mac_sha256_verify(
     const uint8_t *key, size_t key_len,
     const uint8_t *data, size_t data_len,
     const uint8_t expected_mac[32]);
@@ -451,7 +451,7 @@ NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha256_verify(
  * @param mac Output buffer for MAC tag (64 bytes)
  * @return 0 on success, negative on error
  */
-NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha512(
+NEXTSSL_CORE_API int mac_sha512(
     const uint8_t *key, size_t key_len,
     const uint8_t *data, size_t data_len,
     uint8_t mac[64]);
@@ -466,7 +466,7 @@ NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha512(
  * @param expected_mac Expected MAC tag
  * @return 1 if valid, 0 if invalid, negative on error
  */
-NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha512_verify(
+NEXTSSL_CORE_API int mac_sha512_verify(
     const uint8_t *key, size_t key_len,
     const uint8_t *data, size_t data_len,
     const uint8_t expected_mac[64]);
@@ -483,7 +483,7 @@ NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha512_verify(
  * @param mac Output buffer for MAC tag (32 bytes)
  * @return 0 on success, negative on error
  */
-NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha3_256(
+NEXTSSL_CORE_API int mac_sha3_256(
     const uint8_t *key, size_t key_len,
     const uint8_t *data, size_t data_len,
     uint8_t mac[32]);
@@ -498,7 +498,7 @@ NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha3_256(
  * @param expected_mac Expected MAC tag
  * @return 1 if valid, 0 if invalid, negative on error
  */
-NEXTSSL_CORE_API int NEXTSSL_CORE_MAC_H_AGGREGATEmac_sha3_256_verify(
+NEXTSSL_CORE_API int mac_sha3_256_verify(
     const uint8_t *key, size_t key_len,
     const uint8_t *data, size_t data_len,
     const uint8_t expected_mac[32]);

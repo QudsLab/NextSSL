@@ -6,6 +6,7 @@
 #include "signature.h"
 #include "../../../primitives/ecc/ed25519/ed25519.h"
 #include "../../../PQCrypto/crypto_sign/ml-dsa-87/clean/api.h"
+#include "../../../seed/rng/rng.h"
 #include <string.h>
 
 // Ed25519 functions
@@ -20,8 +21,9 @@ int nextssl_ed25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
     unsigned char seed[32];
     unsigned char pk_tmp[32];
 
-    ed25519_create_seed(seed);
+    if (rng_fill(seed, 32) != 0) return -1;
     ed25519_create_keypair(pk_tmp, secret_key, seed);
+    memset(seed, 0, 32);
 
     /* Copy public key to output and embed it in secret_key[32..63] */
     memcpy(public_key, pk_tmp, 32);

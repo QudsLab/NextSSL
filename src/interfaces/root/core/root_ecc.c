@@ -6,6 +6,7 @@
 #include "root_ecc.h"
 #include "../root_internal.h"
 
+#include "../../../seed/keygen.h"   /* keygen_ctx_t + all keygen_<algo>() */
 #include "../../../primitives/ecc/ed25519/ed25519.h"
 #ifndef NEXTSSL_BUILD_LITE
 #include "../../../primitives/ecc/curve448/curve448.h"
@@ -201,3 +202,50 @@ NEXTSSL_API int nextssl_root_ecc_elligator2_keygen(uint8_t hidden[32],
 }
 
 #endif /* NEXTSSL_BUILD_LITE */
+
+/* =========================================================================
+ * Context-keyed (multi-profile) keygen
+ *
+ * Forwards directly to src/seed/keygen.h functions.
+ * Create a context with any keygen_new_*() factory, pass it here to
+ * deterministically derive keypairs per user/session/profile.
+ * ====================================================================== */
+
+NEXTSSL_API int nextssl_root_ecc_ed25519_keygen_ctx(keygen_ctx_t *ctx,
+                                                     uint8_t pk[32],
+                                                     uint8_t sk[64]) {
+    if (!ctx || !pk || !sk) return -1;
+    return keygen_ed25519(ctx, pk, sk);
+}
+
+NEXTSSL_API int nextssl_root_ecc_x25519_keygen_ctx(keygen_ctx_t *ctx,
+                                                    uint8_t pk[32],
+                                                    uint8_t sk[32]) {
+    if (!ctx || !pk || !sk) return -1;
+    return keygen_x25519(ctx, pk, sk);
+}
+
+#ifndef NEXTSSL_BUILD_LITE
+
+NEXTSSL_API int nextssl_root_ecc_ed448_keygen_ctx(keygen_ctx_t *ctx,
+                                                   uint8_t pk[57],
+                                                   uint8_t sk[57]) {
+    if (!ctx || !pk || !sk) return -1;
+    return keygen_ed448(ctx, pk, sk);
+}
+
+NEXTSSL_API int nextssl_root_ecc_x448_keygen_ctx(keygen_ctx_t *ctx,
+                                                  uint8_t pk[56],
+                                                  uint8_t sk[56]) {
+    if (!ctx || !pk || !sk) return -1;
+    return keygen_x448(ctx, pk, sk);
+}
+
+NEXTSSL_API int nextssl_root_ecc_elligator2_keygen_ctx(keygen_ctx_t *ctx,
+                                                        uint8_t hidden[32],
+                                                        uint8_t sk[32]) {
+    if (!ctx || !hidden || !sk) return -1;
+    return keygen_elligator2(ctx, hidden, sk);
+}
+
+#endif /* NEXTSSL_BUILD_LITE (ctx variants) */

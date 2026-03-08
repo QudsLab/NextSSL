@@ -51,9 +51,14 @@ typedef enum {
     NEXTSSL_LEVEL_MAX,               /**< ML-KEM-1024 + ML-DSA-87 + 1 GB Argon2 + BLAKE3    */
 #endif
 
+    NEXTSSL_PROFILE_MAX,        /**< Sentinel: total number of non-alias profiles */
+
     /* Level aliases available in both variants */
     NEXTSSL_LEVEL_STANDARD    = NEXTSSL_PROFILE_MODERN,       /**< Alias: MODERN  */
     NEXTSSL_LEVEL_COMPAT      = NEXTSSL_PROFILE_COMPLIANCE,   /**< Alias: COMPLIANCE */
+} nextssl_profile_t;
+
+/**
  * @brief Algorithm identifiers (validated against compile-time availability)
  */
 typedef enum {

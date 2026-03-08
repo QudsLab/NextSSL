@@ -1,7 +1,7 @@
 #ifndef nextssl_POW_CALC_INTERFACE_H
 #define nextssl_POW_CALC_INTERFACE_H
 
-#include "pow_protocol.h"
+#include "../../core/pow_protocol.h"
 #include <stddef.h>
 #include <stdint.h>
 

@@ -30,6 +30,9 @@ from script.test.main import hash as test_hash_main
 from script.test.main import pqc as test_pqc_main
 from script.test.main import core as test_core_main
 
+# Keygen tests
+from script.test.main import keygen as test_keygen_main
+
 # Primary Layer Tests
 from script.test.primary import system as test_system_main
 from script.test.primary import system_lite as test_system_lite
@@ -68,6 +71,7 @@ _MODULE_REGISTRY = {
     'main/pqc':                           test_pqc_main,
     'main/core':                          test_core_main,
     'main/pow':                           test_pow_main,   # includes dhcm + pow_combined
+    'main/keygen':                        test_keygen_main,
     # primary
     'primary/system':                     test_system_main,
     'primary/system_lite':                test_system_lite,
@@ -145,8 +149,53 @@ _LAYER_DLL_MAP = {
     'main/pqc':            ('main',    'pqc'),
     'main/pow':            ('main',    'pow'),
     'main/dhcm':           ('main',    'dhcm'),
+    'main/keygen':         ('main',    'core'),   # keygen symbols live in core.dll
     'primary/system':      ('primary', 'main'),
     'primary/system_lite': ('primary', 'main_lite'),
+}
+
+# Compact catalog key → algo_tag suffix used in keygen_<algo>_<mode> symbols.
+_KEYGEN_CATALOG_TAG = {
+    'ed25519':          'ed25519',
+    'x25519':           'x25519',
+    'ed448':            'ed448',
+    'x448':             'x448',
+    'elligator2':       'elligator2',
+    'mlkem512':         'ml_kem_512',
+    'mlkem768':         'ml_kem_768',
+    'mlkem1024':        'ml_kem_1024',
+    'mldsa44':          'ml_dsa_44',
+    'mldsa65':          'ml_dsa_65',
+    'mldsa87':          'ml_dsa_87',
+    'falcon512':        'falcon_512',
+    'falcon1024':       'falcon_1024',
+    'falconpadded512':  'falcon_padded_512',
+    'falconpadded1024': 'falcon_padded_1024',
+    'sphincssha2128f':  'sphincs_sha2_128f',
+    'sphincssha2128s':  'sphincs_sha2_128s',
+    'sphincssha2192f':  'sphincs_sha2_192f',
+    'sphincssha2192s':  'sphincs_sha2_192s',
+    'sphincssha2256f':  'sphincs_sha2_256f',
+    'sphincssha2256s':  'sphincs_sha2_256s',
+    'sphincsshake128f': 'sphincs_shake_128f',
+    'sphincsshake128s': 'sphincs_shake_128s',
+    'sphincsshake192f': 'sphincs_shake_192f',
+    'sphincsshake192s': 'sphincs_shake_192s',
+    'sphincsshake256f': 'sphincs_shake_256f',
+    'sphincsshake256s': 'sphincs_shake_256s',
+    'hqc128':           'hqc_128',
+    'hqc192':           'hqc_192',
+    'hqc256':           'hqc_256',
+    'mceliece348864':   'mceliece_348864',
+    'mceliece348864f':  'mceliece_348864f',
+    'mceliece460896':   'mceliece_460896',
+    'mceliece460896f':  'mceliece_460896f',
+    'mceliece6688128':  'mceliece_6688128',
+    'mceliece6688128f': 'mceliece_6688128f',
+    'mceliece6960119':  'mceliece_6960119',
+    'mceliece6960119f': 'mceliece_6960119f',
+    'mceliece8192128':  'mceliece_8192128',
+    'mceliece8192128f': 'mceliece_8192128f',
 }
 
 # Symbol name hints for quickTest: layer → canonical exported C symbol.
@@ -177,6 +226,9 @@ def _get_symbol_for_entry(key, layer):
         return hint
     # Default: nextssl_{item}  e.g. hash.sha256 → nextssl_sha256
     item = key.split('.', 1)[1]
+    # keygen layer: catalog compact key → keygen_<algo_tag>_random
+    if layer == 'main/keygen':
+        return f'keygen_{_KEYGEN_CATALOG_TAG.get(item, item)}_random'
     # Special-case normalisations
     if item == 'chacha20':
         return 'nextssl_chacha20_poly1305_encrypt'
@@ -538,6 +590,12 @@ def run_build(args):
             build_pow = True
         elif target == 'system':
             build_system = True
+        elif target == 'keygen':
+            build_core = True   # keygen symbols compile into core.dll
+        elif target.startswith('keygen:'):
+            # keygen functions live in core.dll — build core instead
+            build_list(core_main_list)
+            return build_ok
         elif target.startswith('hash:'):
             if target == 'hash:main':
                 build_list(hash_main_list)
@@ -718,6 +776,7 @@ def run_test(args):
             run_pqc = False
             run_core = False
             run_pow = False
+            run_keygen = False
             run_system = False
             run_lite = False
 
@@ -726,6 +785,7 @@ def run_test(args):
                 run_pqc = True
                 run_core = True
                 run_pow = True
+                run_keygen = True
                 run_system = True
                 if variant == 'both' or variant == 'lite':
                     run_lite = True
@@ -739,6 +799,8 @@ def run_test(args):
                 run_pow = True   # dhcm tested via pow module
             elif target == 'pow':
                 run_pow = True
+            elif target == 'keygen':
+                run_keygen = True
             elif target == 'system':
                 run_system = True
             elif target.startswith('hash:'):
@@ -765,6 +827,12 @@ def run_test(args):
             elif target.startswith('dhcm:'):
                 # dhcm is tested via pow module
                 test_modules = pow_main_list
+            elif target.startswith('keygen:'):
+                if target == 'keygen:main':
+                    test_modules = [test_keygen_main]
+                else:
+                    console.print_fail(f"Unknown keygen test: {target}")
+                    return 1
             elif target.startswith('pow:'):
                 if target == 'pow:main':
                     test_modules = pow_main_list
@@ -798,6 +866,8 @@ def run_test(args):
                 test_modules.extend(core_main_list)
             if run_pow:
                 test_modules.extend(pow_main_list)
+            if run_keygen:
+                test_modules.append(test_keygen_main)
             if run_system:
                 test_modules.extend(system_main_list)
             if run_lite:

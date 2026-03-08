@@ -125,6 +125,15 @@
     #define NEXTSSL_PARTIAL_API
 #endif
 
+/* Core API - internal aggregate layer (hidden, same as PARTIAL) */
+#ifndef NEXTSSL_CORE_API
+#  if NEXTSSL_COMPILER_GCC || NEXTSSL_COMPILER_CLANG
+#    define NEXTSSL_CORE_API __attribute__((visibility("hidden")))
+#  else
+#    define NEXTSSL_CORE_API
+#  endif
+#endif
+
 /**
  * @brief Internal symbols - Always hidden
  * 
@@ -267,6 +276,11 @@
 #if !NEXTSSL_BUILD_LITE && !NEXTSSL_BUILD_FULL
     #undef  NEXTSSL_BUILD_LITE   /* was set to 0 by the #ifndef guard above */
     #define NEXTSSL_BUILD_LITE 1
+#endif
+
+/* When Full build: undefine NEXTSSL_BUILD_LITE so #ifndef guards in headers work */
+#if NEXTSSL_BUILD_FULL
+    #undef NEXTSSL_BUILD_LITE
 #endif
 
 /* ========================================================================
