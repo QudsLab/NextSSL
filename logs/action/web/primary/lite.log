@@ -1,5 +1,0 @@
-2026-03-07 00:59:18,827 - INFO - Successfully built main_lite
-2026-03-07 00:59:18,953 - INFO - [PASS] WASM present: /home/runner/work/NextSSL/NextSSL/bin/web/primary/main_lite.wasm
-2026-03-07 00:59:18,959 - INFO - [PASS] WASM execute ok: /home/runner/work/NextSSL/NextSSL/bin/web/primary/main_lite.wasm
-2026-03-07 01:47:11,907 - INFO - Successfully built main_lite
-2026-03-07 03:18:46,423 - INFO - Successfully built main_lite
