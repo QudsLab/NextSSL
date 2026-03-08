@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include "../drbg/drbg.h"
+#include "../udbf/udbf.h"
 
 typedef enum {
     CTX_MODE_RANDOM = 0,  /* Non-deterministic: OS RNG each call          */
@@ -20,7 +21,6 @@ typedef enum {
 struct keygen_ctx {
     keygen_mode_t mode;
     DRBG_CTX      drbg;          /* valid only for CTX_MODE_DET            */
+    udbf_ctx_t    udbf;          /* valid only for CTX_MODE_UDBF           */
     uint64_t      fill_counter;  /* increments per keygen_fill() call      */
-};
-
 #endif /* NEXTSSL_SEED_KEYGEN_CTX_H */

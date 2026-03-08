@@ -185,8 +185,14 @@ keygen_ctx_t *keygen_new_udbf(const uint8_t *entropy, size_t ent_len,
 {
     (void)label; /* label is per-read, not per-feed */
 
-    if (udbf_feed(entropy, ent_len) != UDBF_OK) return NULL;
-    return alloc_ctx(CTX_MODE_UDBF);
+    keygen_ctx_t *ctx = alloc_ctx(CTX_MODE_UDBF);
+    if (!ctx) return NULL;
+
+    if (udbf_ctx_feed(&ctx->udbf, entropy, ent_len) != UDBF_OK) {
+        free(ctx);
+        return NULL;
+    }
+    return ctx;
 }
 
 keygen_ctx_t *keygen_new_hd(const uint8_t *master_seed, size_t seed_len,
@@ -203,7 +209,8 @@ keygen_ctx_t *keygen_new_hd(const uint8_t *master_seed, size_t seed_len,
 void keygen_free(keygen_ctx_t *ctx)
 {
     if (!ctx) return;
-    drbg_wipe(&ctx->drbg);    /* safe even if never initialised (just zeros) */
+    drbg_wipe(&ctx->drbg);       /* safe even if never initialised (just zeros) */
+    udbf_ctx_wipe(&ctx->udbf);   /* safe even if never initialised (just zeros) */
     memset(ctx, 0, sizeof *ctx);
     free(ctx);
 }

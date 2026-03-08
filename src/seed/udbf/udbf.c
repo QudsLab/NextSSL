@@ -86,3 +86,62 @@ int udbf_is_active(void)
 {
     return s_enabled;
 }
+
+/* =========================================================================
+ * Per-instance context API
+ * ====================================================================== */
+
+udbf_result_t udbf_ctx_feed(udbf_ctx_t *ctx, const uint8_t *data, size_t len)
+{
+    if (!ctx)                          return UDBF_ERR_NULL;
+    if (!data || len == 0)             return UDBF_ERR_NULL;
+    if (len < UDBF_MIN_FEED_LEN)      return UDBF_ERR_NULL;
+    if (len > UDBF_MAX_FEED_LEN)      return UDBF_ERR_TOO_LARGE;
+
+    /* Wipe any previous state before loading */
+    volatile uint8_t *p = (volatile uint8_t *)ctx->buf;
+    for (size_t i = 0; i < ctx->buf_len; i++) p[i] = 0;
+
+    memcpy(ctx->buf, data, len);
+    ctx->buf_len = len;
+    ctx->buf_pos = 0;
+    ctx->enabled = 1;
+    return UDBF_OK;
+}
+
+udbf_result_t udbf_ctx_read(udbf_ctx_t *ctx, const char *label,
+                             uint8_t *out, size_t out_len)
+{
+    if (!ctx)                           return UDBF_ERR_NULL;
+    if (!ctx->enabled)                  return UDBF_ERR_DISABLED;
+    if (!label || label[0] == '\0')     return UDBF_ERR_NULL;
+    if (!out || out_len == 0)           return UDBF_ERR_NULL;
+
+    size_t remaining = ctx->buf_len - ctx->buf_pos;
+    if (remaining == 0)                 return UDBF_ERR_EXHAUSTED;
+
+    size_t ikm_len = remaining < out_len ? remaining : out_len;
+    if (ikm_len < out_len)             return UDBF_ERR_EXHAUSTED;
+
+    const uint8_t *ikm = ctx->buf + ctx->buf_pos;
+    size_t label_len   = 0;
+    while (label[label_len]) label_len++;
+
+    hkdf(NULL, 0,
+         ikm,  ikm_len,
+         (const uint8_t *)label, label_len,
+         out,  out_len);
+
+    ctx->buf_pos += ikm_len;
+    return UDBF_OK;
+}
+
+void udbf_ctx_wipe(udbf_ctx_t *ctx)
+{
+    if (!ctx) return;
+    volatile uint8_t *p = (volatile uint8_t *)ctx->buf;
+    for (size_t i = 0; i < sizeof(ctx->buf); i++) p[i] = 0;
+    ctx->buf_len = 0;
+    ctx->buf_pos = 0;
+    ctx->enabled = 0;
+}

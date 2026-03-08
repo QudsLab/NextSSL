@@ -51,9 +51,9 @@ int keygen_fill(keygen_ctx_t *ctx, const char *label,
     case CTX_MODE_RANDOM:
         return (rng_fill(out, len) == 0) ? 0 : -1;
 
-    /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
     case CTX_MODE_UDBF: {
-        udbf_result_t r = udbf_read(label, out, len);
+        udbf_result_t r = udbf_ctx_read(&ctx->udbf, label, out, len);
         if (r == UDBF_OK)            return  0;
         if (r == UDBF_ERR_EXHAUSTED) return -3;
         return -1;
