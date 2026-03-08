@@ -416,6 +416,6 @@ NEXTSSL_API void nextssl_cleanup(void);
 #endif
 
 /* Explicit-algorithm interface (bypasses profile dispatch) */
-#include "root/nextssl_root.h"
+#include "nextssl_root.h"
 
 #endif /* NEXTSSL_LITE_H */

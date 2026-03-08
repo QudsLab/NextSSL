@@ -2,16 +2,36 @@ import os
 from script.core import Builder
 
 _WASM_POW_EXPORTS = [
-    # PoW server/client API (defined in utils/pow/server + client)
+    # PoW server generic API (defined in utils/pow/server/api.c)
     'nextssl_pow_server_generate_challenge',
     'nextssl_pow_server_verify_solution',
+    # PoW server algorithm-specific convenience wrappers
+    # (defined in utils/pow/server/primitive_fast.c,
+    #  primitive_memory_hard.c, primitive_sponge_xof.c)
+    'nextssl_pow_server_generate_challenge_sha256',
+    'nextssl_pow_server_generate_challenge_blake3',
+    'nextssl_pow_server_generate_challenge_argon2id',
+    'nextssl_pow_server_generate_challenge_sha3_256',
+    # PoW client generic API (defined in utils/pow/client/api.c)
     'nextssl_pow_client_solve',
     'nextssl_pow_client_check_limits',
     'nextssl_pow_client_parse_challenge',
+    # PoW client algorithm-specific convenience wrappers
+    # (defined in utils/pow/client/primitive_sponge_xof.c)
+    'nextssl_pow_client_solve_sha3_256',
     # Memory allocation — required by Python wasmtime tests in script/web/
     'malloc', 'free',
     # NOTE: nextssl_dhcm_* are NOT compiled into pow.wasm (only in dhcm.wasm
     # and system.wasm). They are NOT exported here.
+]
+
+_WASM_DHCM_EXPORTS = [
+    # DHCM public API (defined in DHCM/utils/dhcm_api.c)
+    'nextssl_dhcm_calculate',
+    'nextssl_dhcm_get_algorithm_info',
+    'nextssl_dhcm_expected_trials',
+    # Memory allocation — required by Python wasmtime tests in script/web/
+    'malloc', 'free',
 ]
 
 _POW_MACROS_BASE = [
@@ -111,6 +131,7 @@ def build(builder: Builder):
             'DHCM_ENABLE_LEGACY_ALIVE',
             'DHCM_ENABLE_LEGACY_UNSAFE',
         ],
+        wasm_exports=_WASM_DHCM_EXPORTS,
     )
 
     return ret_pow or ret_dhcm

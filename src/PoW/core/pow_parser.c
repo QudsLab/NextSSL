@@ -1,5 +1,5 @@
 #include "pow_parser.h"
-#include "../../utils/radix/base64.h"
+#include "../../common/encoding/base64.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

@@ -1,6 +1,6 @@
 #include "../../core/pow_types.h"
 #include "argon2_params.h"
-#include "../../../utils/hash/primitive_memory_hard.h"
+#include "primitive_memory_hard.h"
 #include <string.h>
 
 static int argon2d_get_default_params(void** out_params, size_t* out_len);

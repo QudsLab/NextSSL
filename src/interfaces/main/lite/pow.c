@@ -10,9 +10,9 @@
 #include <stdlib.h>
 
 // Generate random challenge
-int nextssl_lite_pow_generate_challenge(
+int nextssl_pow_generate_challenge(
     uint32_t difficulty,
-    nextssl_lite_pow_challenge_t *challenge
+    nextssl_pow_challenge_t *challenge
 ) {
     if (!challenge) {
         return -1;  // NEXTSSL_ERROR_INVALID_PARAMETER
@@ -30,9 +30,9 @@ int nextssl_lite_pow_generate_challenge(
 }
 
 // Solve PoW challenge (find nonce such that hash has required leading zeros)
-int nextssl_lite_pow_solve(
-    const nextssl_lite_pow_challenge_t *challenge,
-    nextssl_lite_pow_solution_t *solution,
+int nextssl_pow_solve(
+    const nextssl_pow_challenge_t *challenge,
+    nextssl_pow_solution_t *solution,
     uint32_t timeout_seconds
 ) {
     if (!challenge || !solution) {
@@ -108,9 +108,9 @@ int nextssl_lite_pow_solve(
 }
 
 // Verify PoW solution
-int nextssl_lite_pow_verify(
-    const nextssl_lite_pow_challenge_t *challenge,
-    const nextssl_lite_pow_solution_t *solution
+int nextssl_pow_verify(
+    const nextssl_pow_challenge_t *challenge,
+    const nextssl_pow_solution_t *solution
 ) {
     if (!challenge || !solution) {
         return -1;
@@ -153,7 +153,7 @@ int nextssl_lite_pow_verify(
 }
 
 // Estimate time to solve
-uint64_t nextssl_lite_pow_estimate_time(uint32_t difficulty) {
+uint64_t nextssl_pow_estimate_time(uint32_t difficulty) {
     // Rough estimate: 2^difficulty hashes needed
     // Assuming ~1M hashes/sec on average CPU
     uint64_t hashes = 1ULL << difficulty;

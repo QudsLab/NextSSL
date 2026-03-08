@@ -5,8 +5,8 @@
  * @date 2026-02-28
  */
 
-#ifndef NEXTSSL_MAIN_LITE_POW_H
-#define NEXTSSL_MAIN_LITE_POW_H
+#ifndef NEXTSSL_MAIN_POW_H
+#define NEXTSSL_MAIN_POW_H
 
 #include "../../../config.h"
 #include <stdint.h>
@@ -23,7 +23,7 @@ typedef struct {
     uint8_t challenge[32];     /**< Challenge bytes */
     uint32_t difficulty;       /**< Difficulty (leading zero bits) */
     uint64_t timestamp;        /**< Challenge creation time */
-} nextssl_lite_pow_challenge_t;
+} nextssl_pow_challenge_t;
 
 /**
  * @brief PoW solution structure
@@ -32,7 +32,7 @@ typedef struct {
     uint8_t nonce[32];         /**< Nonce that solves the challenge */
     uint8_t hash[32];          /**< Resulting hash */
     uint64_t iterations;       /**< Iterations tried */
-} nextssl_lite_pow_solution_t;
+} nextssl_pow_solution_t;
 
 /**
  * @brief Generate PoW challenge (server-side)
@@ -41,9 +41,9 @@ typedef struct {
  * @param challenge Output challenge structure
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_pow_generate_challenge(
+NEXTSSL_API int nextssl_pow_generate_challenge(
     uint32_t difficulty,
-    nextssl_lite_pow_challenge_t *challenge
+    nextssl_pow_challenge_t *challenge
 );
 
 /**
@@ -59,9 +59,9 @@ NEXTSSL_API int nextssl_lite_pow_generate_challenge(
  * @retval 0 Solution found
  * @retval -NEXTSSL_ERROR_TIMEOUT Timeout reached before solution found
  */
-NEXTSSL_API int nextssl_lite_pow_solve(
-    const nextssl_lite_pow_challenge_t *challenge,
-    nextssl_lite_pow_solution_t *solution,
+NEXTSSL_API int nextssl_pow_solve(
+    const nextssl_pow_challenge_t *challenge,
+    nextssl_pow_solution_t *solution,
     uint32_t timeout_seconds
 );
 
@@ -76,9 +76,9 @@ NEXTSSL_API int nextssl_lite_pow_solve(
  * @retval -NEXTSSL_ERROR_INVALID_SOLUTION Solution does not meet difficulty
  * @retval -NEXTSSL_ERROR_EXPIRED Challenge has expired
  */
-NEXTSSL_API int nextssl_lite_pow_verify(
-    const nextssl_lite_pow_challenge_t *challenge,
-    const nextssl_lite_pow_solution_t *solution
+NEXTSSL_API int nextssl_pow_verify(
+    const nextssl_pow_challenge_t *challenge,
+    const nextssl_pow_solution_t *solution
 );
 
 /**
@@ -87,10 +87,10 @@ NEXTSSL_API int nextssl_lite_pow_verify(
  * @param difficulty Difficulty level
  * @return Estimated seconds to solve (approximate)
  */
-NEXTSSL_API uint64_t nextssl_lite_pow_estimate_time(uint32_t difficulty);
+NEXTSSL_API uint64_t nextssl_pow_estimate_time(uint32_t difficulty);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* NEXTSSL_MAIN_LITE_POW_H */
+#endif /* NEXTSSL_MAIN_POW_H */

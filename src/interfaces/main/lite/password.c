@@ -9,11 +9,11 @@
 #include "../../../PQCrypto/common/sha2.h"
 #include <string.h>
 
-#define NEXTSSL_LITE_ARGON2_DEFAULT_TIME 3
-#define NEXTSSL_LITE_ARGON2_DEFAULT_MEMORY (64 * 1024)  // 64 MB
-#define NEXTSSL_LITE_ARGON2_DEFAULT_PARALLELISM 4
+#define NEXTSSL_ARGON2_DEFAULT_TIME 3
+#define NEXTSSL_ARGON2_DEFAULT_MEMORY (64 * 1024)  // 64 MB
+#define NEXTSSL_ARGON2_DEFAULT_PARALLELISM 4
 
-int nextssl_lite_password_hash(
+int nextssl_password_hash(
     const uint8_t *password,
     size_t password_len,
     const uint8_t *salt,
@@ -30,9 +30,9 @@ int nextssl_lite_password_hash(
     
     // Use Argon2id with default parameters (32 byte output)
     int result = argon2id_hash_raw(
-        NEXTSSL_LITE_ARGON2_DEFAULT_TIME,       // t_cost
-        NEXTSSL_LITE_ARGON2_DEFAULT_MEMORY,     // m_cost (in KB)
-        NEXTSSL_LITE_ARGON2_DEFAULT_PARALLELISM, // parallelism
+        NEXTSSL_ARGON2_DEFAULT_TIME,       // t_cost
+        NEXTSSL_ARGON2_DEFAULT_MEMORY,     // m_cost (in KB)
+        NEXTSSL_ARGON2_DEFAULT_PARALLELISM, // parallelism
         password,                                // pwd
         password_len,                            // pwdlen
         salt,                                    // salt
@@ -44,7 +44,7 @@ int nextssl_lite_password_hash(
     return (result == 0) ? 0 : -4;  // NEXTSSL_ERROR_CRYPTO_FAIL
 }
 
-int nextssl_lite_password_hash_custom(
+int nextssl_password_hash_custom(
     const char *password,
     size_t password_len,
     const uint8_t *salt,
@@ -74,7 +74,7 @@ int nextssl_lite_password_hash_custom(
     return (result == 0) ? 0 : -4;
 }
 
-int nextssl_lite_password_verify(
+int nextssl_password_verify(
     const uint8_t *password,
     size_t password_len,
     const uint8_t *salt,
@@ -88,7 +88,7 @@ int nextssl_lite_password_verify(
     uint8_t computed_hash[32];
     size_t hash_len = 32;
     
-    int result = nextssl_lite_password_hash((const uint8_t *)password, password_len, salt, salt_len,
+    int result = nextssl_password_hash((const uint8_t *)password, password_len, salt, salt_len,
                                            computed_hash);
     if (result != 0) {
         return result;
@@ -103,7 +103,7 @@ int nextssl_lite_password_verify(
     return (diff == 0) ? 0 : -5;  // NEXTSSL_ERROR_AUTH_FAIL
 }
 
-int nextssl_lite_kdf_derive(
+int nextssl_kdf_derive(
     const uint8_t *input_key,
     size_t input_key_len,
     const uint8_t *salt,

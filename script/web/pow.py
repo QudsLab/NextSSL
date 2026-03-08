@@ -195,6 +195,136 @@ def _run_tests(mod) -> _Tester:
 
     t.run("PoW SHA-256 challenge/solve/verify (difficulty=4)", _pow_flow)
 
+    # ── SHA-256 via algorithm-specific server wrapper ─────────────────────────
+    def _pow_sha256_specific():
+        cfg_ptr, algo_ptrs = _make_pow_config(m, difficulty_bits=4,
+                                              algos=["sha256"])
+        challenge_ptr = m.zbuf(_POW_CHALLENGE_SIZE)
+        solution_ptr  = m.zbuf(_POW_SOLUTION_SIZE)
+
+        # nextssl_pow_server_generate_challenge_sha256(config, ctx, ctx_len,
+        #   difficulty_bits, challenge_out)  — no algorithm_id argument
+        rc = m.call('nextssl_pow_server_generate_challenge_sha256',
+                    cfg_ptr, 0, 0, 4, challenge_ptr)
+        if rc != 0:
+            return False
+
+        rc = m.call('nextssl_pow_client_solve', challenge_ptr, solution_ptr)
+        if rc != 0:
+            return False
+
+        p_valid = m.zbuf(4)
+        rc = m.call('nextssl_pow_server_verify_solution',
+                    challenge_ptr, solution_ptr, p_valid)
+        if rc != 0:
+            return False
+
+        valid_flag = _struct.unpack_from('<I', bytes(m.read(p_valid, 4)))[0]
+        for p in [cfg_ptr, challenge_ptr, solution_ptr, p_valid]:
+            m.free(p)
+        for p in algo_ptrs:
+            m.free(p)
+        return valid_flag != 0
+
+    t.run("PoW SHA-256 via specific wrapper (difficulty=4)", _pow_sha256_specific)
+
+    # ── BLAKE3 via algorithm-specific server wrapper ──────────────────────────
+    def _pow_blake3_specific():
+        cfg_ptr, algo_ptrs = _make_pow_config(m, difficulty_bits=4,
+                                              algos=["blake3"])
+        challenge_ptr = m.zbuf(_POW_CHALLENGE_SIZE)
+        solution_ptr  = m.zbuf(_POW_SOLUTION_SIZE)
+
+        rc = m.call('nextssl_pow_server_generate_challenge_blake3',
+                    cfg_ptr, 0, 0, 4, challenge_ptr)
+        if rc != 0:
+            return False
+
+        rc = m.call('nextssl_pow_client_solve', challenge_ptr, solution_ptr)
+        if rc != 0:
+            return False
+
+        p_valid = m.zbuf(4)
+        rc = m.call('nextssl_pow_server_verify_solution',
+                    challenge_ptr, solution_ptr, p_valid)
+        if rc != 0:
+            return False
+
+        valid_flag = _struct.unpack_from('<I', bytes(m.read(p_valid, 4)))[0]
+        for p in [cfg_ptr, challenge_ptr, solution_ptr, p_valid]:
+            m.free(p)
+        for p in algo_ptrs:
+            m.free(p)
+        return valid_flag != 0
+
+    t.run("PoW BLAKE3 via specific wrapper (difficulty=4)", _pow_blake3_specific)
+
+    # ── SHA3-256 via both specific server and client wrappers ─────────────────
+    def _pow_sha3_256_specific():
+        cfg_ptr, algo_ptrs = _make_pow_config(m, difficulty_bits=4,
+                                              algos=["sha3_256"])
+        challenge_ptr = m.zbuf(_POW_CHALLENGE_SIZE)
+        solution_ptr  = m.zbuf(_POW_SOLUTION_SIZE)
+
+        rc = m.call('nextssl_pow_server_generate_challenge_sha3_256',
+                    cfg_ptr, 0, 0, 4, challenge_ptr)
+        if rc != 0:
+            return False
+
+        # Use the SHA3-256-specific client wrapper
+        rc = m.call('nextssl_pow_client_solve_sha3_256',
+                    challenge_ptr, solution_ptr)
+        if rc != 0:
+            return False
+
+        p_valid = m.zbuf(4)
+        rc = m.call('nextssl_pow_server_verify_solution',
+                    challenge_ptr, solution_ptr, p_valid)
+        if rc != 0:
+            return False
+
+        valid_flag = _struct.unpack_from('<I', bytes(m.read(p_valid, 4)))[0]
+        for p in [cfg_ptr, challenge_ptr, solution_ptr, p_valid]:
+            m.free(p)
+        for p in algo_ptrs:
+            m.free(p)
+        return valid_flag != 0
+
+    t.run("PoW SHA3-256 via specific wrappers (difficulty=4)", _pow_sha3_256_specific)
+
+    # ── Argon2id via algorithm-specific server wrapper ────────────────────────
+    # difficulty=2 bits (≈4 trials) — memory-hard, keep very fast
+    def _pow_argon2id_specific():
+        cfg_ptr, algo_ptrs = _make_pow_config(m, difficulty_bits=2,
+                                              algos=["argon2id"])
+        challenge_ptr = m.zbuf(_POW_CHALLENGE_SIZE)
+        solution_ptr  = m.zbuf(_POW_SOLUTION_SIZE)
+
+        rc = m.call('nextssl_pow_server_generate_challenge_argon2id',
+                    cfg_ptr, 0, 0, 2, challenge_ptr)
+        if rc != 0:
+            return False
+
+        # Generic solve dispatches on challenge->algorithm_id ("argon2id")
+        rc = m.call('nextssl_pow_client_solve', challenge_ptr, solution_ptr)
+        if rc != 0:
+            return False
+
+        p_valid = m.zbuf(4)
+        rc = m.call('nextssl_pow_server_verify_solution',
+                    challenge_ptr, solution_ptr, p_valid)
+        if rc != 0:
+            return False
+
+        valid_flag = _struct.unpack_from('<I', bytes(m.read(p_valid, 4)))[0]
+        for p in [cfg_ptr, challenge_ptr, solution_ptr, p_valid]:
+            m.free(p)
+        for p in algo_ptrs:
+            m.free(p)
+        return valid_flag != 0
+
+    t.run("PoW Argon2id via specific wrapper (difficulty=2)", _pow_argon2id_specific)
+
     return t
 
 

@@ -9,7 +9,7 @@
 #include <string.h>
 
 // X25519 functions
-int nextssl_lite_x25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
+int nextssl_x25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
     if (!public_key || !secret_key) {
         return -1;  // NEXTSSL_ERROR_INVALID_PARAMETER
     }
@@ -29,7 +29,7 @@ int nextssl_lite_x25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
     return 0;
 }
 
-int nextssl_lite_x25519_exchange(
+int nextssl_x25519_exchange(
     const uint8_t *my_secret_key,
     const uint8_t *their_public_key,
     uint8_t *shared_secret
@@ -44,7 +44,7 @@ int nextssl_lite_x25519_exchange(
 }
 
 // Kyber1024 functions
-int nextssl_lite_kyber1024_keygen(uint8_t *public_key, uint8_t *secret_key) {
+int nextssl_kyber1024_keygen(uint8_t *public_key, uint8_t *secret_key) {
     if (!public_key || !secret_key) {
         return -1;
     }
@@ -57,7 +57,7 @@ int nextssl_lite_kyber1024_keygen(uint8_t *public_key, uint8_t *secret_key) {
     return 0;
 }
 
-int nextssl_lite_kyber1024_encaps(
+int nextssl_kyber1024_encaps(
     const uint8_t *their_public,
     uint8_t *ciphertext,
     uint8_t *shared_secret
@@ -74,7 +74,7 @@ int nextssl_lite_kyber1024_encaps(
     return 0;
 }
 
-int nextssl_lite_kyber1024_decaps(
+int nextssl_kyber1024_decaps(
     const uint8_t *ciphertext,
     const uint8_t *my_secret,
     uint8_t *shared_secret
@@ -92,7 +92,7 @@ int nextssl_lite_kyber1024_decaps(
 }
 
 // Hybrid key exchange (X25519 + Kyber1024)
-int nextssl_lite_hybrid_keypair(
+int nextssl_hybrid_keypair(
     uint8_t *x25519_public,
     uint8_t *x25519_secret,
     uint8_t *kyber_public,
@@ -100,16 +100,16 @@ int nextssl_lite_hybrid_keypair(
 ) {
     int result;
     
-    result = nextssl_lite_x25519_keygen(x25519_public, x25519_secret);
+    result = nextssl_x25519_keygen(x25519_public, x25519_secret);
     if (result != 0) return result;
     
-    result = nextssl_lite_kyber1024_keygen(kyber_public, kyber_secret);
+    result = nextssl_kyber1024_keygen(kyber_public, kyber_secret);
     if (result != 0) return result;
     
     return 0;
 }
 
-int nextssl_lite_hybrid_encapsulate(
+int nextssl_hybrid_encapsulate(
     uint8_t *x25519_shared,
     uint8_t *kyber_ciphertext,
     uint8_t *kyber_shared,
@@ -120,17 +120,17 @@ int nextssl_lite_hybrid_encapsulate(
     int result;
     
     // X25519 ECDH
-    result = nextssl_lite_x25519_exchange(x25519_my_secret, x25519_their_public, x25519_shared);
+    result = nextssl_x25519_exchange(x25519_my_secret, x25519_their_public, x25519_shared);
     if (result != 0) return result;
     
     // Kyber1024 encapsulation
-    result = nextssl_lite_kyber1024_encaps(kyber_their_public, kyber_ciphertext, kyber_shared);
+    result = nextssl_kyber1024_encaps(kyber_their_public, kyber_ciphertext, kyber_shared);
     if (result != 0) return result;
     
     return 0;
 }
 
-int nextssl_lite_hybrid_decapsulate(
+int nextssl_hybrid_decapsulate(
     uint8_t *x25519_shared,
    uint8_t *kyber_shared,
     const uint8_t *x25519_their_public,
@@ -141,11 +141,11 @@ int nextssl_lite_hybrid_decapsulate(
     int result;
     
     // X25519 ECDH
-    result = nextssl_lite_x25519_exchange(x25519_my_secret, x25519_their_public, x25519_shared);
+    result = nextssl_x25519_exchange(x25519_my_secret, x25519_their_public, x25519_shared);
     if (result != 0) return result;
     
     // Kyber1024 decapsulation
-    result = nextssl_lite_kyber1024_decaps(kyber_ciphertext, kyber_my_secret, kyber_shared);
+    result = nextssl_kyber1024_decaps(kyber_ciphertext, kyber_my_secret, kyber_shared);
     if (result != 0) return result;
     
     return 0;

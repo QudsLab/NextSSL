@@ -107,7 +107,9 @@ TEST_CATALOG = {
     'wasm.core_kat':          'core.wasm   — AES/ChaCha/HMAC/Ed25519 KATs',
     'wasm.pqc_kat':           'pqc.wasm    — ML-KEM + HQC + ML-DSA + Falcon round-trips',
     'wasm.pow_kat':           'pow.wasm    — PoW challenge/solve/verify  (d=4)',
+    'wasm.dhcm_kat':          'dhcm.wasm   — DHCM expected_trials/calculate/info KATs',
     'wasm.system_kat':        'main.wasm   — DHCM cost model  (expected_trials/calculate/info)',
+    'wasm.lite_kat':          'main_lite.wasm — lite high-level + root layer KATs',
     'wasm.core_present':      'bin/web/main/core.wasm   exists & size > 512 B',
     'wasm.pqc_present':       'bin/web/main/pqc.wasm    exists & size > 512 B',
     'wasm.pow_present':       'bin/web/main/pow.wasm    exists & size > 512 B',
@@ -211,7 +213,9 @@ QUICK_MAP = {
     'wasm.core_kat':          {'layer': 'web/main/core',        'check': 'wasm_module'},
     'wasm.pqc_kat':           {'layer': 'web/main/pqc',         'check': 'wasm_module'},
     'wasm.pow_kat':           {'layer': 'web/main/pow',         'check': 'wasm_module'},
+    'wasm.dhcm_kat':          {'layer': 'web/main/dhcm',        'check': 'wasm_module'},
     'wasm.system_kat':        {'layer': 'web/primary/main',     'check': 'wasm_module'},
+    'wasm.lite_kat':          {'layer': 'web/primary/main_lite','check': 'wasm_module'},
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -322,7 +326,9 @@ FULL_MAP = {
     'wasm.core_kat':          {'layer': 'web/main/core',        'check': 'wasm_module', 'module': None},
     'wasm.pqc_kat':           {'layer': 'web/main/pqc',         'check': 'wasm_module', 'module': None},
     'wasm.pow_kat':           {'layer': 'web/main/pow',         'check': 'wasm_module', 'module': None},
+    'wasm.dhcm_kat':          {'layer': 'web/main/dhcm',        'check': 'wasm_module', 'module': None},
     'wasm.system_kat':        {'layer': 'web/primary/main',     'check': 'wasm_module', 'module': None},
+    'wasm.lite_kat':          {'layer': 'web/primary/main_lite','check': 'wasm_module', 'module': None},
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -362,7 +368,9 @@ HYPER_EXTRAS = {
     'wasm.core_kat':          {'layer': 'web/main/core',        'check': 'wasm_module', 'module': None},
     'wasm.pqc_kat':           {'layer': 'web/main/pqc',         'check': 'wasm_module', 'module': None},
     'wasm.pow_kat':           {'layer': 'web/main/pow',         'check': 'wasm_module', 'module': None},
+    'wasm.dhcm_kat':          {'layer': 'web/main/dhcm',        'check': 'wasm_module', 'module': None},
     'wasm.system_kat':        {'layer': 'web/primary/main',     'check': 'wasm_module', 'module': None},
+    'wasm.lite_kat':          {'layer': 'web/primary/main_lite','check': 'wasm_module', 'module': None},
 }
 
 HYPER_MAP = {**FULL_MAP, **HYPER_EXTRAS}

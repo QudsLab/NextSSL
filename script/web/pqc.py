@@ -3,7 +3,12 @@ script/web/pqc.py — WASM functional tests for pqc.wasm (main tier).
 
 Covers all exported PQC algorithms:
   KEM  — ML-KEM-512/768/1024, HQC-128/192/256
-  Sign — ML-DSA-44/65/87, Falcon-512/1024
+  Sign — ML-DSA-44/65/87, Falcon-512/1024, Falcon-padded-512/1024,
+         SPHINCS+-SHA2 (128f/128s/192f/192s/256f/256s),
+         SPHINCS+-SHAKE (128f/128s/192f/192s/256f/256s)
+
+McEliece is intentionally excluded from pqc.wasm (keys up to 1.3 MB —
+impractical in a browser context).
 
 Every algorithm is tested with a full round-trip:
   KEM:  keypair → encaps → decaps  (shared secrets must match)
@@ -37,11 +42,30 @@ _KEM = {
 
 _SIGN = {
     # (pk, sk, max_sig)
+    # ML-DSA
     'mldsa44':    (1312,  2560, 2420),
     'mldsa65':    (1952,  4032, 3309),
     'mldsa87':    (2592,  4896, 4627),
+    # Falcon (standard — variable-length signature)
     'falcon512':  ( 897,  1281,  752),
     'falcon1024': (1793,  2305, 1462),
+    # Falcon-padded (constant-length signature)
+    'falconpadded512':  ( 897,  1281,  666),
+    'falconpadded1024': (1793,  2305, 1280),
+    # SPHINCS+-SHA2
+    'sphincssha2128fsimple':  ( 32,   64, 17088),
+    'sphincssha2128ssimple':  ( 32,   64,  7856),
+    'sphincssha2192fsimple':  ( 48,   96, 35664),
+    'sphincssha2192ssimple':  ( 48,   96, 16224),
+    'sphincssha2256fsimple':  ( 64,  128, 49856),
+    'sphincssha2256ssimple':  ( 64,  128, 29792),
+    # SPHINCS+-SHAKE
+    'sphincsshake128fsimple':  ( 32,   64, 17088),
+    'sphincsshake128ssimple':  ( 32,   64,  7856),
+    'sphincsshake192fsimple':  ( 48,   96, 35664),
+    'sphincsshake192ssimple':  ( 48,   96, 16224),
+    'sphincsshake256fsimple':  ( 64,  128, 49856),
+    'sphincsshake256ssimple':  ( 64,  128, 29792),
 }
 
 _MSG = b"hello"
@@ -123,8 +147,14 @@ def _run_tests(mod) -> _Tester:
     for name, sizes in _SIGN.items():
         if 'mldsa' in name:
             label = name.replace('mldsa', 'ML-DSA-')
+        elif 'falconpadded' in name:
+            label = name.replace('falconpadded', 'Falcon-padded-')
         elif 'falcon' in name:
             label = name.replace('falcon', 'Falcon-')
+        elif name.startswith('sphincssha2'):
+            label = 'SPHINCS+-SHA2-' + name[len('sphincssha2'):]
+        elif name.startswith('sphincsshake'):
+            label = 'SPHINCS+-SHAKE-' + name[len('sphincsshake'):]
         else:
             label = name
         t.run(f"{label} keypair/sign/verify",

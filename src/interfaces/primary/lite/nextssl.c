@@ -2,8 +2,10 @@
  * @file nextssl.c
  * @brief Lite variant unified API implementation (Layer 4)
  *
- * This is the ultra-simple wrapper for the lite variant.
- * Provides sensible defaults and minimal configuration.
+ * Delegates to main/lite Layer 3 for AEAD, key-exchange, and signatures.
+ * Uses hash and Argon2id primitives directly to avoid function-name conflicts
+ * with the same-named but differently-signatured main/lite hash and password
+ * dispatchers.
  */
 
 /* Mark this translation unit as building the DLL so NEXTSSL_API = dllexport */
@@ -12,58 +14,81 @@
 #endif
 
 #include "nextssl.h"
-#include "../../main/lite/hash.h"
+
+/*
+ * Non-conflicting main/lite Layer-3 modules.
+ * (main/lite/hash.h and main/lite/password.h are intentionally excluded;
+ *  they declare nextssl_hash / nextssl_password_hash with different signatures
+ *  than the three-arg / four-arg versions this file provides.)
+ */
 #include "../../main/lite/aead.h"
-#include "../../main/lite/password.h"
 #include "../../main/lite/keyexchange.h"
 #include "../../main/lite/signature.h"
-#include "../../main/lite/pqc.h"
-#include "../../main/lite/pow.h"
+
+/* Hash primitives used directly */
+#include "../../../primitives/hash/fast/sha256/sha256.h"
+#include "../../../primitives/hash/fast/sha512/sha512.h"
+#include "../../../primitives/hash/fast/blake3/blake3.h"
+
+/* Password-hash primitive (Argon2id) */
+#include "../../../primitives/hash/memory_hard/Argon2id/argon2id.h"
+
+/* OS-backed CSPRNG */
+#include "../../../seed/rng/rng.h"
+
 /* Profile-based configuration system */
 #include "../../../config/config.h"
 #include <string.h>
 
-#if defined(_WIN32) || defined(_WIN64)
-#  include <windows.h>
-/* RtlGenRandom = SystemFunction036 in advapi32.dll (always linked) */
-BOOLEAN NTAPI SystemFunction036(PVOID RandomBuffer, ULONG RandomBufferLength);
-static int os_random(uint8_t *buf, size_t len) {
-    return SystemFunction036(buf, (ULONG)len) ? 0 : -1;
-}
-#else
-#  include <stdio.h>
-static int os_random(uint8_t *buf, size_t len) {
-    FILE *f = fopen("/dev/urandom", "rb");
-    if (!f) return -1;
-    size_t n = fread(buf, 1, len, f);
-    fclose(f);
-    return (n == len) ? 0 : -1;
-}
-#endif
-
 // ============================================================================
-// Hash Functions (profile-dispatched, falls back to SHA-256)
+// Hash Functions (use primitives directly to avoid naming conflict with
+// main/lite nextssl_hash which takes an extra leading algorithm argument)
 // ============================================================================
 
 NEXTSSL_API int nextssl_hash(const uint8_t *data, size_t len, uint8_t *output) {
     const nextssl_config_t *cfg = nextssl_config_get_or_default();
     switch (cfg->default_hash) {
-        case NEXTSSL_HASH_SHA512:
-            return nextssl_lite_hash("SHA-512", data, len, output);
-        case NEXTSSL_HASH_BLAKE3:
-            return nextssl_lite_hash("BLAKE3",  data, len, output);
+        case NEXTSSL_HASH_SHA512: {
+            sha512_hash(data, len, output);
+            return 0;
+        }
+        case NEXTSSL_HASH_BLAKE3: {
+            blake3_hasher h;
+            blake3_hasher_init(&h);
+            blake3_hasher_update(&h, data, len);
+            blake3_hasher_finalize(&h, output, BLAKE3_OUT_LEN);
+            return 0;
+        }
         case NEXTSSL_HASH_SHA256:
         default:
-            return nextssl_lite_hash("SHA-256", data, len, output);
+            sha256(data, len, output);
+            return 0;
     }
 }
 
 NEXTSSL_API int nextssl_hash_ex(const char *algorithm, const uint8_t *data, size_t len, uint8_t *output) {
-    return nextssl_lite_hash(algorithm, data, len, output);
+    if (!algorithm) {
+        sha256(data, len, output);
+        return 0;
+    }
+    if (strcmp(algorithm, "SHA-512") == 0) {
+        sha512_hash(data, len, output);
+        return 0;
+    }
+    if (strcmp(algorithm, "BLAKE3") == 0) {
+        blake3_hasher h;
+        blake3_hasher_init(&h);
+        blake3_hasher_update(&h, data, len);
+        blake3_hasher_finalize(&h, output, BLAKE3_OUT_LEN);
+        return 0;
+    }
+    /* SHA-256 and unknown algorithms fall through to SHA-256 */
+    sha256(data, len, output);
+    return 0;
 }
 
 // ============================================================================
-// Encryption Functions (profile-dispatched, falls back to AES-256-GCM)
+// Encryption Functions (delegates to main/lite aead)
 // ============================================================================
 
 static const char* _lite_aead_name(void) {
@@ -80,7 +105,7 @@ NEXTSSL_API int nextssl_encrypt(
     size_t plen,
     uint8_t *ciphertext
 ) {
-    return nextssl_lite_aead_encrypt(_lite_aead_name(), key, nonce, NULL, 0, plaintext, plen, ciphertext);
+    return nextssl_aead_encrypt(_lite_aead_name(), key, nonce, NULL, 0, plaintext, plen, ciphertext);
 }
 
 NEXTSSL_API int nextssl_decrypt(
@@ -90,7 +115,7 @@ NEXTSSL_API int nextssl_decrypt(
     size_t clen,
     uint8_t *plaintext
 ) {
-    return nextssl_lite_aead_decrypt(_lite_aead_name(), key, nonce, NULL, 0, ciphertext, clen, plaintext);
+    return nextssl_aead_decrypt(_lite_aead_name(), key, nonce, NULL, 0, ciphertext, clen, plaintext);
 }
 
 NEXTSSL_API int nextssl_encrypt_ex(
@@ -101,7 +126,7 @@ NEXTSSL_API int nextssl_encrypt_ex(
     size_t plen,
     uint8_t *ciphertext
 ) {
-    return nextssl_lite_aead_encrypt(algorithm, key, nonce, NULL, 0, plaintext, plen, ciphertext);
+    return nextssl_aead_encrypt(algorithm, key, nonce, NULL, 0, plaintext, plen, ciphertext);
 }
 
 NEXTSSL_API int nextssl_decrypt_ex(
@@ -112,11 +137,12 @@ NEXTSSL_API int nextssl_decrypt_ex(
     size_t clen,
     uint8_t *plaintext
 ) {
-    return nextssl_lite_aead_decrypt(algorithm, key, nonce, NULL, 0, ciphertext, clen, plaintext);
+    return nextssl_aead_decrypt(algorithm, key, nonce, NULL, 0, ciphertext, clen, plaintext);
 }
 
 // ============================================================================
-// Password Hashing (Argon2id)
+// Password Hashing (Argon2id primitive — avoids salt_len conflict with
+// main/lite nextssl_password_hash which takes an extra salt_len argument)
 // ============================================================================
 
 NEXTSSL_API int nextssl_password_hash(
@@ -125,7 +151,8 @@ NEXTSSL_API int nextssl_password_hash(
     const uint8_t *salt,
     uint8_t *output
 ) {
-    return nextssl_lite_password_hash(password, plen, salt, 16, output);
+    /* salt is documented as exactly 16 bytes; hash output is 32 bytes */
+    return argon2id_hash_raw(3, 65536, 4, password, plen, salt, 16, output, 32);
 }
 
 NEXTSSL_API int nextssl_password_verify(
@@ -134,11 +161,20 @@ NEXTSSL_API int nextssl_password_verify(
     const uint8_t *salt,
     const uint8_t *expected_hash
 ) {
-    return nextssl_lite_password_verify(password, plen, salt, 16, expected_hash);
+    uint8_t computed[32];
+    int ret = argon2id_hash_raw(3, 65536, 4, password, plen, salt, 16, computed, 32);
+    if (ret != 0) return ret;
+    /* Constant-time comparison */
+    unsigned diff = 0;
+    for (int i = 0; i < 32; i++) diff |= (unsigned)(computed[i] ^ expected_hash[i]);
+    /* Zero the temporary hash buffer before returning */
+    volatile uint8_t *p = computed;
+    for (int i = 0; i < 32; i++) p[i] = 0;
+    return (diff == 0) ? 0 : -1;
 }
 
 // ============================================================================
-// Key Exchange (defaults to X25519, can use Kyber1024)
+// Key Exchange (delegates to main/lite keyexchange)
 // ============================================================================
 
 NEXTSSL_API int nextssl_keygen(
@@ -147,9 +183,9 @@ NEXTSSL_API int nextssl_keygen(
     int pqc
 ) {
     if (pqc) {
-        return nextssl_lite_kyber1024_keygen(public_key, secret_key);
+        return nextssl_kyber1024_keygen(public_key, secret_key);
     } else {
-        return nextssl_lite_x25519_keygen(public_key, secret_key);
+        return nextssl_x25519_keygen(public_key, secret_key);
     }
 }
 
@@ -162,12 +198,9 @@ NEXTSSL_API int nextssl_keyexchange(
 ) {
     if (pqc) {
         if (!ciphertext) return -1;
-        uint8_t ss[32];
-        int ret = nextssl_lite_kyber1024_encaps(their_public, ciphertext, ss);
-        if (ret == 0) memcpy(shared_secret, ss, 32);
-        return ret;
+        return nextssl_kyber1024_encaps(their_public, ciphertext, shared_secret);
     } else {
-        return nextssl_lite_x25519_exchange(my_secret, their_public, shared_secret);
+        return nextssl_x25519_exchange(my_secret, their_public, shared_secret);
     }
 }
 
@@ -176,11 +209,11 @@ NEXTSSL_API int nextssl_keyexchange_decaps(
     const uint8_t *my_secret,
     uint8_t *shared_secret
 ) {
-    return nextssl_lite_kyber1024_decaps(ciphertext, my_secret, shared_secret);
+    return nextssl_kyber1024_decaps(ciphertext, my_secret, shared_secret);
 }
 
 // ============================================================================
-// Digital Signatures (defaults to Ed25519, can use Dilithium5)
+// Digital Signatures (delegates to main/lite signature)
 // ============================================================================
 
 NEXTSSL_API int nextssl_sign_keygen(
@@ -189,9 +222,9 @@ NEXTSSL_API int nextssl_sign_keygen(
     int pqc
 ) {
     if (pqc) {
-        return nextssl_lite_dilithium5_keygen(public_key, secret_key);
+        return nextssl_dilithium5_keygen(public_key, secret_key);
     } else {
-        return nextssl_lite_ed25519_keygen(public_key, secret_key);
+        return nextssl_ed25519_keygen(public_key, secret_key);
     }
 }
 
@@ -204,9 +237,9 @@ NEXTSSL_API int nextssl_sign(
 ) {
     if (pqc) {
         size_t sig_len;
-        return nextssl_lite_dilithium5_sign(message, mlen, secret_key, signature, &sig_len);
+        return nextssl_dilithium5_sign(message, mlen, secret_key, signature, &sig_len);
     } else {
-        return nextssl_lite_ed25519_sign(message, mlen, secret_key, signature);
+        return nextssl_ed25519_sign(message, mlen, secret_key, signature);
     }
 }
 
@@ -218,15 +251,30 @@ NEXTSSL_API int nextssl_verify(
     int pqc
 ) {
     if (pqc) {
-        return nextssl_lite_dilithium5_verify(message, mlen, signature, NEXTSSL_LITE_DILITHIUM5_SIGNATURE_SIZE, public_key);
+        return nextssl_dilithium5_verify(message, mlen, signature, NEXTSSL_DILITHIUM5_SIGNATURE_SIZE, public_key);
     } else {
-        return nextssl_lite_ed25519_verify(message, mlen, signature, public_key);
+        return nextssl_ed25519_verify(message, mlen, signature, public_key);
     }
 }
 
 // ============================================================================
-// Proof-of-Work
+// Proof-of-Work (sha256 primitive — avoids struct-signature conflict with
+// main/lite nextssl_pow_solve which takes challenge/solution structs)
 // ============================================================================
+
+static int _leading_zero_bits(const uint8_t *hash) {
+    int bits = 0;
+    for (int i = 0; i < 32; i++) {
+        if (hash[i] == 0) {
+            bits += 8;
+        } else {
+            uint8_t b = hash[i];
+            while (!(b & 0x80)) { bits++; b = (uint8_t)(b << 1); }
+            break;
+        }
+    }
+    return bits;
+}
 
 NEXTSSL_API int nextssl_pow_solve(
     const uint8_t *challenge_data,
@@ -235,29 +283,22 @@ NEXTSSL_API int nextssl_pow_solve(
     uint64_t *nonce,
     uint8_t *hash_output
 ) {
-    if (challenge_len > 32) {
-        return -1;
-    }
+    if (!challenge_data || !nonce || !hash_output || challenge_len > 32) return -1;
 
-    nextssl_lite_pow_challenge_t challenge;
-    memset(&challenge, 0, sizeof(challenge));
-    memcpy(challenge.challenge, challenge_data, challenge_len);
-    challenge.difficulty = difficulty;
-    challenge.timestamp = 0;
+    uint8_t buf[40];
+    uint8_t hash[32];
+    size_t clen = challenge_len;
+    memcpy(buf, challenge_data, clen);
 
-    nextssl_lite_pow_solution_t solution;
-    memset(&solution, 0, sizeof(solution));
-    int result = nextssl_lite_pow_solve(&challenge, &solution, 300);
-
-    if (result == 0) {
-        *nonce = 0;
-        for (int i = 0; i < 8; i++) {
-            *nonce |= (uint64_t)solution.nonce[i] << (i * 8);
+    for (uint64_t n = 0; ; n++) {
+        memcpy(buf + clen, &n, 8);
+        sha256(buf, clen + 8, hash);
+        if ((uint32_t)_leading_zero_bits(hash) >= difficulty) {
+            *nonce = n;
+            memcpy(hash_output, hash, 32);
+            return 0;
         }
-        memcpy(hash_output, solution.hash, 32);
     }
-
-    return result;
 }
 
 NEXTSSL_API int nextssl_pow_verify(
@@ -267,25 +308,21 @@ NEXTSSL_API int nextssl_pow_verify(
     uint64_t nonce,
     const uint8_t *hash
 ) {
-    if (challenge_len > 32) {
-        return -1;
-    }
+    if (!challenge_data || !hash || challenge_len > 32) return -1;
 
-    nextssl_lite_pow_challenge_t challenge;
-    memset(&challenge, 0, sizeof(challenge));
-    memcpy(challenge.challenge, challenge_data, challenge_len);
-    challenge.difficulty = difficulty;
-    challenge.timestamp = 0;
+    uint8_t buf[40];
+    uint8_t computed[32];
+    size_t clen = challenge_len;
+    memcpy(buf, challenge_data, clen);
+    memcpy(buf + clen, &nonce, 8);
+    sha256(buf, clen + 8, computed);
 
-    nextssl_lite_pow_solution_t solution;
-    memset(&solution, 0, sizeof(solution));
-    for (int i = 0; i < 8 && i < 32; i++) {
-        solution.nonce[i] = (nonce >> (i * 8)) & 0xFF;
-    }
-    memcpy(solution.hash, hash, 32);
-    solution.iterations = 0;
+    if ((uint32_t)_leading_zero_bits(computed) < difficulty) return -1;
 
-    return nextssl_lite_pow_verify(&challenge, &solution);
+    /* Constant-time compare of recomputed vs supplied hash */
+    unsigned diff = 0;
+    for (int i = 0; i < 32; i++) diff |= (unsigned)(computed[i] ^ hash[i]);
+    return (diff == 0) ? 0 : -1;
 }
 
 // ============================================================================
@@ -293,7 +330,7 @@ NEXTSSL_API int nextssl_pow_verify(
 // ============================================================================
 
 NEXTSSL_API int nextssl_random(uint8_t *output, size_t len) {
-    return os_random(output, len);
+    return rng_fill(output, len);
 }
 
 NEXTSSL_API const char* nextssl_version(void) {

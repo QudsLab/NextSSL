@@ -5,8 +5,8 @@
  * @date 2026-02-28
  */
 
-#ifndef NEXTSSL_MAIN_LITE_HASH_H
-#define NEXTSSL_MAIN_LITE_HASH_H
+#ifndef NEXTSSL_MAIN_HASH_H
+#define NEXTSSL_MAIN_HASH_H
 
 #include "../../../config.h"
 #include <stdint.h>
@@ -20,10 +20,10 @@ extern "C" {
  * @brief Hash algorithms available in lite variant
  */
 typedef enum {
-    NEXTSSL_LITE_HASH_SHA256,    /**< SHA-256 (32 bytes output) */
-    NEXTSSL_LITE_HASH_SHA512,    /**< SHA-512 (64 bytes output) */
-    NEXTSSL_LITE_HASH_BLAKE3      /**< BLAKE3 (32 bytes output, extensible) */
-} nextssl_lite_hash_algorithm_t;
+    NEXTSSL_HASH_SHA256,    /**< SHA-256 (32 bytes output) */
+    NEXTSSL_HASH_SHA512,    /**< SHA-512 (64 bytes output) */
+    NEXTSSL_HASH_BLAKE3      /**< BLAKE3 (32 bytes output, extensible) */
+} nextssl_hash_algorithm_t;
 
 /**
  * @brief Compute hash (lite variant)
@@ -44,7 +44,7 @@ typedef enum {
  * @retval -NEXTSSL_ERROR_INVALID_PARAMETER NULL pointer or invalid length
  * @retval -NEXTSSL_ERROR_BUFFER_TOO_SMALL Output buffer too small
  */
-NEXTSSL_API int nextssl_lite_hash(
+NEXTSSL_API int nextssl_hash(
     const char *algorithm,
     const uint8_t *data,
     size_t data_len,
@@ -61,7 +61,7 @@ NEXTSSL_API int nextssl_lite_hash(
  * @retval 64 SHA-512
  * @retval -1 Algorithm not available in lite variant
  */
-NEXTSSL_API int nextssl_lite_hash_size(const char *algorithm);
+NEXTSSL_API int nextssl_hash_size(const char *algorithm);
 
 /**
  * @brief Incremental hashing: initialize context
@@ -70,17 +70,17 @@ NEXTSSL_API int nextssl_lite_hash_size(const char *algorithm);
  * @param ctx Output context pointer (allocated internally)
  * @return 0 on success, negative on error
  */
-NEXTSSL_API int nextssl_lite_hash_init(const char *algorithm, void **ctx);
+NEXTSSL_API int nextssl_hash_init(const char *algorithm, void **ctx);
 
 /**
  * @brief Incremental hashing: update with data
  * 
- * @param ctx Context from nextssl_lite_hash_init()
+ * @param ctx Context from nextssl_hash_init()
  * @param data Input data
  * @param len Input length
  * @return 0 on success, negative on error
  */
-NEXTSSL_API int nextssl_lite_hash_update(void *ctx, const uint8_t *data, size_t len);
+NEXTSSL_API int nextssl_hash_update(void *ctx, const uint8_t *data, size_t len);
 
 /**
  * @brief Incremental hashing: finalize and get output
@@ -89,7 +89,7 @@ NEXTSSL_API int nextssl_lite_hash_update(void *ctx, const uint8_t *data, size_t 
  * @param output Output buffer
  * @return 0 on success, negative on error
  */
-NEXTSSL_API int nextssl_lite_hash_final(void *ctx, uint8_t *output);
+NEXTSSL_API int nextssl_hash_final(void *ctx, uint8_t *output);
 
 /**
  * @brief Check if hash algorithm is available
@@ -97,10 +97,10 @@ NEXTSSL_API int nextssl_lite_hash_final(void *ctx, uint8_t *output);
  * @param algorithm Algorithm name
  * @return 1 if available, 0 otherwise
  */
-NEXTSSL_API int nextssl_lite_hash_available(const char *algorithm);
+NEXTSSL_API int nextssl_hash_available(const char *algorithm);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* NEXTSSL_MAIN_LITE_HASH_H */
+#endif /* NEXTSSL_MAIN_HASH_H */

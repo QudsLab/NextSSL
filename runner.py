@@ -40,6 +40,8 @@ from script.web import core as web_core_test
 from script.web import pqc as web_pqc_test
 from script.web import pow as web_pow_test
 from script.web import system as web_system_test
+from script.web import dhcm as web_dhcm_test
+from script.web import system_lite as web_system_lite_test
 
 PLATFORM_LIB_EXT = {
     'windows': '.dll',
@@ -74,7 +76,9 @@ _MODULE_REGISTRY = {
     'web/main/core':                      web_core_test,
     'web/main/pqc':                       web_pqc_test,
     'web/main/pow':                       web_pow_test,
+    'web/main/dhcm':                      web_dhcm_test,
     'web/primary/main':                   web_system_test,
+    'web/primary/main_lite':              web_system_lite_test,
 }
 
 

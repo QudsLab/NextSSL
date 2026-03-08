@@ -150,13 +150,42 @@ def build(builder: Builder):
     if builder.config.lib_ext == '.dll':   # bcrypt is Windows-only
         extra_libs.append('-lbcrypt')
 
+    _WASM_LITE_EXPORTS = [
+        # High-level API
+        'nextssl_init', 'nextssl_init_custom', 'nextssl_cleanup',
+        'nextssl_hash', 'nextssl_encrypt', 'nextssl_decrypt',
+        'nextssl_security_level',
+        # Root hash (SHA-256, SHA-512, BLAKE3, Argon2id — no SHA3 in lite)
+        'nextssl_root_hash_sha256', 'nextssl_root_hash_sha512',
+        'nextssl_root_hash_blake3', 'nextssl_root_hash_argon2id',
+        # Root ECC
+        'nextssl_root_ecc_ed25519_keygen', 'nextssl_root_ecc_ed25519_sign',
+        'nextssl_root_ecc_ed25519_verify',
+        'nextssl_root_ecc_x25519_keygen', 'nextssl_root_ecc_x25519_exchange',
+        # Root PQC KEM (ML-KEM-1024 in lite, not 768)
+        'nextssl_root_pqc_kem_mlkem1024_keygen',
+        'nextssl_root_pqc_kem_mlkem1024_encaps',
+        'nextssl_root_pqc_kem_mlkem1024_decaps',
+        # Root PQC Sign (ML-DSA-87 only in lite, no ML-DSA-65)
+        'nextssl_root_pqc_sign_mldsa87_keygen',
+        'nextssl_root_pqc_sign_mldsa87_sign',
+        'nextssl_root_pqc_sign_mldsa87_verify',
+        # Root PoW
+        'nextssl_root_pow_server_challenge',
+        'nextssl_root_pow_server_verify',
+        'nextssl_root_pow_client_solve',
+        # Memory allocation — required by Python wasmtime tests in script/web/
+        'malloc', 'free',
+    ]
+
     return builder.build_target(
         'main_lite',
         list(sources),
         extra_libs=extra_libs,
         includes=includes,
         output_subdir='primary',
-        macros=['NEXTSSL_BUILDING_DLL', 'NEXTSSL_BUILD_LITE']
+        macros=['NEXTSSL_BUILDING_DLL', 'NEXTSSL_BUILD_LITE'],
+        wasm_exports=_WASM_LITE_EXPORTS,
     )
 
 

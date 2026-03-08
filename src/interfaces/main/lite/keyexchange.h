@@ -5,8 +5,8 @@
  * @date 2026-02-28
  */
 
-#ifndef NEXTSSL_MAIN_LITE_KEYEXCHANGE_H
-#define NEXTSSL_MAIN_LITE_KEYEXCHANGE_H
+#ifndef NEXTSSL_MAIN_KEYEXCHANGE_H
+#define NEXTSSL_MAIN_KEYEXCHANGE_H
 
 #include "../../../config.h"
 #include <stdint.h>
@@ -17,23 +17,23 @@ extern "C" {
 #endif
 
 /* Key sizes for X25519 (classical) */
-#define NEXTSSL_LITE_X25519_PUBLIC_KEY_SIZE  32
-#define NEXTSSL_LITE_X25519_SECRET_KEY_SIZE  32
-#define NEXTSSL_LITE_X25519_SHARED_SIZE      32
+#define NEXTSSL_X25519_PUBLIC_KEY_SIZE  32
+#define NEXTSSL_X25519_SECRET_KEY_SIZE  32
+#define NEXTSSL_X25519_SHARED_SIZE      32
 
 /* Key sizes for Kyber1024 (post-quantum) */
-#define NEXTSSL_LITE_KYBER1024_PUBLIC_KEY_SIZE  1568
-#define NEXTSSL_LITE_KYBER1024_SECRET_KEY_SIZE  3168
-#define NEXTSSL_LITE_KYBER1024_CIPHERTEXT_SIZE  1568
-#define NEXTSSL_LITE_KYBER1024_SHARED_SIZE      32
+#define NEXTSSL_KYBER1024_PUBLIC_KEY_SIZE  1568
+#define NEXTSSL_KYBER1024_SECRET_KEY_SIZE  3168
+#define NEXTSSL_KYBER1024_CIPHERTEXT_SIZE  1568
+#define NEXTSSL_KYBER1024_SHARED_SIZE      32
 
 /**
  * @brief Key exchange algorithms
  */
 typedef enum {
-    NEXTSSL_LITE_KEX_X25519,      /**< X25519 ECDH (Curve25519) */
-    NEXTSSL_LITE_KEX_KYBER1024    /**< Kyber1024 KEM (NIST FIPS 203) */
-} nextssl_lite_kex_algorithm_t;
+    NEXTSSL_KEX_X25519,      /**< X25519 ECDH (Curve25519) */
+    NEXTSSL_KEX_KYBER1024    /**< Kyber1024 KEM (NIST FIPS 203) */
+} nextssl_kex_algorithm_t;
 
 /**
  * @brief Generate X25519 keypair
@@ -42,9 +42,9 @@ typedef enum {
  * @param secret_key Output secret key (32 bytes)
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_x25519_keygen(
-    uint8_t public_key[NEXTSSL_LITE_X25519_PUBLIC_KEY_SIZE],
-    uint8_t secret_key[NEXTSSL_LITE_X25519_SECRET_KEY_SIZE]
+NEXTSSL_API int nextssl_x25519_keygen(
+    uint8_t public_key[NEXTSSL_X25519_PUBLIC_KEY_SIZE],
+    uint8_t secret_key[NEXTSSL_X25519_SECRET_KEY_SIZE]
 );
 
 /**
@@ -55,10 +55,10 @@ NEXTSSL_API int nextssl_lite_x25519_keygen(
  * @param shared_secret Output shared secret (32 bytes)
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_x25519_exchange(
-    const uint8_t my_secret[NEXTSSL_LITE_X25519_SECRET_KEY_SIZE],
-    const uint8_t their_public[NEXTSSL_LITE_X25519_PUBLIC_KEY_SIZE],
-    uint8_t shared_secret[NEXTSSL_LITE_X25519_SHARED_SIZE]
+NEXTSSL_API int nextssl_x25519_exchange(
+    const uint8_t my_secret[NEXTSSL_X25519_SECRET_KEY_SIZE],
+    const uint8_t their_public[NEXTSSL_X25519_PUBLIC_KEY_SIZE],
+    uint8_t shared_secret[NEXTSSL_X25519_SHARED_SIZE]
 );
 
 /**
@@ -68,9 +68,9 @@ NEXTSSL_API int nextssl_lite_x25519_exchange(
  * @param secret_key Output secret key (3168 bytes)
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_kyber1024_keygen(
-    uint8_t public_key[NEXTSSL_LITE_KYBER1024_PUBLIC_KEY_SIZE],
-    uint8_t secret_key[NEXTSSL_LITE_KYBER1024_SECRET_KEY_SIZE]
+NEXTSSL_API int nextssl_kyber1024_keygen(
+    uint8_t public_key[NEXTSSL_KYBER1024_PUBLIC_KEY_SIZE],
+    uint8_t secret_key[NEXTSSL_KYBER1024_SECRET_KEY_SIZE]
 );
 
 /**
@@ -81,10 +81,10 @@ NEXTSSL_API int nextssl_lite_kyber1024_keygen(
  * @param shared_secret Output shared secret (32 bytes)
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_kyber1024_encaps(
-    const uint8_t their_public[NEXTSSL_LITE_KYBER1024_PUBLIC_KEY_SIZE],
-    uint8_t ciphertext[NEXTSSL_LITE_KYBER1024_CIPHERTEXT_SIZE],
-    uint8_t shared_secret[NEXTSSL_LITE_KYBER1024_SHARED_SIZE]
+NEXTSSL_API int nextssl_kyber1024_encaps(
+    const uint8_t their_public[NEXTSSL_KYBER1024_PUBLIC_KEY_SIZE],
+    uint8_t ciphertext[NEXTSSL_KYBER1024_CIPHERTEXT_SIZE],
+    uint8_t shared_secret[NEXTSSL_KYBER1024_SHARED_SIZE]
 );
 
 /**
@@ -95,14 +95,14 @@ NEXTSSL_API int nextssl_lite_kyber1024_encaps(
  * @param shared_secret Output shared secret (32 bytes)
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_kyber1024_decaps(
-    const uint8_t ciphertext[NEXTSSL_LITE_KYBER1024_CIPHERTEXT_SIZE],
-    const uint8_t my_secret[NEXTSSL_LITE_KYBER1024_SECRET_KEY_SIZE],
-    uint8_t shared_secret[NEXTSSL_LITE_KYBER1024_SHARED_SIZE]
+NEXTSSL_API int nextssl_kyber1024_decaps(
+    const uint8_t ciphertext[NEXTSSL_KYBER1024_CIPHERTEXT_SIZE],
+    const uint8_t my_secret[NEXTSSL_KYBER1024_SECRET_KEY_SIZE],
+    uint8_t shared_secret[NEXTSSL_KYBER1024_SHARED_SIZE]
 );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* NEXTSSL_MAIN_LITE_KEYEXCHANGE_H */
+#endif /* NEXTSSL_MAIN_KEYEXCHANGE_H */

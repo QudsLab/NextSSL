@@ -10,7 +10,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-int nextssl_lite_hash(const char *algorithm, const uint8_t *data, size_t data_len, uint8_t *output) {
+int nextssl_hash(const char *algorithm, const uint8_t *data, size_t data_len, uint8_t *output) {
     if (!data || !output) {
         return -1;  // NEXTSSL_ERROR_INVALID_PARAMETER
     }
@@ -43,7 +43,7 @@ int nextssl_lite_hash(const char *algorithm, const uint8_t *data, size_t data_le
     return -2;  // NEXTSSL_ERROR_INVALID_ALGORITHM
 }
 
-int nextssl_lite_hash_size(const char *algorithm) {
+int nextssl_hash_size(const char *algorithm) {
     if (!algorithm || strcmp(algorithm, "SHA-256") == 0 || strcmp(algorithm, "BLAKE3") == 0) {
         return 32;
     }
@@ -53,7 +53,7 @@ int nextssl_lite_hash_size(const char *algorithm) {
     return -1;
 }
 
-int nextssl_lite_hash_available(const char *algorithm) {
+int nextssl_hash_available(const char *algorithm) {
     if (!algorithm) return 0;
     if (strcmp(algorithm, "SHA-256") == 0) return 1;
     if (strcmp(algorithm, "SHA-512") == 0) return 1;
@@ -62,14 +62,14 @@ int nextssl_lite_hash_available(const char *algorithm) {
 }
 
 // Incremental hashing support (stub for now)
-int nextssl_lite_hash_init(const char *algorithm, void **ctx) {
+int nextssl_hash_init(const char *algorithm, void **ctx) {
     return -99;  // NOT_IMPLEMENTED
 }
 
-int nextssl_lite_hash_update(void *ctx, const uint8_t *data, size_t len) {
+int nextssl_hash_update(void *ctx, const uint8_t *data, size_t len) {
     return -99;  // NOT_IMPLEMENTED
 }
 
-int nextssl_lite_hash_final(void *ctx, uint8_t *output) {
+int nextssl_hash_final(void *ctx, uint8_t *output) {
     return -99;  // NOT_IMPLEMENTED
 }

@@ -1,5 +1,5 @@
 #include "curve448.h"
-#include "../../utils/drbg/drbg.h"
+#include "../../../seed/drbg/drbg.h"
 
 /* Deterministic key generation using a user-provided seed */
 int wc_curve448_make_key_deterministic(curve448_key* key, const byte* seed, word32 seedSz) {
@@ -15,11 +15,11 @@ int wc_curve448_make_key_deterministic(curve448_key* key, const byte* seed, word
        If seed is short, we expand it using our DRBG.
     */
     
-    CTR_DRBG_CTX drbg;
-    ctr_drbg_init(&drbg, seed, seedSz, NULL, 0);
+    DRBG_CTX drbg;
+    drbg_init(&drbg, seed, seedSz);
     
-    int ret = ctr_drbg_generate(&drbg, key->k, CURVE448_KEY_SIZE, NULL, 0);
-    ctr_drbg_free(&drbg);
+    int ret = drbg_generate(&drbg, key->k, CURVE448_KEY_SIZE);
+    drbg_wipe(&drbg);
     
     if (ret != 0) return ret;
 

@@ -5,8 +5,8 @@
  * @date 2026-02-28
  */
 
-#ifndef NEXTSSL_MAIN_LITE_PQC_H
-#define NEXTSSL_MAIN_LITE_PQC_H
+#ifndef NEXTSSL_MAIN_PQC_H
+#define NEXTSSL_MAIN_PQC_H
 
 #include "../../../config.h"
 #include <stdint.h>
@@ -24,14 +24,14 @@ extern "C" {
  */
 
 /* Re-export key sizes for convenience */
-#define NEXTSSL_LITE_PQC_KEM_PUBLIC_SIZE   1568
-#define NEXTSSL_LITE_PQC_KEM_SECRET_SIZE   3168
-#define NEXTSSL_LITE_PQC_KEM_CT_SIZE       1568
-#define NEXTSSL_LITE_PQC_KEM_SHARED_SIZE   32
+#define NEXTSSL_PQC_KEM_PUBLIC_SIZE   1568
+#define NEXTSSL_PQC_KEM_SECRET_SIZE   3168
+#define NEXTSSL_PQC_KEM_CT_SIZE       1568
+#define NEXTSSL_PQC_KEM_SHARED_SIZE   32
 
-#define NEXTSSL_LITE_PQC_SIGN_PUBLIC_SIZE  2592
-#define NEXTSSL_LITE_PQC_SIGN_SECRET_SIZE  4864
-#define NEXTSSL_LITE_PQC_SIGN_SIG_SIZE     4627
+#define NEXTSSL_PQC_SIGN_PUBLIC_SIZE  2592
+#define NEXTSSL_PQC_SIGN_SECRET_SIZE  4864
+#define NEXTSSL_PQC_SIGN_SIG_SIZE     4627
 
 /**
  * @brief Generate combined PQC keypair (KEM + Sign)
@@ -44,7 +44,7 @@ extern "C" {
  * @param sign_secret Output signature secret key (4864 bytes)
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_pqc_keygen_combined(
+NEXTSSL_API int nextssl_pqc_keygen_combined(
     uint8_t *kem_public,
     uint8_t *kem_secret,
     uint8_t *sign_public,
@@ -58,17 +58,17 @@ NEXTSSL_API int nextssl_lite_pqc_keygen_combined(
  * @param size Buffer size
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_pqc_info(char *buffer, size_t size);
+NEXTSSL_API int nextssl_pqc_info(char *buffer, size_t size);
 
 /**
  * @brief Check if PQC is available in this build
  * 
  * @return 1 if PQC algorithms are available, 0 otherwise
  */
-NEXTSSL_API int nextssl_lite_pqc_available(void);
+NEXTSSL_API int nextssl_pqc_available(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* NEXTSSL_MAIN_LITE_PQC_H */
+#endif /* NEXTSSL_MAIN_PQC_H */

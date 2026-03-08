@@ -5,8 +5,8 @@
  * @date 2026-02-28
  */
 
-#ifndef NEXTSSL_MAIN_LITE_SIGNATURE_H
-#define NEXTSSL_MAIN_LITE_SIGNATURE_H
+#ifndef NEXTSSL_MAIN_SIGNATURE_H
+#define NEXTSSL_MAIN_SIGNATURE_H
 
 #include "../../../config.h"
 #include <stdint.h>
@@ -17,22 +17,22 @@ extern "C" {
 #endif
 
 /* Key/signature sizes for Ed25519 (classical) */
-#define NEXTSSL_LITE_ED25519_PUBLIC_KEY_SIZE   32
-#define NEXTSSL_LITE_ED25519_SECRET_KEY_SIZE   64
-#define NEXTSSL_LITE_ED25519_SIGNATURE_SIZE    64
+#define NEXTSSL_ED25519_PUBLIC_KEY_SIZE   32
+#define NEXTSSL_ED25519_SECRET_KEY_SIZE   64
+#define NEXTSSL_ED25519_SIGNATURE_SIZE    64
 
 /* Key/signature sizes for Dilithium5 (post-quantum) */
-#define NEXTSSL_LITE_DILITHIUM5_PUBLIC_KEY_SIZE  2592
-#define NEXTSSL_LITE_DILITHIUM5_SECRET_KEY_SIZE  4864
-#define NEXTSSL_LITE_DILITHIUM5_SIGNATURE_SIZE   4627
+#define NEXTSSL_DILITHIUM5_PUBLIC_KEY_SIZE  2592
+#define NEXTSSL_DILITHIUM5_SECRET_KEY_SIZE  4864
+#define NEXTSSL_DILITHIUM5_SIGNATURE_SIZE   4627
 
 /**
  * @brief Signature algorithms
  */
 typedef enum {
-    NEXTSSL_LITE_SIGN_ED25519,      /**< Ed25519 (EdDSA on Curve25519) */
-    NEXTSSL_LITE_SIGN_DILITHIUM5    /**< Dilithium5 (NIST FIPS 204) */
-} nextssl_lite_sign_algorithm_t;
+    NEXTSSL_SIGN_ED25519,      /**< Ed25519 (EdDSA on Curve25519) */
+    NEXTSSL_SIGN_DILITHIUM5    /**< Dilithium5 (NIST FIPS 204) */
+} nextssl_sign_algorithm_t;
 
 /**
  * @brief Generate Ed25519 keypair
@@ -41,9 +41,9 @@ typedef enum {
  * @param secret_key Output secret key (64 bytes)
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_ed25519_keygen(
-    uint8_t public_key[NEXTSSL_LITE_ED25519_PUBLIC_KEY_SIZE],
-    uint8_t secret_key[NEXTSSL_LITE_ED25519_SECRET_KEY_SIZE]
+NEXTSSL_API int nextssl_ed25519_keygen(
+    uint8_t public_key[NEXTSSL_ED25519_PUBLIC_KEY_SIZE],
+    uint8_t secret_key[NEXTSSL_ED25519_SECRET_KEY_SIZE]
 );
 
 /**
@@ -55,11 +55,11 @@ NEXTSSL_API int nextssl_lite_ed25519_keygen(
  * @param signature Output signature (64 bytes)
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_ed25519_sign(
+NEXTSSL_API int nextssl_ed25519_sign(
     const uint8_t *message,
     size_t message_len,
-    const uint8_t secret_key[NEXTSSL_LITE_ED25519_SECRET_KEY_SIZE],
-    uint8_t signature[NEXTSSL_LITE_ED25519_SIGNATURE_SIZE]
+    const uint8_t secret_key[NEXTSSL_ED25519_SECRET_KEY_SIZE],
+    uint8_t signature[NEXTSSL_ED25519_SIGNATURE_SIZE]
 );
 
 /**
@@ -74,11 +74,11 @@ NEXTSSL_API int nextssl_lite_ed25519_sign(
  * @retval 0 Signature is valid
  * @retval -NEXTSSL_ERROR_AUTH_FAILED Signature is invalid
  */
-NEXTSSL_API int nextssl_lite_ed25519_verify(
+NEXTSSL_API int nextssl_ed25519_verify(
     const uint8_t *message,
     size_t message_len,
-    const uint8_t signature[NEXTSSL_LITE_ED25519_SIGNATURE_SIZE],
-    const uint8_t public_key[NEXTSSL_LITE_ED25519_PUBLIC_KEY_SIZE]
+    const uint8_t signature[NEXTSSL_ED25519_SIGNATURE_SIZE],
+    const uint8_t public_key[NEXTSSL_ED25519_PUBLIC_KEY_SIZE]
 );
 
 /**
@@ -88,9 +88,9 @@ NEXTSSL_API int nextssl_lite_ed25519_verify(
  * @param secret_key Output secret key (4864 bytes)
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_dilithium5_keygen(
-    uint8_t public_key[NEXTSSL_LITE_DILITHIUM5_PUBLIC_KEY_SIZE],
-    uint8_t secret_key[NEXTSSL_LITE_DILITHIUM5_SECRET_KEY_SIZE]
+NEXTSSL_API int nextssl_dilithium5_keygen(
+    uint8_t public_key[NEXTSSL_DILITHIUM5_PUBLIC_KEY_SIZE],
+    uint8_t secret_key[NEXTSSL_DILITHIUM5_SECRET_KEY_SIZE]
 );
 
 /**
@@ -103,11 +103,11 @@ NEXTSSL_API int nextssl_lite_dilithium5_keygen(
  * @param signature_len Output: actual signature length
  * @return 0 on success
  */
-NEXTSSL_API int nextssl_lite_dilithium5_sign(
+NEXTSSL_API int nextssl_dilithium5_sign(
     const uint8_t *message,
     size_t message_len,
-    const uint8_t secret_key[NEXTSSL_LITE_DILITHIUM5_SECRET_KEY_SIZE],
-    uint8_t signature[NEXTSSL_LITE_DILITHIUM5_SIGNATURE_SIZE],
+    const uint8_t secret_key[NEXTSSL_DILITHIUM5_SECRET_KEY_SIZE],
+    uint8_t signature[NEXTSSL_DILITHIUM5_SIGNATURE_SIZE],
     size_t *signature_len
 );
 
@@ -124,16 +124,16 @@ NEXTSSL_API int nextssl_lite_dilithium5_sign(
  * @retval 0 Signature is valid
  * @retval -NEXTSSL_ERROR_AUTH_FAILED Signature is invalid
  */
-NEXTSSL_API int nextssl_lite_dilithium5_verify(
+NEXTSSL_API int nextssl_dilithium5_verify(
     const uint8_t *message,
     size_t message_len,
     const uint8_t *signature,
     size_t signature_len,
-    const uint8_t public_key[NEXTSSL_LITE_DILITHIUM5_PUBLIC_KEY_SIZE]
+    const uint8_t public_key[NEXTSSL_DILITHIUM5_PUBLIC_KEY_SIZE]
 );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* NEXTSSL_MAIN_LITE_SIGNATURE_H */
+#endif /* NEXTSSL_MAIN_SIGNATURE_H */

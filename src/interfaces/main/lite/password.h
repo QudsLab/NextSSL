@@ -5,8 +5,8 @@
  * @date 2026-02-28
  */
 
-#ifndef NEXTSSL_MAIN_LITE_PASSWORD_H
-#define NEXTSSL_MAIN_LITE_PASSWORD_H
+#ifndef NEXTSSL_MAIN_PASSWORD_H
+#define NEXTSSL_MAIN_PASSWORD_H
 
 #include "../../../config.h"
 #include <stdint.h>
@@ -20,9 +20,9 @@ extern "C" {
  * @brief Password/KDF algorithms available in lite variant
  */
 typedef enum {
-    NEXTSSL_LITE_KDF_HKDF,      /**< HKDF-SHA256 (RFC 5869) */
-    NEXTSSL_LITE_KDF_ARGON2ID   /**< Argon2id (RFC 9106) */
-} nextssl_lite_kdf_algorithm_t;
+    NEXTSSL_KDF_HKDF,      /**< HKDF-SHA256 (RFC 5869) */
+    NEXTSSL_KDF_ARGON2ID   /**< Argon2id (RFC 9106) */
+} nextssl_kdf_algorithm_t;
 
 /**
  * @brief Hash password with Argon2id
@@ -39,7 +39,7 @@ typedef enum {
  * @param output Output buffer (32 bytes)
  * @return 0 on success, negative on error
  */
-NEXTSSL_API int nextssl_lite_password_hash(
+NEXTSSL_API int nextssl_password_hash(
     const uint8_t *password,
     size_t password_len,
     const uint8_t *salt,
@@ -60,7 +60,7 @@ NEXTSSL_API int nextssl_lite_password_hash(
  * @param output Output buffer (32 bytes)
  * @return 0 on success, negative on error
  */
-NEXTSSL_API int nextssl_lite_password_hash_ex(
+NEXTSSL_API int nextssl_password_hash_ex(
     const uint8_t *password,
     size_t password_len,
     const uint8_t *salt,
@@ -86,7 +86,7 @@ NEXTSSL_API int nextssl_lite_password_hash_ex(
  * @retval 0 Password matches
  * @retval -NEXTSSL_ERROR_AUTH_FAILED Password does not match
  */
-NEXTSSL_API int nextssl_lite_password_verify(
+NEXTSSL_API int nextssl_password_verify(
     const uint8_t *password,
     size_t password_len,
     const uint8_t *salt,
@@ -107,7 +107,7 @@ NEXTSSL_API int nextssl_lite_password_verify(
  * @param output_len Desired output length (max 8160 bytes = 255 * 32)
  * @return 0 on success, negative on error
  */
-NEXTSSL_API int nextssl_lite_kdf_derive(
+NEXTSSL_API int nextssl_kdf_derive(
     const uint8_t *ikm,
     size_t ikm_len,
     const uint8_t *salt,
@@ -122,4 +122,4 @@ NEXTSSL_API int nextssl_lite_kdf_derive(
 }
 #endif
 
-#endif /* NEXTSSL_MAIN_LITE_PASSWORD_H */
+#endif /* NEXTSSL_MAIN_PASSWORD_H */

@@ -9,7 +9,7 @@
 #include <string.h>
 
 // Ed25519 functions
-int nextssl_lite_ed25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
+int nextssl_ed25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
     if (!public_key || !secret_key) {
         return -1;  // NEXTSSL_ERROR_INVALID_PARAMETER
     }
@@ -30,11 +30,11 @@ int nextssl_lite_ed25519_keygen(uint8_t *public_key, uint8_t *secret_key) {
     return 0;
 }
 
-int nextssl_lite_ed25519_sign(
+int nextssl_ed25519_sign(
     const uint8_t *message,
     size_t message_len,
-    const uint8_t secret_key[NEXTSSL_LITE_ED25519_SECRET_KEY_SIZE],
-    uint8_t signature[NEXTSSL_LITE_ED25519_SIGNATURE_SIZE]
+    const uint8_t secret_key[NEXTSSL_ED25519_SECRET_KEY_SIZE],
+    uint8_t signature[NEXTSSL_ED25519_SIGNATURE_SIZE]
 ) {
     if (!signature || !message || !secret_key) {
         return -1;
@@ -49,11 +49,11 @@ int nextssl_lite_ed25519_sign(
     return 0;
 }
 
-int nextssl_lite_ed25519_verify(
+int nextssl_ed25519_verify(
     const uint8_t *message,
     size_t message_len,
-    const uint8_t signature[NEXTSSL_LITE_ED25519_SIGNATURE_SIZE],
-    const uint8_t public_key[NEXTSSL_LITE_ED25519_PUBLIC_KEY_SIZE]
+    const uint8_t signature[NEXTSSL_ED25519_SIGNATURE_SIZE],
+    const uint8_t public_key[NEXTSSL_ED25519_PUBLIC_KEY_SIZE]
 ) {
     if (!signature || !message || !public_key) {
         return -1;
@@ -66,7 +66,7 @@ int nextssl_lite_ed25519_verify(
 }
 
 // Dilithium5 functions
-int nextssl_lite_dilithium5_keygen(uint8_t *public_key, uint8_t *secret_key) {
+int nextssl_dilithium5_keygen(uint8_t *public_key, uint8_t *secret_key) {
     if (!public_key || !secret_key) {
         return -1;
     }
@@ -79,11 +79,11 @@ int nextssl_lite_dilithium5_keygen(uint8_t *public_key, uint8_t *secret_key) {
     return 0;
 }
 
-int nextssl_lite_dilithium5_sign(
+int nextssl_dilithium5_sign(
     const uint8_t *message,
     size_t message_len,
-    const uint8_t secret_key[NEXTSSL_LITE_DILITHIUM5_SECRET_KEY_SIZE],
-    uint8_t signature[NEXTSSL_LITE_DILITHIUM5_SIGNATURE_SIZE],
+    const uint8_t secret_key[NEXTSSL_DILITHIUM5_SECRET_KEY_SIZE],
+    uint8_t signature[NEXTSSL_DILITHIUM5_SIGNATURE_SIZE],
     size_t *signature_len
 ) {
     if (!signature || !signature_len || !message || !secret_key) {
@@ -98,12 +98,12 @@ int nextssl_lite_dilithium5_sign(
     return 0;
 }
 
-int nextssl_lite_dilithium5_verify(
+int nextssl_dilithium5_verify(
     const uint8_t *message,
     size_t message_len,
     const uint8_t *signature,
     size_t signature_len,
-    const uint8_t public_key[NEXTSSL_LITE_DILITHIUM5_PUBLIC_KEY_SIZE]
+    const uint8_t public_key[NEXTSSL_DILITHIUM5_PUBLIC_KEY_SIZE]
 ) {
     if (!signature || !message || !public_key) {
         return -1;
@@ -116,7 +116,7 @@ int nextssl_lite_dilithium5_verify(
 }
 
 // Hybrid signing (Ed25519 + Dilithium5)
-int nextssl_lite_hybrid_sign_keypair(
+int nextssl_hybrid_sign_keypair(
     uint8_t *ed25519_public,
     uint8_t *ed25519_secret,
     uint8_t *dilithium_public,
@@ -124,16 +124,16 @@ int nextssl_lite_hybrid_sign_keypair(
 ) {
     int result;
     
-    result = nextssl_lite_ed25519_keygen(ed25519_public, ed25519_secret);
+    result = nextssl_ed25519_keygen(ed25519_public, ed25519_secret);
     if (result != 0) return result;
     
-    result = nextssl_lite_dilithium5_keygen(dilithium_public, dilithium_secret);
+    result = nextssl_dilithium5_keygen(dilithium_public, dilithium_secret);
     if (result != 0) return result;
     
     return 0;
 }
 
-int nextssl_lite_hybrid_sign(
+int nextssl_hybrid_sign(
     uint8_t *ed25519_sig,
     uint8_t *dilithium_sig,
     size_t *dilithium_sig_len,
@@ -145,17 +145,17 @@ int nextssl_lite_hybrid_sign(
     int result;
     
     // Ed25519 signature
-    result = nextssl_lite_ed25519_sign(message, message_len, ed25519_secret, ed25519_sig);
+    result = nextssl_ed25519_sign(message, message_len, ed25519_secret, ed25519_sig);
     if (result != 0) return result;
     
     // Dilithium5 signature
-    result = nextssl_lite_dilithium5_sign(message, message_len, dilithium_secret, dilithium_sig, dilithium_sig_len);
+    result = nextssl_dilithium5_sign(message, message_len, dilithium_secret, dilithium_sig, dilithium_sig_len);
     if (result != 0) return result;
     
     return 0;
 }
 
-int nextssl_lite_hybrid_verify(
+int nextssl_hybrid_verify(
     const uint8_t *ed25519_sig,
     const uint8_t *dilithium_sig,
     size_t dilithium_sig_len,
@@ -167,11 +167,11 @@ int nextssl_lite_hybrid_verify(
     int result;
     
     // Verify Ed25519 signature
-    result = nextssl_lite_ed25519_verify(message, message_len, ed25519_sig, ed25519_public);
+    result = nextssl_ed25519_verify(message, message_len, ed25519_sig, ed25519_public);
     if (result != 0) return result;
     
     // Verify Dilithium5 signature
-    result = nextssl_lite_dilithium5_verify(message, message_len, dilithium_sig, dilithium_sig_len, dilithium_public);
+    result = nextssl_dilithium5_verify(message, message_len, dilithium_sig, dilithium_sig_len, dilithium_public);
     if (result != 0) return result;
     
     return 0;  // Both signatures valid
