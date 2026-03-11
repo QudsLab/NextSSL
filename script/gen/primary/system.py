@@ -7,7 +7,7 @@ _WASM_SYSTEM_EXPORTS = [
     # High-level API
     'nextssl_init', 'nextssl_init_custom', 'nextssl_cleanup',
     'nextssl_encrypt', 'nextssl_decrypt', 'nextssl_hash',
-    'nextssl_security_level', 'nextssl_sha256',
+    'nextssl_security_level',
     # Root layer
     'nextssl_root_hash_sha256', 'nextssl_root_hash_sha512',
     'nextssl_root_hash_sha3_256', 'nextssl_root_hash_blake3',
@@ -87,7 +87,6 @@ def build(builder: Builder):
         os.path.join(src_dir, 'primitives', 'cipher', 'aes_core')
     ], recursive=True)
 
-    add_sources([os.path.join(src_dir, 'utils', 'hash')], recursive=False)
 
     add_sources([
         os.path.join(src_dir, 'DHCM/core/'),
@@ -126,10 +125,6 @@ def build(builder: Builder):
         os.path.join(src_dir, 'legacy/alive/'),
         os.path.join(src_dir, 'legacy/unsafe/')
     ], recursive=True)
-
-    hash_wrapper = os.path.join(src_dir, 'utils', 'hash', 'primitive_memory_hard.c')
-    if os.path.exists(hash_wrapper):
-        sources.add(os.path.normpath(hash_wrapper))
 
     add_sources([os.path.join(src_dir, 'primitives/cipher/aes_core/')], recursive=True)
 
@@ -251,6 +246,9 @@ def build(builder: Builder):
         'ENABLE_ML_DSA',
         'ENABLE_FALCON',
         'ENABLE_SPHINCS',
+        'NEXTSSL_EXPOSE_MAIN_API',
+        'NEXTSSL_BUILDING',
+        'NEXTSSL_BUILD_SHARED',
         'NEXTSSL_BUILDING_DLL',
         'NEXTSSL_BUILD_FULL=1',
     ]

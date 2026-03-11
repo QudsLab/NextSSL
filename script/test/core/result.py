@@ -12,10 +12,13 @@ class Results:
         console.print_pass(name)
         self.passed += 1
 
-    def fail(self, name: str, reason: str = "") -> None:
+    def fail(self, name: str, reason: str = "", debug_data: dict = None) -> None:
         console.print_fail(name)
         if reason:
             print(f"  reason: {reason}")
+        if debug_data:
+            for k, v in debug_data.items():
+                console.print_debug_val(k, v, hex_dump=isinstance(v, (bytes, bytearray)))
         self.failed += 1
 
     def summary(self) -> int:

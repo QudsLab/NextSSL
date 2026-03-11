@@ -362,10 +362,10 @@ def main() -> int:
                     failed += 1
                 else:
                     out_pqc = ctypes.create_string_buffer(32)
-                    r = lib.nextssl_hash(b"abc", 3, out_pqc)
+                    ret_pqc_hash = lib.nextssl_hash(b"abc", 3, out_pqc)
                     sha256_abc = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
-                    if r != 0:
-                        console.print_fail(f"nextssl_hash under PQC profile failed (ret={r})")
+                    if ret_pqc_hash != 0:
+                        console.print_fail(f"nextssl_hash under PQC profile failed (ret={ret_pqc_hash})")
                         failed += 1
                     elif out_pqc.raw.hex() == sha256_abc:
                         console.print_fail("PQC profile hash returned SHA-256 — expected BLAKE3 dispatch")
@@ -527,20 +527,20 @@ def main() -> int:
             console.print_fail(f"nextssl_root_aead_chacha20 round-trip failed: {e}")
             failed += 1
 
-        # root_ecc_ed25519 keygen / sign / verify (lite arg order: sk first in sign/verify)
+        # root_ecc_ed25519 keygen / sign / verify
         try:
             lib.nextssl_root_ecc_ed25519_keygen.argtypes  = [ctypes.c_void_p, ctypes.c_void_p]  # pk, sk
             lib.nextssl_root_ecc_ed25519_keygen.restype   = ctypes.c_int
             lib.nextssl_root_ecc_ed25519_sign.argtypes    = [
-                ctypes.c_char_p,              # sk[64]
-                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
                 ctypes.c_void_p,              # sig[64] output
+                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
+                ctypes.c_char_p,              # sk[64]
             ]
             lib.nextssl_root_ecc_ed25519_sign.restype     = ctypes.c_int
             lib.nextssl_root_ecc_ed25519_verify.argtypes  = [
-                ctypes.c_char_p,              # pk[32]
-                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
                 ctypes.c_char_p,              # sig[64]
+                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
+                ctypes.c_char_p,              # pk[32]
             ]
             lib.nextssl_root_ecc_ed25519_verify.restype   = ctypes.c_int
 
@@ -549,8 +549,8 @@ def main() -> int:
             sig_e = ctypes.create_string_buffer(64)
             msg_e = b"root ed25519 test"
             lib.nextssl_root_ecc_ed25519_keygen(pk_e, sk_e)
-            ret_s = lib.nextssl_root_ecc_ed25519_sign(sk_e.raw, msg_e, len(msg_e), sig_e)
-            ret_v = lib.nextssl_root_ecc_ed25519_verify(pk_e.raw, msg_e, len(msg_e), sig_e.raw)
+            ret_s = lib.nextssl_root_ecc_ed25519_sign(sig_e, msg_e, len(msg_e), sk_e.raw)
+            ret_v = lib.nextssl_root_ecc_ed25519_verify(sig_e.raw, msg_e, len(msg_e), pk_e.raw)
             if ret_s != 0 or ret_v != 1:
                 console.print_fail(f"nextssl_root_ecc_ed25519 sign/verify failed (s={ret_s}, v={ret_v})")
                 failed += 1
@@ -560,20 +560,21 @@ def main() -> int:
             console.print_fail(f"nextssl_root_ecc_ed25519 failed: {e}")
             failed += 1
 
-        # root_pqc_sign_mldsa87 keygen / sign / verify (lite arg order: sk first in sign)
+        # root_pqc_sign_mldsa87 keygen / sign / verify
         try:
             lib.nextssl_root_pqc_sign_mldsa87_keygen.argtypes  = [ctypes.c_void_p, ctypes.c_void_p]  # pk, sk
             lib.nextssl_root_pqc_sign_mldsa87_keygen.restype   = ctypes.c_int
             lib.nextssl_root_pqc_sign_mldsa87_sign.argtypes    = [
-                ctypes.c_char_p,                               # sk
+                ctypes.c_void_p,                               # sig
+                ctypes.POINTER(ctypes.c_size_t),              # sig_len*
                 ctypes.c_char_p, ctypes.c_size_t,             # msg, mlen
-                ctypes.c_void_p, ctypes.POINTER(ctypes.c_size_t),  # sig, sig_len*
+                ctypes.c_char_p,                               # sk
             ]
             lib.nextssl_root_pqc_sign_mldsa87_sign.restype     = ctypes.c_int
             lib.nextssl_root_pqc_sign_mldsa87_verify.argtypes  = [
-                ctypes.c_char_p,                               # pk
-                ctypes.c_char_p, ctypes.c_size_t,             # msg, mlen
                 ctypes.c_char_p, ctypes.c_size_t,             # sig, sig_len
+                ctypes.c_char_p, ctypes.c_size_t,             # msg, mlen
+                ctypes.c_char_p,                               # pk
             ]
             lib.nextssl_root_pqc_sign_mldsa87_verify.restype   = ctypes.c_int
 
@@ -584,9 +585,9 @@ def main() -> int:
             msg_d    = b"root mldsa87 test"
             lib.nextssl_root_pqc_sign_mldsa87_keygen(pk_d, sk_d)
             ret_s = lib.nextssl_root_pqc_sign_mldsa87_sign(
-                sk_d.raw, msg_d, len(msg_d), sig_d, ctypes.byref(sig_len))
+                sig_d, ctypes.byref(sig_len), msg_d, len(msg_d), sk_d.raw)
             ret_v = lib.nextssl_root_pqc_sign_mldsa87_verify(
-                pk_d.raw, msg_d, len(msg_d), sig_d.raw, sig_len.value)
+                sig_d.raw, sig_len.value, msg_d, len(msg_d), pk_d.raw)
             if ret_s != 0 or ret_v != 1:
                 console.print_fail(f"nextssl_root_pqc_sign_mldsa87 failed (s={ret_s}, v={ret_v})")
                 failed += 1
@@ -755,15 +756,15 @@ def main() -> int:
             lib.nextssl_root_ecc_ed25519_keygen.argtypes  = [ctypes.c_void_p, ctypes.c_void_p]
             lib.nextssl_root_ecc_ed25519_keygen.restype   = ctypes.c_int
             lib.nextssl_root_ecc_ed25519_sign.argtypes    = [
-                ctypes.c_char_p,              # sk[64]
-                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
                 ctypes.c_void_p,              # sig[64]
+                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
+                ctypes.c_char_p,              # sk[64]
             ]
             lib.nextssl_root_ecc_ed25519_sign.restype     = ctypes.c_int
             lib.nextssl_root_ecc_ed25519_verify.argtypes  = [
-                ctypes.c_char_p,              # pk[32]
-                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
                 ctypes.c_char_p,              # sig[64]
+                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
+                ctypes.c_char_p,              # pk[32]
             ]
             lib.nextssl_root_ecc_ed25519_verify.restype   = ctypes.c_int
 
@@ -776,8 +777,8 @@ def main() -> int:
             else:
                 msg_t  = b"tree ed25519 message"
                 sig_et = ctypes.create_string_buffer(64)
-                ret_s  = lib.nextssl_root_ecc_ed25519_sign(sk_et.raw, msg_t, len(msg_t), sig_et)
-                ret_v  = lib.nextssl_root_ecc_ed25519_verify(pk_et.raw, msg_t, len(msg_t), sig_et.raw)
+                ret_s  = lib.nextssl_root_ecc_ed25519_sign(sig_et, msg_t, len(msg_t), sk_et.raw)
+                ret_v  = lib.nextssl_root_ecc_ed25519_verify(sig_et.raw, msg_t, len(msg_t), pk_et.raw)
                 if ret_s != 0 or ret_v != 1:
                     console.print_fail(f"nextssl_root_ecc_ed25519 sign/verify failed (s={ret_s}, v={ret_v})")
                     failed += 1
@@ -789,7 +790,7 @@ def main() -> int:
 
         # root_ecc: X25519 key exchange
         try:
-            lib.nextssl_root_ecc_x25519_keygen.argtypes   = [ctypes.c_void_p, ctypes.c_void_p]  # sk, pk
+            lib.nextssl_root_ecc_x25519_keygen.argtypes   = [ctypes.c_void_p, ctypes.c_void_p]  # pk, sk
             lib.nextssl_root_ecc_x25519_keygen.restype    = ctypes.c_int
             lib.nextssl_root_ecc_x25519_exchange.argtypes = [
                 ctypes.c_char_p, ctypes.c_char_p, ctypes.c_void_p  # sk, their_pk, shared
@@ -800,8 +801,8 @@ def main() -> int:
             pk_xa = ctypes.create_string_buffer(32)
             sk_xb = ctypes.create_string_buffer(32)
             pk_xb = ctypes.create_string_buffer(32)
-            lib.nextssl_root_ecc_x25519_keygen(sk_xa, pk_xa)
-            lib.nextssl_root_ecc_x25519_keygen(sk_xb, pk_xb)
+            lib.nextssl_root_ecc_x25519_keygen(pk_xa, sk_xa)
+            lib.nextssl_root_ecc_x25519_keygen(pk_xb, sk_xb)
             ss_xa = ctypes.create_string_buffer(32)
             ss_xb = ctypes.create_string_buffer(32)
             ret_a = lib.nextssl_root_ecc_x25519_exchange(sk_xa.raw, pk_xb.raw, ss_xa)
@@ -824,7 +825,7 @@ def main() -> int:
             ]
             lib.nextssl_root_pqc_kem_mlkem1024_encaps.restype   = ctypes.c_int
             lib.nextssl_root_pqc_kem_mlkem1024_decaps.argtypes  = [
-                ctypes.c_char_p, ctypes.c_char_p, ctypes.c_void_p  # sk, ct, ss
+                ctypes.c_char_p, ctypes.c_char_p, ctypes.c_void_p  # ct, sk, ss
             ]
             lib.nextssl_root_pqc_kem_mlkem1024_decaps.restype   = ctypes.c_int
 
@@ -839,7 +840,7 @@ def main() -> int:
                 ss_enc = ctypes.create_string_buffer(32)
                 ss_dec = ctypes.create_string_buffer(32)
                 ret_e  = lib.nextssl_root_pqc_kem_mlkem1024_encaps(pk_kt.raw, ct_kt, ss_enc)
-                ret_d  = lib.nextssl_root_pqc_kem_mlkem1024_decaps(sk_kt.raw, ct_kt.raw, ss_dec)
+                ret_d  = lib.nextssl_root_pqc_kem_mlkem1024_decaps(ct_kt.raw, sk_kt.raw, ss_dec)
                 if ret_e != 0 or ret_d != 0 or ss_enc.raw != ss_dec.raw:
                     console.print_fail(f"nextssl_root_pqc_kem_mlkem1024 encaps/decaps mismatch (e={ret_e}, d={ret_d})")
                     failed += 1
@@ -854,15 +855,16 @@ def main() -> int:
             lib.nextssl_root_pqc_sign_mldsa87_keygen.argtypes  = [ctypes.c_void_p, ctypes.c_void_p]
             lib.nextssl_root_pqc_sign_mldsa87_keygen.restype   = ctypes.c_int
             lib.nextssl_root_pqc_sign_mldsa87_sign.argtypes    = [
-                ctypes.c_char_p,              # sk
+                ctypes.c_void_p,              # sig
+                ctypes.POINTER(ctypes.c_size_t),  # sig_len*
                 ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
-                ctypes.c_void_p, ctypes.POINTER(ctypes.c_size_t),  # sig, sig_len*
+                ctypes.c_char_p,              # sk
             ]
             lib.nextssl_root_pqc_sign_mldsa87_sign.restype     = ctypes.c_int
             lib.nextssl_root_pqc_sign_mldsa87_verify.argtypes  = [
-                ctypes.c_char_p,              # pk
-                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
                 ctypes.c_char_p, ctypes.c_size_t,  # sig, sig_len
+                ctypes.c_char_p, ctypes.c_size_t,  # msg, mlen
+                ctypes.c_char_p,              # pk
             ]
             lib.nextssl_root_pqc_sign_mldsa87_verify.restype   = ctypes.c_int
 
@@ -877,9 +879,9 @@ def main() -> int:
                 sig_len = ctypes.c_size_t(4627)
                 msg_dt  = b"tree mldsa87 test msg"
                 ret_s   = lib.nextssl_root_pqc_sign_mldsa87_sign(
-                    sk_dt.raw, msg_dt, len(msg_dt), sig_dt, ctypes.byref(sig_len))
+                    sig_dt, ctypes.byref(sig_len), msg_dt, len(msg_dt), sk_dt.raw)
                 ret_v   = lib.nextssl_root_pqc_sign_mldsa87_verify(
-                    pk_dt.raw, msg_dt, len(msg_dt), sig_dt.raw, sig_len.value)
+                    sig_dt.raw, sig_len.value, msg_dt, len(msg_dt), pk_dt.raw)
                 if ret_s != 0 or ret_v != 1:
                     console.print_fail(f"nextssl_root_pqc_sign_mldsa87 sign/verify failed (s={ret_s}, v={ret_v})")
                     failed += 1
@@ -891,49 +893,93 @@ def main() -> int:
 
         # root_pow: server challenge → client solve → server verify
         try:
+            class POWConfig(ctypes.Structure):
+                _fields_ = [
+                    ("default_difficulty_bits",    ctypes.c_uint32),
+                    ("max_wu_per_challenge",        ctypes.c_uint64),
+                    ("challenge_ttl_seconds",       ctypes.c_uint64),
+                    ("allowed_algos",               ctypes.c_char_p * 32),
+                    ("allowed_algos_count",         ctypes.c_size_t),
+                    ("max_challenges_per_ip",       ctypes.c_uint32),
+                    ("rate_limit_window_seconds",   ctypes.c_uint32),
+                ]
+            class POWChallenge(ctypes.Structure):
+                _fields_ = [
+                    ("version",          ctypes.c_uint8),
+                    ("challenge_id",     ctypes.c_uint8 * 16),
+                    ("algorithm_id",     ctypes.c_char * 32),
+                    ("context",          ctypes.c_uint8 * 256),
+                    ("context_len",      ctypes.c_size_t),
+                    ("target",           ctypes.c_uint8 * 64),
+                    ("target_len",       ctypes.c_size_t),
+                    ("difficulty_bits",  ctypes.c_uint32),
+                    ("wu",               ctypes.c_uint64),
+                    ("mu",               ctypes.c_uint64),
+                    ("expires_unix",     ctypes.c_uint64),
+                    ("algo_params",      ctypes.c_void_p),
+                    ("algo_params_size", ctypes.c_size_t),
+                ]
+            class POWSolution(ctypes.Structure):
+                _fields_ = [
+                    ("challenge_id",       ctypes.c_uint8 * 16),
+                    ("nonce",              ctypes.c_uint64),
+                    ("hash_output",        ctypes.c_uint8 * 64),
+                    ("hash_output_len",    ctypes.c_size_t),
+                    ("solve_time_seconds", ctypes.c_double),
+                    ("attempts",           ctypes.c_uint64),
+                ]
             lib.nextssl_root_pow_server_challenge.argtypes = [
-                ctypes.c_char_p,               # algo ("sha256")
-                ctypes.c_uint32,               # difficulty
-                ctypes.c_void_p,               # out token buffer
-                ctypes.POINTER(ctypes.c_size_t),  # out_len
+                ctypes.POINTER(POWConfig),
+                ctypes.c_char_p,
+                ctypes.c_char_p,
+                ctypes.c_size_t,
+                ctypes.c_uint32,
+                ctypes.POINTER(POWChallenge),
             ]
             lib.nextssl_root_pow_server_challenge.restype = ctypes.c_int
             lib.nextssl_root_pow_client_solve.argtypes = [
-                ctypes.c_char_p,               # challenge_tok
-                ctypes.c_void_p,               # solution_out
-                ctypes.POINTER(ctypes.c_size_t),  # sol_len
-                ctypes.c_uint64,               # max_iters (0 = unlimited)
+                ctypes.POINTER(POWChallenge),
+                ctypes.POINTER(POWSolution),
             ]
             lib.nextssl_root_pow_client_solve.restype = ctypes.c_int
             lib.nextssl_root_pow_server_verify.argtypes = [
-                ctypes.c_char_p,               # challenge_tok
-                ctypes.c_char_p,               # solution_tok
-                ctypes.c_uint32,               # max_age_secs (0 = no limit)
+                ctypes.POINTER(POWChallenge),
+                ctypes.POINTER(POWSolution),
+                ctypes.POINTER(ctypes.c_bool),
             ]
             lib.nextssl_root_pow_server_verify.restype = ctypes.c_int
 
-            challenge_buf = ctypes.create_string_buffer(512)
-            ch_len        = ctypes.c_size_t(512)
-            ret_ch        = lib.nextssl_root_pow_server_challenge(
-                b"sha256", 4, challenge_buf, ctypes.byref(ch_len))
+            algo_str = b"sha256"
+            cfg = POWConfig()
+            cfg.default_difficulty_bits   = 4
+            cfg.max_wu_per_challenge      = 1_000_000_000
+            cfg.challenge_ttl_seconds     = 3600
+            cfg.allowed_algos[0]          = algo_str
+            cfg.allowed_algos_count       = 1
+            cfg.max_challenges_per_ip     = 100
+            cfg.rate_limit_window_seconds = 60
+            challenge  = POWChallenge()
+            ctx_data   = b"lite_tree_test"
+            ret_ch     = lib.nextssl_root_pow_server_challenge(
+                ctypes.byref(cfg), algo_str, ctx_data, len(ctx_data), 4,
+                ctypes.byref(challenge))
             if ret_ch != 0:
                 console.print_fail(f"nextssl_root_pow_server_challenge failed (ret={ret_ch})")
                 failed += 1
             else:
-                challenge_tok = challenge_buf.raw[:ch_len.value]
-                sol_buf = ctypes.create_string_buffer(512)
-                sol_len = ctypes.c_size_t(512)
-                ret_sol = lib.nextssl_root_pow_client_solve(
-                    challenge_tok, sol_buf, ctypes.byref(sol_len), 0)
+                solution  = POWSolution()
+                ret_sol   = lib.nextssl_root_pow_client_solve(
+                    ctypes.byref(challenge), ctypes.byref(solution))
                 if ret_sol != 0:
                     console.print_fail(f"nextssl_root_pow_client_solve failed (ret={ret_sol})")
                     failed += 1
                 else:
-                    solution_tok = sol_buf.raw[:sol_len.value]
-                    ret_ver = lib.nextssl_root_pow_server_verify(
-                        challenge_tok, solution_tok, 0)
-                    if ret_ver != 1:
-                        console.print_fail(f"nextssl_root_pow_server_verify failed (ret={ret_ver})")
+                    out_valid = ctypes.c_bool(False)
+                    ret_ver   = lib.nextssl_root_pow_server_verify(
+                        ctypes.byref(challenge), ctypes.byref(solution),
+                        ctypes.byref(out_valid))
+                    if ret_ver != 0 or not out_valid.value:
+                        console.print_fail(f"nextssl_root_pow_server_verify failed (ret={ret_ver}, valid={out_valid.value})")
                         failed += 1
                     else:
                         console.print_pass("nextssl_root_pow challenge/solve/verify (d=4, sha256) OK")

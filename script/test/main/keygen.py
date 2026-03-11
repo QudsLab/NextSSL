@@ -13,7 +13,7 @@ from script.core                    import Config, console
 from script.test.core.result        import Results
 from script.test.core.keygen_runner import run_keygen_oneshotmodes
 
-_ALL_MODES = ['random', 'drbg', 'password', 'hd']
+_ALL_MODES = ['random', 'drbg', 'password', 'hd', 'hash', 'kdf', 'udbf']
 
 # (display_name, algo_tag, pk_size, sk_size)
 _ALGOS = [
@@ -51,20 +51,22 @@ _ALGOS = [
     ("SPHINCS+-SHAKE-256f", "sphincs_shake_256f", 64, 128),
     ("SPHINCS+-SHAKE-256s", "sphincs_shake_256s", 64, 128),
     # ── HQC ────────────────────────────────────────────────────────────────
-    ("HQC-128",            "hqc_128",         2249,    2289),
-    ("HQC-192",            "hqc_192",         4522,    4562),
-    ("HQC-256",            "hqc_256",         7245,    7285),
+    # Sizes from PQCLEAN_HQC*_CLEAN_CRYPTO_{PUBLIC,SECRET}KEYBYTES in api.h
+    ("HQC-128",            "hqc_128",         2249,    2305),
+    ("HQC-192",            "hqc_192",         4522,    4586),
+    ("HQC-256",            "hqc_256",         7245,    7317),
     # ── McEliece ───────────────────────────────────────────────────────────
-    ("McEliece-348864",    "mceliece_348864",   261120,  6452),
-    ("McEliece-348864f",   "mceliece_348864f",  261120,  6452),
-    ("McEliece-460896",    "mceliece_460896",   524160, 13568),
-    ("McEliece-460896f",   "mceliece_460896f",  524160, 13568),
-    ("McEliece-6688128",   "mceliece_6688128", 1044992, 13892),
-    ("McEliece-6688128f",  "mceliece_6688128f",1044992, 13892),
+    # Sizes from PQCLEAN_MCELIECE*_CLEAN_CRYPTO_{PUBLIC,SECRET}KEYBYTES
+    ("McEliece-348864",    "mceliece_348864",   261120,  6492),
+    ("McEliece-348864f",   "mceliece_348864f",  261120,  6492),
+    ("McEliece-460896",    "mceliece_460896",   524160, 13608),
+    ("McEliece-460896f",   "mceliece_460896f",  524160, 13608),
+    ("McEliece-6688128",   "mceliece_6688128", 1044992, 13932),
+    ("McEliece-6688128f",  "mceliece_6688128f",1044992, 13932),
     ("McEliece-6960119",   "mceliece_6960119", 1047319, 13948),
     ("McEliece-6960119f",  "mceliece_6960119f",1047319, 13948),
-    ("McEliece-8192128",   "mceliece_8192128", 1357824, 14080),
-    ("McEliece-8192128f",  "mceliece_8192128f",1357824, 14080),
+    ("McEliece-8192128",   "mceliece_8192128", 1357824, 14120),
+    ("McEliece-8192128f",  "mceliece_8192128f",1357824, 14120),
 ]
 
 
@@ -91,10 +93,11 @@ def main() -> int:
     console.print_pass("DLL loaded")
 
     r = Results('test/main/keygen')
+    debug = console.DEBUG_MODE
 
     for display, algo_tag, pk_size, sk_size in _ALGOS:
         console.print_info(f"Keygen: {display}")
-        run_keygen_oneshotmodes(lib, algo_tag, pk_size, sk_size, _ALL_MODES, r)
+        run_keygen_oneshotmodes(lib, algo_tag, pk_size, sk_size, _ALL_MODES, r, debug=debug)
 
     return r.summary()
 

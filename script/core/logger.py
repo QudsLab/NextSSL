@@ -70,3 +70,23 @@ class Logger:
     
     def debug(self, msg):
         self.logger.debug(msg)
+
+class DebugLogger(Logger):
+    """Extends Logger with a parallel .debug.log file at DEBUG level.
+
+    The debug log is a superset of the normal log: it contains all INFO
+    entries plus DEBUG entries with hex key bytes, seeds, and variable dumps.
+    Only created when --debug is passed to runner.py.
+    """
+
+    def __init__(self, base_log_path):
+        super().__init__(base_log_path, console_output=False)
+        stem, ext = os.path.splitext(base_log_path)
+        self.debug_path = stem + '.debug' + ext
+        try:
+            dfh = logging.FileHandler(self.debug_path, mode='w', encoding='utf-8')
+            dfh.setLevel(logging.DEBUG)
+            dfh.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+            self.logger.addHandler(dfh)
+        except Exception as e:
+            print(f"ERROR: Failed to create debug log handler for {self.debug_path}: {e}")

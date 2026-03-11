@@ -33,6 +33,9 @@ from script.test.main import core as test_core_main
 # Keygen tests
 from script.test.main import keygen as test_keygen_main
 
+# Seed subsystem tests
+from script.test.main import seed_udbf as test_seed_udbf
+
 # Primary Layer Tests
 from script.test.primary import system as test_system_main
 from script.test.primary import system_lite as test_system_lite
@@ -72,6 +75,7 @@ _MODULE_REGISTRY = {
     'main/core':                          test_core_main,
     'main/pow':                           test_pow_main,   # includes dhcm + pow_combined
     'main/keygen':                        test_keygen_main,
+    'main/seed_udbf':                     test_seed_udbf,
     # primary
     'primary/system':                     test_system_main,
     'primary/system_lite':                test_system_lite,
@@ -201,10 +205,39 @@ _KEYGEN_CATALOG_TAG = {
 # Symbol name hints for quickTest: layer → canonical exported C symbol.
 # Used when the default "nextssl_{item}" derivation is ambiguous.
 _LAYER_SYMBOL_HINT = {
-    'main/pqc':            'nextssl_mlkem768_keypair',
     'main/pow':            'nextssl_pow_server_generate_challenge',
     'primary/system':      'nextssl_hash',
     'primary/system_lite': 'nextssl_hash',
+}
+
+_HASH_SYMBOL_HINT = {
+    'sha256':    'sha256',
+    'sha512':    'sha512_hash',
+    'blake3':    'blake3_hasher_init',
+    'argon2id':  'argon2id_hash_raw',
+    'argon2i':   'argon2i_hash_raw',
+    'argon2d':   'argon2d_hash_raw',
+    'sha3_256':  'sha3_256_hash',
+    'sha3_512':  'sha3_512_hash',
+    'keccak256': 'keccak_256_hash',
+    'shake128':  'shake128_hash',
+    'shake256':  'shake256_hash',
+    'sha1':      'sha1_hash',
+    'md5':       'md5_hash',
+    'md2':       'md2_hash',
+    'md4':       'md4_hash',
+}
+
+_CORE_SYMBOL_HINT = {
+    'aes_cbc':  'AES_CBC_encrypt',
+    'aes_gcm':  'AES_GCM_encrypt',
+    'chacha20': 'ChaCha20_Poly1305_encrypt',
+    'ed25519':  'ed25519_sign',
+}
+
+_PQC_SYMBOL_HINT = {
+    'mlkem768': 'pqc_mlkem768_keypair',
+    'mldsa44':  'pqc_mldsa44_keypair',
 }
 
 def _resolve_dll_path_for_layer(config, layer):
@@ -226,12 +259,16 @@ def _get_symbol_for_entry(key, layer):
         return hint
     # Default: nextssl_{item}  e.g. hash.sha256 → nextssl_sha256
     item = key.split('.', 1)[1]
+    if layer == 'main/hash':
+        return _HASH_SYMBOL_HINT.get(item, f'nextssl_{item}')
+    if layer == 'main/core':
+        return _CORE_SYMBOL_HINT.get(item, f'nextssl_{item}')
+    if layer == 'main/pqc':
+        return _PQC_SYMBOL_HINT.get(item, f'nextssl_{item}')
     # keygen layer: catalog compact key → keygen_<algo_tag>_random
     if layer == 'main/keygen':
         return f'keygen_{_KEYGEN_CATALOG_TAG.get(item, item)}_random'
     # Special-case normalisations
-    if item == 'chacha20':
-        return 'nextssl_chacha20_poly1305_encrypt'
     if item.startswith('root_'):
         return f'nextssl_{item}'
     return f'nextssl_{item}'
@@ -717,9 +754,17 @@ def run_test(args):
     else:
         action_type = getattr(args, 'action', None)
         log_path = config.get_runner_log_path(action_type)
-    with Logger(log_path, console_output=False) as logger:
+    debug_mode = getattr(args, 'debug', False)
+    if debug_mode and log_path:
+        from script.core import DebugLogger
+        _logger_instance = DebugLogger(log_path)
+    else:
+        _logger_instance = Logger(log_path, console_output=False)
+    with _logger_instance as logger:
         from script.core import console
         console.set_logger(logger)
+        if debug_mode:
+            console.set_debug(True)
 
         # ── Structured test modes (--quickTest / --fullTest / --hyperTest) ────
         if getattr(args, 'quick_test', False):
@@ -777,6 +822,7 @@ def run_test(args):
             run_core = False
             run_pow = False
             run_keygen = False
+            run_seed_udbf = False
             run_system = False
             run_lite = False
 
@@ -786,6 +832,7 @@ def run_test(args):
                 run_core = True
                 run_pow = True
                 run_keygen = True
+                run_seed_udbf = True
                 run_system = True
                 if variant == 'both' or variant == 'lite':
                     run_lite = True
@@ -801,6 +848,8 @@ def run_test(args):
                 run_pow = True
             elif target == 'keygen':
                 run_keygen = True
+            elif target == 'seed_udbf':
+                run_seed_udbf = True
             elif target == 'system':
                 run_system = True
             elif target.startswith('hash:'):
@@ -868,6 +917,8 @@ def run_test(args):
                 test_modules.extend(pow_main_list)
             if run_keygen:
                 test_modules.append(test_keygen_main)
+            if run_seed_udbf:
+                test_modules.append(test_seed_udbf)
             if run_system:
                 test_modules.extend(system_main_list)
             if run_lite:
@@ -916,6 +967,8 @@ if __name__ == "__main__":
                         help='Test load mode: gen=default LOAD_MAP, genAll=LOAD_MAP_ALL, genQuick=LOAD_MAP_QUICK')
     parser.add_argument('--noLog', action='store_true', dest='no_log',
                         help='Disable file-based logging; console output is unaffected')
+    parser.add_argument('--debug', action='store_true', dest='debug',
+                        help='Write a parallel .debug.log with full key bytes and variable values')
     parser.add_argument('--quickTest', action='store_true', dest='quick_test',
                         help='Symbol/presence check only — no algo execution')
     parser.add_argument('--fullTest', action='store_true', dest='full_test',

@@ -121,8 +121,8 @@ def run_sign(
         r1 = sign_d(sig_d1, ctypes.byref(slen1), msg, len(msg), b"", 0, rnd, sk)
         r2 = sign_d(sig_d2, ctypes.byref(slen2), msg, len(msg), b"", 0, rnd, sk)
     else:
-        r1 = sign_d(sig_d1, ctypes.byref(slen1), msg, len(msg), rnd, sk)
-        r2 = sign_d(sig_d2, ctypes.byref(slen2), msg, len(msg), rnd, sk)
+        r1 = sign_d(sig_d1, ctypes.byref(slen1), msg, len(msg), sk, rnd)
+        r2 = sign_d(sig_d2, ctypes.byref(slen2), msg, len(msg), sk, rnd)
     match = sig_d1.raw[:slen1.value] == sig_d2.raw[:slen2.value]
     if r1 == 0 and r2 == 0 and match:
         results.ok(f"{name}: sign_derand (deterministic)")

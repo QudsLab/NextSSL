@@ -22,18 +22,18 @@ def main() -> int:
 
         failed = 0
 
-        # ── SHA-256 utility (base layer sanity) ──
+        # ── SHA-256 utility (primary layer) ──
         try:
-            lib.nextssl_sha256.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_void_p]
+            lib.nextssl_hash.argtypes = [ctypes.c_char_p, ctypes.c_size_t, ctypes.c_void_p]
             out = ctypes.create_string_buffer(32)
-            lib.nextssl_sha256(b"abc", 3, out)
+            lib.nextssl_hash(b"abc", 3, out)
             if out.raw.hex() != "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad":
-                console.print_fail("SHA256 utility mismatch")
+                console.print_fail("nextssl_hash mismatch")
                 failed += 1
             else:
-                console.print_pass("SHA256 utility OK")
+                console.print_pass("nextssl_hash (SHA-256) OK")
         except Exception as e:
-            console.print_fail(f"SHA256 utility failed: {e}")
+            console.print_fail(f"nextssl_hash failed: {e}")
             failed += 1
 
         # ── DHCM ──

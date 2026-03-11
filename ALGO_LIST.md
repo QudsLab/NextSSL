@@ -140,29 +140,31 @@ Source implementations of underlying ECC curves.
 
 ## 11. ECC — Interface (`src/interfaces/base/ecc.h`)
 
-Additional NIST curves exposed at the interface layer.
+**⚠️ NOTE: This section documents PLANNED APIs that do NOT exist yet.**
 
-> **Was completely missing in previous version.** `ecc.h` exposes P-256, P-384, P-521 via the base interface layer.
+> **Status Update (Mar 2026):** The `src/interfaces/base/` directory does not exist. No NIST curve implementations (P-256/P-384/P-521) are present in the codebase. These entries document API contracts planned for future implementation.
 
-| Curve               | Notes                                 |
-| ------------------- | ------------------------------------- |
-| Curve25519 (X25519) | Scalar mult + public key gen          |
-| Curve448            | Scalar mult                           |
-| NIST P-256          | Point mul, base mul, point validation |
-| NIST P-384          | Base mul, point validation            |
-| NIST P-521          | Base mul, point validation            |
+| Curve               | Status          | Notes                                 |
+| ------------------- | --------------- | ------------------------------------- |
+| Curve25519 (X25519) | ✅ Implemented  | Scalar mult + public key gen          |
+| Curve448            | ✅ Implemented  | Scalar mult                           |
+| NIST P-256          | ❌ Not Impl     | Point mul, base mul, point validation |
+| NIST P-384          | ❌ Not Impl     | Base mul, point validation            |
+| NIST P-521          | ❌ Not Impl     | Base mul, point validation            |
 
 ---
 
 ## 12. Digital Signatures (`src/interfaces/base/sign.h`)
 
-> **ECDSA P-256 was missing in previous version.**
+**⚠️ NOTE: ECDSA P-256 is NOT implemented — interface-only.**
 
-| Algorithm   | Notes                              |
-| ----------- | ---------------------------------- |
-| Ed25519     | Keypair, sign, verify (RFC 8032)   |
-| ECDSA P-256 | Keypair, sign, verify (FIPS 186-4) |
-| ML-DSA-65   | Post-quantum (NIST FIPS 204, L3)   |
+> **Status Update (Mar 2026):** Only Ed25519 and ML-DSA-65 have implementations. ECDSA P-256 is a planned API contract with no backing source code.
+
+| Algorithm   | Status         | Notes                              |
+| ----------- | -------------- | ---------------------------------- |
+| Ed25519     | ✅ Implemented | Keypair, sign, verify (RFC 8032)   |
+| ECDSA P-256 | ❌ Not Impl    | Keypair, sign, verify (FIPS 186-4) |
+| ML-DSA-65   | ✅ Implemented | Post-quantum (NIST FIPS 204, L3)   |
 
 ---
 

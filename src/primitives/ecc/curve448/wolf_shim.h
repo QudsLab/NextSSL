@@ -119,6 +119,7 @@ static inline int wc_Shake256_Update(wc_Shake* shake, const byte* data, word32 l
 }
 
 static inline int wc_Shake256_Final(wc_Shake* shake, byte* out, word32 outLen) {
+    shake_final(shake);
     shake_squeeze(shake, out, outLen);
     return 0;
 }

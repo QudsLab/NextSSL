@@ -241,6 +241,8 @@ def build(builder: Builder):
     extra_libs = []
     lib_ext = builder.config.get_shared_lib_ext()
     if lib_ext != '.wasm':
+        if lib_ext == '.dll':
+            extra_libs.append('-Wl,--export-all-symbols')
         pqc_lib = builder.config.get_lib_path('main', 'pqc')
         if not os.path.exists(pqc_lib):
             builder.logger.error(f"pqc.dll not found at {pqc_lib} — build pqc before core")

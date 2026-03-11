@@ -27,6 +27,11 @@ def supports_color():
 # Global flag to enable/disable color
 USE_COLOR = True
 LOGGER = None
+DEBUG_MODE = False
+
+def set_debug(enabled: bool):
+    global DEBUG_MODE
+    DEBUG_MODE = enabled
 
 def set_color(enabled: bool):
     global USE_COLOR
@@ -79,6 +84,14 @@ def print_info(msg):
 def print_warn(msg):
     log_to_file(f"[WARN] {msg}")
     print(colorize(f"[WARN] {msg}", Colors.YELLOW), flush=True)
+
+def print_debug_val(label: str, value, hex_dump: bool = False) -> None:
+    """Write a debug key=value pair to the debug log file only (no console output)."""
+    if not DEBUG_MODE:
+        return
+    if hex_dump and isinstance(value, (bytes, bytearray)):
+        value = value.hex()
+    log_to_file(f"[DEBUG]   {label}: {value}", level='debug')
 
 def print_header(msg):
     log_to_file(f"=== {msg} ===")

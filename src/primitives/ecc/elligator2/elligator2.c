@@ -1,6 +1,10 @@
 #include "elligator2.h"
 #include "../ed25519/fe.h"
 #include <stddef.h>
+#include <string.h>
+
+/* Forward declaration: Curve25519 scalar multiplication from ed25519/key_exchange.c */
+extern void curve25519(uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *private_key);
 
 /*
     Constants for Elligator 2
@@ -229,6 +233,35 @@ int elligator2_rev(uint8_t hidden[32], const uint8_t public_key[32], uint8_t twe
 }
 
 void elligator2_key_pair(uint8_t hidden[32], uint8_t secret_key[32], uint8_t seed[32]) {
-    // Not implemented yet due to dependencies on ChaCha20 and X25519 dirty generation.
-    // Placeholder.
+    static const uint8_t basepoint[32] = {9};
+    uint8_t pk[32];
+    uint8_t sk[32];
+    int attempt;
+
+    /* Try up to 64 different scalar variants until elligator2_rev succeeds.
+     * ~50% of Curve25519 public keys are Elligator2-representable, so this
+     * loop converges in 2 iterations on average; 64 gives >2^-64 failure prob. */
+    for (attempt = 0; attempt < 64; attempt++) {
+        memcpy(sk, seed, 32);
+        sk[0] ^= (uint8_t)attempt;  /* vary key to sample different public keys */
+        curve25519(pk, basepoint, sk);  /* curve25519 clamps sk internally */
+
+        /* Try all 4 tweak combinations for the upper two bits */
+        uint8_t tweak;
+        for (tweak = 0; tweak < 4; tweak++) {
+            uint8_t t = (uint8_t)(seed[31] ^ (uint8_t)(attempt << 2)) | tweak;
+            if (elligator2_rev(hidden, pk, t) == 0) {
+                memcpy(secret_key, sk, 32);
+                wipe_buffer(pk, 32);
+                wipe_buffer(sk, 32);
+                return;
+            }
+        }
+    }
+
+    /* Fallback (should never reach here in practice): use last computed values */
+    memcpy(secret_key, sk, 32);
+    memcpy(hidden, pk, 32);
+    wipe_buffer(pk, 32);
+    wipe_buffer(sk, 32);
 }

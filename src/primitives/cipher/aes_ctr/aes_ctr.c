@@ -40,12 +40,23 @@ void CTR_cipher( const block_t iCtr, const char mode,
 void AES_CTR_encrypt( const uint8_t* key, const uint8_t* iv,
                       const void* pntxt, const size_t ptextLen, void* crtxt )
 {
-    block_t ctr = { 0 };
-    memcpy( ctr, iv, CTR_IV_LENGTH );
-    xorBEint( ctr, CTR_START_VALUE, LAST );
+    block_t ctr, enc;
+    count_t n = ptextLen / BLOCKSIZE;
+    uint8_t *y;
+
+    /* NIST SP 800-38A: Use full 16-byte IV as initial counter */
+    memcpy( ctr, iv, BLOCKSIZE );
+
+    if (pntxt != crtxt) memcpy( crtxt, pntxt, ptextLen );
 
     AES_setkey( key );
-    CTR_cipher( ctr, CTR_DEFAULT, pntxt, ptextLen, crtxt );
+    for (y = crtxt; n--; y += BLOCKSIZE)
+    {
+        rijndaelEncrypt( ctr, enc );
+        xorBlock( enc, y );
+        incBlock( ctr, LAST );
+    }
+    mixThenXor( &rijndaelEncrypt, ctr, ctr, y, ptextLen % BLOCKSIZE, y );
     AES_burn();
 }
 

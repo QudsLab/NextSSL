@@ -33,7 +33,6 @@ security_test.py
 verify_build_env.py
 BUILD.md
 CHANGELOG.md
-CODE_OF_CONDUCT.md
 CHANGELOG.md
 CHANGELOG.md
 CHANGELOG.md
@@ -44,3 +43,4 @@ CHANGELOG.md
 /script_old_002
 /script_old_001
 /_
+*.txt

@@ -41,14 +41,22 @@ def run_aead_roundtrip(
     aad:        bytes,
     results:    Results,
     name:       str,
+    decrypt_ct_len: int = None,
 ) -> None:
-    """Encrypt then decrypt; verify plaintext is recovered and tag passes."""
+    """Encrypt then decrypt; verify plaintext is recovered and tag passes.
+
+    decrypt_ct_len overrides the ciphertext-length argument passed to the
+    decrypt function.  Most AEAD modes (GCM, CCM, OCB, EAX, GCM-SIV) pass
+    only the plaintext length; ChaCha20-Poly1305 expects the combined
+    ciphertext+tag length (pt_len + 16), so callers set decrypt_ct_len
+    accordingly.
+    """
     enc = getattr(lib, encrypt_fn)
     enc.argtypes = [
         ctypes.c_char_p, ctypes.c_char_p,
         ctypes.c_void_p, ctypes.c_size_t,
         ctypes.c_void_p, ctypes.c_size_t,
-        ctypes.c_void_p,  # tag output
+        ctypes.c_void_p,  # ciphertext || tag output
     ]
     enc.restype = None
 
@@ -57,18 +65,18 @@ def run_aead_roundtrip(
         ctypes.c_char_p, ctypes.c_char_p,
         ctypes.c_void_p, ctypes.c_size_t,
         ctypes.c_void_p, ctypes.c_size_t,
-        ctypes.c_void_p,  # tag input
+        ctypes.c_void_p,  # plaintext output
     ]
     dec.restype = ctypes.c_int
 
-    pt_len  = max(len(plaintext), 1)
-    ct_buf  = ctypes.create_string_buffer(pt_len)
-    tag_buf = ctypes.create_string_buffer(16)
-    enc(key, nonce, plaintext or b"\x00", len(plaintext), aad or b"", len(aad), tag_buf)
+    pt_len = len(plaintext)
+    ct_buf = ctypes.create_string_buffer(pt_len + 16)
+    enc(key, nonce, aad or b"", len(aad), plaintext or b"", pt_len, ct_buf)
 
-    pt_buf = ctypes.create_string_buffer(pt_len)
-    ret    = dec(key, nonce, ct_buf.raw, len(plaintext), aad or b"", len(aad), tag_buf)
-    if ret == 0 and pt_buf.raw[:len(plaintext)] == plaintext:
+    pt_buf = ctypes.create_string_buffer(max(pt_len, 1))
+    ct_len_for_dec = decrypt_ct_len if decrypt_ct_len is not None else pt_len
+    ret = dec(key, nonce, aad or b"", len(aad), ct_buf.raw, ct_len_for_dec, pt_buf)
+    if ret == 0 and pt_buf.raw[:pt_len] == plaintext:
         results.ok(f"{name} AEAD round-trip")
     else:
         results.fail(f"{name} AEAD round-trip",

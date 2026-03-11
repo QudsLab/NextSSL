@@ -270,8 +270,11 @@ int keygen_ed448(keygen_ctx_t *ctx, uint8_t pk[57], uint8_t sk[57])
             r = -1;
         } else {
             word32 pkSz = 57, skSz = 57;
-            if (wc_ed448_import_private_only(coins, 57, &key) != 0 ||
-                wc_ed448_make_public(&key, pk, pkSz) != 0          ||
+            /* import_private_key derives the public key from the private seed,
+             * fixing the bug where import_private_only + make_public ignored
+             * the provided coins and produced seed-independent output. */
+            if (wc_ed448_import_private_key(coins, 57, NULL, 0, &key) != 0 ||
+                wc_ed448_export_public(&key, pk, &pkSz) != 0               ||
                 wc_ed448_export_private_only(&key, sk, &skSz) != 0) {
                 r = -1;
             }
@@ -429,193 +432,349 @@ int keygen_##algo##_hd(const uint8_t *master, size_t mlen, const char *path,  \
     return r;                                                                  \
 }
 
-/* Ed25519 — all four modes */
+#define KG_HASH(algo)                                                          \
+int keygen_##algo##_hash(const uint8_t *seed, size_t slen,                    \
+                          const uint8_t *ctx_data, size_t clen,               \
+                          uint8_t *pk, uint8_t *sk) {                         \
+    keygen_ctx_t *ctx = keygen_new_hash(seed, slen, ctx_data, clen);          \
+    if (!ctx) return -1;                                                       \
+    int r = keygen_##algo(ctx, pk, sk);                                        \
+    keygen_free(ctx);                                                          \
+    return r;                                                                  \
+}
+
+#define KG_KDF(algo)                                                           \
+int keygen_##algo##_kdf(const uint8_t *ikm,  size_t ilen,                     \
+                         const uint8_t *salt, size_t slen,                    \
+                         const uint8_t *info, size_t flen,                    \
+                         uint8_t *pk, uint8_t *sk) {                          \
+    keygen_ctx_t *ctx = keygen_new_kdf(ikm, ilen, salt, slen, info, flen);    \
+    if (!ctx) return -1;                                                       \
+    int r = keygen_##algo(ctx, pk, sk);                                        \
+    keygen_free(ctx);                                                          \
+    return r;                                                                  \
+}
+
+#define KG_UDBF(algo)                                                          \
+int keygen_##algo##_udbf(const uint8_t *entropy, size_t elen,                 \
+                          uint8_t *pk, uint8_t *sk) {                         \
+    keygen_ctx_t *ctx = keygen_new_udbf(entropy, elen, NULL);                 \
+    if (!ctx) return -1;                                                       \
+    int r = keygen_##algo(ctx, pk, sk);                                        \
+    keygen_free(ctx);                                                          \
+    return r;                                                                  \
+}
+
+/* Ed25519 — all seven modes */
 KG_RANDOM  (ed25519)
 KG_DRBG    (ed25519)
 KG_PASSWORD(ed25519)
 KG_HD      (ed25519)
+KG_HASH    (ed25519)
+KG_KDF     (ed25519)
+KG_UDBF    (ed25519)
 
-/* X25519 — all four modes */
+/* X25519 — all seven modes */
 KG_RANDOM  (x25519)
 KG_DRBG    (x25519)
 KG_PASSWORD(x25519)
 KG_HD      (x25519)
+KG_HASH    (x25519)
+KG_KDF     (x25519)
+KG_UDBF    (x25519)
 
-/* Ed448 — all four modes */
+/* Ed448 — all seven modes */
 KG_RANDOM  (ed448)
 KG_DRBG    (ed448)
 KG_PASSWORD(ed448)
 KG_HD      (ed448)
+KG_HASH    (ed448)
+KG_KDF     (ed448)
+KG_UDBF    (ed448)
 
-/* X448 — all four modes */
+/* X448 — all seven modes */
 KG_RANDOM  (x448)
 KG_DRBG    (x448)
 KG_PASSWORD(x448)
 KG_HD      (x448)
+KG_HASH    (x448)
+KG_KDF     (x448)
+KG_UDBF    (x448)
 
-/* Elligator2 — random, drbg, password, hd */
+/* Elligator2 — all seven modes */
 KG_RANDOM   (elligator2)
 KG_DRBG     (elligator2)
 KG_PASSWORD (elligator2)
 KG_HD       (elligator2)
+KG_HASH     (elligator2)
+KG_KDF      (elligator2)
+KG_UDBF     (elligator2)
 
-/* ML-KEM — all four modes */
+/* ML-KEM — all seven modes */
 KG_RANDOM   (ml_kem_512)
 KG_DRBG     (ml_kem_512)
 KG_PASSWORD (ml_kem_512)
 KG_HD       (ml_kem_512)
+KG_HASH     (ml_kem_512)
+KG_KDF      (ml_kem_512)
+KG_UDBF     (ml_kem_512)
 
 KG_RANDOM   (ml_kem_768)
 KG_DRBG     (ml_kem_768)
 KG_PASSWORD (ml_kem_768)
 KG_HD       (ml_kem_768)
+KG_HASH     (ml_kem_768)
+KG_KDF      (ml_kem_768)
+KG_UDBF     (ml_kem_768)
 
 KG_RANDOM   (ml_kem_1024)
 KG_DRBG     (ml_kem_1024)
 KG_PASSWORD (ml_kem_1024)
 KG_HD       (ml_kem_1024)
+KG_HASH     (ml_kem_1024)
+KG_KDF      (ml_kem_1024)
+KG_UDBF     (ml_kem_1024)
 
-/* ML-DSA — all four modes */
+/* ML-DSA — all seven modes */
 KG_RANDOM   (ml_dsa_44)
 KG_DRBG     (ml_dsa_44)
 KG_PASSWORD (ml_dsa_44)
 KG_HD       (ml_dsa_44)
+KG_HASH     (ml_dsa_44)
+KG_KDF      (ml_dsa_44)
+KG_UDBF     (ml_dsa_44)
 
 KG_RANDOM   (ml_dsa_65)
 KG_DRBG     (ml_dsa_65)
 KG_PASSWORD (ml_dsa_65)
 KG_HD       (ml_dsa_65)
+KG_HASH     (ml_dsa_65)
+KG_KDF      (ml_dsa_65)
+KG_UDBF     (ml_dsa_65)
 
 KG_RANDOM   (ml_dsa_87)
 KG_DRBG     (ml_dsa_87)
 KG_PASSWORD (ml_dsa_87)
 KG_HD       (ml_dsa_87)
+KG_HASH     (ml_dsa_87)
+KG_KDF      (ml_dsa_87)
+KG_UDBF     (ml_dsa_87)
 
-/* Falcon + Falcon-Padded — all four modes */
+/* Falcon + Falcon-Padded — all seven modes */
 KG_RANDOM   (falcon_512)
 KG_DRBG     (falcon_512)
 KG_PASSWORD (falcon_512)
 KG_HD       (falcon_512)
+KG_HASH     (falcon_512)
+KG_KDF      (falcon_512)
+KG_UDBF     (falcon_512)
 KG_RANDOM   (falcon_1024)
 KG_DRBG     (falcon_1024)
 KG_PASSWORD (falcon_1024)
 KG_HD       (falcon_1024)
+KG_HASH     (falcon_1024)
+KG_KDF      (falcon_1024)
+KG_UDBF     (falcon_1024)
 KG_RANDOM   (falcon_padded_512)
 KG_DRBG     (falcon_padded_512)
 KG_PASSWORD (falcon_padded_512)
 KG_HD       (falcon_padded_512)
+KG_HASH     (falcon_padded_512)
+KG_KDF      (falcon_padded_512)
+KG_UDBF     (falcon_padded_512)
 KG_RANDOM   (falcon_padded_1024)
 KG_DRBG     (falcon_padded_1024)
 KG_PASSWORD (falcon_padded_1024)
 KG_HD       (falcon_padded_1024)
+KG_HASH     (falcon_padded_1024)
+KG_KDF      (falcon_padded_1024)
+KG_UDBF     (falcon_padded_1024)
 
-/* SPHINCS+ — all four modes */
+/* SPHINCS+ — all seven modes */
 KG_RANDOM   (sphincs_sha2_128f)
 KG_DRBG     (sphincs_sha2_128f)
 KG_PASSWORD (sphincs_sha2_128f)
 KG_HD       (sphincs_sha2_128f)
+KG_HASH     (sphincs_sha2_128f)
+KG_KDF      (sphincs_sha2_128f)
+KG_UDBF     (sphincs_sha2_128f)
 KG_RANDOM   (sphincs_sha2_128s)
 KG_DRBG     (sphincs_sha2_128s)
 KG_PASSWORD (sphincs_sha2_128s)
 KG_HD       (sphincs_sha2_128s)
+KG_HASH     (sphincs_sha2_128s)
+KG_KDF      (sphincs_sha2_128s)
+KG_UDBF     (sphincs_sha2_128s)
 KG_RANDOM   (sphincs_sha2_192f)
 KG_DRBG     (sphincs_sha2_192f)
 KG_PASSWORD (sphincs_sha2_192f)
 KG_HD       (sphincs_sha2_192f)
+KG_HASH     (sphincs_sha2_192f)
+KG_KDF      (sphincs_sha2_192f)
+KG_UDBF     (sphincs_sha2_192f)
 KG_RANDOM   (sphincs_sha2_192s)
 KG_DRBG     (sphincs_sha2_192s)
 KG_PASSWORD (sphincs_sha2_192s)
 KG_HD       (sphincs_sha2_192s)
+KG_HASH     (sphincs_sha2_192s)
+KG_KDF      (sphincs_sha2_192s)
+KG_UDBF     (sphincs_sha2_192s)
 KG_RANDOM   (sphincs_sha2_256f)
 KG_DRBG     (sphincs_sha2_256f)
 KG_PASSWORD (sphincs_sha2_256f)
 KG_HD       (sphincs_sha2_256f)
+KG_HASH     (sphincs_sha2_256f)
+KG_KDF      (sphincs_sha2_256f)
+KG_UDBF     (sphincs_sha2_256f)
 KG_RANDOM   (sphincs_sha2_256s)
 KG_DRBG     (sphincs_sha2_256s)
 KG_PASSWORD (sphincs_sha2_256s)
 KG_HD       (sphincs_sha2_256s)
+KG_HASH     (sphincs_sha2_256s)
+KG_KDF      (sphincs_sha2_256s)
+KG_UDBF     (sphincs_sha2_256s)
 KG_RANDOM   (sphincs_shake_128f)
 KG_DRBG     (sphincs_shake_128f)
 KG_PASSWORD (sphincs_shake_128f)
 KG_HD       (sphincs_shake_128f)
+KG_HASH     (sphincs_shake_128f)
+KG_KDF      (sphincs_shake_128f)
+KG_UDBF     (sphincs_shake_128f)
 KG_RANDOM   (sphincs_shake_128s)
 KG_DRBG     (sphincs_shake_128s)
 KG_PASSWORD (sphincs_shake_128s)
 KG_HD       (sphincs_shake_128s)
+KG_HASH     (sphincs_shake_128s)
+KG_KDF      (sphincs_shake_128s)
+KG_UDBF     (sphincs_shake_128s)
 KG_RANDOM   (sphincs_shake_192f)
 KG_DRBG     (sphincs_shake_192f)
 KG_PASSWORD (sphincs_shake_192f)
 KG_HD       (sphincs_shake_192f)
+KG_HASH     (sphincs_shake_192f)
+KG_KDF      (sphincs_shake_192f)
+KG_UDBF     (sphincs_shake_192f)
 KG_RANDOM   (sphincs_shake_192s)
 KG_DRBG     (sphincs_shake_192s)
 KG_PASSWORD (sphincs_shake_192s)
 KG_HD       (sphincs_shake_192s)
+KG_HASH     (sphincs_shake_192s)
+KG_KDF      (sphincs_shake_192s)
+KG_UDBF     (sphincs_shake_192s)
 KG_RANDOM   (sphincs_shake_256f)
 KG_DRBG     (sphincs_shake_256f)
 KG_PASSWORD (sphincs_shake_256f)
 KG_HD       (sphincs_shake_256f)
+KG_HASH     (sphincs_shake_256f)
+KG_KDF      (sphincs_shake_256f)
+KG_UDBF     (sphincs_shake_256f)
 KG_RANDOM   (sphincs_shake_256s)
 KG_DRBG     (sphincs_shake_256s)
 KG_PASSWORD (sphincs_shake_256s)
 KG_HD       (sphincs_shake_256s)
+KG_HASH     (sphincs_shake_256s)
+KG_KDF      (sphincs_shake_256s)
+KG_UDBF     (sphincs_shake_256s)
 
-/* HQC — all four modes */
+/* HQC — all seven modes */
 KG_RANDOM   (hqc_128)
 KG_DRBG     (hqc_128)
 KG_PASSWORD (hqc_128)
 KG_HD       (hqc_128)
+KG_HASH     (hqc_128)
+KG_KDF      (hqc_128)
+KG_UDBF     (hqc_128)
 KG_RANDOM   (hqc_192)
 KG_DRBG     (hqc_192)
 KG_PASSWORD (hqc_192)
 KG_HD       (hqc_192)
+KG_HASH     (hqc_192)
+KG_KDF      (hqc_192)
+KG_UDBF     (hqc_192)
 KG_RANDOM   (hqc_256)
 KG_DRBG     (hqc_256)
 KG_PASSWORD (hqc_256)
 KG_HD       (hqc_256)
+KG_HASH     (hqc_256)
+KG_KDF      (hqc_256)
+KG_UDBF     (hqc_256)
 
-/* Classic McEliece — all four modes */
+/* Classic McEliece — all seven modes */
 KG_RANDOM   (mceliece_348864)
 KG_DRBG     (mceliece_348864)
 KG_PASSWORD (mceliece_348864)
 KG_HD       (mceliece_348864)
+KG_HASH     (mceliece_348864)
+KG_KDF      (mceliece_348864)
+KG_UDBF     (mceliece_348864)
 KG_RANDOM   (mceliece_348864f)
 KG_DRBG     (mceliece_348864f)
 KG_PASSWORD (mceliece_348864f)
 KG_HD       (mceliece_348864f)
+KG_HASH     (mceliece_348864f)
+KG_KDF      (mceliece_348864f)
+KG_UDBF     (mceliece_348864f)
 KG_RANDOM   (mceliece_460896)
 KG_DRBG     (mceliece_460896)
 KG_PASSWORD (mceliece_460896)
 KG_HD       (mceliece_460896)
+KG_HASH     (mceliece_460896)
+KG_KDF      (mceliece_460896)
+KG_UDBF     (mceliece_460896)
 KG_RANDOM   (mceliece_460896f)
 KG_DRBG     (mceliece_460896f)
 KG_PASSWORD (mceliece_460896f)
 KG_HD       (mceliece_460896f)
+KG_HASH     (mceliece_460896f)
+KG_KDF      (mceliece_460896f)
+KG_UDBF     (mceliece_460896f)
 KG_RANDOM   (mceliece_6688128)
 KG_DRBG     (mceliece_6688128)
 KG_PASSWORD (mceliece_6688128)
 KG_HD       (mceliece_6688128)
+KG_HASH     (mceliece_6688128)
+KG_KDF      (mceliece_6688128)
+KG_UDBF     (mceliece_6688128)
 KG_RANDOM   (mceliece_6688128f)
 KG_DRBG     (mceliece_6688128f)
 KG_PASSWORD (mceliece_6688128f)
 KG_HD       (mceliece_6688128f)
+KG_HASH     (mceliece_6688128f)
+KG_KDF      (mceliece_6688128f)
+KG_UDBF     (mceliece_6688128f)
 KG_RANDOM   (mceliece_6960119)
 KG_DRBG     (mceliece_6960119)
 KG_PASSWORD (mceliece_6960119)
 KG_HD       (mceliece_6960119)
+KG_HASH     (mceliece_6960119)
+KG_KDF      (mceliece_6960119)
+KG_UDBF     (mceliece_6960119)
 KG_RANDOM   (mceliece_6960119f)
 KG_DRBG     (mceliece_6960119f)
 KG_PASSWORD (mceliece_6960119f)
 KG_HD       (mceliece_6960119f)
+KG_HASH     (mceliece_6960119f)
+KG_KDF      (mceliece_6960119f)
+KG_UDBF     (mceliece_6960119f)
 KG_RANDOM   (mceliece_8192128)
 KG_DRBG     (mceliece_8192128)
 KG_PASSWORD (mceliece_8192128)
 KG_HD       (mceliece_8192128)
+KG_HASH     (mceliece_8192128)
+KG_KDF      (mceliece_8192128)
+KG_UDBF     (mceliece_8192128)
 KG_RANDOM   (mceliece_8192128f)
 KG_DRBG     (mceliece_8192128f)
 KG_PASSWORD (mceliece_8192128f)
 KG_HD       (mceliece_8192128f)
+KG_HASH     (mceliece_8192128f)
+KG_KDF      (mceliece_8192128f)
+KG_UDBF     (mceliece_8192128f)
 
 #undef KG_RANDOM
 #undef KG_DRBG
 #undef KG_PASSWORD
 #undef KG_HD
+#undef KG_HASH
+#undef KG_KDF
+#undef KG_UDBF

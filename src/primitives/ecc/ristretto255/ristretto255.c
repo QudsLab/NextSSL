@@ -97,7 +97,7 @@ static int ristretto255_sqrt_ratio_m1(fe x, const fe u, const fe v) {
 }
 
 static int ristretto255_is_canonical(const unsigned char *s) {
-    unsigned char c, d, e;
+    unsigned char c, d;
     unsigned int i;
 
     c = (s[31] & 0x7f) ^ 0x7f;
@@ -105,11 +105,11 @@ static int ristretto255_is_canonical(const unsigned char *s) {
         c |= s[i] ^ 0xff;
     }
     c = (((unsigned int) c) - 1U) >> 8;
-    
+
     d = (0xed - 1U - (unsigned int) s[0]) >> 8;
-    e = (s[31] >> 5) & 1;
-    
-    return 1 - (((c & d) | e | (s[0] & 1)) & 1);
+
+    /* bit 255 (high bit of s[31]) must be 0; low bit of s[0] must be 0 */
+    return 1 - (int)(((c & d) | (s[31] >> 7) | (s[0] & 1)) & 1);
 }
 
 static int ristretto255_frombytes(ge_p3 *h, const unsigned char *s) {
