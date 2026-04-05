@@ -1,20 +1,31 @@
+/* pow_parser.h — challenge/solution encode/decode and name normalisation */
 #ifndef POW_PARSER_H
 #define POW_PARSER_H
 
 #include "pow_types.h"
+#include <stddef.h>
 
-// Parse challenge from JSON/Base64 string
-int pow_parser_decode_challenge(const char* base64_str, POWChallenge* out_challenge);
+/* Normalise an algorithm name in-place.
+ * Converts underscores to hyphens so "sha3_256" becomes "sha3-256".
+ * This lets callers use either form; canonical is always hyphen. */
+void pow_algo_name_normalise(char *name);
 
-// Encode challenge to JSON/Base64 string
-// Returns 0 on success, < 0 on error
-// out_str must be large enough
-int pow_parser_encode_challenge(const POWChallenge* challenge, char* out_str, size_t out_len);
+/* Decode a base64-encoded JSON challenge string into *out.
+ * Returns 0 on success. */
+int pow_challenge_decode(const char   *base64_str,
+                         pow_challenge_t *out);
 
-// Parse solution from JSON/Base64 string
-int pow_parser_decode_solution(const char* base64_str, POWSolution* out_solution);
+/* Encode a challenge to a NUL-terminated base64-JSON string in out_buf.
+ * Returns 0 on success, -1 if buffer too small. */
+int pow_challenge_encode(const pow_challenge_t *challenge,
+                         char                  *out_buf,
+                         size_t                 out_len);
 
-// Encode solution to JSON/Base64 string
-int pow_parser_encode_solution(const POWSolution* solution, char* out_str, size_t out_len);
+/* Encode/decode solution — same convention as challenge. */
+int pow_solution_decode(const char     *base64_str,
+                        pow_solution_t *out);
+int pow_solution_encode(const pow_solution_t *solution,
+                        char                 *out_buf,
+                        size_t                out_len);
 
-#endif // POW_PARSER_H
+#endif /* POW_PARSER_H */

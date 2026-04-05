@@ -1,0 +1,30 @@
+#ifndef NEXTSSL_MCELIECE6960119_API_H
+#define NEXTSSL_MCELIECE6960119_API_H
+
+#include <stdint.h>
+
+#define NEXTSSL_MCELIECE6960119_CRYPTO_ALGNAME "Classic McEliece 6960119"
+#define NEXTSSL_MCELIECE6960119_CRYPTO_PUBLICKEYBYTES 1047319
+#define NEXTSSL_MCELIECE6960119_CRYPTO_SECRETKEYBYTES 13948
+#define NEXTSSL_MCELIECE6960119_CRYPTO_CIPHERTEXTBYTES 194
+#define NEXTSSL_MCELIECE6960119_CRYPTO_BYTES 32
+
+int NEXTSSL_MCELIECE6960119_crypto_kem_enc(
+    uint8_t *c,
+    uint8_t *key,
+    const uint8_t *pk
+);
+
+int NEXTSSL_MCELIECE6960119_crypto_kem_dec(
+    uint8_t *key,
+    const uint8_t *c,
+    const uint8_t *sk
+);
+
+int NEXTSSL_MCELIECE6960119_crypto_kem_keypair
+(
+    uint8_t *pk,
+    uint8_t *sk
+);
+
+#endif

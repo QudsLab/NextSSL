@@ -1,147 +1,171 @@
-#include "udbf.h"
-#include "../../PQCrypto/common/hkdf/hkdf.h"
-#include <string.h>
-
-/*
- * UDBF — User Defined Buffer Function implementation.
+/* udbf.c — Test Vector Override Implementation
  *
- * Extracted from src/PQCrypto/common/randombytes.c and fixed:
- *   Old bug: when buffer ran out, remaining bytes were zero-filled silently.
- *   Fix: udbf_read() returns UDBF_ERR_EXHAUSTED without writing anything.
- *
- * Domain separation is provided via HKDF with the label as the `info` field.
- * Each labelled call derives a fresh sub-key from the remaining buffer bytes
- * so that identical seed material fed for different operations yields distinct
- * outputs.
+ * Simple key-value store for test vectors. Global state (not thread-safe).
  */
+#include "udbf.h"
+#include "../../common/secure_zero.h"
+#include <string.h>
+#include <stdlib.h>
 
-/* Internal state — module-private */
-static uint8_t  s_buffer[UDBF_MAX_FEED_LEN];
-static size_t   s_buf_len = 0;
-static size_t   s_buf_pos = 0;
-static int      s_enabled  = 0;
+/* -------------------------------------------------------------------------
+ * Global UDBF state
+ * -------------------------------------------------------------------------*/
 
-udbf_result_t udbf_feed(const uint8_t *data, size_t len)
+#define UDBF_MAX_SIZE (1u << 20)  /* 1 MB max */
+
+static struct {
+    uint8_t *data;          /* Allocated UDBF buffer */
+    size_t data_len;        /* Total length */
+    int is_loaded;          /* 1 if data is loaded, 0 otherwise */
+} g_udbf = { NULL, 0, 0 };
+
+/* -------------------------------------------------------------------------
+ * UDBF Format Helper Functions
+ * -------------------------------------------------------------------------*/
+
+/* Helper: Read little-endian uint32 from buffer */
+static uint32_t read_le32(const uint8_t *buf)
 {
-    if (!data || len == 0)             return UDBF_ERR_NULL;
-    if (len < UDBF_MIN_FEED_LEN)      return UDBF_ERR_NULL;   /* too short    */
-    if (len > UDBF_MAX_FEED_LEN)      return UDBF_ERR_TOO_LARGE;
+    return ((uint32_t)buf[0]) |
+           (((uint32_t)buf[1]) << 8) |
+           (((uint32_t)buf[2]) << 16) |
+           (((uint32_t)buf[3]) << 24);
+}
 
-    /* Wipe any previous state before loading */
-    volatile uint8_t *p = (volatile uint8_t *)s_buffer;
-    for (size_t i = 0; i < s_buf_len; i++) p[i] = 0;
+/* -------------------------------------------------------------------------
+ * udbf_feed — Load UDBF data
+ * -------------------------------------------------------------------------*/
+int udbf_feed(const uint8_t *data, size_t len)
+{
+    if (!data || len < 5 || len > UDBF_MAX_SIZE) {
+        return UDBF_ERR_TOO_LARGE;
+    }
 
-    memcpy(s_buffer, data, len);
-    s_buf_len = len;
-    s_buf_pos = 0;
-    s_enabled  = 1;
+    if (g_udbf.is_loaded) {
+        return UDBF_ERR_ALREADY_LOADED;
+    }
+
+    /* Allocate and copy UDBF data */
+    g_udbf.data = (uint8_t *)malloc(len);
+    if (!g_udbf.data) {
+        return UDBF_ERR_TOO_LARGE;
+    }
+
+    memcpy(g_udbf.data, data, len);
+    g_udbf.data_len = len;
+    g_udbf.is_loaded = 1;
+
     return UDBF_OK;
 }
 
-udbf_result_t udbf_read(const char *label, uint8_t *out, size_t out_len)
+/* -------------------------------------------------------------------------
+ * udbf_read — Extract labeled value from UDBF
+ * -------------------------------------------------------------------------
+ *
+ * UDBF Format:
+ *   Offset  | Type     | Description
+ *   --------+----------+------------------------------------
+ *   0-3     | uint32LE | Total UDBF size
+ *   4+      | entries  | Variable-length entries
+ *
+ * Each entry:
+ *   Offset  | Type     | Description
+ *   --------+----------+------------------------------------
+ *   0       | uint8    | Label length (1-255)
+ *   1-N     | bytes    | Label string
+ *   N+1-N+4 | uint32LE | Value length
+ *   N+5-... | bytes    | Value data
+ */
+int udbf_read(const char *label, uint8_t *out, size_t olen)
 {
-    if (!s_enabled)                     return UDBF_ERR_DISABLED;
-    if (!label || label[0] == '\0')     return UDBF_ERR_NULL;
-    if (!out || out_len == 0)           return UDBF_ERR_NULL;
+    size_t label_len;
+    size_t pos;
+    uint8_t entry_label_len;
+    uint32_t value_len;
+    int match;
 
-    size_t remaining = s_buf_len - s_buf_pos;
-    if (remaining == 0)                 return UDBF_ERR_EXHAUSTED;
+    if (!label || !out || olen == 0) {
+        return UDBF_ERR_NO_DATA;
+    }
 
-    /*
-     * Use HKDF to derive @out_len domain-separated bytes from the next
-     * `ikm_len` bytes of s_buffer.  We consume min(remaining, out_len + 32)
-     * bytes as IKM so that repeated reads with different labels differ even
-     * when the underlying byte run is the same.
-     *
-     * We need at least out_len bytes of IKM for HKDF to be meaningful.
-     */
-    size_t ikm_len = remaining < out_len ? remaining : out_len;
-    /* Require at least as many IKM bytes as requested output */
-    if (ikm_len < out_len)             return UDBF_ERR_EXHAUSTED;
+    if (!g_udbf.is_loaded) {
+        return UDBF_ERR_NO_DATA;
+    }
 
-    const uint8_t *ikm = s_buffer + s_buf_pos;
-    size_t label_len   = 0;
-    while (label[label_len]) label_len++; /* strlen without including <string.h> twice */
+    label_len = strlen(label);
 
-    /* HKDF: no salt, IKM from buffer, label as info, output to @out */
-    hkdf(NULL, 0,
-         ikm,  ikm_len,
-         (const uint8_t *)label, label_len,
-         out,  out_len);
+    /* Skip header (4 bytes) */
+    pos = 4;
 
-    s_buf_pos += ikm_len;
-    return UDBF_OK;
+    /* Iterate through entries */
+    while (pos < g_udbf.data_len) {
+        if (pos + 1 > g_udbf.data_len) {
+            break;  /* Malformed entry */
+        }
+
+        /* Read label length */
+        entry_label_len = g_udbf.data[pos];
+        pos++;
+
+        /* Check bounds */
+        if (pos + entry_label_len + 4 > g_udbf.data_len) {
+            break;  /* Malformed entry */
+        }
+
+        /* Try to match label */
+        match = (entry_label_len == label_len &&
+                 memcmp(&g_udbf.data[pos], label, label_len) == 0);
+
+        pos += entry_label_len;
+
+        /* Read value length */
+        value_len = read_le32(&g_udbf.data[pos]);
+        pos += 4;
+
+        /* Check value bounds */
+        if (pos + value_len > g_udbf.data_len) {
+            break;  /* Malformed entry */
+        }
+
+        if (match) {
+            /* Found matching label */
+            if (value_len < olen) {
+                /* Not enough bytes provided */
+                return UDBF_ERR_TOO_LARGE;
+            }
+
+            /* Copy value to output */
+            memcpy(out, &g_udbf.data[pos], olen);
+            return (int)olen;
+        }
+
+        /* Move to next entry */
+        pos += value_len;
+    }
+
+    /* Label not found */
+    return UDBF_ERR_LABEL_NOT_FOUND;
 }
 
+/* -------------------------------------------------------------------------
+ * seed_udbf_is_active — Check if UDBF is loaded (called by seed_core)
+ * -------------------------------------------------------------------------*/
+int seed_udbf_is_active(void)
+{
+    return g_udbf.is_loaded;
+}
+
+/* -------------------------------------------------------------------------
+ * udbf_wipe — Clear UDBF data
+ * -------------------------------------------------------------------------*/
 void udbf_wipe(void)
 {
-    volatile uint8_t *p = (volatile uint8_t *)s_buffer;
-    for (size_t i = 0; i < sizeof(s_buffer); i++) p[i] = 0;
-    s_buf_len = 0;
-    s_buf_pos = 0;
-    s_enabled  = 0;
-}
+    if (g_udbf.data) {
+        secure_zero(g_udbf.data, g_udbf.data_len);
+        free(g_udbf.data);
+        g_udbf.data = NULL;
+    }
 
-int udbf_is_active(void)
-{
-    return s_enabled;
-}
-
-/* =========================================================================
- * Per-instance context API
- * ====================================================================== */
-
-udbf_result_t udbf_ctx_feed(udbf_ctx_t *ctx, const uint8_t *data, size_t len)
-{
-    if (!ctx)                          return UDBF_ERR_NULL;
-    if (!data || len == 0)             return UDBF_ERR_NULL;
-    if (len < UDBF_MIN_FEED_LEN)      return UDBF_ERR_NULL;
-    if (len > UDBF_MAX_FEED_LEN)      return UDBF_ERR_TOO_LARGE;
-
-    /* Wipe any previous state before loading */
-    volatile uint8_t *p = (volatile uint8_t *)ctx->buf;
-    for (size_t i = 0; i < ctx->buf_len; i++) p[i] = 0;
-
-    memcpy(ctx->buf, data, len);
-    ctx->buf_len = len;
-    ctx->buf_pos = 0;
-    ctx->enabled = 1;
-    return UDBF_OK;
-}
-
-udbf_result_t udbf_ctx_read(udbf_ctx_t *ctx, const char *label,
-                             uint8_t *out, size_t out_len)
-{
-    if (!ctx)                           return UDBF_ERR_NULL;
-    if (!ctx->enabled)                  return UDBF_ERR_DISABLED;
-    if (!label || label[0] == '\0')     return UDBF_ERR_NULL;
-    if (!out || out_len == 0)           return UDBF_ERR_NULL;
-
-    size_t remaining = ctx->buf_len - ctx->buf_pos;
-    if (remaining == 0)                 return UDBF_ERR_EXHAUSTED;
-
-    size_t ikm_len = remaining < out_len ? remaining : out_len;
-    if (ikm_len < out_len)             return UDBF_ERR_EXHAUSTED;
-
-    const uint8_t *ikm = ctx->buf + ctx->buf_pos;
-    size_t label_len   = 0;
-    while (label[label_len]) label_len++;
-
-    hkdf(NULL, 0,
-         ikm,  ikm_len,
-         (const uint8_t *)label, label_len,
-         out,  out_len);
-
-    ctx->buf_pos += ikm_len;
-    return UDBF_OK;
-}
-
-void udbf_ctx_wipe(udbf_ctx_t *ctx)
-{
-    if (!ctx) return;
-    volatile uint8_t *p = (volatile uint8_t *)ctx->buf;
-    for (size_t i = 0; i < sizeof(ctx->buf); i++) p[i] = 0;
-    ctx->buf_len = 0;
-    ctx->buf_pos = 0;
-    ctx->enabled = 0;
+    g_udbf.data_len = 0;
+    g_udbf.is_loaded = 0;
 }

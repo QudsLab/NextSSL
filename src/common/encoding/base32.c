@@ -34,7 +34,9 @@ int radix_base32_encode(const uint8_t *input, size_t input_len,
         // 4 bytes: [32 bits data] [8 bits zero] -> 40 bits
         // 5 bytes: [40 bits data] -> 40 bits
         
-        val <<= (5 - input_bytes) * 8;
+        // The loop above already places the data bytes in the top of the
+        // 40-bit value (lower bytes are zero when input_bytes < 5).
+        // No additional shift is needed.
         
         // Determine padding characters
         int pad_chars = 0;

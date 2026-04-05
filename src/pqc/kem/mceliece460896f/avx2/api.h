@@ -1,0 +1,30 @@
+#ifndef NEXTSSL_MCELIECE460896F_AVX2_API_H
+#define NEXTSSL_MCELIECE460896F_AVX2_API_H
+
+#include <stdint.h>
+
+#define NEXTSSL_MCELIECE460896F_AVX2_CRYPTO_ALGNAME "Classic McEliece 460896"
+#define NEXTSSL_MCELIECE460896F_AVX2_CRYPTO_PUBLICKEYBYTES 524160
+#define NEXTSSL_MCELIECE460896F_AVX2_CRYPTO_SECRETKEYBYTES 13608
+#define NEXTSSL_MCELIECE460896F_AVX2_CRYPTO_CIPHERTEXTBYTES 156
+#define NEXTSSL_MCELIECE460896F_AVX2_CRYPTO_BYTES 32
+
+int NEXTSSL_MCELIECE460896F_AVX2_crypto_kem_enc(
+    uint8_t *c,
+    uint8_t *key,
+    const uint8_t *pk
+);
+
+int NEXTSSL_MCELIECE460896F_AVX2_crypto_kem_dec(
+    uint8_t *key,
+    const uint8_t *c,
+    const uint8_t *sk
+);
+
+int NEXTSSL_MCELIECE460896F_AVX2_crypto_kem_keypair
+(
+    uint8_t *pk,
+    uint8_t *sk
+);
+
+#endif

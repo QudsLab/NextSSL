@@ -44,3 +44,11 @@ CHANGELOG.md
 /script_old_001
 /_
 *.txt
+SEED_EXPLANATIONS.md
+SOURCE.md
+/_build
+/build_dir
+/bin
+/example
+/temp
+/tools

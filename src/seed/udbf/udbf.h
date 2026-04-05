@@ -1,106 +1,84 @@
-#ifndef NEXTSSL_COMMON_UDBF_H
-#define NEXTSSL_COMMON_UDBF_H
+/* udbf.h — Test Vector Override System (TIER 3)
+ *
+ * User-Defined Byte Feed (UDBF) allows injecting known-answer test (KAT) vectors
+ * into the seed system for testing purposes. When active, seed_hash_derive()
+ * returns UDBF-provided values instead of performing normal derivation.
+ *
+ * WARNING: This is test-mode only. Do NOT use in production.
+ *
+ * API (Plan 404):
+ *   udbf_feed()         — load test vector data
+ *   udbf_read()         — extract labeled output
+ *   seed_udbf_is_active() — check if active (used by seed_core)
+ *   udbf_wipe()         — clear and reset
+ */
+#ifndef SEED_UDBF_H
+#define SEED_UDBF_H
 
-#include <stddef.h>
 #include <stdint.h>
+#include <stddef.h>
+#include "udbf_errors.h"
 
-/*
- * UDBF — User Defined Buffer Function
+/* -------------------------------------------------------------------------
+ * udbf_feed — Load test vector data into UDBF
+ * -------------------------------------------------------------------------
+ * Loads raw UDBF data (binary format with label-based entries).
  *
- * Provides a deterministic byte-feeder for key generation testing and
- * known-answer tests.  The caller feeds raw seed bytes once; subsequent
- * udbf_read() calls derive domain-separated material via HKDF labels.
+ * Format: [uint32_le:total_len][entries...]
+ * Each entry: [uint8:label_len][label_bytes...][uint32_le:value_len][value_bytes...]
  *
- * Security contract:
- *   - udbf_read() returns UDBF_ERR_EXHAUSTED if remaining bytes are
- *     insufficient.  It NEVER zero-fills.  Callers must handle the error.
- *   - In production mode UDBF must be disabled.  Enable only for testing
- *     or deterministic-keygen flows where the caller guarantees entropy.
- *   - Call udbf_wipe() when done to erase the internal state.
+ * Args:
+ *   data — UDBF binary data
+ *   len  — length of data (must be > 0 and <= 1 MB)
+ *
+ * Returns:
+ *   UDBF_OK on success, UDBF_ERR_* on error
+ *
+ * Notes:
+ *   - Can only load once; subsequent calls return UDBF_ERR_ALREADY_LOADED
+ *   - Call udbf_wipe() to reset and allow reloading
  */
+int udbf_feed(const uint8_t *data, size_t len);
 
-typedef enum {
-    UDBF_OK            =  0,
-    UDBF_ERR_NULL      = -1, /* null or zero-length input rejected             */
-    UDBF_ERR_EXHAUSTED = -2, /* insufficient bytes remaining for the request   */
-    UDBF_ERR_DISABLED  = -3, /* UDBF is not currently active                  */
-    UDBF_ERR_TOO_LARGE = -4, /* feed length exceeds UDBF_MAX_FEED_LEN         */
-} udbf_result_t;
-
-#define UDBF_MAX_FEED_LEN  (1u << 20)  /* 1 MB hard ceiling for feed buffer    */
-#define UDBF_MIN_FEED_LEN  32u          /* minimum meaningful feed              */
-
-/*
- * udbf_feed - Load root deterministic bytes into UDBF state.
+/* -------------------------------------------------------------------------
+ * udbf_read — Extract labeled output from UDBF
+ * -------------------------------------------------------------------------
+ * Retrieves the bytes stored under a given label.
  *
- * Must be called before any udbf_read().  Calling again resets the state.
+ * Args:
+ *   label — label string (e.g., "aes-256-cbc-account-7")
+ *   out   — caller-allocated output buffer, at least olen bytes
+ *   olen  — number of bytes requested (must be > 0)
  *
- * @data: Pointer to seed bytes.
- * @len:  Byte count (UDBF_MIN_FEED_LEN .. UDBF_MAX_FEED_LEN inclusive).
- * @return: UDBF_OK, or UDBF_ERR_NULL / UDBF_ERR_TOO_LARGE.
+ * Returns:
+ *   (int)olen on success, UDBF_ERR_* on error
+ *
+ * Notes:
+ *   - Returns UDBF_ERR_LABEL_NOT_FOUND if label absent
+ *   - Returns UDBF_ERR_TOO_LARGE if stored value is shorter than olen
  */
-udbf_result_t udbf_feed(const uint8_t *data, size_t len);
+int udbf_read(const char *label, uint8_t *out, size_t olen);
 
-/*
- * udbf_read - Consume bytes for a labelled key operation.
+/* -------------------------------------------------------------------------
+ * seed_udbf_is_active — Check if UDBF is currently loaded
+ * -------------------------------------------------------------------------
+ * Used by seed_core before performing normal derivation.
  *
- * Uses HKDF with @label as the `info` field to provide domain separation.
- * If the internal feeder does not have enough bytes remaining, returns
- * UDBF_ERR_EXHAUSTED without writing anything to @out.
- *
- * @label:   Non-NULL, non-empty ASCII string identifying the use-case
- *           (e.g. "mlkem512-keypair", "mldsa44-sign-derand").
- * @out:     Output buffer.
- * @out_len: Number of bytes required.
- * @return:  UDBF_OK, UDBF_ERR_DISABLED, UDBF_ERR_EXHAUSTED, or UDBF_ERR_NULL.
+ * Returns:
+ *   1 — UDBF loaded; seed_hash_derive() will use udbf_read() instead
+ *   0 — Not active; normal CTR-mode derivation proceeds
  */
-udbf_result_t udbf_read(const char *label, uint8_t *out, size_t out_len);
+int seed_udbf_is_active(void);
 
-/*
- * udbf_wipe - Securely erase and disable the UDBF state.
- *
- * Should be called after key generation is complete.  After this call,
- * udbf_read() returns UDBF_ERR_DISABLED until the next udbf_feed().
+/* -------------------------------------------------------------------------
+ * udbf_wipe — Clear UDBF and reset to inactive state
+ * -------------------------------------------------------------------------
+ * Securely erases stored UDBF data, frees memory, and allows udbf_feed()
+ * to be called again.
  */
 void udbf_wipe(void);
 
-/*
- * udbf_is_active - Query whether UDBF mode is currently active.
- * @return: 1 if active, 0 if disabled.
- */
-int udbf_is_active(void);
+/* Compatibility alias — PQC randombytes.c uses the short name */
+#define udbf_is_active() seed_udbf_is_active()
 
-/* =========================================================================
- * Per-instance UDBF context
- *
- * Allows multiple independent UDBF streams simultaneously (e.g. user_a and
- * user_b each with their own entropy buffer).  The state lives entirely
- * inside the caller-allocated udbf_ctx_t — no global buffer is touched.
- * ====================================================================== */
-
-typedef struct {
-    uint8_t buf[UDBF_MAX_FEED_LEN];
-    size_t  buf_len;
-    size_t  buf_pos;
-    int     enabled;
-} udbf_ctx_t;
-
-/*
- * udbf_ctx_feed - Load entropy into a per-instance context.
- * Equivalent to udbf_feed() but writes to ctx, not the global state.
- */
-udbf_result_t udbf_ctx_feed(udbf_ctx_t *ctx, const uint8_t *data, size_t len);
-
-/*
- * udbf_ctx_read - Consume domain-separated bytes from a per-instance context.
- * Equivalent to udbf_read() but reads from ctx, not the global state.
- */
-udbf_result_t udbf_ctx_read(udbf_ctx_t *ctx, const char *label,
-                             uint8_t *out, size_t out_len);
-
-/*
- * udbf_ctx_wipe - Securely erase a per-instance context.
- */
-void udbf_ctx_wipe(udbf_ctx_t *ctx);
-
-#endif /* NEXTSSL_COMMON_UDBF_H */
+#endif /* SEED_UDBF_H */

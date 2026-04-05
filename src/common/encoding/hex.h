@@ -1,5 +1,5 @@
-#ifndef nextssl_UTILS_ENCODING_HEX_H
-#define nextssl_UTILS_ENCODING_HEX_H
+#ifndef NEXTSSL_UTILS_ENCODING_HEX_H
+#define NEXTSSL_UTILS_ENCODING_HEX_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -44,4 +44,4 @@ int hex_decode(const char *hex, size_t hex_len, uint8_t *bin, size_t bin_len);
 }
 #endif
 
-#endif // nextssl_UTILS_ENCODING_HEX_H
+#endif // NEXTSSL_UTILS_ENCODING_HEX_H

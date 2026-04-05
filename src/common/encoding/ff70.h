@@ -1,5 +1,5 @@
-#ifndef nextssl_UTILS_ENCODING_FF70_H
-#define nextssl_UTILS_ENCODING_FF70_H
+#ifndef NEXTSSL_UTILS_ENCODING_FF70_H
+#define NEXTSSL_UTILS_ENCODING_FF70_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -55,4 +55,4 @@ void ff70_frame_free(ff70_frame_t *frame);
 }
 #endif
 
-#endif // nextssl_UTILS_ENCODING_FF70_H
+#endif // NEXTSSL_UTILS_ENCODING_FF70_H

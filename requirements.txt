@@ -1,4 +1,16 @@
-# No external dependencies required.
-# The build system and test runner rely solely on the Python Standard Library.
-#
-# Recommended: Python 3.8+
+# NextSSL — Python dependencies
+# Python 3.8+ required.
+
+# ── Build system ────────────────────────────────────────────────────────────
+# No external dependencies. Uses stdlib only:
+#   pathlib, subprocess, importlib, logging, shutil, platform
+
+# ── Test system ─────────────────────────────────────────────────────────────
+termcolor>=2.3.0        # colored terminal output (test.py reporter)
+wasmtime>=24.0          # WASM runtime — preferred when --platform wasm
+wasmer>=1.1.0           # WASM runtime fallback if wasmtime import fails
+# Uses stdlib: ctypes, concurrent.futures, logging.handlers, threading, fnmatch
+
+# ── Development / static analysis (optional, not required to run) ────────────
+# mypy>=1.0             # type checking
+# ruff>=0.1             # linting

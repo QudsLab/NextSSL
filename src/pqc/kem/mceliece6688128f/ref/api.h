@@ -1,0 +1,30 @@
+#ifndef NEXTSSL_MCELIECE6688128F_API_H
+#define NEXTSSL_MCELIECE6688128F_API_H
+
+#include <stdint.h>
+
+#define NEXTSSL_MCELIECE6688128F_CRYPTO_ALGNAME "Classic McEliece 6688128"
+#define NEXTSSL_MCELIECE6688128F_CRYPTO_PUBLICKEYBYTES 1044992
+#define NEXTSSL_MCELIECE6688128F_CRYPTO_SECRETKEYBYTES 13932
+#define NEXTSSL_MCELIECE6688128F_CRYPTO_CIPHERTEXTBYTES 208
+#define NEXTSSL_MCELIECE6688128F_CRYPTO_BYTES 32
+
+int NEXTSSL_MCELIECE6688128F_crypto_kem_enc(
+    uint8_t *c,
+    uint8_t *key,
+    const uint8_t *pk
+);
+
+int NEXTSSL_MCELIECE6688128F_crypto_kem_dec(
+    uint8_t *key,
+    const uint8_t *c,
+    const uint8_t *sk
+);
+
+int NEXTSSL_MCELIECE6688128F_crypto_kem_keypair
+(
+    uint8_t *pk,
+    uint8_t *sk
+);
+
+#endif
