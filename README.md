@@ -1,5 +1,5 @@
 <div align="center">
-   <img src="assets/logo.svg" style="width: 95%;" alt="NextSSL Banner" />
+   <img src="assets/logo.svg" style="width: 40%;" alt="NextSSL Banner" />
 <br/><br/>
 
 
