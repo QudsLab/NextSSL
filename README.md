@@ -1,23 +1,7 @@
 <div align="center">
-   <img src="assets/logo.svg" style="width: 40%;" alt="NextSSL Banner" />
+   <img src="assets/logo_ud.svg" style="width: 70%;" alt="NextSSL Banner" />
 <br/><br/>
-
-
-</br>
-</br>
-
 </div>
-
-
-<div align="center">
-   
-
-### WARNING! This repository is under active development, APIs and features may change without notice.
-
-</div>
-</br>
-</br>
-
 
 
 # NextSSL
