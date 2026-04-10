@@ -177,6 +177,9 @@ target_include_directories(nextssl PRIVATE
     "${SRC}/hash/memory_hard"
     "${SRC}/hash/skein"
     "${SRC}/hash/sponge"
+    "${SRC}/hash/adapters"
+    "${SRC}/hash/generic"
+    "${SRC}/hash/root_functions"
     "${SRC}/seed"
     "${SRC}/seed/hash"
     "${SRC}/seed/random"
@@ -241,8 +244,12 @@ else()
     target_compile_options(nextssl PRIVATE
         -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare
         -Wno-missing-field-initializers
-        $<$<CONFIG:Release>:-O2>
+        $<$<CONFIG:Release>:-O3>
         $<$<CONFIG:Debug>:-g -O0>
+    )
+    # Strip debug symbols in Release → smaller DLL
+    target_link_options(nextssl PRIVATE
+        $<$<CONFIG:Release>:-Wl,-s>
     )
 endif()
 
