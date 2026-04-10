@@ -11,6 +11,10 @@ Usage:
     python build.py --platform win x86_64 --clean
     python build.py --platform wasm wasm32 --jobs 8
     python build.py --platform win x86_64 --log-level debug
+
+Scratch dir : .build_cache/<tag>_<variant>/   (never inside build/)
+Log files   : .temp/build_<tag>_<variant>.log
+Artifacts   : bin/<tag>/<variant>/*.dll  (no .dll.a)
 """
 
 import argparse
@@ -22,7 +26,7 @@ from pathlib import Path
 
 ROOT  = Path(__file__).resolve().parent
 BUILD = ROOT / "build" / "platform"
-TEMP  = ROOT / "temp"
+TEMP  = ROOT / ".temp"
 
 _OS_MAP   = {"windows": "win", "darwin": "macos", "linux": "linux"}
 _ARCH_MAP = {"amd64": "x86_64", "aarch64": "arm64", "arm64": "arm64"}
@@ -58,10 +62,10 @@ def main():
                         help="Wipe scratch dir before build")
     parser.add_argument("--jobs",      type=int, default=4)
     parser.add_argument("--log-file",  type=str, default=None,
-                        help="Override log file path (default: temp/build_<tag>_<variant>.log)")
+                        help="Override log file path (default: .temp/build_<tag>_<variant>.log)")
     parser.add_argument("--log-level", choices=["debug", "info", "warning", "error"],
-                        default="error",
-                        help="Console log verbosity (default: error)")
+                        default="info",
+                        help="Console log verbosity (default: info)")
     args = parser.parse_args()
 
     logger = _setup_logger(_LOG_LEVELS[args.log_level])
@@ -73,7 +77,7 @@ def main():
     log_path = Path(args.log_file) if args.log_file else TEMP / f"build_{tag}_{variant}.log"
     logger.debug("Log file: %s", log_path)
 
-    build_dir = ROOT / "build" / "out" / f"{tag}_{variant}"
+    build_dir = ROOT / ".build_cache" / f"{tag}_{variant}"
     logger.debug("Scratch dir: %s", build_dir)
 
     script = BUILD / f"{tag}.py"
