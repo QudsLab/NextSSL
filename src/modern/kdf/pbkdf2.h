@@ -35,4 +35,25 @@ int pbkdf2_ex(const hash_ops_t *hash,
               uint32_t          iterations,
               uint8_t          *out,      size_t outlen);
 
+/* -------------------------------------------------------------------------
+ * pbkdf2_ex_adapter — PBKDF2 using a hash_adapter_t as the HMAC PRF
+ *
+ * ha         — pre-configured hash adapter (any plain or KDF adapter)
+ * password   — password bytes
+ * pwdlen     — password length
+ * salt       — salt bytes
+ * saltlen    — salt length (recommended ≥ 16 bytes)
+ * iterations — iteration count
+ * out        — derived key output buffer
+ * outlen     — desired derived key length in bytes
+ *
+ * Returns 0 on success, -1 on invalid arguments or internal error.
+ * -------------------------------------------------------------------------*/
+#include "../../hash/adapters/hash_adapter.h"
+int pbkdf2_ex_adapter(const hash_adapter_t *ha,
+                      const uint8_t *password, size_t pwdlen,
+                      const uint8_t *salt,     size_t saltlen,
+                      uint32_t       iterations,
+                      uint8_t       *out,       size_t outlen);
+
 #endif /* MODERN_PBKDF2_H */

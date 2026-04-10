@@ -18,14 +18,34 @@
 #include <string.h>
 #include <stdint.h>
 
+/* Context layout: buf[2016] + salt[16] + salt_len[1] + _pad[7] + len[8] = 2048
+ * = HASH_OPS_CTX_MAX exactly (Plan 40003). */
 typedef struct {
-    uint8_t buf[2040];
-    size_t  len;
+    uint8_t buf[2016];   /* accumulator                                     */
+    uint8_t salt[16];    /* optional caller-configured salt (Plan 40003)     */
+    uint8_t salt_len;    /* 0 = use domain separator; >0 = use salt[]        */
+    uint8_t _pad[7];     /* alignment — keeps len at offset 2040             */
+    size_t  len;         /* bytes in buf                                     */
 } pomelo_ops_ctx_t;
 
 static void pomelo_ops_init(void *c) {
     pomelo_ops_ctx_t *ctx = (pomelo_ops_ctx_t *)c;
     ctx->len = 0;
+    /* salt field intentionally NOT reset — survives across init calls */
+}
+
+/* pomelo_ops_set_salt — configure override salt before init/update/final (Plan 40003)
+ * Pass NULL or salt_len=0 to revert to the domain-separator default. */
+void pomelo_ops_set_salt(void *ctx_raw, const uint8_t *salt, size_t salt_len)
+{
+    pomelo_ops_ctx_t *ctx = (pomelo_ops_ctx_t *)ctx_raw;
+    if (!ctx || !salt || salt_len == 0) {
+        if (ctx) ctx->salt_len = 0;
+        return;
+    }
+    size_t copy = salt_len > sizeof(ctx->salt) ? sizeof(ctx->salt) : salt_len;
+    memcpy(ctx->salt, salt, copy);
+    ctx->salt_len = (uint8_t)copy;
 }
 
 static void pomelo_ops_update(void *c, const uint8_t *d, size_t l) {
@@ -38,8 +58,11 @@ static void pomelo_ops_update(void *c, const uint8_t *d, size_t l) {
 
 static void pomelo_ops_final(void *c, uint8_t *out) {
     pomelo_ops_ctx_t *ctx = (pomelo_ops_ctx_t *)c;
-    static const uint8_t salt[8] = {0};
-    PHS(out, 32, ctx->buf, ctx->len, salt, sizeof(salt), 1, 14);
+    /* Domain separator — default when no salt configured (Plan 40003). */
+    static const uint8_t s_default[8] = {'N','X','T','S','P','M','L', 0};
+    const uint8_t *s   = ctx->salt_len ? ctx->salt : s_default;
+    size_t         sln = ctx->salt_len ? ctx->salt_len : sizeof(s_default);
+    PHS(out, 32, ctx->buf, ctx->len, s, sln, 1, 14);
     secure_zero(ctx->buf, ctx->len);
     ctx->len = 0;
 }

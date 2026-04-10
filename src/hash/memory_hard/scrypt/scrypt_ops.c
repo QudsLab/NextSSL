@@ -22,7 +22,10 @@ typedef struct {
     size_t  len;
 } scrypt_ops_ctx_t;
 
-static const uint8_t s_scrypt_ops_salt[8] = {0};
+/* Domain separator for NextSSL seed derivation — fixed, non-zero, non-secret. */
+static const uint8_t s_scrypt_ops_salt[8] = {
+    'N','X','T','S','C','R','P', 0
+};
 
 #define SCRYPT_OPS_N  4096
 #define SCRYPT_OPS_R  8

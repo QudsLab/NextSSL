@@ -69,3 +69,23 @@ const hash_ops_t argon2_ops = {
     disabled_init, disabled_update, disabled_final,
     1.0, 65536.0, 1
 };
+
+/* ── pomelo ──────────────────────────────────────────────────────── */
+#ifndef NEXTSSL_HAS_POMELO
+const hash_ops_t pomelo_ops = {
+    "pomelo", 32, 64,
+    HASH_USAGE_SEED,
+    disabled_init, disabled_update, disabled_final,
+    1.0, 16384.0, 1
+};
+#endif
+
+/* ── makwa ───────────────────────────────────────────────────────── */
+#ifndef NEXTSSL_HAS_MAKWA
+const hash_ops_t makwa_ops = {
+    "makwa", 32, 64,
+    HASH_USAGE_SEED,
+    disabled_init, disabled_update, disabled_final,
+    1.0, 8192.0, 1
+};
+#endif

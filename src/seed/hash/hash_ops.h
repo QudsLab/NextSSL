@@ -7,7 +7,7 @@
  *   Blake      (3): blake2b, blake2s, blake3
  *   Fast       (7): sha224, sha256, sha384, sha512, sha512/224, sha512/256, sm3
  *   Legacy    (12): has160, md2, md4, md5, nt, ripemd128/160/256/320, sha0, sha1, whirlpool
- *   MemHard    (8): argon2, argon2d, argon2i, argon2id, balloon(*), bcrypt, catena, scrypt
+ *   MemHard   (11): argon2, argon2d, argon2i, argon2id, balloon(*), bcrypt, catena, lyra2(*), makwa(*), pomelo(*), scrypt, yescrypt
  *   Sponge     (5): keccak256, sha3-224/256/384/512
  *   XOF        (2): shake128, shake256
  *   Skein      (3): skein256, skein512, skein1024
@@ -56,7 +56,7 @@ extern const hash_ops_t sha1_ops;
 extern const hash_ops_t whirlpool_ops;
 
 /* -------------------------------------------------------------------------
- * Memory-Hard (8)
+ * Memory-Hard (11)
  * -------------------------------------------------------------------------*/
 extern const hash_ops_t argon2_ops;     /* generic/default Argon2 */
 extern const hash_ops_t argon2d_ops;
@@ -64,10 +64,17 @@ extern const hash_ops_t argon2i_ops;
 extern const hash_ops_t argon2id_ops;
 extern const hash_ops_t bcrypt_ops;
 extern const hash_ops_t catena_ops;
+extern const hash_ops_t lyra2_ops;
 extern const hash_ops_t scrypt_ops;
 extern const hash_ops_t yescrypt_ops;   /* replaces balloon in this build */
 #ifdef NEXTSSL_HAS_BALLOON
 extern const hash_ops_t balloon_ops;
+#endif
+#ifdef NEXTSSL_HAS_POMELO
+extern const hash_ops_t pomelo_ops;
+#endif
+#ifdef NEXTSSL_HAS_MAKWA
+extern const hash_ops_t makwa_ops;
 #endif
 
 /* -------------------------------------------------------------------------

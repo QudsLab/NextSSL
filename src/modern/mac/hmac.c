@@ -157,3 +157,66 @@ int hmac_final(hmac_ctx_t *ctx, uint8_t *out)
     secure_zero(ctx->inner_ctx, sizeof(ctx->inner_ctx));
     return 0;
 }
+
+/* =========================================================================
+ * Adapter-based HMAC (Plan 40002)
+ * ========================================================================= */
+#include "../../hash/adapters/hash_adapter.h"
+
+/* Maximum sizes for adapter-based HMAC internal buffers.
+ * Adapters report actual sizes in ha->block_size / ha->digest_size. */
+#define ADAPTER_MAX_BLOCK  256   /* generous upper bound across all supported algos */
+#define ADAPTER_MAX_DIGEST 128
+
+int hmac_compute_adapter(const hash_adapter_t *ha,
+                         const uint8_t        *key,  size_t klen,
+                         const uint8_t        *data, size_t dlen,
+                         uint8_t              *out,  size_t out_len)
+{
+    if (!ha || !ha->init_fn || !ha->update_fn || !ha->final_fn) return -1;
+    if (!key || klen == 0 || !data || !out || out_len == 0) return -1;
+
+    size_t block_size  = ha->block_size  ? ha->block_size  : 64;
+    size_t digest_size = ha->digest_size ? ha->digest_size : 32;
+    if (block_size  > ADAPTER_MAX_BLOCK)  return -1;
+    if (digest_size > ADAPTER_MAX_DIGEST) return -1;
+
+    uint8_t kbuf[ADAPTER_MAX_BLOCK];
+    uint8_t ipad[ADAPTER_MAX_BLOCK];
+    uint8_t opad[ADAPTER_MAX_BLOCK];
+    uint8_t inner[ADAPTER_MAX_DIGEST];
+
+    /* Keys longer than block_size: hash them down */
+    if (klen > block_size) {
+        ha->init_fn(ha->impl);
+        ha->update_fn(ha->impl, key, klen);
+        ha->final_fn(ha->impl, kbuf, digest_size);
+        klen = digest_size;
+    } else {
+        memcpy(kbuf, key, klen);
+    }
+    if (klen < block_size) memset(kbuf + klen, 0, block_size - klen);
+
+    for (size_t i = 0; i < block_size; i++) {
+        ipad[i] = kbuf[i] ^ 0x36u;
+        opad[i] = kbuf[i] ^ 0x5cu;
+    }
+
+    /* Inner: H(ipad ‖ data) */
+    ha->init_fn(ha->impl);
+    ha->update_fn(ha->impl, ipad, block_size);
+    ha->update_fn(ha->impl, data, dlen);
+    ha->final_fn(ha->impl, inner, digest_size);
+
+    /* Outer: H(opad ‖ inner) */
+    ha->init_fn(ha->impl);
+    ha->update_fn(ha->impl, opad, block_size);
+    ha->update_fn(ha->impl, inner, digest_size);
+    ha->final_fn(ha->impl, out, out_len);
+
+    secure_zero(kbuf,  sizeof(kbuf));
+    secure_zero(ipad,  sizeof(ipad));
+    secure_zero(opad,  sizeof(opad));
+    secure_zero(inner, sizeof(inner));
+    return 0;
+}

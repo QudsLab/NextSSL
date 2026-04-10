@@ -177,3 +177,94 @@ int hkdf_expand_label_ex(const hash_ops_t *hash,
     secure_zero(hkdf_label, sizeof(hkdf_label));
     return r;
 }
+
+/* =========================================================================
+ * hkdf_ex_adapter — combined Extract + Expand using hash_adapter_t (Plan 40002)
+ * ========================================================================= */
+#include "../../hash/adapters/hash_adapter.h"
+#include "../mac/hmac.h"   /* hmac_compute_adapter */
+
+int hkdf_ex_adapter(const hash_adapter_t *ha,
+                    const uint8_t *salt,    size_t salt_len,
+                    const uint8_t *ikm,     size_t ikm_len,
+                    const uint8_t *info,    size_t info_len,
+                    uint8_t       *okm,     size_t okm_len)
+{
+    if (!ha || !ikm || ikm_len == 0 || !okm || okm_len == 0) return -1;
+
+    size_t hash_len = ha->digest_size ? ha->digest_size : 32;
+    if (hash_len > 128) return -1;  /* sanity guard */
+
+    /* --- Extract: PRK = HMAC-Hash(salt, IKM) --- */
+    uint8_t zero_salt[128];
+    uint8_t prk[128];
+    if (!salt || salt_len == 0) {
+        memset(zero_salt, 0, hash_len);
+        salt     = zero_salt;
+        salt_len = hash_len;
+    }
+    if (hmac_compute_adapter(ha, salt, salt_len, ikm, ikm_len, prk, hash_len) != 0)
+        goto fail;
+
+    /* --- Expand: OKM = T(1) ‖ T(2) ‖ … truncated to okm_len --- */
+    if (okm_len > 255u * hash_len) goto fail;
+
+    uint8_t t_prev[128];
+    uint8_t t_curr[128];
+    memset(t_prev, 0, sizeof(t_prev));
+
+    size_t  produced = 0;
+    uint8_t counter  = 1;
+
+    /* Build per-round input: T(i-1) ‖ info ‖ counter */
+    /* Max round buffer: 128 + info_len + 1 — we allocate on heap for large info */
+    uint8_t rnd_stack[512];
+    uint8_t *rnd_buf  = NULL;
+    int      rnd_heap = 0;
+    size_t   info_safe = info ? info_len : 0;
+    size_t   rnd_cap   = hash_len + info_safe + 1;
+    if (rnd_cap <= sizeof(rnd_stack)) {
+        rnd_buf = rnd_stack;
+    } else {
+        rnd_buf = (uint8_t *)malloc(rnd_cap);
+        if (!rnd_buf) goto fail;
+        rnd_heap = 1;
+    }
+
+    while (produced < okm_len) {
+        size_t  pos = 0;
+        if (counter > 1) {
+            memcpy(rnd_buf + pos, t_prev, hash_len); pos += hash_len;
+        }
+        if (info && info_safe > 0) {
+            memcpy(rnd_buf + pos, info, info_safe); pos += info_safe;
+        }
+        rnd_buf[pos++] = counter;
+
+        if (hmac_compute_adapter(ha, prk, hash_len, rnd_buf, pos, t_curr, hash_len) != 0)
+            goto fail2;
+
+        size_t copy = okm_len - produced;
+        if (copy > hash_len) copy = hash_len;
+        memcpy(okm + produced, t_curr, copy);
+        memcpy(t_prev, t_curr, hash_len);
+        produced += copy;
+        counter++;
+    }
+
+    if (rnd_heap) { secure_zero(rnd_buf, rnd_cap); free(rnd_buf); }
+    secure_zero(prk,    hash_len);
+    secure_zero(t_prev, sizeof(t_prev));
+    secure_zero(t_curr, sizeof(t_curr));
+    secure_zero(zero_salt, sizeof(zero_salt));
+    return 0;
+
+fail2:
+    if (rnd_heap) { secure_zero(rnd_buf, rnd_cap); free(rnd_buf); }
+fail:
+    secure_zero(prk,    sizeof(prk));
+    secure_zero(t_prev, sizeof(t_prev));
+    secure_zero(t_curr, sizeof(t_curr));
+    secure_zero(zero_salt, sizeof(zero_salt));
+    return -1;
+}

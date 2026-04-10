@@ -26,7 +26,10 @@ typedef struct {
     size_t  len;
 } lyra2_ops_ctx_t;
 
-static const uint8_t s_lyra2_ops_salt[8] = {0};
+/* Domain separator for NextSSL seed derivation — fixed, non-zero, non-secret. */
+static const uint8_t s_lyra2_ops_salt[8] = {
+    'N','X','T','S','L','Y','2', 0
+};
 
 #define LYRA2_OPS_TIME_COST  1
 #define LYRA2_OPS_NROWS      8

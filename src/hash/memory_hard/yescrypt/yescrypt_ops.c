@@ -22,7 +22,10 @@ typedef struct {
     size_t  len;
 } yescrypt_ops_ctx_t;
 
-static const uint8_t s_yescrypt_ops_salt[8] = {0};
+/* Domain separator for NextSSL seed derivation — fixed, non-zero, non-secret. */
+static const uint8_t s_yescrypt_ops_salt[8] = {
+    'N','X','T','S','Y','S','C', 0
+};
 
 static const yescrypt_params_t s_yescrypt_ops_params = {
     .flags = 0,      /* classic scrypt — no YESCRYPT_RW */

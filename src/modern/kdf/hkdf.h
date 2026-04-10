@@ -66,4 +66,26 @@ int hkdf_expand_label_ex(const hash_ops_t *hash,
                          const uint8_t    *context,     size_t  context_len,
                          uint8_t          *okm,         size_t  okm_len);
 
+/* -------------------------------------------------------------------------
+ * hkdf_ex_adapter — combined Extract + Expand using a hash_adapter_t
+ *
+ * Implements RFC 5869 Extract + Expand using hmac_compute_adapter() as PRF.
+ * Works with any hash_adapter_t (plain or KDF adapter).
+ *
+ * ha       — pre-configured hash adapter
+ * salt     — extract salt (NULL → all-zero salt of ha->digest_size bytes)
+ * ikm      — input key material
+ * info     — context/application info (may be NULL)
+ * okm      — output key material buffer
+ * okm_len  — desired OKM length (≤ 255 × ha->digest_size)
+ *
+ * Returns 0 on success, -1 on invalid arguments or internal error.
+ * -------------------------------------------------------------------------*/
+#include "../../hash/adapters/hash_adapter.h"
+int hkdf_ex_adapter(const hash_adapter_t *ha,
+                    const uint8_t *salt,    size_t salt_len,
+                    const uint8_t *ikm,     size_t ikm_len,
+                    const uint8_t *info,    size_t info_len,
+                    uint8_t       *okm,     size_t okm_len);
+
 #endif /* MODERN_HKDF_H */

@@ -311,17 +311,22 @@ const hash_ops_t shake256_ops = {
 };
 
 /* =========================================================================
- * Argon2 accumulator adapter (Plan 205 Phase A)
+ * Argon2 accumulator adapter (Plan 205 Phase A / Plan 40003)
  *
  * Argon2 is a KDF, not a streaming hash. This adapter accumulates all
  * update() data into a fixed buffer and calls argon2*_hash_raw() on final().
  *
  * RESTRICTION: Only valid for seed_hash_derive_ex() CTR seeding where total
- * input is small (<= 2040 bytes). Must NOT be used with HMAC, HKDF, or
+ * input is small (<= 2016 bytes). Must NOT be used with HMAC, HKDF, or
  * PBKDF2 — the construction is undefined and has no security proof.
  *
  * Context fits in HASH_OPS_CTX_MAX (2048):
- *   buf[2040] + len[8] = 2048 bytes exactly.
+ *   buf[2016] + salt[16] + salt_len[1] + _pad[7] + len[8] = 2048 bytes.
+ *
+ * Salt rules:
+ *   salt_len == 0  → use domain-separator s_argon2_ops_salt (deterministic)
+ *   salt_len  > 0  → use caller-provided salt from ctx->salt[]
+ *   Call argon2_ops_set_salt(ctx, s, len) once before init/update/final.
  * ========================================================================= */
 #include "../memory_hard/argon2id.h"
 #include "../memory_hard/argon2i.h"
@@ -330,21 +335,48 @@ const hash_ops_t shake256_ops = {
 #include <string.h>
 
 typedef struct {
-    uint8_t buf[2040];
-    size_t  len;
-} argon2_ops_ctx_t;
+    uint8_t buf[2016];   /* accumulator: input < 2016 bytes                */
+    uint8_t salt[16];    /* optional caller-provided salt (Plan 40003)      */
+    uint8_t salt_len;    /* 0 = use domain separator; >0 = use salt[]       */
+    uint8_t _pad[7];     /* alignment pad — keeps len at offset 2040        */
+    size_t  len;         /* bytes accumulated in buf                        */
+} argon2_ops_ctx_t;      /* sizeof = 2016+16+1+7+8 = 2048 == HASH_OPS_CTX_MAX */
 
-/* Fixed internal salt — this adapter is for KDF/seeding, not password storage */
-static const uint8_t s_argon2_ops_salt[16] = {0};
+/* Domain separator for NextSSL seed derivation — fixed, non-zero, non-secret.
+ * Used as the default salt when the caller has not configured one explicitly.
+ * Not a secret; distinguishes NextSSL argon2 seed usage from generic argon2. */
+static const uint8_t s_argon2_ops_salt[16] = {
+    'N','X','T','S','L', 0, 'A','G', '2', 0, 0, 0, 0, 0, 0, 0
+};
 
 #define ARGON2_OPS_TCOST 2
 #define ARGON2_OPS_MCOST 65536  /* 64 MiB */
 #define ARGON2_OPS_PAR   1
 
+/* argon2_ops_set_salt — configure override salt before init/update/final
+ *
+ * ctx      — raw context buffer (allocated by the caller as HASH_OPS_CTX_MAX)
+ * salt     — salt bytes to copy; max 16 bytes are used
+ * salt_len — length; pass 0 to revert to domain-separator default
+ *
+ * The salt persists across multiple init/update/final cycles on the same ctx.
+ */
+void argon2_ops_set_salt(void *ctx_raw, const uint8_t *salt, size_t salt_len)
+{
+    argon2_ops_ctx_t *ctx = (argon2_ops_ctx_t *)ctx_raw;
+    if (!ctx || !salt || salt_len == 0) {
+        if (ctx) ctx->salt_len = 0;
+        return;
+    }
+    size_t copy = salt_len > sizeof(ctx->salt) ? sizeof(ctx->salt) : salt_len;
+    memcpy(ctx->salt, salt, copy);
+    ctx->salt_len = (uint8_t)copy;
+}
+
 static void argon2_ops_init_common(void *c) {
     argon2_ops_ctx_t *ctx = (argon2_ops_ctx_t *)c;
     ctx->len = 0;
-    /* Do not memset buf — no sensitive data yet */
+    /* salt field intentionally NOT reset — survives across init calls */
 }
 
 static void argon2_ops_update_common(void *c, const uint8_t *d, size_t l) {
@@ -360,10 +392,10 @@ static void argon2id_ops_init  (void *c)                              { argon2_o
 static void argon2id_ops_update(void *c, const uint8_t *d, size_t l)  { argon2_ops_update_common(c, d, l); }
 static void argon2id_ops_final (void *c, uint8_t *out) {
     argon2_ops_ctx_t *ctx = (argon2_ops_ctx_t *)c;
+    const uint8_t *s   = ctx->salt_len ? ctx->salt : s_argon2_ops_salt;
+    size_t         sln = ctx->salt_len ? ctx->salt_len : sizeof(s_argon2_ops_salt);
     argon2id_hash_raw(ARGON2_OPS_TCOST, ARGON2_OPS_MCOST, ARGON2_OPS_PAR,
-                      ctx->buf, ctx->len,
-                      s_argon2_ops_salt, sizeof(s_argon2_ops_salt),
-                      out, 32);
+                      ctx->buf, ctx->len, s, sln, out, 32);
     secure_zero(ctx->buf, ctx->len);
     ctx->len = 0;
 }
@@ -386,10 +418,10 @@ static void argon2i_ops_init  (void *c)                               { argon2_o
 static void argon2i_ops_update(void *c, const uint8_t *d, size_t l)   { argon2_ops_update_common(c, d, l); }
 static void argon2i_ops_final (void *c, uint8_t *out) {
     argon2_ops_ctx_t *ctx = (argon2_ops_ctx_t *)c;
+    const uint8_t *s   = ctx->salt_len ? ctx->salt : s_argon2_ops_salt;
+    size_t         sln = ctx->salt_len ? ctx->salt_len : sizeof(s_argon2_ops_salt);
     argon2i_hash_raw(ARGON2_OPS_TCOST, ARGON2_OPS_MCOST, ARGON2_OPS_PAR,
-                     ctx->buf, ctx->len,
-                     s_argon2_ops_salt, sizeof(s_argon2_ops_salt),
-                     out, 32);
+                     ctx->buf, ctx->len, s, sln, out, 32);
     secure_zero(ctx->buf, ctx->len);
     ctx->len = 0;
 }
@@ -412,10 +444,10 @@ static void argon2d_ops_init  (void *c)                               { argon2_o
 static void argon2d_ops_update(void *c, const uint8_t *d, size_t l)   { argon2_ops_update_common(c, d, l); }
 static void argon2d_ops_final (void *c, uint8_t *out) {
     argon2_ops_ctx_t *ctx = (argon2_ops_ctx_t *)c;
+    const uint8_t *s   = ctx->salt_len ? ctx->salt : s_argon2_ops_salt;
+    size_t         sln = ctx->salt_len ? ctx->salt_len : sizeof(s_argon2_ops_salt);
     argon2d_hash_raw(ARGON2_OPS_TCOST, ARGON2_OPS_MCOST, ARGON2_OPS_PAR,
-                     ctx->buf, ctx->len,
-                     s_argon2_ops_salt, sizeof(s_argon2_ops_salt),
-                     out, 32);
+                     ctx->buf, ctx->len, s, sln, out, 32);
     secure_zero(ctx->buf, ctx->len);
     ctx->len = 0;
 }
