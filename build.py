@@ -33,8 +33,7 @@ TEMP  = ROOT / ".temp"
 _OS_MAP   = {"windows": "win", "darwin": "macos", "linux": "linux"}
 _ARCH_MAP = {"amd64": "x86_64", "aarch64": "arm64", "arm64": "arm64"}
 
-_LOG_LEVELS = {"debug": logging.DEBUG, "info": logging.INFO,
-               "warning": logging.WARNING, "error": logging.ERROR}
+_LOG_LEVELS = {"debug": logging.DEBUG, "info": logging.INFO, "warning": logging.WARNING, "error": logging.ERROR}
 
 
 def _setup_logger(level: int) -> logging.Logger:
@@ -58,16 +57,11 @@ def auto_platform():
 
 def main():
     parser = argparse.ArgumentParser(description="NextSSL build")
-    parser.add_argument("--platform",  nargs=2, metavar=("TAG", "VARIANT"),
-                        help="Platform tag and variant, e.g. win x86_64 / wasm wasm32")
-    parser.add_argument("--clean",     action="store_true",
-                        help="Wipe scratch dir before build")
+    parser.add_argument("--platform",  nargs=2, metavar=("TAG", "VARIANT"), help="Platform tag and variant, e.g. win x86_64 / wasm wasm32")
+    parser.add_argument("--clean",     action="store_true", help="Wipe scratch dir before build")
     parser.add_argument("--jobs",      type=int, default=4)
-    parser.add_argument("--log-file",  type=str, default=None,
-                        help="Override log file path (default: .temp/build_<tag>_<variant>.log)")
-    parser.add_argument("--log-level", choices=["debug", "info", "warning", "error"],
-                        default="info",
-                        help="Console log verbosity (default: info)")
+    parser.add_argument("--log-file",  type=str, default=None, help="Override log file path (default: .temp/build_<tag>_<variant>.log)")
+    parser.add_argument("--log-level", choices=["debug", "info", "warning", "error"], default="info", help="Console log verbosity (default: info)")
     args = parser.parse_args()
 
     logger = _setup_logger(_LOG_LEVELS[args.log_level])
@@ -95,24 +89,19 @@ def main():
     logger.info("Starting build (%s jobs, clean=%s)", args.jobs, args.clean)
 
     if tag == "wasm":
-        mod.build(variant=variant, build_dir=build_dir,
-                  jobs=args.jobs, clean=args.clean, log_path=log_path,
-                  log_level=args.log_level)
+        mod.build(variant=variant, build_dir=build_dir, jobs=args.jobs, clean=args.clean, log_path=log_path, log_level=args.log_level)
     else:
         bin_dir = ROOT / "bin" / tag / variant
         logger.debug("Bin dir: %s", bin_dir)
-        mod.build(variant=variant, build_dir=build_dir, bin_dir=bin_dir,
-                  jobs=args.jobs, clean=args.clean, log_path=log_path,
-                  log_level=args.log_level)
-
+        mod.build(variant=variant, build_dir=build_dir, bin_dir=bin_dir, jobs=args.jobs, clean=args.clean, log_path=log_path, log_level=args.log_level)
     logger.info("Build complete.")
-    print(f"\nDone. Log: {log_path}")
 
     # aaafter build let's cleanup .build_cache to save disk space
     if build_dir.exists():
         logger.info("Cleaning up scratch dir %s ...", build_dir.relative_to(ROOT))
         shutil.rmtree(build_dir)
 
+    print(f"\nDone. Log: {log_path}")
 
 if __name__ == "__main__":
     main()
