@@ -16,4 +16,14 @@ int dhcm_core_calculate(const DHCMParams *params, DHCMResult *result);
  * Returns NULL for DHCM_ALGO_UNKNOWN. */
 const char *dhcm_algo_name(DHCMAlgorithm algo);
 
+/* Map a canonical hyphen-form name to its DHCMAlgorithm enum value.
+ * Returns DHCM_ALGO_UNKNOWN if the name is not recognised. */
+DHCMAlgorithm dhcm_algo_from_name(const char *name);
+
+/* Convenience: calculate cost for a named algorithm at given difficulty.
+ * Selects the correct DHCMDifficultyModel automatically.
+ * Returns 0 on success, -1 on NULL args, -2 on unknown algorithm. */
+int dhcm_cost_for_name(const char *algo_name, uint32_t difficulty_bits,
+                       size_t input_size, DHCMResult *result);
+
 #endif /* DHCM_CORE_H */

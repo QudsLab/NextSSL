@@ -1,6 +1,6 @@
 /* pow_reject.c */
 #include "pow_reject.h"
-#include "../dispatcher.h"
+#include "../pow_engine.h"
 #include <time.h>
 
 int pow_client_reject_reason(
@@ -14,7 +14,7 @@ int pow_client_reject_reason(
         *out_reason = POW_REJECT_EXPIRED;
         return 0;
     }
-    if (!pow_adapter_get(challenge->algorithm_id)) {
+    if (!pow_engine_algo_valid(challenge->algorithm_id)) {
         *out_reason = POW_REJECT_ALGO_UNSUPPORTED;
         return 0;
     }

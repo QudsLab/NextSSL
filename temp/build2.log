@@ -1,0 +1,44 @@
+﻿[03:13:15] INFO     Platform: win  Variant: x86_64
+[03:13:15] INFO     Starting build (4 jobs, clean=False)
+[03:13:15] INFO     NextSSL Windows Build  variant=x86_64
+[03:13:15] INFO     NextSSL Windows Build  variant=x86_64
+[03:13:15] INFO     build_dir : C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.build_cache\win_x86_64
+[03:13:15] INFO     build_dir : C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.build_cache\win_x86_64
+[03:13:15] INFO     bin_dir   : C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\bin\win\x86_64
+[03:13:15] INFO     bin_dir   : C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\bin\win\x86_64
+[03:13:15] INFO     log_path  : C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.temp\build_win_x86_64.log
+[03:13:15] INFO     log_path  : C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.temp\build_win_x86_64.log
+[03:13:15] INFO     jobs=4  clean=False
+[03:13:15] INFO     jobs=4  clean=False
+[03:13:15] INFO     cmake    : cmake version 4.0.2
+[03:13:15] INFO     cmake    : cmake version 4.0.2
+[03:13:15] INFO     compiler : cc.EXE (Rev2, Built by MSYS2 project) 14.2.0
+[03:13:15] INFO     compiler : cc.EXE (Rev2, Built by MSYS2 project) 14.2.0
+[03:13:15] INFO     Variant  : x86_64
+[03:13:15] INFO     Variant  : x86_64
+[03:13:15] INFO     Out      : bin\win\x86_64
+[03:13:15] INFO     Out      : bin\win\x86_64
+[03:13:15] INFO     Step 1/2: CMake configure ...
+[03:13:15] INFO     Step 1/2: CMake configure ...
+[03:13:15] INFO     Running: cmake configure
+[03:13:15] INFO     Running: cmake configure
+[03:13:18] INFO     Configure: OK ΓÇö full output in C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.temp\cmake_configure.log
+[03:13:18] INFO     Configure: OK ΓÇö full output in C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.temp\cmake_configure.log
+[03:13:18] INFO     Step 2/2: Compiling (4 jobs) ...
+[03:13:18] INFO     Step 2/2: Compiling (4 jobs) ...
+[03:13:18] INFO     Running: compile
+[03:13:18] INFO     Running: compile
+[03:13:47] INFO     Removed import lib: libnextssl.dll.a
+[03:13:47] INFO     Removed import lib: libnextssl.dll.a
+[03:13:47] INFO     Build: SUCCESS
+[03:13:47] INFO     Build: SUCCESS
+[03:13:47] INFO     Artifact : bin\win\x86_64\libnextssl.dll  (2488 KB)
+[03:13:47] INFO     Artifact : bin\win\x86_64\libnextssl.dll  (2488 KB)
+[03:13:47] INFO     Full compile log : C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.temp\compile.log
+[03:13:47] INFO     Full compile log : C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.temp\compile.log
+[03:13:47] INFO     Full configure log: C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.temp\cmake_configure.log
+[03:13:47] INFO     Full configure log: C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.temp\cmake_configure.log
+[03:13:47] INFO     Build complete.
+[03:13:47] INFO     Cleaning up scratch dir .build_cache\win_x86_64 ...
+
+Done. Log: C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.temp\build_win_x86_64.log

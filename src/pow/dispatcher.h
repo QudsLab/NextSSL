@@ -1,11 +1,8 @@
-/* dispatcher.h — single point of adapter lookup for the entire pow system */
+/* dispatcher.h — algorithm name validation for the PoW subsystem */
 #ifndef POW_DISPATCHER_H
 #define POW_DISPATCHER_H
 
-#include "core/pow_types.h"
-
-/* Resolve a canonical hyphen-form algorithm name to its adapter.
- * Returns NULL if the name is not registered. */
-const pow_adapter_t *pow_adapter_get(const char *name);
+/* Returns 1 if name is a valid registered PoW algorithm, 0 otherwise. */
+int pow_dispatcher_valid(const char *name);
 
 #endif /* POW_DISPATCHER_H */

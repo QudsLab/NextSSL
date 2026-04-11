@@ -371,3 +371,84 @@ const char *dhcm_algo_name(DHCMAlgorithm algo) {
     default:               return NULL;
     }
 }
+
+DHCMAlgorithm dhcm_algo_from_name(const char *name)
+{
+    if (!name) return DHCM_ALGO_UNKNOWN;
+    /* Fast SHA-2 */
+    if (strcmp(name, "sha224")     == 0) return DHCM_SHA224;
+    if (strcmp(name, "sha256")     == 0) return DHCM_SHA256;
+    if (strcmp(name, "sha384")     == 0) return DHCM_SHA384;
+    if (strcmp(name, "sha512")     == 0) return DHCM_SHA512;
+    if (strcmp(name, "sha512-224") == 0) return DHCM_SHA512_224;
+    if (strcmp(name, "sha512-256") == 0) return DHCM_SHA512_256;
+    /* BLAKE */
+    if (strcmp(name, "blake2b")    == 0) return DHCM_BLAKE2B;
+    if (strcmp(name, "blake2s")    == 0) return DHCM_BLAKE2S;
+    if (strcmp(name, "blake3")     == 0) return DHCM_BLAKE3;
+    /* SHA-3 / Keccak / KMAC */
+    if (strcmp(name, "sha3-224")   == 0) return DHCM_SHA3_224;
+    if (strcmp(name, "sha3-256")   == 0) return DHCM_SHA3_256;
+    if (strcmp(name, "sha3-384")   == 0) return DHCM_SHA3_384;
+    if (strcmp(name, "sha3-512")   == 0) return DHCM_SHA3_512;
+    if (strcmp(name, "keccak256")  == 0) return DHCM_KECCAK256;
+    if (strcmp(name, "kmac128")    == 0) return DHCM_KMAC128;
+    if (strcmp(name, "kmac256")    == 0) return DHCM_KMAC256;
+    /* XOF */
+    if (strcmp(name, "shake128")   == 0) return DHCM_SHAKE128;
+    if (strcmp(name, "shake256")   == 0) return DHCM_SHAKE256;
+    /* Memory-hard */
+    if (strcmp(name, "argon2id")   == 0) return DHCM_ARGON2ID;
+    if (strcmp(name, "argon2i")    == 0) return DHCM_ARGON2I;
+    if (strcmp(name, "argon2d")    == 0) return DHCM_ARGON2D;
+    if (strcmp(name, "argon2")     == 0) return DHCM_ARGON2ID; /* generic alias */
+    if (strcmp(name, "scrypt")     == 0) return DHCM_SCRYPT;
+    if (strcmp(name, "yescrypt")   == 0) return DHCM_YESCRYPT;
+    if (strcmp(name, "catena")     == 0) return DHCM_CATENA;
+    if (strcmp(name, "lyra2")      == 0) return DHCM_LYRA2;
+    if (strcmp(name, "bcrypt")     == 0) return DHCM_BCRYPT;
+    /* Skein */
+    if (strcmp(name, "skein256")   == 0) return DHCM_SKEIN256;
+    if (strcmp(name, "skein512")   == 0) return DHCM_SKEIN512;
+    if (strcmp(name, "skein1024")  == 0) return DHCM_SKEIN1024;
+    /* Legacy */
+    if (strcmp(name, "sha1")       == 0) return DHCM_SHA1;
+    if (strcmp(name, "sha0")       == 0) return DHCM_SHA0;
+    if (strcmp(name, "md5")        == 0) return DHCM_MD5;
+    if (strcmp(name, "md4")        == 0) return DHCM_MD4;
+    if (strcmp(name, "md2")        == 0) return DHCM_MD2;
+    if (strcmp(name, "nt")         == 0) return DHCM_NT;
+    if (strcmp(name, "ripemd128")  == 0) return DHCM_RIPEMD128;
+    if (strcmp(name, "ripemd160")  == 0) return DHCM_RIPEMD160;
+    if (strcmp(name, "ripemd256")  == 0) return DHCM_RIPEMD256;
+    if (strcmp(name, "ripemd320")  == 0) return DHCM_RIPEMD320;
+    if (strcmp(name, "whirlpool")  == 0) return DHCM_WHIRLPOOL;
+    if (strcmp(name, "has160")     == 0) return DHCM_HAS160;
+    if (strcmp(name, "tiger")      == 0) return DHCM_TIGER;
+    if (strcmp(name, "sm3")        == 0) return DHCM_SM3;
+    return DHCM_ALGO_UNKNOWN;
+}
+
+int dhcm_cost_for_name(const char *algo_name, uint32_t difficulty_bits,
+                       size_t input_size, DHCMResult *result)
+{
+    if (!algo_name || !result) return -1;
+
+    DHCMAlgorithm id = dhcm_algo_from_name(algo_name);
+    if (id == DHCM_ALGO_UNKNOWN) return -2;
+
+    /* Memory-hard algorithms (group 0x05xx) use iteration-based difficulty */
+    DHCMDifficultyModel model =
+        ((int)id >= 0x0500 && (int)id <= 0x05FF)
+        ? DHCM_DIFFICULTY_ITERATION_BASED
+        : DHCM_DIFFICULTY_TARGET_BASED;
+
+    DHCMParams p;
+    memset(&p, 0, sizeof(p));
+    p.algorithm            = id;
+    p.difficulty_model     = model;
+    p.target_leading_zeros = difficulty_bits;
+    p.input_size           = input_size ? input_size : 64;
+
+    return dhcm_core_calculate(&p, result);
+}

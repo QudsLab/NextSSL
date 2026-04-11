@@ -1,6 +1,4 @@
-/* pow_types.h — Core PoW data structures and adapter contract.
- *
- * All types are lowercase. POWAlgoAdapter is gone; use pow_adapter_t.
+/* pow_types.h — Core PoW data structures.
  */
 #ifndef POW_TYPES_H
 #define POW_TYPES_H
@@ -9,6 +7,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "../dhcm/dhcm_types.h"
+#include "../pow_config.h"
 
 /* -------------------------------------------------------------------------
  * Challenge — issued by server, solved by client
@@ -29,6 +28,10 @@ typedef struct {
     uint64_t mu;                    /* expected Memory Units KB (from DHCM) */
 
     uint64_t expires_unix;          /* expiry timestamp (Unix seconds) */
+
+    /* Engine config — algo points to algorithm_id; kdf carries KDF params.
+     * Set by the server in pow_challenge.c, consumed by solver/verifier. */
+    pow_config_t pow_cfg;
 } pow_challenge_t;
 
 /* -------------------------------------------------------------------------
@@ -55,28 +58,7 @@ typedef struct {
     size_t   allowed_algos_count;
     uint32_t max_challenges_per_ip;
     uint32_t rate_limit_window_seconds;
-} pow_config_t;
-
-/* -------------------------------------------------------------------------
- * Adapter — one per algorithm, registered in dispatcher.c
- *
- * hash():     calls hash_lookup(name) from src/hash registry, runs init/update/final.
- *             params is NULL for simple hashes; may point to algo-specific config.
- *             Returns 0 on success.
- *
- * get_cost(): builds DHCMParams for this algo and calls dhcm_core_calculate().
- *             difficulty_bits drives expected_trials for target-based algos.
- *             Returns 0 on success; fills *result.
- * ------------------------------------------------------------------------- */
-typedef struct {
-    const char *name;   /* canonical hyphen-form — must match hash registry */
-
-    int (*hash)(const uint8_t *input, size_t len,
-                const void    *params,
-                uint8_t       *out);
-
-    int (*get_cost)(uint32_t    difficulty_bits,
-                    DHCMResult *result);
-} pow_adapter_t;
+} pow_server_config_t;
 
 #endif /* POW_TYPES_H */
+

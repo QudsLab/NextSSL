@@ -30,12 +30,12 @@
 
 POW_EXPORT
 int nextssl_pow_server_generate_challenge(
-    const pow_config_t *config,
-    const char         *algorithm_id,
-    const uint8_t      *context,
-    size_t              context_len,
-    uint32_t            difficulty_bits,
-    pow_challenge_t    *out)
+    const pow_server_config_t *config,
+    const char                *algorithm_id,
+    const uint8_t             *context,
+    size_t                     context_len,
+    uint32_t                   difficulty_bits,
+    pow_challenge_t           *out)
 {
     return pow_server_generate_challenge(config, algorithm_id,
                                          context, context_len,

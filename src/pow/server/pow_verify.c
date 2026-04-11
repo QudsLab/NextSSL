@@ -1,7 +1,7 @@
 /* pow_verify.c — server-side solution verification */
 #include "pow_verify.h"
 #include "../core/pow_difficulty.h"
-#include "../dispatcher.h"
+#include "../pow_engine.h"
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
@@ -22,9 +22,8 @@ int pow_server_verify_solution(
     /* Expiry check */
     if ((uint64_t)time(NULL) > challenge->expires_unix) return -4;
 
-    /* Get adapter */
-    const pow_adapter_t *adapter = pow_adapter_get(challenge->algorithm_id);
-    if (!adapter) return -3;
+    /* Validate algorithm */
+    if (!pow_engine_algo_valid(challenge->algorithm_id)) return -3;
 
     /* Reconstruct input: context || decimal_nonce_string */
     if (challenge->context_len > sizeof(challenge->context)) return -3;
@@ -41,8 +40,8 @@ int pow_server_verify_solution(
     memcpy(input + challenge->context_len, nonce_str, (size_t)nonce_len);
 
     uint8_t hash_out[64];
-    if (adapter->hash(input, challenge->context_len + (size_t)nonce_len,
-                      NULL, hash_out) != 0) return -3;
+    if (pow_engine_hash(input, challenge->context_len + (size_t)nonce_len,
+                        &challenge->pow_cfg, hash_out) != 0) return -3;
 
     if (pow_hash_meets_target(hash_out, challenge->target, challenge->target_len))
         *out_valid = true;
