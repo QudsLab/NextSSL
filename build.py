@@ -96,10 +96,15 @@ def main():
         mod.build(variant=variant, build_dir=build_dir, bin_dir=bin_dir, jobs=args.jobs, clean=args.clean, log_path=log_path, log_level=args.log_level)
     logger.info("Build complete.")
 
-    # aaafter build let's cleanup .build_cache to save disk space
+    # after build let's cleanup .build_cache to save disk space
     if build_dir.exists():
         logger.info("Cleaning up scratch dir %s ...", build_dir.relative_to(ROOT))
         shutil.rmtree(build_dir)
+    # and remove the .build_cache directory too
+    build_cache = ROOT / ".build_cache"
+    if build_cache.exists() and not any(build_cache.iterdir()):
+        logger.info("Removing empty scratch cache dir %s ...", build_cache.relative_to(ROOT))
+        build_cache.rmdir()
 
     print(f"\nDone. Log: {log_path}")
 
