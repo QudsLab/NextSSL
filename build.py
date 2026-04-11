@@ -23,6 +23,8 @@ import logging
 import platform
 import sys
 from pathlib import Path
+# import shutil for build scripts cleanup
+import shutil
 
 ROOT  = Path(__file__).resolve().parent
 BUILD = ROOT / "build" / "platform"
@@ -105,6 +107,11 @@ def main():
 
     logger.info("Build complete.")
     print(f"\nDone. Log: {log_path}")
+
+    # aaafter build let's cleanup .build_cache to save disk space
+    if build_dir.exists():
+        logger.info("Cleaning up scratch dir %s ...", build_dir.relative_to(ROOT))
+        shutil.rmtree(build_dir)
 
 
 if __name__ == "__main__":
