@@ -133,29 +133,23 @@ int nextssl_lyra2   (const uint8_t *data, size_t data_len,
                      uint64_t t_cost, uint32_t nrows, uint32_t ncols,
                      uint32_t key_length, const uint8_t *salt, size_t salt_len);
 
-/* ---- Balloon (optional) ---- */
-#ifdef NEXTSSL_HAS_BALLOON
+/* ---- Balloon ---- */
 int nextssl_balloon (const uint8_t *data, size_t data_len,
                      uint8_t *out, size_t out_len,
                      uint32_t s_cost, uint32_t t_cost, uint32_t n_threads,
                      const uint8_t *salt, size_t salt_len);
-#endif
 
-/* ---- Pomelo (optional) ---- */
-#ifdef NEXTSSL_HAS_POMELO
+/* ---- Pomelo ---- */
 int nextssl_pomelo  (const uint8_t *data, size_t data_len,
                      uint8_t *out, size_t out_len,
                      unsigned int t_cost, unsigned int m_cost,
-                     uint32_t key_length, const uint8_t *salt, size_t salt_len);
-#endif
+                     size_t key_length, const uint8_t *salt, size_t salt_len);
 
-/* ---- Makwa (optional) ---- */
-#ifdef NEXTSSL_HAS_MAKWA
+/* ---- Makwa ---- */
 int nextssl_makwa   (const uint8_t *data, size_t data_len,
                      uint8_t *out, size_t out_len,
-                     uint32_t work_factor, uint32_t key_length,
+                     uint32_t work_factor, size_t key_length,
                      const uint8_t *salt, size_t salt_len);
-#endif
 
 #ifdef __cplusplus
 }

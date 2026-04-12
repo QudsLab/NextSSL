@@ -14,7 +14,6 @@
  */
 #include "../../interface/hash_registry.h"
 
-#ifdef NEXTSSL_HAS_MAKWA
 #include "makwa.h"
 #include "../../../common/secure_zero.h"
 #include <string.h>
@@ -83,4 +82,3 @@ const hash_ops_t makwa_ops = {
     .mu_per_eval = 0.5,      /* ~2048-bit modulus operations, small scratch */
     .parallelism = 1
 };
-#endif /* NEXTSSL_HAS_MAKWA */

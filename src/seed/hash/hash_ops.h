@@ -66,16 +66,10 @@ extern const hash_ops_t bcrypt_ops;
 extern const hash_ops_t catena_ops;
 extern const hash_ops_t lyra2_ops;
 extern const hash_ops_t scrypt_ops;
-extern const hash_ops_t yescrypt_ops;   /* replaces balloon in this build */
-#ifdef NEXTSSL_HAS_BALLOON
+extern const hash_ops_t yescrypt_ops;
 extern const hash_ops_t balloon_ops;
-#endif
-#ifdef NEXTSSL_HAS_POMELO
 extern const hash_ops_t pomelo_ops;
-#endif
-#ifdef NEXTSSL_HAS_MAKWA
 extern const hash_ops_t makwa_ops;
-#endif
 
 /* -------------------------------------------------------------------------
  * Sponge / SHA-3 (5)

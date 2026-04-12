@@ -60,20 +60,14 @@ static void apply_catena(hash_adapter_t *a, const nextssl_hash_config_t *c)
 static void apply_lyra2(hash_adapter_t *a, const nextssl_hash_config_t *c)
 { lyra2_adapter_config(a, c->t_cost, c->nrows, c->ncols, c->key_length, c->salt, c->salt_len); }
 
-#ifdef NEXTSSL_HAS_BALLOON
 static void apply_balloon(hash_adapter_t *a, const nextssl_hash_config_t *c)
 { balloon_adapter_config(a, c->s_cost, (uint32_t)c->iterations, c->n_threads, c->salt, c->salt_len); }
-#endif
 
-#ifdef NEXTSSL_HAS_POMELO
 static void apply_pomelo(hash_adapter_t *a, const nextssl_hash_config_t *c)
 { pomelo_adapter_config(a, c->t_cost_u, c->m_cost_u, c->key_length, c->salt, c->salt_len); }
-#endif
 
-#ifdef NEXTSSL_HAS_MAKWA
 static void apply_makwa(hash_adapter_t *a, const nextssl_hash_config_t *c)
 { makwa_adapter_config(a, c->work_factor, c->key_length, c->salt, c->salt_len); }
-#endif
 
 /* ---- Static factory table --------------------------------------------- */
 static const kdf_factory_t s_kdf_table[] = {
@@ -86,15 +80,9 @@ static const kdf_factory_t s_kdf_table[] = {
     { "bcrypt",    bcrypt_adapter_create,    apply_bcrypt    },
     { "catena",    catena_adapter_create,    apply_catena    },
     { "lyra2",     lyra2_adapter_create,     apply_lyra2     },
-#ifdef NEXTSSL_HAS_BALLOON
     { "balloon",   balloon_adapter_create,   apply_balloon   },
-#endif
-#ifdef NEXTSSL_HAS_POMELO
     { "pomelo",    pomelo_adapter_create,    apply_pomelo    },
-#endif
-#ifdef NEXTSSL_HAS_MAKWA
     { "makwa",     makwa_adapter_create,     apply_makwa     },
-#endif
 };
 #define KDF_TABLE_SIZE (sizeof(s_kdf_table) / sizeof(s_kdf_table[0]))
 

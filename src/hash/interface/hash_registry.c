@@ -953,12 +953,8 @@ void hash_registry_init(void) {
     hash_register(&catena_ops);
     hash_register(&lyra2_ops);
     hash_register(&bcrypt_ops);
-#ifdef NEXTSSL_HAS_POMELO
     hash_register(&pomelo_ops);
-#endif
-#ifdef NEXTSSL_HAS_MAKWA
     hash_register(&makwa_ops);
-#endif
     hash_register(&ripemd128_ops);
     hash_register(&ripemd160_ops);
     hash_register(&ripemd256_ops);

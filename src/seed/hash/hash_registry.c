@@ -52,15 +52,9 @@ const hash_registry_entry_t HASH_REGISTRY[] = {
     { "lyra2",       &lyra2_ops,       HASH_CAT_MEMORY_HARD },
     { "scrypt",      &scrypt_ops,      HASH_CAT_MEMORY_HARD },
     { "yescrypt",    &yescrypt_ops,    HASH_CAT_MEMORY_HARD },
-#ifdef NEXTSSL_HAS_BALLOON
     { "balloon",     &balloon_ops,     HASH_CAT_MEMORY_HARD },
-#endif
-#ifdef NEXTSSL_HAS_POMELO
     { "pomelo",      &pomelo_ops,      HASH_CAT_MEMORY_HARD },
-#endif
-#ifdef NEXTSSL_HAS_MAKWA
     { "makwa",       &makwa_ops,       HASH_CAT_MEMORY_HARD },
-#endif
 
     /* ---- Sponge / SHA-3 (5) ---------------------------------- */
     { "keccak256",   &keccak256_ops,   HASH_CAT_SPONGE },

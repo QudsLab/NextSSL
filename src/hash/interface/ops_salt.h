@@ -39,19 +39,13 @@ void argon2_ops_set_salt(void *ctx, const uint8_t *salt, size_t salt_len);
 /* -------------------------------------------------------------------------
  * pomelo_ops_set_salt — applies to pomelo_ops.
  * Defined in src/hash/memory_hard/pomelo/pomelo_ops.c
- * Only available when NEXTSSL_HAS_POMELO is defined.
  * -------------------------------------------------------------------------*/
-#ifdef NEXTSSL_HAS_POMELO
 void pomelo_ops_set_salt(void *ctx, const uint8_t *salt, size_t salt_len);
-#endif
 
 /* -------------------------------------------------------------------------
  * makwa_ops_set_salt — applies to makwa_ops.
  * Defined in src/hash/memory_hard/makwa/makwa_ops.c
- * Only available when NEXTSSL_HAS_MAKWA is defined.
  * -------------------------------------------------------------------------*/
-#ifdef NEXTSSL_HAS_MAKWA
 void makwa_ops_set_salt(void *ctx, const uint8_t *salt, size_t salt_len);
-#endif
 
 #endif /* OPS_SALT_H */

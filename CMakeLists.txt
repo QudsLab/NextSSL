@@ -16,10 +16,7 @@ option(ENABLE_SPHINCS   "Enable SPHINCS+ sign family"           ON)
 
 option(ENABLE_GMSSL     "Enable GmSSL (SM2/SM3/SM4)"            OFF)
 option(ENABLE_ED448     "Enable Ed448 / X448"                   ON)
-option(ENABLE_POMELO    "Enable Pomelo memory-hard hash"        OFF)
-option(ENABLE_MAKWA     "Enable Makwa memory-hard hash"         OFF)
-option(ENABLE_BALLOON   "Enable Balloon memory-hard hash"       OFF)
-# scrypt, yescrypt, catena, lyra2 are always built (no opt-out).
+# balloon, pomelo, makwa are always built (no opt-out).
 
 option(NEXTSSL_SHARED   "Build as shared library (.dll/.so)"    ON)
 
@@ -77,15 +74,7 @@ endif()
 if(ENABLE_ED448)
     list(APPEND NEXTSSL_DEFS HAVE_ED448 HAVE_CURVE448)
 endif()
-if(ENABLE_POMELO)
-    list(APPEND NEXTSSL_DEFS NEXTSSL_HAS_POMELO)
-endif()
-if(ENABLE_MAKWA)
-    list(APPEND NEXTSSL_DEFS NEXTSSL_HAS_MAKWA)
-endif()
-if(ENABLE_BALLOON)
-    list(APPEND NEXTSSL_DEFS NEXTSSL_HAS_BALLOON)
-endif()
+list(APPEND NEXTSSL_DEFS NEXTSSL_HAS_BALLOON NEXTSSL_HAS_POMELO NEXTSSL_HAS_MAKWA)
 list(APPEND NEXTSSL_DEFS ENABLE_SCRYPT ENABLE_YESCRYPT ENABLE_CATENA ENABLE_LYRA2)
 
 # ─────────────────────────────────────────────────────────────────
@@ -118,13 +107,11 @@ list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/ref\\.c$")
 # Skein: skein_block.c is the primary; skeinBlockNo3F.c is a duplicate
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/skeinBlockNo3F\\.c$")
 
-# ── Memory-hard hashes with broken/platform deps on Windows ─────
-# These have missing headers, Linux-only syscalls, or incomplete
-# vendored code. Stub ops are provided in hash_ops_disabled_stubs.c
-list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/balloon/")
-
-list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/makwa/")
-list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/pomelo/")
+# ── Memory-hard hashes ───────────────────────────────────────────────
+# scrypt/yescrypt/catena/lyra2/balloon/pomelo/makwa always included via main GLOB.
+# Exclusions still needed for files that conflict or are included via #include:  
+# balloon/balloon.c: uses pthread_create — not needed; adapter calls hash_state_* directly
+list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/balloon/balloon\\.c$")
 # scrypt's original sha256.c requires cpusupport.h — use sha256_portable.c instead
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/scrypt/sha256\\.c$")
 # yescrypt's sha256.c uses same libcperciva_ namespace — scrypt's portable covers both
@@ -135,20 +122,7 @@ list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/yescrypt/insecure_memzer
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/yescrypt-platform\\.c$")
 
 
-# ── Conditional re-inclusion of opted-in memory-hard algos ──────
-if(ENABLE_BALLOON)
-    file(GLOB_RECURSE _extra "${SRC}/hash/memory_hard/balloon/*.c")
-    list(APPEND NEXTSSL_SOURCES ${_extra})
-endif()
-# scrypt/yescrypt/catena/lyra2 always included via main GLOB (no exclusion)
-if(ENABLE_MAKWA)
-    file(GLOB_RECURSE _extra "${SRC}/hash/memory_hard/makwa/*.c")
-    list(APPEND NEXTSSL_SOURCES ${_extra})
-endif()
-if(ENABLE_POMELO)
-    file(GLOB_RECURSE _extra "${SRC}/hash/memory_hard/pomelo/*.c")
-    list(APPEND NEXTSSL_SOURCES ${_extra})
-endif()
+# scrypt/yescrypt/catena/lyra2/balloon/pomelo/makwa always included via main GLOB
 
 # ─────────────────────────────────────────────────────────────────
 # Library target
@@ -213,9 +187,7 @@ target_include_directories(nextssl PRIVATE
 if(ENABLE_GMSSL)
     target_include_directories(nextssl PRIVATE "${SRC}/modern/asymmetric/sm2")
 endif()
-if(ENABLE_BALLOON)
-    target_include_directories(nextssl PRIVATE "${SRC}/hash/memory_hard/balloon")
-endif()
+target_include_directories(nextssl PRIVATE "${SRC}/hash/memory_hard/balloon")
 
 # ─────────────────────────────────────────────────────────────────
 # BLAKE3 SIMD — disable intrinsics on non-x86 or when unavailable
@@ -286,3 +258,6 @@ message(STATUS "  McEliece    : ${ENABLE_MCELIECE}")
 message(STATUS "  SPHINCS+    : ${ENABLE_SPHINCS}")
 message(STATUS "  GmSSL       : ${ENABLE_GMSSL}")
 message(STATUS "  Ed448/X448  : ${ENABLE_ED448}")
+message(STATUS "  Balloon     : ON (always)")
+message(STATUS "  Pomelo      : ON (always)")
+message(STATUS "  Makwa       : ON (always)")

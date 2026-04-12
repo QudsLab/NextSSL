@@ -1,7 +1,4 @@
-/* pomelo_adapter.c — Pomelo KDF hash adapter (Plan 40002)
- * Conditionally compiled when NEXTSSL_HAS_POMELO is defined. */
-#ifdef NEXTSSL_HAS_POMELO
-
+/* pomelo_adapter.c — Pomelo KDF hash adapter (Plan 40002) */
 #include "kdf_adapters.h"
 #include "../memory_hard/pomelo/pomelo.h"
 #include "../../seed/random/entropy.h"
@@ -96,5 +93,3 @@ void pomelo_adapter_config(hash_adapter_t *a,
         p->salt_set = 0;
     }
 }
-
-#endif /* NEXTSSL_HAS_POMELO */

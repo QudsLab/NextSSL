@@ -167,7 +167,6 @@ int nextssl_lyra2(const uint8_t *data, size_t data_len,
     hash_adapter_free(a); return (rc == 0) ? 0 : -2;
 }
 
-#ifdef NEXTSSL_HAS_BALLOON
 int nextssl_balloon(const uint8_t *data, size_t data_len,
                     uint8_t *out, size_t out_len,
                     uint32_t s_cost, uint32_t t_cost, uint32_t n_threads,
@@ -178,25 +177,21 @@ int nextssl_balloon(const uint8_t *data, size_t data_len,
     int rc = a->hash_fn(a->impl, data, data_len, out, out_len);
     hash_adapter_free(a); return (rc == 0) ? 0 : -2;
 }
-#endif
 
-#ifdef NEXTSSL_HAS_POMELO
 int nextssl_pomelo(const uint8_t *data, size_t data_len,
                    uint8_t *out, size_t out_len,
                    unsigned int t_cost, unsigned int m_cost,
-                   uint32_t key_length, const uint8_t *salt, size_t salt_len)
+                   size_t key_length, const uint8_t *salt, size_t salt_len)
 {
     hash_adapter_t *a = pomelo_adapter_create(); if (!a) return -1;
     pomelo_adapter_config(a, t_cost, m_cost, key_length, salt, salt_len);
     int rc = a->hash_fn(a->impl, data, data_len, out, out_len);
     hash_adapter_free(a); return (rc == 0) ? 0 : -2;
 }
-#endif
 
-#ifdef NEXTSSL_HAS_MAKWA
 int nextssl_makwa(const uint8_t *data, size_t data_len,
                   uint8_t *out, size_t out_len,
-                  uint32_t work_factor, uint32_t key_length,
+                  uint32_t work_factor, size_t key_length,
                   const uint8_t *salt, size_t salt_len)
 {
     hash_adapter_t *a = makwa_adapter_create(); if (!a) return -1;
@@ -204,4 +199,3 @@ int nextssl_makwa(const uint8_t *data, size_t data_len,
     int rc = a->hash_fn(a->impl, data, data_len, out, out_len);
     hash_adapter_free(a); return (rc == 0) ? 0 : -2;
 }
-#endif

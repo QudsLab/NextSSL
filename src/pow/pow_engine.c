@@ -51,25 +51,19 @@ static void config_bcrypt(hash_adapter_t *a, const pow_kdf_params_t *k) {
     bcrypt_adapter_config(a, k->work_factor, k->salt, k->salt_len);
 }
 
-#ifdef NEXTSSL_HAS_BALLOON
 static void config_balloon(hash_adapter_t *a, const pow_kdf_params_t *k) {
     balloon_adapter_config(a, k->s_cost, k->balloon_t, k->threads,
                            k->salt, k->salt_len);
 }
-#endif
 
-#ifdef NEXTSSL_HAS_POMELO
 static void config_pomelo(hash_adapter_t *a, const pow_kdf_params_t *k) {
     pomelo_adapter_config(a, k->pomelo_t, k->pomelo_m, 32,
                           k->salt, k->salt_len);
 }
-#endif
 
-#ifdef NEXTSSL_HAS_MAKWA
 static void config_makwa(hash_adapter_t *a, const pow_kdf_params_t *k) {
     makwa_adapter_config(a, k->work_factor, 32, k->salt, k->salt_len);
 }
-#endif
 
 /* XOF shims — output_size not yet wired (extend when adapters gain config API) */
 static void config_shake128(hash_adapter_t *a, const pow_kdf_params_t *k) {
@@ -145,16 +139,10 @@ static const pow_entry_t s_algos[] = {
     { "catena",     catena_adapter_create,     config_catena   },
     { "lyra2",      lyra2_adapter_create,      config_lyra2    },
     { "bcrypt",     bcrypt_adapter_create,     config_bcrypt   },
-    /* KDF — conditionally compiled */
-#ifdef NEXTSSL_HAS_BALLOON
+    /* KDF — always compiled */
     { "balloon",    balloon_adapter_create,    config_balloon  },
-#endif
-#ifdef NEXTSSL_HAS_POMELO
     { "pomelo",     pomelo_adapter_create,     config_pomelo   },
-#endif
-#ifdef NEXTSSL_HAS_MAKWA
     { "makwa",      makwa_adapter_create,      config_makwa    },
-#endif
 };
 
 #define N_ALGOS (sizeof(s_algos) / sizeof(s_algos[0]))

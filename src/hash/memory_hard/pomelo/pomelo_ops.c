@@ -12,7 +12,6 @@
  */
 #include "../../interface/hash_registry.h"
 
-#ifdef NEXTSSL_HAS_POMELO
 #include "pomelo.h"
 #include "../../../common/secure_zero.h"
 #include <string.h>
@@ -79,4 +78,3 @@ const hash_ops_t pomelo_ops = {
     .mu_per_eval = 16.0,    /* 2^14 KiB = 16 MiB at m_cost=14 */
     .parallelism = 1
 };
-#endif /* NEXTSSL_HAS_POMELO */

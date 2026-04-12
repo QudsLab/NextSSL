@@ -89,33 +89,27 @@ void lyra2_adapter_config(hash_adapter_t *a,
                            uint32_t key_length,   /* 0 = keep default 32       */
                            const uint8_t *salt, size_t salt_len);
 
-/* ── Balloon (optional — NEXTSSL_HAS_BALLOON) ─────────────────────────── */
-#ifdef NEXTSSL_HAS_BALLOON
+/* ── Balloon ──────────────────────────────────────────────────────────── */
 hash_adapter_t *balloon_adapter_create(void);
 void balloon_adapter_config(hash_adapter_t *a,
                              uint32_t s_cost,      /* 0 = keep default 1024     */
                              uint32_t t_cost,      /* 0 = keep default 3        */
                              uint32_t n_threads,   /* 0 = keep default 1        */
                              const uint8_t *salt, size_t salt_len); /* salt = 32 bytes */
-#endif
 
-/* ── Pomelo (optional — NEXTSSL_HAS_POMELO) ───────────────────────────── */
-#ifdef NEXTSSL_HAS_POMELO
+/* ── Pomelo ───────────────────────────────────────────────────────────── */
 hash_adapter_t *pomelo_adapter_create(void);
 void pomelo_adapter_config(hash_adapter_t *a,
-                            uint32_t t_cost,      /* 0 = keep default 1        */
-                            uint32_t m_cost,      /* 0 = keep default 14       */
-                            uint32_t key_length,  /* 0 = keep default 32       */
+                            unsigned int t_cost,  /* 0 = keep default 1        */
+                            unsigned int m_cost,  /* 0 = keep default 14       */
+                            size_t key_length,    /* 0 = keep default 32       */
                             const uint8_t *salt, size_t salt_len);
-#endif
 
-/* ── Makwa (optional — NEXTSSL_HAS_MAKWA) ─────────────────────────────── */
-#ifdef NEXTSSL_HAS_MAKWA
+/* ── Makwa ─────────────────────────────────────────────────────────────── */
 hash_adapter_t *makwa_adapter_create(void);
 void makwa_adapter_config(hash_adapter_t *a,
                            uint32_t work_factor,  /* 0 = keep default 4096     */
-                           uint32_t key_length,   /* 0 = keep default 32       */
+                           size_t key_length,     /* 0 = keep default 32       */
                            const uint8_t *salt, size_t salt_len);
-#endif
 
 #endif /* KDF_ADAPTERS_H */

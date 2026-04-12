@@ -25,14 +25,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#ifdef NEXTSSL_HAS_MAKWA
-/* Forward declaration — actual types defined in makwa.c */
+/* Portable 2048-bit modular-squaring password hash */
 int makwa_hash(const uint8_t *password, size_t passlen,
                const uint8_t *salt, size_t saltlen,
                uint32_t work_factor,
                uint8_t *out, size_t outlen);
-#else
-static inline int makwa_not_available(void) { return -1; }
-#endif
 
 #endif /* MAKWA_H */

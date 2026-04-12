@@ -59,12 +59,8 @@ extern const hash_ops_t yescrypt_ops;
 extern const hash_ops_t catena_ops;
 extern const hash_ops_t lyra2_ops;
 extern const hash_ops_t bcrypt_ops;
-#ifdef NEXTSSL_HAS_POMELO
 extern const hash_ops_t pomelo_ops;
-#endif
-#ifdef NEXTSSL_HAS_MAKWA
 extern const hash_ops_t makwa_ops;
-#endif
 
 /* Legacy ⚠️ — weak/broken, correctness-tested only */
 extern const hash_ops_t sha1_ops;
