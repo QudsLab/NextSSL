@@ -1,4 +1,4 @@
-/* root_pow.h — Exported PoW API (Plan 405)
+/* root_pow.h — exported PoW API (Plan 405)
  *
  * Header-only re-declaration of the pow_api.c exports under the unified
  * nextssl.h umbrella.  No new .c file is needed — the symbols are already
@@ -84,6 +84,68 @@ NEXTSSL_API int nextssl_pow_solution_decode(
     pow_solution_t *out);
 
 NEXTSSL_API void nextssl_pow_algo_name_normalise(char *name);
+
+/* -------------------------------------------------------------------------
+ * Cost Model API — Plan 40005/40006
+ *
+ * Formula-driven, architecture-independent cost for any algorithm.
+ * All fields in nextssl_cost_result_t are set from source-verified formulas;
+ * no benchmarking is needed for formula output.
+ *
+ * nextssl_cost_probe() additionally runs the algorithm live (n_trials times)
+ * and reports measured nanosecond timing alongside the formula values.
+ *
+ * Both calls require nextssl_init() to have been called first so that
+ * hash_cost_registry_init() has run and the plugin table has been validated.
+ * -------------------------------------------------------------------------*/
+
+/* Thin public aliases for the internal structs.
+ * Consumers include only nextssl.h / root_pow.h — they never need to
+ * include hash_cost.h or hash_cost_probe.h directly. */
+#include "../../pow/dhcm/hash_cost.h"
+#include "../../pow/dhcm/hash_cost_probe.h"
+
+typedef hash_cost_t               nextssl_cost_result_t;
+typedef hash_cost_probe_result_t  nextssl_cost_probe_result_t;
+
+/* Formula-only: compute the 8-dimension cost for algo_name at cost_params.
+ * algo_name   — canonical name, e.g. "argon2id", "sha256".
+ * cost_params — pointer to the matching hash_cost_params_*_t struct.
+ * params_size — sizeof(*cost_params).
+ * out         — filled with all 8 cost dimensions.
+ *
+ * Returns  0 on success.
+ * Returns -1 if algo_name not registered.
+ * Returns -2 if cost_params or out is NULL. */
+NEXTSSL_API int nextssl_cost_compute(
+    const char             *algo_name,
+    const void             *cost_params,
+    size_t                  params_size,
+    nextssl_cost_result_t  *out);
+
+/* Live benchmark + formula: runs the adapter n_trials times, measures
+ * nanosecond timing, and fills formula fields via hash_cost_compute().
+ *
+ * For memory-hard (DF) algorithms cost_params MUST NOT be NULL — the probe
+ * needs them to compute the formula side. For fast hashes cost_params may
+ * be NULL (defaults to 64-byte input).
+ *
+ * The adapter is created internally from algo_name + cost_params, run
+ * n_trials times (+ one warm-up), then destroyed. The caller never touches
+ * the adapter directly.
+ *
+ * Returns PROBE_OK (0) on success, or one of the PROBE_ERR_* codes. */
+NEXTSSL_API int nextssl_cost_probe(
+    const char                  *algo_name,
+    const void                  *cost_params,
+    size_t                       params_size,
+    uint32_t                     n_trials,
+    nextssl_cost_probe_result_t *out);
+
+/* Print a formatted summary of a nextssl_cost_probe_result_t to stdout.
+ * Identical to hash_cost_probe_print() but under the public API name. */
+NEXTSSL_API void nextssl_cost_probe_print(
+    const nextssl_cost_probe_result_t *result);
 
 #ifdef __cplusplus
 }

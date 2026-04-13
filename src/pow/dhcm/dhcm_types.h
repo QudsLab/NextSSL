@@ -51,6 +51,9 @@ typedef enum {
     DHCM_CATENA      = 0x0505,
     DHCM_LYRA2       = 0x0506,
     DHCM_BCRYPT      = 0x0507,
+    DHCM_BALLOON     = 0x0508,
+    DHCM_POMELO      = 0x0509,
+    DHCM_MAKWA       = 0x050A,
 
     /* Skein (0x06xx) */
     DHCM_SKEIN256    = 0x0600,
@@ -110,16 +113,39 @@ typedef struct {
 
 /* -------------------------------------------------------------------------
  * Output result
+ * Plan 40005: extended with 8-dimension cost fields from hash_cost_t.
+ * Legacy fields (work_units_per_eval, memory_units_per_eval) are preserved
+ * for backward compatibility with existing callers.
  * ------------------------------------------------------------------------- */
 typedef struct {
-    uint64_t    work_units_per_eval;       /* WU for one hash call */
-    uint64_t    memory_units_per_eval;     /* MU (KB) for one hash call */
+    /* ---- Legacy fields (kept for backward compat) ---- */
+    uint64_t    work_units_per_eval;       /* WU for one hash call (= primitive_calls) */
+    uint64_t    memory_units_per_eval;     /* MU (KiB) for one hash call (= peak_bytes/1024) */
     double      expected_trials;           /* E[N] = 2^leading_zeros for target-based */
-    uint64_t    total_work_units;          /* work_units_per_eval * expected_trials */
+    uint64_t    total_work_units;          /* work_units_per_eval × expected_trials */
     uint64_t    total_memory_units;        /* memory_units_per_eval (peak, not accumulated) */
     uint64_t    verification_work_units;   /* WU to verify one solution (= work_units_per_eval) */
-    const char *algorithm_name;            /* human-readable name */
-    const char *cost_model_version;        /* "2.0.0" */
+    const char *algorithm_name;            /* human-readable canonical name */
+
+    /* ---- Plan 40005: aggregate cost metrics (exact, per evaluation) ---- */
+    uint64_t    peak_bytes;                /* peak simultaneous heap allocation (bytes) */
+    uint64_t    bandwidth_bytes;           /* total bytes read + written through memory */
+    uint64_t    primitive_calls;           /* calls to the algorithm's inner primitive */
+    uint32_t    primitive_id;             /* HASH_PRIM_* constant */
+    uint64_t    bit_ops;                   /* primitive_calls × prim_bits */
+
+    /* ---- Plan 40005: structural properties (per evaluation) ----------- */
+    uint64_t    dependency_depth;          /* minimum sequential primitive steps */
+    uint32_t    parallel_limit;           /* internal lanes per evaluation */
+    uint8_t     access_pattern;           /* HASH_ACCESS_SEQUENTIAL/_RANDOM/_MIXED */
+    uint8_t     memory_tier;              /* HASH_MEM_TIER_STACK/L1/L2/L3/DRAM */
+    uint8_t     _pad[2];
+    uint32_t    memory_reread_factor;     /* bandwidth_bytes / peak_bytes */
+    uint32_t    cost_flags;               /* HASH_COST_* flags from hash_cost_t */
+
+    /* ---- Per-solve totals (× expected_trials) ------------------------- */
+    uint64_t    total_bandwidth_bytes;     /* bandwidth_bytes × expected_trials */
+    uint64_t    total_primitive_calls;     /* primitive_calls × expected_trials */
 } DHCMResult;
 
 #endif /* DHCM_TYPES_H */

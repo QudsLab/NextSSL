@@ -15,6 +15,7 @@
 #include "dhcm_core.h"
 #include "dhcm_difficulty.h"
 #include "dhcm_math.h"
+#include "hash_cost.h"
 #include <string.h>
 #include <stdint.h>
 
@@ -133,7 +134,6 @@ void dhcm_result_init(DHCMResult *r) {
     if (!r) return;
     memset(r, 0, sizeof(*r));
     r->expected_trials    = 1.0;
-    r->cost_model_version = "2.0.0";
 }
 
 int dhcm_core_calculate(const DHCMParams *params, DHCMResult *result) {
@@ -250,6 +250,32 @@ int dhcm_core_calculate(const DHCMParams *params, DHCMResult *result) {
         mu = 4;   /* Blowfish key schedule: ~4 KiB */
         break;
     }
+    case DHCM_BALLOON: {
+        /* balloon: s_cost from memory_kb, t_cost from iterations, parallelism */
+        uint32_t s = params->memory_kb  ? params->memory_kb  : 1024;
+        uint32_t t = params->iterations ? params->iterations : 3;
+        uint32_t n = params->parallelism? params->parallelism: 1;
+        uint64_t nb = ((uint64_t)s * 1024 + 31) / 32;
+        if (nb & 1) nb++;
+        wu = nb * (1 + (uint64_t)t * 4) * n;   /* delta=3 */
+        mu = s;
+        break;
+    }
+    case DHCM_POMELO: {
+        /* pomelo: m_cost from memory_kb encoded as log2 tier; t_cost from iterations */
+        uint32_t mc = params->memory_kb  ? params->memory_kb  : 14;
+        uint32_t tc = params->iterations ? params->iterations : 1;
+        uint64_t words = ((uint64_t)8192 << mc) / 8;
+        wu = (3 + ((uint64_t)2 << tc)) * words;
+        mu = ((uint64_t)8192 << mc) / 1024;
+        break;
+    }
+    case DHCM_MAKWA: {
+        uint32_t wf = params->iterations ? params->iterations : 4096;
+        wu = wf;   /* one Montgomery squaring per work unit */
+        mu = 2;    /* ~1.5 KiB working state, rounds up to 2 KiB */
+        break;
+    }
 
     /* ---- Skein -------------------------------------------------------- */
     case DHCM_SKEIN256:
@@ -320,6 +346,116 @@ int dhcm_core_calculate(const DHCMParams *params, DHCMResult *result) {
     result->total_memory_units       = mu;
     result->verification_work_units  = wu;
 
+    /* ---- Plan 40005: fill 8-dimension cost fields via hash_cost plugin --- */
+    {
+        const char *aname = result->algorithm_name;
+        hash_cost_t hc;
+        memset(&hc, 0, sizeof hc);
+        int ok = -1;
+
+        switch (params->algorithm) {
+        case DHCM_ARGON2ID:
+        case DHCM_ARGON2I:
+        case DHCM_ARGON2D: {
+            hash_cost_params_argon2_t ap = {
+                .m_kib  = params->memory_kb  ? params->memory_kb  : ARGON2_DEFAULT_M,
+                .t_cost = params->iterations ? params->iterations : ARGON2_DEFAULT_T,
+                .p      = params->parallelism? params->parallelism: ARGON2_DEFAULT_P,
+            };
+            ok = hash_cost_compute(aname, &ap, sizeof ap, &hc);
+            break;
+        }
+        case DHCM_SCRYPT:
+        case DHCM_YESCRYPT: {
+            hash_cost_params_scrypt_t sp = {
+                .N = params->iterations ? params->iterations : SCRYPT_DEFAULT_N,
+                .r = params->parallelism? params->parallelism: SCRYPT_DEFAULT_R,
+                .p = 1,
+            };
+            ok = hash_cost_compute(aname, &sp, sizeof sp, &hc);
+            break;
+        }
+        case DHCM_BCRYPT: {
+            hash_cost_params_bcrypt_t bp = {
+                .work_factor = params->bcrypt_cost ? params->bcrypt_cost : BCRYPT_DEFAULT_COST,
+            };
+            ok = hash_cost_compute(aname, &bp, sizeof bp, &hc);
+            break;
+        }
+        case DHCM_CATENA: {
+            hash_cost_params_catena_t cp = {
+                .garlic = (uint8_t)(params->iterations ? params->iterations : CATENA_DEFAULT_G),
+                .lambda = 2,
+            };
+            ok = hash_cost_compute(aname, &cp, sizeof cp, &hc);
+            break;
+        }
+        case DHCM_LYRA2: {
+            hash_cost_params_lyra2_t lp = {
+                .t_cost = params->iterations ? params->iterations : LYRA2_DEFAULT_T,
+                .nrows  = 8,
+                .ncols  = (uint32_t)(params->memory_kb ? params->memory_kb * 1024 / 8 / 96
+                                                       : 256),
+            };
+            ok = hash_cost_compute(aname, &lp, sizeof lp, &hc);
+            break;
+        }
+        case DHCM_BALLOON: {
+            hash_cost_params_balloon_t blp = {
+                .s_cost   = params->memory_kb  ? params->memory_kb  : 1024,
+                .t_cost   = params->iterations ? params->iterations : 3,
+                .n_threads= params->parallelism? params->parallelism: 1,
+            };
+            ok = hash_cost_compute(aname, &blp, sizeof blp, &hc);
+            break;
+        }
+        case DHCM_POMELO: {
+            hash_cost_params_pomelo_t pp = {
+                .m_cost = params->memory_kb  ? params->memory_kb  : 14,
+                .t_cost = params->iterations ? params->iterations : 1,
+            };
+            ok = hash_cost_compute(aname, &pp, sizeof pp, &hc);
+            break;
+        }
+        case DHCM_MAKWA: {
+            hash_cost_params_makwa_t mp = {
+                .work_factor = params->iterations ? params->iterations : 4096,
+            };
+            ok = hash_cost_compute(aname, &mp, sizeof mp, &hc);
+            break;
+        }
+        default: {
+            /* Fast / streaming hashes */
+            hash_cost_params_fast_t fp = {
+                .input_bytes = params->input_size ? params->input_size : 64,
+            };
+            ok = hash_cost_compute(aname, &fp, sizeof fp, &hc);
+            break;
+        }
+        }
+
+        if (ok == 0) {
+            /* Aggregate metrics */
+            result->peak_bytes       = hc.peak_bytes;
+            result->bandwidth_bytes  = hc.bandwidth_bytes;
+            result->primitive_calls  = hc.primitive_calls;
+            result->primitive_id     = hc.primitive_id;
+            result->bit_ops          = hc.bit_ops;
+            /* Structural properties */
+            result->dependency_depth    = hc.dependency_depth;
+            result->parallel_limit      = hc.parallel_limit;
+            result->access_pattern      = hc.access_pattern;
+            result->memory_tier         = hc.memory_tier;
+            result->memory_reread_factor= hc.memory_reread_factor;
+            result->cost_flags          = hc.flags;
+            /* Per-solve totals */
+            result->total_bandwidth_bytes  = (uint64_t)(hc.bandwidth_bytes
+                                              * result->expected_trials);
+            result->total_primitive_calls  = (uint64_t)(hc.primitive_calls
+                                              * result->expected_trials);
+        }
+    }
+
     return 0;
 }
 
@@ -368,6 +504,9 @@ const char *dhcm_algo_name(DHCMAlgorithm algo) {
     case DHCM_HAS160:      return "has160";
     case DHCM_TIGER:       return "tiger";
     case DHCM_SM3:         return "sm3";
+    case DHCM_BALLOON:     return "balloon";
+    case DHCM_POMELO:      return "pomelo";
+    case DHCM_MAKWA:       return "makwa";
     default:               return NULL;
     }
 }
@@ -407,6 +546,9 @@ DHCMAlgorithm dhcm_algo_from_name(const char *name)
     if (strcmp(name, "catena")     == 0) return DHCM_CATENA;
     if (strcmp(name, "lyra2")      == 0) return DHCM_LYRA2;
     if (strcmp(name, "bcrypt")     == 0) return DHCM_BCRYPT;
+    if (strcmp(name, "balloon")    == 0) return DHCM_BALLOON;
+    if (strcmp(name, "pomelo")     == 0) return DHCM_POMELO;
+    if (strcmp(name, "makwa")      == 0) return DHCM_MAKWA;
     /* Skein */
     if (strcmp(name, "skein256")   == 0) return DHCM_SKEIN256;
     if (strcmp(name, "skein512")   == 0) return DHCM_SKEIN512;
@@ -439,7 +581,7 @@ int dhcm_cost_for_name(const char *algo_name, uint32_t difficulty_bits,
 
     /* Memory-hard algorithms (group 0x05xx) use iteration-based difficulty */
     DHCMDifficultyModel model =
-        ((int)id >= 0x0500 && (int)id <= 0x05FF)
+        (id >= DHCM_ARGON2ID && id <= DHCM_MAKWA)
         ? DHCM_DIFFICULTY_ITERATION_BASED
         : DHCM_DIFFICULTY_TARGET_BASED;
 
