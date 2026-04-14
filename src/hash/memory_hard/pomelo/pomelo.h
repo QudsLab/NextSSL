@@ -1,12 +1,7 @@
-/* pomelo.h — Pomelo password hashing stub (Plan 205)
+/* pomelo.h — Pomelo password hashing (Plan 205)
  *
  * Source: Hongjun Wu (PHC submission, 2015), public domain.
- * Status: SOURCE NOT YET AVAILABLE — see note/plans/205_MISSING_ALGO_INTEGRATION.md
- *
- * To integrate:
- *   1. Obtain pomelo-v2.0.tar.gz from the PHC submissions archive.
- *   2. Copy pomelo.c and this header to src/hash/memory_hard/pomelo/
- *   3. Remove the #error pragma below.
+ * Status: implemented locally — bundled PHC submission source.
  *
  * PHS interface per PHC specification:
  *   out      — output buffer (outlen bytes)

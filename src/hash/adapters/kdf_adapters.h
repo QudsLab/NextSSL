@@ -40,7 +40,7 @@ void argon2d_adapter_config(hash_adapter_t *a,
                              uint32_t parallelism, uint32_t key_length,
                              const uint8_t *salt, size_t salt_len);
 
-/* ── Argon2 (generic alias → argon2id) ────────────────────────────────── */
+/* ── Argon2 (compatibility/default entry point) ───────────────────────── */
 hash_adapter_t *argon2_adapter_create(void);
 void argon2_adapter_config(hash_adapter_t *a,
                             uint32_t memory, uint32_t iterations,

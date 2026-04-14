@@ -58,7 +58,7 @@ extern const hash_ops_t whirlpool_ops;
 /* -------------------------------------------------------------------------
  * Memory-Hard (11)
  * -------------------------------------------------------------------------*/
-extern const hash_ops_t argon2_ops;     /* generic/default Argon2 */
+extern const hash_ops_t argon2_ops;     /* compatibility/default Argon2 */
 extern const hash_ops_t argon2d_ops;
 extern const hash_ops_t argon2i_ops;
 extern const hash_ops_t argon2id_ops;

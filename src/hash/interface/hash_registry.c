@@ -328,6 +328,7 @@ const hash_ops_t shake256_ops = {
  *   salt_len  > 0  → use caller-provided salt from ctx->salt[]
  *   Call argon2_ops_set_salt(ctx, s, len) once before init/update/final.
  * ========================================================================= */
+#include "../memory_hard/argon2.h"
 #include "../memory_hard/argon2id.h"
 #include "../memory_hard/argon2i.h"
 #include "../memory_hard/argon2d.h"
@@ -460,6 +461,36 @@ const hash_ops_t argon2d_ops = {
     .init        = argon2d_ops_init,
     .update      = argon2d_ops_update,
     .final       = argon2d_ops_final,
+    .wu_per_eval = 5000.0,
+    .mu_per_eval = 64.0,
+    .parallelism = 1
+};
+
+/* --- Argon2 (compatibility/default entry point) --- */
+static void argon2_ops_init  (void *c)                               { argon2_ops_init_common(c); }
+static void argon2_ops_update(void *c, const uint8_t *d, size_t l)   { argon2_ops_update_common(c, d, l); }
+static void argon2_ops_final (void *c, uint8_t *out) {
+    argon2_ops_ctx_t *ctx = (argon2_ops_ctx_t *)c;
+    const uint8_t *s   = ctx->salt_len ? ctx->salt : s_argon2_ops_salt;
+    size_t         sln = ctx->salt_len ? ctx->salt_len : sizeof(s_argon2_ops_salt);
+    argon2_hash(ARGON2_OPS_TCOST, ARGON2_OPS_MCOST, ARGON2_OPS_PAR,
+                ctx->buf, ctx->len, s, sln,
+                out, 32,
+                NULL, 0,
+                Argon2_id,
+                ARGON2_VERSION_NUMBER);
+    secure_zero(ctx->buf, ctx->len);
+    ctx->len = 0;
+}
+
+const hash_ops_t argon2_ops = {
+    .name        = "argon2",
+    .digest_size = 32,
+    .block_size  = 64,
+    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
+    .init        = argon2_ops_init,
+    .update      = argon2_ops_update,
+    .final       = argon2_ops_final,
     .wu_per_eval = 5000.0,
     .mu_per_eval = 64.0,
     .parallelism = 1

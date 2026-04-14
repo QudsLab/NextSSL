@@ -57,17 +57,7 @@ const hash_ops_t lyra2_ops = {
 };
 #endif
 
-/* ── argon2 (generic alias → mirrors argon2id semantics) ─────────
- * seed/hash/hash_registry.c registers &argon2_ops as a generic
- * "argon2" label.  Provide a real stub so the linker is satisfied.
- * The actual argon2id/argon2i/argon2d ops defined in hash_registry.c
- * are the ones that should be used for real operations.
- * ─────────────────────────────────────────────────────────────────*/
-const hash_ops_t argon2_ops = {
-    "argon2", 32, 64,
-    HASH_USAGE_SEED,
-    disabled_init, disabled_update, disabled_final,
-    1.0, 65536.0, 1
-};
+/* argon2_ops is provided by hash_registry.c as the compatibility/default
+ * Argon2 entry point backed by the generic argon2.h API. */
 
 /* pomelo_ops and makwa_ops are defined in their respective _ops.c files (always compiled). */
