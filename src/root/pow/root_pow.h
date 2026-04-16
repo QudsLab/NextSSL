@@ -1,8 +1,8 @@
 /* root_pow.h — exported PoW API (Plan 405)
  *
- * Header-only re-declaration of the pow_api.c exports under the unified
- * nextssl.h umbrella.  No new .c file is needed — the symbols are already
- * defined and exported by src/pow/pow_api.c.
+ * Public PoW declarations exposed under the unified nextssl.h umbrella.
+ * Implementations live in src/root/pow/root_pow.c and forward into the
+ * internal PoW modules.
  *
  * Include order: consumers get this via nextssl.h.
  */
@@ -26,12 +26,12 @@ extern "C" {
  * algorithm_id — canonical hyphen-form, e.g. "sha3-256", "blake3"
  * Returns 0 on success. */
 NEXTSSL_API int nextssl_pow_server_generate_challenge(
-    const pow_config_t *config,
-    const char         *algorithm_id,
-    const uint8_t      *context,
-    size_t              context_len,
-    uint32_t            difficulty_bits,
-    pow_challenge_t    *out);
+    const pow_server_config_t *config,
+    const char                *algorithm_id,
+    const uint8_t             *context,
+    size_t                     context_len,
+    uint32_t                   difficulty_bits,
+    pow_challenge_t           *out);
 
 /* Verify a client solution.
  * out_valid — set to 1 if valid, 0 if invalid.
