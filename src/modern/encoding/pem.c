@@ -137,7 +137,6 @@ int pem_decode(const char *pem, size_t pem_len,
     if (!footer) return PEM_ERR_FORMAT;
 
     /* Collect base64 content between body and footer, skipping whitespace */
-    size_t b64cap = (size_t)(footer - body) + 4;
     /* Use der_out as intermediate scratch only if large enough; otherwise fail */
     /* To avoid heap alloc, we write base64 into a local VLA or fixed buffer.
      * PEM bodies are typically ≤16 KB, so 24 KB stack is fine for most keys. */
