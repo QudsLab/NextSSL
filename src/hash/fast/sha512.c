@@ -38,7 +38,7 @@ static const uint64_t K[80] = {
     0x4cc5d4becb3e42b6ULL, 0x597f299cfc657e2aULL, 0x5fcb6fab3ad6faecULL, 0x6c44198c4a475817ULL
 };
 
-static void sha512_transform(SHA512_CTX *ctx, const uint8_t data[128]) {
+static void sha512_transform(SHA512_CTX *ctx, const uint8_t *data) {
     uint64_t a, b, c, d, e, f, g, h, W[80], T1, T2;
     int i;
     
