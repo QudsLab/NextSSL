@@ -4,7 +4,7 @@
  * Call nextssl_init() ONCE before any other nextssl_* function.
  *
  * Rule (Plan 40006):
- *   - All NEXTSSL_API symbols live exclusively in src/root/**
+ *   - All NEXTSSL_API symbols live exclusively under src/root/
  *   - Subsystem inits are chained through nextssl_init() only
  *   - New exports require a root_<name>.h + root_<name>.c entry
  *
