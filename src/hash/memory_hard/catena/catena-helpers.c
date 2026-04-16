@@ -33,7 +33,7 @@ void initmem(const uint8_t x[H_LEN], const uint64_t c, uint8_t *r)
 }
 
 
-void gamma(const uint8_t garlic, const uint8_t *salt, 
+void catena_gamma(const uint8_t garlic, const uint8_t *salt,
                   const uint8_t saltlen, uint8_t *r)
 {
   const uint64_t q = UINT64_C(1) << ((3*garlic+3)/4);
