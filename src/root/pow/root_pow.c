@@ -16,7 +16,11 @@
  *   The caller never sees the adapter.
  */
 #include "root_pow.h"
-#include "../../pow/pow_api.h"
+#include "../../pow/server/pow_challenge.h"
+#include "../../pow/server/pow_verify.h"
+#include "../../pow/client/pow_solver.h"
+#include "../../pow/client/pow_limits.h"
+#include "../../pow/core/pow_parser.h"
 #include "../../pow/dhcm/hash_cost.h"
 #include "../../pow/dhcm/hash_cost_probe.h"
 #include "../../hash/adapters/plain_hash_adapter.h"
@@ -196,18 +200,17 @@ void nextssl_cost_probe_print(const nextssl_cost_probe_result_t *result)
 }
 
 /* =========================================================================
- * PoW server/client API — thin forwarding layer over pow_api.c
- * (pow_api.c is the authoritative implementation; this file just re-exports
- *  under the NEXTSSL_API-decorated names declared in root_pow.h)
+ * PoW server/client API — thin forwarding layer over internal PoW modules.
+ * Public exports live here under src/root, matching the root API contract.
  * ========================================================================= */
 
 int nextssl_pow_server_generate_challenge(
-    const pow_config_t *config,
-    const char         *algorithm_id,
-    const uint8_t      *context,
-    size_t              context_len,
-    uint32_t            difficulty_bits,
-    pow_challenge_t    *out)
+    const pow_server_config_t *config,
+    const char                *algorithm_id,
+    const uint8_t             *context,
+    size_t                     context_len,
+    uint32_t                   difficulty_bits,
+    pow_challenge_t           *out)
 {
     return pow_server_generate_challenge(
                config, algorithm_id, context, context_len, difficulty_bits, out);
@@ -218,7 +221,10 @@ int nextssl_pow_server_verify_solution(
     const pow_solution_t  *solution,
     int                   *out_valid)
 {
-    return pow_server_verify_solution(challenge, solution, out_valid);
+    _Bool valid = 0;
+    int rc = pow_server_verify_solution(challenge, solution, &valid);
+    if (out_valid) *out_valid = (int)valid;
+    return rc;
 }
 
 int nextssl_pow_client_parse_challenge(
@@ -242,8 +248,11 @@ int nextssl_pow_client_check_limits(
     double                 max_time_seconds,
     int                   *out_acceptable)
 {
-    return pow_client_check_limits(
-               challenge, max_wu, max_mu_kb, max_time_seconds, out_acceptable);
+    _Bool acceptable = 0;
+    int rc = pow_client_check_limits(
+               challenge, max_wu, max_mu_kb, max_time_seconds, &acceptable);
+    if (out_acceptable) *out_acceptable = (int)acceptable;
+    return rc;
 }
 
 int nextssl_pow_challenge_encode(
