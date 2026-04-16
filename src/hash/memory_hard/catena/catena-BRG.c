@@ -38,7 +38,7 @@ void Flap(const uint8_t x[H_LEN], const uint8_t lambda,
     if (!r) return;
 
     initmem(x, c, r);
-    gamma(garlic, salt, saltlen, r);
+    catena_gamma(garlic, salt, saltlen, r);
 
     for (uint8_t k = 0; k < lambda; k++) {
         /* BRG phase */
