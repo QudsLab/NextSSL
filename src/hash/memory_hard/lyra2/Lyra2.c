@@ -289,11 +289,13 @@ int LYRA2(void *K, unsigned int kLen, const void *pwd, unsigned int pwdlen, cons
         return -1;
     }
    //Allocates pointers to each key
-    unsigned char **pKeys = malloc(nPARALLEL * sizeof (unsigned char*));
+    unsigned char **pKeys = calloc(nPARALLEL, sizeof (unsigned char*));
     if (pKeys == NULL) {
+        free(memMatrix);
         return -1;
     }
 
+#ifdef _OPENMP
 #if _OPENMP <= 201107  //OpenMP 3.X or less 
     #pragma omp parallel num_threads(nPARALLEL) default(none) /*private(pwd)*/ shared(memMatrix,  pKeys, pwd, pwdlen, salt, saltlen, nRows, nCols, kLen, timeCost)
 #endif // _OPENMP
@@ -301,6 +303,7 @@ int LYRA2(void *K, unsigned int kLen, const void *pwd, unsigned int pwdlen, cons
 #if _OPENMP > 201107  //OpenMP 4.0
     #pragma omp parallel proc_bind(spread) num_threads(nPARALLEL) default(none) /*private(pwd)*/ shared(memMatrix,  pKeys, pwd, pwdlen, salt, saltlen, nRows, nCols, kLen, timeCost)
 #endif // _OPENMP
+#endif
     {
         //============================= Basic threads variables ============================//
         int64_t gap = 1;                //Modifier to the step, assuming the values 1 or -1
@@ -466,12 +469,16 @@ int LYRA2(void *K, unsigned int kLen, const void *pwd, unsigned int pwdlen, cons
             if (row0 == sync) {
                 sync += sqrt/2;                 //increment synchronize counter
                 jP = (jP + 1) % nPARALLEL;      //change the visitation thread
+#ifdef _OPENMP
                 #pragma omp barrier
+#endif
             } 
         } 
         
         // Needs all matrix done before starting Wandering Phase.
+#ifdef _OPENMP
         #pragma omp barrier
+#endif
         
         //============================ Wandering Phase =============================//
         //=====Iteratively overwrites pseudorandom cells of the memory matrix=======//
@@ -510,10 +517,14 @@ int LYRA2(void *K, unsigned int kLen, const void *pwd, unsigned int pwdlen, cons
                 offTemp = off0;
                 off0 = offP;
                 offP = offTemp;
+#ifdef _OPENMP
                 #pragma omp barrier
+#endif
             }
         }
+#ifdef _OPENMP
         #pragma omp barrier
+#endif
         
         //==========================================================================/
 
