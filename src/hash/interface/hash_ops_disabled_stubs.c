@@ -12,10 +12,12 @@
 #include <string.h>
 #include <stdint.h>
 
+#if !defined(ENABLE_SCRYPT) || !defined(ENABLE_YESCRYPT) || !defined(ENABLE_CATENA) || !defined(ENABLE_LYRA2)
 /* ── shared no-op helpers ─────────────────────────────────────── */
 static void disabled_init  (void *ctx)                             { (void)ctx; }
 static void disabled_update(void *ctx, const uint8_t *d, size_t l){ (void)ctx; (void)d; (void)l; }
 static void disabled_final (void *ctx, uint8_t *out)               { (void)ctx; memset(out, 0, 32); }
+#endif
 
 /* ── scrypt ─────────────────────────────────────────────────────── */
 #ifndef ENABLE_SCRYPT
