@@ -769,7 +769,7 @@ static void XYcZ_initial_double(uECC_word_t * X1,
                                 uECC_word_t * Y2,
                                 const uECC_word_t * const initial_Z,
                                 uECC_Curve curve) {
-    uECC_word_t z[uECC_MAX_WORDS];
+    uECC_word_t z[uECC_MAX_WORDS] = {0};
     wordcount_t num_words = curve->num_words;
     if (initial_Z) {
         uECC_vli_set(z, initial_Z, num_words);
