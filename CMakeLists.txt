@@ -48,7 +48,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${_BIN_DIR}")  # .a / .lib
 # ─────────────────────────────────────────────────────────────────
 # Compile definitions from feature flags
 # ─────────────────────────────────────────────────────────────────
-set(NEXTSSL_DEFS NEXTSSL_BUILDING_DLL)
+set(NEXTSSL_DEFS NEXTSSL_BUILDING_DLL NEXTSSL_SUPPRESS_UPSTREAM_WARNINGS)
 
 if(ENABLE_ML_KEM)
     list(APPEND NEXTSSL_DEFS ENABLE_ML_KEM)
@@ -106,6 +106,8 @@ list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/.*/avx2/")
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/ref\\.c$")
 # Skein: skein_block.c is the primary; skeinBlockNo3F.c is a duplicate
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/skeinBlockNo3F\\.c$")
+# PoW public wrappers live in src/root/pow/root_pow.c; exclude legacy duplicate
+list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pow/pow_api\\.c$")
 
 # ── Memory-hard hashes ───────────────────────────────────────────────
 # scrypt/yescrypt/catena/lyra2/balloon/pomelo/makwa always included via main GLOB.
