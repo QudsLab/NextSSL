@@ -19,7 +19,6 @@ int ctr_mode_expand(const hash_ops_t *engine,
     uint32_t counter;
     size_t bytes_generated;
     size_t bytes_to_copy;
-    int i;
 
     /* Validate inputs */
     if (!engine || !out || out_len == 0 || out_len > SEED_MAX_OUTPUT_LEN) {
