@@ -644,6 +644,10 @@ void sm4_cbc_encrypt_blocks(const SM4_KEY *key, uint8_t iv[16], const uint8_t *i
 	uint32_t X0, X1, X2, X3, X4;
 	uint32_t X5;
 
+	if (nblocks == 0) {
+		return;
+	}
+
 	X0 = GETU32(iv     ); // X0 = IV0
 	X4 = GETU32(iv +  4); // X4 = IV1
 	X3 = GETU32(iv +  8); // X3 = IV2
