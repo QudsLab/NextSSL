@@ -75,7 +75,7 @@
     (c) = ROL((c), 10); \
 }
 
-static void ripemd160_transform(RIPEMD160_CTX *ctx, const uint8_t data[64]) {
+static void ripemd160_transform(RIPEMD160_CTX *ctx, const uint8_t *data) {
     uint32_t al, bl, cl, dl, el, ar, br, cr, dr, er, t, x[16];
     int i;
     
