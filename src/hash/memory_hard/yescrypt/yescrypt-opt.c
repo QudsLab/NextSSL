@@ -34,7 +34,7 @@
  * sub-block), and much less so for YESCRYPT_RW (which uses 2 rounds of Salsa20
  * per block except during pwxform S-box initialization).
  */
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(NEXTSSL_SUPPRESS_UPSTREAM_WARNINGS)
 #ifdef __XOP__
 #warning "Note: XOP is enabled.  That's great."
 #elif defined(__AVX512VL__)
@@ -517,7 +517,9 @@ static volatile uint64_t Smask2var = Smask2;
 /* 64-bit without AVX.  This relies on out-of-order execution and register
  * renaming.  It may actually be fastest on CPUs with AVX(2) as well - e.g.,
  * it runs great on Haswell. */
+#ifndef NEXTSSL_SUPPRESS_UPSTREAM_WARNINGS
 #warning "Note: using x86-64 inline assembly for YESCRYPT_RW.  That's great."
+#endif
 /* We need a compiler memory barrier between sub-blocks to ensure that none of
  * the writes into what was S2 during processing of the previous sub-block are
  * postponed until after a read from S0 or S1 in the inline asm code below. */
@@ -1191,7 +1193,7 @@ static int yescrypt_kdf_body(const yescrypt_shared_t *shared,
 	    N > SIZE_MAX / 128 / r)
 		goto out_EINVAL;
 	if (flags & YESCRYPT_RW) {
-		if (N / p <= 3 || (size_t)p > SIZE_MAX / Salloc)
+		if (N / p <= 3)
 			goto out_EINVAL;
 	}
 #ifdef _OPENMP
