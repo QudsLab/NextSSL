@@ -261,10 +261,7 @@ int  Skein1024_Output   (Skein1024_Ctxt_t *ctx, u08b_t * hashVal);
 #define Skein_Show_Key(bits,ctx,key,keyBytes)
 #endif
 
-#ifndef SKEIN_ERR_CHECK        /* run-time checks (e.g., bad params, uninitialized context)? */
-#define Skein_Assert(x,retCode)/* default: ignore all Asserts, for performance */
-#define Skein_assert(x)
-#elif   defined(SKEIN_ASSERT)
+#if   defined(SKEIN_ASSERT)
 #include <assert.h>     
 #define Skein_Assert(x,retCode) assert(x) 
 #define Skein_assert(x)         assert(x) 

@@ -3,6 +3,7 @@
  * Thin export layer over src/modern/.
  */
 #include "root_modern.h"
+#include "../seed/root_seed.h"
 #include "../../modern/symmetric/aes_cbc.h"
 #include "../../modern/symmetric/aes_ecb.h"
 #include "../../modern/symmetric/aes_ctr.h"
@@ -26,13 +27,53 @@
 #include "../../modern/mac/siphash.h"
 #include "../../modern/kdf/hkdf.h"
 #include "../../modern/kdf/pbkdf2.h"
+#include "../../modern/aead/monocypher.h"
 #include "../../modern/asymmetric/ed25519.h"
 #include "../../modern/asymmetric/p256.h"
 #include "../../modern/asymmetric/p384.h"
 #include "../../modern/asymmetric/p521.h"
+#include "../../common/secure_zero.h"
 #include "../../hash/interface/hash_registry.h"
 #include "../../seed/random/seed_derive_random.h"
 #include <string.h>
+
+static int modern_join_label(const char *prefix,
+                             const char *suffix,
+                             char out[257])
+{
+    size_t prefix_len = strlen(prefix);
+    size_t suffix_len = (suffix && suffix[0] != '\0') ? strlen(suffix) : 0;
+
+    if (prefix_len + suffix_len > 256) return -1;
+
+    memcpy(out, prefix, prefix_len);
+    if (suffix_len > 0) memcpy(out + prefix_len, suffix, suffix_len);
+    out[prefix_len + suffix_len] = '\0';
+    return 0;
+}
+
+static int modern_random_bytes(const char *label, uint8_t *out, size_t out_len)
+{
+    return seed_derive_random_label(label, out, out_len);
+}
+
+static int modern_derive_bytes(const char *algo,
+                               const char *label,
+                               const uint8_t *seed,
+                               size_t seed_len,
+                               uint8_t *out,
+                               size_t out_len)
+{
+    if (!seed || seed_len == 0) return -1;
+    return nextssl_seed_derive(algo, label, seed, seed_len, out, out_len);
+}
+
+static void x25519_clamp_private(uint8_t sk[32])
+{
+    sk[0] &= 248;
+    sk[31] &= 127;
+    sk[31] |= 64;
+}
 
 /* =========================================================================
  * Symmetric — AES-CBC
@@ -175,6 +216,28 @@ int nextssl_kdf_pbkdf2(
     return pbkdf2_ex(ops, pass, pass_len, salt, salt_len, iterations, out, out_len);
 }
 
+int nextssl_modern_seed_key(
+    const char    *algo,
+    const char    *label,
+    const uint8_t *seed,  size_t seed_len,
+    uint8_t       *out,   size_t out_len)
+{
+    char domain[257];
+    if (modern_join_label("modern:key:", label, domain) != 0) return -1;
+    return modern_derive_bytes(algo, domain, seed, seed_len, out, out_len);
+}
+
+int nextssl_modern_seed_nonce(
+    const char    *algo,
+    const char    *label,
+    const uint8_t *seed,  size_t seed_len,
+    uint8_t       *out,   size_t out_len)
+{
+    char domain[257];
+    if (modern_join_label("modern:nonce:", label, domain) != 0) return -1;
+    return modern_derive_bytes(algo, domain, seed, seed_len, out, out_len);
+}
+
 /* =========================================================================
  * Asymmetric — Ed25519
  * =========================================================================*/
@@ -182,10 +245,25 @@ int nextssl_asym_ed25519_keypair(uint8_t *pk, uint8_t *sk)
 {
     unsigned char seed[32];
     if (!pk || !sk) return -1;
-    if (seed_derive_random(seed, sizeof(seed)) != 0) return -1;
+    if (modern_random_bytes("modern:ed25519:keypair", seed, sizeof(seed)) != 0) return -1;
     ed25519_create_keypair(pk, sk, seed);
-    volatile uint8_t *p = (volatile uint8_t *)seed;
-    for (int i = 0; i < 32; i++) p[i] = 0;
+    secure_zero(seed, sizeof(seed));
+    return 0;
+}
+
+int nextssl_asym_ed25519_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    uint8_t material[32];
+    if (!pk || !sk) return -1;
+    if (modern_derive_bytes(algo, "modern:ed25519:keypair", seed, seed_len,
+                            material, sizeof(material)) != 0) return -1;
+    ed25519_create_keypair(pk, sk, material);
+    secure_zero(material, sizeof(material));
     return 0;
 }
 
@@ -214,25 +292,31 @@ int nextssl_asym_ed25519_verify(
  * =========================================================================*/
 int nextssl_asym_x25519_keypair(uint8_t *pk, uint8_t *sk)
 {
-    /* X25519 uses 32-byte random scalar as sk; derive pk via scalar mult */
-    unsigned char seed[32];
+    unsigned char material[32];
     if (!pk || !sk) return -1;
-    if (seed_derive_random(seed, sizeof(seed)) != 0) return -1;
-    /* Clamp the private key per RFC 7748 */
-    seed[0]  &= 248;
-    seed[31] &= 127;
-    seed[31] |= 64;
-    memcpy(sk, seed, 32);
-    /* Generate a temporary public key from a fresh keypair seed for X25519.
-     * ed25519_create_keypair derives pubkey via edge multiplication —
-     * use the clamped scalar to derive the Curve25519 public key. */
-    {
-        unsigned char tmp_pk[32], tmp_sk[64];
-        ed25519_create_keypair(tmp_pk, tmp_sk, seed);
-        memcpy(pk, tmp_pk, 32);
-    }
-    volatile uint8_t *p = (volatile uint8_t *)seed;
-    for (int i = 0; i < 32; i++) p[i] = 0;
+    if (modern_random_bytes("modern:x25519:keypair", material, sizeof(material)) != 0) return -1;
+    memcpy(sk, material, sizeof(material));
+    x25519_clamp_private(sk);
+    crypto_x25519_public_key(pk, sk);
+    secure_zero(material, sizeof(material));
+    return 0;
+}
+
+int nextssl_asym_x25519_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    uint8_t material[32];
+    if (!pk || !sk) return -1;
+    if (modern_derive_bytes(algo, "modern:x25519:keypair", seed, seed_len,
+                            material, sizeof(material)) != 0) return -1;
+    memcpy(sk, material, sizeof(material));
+    x25519_clamp_private(sk);
+    crypto_x25519_public_key(pk, sk);
+    secure_zero(material, sizeof(material));
     return 0;
 }
 
@@ -242,7 +326,7 @@ int nextssl_asym_x25519_exchange(
     const uint8_t *their_pk)
 {
     if (!shared || !sk || !their_pk) return -1;
-    ed25519_key_exchange(shared, their_pk, sk);
+    crypto_x25519(shared, sk, their_pk);
     return 0;
 }
 
@@ -251,7 +335,30 @@ int nextssl_asym_x25519_exchange(
  * =========================================================================*/
 int nextssl_asym_p256_keypair(uint8_t *pk, uint8_t *sk)
 {
-    return p256_keygen(sk, pk);
+    uint8_t seed[32];
+    int rc;
+    if (!pk || !sk) return -1;
+    if (modern_random_bytes("modern:p256:keypair", seed, sizeof(seed)) != 0) return -1;
+    rc = p256_keygen_from_seed(seed, sizeof(seed), sk, pk);
+    secure_zero(seed, sizeof(seed));
+    return rc;
+}
+
+int nextssl_asym_p256_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    uint8_t material[32];
+    int rc;
+    if (!pk || !sk) return -1;
+    if (modern_derive_bytes(algo, "modern:p256:keypair", seed, seed_len,
+                            material, sizeof(material)) != 0) return -1;
+    rc = p256_keygen_from_seed(material, sizeof(material), sk, pk);
+    secure_zero(material, sizeof(material));
+    return rc;
 }
 
 int nextssl_asym_p256_ecdh(const uint8_t *their_pk,
@@ -265,6 +372,21 @@ int nextssl_asym_p384_keypair(uint8_t *pk, uint8_t *sk)
     return p384_keygen(sk, pk);
 }
 
+int nextssl_asym_p384_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    (void)pk;
+    (void)sk;
+    (void)algo;
+    (void)seed;
+    (void)seed_len;
+    return -1;
+}
+
 int nextssl_asym_p384_ecdh(const uint8_t *their_pk,
     const uint8_t *our_sk, uint8_t *shared)
 {
@@ -274,6 +396,21 @@ int nextssl_asym_p384_ecdh(const uint8_t *their_pk,
 int nextssl_asym_p521_keypair(uint8_t *pk, uint8_t *sk)
 {
     return p521_keygen(sk, pk);
+}
+
+int nextssl_asym_p521_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    (void)pk;
+    (void)sk;
+    (void)algo;
+    (void)seed;
+    (void)seed_len;
+    return -1;
 }
 
 int nextssl_asym_p521_ecdh(const uint8_t *their_pk,
@@ -593,16 +730,41 @@ int nextssl_mac_siphash(
 #ifdef HAVE_ED448
 #include "../../modern/asymmetric/ed448.h"
 
-int nextssl_asym_ed448_keypair(uint8_t pk[57], uint8_t sk[57])
+static int ed448_keypair_from_bytes(uint8_t pk[57], uint8_t sk[57])
 {
     ed448_key key;
-    if (!pk || !sk) return -1;
+
     if (wc_ed448_init(&key) != 0) return -1;
-    if (wc_ed448_make_key(NULL, 57, &key) != 0) { wc_ed448_free(&key); return -1; }
-    word32 pk_len = 57, sk_len = 57;
-    int rc = wc_ed448_export_key(&key, sk, &sk_len, pk, &pk_len);
+    if (wc_ed448_import_private_only(sk, 57, &key) != 0) {
+        wc_ed448_free(&key);
+        return -1;
+    }
+    if (wc_ed448_make_public(&key, pk, 57) != 0) {
+        wc_ed448_free(&key);
+        return -1;
+    }
     wc_ed448_free(&key);
-    return rc == 0 ? 0 : -1;
+    return 0;
+}
+
+int nextssl_asym_ed448_keypair(uint8_t pk[57], uint8_t sk[57])
+{
+    if (!pk || !sk) return -1;
+    if (modern_random_bytes("modern:ed448:keypair", sk, 57) != 0) return -1;
+    return ed448_keypair_from_bytes(pk, sk);
+}
+
+int nextssl_asym_ed448_keypair_derand(
+    uint8_t        pk[57],
+    uint8_t        sk[57],
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    if (!pk || !sk) return -1;
+    if (modern_derive_bytes(algo, "modern:ed448:keypair", seed, seed_len,
+                            sk, 57) != 0) return -1;
+    return ed448_keypair_from_bytes(pk, sk);
 }
 
 int nextssl_asym_ed448_sign(
@@ -637,6 +799,60 @@ int nextssl_asym_ed448_verify(
     wc_ed448_free(&key);
     return (rc == 0 && res == 1) ? 1 : 0;
 }
+#else
+int nextssl_asym_ed448_keypair(uint8_t pk[57], uint8_t sk[57])
+{
+    (void)pk;
+    (void)sk;
+    return -1;
+}
+
+int nextssl_asym_ed448_keypair_derand(
+    uint8_t        pk[57],
+    uint8_t        sk[57],
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    (void)pk;
+    (void)sk;
+    (void)algo;
+    (void)seed;
+    (void)seed_len;
+    return -1;
+}
+
+int nextssl_asym_ed448_sign(
+    uint8_t *sig, size_t *sig_len,
+    const uint8_t *msg, size_t msg_len,
+    const uint8_t sk[57],
+    const uint8_t *ctx, size_t ctx_len)
+{
+    (void)sig;
+    (void)sig_len;
+    (void)msg;
+    (void)msg_len;
+    (void)sk;
+    (void)ctx;
+    (void)ctx_len;
+    return -1;
+}
+
+int nextssl_asym_ed448_verify(
+    const uint8_t *sig, size_t sig_len,
+    const uint8_t *msg, size_t msg_len,
+    const uint8_t pk[57],
+    const uint8_t *ctx, size_t ctx_len)
+{
+    (void)sig;
+    (void)sig_len;
+    (void)msg;
+    (void)msg_len;
+    (void)pk;
+    (void)ctx;
+    (void)ctx_len;
+    return -1;
+}
 #endif
 
 /* =========================================================================
@@ -644,13 +860,40 @@ int nextssl_asym_ed448_verify(
  * =========================================================================*/
 #ifdef HAVE_CURVE448
 #include "../../modern/asymmetric/curve448.h"
+#include "../../modern/asymmetric/curve448_det.h"
 
 int nextssl_asym_x448_keypair(uint8_t pk[56], uint8_t sk[56])
 {
     curve448_key key;
     if (!pk || !sk) return -1;
     if (wc_curve448_init(&key) != 0) return -1;
-    if (wc_curve448_make_key(NULL, 56, &key) != 0) { wc_curve448_free(&key); return -1; }
+    if (modern_random_bytes("modern:x448:keypair", sk, 56) != 0) {
+        wc_curve448_free(&key);
+        return -1;
+    }
+    if (wc_curve448_make_key_deterministic(&key, sk, 56) != 0) { wc_curve448_free(&key); return -1; }
+    word32 pk_len = 56, sk_len = 56;
+    int rc = wc_curve448_export_key_raw(&key, sk, &sk_len, pk, &pk_len);
+    wc_curve448_free(&key);
+    return rc == 0 ? 0 : -1;
+}
+
+int nextssl_asym_x448_keypair_derand(
+    uint8_t        pk[56],
+    uint8_t        sk[56],
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    curve448_key key;
+    if (!pk || !sk) return -1;
+    if (modern_derive_bytes(algo, "modern:x448:keypair", seed, seed_len,
+                            sk, 56) != 0) return -1;
+    if (wc_curve448_init(&key) != 0) return -1;
+    if (wc_curve448_make_key_deterministic(&key, sk, 56) != 0) {
+        wc_curve448_free(&key);
+        return -1;
+    }
     word32 pk_len = 56, sk_len = 56;
     int rc = wc_curve448_export_key_raw(&key, sk, &sk_len, pk, &pk_len);
     wc_curve448_free(&key);
@@ -678,6 +921,39 @@ fail:
     wc_curve448_free(&priv);
     return -1;
 }
+#else
+int nextssl_asym_x448_keypair(uint8_t pk[56], uint8_t sk[56])
+{
+    (void)pk;
+    (void)sk;
+    return -1;
+}
+
+int nextssl_asym_x448_keypair_derand(
+    uint8_t        pk[56],
+    uint8_t        sk[56],
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    (void)pk;
+    (void)sk;
+    (void)algo;
+    (void)seed;
+    (void)seed_len;
+    return -1;
+}
+
+int nextssl_asym_x448_exchange(
+    uint8_t *shared,
+    const uint8_t sk[56],
+    const uint8_t their_pk[56])
+{
+    (void)shared;
+    (void)sk;
+    (void)their_pk;
+    return -1;
+}
 #endif
 
 /* =========================================================================
@@ -691,8 +967,30 @@ void  nextssl_asym_rsa_free(void *kp) { rsa_keypair_free(kp); }
 
 int nextssl_asym_rsa_keygen(void *kp, unsigned bits)
 {
+    uint8_t seed[64];
+    int rc;
     if (!kp) return -1;
-    return rsa_keygen(kp, bits) == 0 ? 0 : -1;
+    if (modern_random_bytes("modern:rsa:keygen", seed, sizeof(seed)) != 0) return -1;
+    rc = rsa_keygen_seeded(kp, bits, seed, sizeof(seed));
+    secure_zero(seed, sizeof(seed));
+    return rc == 0 ? 0 : -1;
+}
+
+int nextssl_asym_rsa_keygen_derand(
+    void          *kp,
+    unsigned       bits,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    uint8_t material[64];
+    int rc;
+    if (!kp) return -1;
+    if (modern_derive_bytes(algo, "modern:rsa:keygen", seed, seed_len,
+                            material, sizeof(material)) != 0) return -1;
+    rc = rsa_keygen_seeded(kp, bits, material, sizeof(material));
+    secure_zero(material, sizeof(material));
+    return rc == 0 ? 0 : -1;
 }
 
 int nextssl_asym_rsa_pkcs1_sign(
@@ -724,6 +1022,76 @@ int nextssl_asym_rsa_oaep_decrypt(
 {
     if (!kp || !data || !data_len) return -1;
     return rsa_oaep_decrypt(kp, NULL, NULL, 0, data, data_len) ? 0 : -1;
+}
+#else
+void *nextssl_asym_rsa_alloc(void)   { return NULL; }
+void  nextssl_asym_rsa_free(void *kp) { (void)kp; }
+
+int nextssl_asym_rsa_keygen(void *kp, unsigned bits)
+{
+    (void)kp;
+    (void)bits;
+    return -1;
+}
+
+int nextssl_asym_rsa_keygen_derand(
+    void          *kp,
+    unsigned       bits,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len)
+{
+    (void)kp;
+    (void)bits;
+    (void)algo;
+    (void)seed;
+    (void)seed_len;
+    return -1;
+}
+
+int nextssl_asym_rsa_pkcs1_sign(
+    const void *kp, const uint8_t *hash, size_t hash_len,
+    uint8_t *sig, size_t *sig_len)
+{
+    (void)kp;
+    (void)hash;
+    (void)hash_len;
+    (void)sig;
+    (void)sig_len;
+    return -1;
+}
+
+int nextssl_asym_rsa_pkcs1_verify(
+    const void *pk, const uint8_t *hash, size_t hash_len,
+    const uint8_t *sig, size_t sig_len)
+{
+    (void)pk;
+    (void)hash;
+    (void)hash_len;
+    (void)sig;
+    (void)sig_len;
+    return -1;
+}
+
+int nextssl_asym_rsa_oaep_encrypt(
+    const void *pk, const uint8_t *in, size_t in_len,
+    uint8_t *out, size_t *out_len)
+{
+    (void)pk;
+    (void)in;
+    (void)in_len;
+    (void)out;
+    (void)out_len;
+    return -1;
+}
+
+int nextssl_asym_rsa_oaep_decrypt(
+    const void *kp, uint8_t *data, size_t *data_len)
+{
+    (void)kp;
+    (void)data;
+    (void)data_len;
+    return -1;
 }
 #endif /* NEXTSSL_HAS_BEARSSL */
 
@@ -763,6 +1131,52 @@ int nextssl_asym_sm2_decrypt(
 {
     if (!key || !in || !out || !out_len) return -1;
     return sm2_dec(key, in, in_len, out, out_len);
+}
+#else
+int nextssl_asym_sm2_sign(
+    const void *key, const uint8_t dgst[32],
+    uint8_t *sig, size_t *sig_len)
+{
+    (void)key;
+    (void)dgst;
+    (void)sig;
+    (void)sig_len;
+    return -1;
+}
+
+int nextssl_asym_sm2_verify(
+    const void *key, const uint8_t dgst[32],
+    const uint8_t *sig, size_t sig_len)
+{
+    (void)key;
+    (void)dgst;
+    (void)sig;
+    (void)sig_len;
+    return -1;
+}
+
+int nextssl_asym_sm2_encrypt(
+    const void *key, const uint8_t *in, size_t in_len,
+    uint8_t *out, size_t *out_len)
+{
+    (void)key;
+    (void)in;
+    (void)in_len;
+    (void)out;
+    (void)out_len;
+    return -1;
+}
+
+int nextssl_asym_sm2_decrypt(
+    const void *key, const uint8_t *in, size_t in_len,
+    uint8_t *out, size_t *out_len)
+{
+    (void)key;
+    (void)in;
+    (void)in_len;
+    (void)out;
+    (void)out_len;
+    return -1;
 }
 #endif
 

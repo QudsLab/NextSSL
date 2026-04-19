@@ -1,6 +1,6 @@
 /* ops_salt.h — Caller-configurable salt for KDF hash_ops_t adapters (Plan 40003)
  *
- * The argon2, pomelo, and makwa accumulator ops store all input via update()
+ * The argon2id, argon2i, argon2d, pomelo, and makwa accumulator ops store all input via update()
  * and run the KDF at final().  By default they use a fixed domain-separator
  * salt, which is correct for the seed system (deterministic, non-secret).
  *
@@ -30,8 +30,8 @@
 #include <stddef.h>
 
 /* -------------------------------------------------------------------------
- * argon2_ops_set_salt — applies to argon2id_ops, argon2i_ops, argon2d_ops,
- *                       and argon2_ops (all share the same context layout).
+ * argon2_ops_set_salt — applies to argon2id_ops, argon2i_ops, and argon2d_ops
+ * (all share the same context layout).
  * Defined in src/hash/interface/hash_registry.c
  * -------------------------------------------------------------------------*/
 void argon2_ops_set_salt(void *ctx, const uint8_t *salt, size_t salt_len);

@@ -63,19 +63,7 @@
         v2 = ROTL(v2, 32);                                                     \
     } while (0)
 
-#ifdef DEBUG_SIPHASH
-#include <stdio.h>
-
-#define TRACE                                                                  \
-    do {                                                                       \
-        printf("(%3zu) v0 %016" PRIx64 "\n", inlen, v0);                       \
-        printf("(%3zu) v1 %016" PRIx64 "\n", inlen, v1);                       \
-        printf("(%3zu) v2 %016" PRIx64 "\n", inlen, v2);                       \
-        printf("(%3zu) v3 %016" PRIx64 "\n", inlen, v3);                       \
-    } while (0)
-#else
 #define TRACE
-#endif
 
 #ifdef _WIN32
 #define EXPORT __declspec(dllexport)

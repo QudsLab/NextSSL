@@ -6,35 +6,23 @@
 #include "../../hash/interface/hash_registry.h"
 #include <string.h>
 
-/* Static NULL-terminated list of all canonical algorithm names.
- * Must match the 41+ entries in hash_registry.c. */
-static const char *s_algo_list[] = {
-    /* Blake */
-    "blake2b", "blake2s", "blake3",
-    /* Fast / SHA-2 */
-    "sha224", "sha256", "sha384", "sha512",
-    "sha512-224", "sha512/224", "sha512-256", "sha512/256", "sm3",
-    /* Legacy */
-    "has160", "md2", "md4", "md5", "nt", "nthash",
-    "ripemd128", "ripemd160", "ripemd256", "ripemd320",
-    "sha0", "sha1", "tiger", "whirlpool",
-    /* Memory-Hard */
-    "argon2id", "argon2i", "argon2d",
-    "scrypt",
-    "yescrypt",
-    "catena",
-    "lyra2",
-    "bcrypt",
-    /* Sponge / SHA-3 */
-    "keccak256", "sha3-224", "sha3-256", "sha3-384", "sha3-512",
-    /* XOF */
-    "shake128", "shake256",
-    /* Skein */
-    "skein256", "skein512", "skein1024",
-    /* KMAC */
-    "kmac128", "kmac256",
-    NULL  /* sentinel */
-};
+static const char *s_algo_list[HASH_REGISTRY_MAX + 1];
+static int s_algo_list_ready = 0;
+
+static void root_hash_build_algo_list(void)
+{
+    if (s_algo_list_ready) {
+        return;
+    }
+
+    hash_registry_init();
+    for (size_t i = 0; i < hash_registry_count() && i < HASH_REGISTRY_MAX; ++i) {
+        const hash_ops_t *ops = hash_registry_at(i);
+        s_algo_list[i] = ops ? ops->name : NULL;
+    }
+    s_algo_list[hash_registry_count()] = NULL;
+    s_algo_list_ready = 1;
+}
 
 /* -------------------------------------------------------------------------
  * nextssl_hash_compute
@@ -107,5 +95,6 @@ size_t nextssl_hash_block_size(const char *algo)
  * -------------------------------------------------------------------------*/
 const char **nextssl_hash_list(void)
 {
+    root_hash_build_algo_list();
     return s_algo_list;
 }

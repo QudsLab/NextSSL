@@ -134,12 +134,37 @@ NEXTSSL_API int nextssl_kdf_pbkdf2(
     uint8_t       *out,   size_t out_len);
 
 /* =========================================================================
+ * Modern seed helpers
+ * =========================================================================
+ * These helpers standardise seed-driven material generation for modern
+ * caller-material APIs by applying fixed domain prefixes for keys and nonces.
+ */
+NEXTSSL_API int nextssl_modern_seed_key(
+    const char    *algo,
+    const char    *label,
+    const uint8_t *seed,  size_t seed_len,
+    uint8_t       *out,   size_t out_len);
+
+NEXTSSL_API int nextssl_modern_seed_nonce(
+    const char    *algo,
+    const char    *label,
+    const uint8_t *seed,  size_t seed_len,
+    uint8_t       *out,   size_t out_len);
+
+/* =========================================================================
  * Asymmetric — Ed25519
  * =========================================================================
  * Keypair: pk = 32 bytes public, sk = 64 bytes private (seed ‖ public).
  * Sign: sig = 64 bytes. Verify: returns 1 valid / 0 invalid.
  */
 NEXTSSL_API int nextssl_asym_ed25519_keypair(uint8_t *pk, uint8_t *sk);
+
+NEXTSSL_API int nextssl_asym_ed25519_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len);
 
 NEXTSSL_API int nextssl_asym_ed25519_sign(
     uint8_t       *sig,
@@ -160,6 +185,13 @@ NEXTSSL_API int nextssl_asym_ed25519_verify(
  */
 NEXTSSL_API int nextssl_asym_x25519_keypair(uint8_t *pk, uint8_t *sk);
 
+NEXTSSL_API int nextssl_asym_x25519_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len);
+
 NEXTSSL_API int nextssl_asym_x25519_exchange(
     uint8_t       *shared,
     const uint8_t *sk,
@@ -171,14 +203,32 @@ NEXTSSL_API int nextssl_asym_x25519_exchange(
  * Returns -1 (stubs — replace with vetted implementation when needed).
  */
 NEXTSSL_API int nextssl_asym_p256_keypair(uint8_t *pk, uint8_t *sk);
+NEXTSSL_API int nextssl_asym_p256_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len);
 NEXTSSL_API int nextssl_asym_p256_ecdh(const uint8_t *their_pk,
     const uint8_t *our_sk, uint8_t *shared);
 
 NEXTSSL_API int nextssl_asym_p384_keypair(uint8_t *pk, uint8_t *sk);
+NEXTSSL_API int nextssl_asym_p384_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len);
 NEXTSSL_API int nextssl_asym_p384_ecdh(const uint8_t *their_pk,
     const uint8_t *our_sk, uint8_t *shared);
 
 NEXTSSL_API int nextssl_asym_p521_keypair(uint8_t *pk, uint8_t *sk);
+NEXTSSL_API int nextssl_asym_p521_keypair_derand(
+    uint8_t       *pk,
+    uint8_t       *sk,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len);
 NEXTSSL_API int nextssl_asym_p521_ecdh(const uint8_t *their_pk,
     const uint8_t *our_sk, uint8_t *shared);
 
@@ -407,10 +457,17 @@ NEXTSSL_API int nextssl_mac_siphash(
     uint8_t       *out, size_t out_len);
 
 /* =========================================================================
- * Asymmetric — Ed448 (conditional)
+ * Asymmetric — Ed448
+ * Returns -1 when Ed448 support is not compiled into this build.
  * =========================================================================*/
-#ifdef HAVE_ED448
 NEXTSSL_API int nextssl_asym_ed448_keypair(uint8_t pk[57], uint8_t sk[57]);
+
+NEXTSSL_API int nextssl_asym_ed448_keypair_derand(
+    uint8_t        pk[57],
+    uint8_t        sk[57],
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len);
 
 NEXTSSL_API int nextssl_asym_ed448_sign(
     uint8_t       *sig,   size_t *sig_len,
@@ -423,19 +480,24 @@ NEXTSSL_API int nextssl_asym_ed448_verify(
     const uint8_t *msg,   size_t  msg_len,
     const uint8_t  pk[57],
     const uint8_t *ctx,   size_t  ctx_len);
-#endif
 
 /* =========================================================================
- * Asymmetric — X448 / Curve448 (conditional)
+ * Asymmetric — X448 / Curve448
+ * Returns -1 when X448 support is not compiled into this build.
  * =========================================================================*/
-#ifdef HAVE_CURVE448
 NEXTSSL_API int nextssl_asym_x448_keypair(uint8_t pk[56], uint8_t sk[56]);
+
+NEXTSSL_API int nextssl_asym_x448_keypair_derand(
+    uint8_t        pk[56],
+    uint8_t        sk[56],
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len);
 
 NEXTSSL_API int nextssl_asym_x448_exchange(
     uint8_t       *shared,
     const uint8_t  sk[56],
     const uint8_t  their_pk[56]);
-#endif
 
 /* =========================================================================
  * Asymmetric — RSA
@@ -443,6 +505,12 @@ NEXTSSL_API int nextssl_asym_x448_exchange(
 NEXTSSL_API void *nextssl_asym_rsa_alloc(void);
 NEXTSSL_API void  nextssl_asym_rsa_free(void *kp);
 NEXTSSL_API int   nextssl_asym_rsa_keygen(void *kp, unsigned bits);
+NEXTSSL_API int   nextssl_asym_rsa_keygen_derand(
+    void          *kp,
+    unsigned       bits,
+    const char    *algo,
+    const uint8_t *seed,
+    size_t         seed_len);
 
 NEXTSSL_API int nextssl_asym_rsa_pkcs1_sign(
     const void    *kp,
@@ -464,9 +532,9 @@ NEXTSSL_API int nextssl_asym_rsa_oaep_decrypt(
     uint8_t       *data, size_t *data_len);
 
 /* =========================================================================
- * Asymmetric — SM2 (conditional)
+ * Asymmetric — SM2
+ * Returns -1 when GmSSL support is not compiled in.
  * =========================================================================*/
-#ifdef NEXTSSL_HAS_GMSSL
 NEXTSSL_API int nextssl_asym_sm2_sign(
     const void    *key,
     const uint8_t  dgst[32],
@@ -486,7 +554,6 @@ NEXTSSL_API int nextssl_asym_sm2_decrypt(
     const void    *key,
     const uint8_t *in,  size_t  in_len,
     uint8_t       *out, size_t *out_len);
-#endif
 
 /* =========================================================================
  * Encoding — Base58Check

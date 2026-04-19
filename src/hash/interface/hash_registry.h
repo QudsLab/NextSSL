@@ -17,7 +17,7 @@
  * Registry management
  * -------------------------------------------------------------------------*/
 
-/* hash_registry_init — register all 12 built-in hash algorithms.
+/* hash_registry_init — register all built-in runtime registry algorithms.
  * Safe to call multiple times; subsequent calls are no-ops. */
 void hash_registry_init(void);
 
@@ -28,6 +28,10 @@ int hash_register(const hash_ops_t *ops);
 /* hash_lookup — find a registered algorithm by name (case-sensitive).
  * Returns pointer to the algorithm's hash_ops_t, or NULL if not found. */
 const hash_ops_t *hash_lookup(const char *name);
+
+/* Canonical registry enumeration (aliases excluded). */
+size_t hash_registry_count(void);
+const hash_ops_t *hash_registry_at(size_t index);
 
 /* -------------------------------------------------------------------------
  * Extern declarations for built-in hash_ops_t instances

@@ -104,10 +104,11 @@ int nextssl_argon2d(const uint8_t *data, size_t data_len,
 int nextssl_argon2(const uint8_t *data, size_t data_len,
                    uint8_t *out, size_t out_len,
                    uint32_t memory, uint32_t iterations, uint32_t parallelism,
-                   uint32_t key_length, const uint8_t *salt, size_t salt_len)
+                   uint32_t key_length, const uint8_t *salt, size_t salt_len,
+                   argon2_type type)
 {
     hash_adapter_t *a = argon2_adapter_create(); if (!a) return -1;
-    argon2_adapter_config(a, memory, iterations, parallelism, key_length, salt, salt_len);
+    argon2_adapter_config(a, memory, iterations, parallelism, key_length, salt, salt_len, type);
     int rc = a->hash_fn(a->impl, data, data_len, out, out_len);
     hash_adapter_free(a); return (rc == 0) ? 0 : -2;
 }

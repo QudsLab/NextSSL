@@ -43,7 +43,6 @@ const hash_registry_entry_t HASH_REGISTRY[] = {
     { "whirlpool",   &whirlpool_ops,   HASH_CAT_LEGACY },
 
     /* ---- Memory-Hard (8) ------------------------------------- */
-    { "argon2",      &argon2_ops,      HASH_CAT_MEMORY_HARD },
     { "argon2d",     &argon2d_ops,     HASH_CAT_MEMORY_HARD },
     { "argon2i",     &argon2i_ops,     HASH_CAT_MEMORY_HARD },
     { "argon2id",    &argon2id_ops,    HASH_CAT_MEMORY_HARD },

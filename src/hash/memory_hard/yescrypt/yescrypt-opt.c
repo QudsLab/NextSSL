@@ -34,22 +34,6 @@
  * sub-block), and much less so for YESCRYPT_RW (which uses 2 rounds of Salsa20
  * per block except during pwxform S-box initialization).
  */
-#if defined(__GNUC__) && !defined(NEXTSSL_SUPPRESS_UPSTREAM_WARNINGS)
-#ifdef __XOP__
-#warning "Note: XOP is enabled.  That's great."
-#elif defined(__AVX512VL__)
-#warning "Note: AVX512VL is enabled.  That's great."
-#elif defined(__AVX__)
-#warning "Note: AVX is enabled, which is great for classic scrypt and YESCRYPT_WORM, but is sometimes slightly slower than plain SSE2 for YESCRYPT_RW"
-#elif defined(__SSE2__)
-#warning "Note: AVX and XOP are not enabled, which is great for YESCRYPT_RW, but they would substantially improve performance at classic scrypt and YESCRYPT_WORM"
-#elif defined(__x86_64__) || defined(__i386__)
-#warning "SSE2 not enabled.  Expect poor performance."
-#else
-#warning "Note: building generic code for non-x86.  That's OK."
-#endif
-#endif
-
 /*
  * The SSE4 code version has fewer instructions than the generic SSE2 version,
  * but all of the instructions are SIMD, thereby wasting the scalar execution
@@ -1073,6 +1057,8 @@ static void smix(uint8_t *B, size_t r, uint32_t N, uint32_t p, uint32_t t,
 #ifdef _OPENMP
 		salsa20_blk_t *XYp = &XY[i * (2 * s)];
 #else
+		/* Scalar fallback: all lanes reuse the single XY workspace because there is
+		 * no parallel execution when OpenMP support is absent. */
 		salsa20_blk_t *XYp = XY;
 #endif
 		pwxform_ctx_t *ctx_i = NULL;
@@ -1103,6 +1089,7 @@ static void smix(uint8_t *B, size_t r, uint32_t N, uint32_t p, uint32_t t,
 #ifdef _OPENMP
 			salsa20_blk_t *XYp = &XY[i * (2 * s)];
 #else
+			/* Scalar fallback: lane-local scratch collapses to the shared XY buffer. */
 			salsa20_blk_t *XYp = XY;
 #endif
 			pwxform_ctx_t *ctx_i = NULL;

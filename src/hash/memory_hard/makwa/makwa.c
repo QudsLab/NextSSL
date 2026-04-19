@@ -26,6 +26,7 @@
 #include "makwa.h"
 #include "../../fast/sha256.h"
 #include "../../../common/secure_zero.h"
+#include <stdatomic.h>
 #include <string.h>
 #include <stdint.h>
 
@@ -83,7 +84,7 @@ static const uint8_t N_BE[256] = {
 static bn_t     g_n;        /* modulus N as little-endian limbs              */
 static bn_t     g_r2n;      /* R² mod N = 2^4096 mod N, for to-Montgomery   */
 static uint32_t g_n0;       /* -N⁻¹ mod 2^32 (Montgomery constant)          */
-static int      g_init = 0; /* 0 = not yet initialised                       */
+static atomic_int g_init = ATOMIC_VAR_INIT(0); /* 0=off, 1=busy, 2=ready */
 
 /* ────────────────────────────────────────────────────────────────────────
  * Big-integer helper functions
@@ -226,7 +227,17 @@ static void pow2_mod(int k, const bn_t n, bn_t result)
  */
 static void makwa_init_params(void)
 {
-    if (g_init) return;
+    int state = atomic_load_explicit(&g_init, memory_order_acquire);
+    if (state == 2) return;
+
+    state = 0;
+    if (!atomic_compare_exchange_strong_explicit(
+            &g_init, &state, 1,
+            memory_order_acq_rel, memory_order_acquire)) {
+        while (atomic_load_explicit(&g_init, memory_order_acquire) == 1) {
+        }
+        return;
+    }
 
     /* Load N into little-endian limbs */
     bn_from_be(N_BE, g_n);
@@ -242,7 +253,7 @@ static void makwa_init_params(void)
     /* Compute R² mod N = 2^4096 mod N */
     pow2_mod(4096, g_n, g_r2n);
 
-    g_init = 1;
+    atomic_store_explicit(&g_init, 2, memory_order_release);
 }
 
 /* ────────────────────────────────────────────────────────────────────────

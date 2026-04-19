@@ -116,7 +116,11 @@ int hash_cost_probe(hash_adapter_t           *adapter,
     }
 
     /* ---- Benchmark: run adapter n_trials times ----------------------- */
-    /* Fixed 64-byte dummy input — content doesn't affect cost, only length */
+    /* Fixed 64-byte dummy input — content doesn't affect cost, only length.
+     * DF adapters ignore the streaming input length in their hash_fn path and
+     * instead use their configured password/salt/work parameters, so this
+     * buffer matters mainly for fast hashes where block count scales with
+     * message length. */
     static const uint8_t dummy_input[64] = {
         0x54, 0x68, 0x69, 0x73, 0x20, 0x69, 0x73, 0x20,
         0x61, 0x20, 0x44, 0x48, 0x43, 0x4d, 0x20, 0x70,

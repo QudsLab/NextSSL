@@ -27,7 +27,11 @@ typedef unsigned char byte ;
 #endif
 
 #ifndef nPARALLEL
+#ifdef _OPENMP
         #define nPARALLEL 2                                     //Number of parallel threads
+#else
+        #define nPARALLEL 1                                     //Scalar fallback when OpenMP is unavailable
+#endif
 #endif
 
 #define ROW_LEN_INT64 (BLOCK_LEN_INT64 * N_COLS)                //Total length of a row: N_COLS blocks

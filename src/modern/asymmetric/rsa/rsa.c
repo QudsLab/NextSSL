@@ -28,6 +28,15 @@ static int seed_drbg(br_hmac_drbg_context *rng)
     return 0;
 }
 
+static int seed_drbg_seeded(br_hmac_drbg_context *rng,
+                            const uint8_t *seed,
+                            size_t seed_len)
+{
+    if (!rng || !seed || seed_len == 0) return -1;
+    br_hmac_drbg_init(rng, &br_sha256_vtable, seed, seed_len);
+    return 0;
+}
+
 /* ---- Lifecycle ----------------------------------------------------------- */
 
 rsa_keypair_t *rsa_keypair_alloc(void)
@@ -124,6 +133,34 @@ int rsa_keygen(rsa_keypair_t *kp, unsigned bits)
     );
 
     /* Wipe PRNG state — it contains entropy and derived key data */
+    memset(&rng, 0, sizeof(rng));
+
+    if (!ok) { rsa_keypair_wipe(kp); return -1; }
+    kp->key_bits = bits;
+    return 0;
+}
+
+int rsa_keygen_seeded(rsa_keypair_t *kp, unsigned bits,
+                      const uint8_t *seed, size_t seed_len)
+{
+    if (!kp) return -1;
+    if (!seed || seed_len == 0) return -1;
+    if (bits < RSA_MIN_BITS || bits > RSA_MAX_BITS) return -1;
+    if (bits != 2048 && bits != 3072 && bits != 4096) return -1;
+
+    br_hmac_drbg_context rng;
+    if (seed_drbg_seeded(&rng, seed, seed_len) != 0) return -1;
+
+    memset(kp, 0, sizeof(*kp));
+
+    br_rsa_keygen gen = br_rsa_keygen_get_default();
+    uint32_t ok = gen(
+        (const br_prng_class **)&rng,
+        &kp->sk, kp->priv_buf,
+        &kp->pk,  kp->pub_buf,
+        bits, RSA_DEFAULT_PUBEXP
+    );
+
     memset(&rng, 0, sizeof(rng));
 
     if (!ok) { rsa_keypair_wipe(kp); return -1; }

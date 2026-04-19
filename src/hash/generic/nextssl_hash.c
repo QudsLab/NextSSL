@@ -22,7 +22,7 @@ static const nextssl_hash_config_t s_zero_config;
  * KDF factory entry: name → create function + apply-config function
  * -------------------------------------------------------------------------*/
 typedef hash_adapter_t *(*kdf_create_fn)(void);
-typedef void            (*kdf_apply_fn) (hash_adapter_t *a,
+typedef int             (*kdf_apply_fn) (hash_adapter_t *a,
                                          const nextssl_hash_config_t *cfg);
 
 typedef struct {
@@ -33,48 +33,55 @@ typedef struct {
 
 /* ---- Per-KDF apply helpers -------------------------------------------- */
 
-static void apply_argon2id(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ argon2id_adapter_config(a, c->memory, c->iterations, c->parallelism, c->key_length, c->salt, c->salt_len); }
+static int apply_argon2(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{
+    if (!c->argon2_type_set) return -1;
+    if (c->argon2_type != Argon2_d && c->argon2_type != Argon2_i && c->argon2_type != Argon2_id)
+        return -1;
+    argon2_adapter_config(a, c->memory, c->iterations, c->parallelism,
+                          c->key_length, c->salt, c->salt_len, c->argon2_type);
+    return 0;
+}
 
-static void apply_argon2i(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ argon2i_adapter_config(a, c->memory, c->iterations, c->parallelism, c->key_length, c->salt, c->salt_len); }
+static int apply_argon2id(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ argon2id_adapter_config(a, c->memory, c->iterations, c->parallelism, c->key_length, c->salt, c->salt_len); return 0; }
 
-static void apply_argon2d(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ argon2d_adapter_config(a, c->memory, c->iterations, c->parallelism, c->key_length, c->salt, c->salt_len); }
+static int apply_argon2i(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ argon2i_adapter_config(a, c->memory, c->iterations, c->parallelism, c->key_length, c->salt, c->salt_len); return 0; }
 
-static void apply_argon2(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ argon2_adapter_config(a, c->memory, c->iterations, c->parallelism, c->key_length, c->salt, c->salt_len); }
+static int apply_argon2d(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ argon2d_adapter_config(a, c->memory, c->iterations, c->parallelism, c->key_length, c->salt, c->salt_len); return 0; }
 
-static void apply_scrypt(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ scrypt_adapter_config(a, c->N, c->r, c->p, c->key_length, c->salt, c->salt_len); }
+static int apply_scrypt(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ scrypt_adapter_config(a, c->N, c->r, c->p, c->key_length, c->salt, c->salt_len); return 0; }
 
-static void apply_yescrypt(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ yescrypt_adapter_config(a, c->N, c->r, c->p, c->key_length, c->salt, c->salt_len); }
+static int apply_yescrypt(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ yescrypt_adapter_config(a, c->N, c->r, c->p, c->key_length, c->salt, c->salt_len); return 0; }
 
-static void apply_bcrypt(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ bcrypt_adapter_config(a, c->work_factor, c->salt, c->salt_len); }
+static int apply_bcrypt(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ bcrypt_adapter_config(a, c->work_factor, c->salt, c->salt_len); return 0; }
 
-static void apply_catena(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ catena_adapter_config(a, c->lambda, c->garlic, c->key_length, c->salt, c->salt_len); }
+static int apply_catena(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ catena_adapter_config(a, c->lambda, c->garlic, c->key_length, c->salt, c->salt_len); return 0; }
 
-static void apply_lyra2(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ lyra2_adapter_config(a, c->t_cost, c->nrows, c->ncols, c->key_length, c->salt, c->salt_len); }
+static int apply_lyra2(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ lyra2_adapter_config(a, c->t_cost, c->nrows, c->ncols, c->key_length, c->salt, c->salt_len); return 0; }
 
-static void apply_balloon(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ balloon_adapter_config(a, c->s_cost, (uint32_t)c->iterations, c->n_threads, c->salt, c->salt_len); }
+static int apply_balloon(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ balloon_adapter_config(a, c->s_cost, (uint32_t)c->iterations, c->n_threads, c->salt, c->salt_len); return 0; }
 
-static void apply_pomelo(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ pomelo_adapter_config(a, c->t_cost_u, c->m_cost_u, c->key_length, c->salt, c->salt_len); }
+static int apply_pomelo(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ pomelo_adapter_config(a, c->t_cost_u, c->m_cost_u, c->key_length, c->salt, c->salt_len); return 0; }
 
-static void apply_makwa(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{ makwa_adapter_config(a, c->work_factor, c->key_length, c->salt, c->salt_len); }
+static int apply_makwa(hash_adapter_t *a, const nextssl_hash_config_t *c)
+{ makwa_adapter_config(a, c->work_factor, c->key_length, c->salt, c->salt_len); return 0; }
 
 /* ---- Static factory table --------------------------------------------- */
 static const kdf_factory_t s_kdf_table[] = {
+    { "argon2",    argon2_adapter_create,    apply_argon2    },
     { "argon2id",  argon2id_adapter_create,  apply_argon2id  },
     { "argon2i",   argon2i_adapter_create,   apply_argon2i   },
     { "argon2d",   argon2d_adapter_create,   apply_argon2d   },
-    { "argon2",    argon2_adapter_create,    apply_argon2    },
     { "scrypt",    scrypt_adapter_create,    apply_scrypt    },
     { "yescrypt",  yescrypt_adapter_create,  apply_yescrypt  },
     { "bcrypt",    bcrypt_adapter_create,    apply_bcrypt    },
@@ -102,7 +109,10 @@ int nextssl_hash(const char    *algo_name,
         if (strcmp(algo_name, s_kdf_table[i].name) == 0) {
             hash_adapter_t *a = s_kdf_table[i].create();
             if (!a) return -2;
-            s_kdf_table[i].apply(a, config);
+            if (s_kdf_table[i].apply(a, config) != 0) {
+                hash_adapter_free(a);
+                return -2;
+            }
             int rc = a->hash_fn(a->impl, data, data_len, out, out_len);
             hash_adapter_free(a);
             return (rc == 0) ? 0 : -2;

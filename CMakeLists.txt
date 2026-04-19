@@ -5,7 +5,12 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 # ─────────────────────────────────────────────────────────────────
-# Feature flags (all default ON for full build, can be toggled)
+# Feature flags
+#
+# NextSSL is treated as a unified library: core algorithm families are forced
+# on so the public surface does not shape-shift across builds. The legacy cache
+# options remain for compatibility with existing presets, but the build below
+# normalises the core families back to ON.
 # ─────────────────────────────────────────────────────────────────
 option(ENABLE_ML_KEM    "Enable ML-KEM (Kyber) KEM family"     ON)
 option(ENABLE_ML_DSA    "Enable ML-DSA (Dilithium) sign family" ON)
@@ -17,6 +22,14 @@ option(ENABLE_SPHINCS   "Enable SPHINCS+ sign family"           ON)
 option(ENABLE_GMSSL     "Enable GmSSL (SM2/SM3/SM4)"            OFF)
 option(ENABLE_ED448     "Enable Ed448 / X448"                   ON)
 # balloon, pomelo, makwa are always built (no opt-out).
+
+set(ENABLE_ML_KEM ON)
+set(ENABLE_ML_DSA ON)
+set(ENABLE_FALCON ON)
+set(ENABLE_HQC ON)
+set(ENABLE_MCELIECE ON)
+set(ENABLE_SPHINCS ON)
+set(ENABLE_ED448 ON)
 
 option(NEXTSSL_SHARED   "Build as shared library (.dll/.so)"    ON)
 
@@ -50,30 +63,17 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${_BIN_DIR}")  # .a / .lib
 # ─────────────────────────────────────────────────────────────────
 set(NEXTSSL_DEFS NEXTSSL_BUILDING_DLL NEXTSSL_SUPPRESS_UPSTREAM_WARNINGS)
 
-if(ENABLE_ML_KEM)
-    list(APPEND NEXTSSL_DEFS ENABLE_ML_KEM)
-endif()
-if(ENABLE_ML_DSA)
-    list(APPEND NEXTSSL_DEFS ENABLE_ML_DSA)
-endif()
-if(ENABLE_FALCON)
-    list(APPEND NEXTSSL_DEFS ENABLE_FALCON)
-endif()
-if(ENABLE_HQC)
-    list(APPEND NEXTSSL_DEFS ENABLE_HQC)
-endif()
-if(ENABLE_MCELIECE)
-    list(APPEND NEXTSSL_DEFS ENABLE_MCELIECE)
-endif()
-if(ENABLE_SPHINCS)
-    list(APPEND NEXTSSL_DEFS ENABLE_SPHINCS)
-endif()
+list(APPEND NEXTSSL_DEFS
+    ENABLE_ML_KEM
+    ENABLE_ML_DSA
+    ENABLE_FALCON
+    ENABLE_HQC
+    ENABLE_MCELIECE
+    ENABLE_SPHINCS)
 if(ENABLE_GMSSL)
     list(APPEND NEXTSSL_DEFS NEXTSSL_HAS_GMSSL)
 endif()
-if(ENABLE_ED448)
-    list(APPEND NEXTSSL_DEFS HAVE_ED448 HAVE_CURVE448)
-endif()
+list(APPEND NEXTSSL_DEFS HAVE_ED448 HAVE_CURVE448)
 list(APPEND NEXTSSL_DEFS NEXTSSL_HAS_BALLOON NEXTSSL_HAS_POMELO NEXTSSL_HAS_MAKWA)
 list(APPEND NEXTSSL_DEFS ENABLE_SCRYPT ENABLE_YESCRYPT ENABLE_CATENA ENABLE_LYRA2)
 

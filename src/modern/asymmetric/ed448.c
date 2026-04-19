@@ -33,16 +33,6 @@
 #include "wolf_shim.h"
 
 #ifdef HAVE_ED448
-#if 0
-    /* set NO_WRAPPERS before headers, use direct internal f()s not wrappers */
-    #define FIPS_NO_WRAPPERS
-
-       #ifdef USE_WINDOWS_API
-               #pragma code_seg(".fipsA$f")
-               #pragma const_seg(".fipsB$f")
-       #endif
-#endif
-
 #include "ed448.h"
 #include "fe_448.h"
 #include "ge_448.h"
@@ -59,15 +49,6 @@
 #define ED448CTX_SIZE    8
 /* Context to pass to hash when signing and verifying. */
 static const byte ed448Ctx[ED448CTX_SIZE+1] = "SigEd448";
-#endif
-
-#if 0
-    const unsigned int wolfCrypt_FIPS_ed448_ro_sanity[2] =
-                                                     { 0x1a2b3c4d, 0x00000007 };
-    int wolfCrypt_FIPS_ED448_sanity(void)
-    {
-        return 0;
-    }
 #endif
 
 static int ed448_hash_init(ed448_key* key, wc_Shake *sha)
@@ -183,56 +164,6 @@ static int ed448_hash(ed448_key* key, const byte* in, word32 inLen,
     return ret;
 }
 
-#if 0
-/* Performs a Pairwise Consistency Test on an Ed448 key pair.
- *
- * @param [in] key  Ed448 key to test.
- * @param [in] rng  Random number generator to use to create random digest.
- * @return  0 on success.
- * @return  ECC_PCT_E when signing or verification fail.
- * @return  Other -ve when random number generation fails.
- */
-static int ed448_pairwise_consistency_test(ed448_key* key, WC_RNG* rng)
-{
-    int err = 0;
-    byte digest[WC_SHA256_DIGEST_SIZE];
-    word32 digestLen = WC_SHA256_DIGEST_SIZE;
-    byte sig[ED448_SIG_SIZE];
-    word32 sigLen = ED448_SIG_SIZE;
-    int res = 0;
-
-    /* Generate a random digest to sign. */
-    err = wc_RNG_GenerateBlock(rng, digest, digestLen);
-    if (err == 0) {
-        /* Sign digest without context. */
-        err = wc_ed448_sign_msg_ex(digest, digestLen, sig, &sigLen, key, Ed448,
-            NULL, 0);
-        if (err != 0) {
-            /* Any sign failure means test failed. */
-            err = ECC_PCT_E;
-        }
-    }
-    if (err == 0) {
-        /* Verify digest without context. */
-        err = wc_ed448_verify_msg_ex(sig, sigLen, digest, digestLen, &res, key,
-            Ed448, NULL, 0);
-        if (err != 0) {
-            /* Any verification operation failure means test failed. */
-            err = ECC_PCT_E;
-        }
-        /* Check whether the signature verified. */
-        else if (res == 0) {
-            /* Test failed. */
-            err = ECC_PCT_E;
-        }
-    }
-
-    ForceZero(sig, sigLen);
-
-    return err;
-}
-#endif
-
 /* Derive the public key for the private key.
  *
  * key       [in]  Ed448 key object.
@@ -319,12 +250,6 @@ int wc_ed448_make_key(WC_RNG* rng, int keySz, ed448_key* key)
         /* put public key after private key, on the same buffer */
         XMEMMOVE(key->k + ED448_KEY_SIZE, key->p, ED448_PUB_KEY_SIZE);
 
-    #if 0
-        ret = wc_ed448_check_key(key);
-        if (ret == 0) {
-            ret = ed448_pairwise_consistency_test(key, rng);
-        }
-    #endif
     }
 
     return ret;

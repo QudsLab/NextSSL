@@ -13,7 +13,7 @@ typedef struct {
     uint32_t t_cost;
     uint32_t n_threads;
     uint8_t  salt[SALT_LEN];  /* always SALT_LEN=32 bytes */
-    int      salt_set;         /* 0 = random each call, 1 = fixed */
+    int      salt_set;         /* 0 = unset, 1 = fixed */
     uint8_t  buf[2040];
     size_t   buf_len;
 } balloon_impl_t;
@@ -26,7 +26,7 @@ static int do_hash(balloon_impl_t *p,
     if (p->salt_set) {
         memcpy(active_salt, p->salt, SALT_LEN);
     } else {
-        if (entropy_getrandom(active_salt, SALT_LEN) != 0) return -1;
+        if (kdf_adapter_fill_auto_salt(active_salt, SALT_LEN) != 0) return -1;
     }
     struct balloon_options opts = { p->s_cost, p->t_cost, p->n_threads };
     struct hash_state hs;

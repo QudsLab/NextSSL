@@ -41,25 +41,16 @@ THE SOFTWARE.
 
 static DRBG_CTX global_drbg;
 static int drbg_initialized = 0;
-
-/*
- * GAP-5: Explicit OS-RNG opt-in flag (debug builds only).
- *
- * In a release build the OS fallback is always allowed (callers that
- * start without seeding are common in CLI tooling).
- * In a debug build we assert that the caller either:
- *   a) seeded via UDBF or DRBG before calling randombytes(), OR
- *   b) explicitly acknowledged OS fallback by calling
- *      pqc_randombytes_use_os_rng().
- * This surfaces accidental unseeded calls during development.
- */
-#ifndef NDEBUG
-static int g_randombytes_use_os_rng = 0;
+static int g_randombytes_allow_os_rng = 0;
 
 EXPORT void pqc_randombytes_use_os_rng(void) {
-    g_randombytes_use_os_rng = 1;
+    g_randombytes_allow_os_rng = 1;
 }
-#endif /* !NDEBUG */
+
+EXPORT int pqc_randombytes_set_mode(int unsafe) {
+    g_randombytes_allow_os_rng = unsafe ? 1 : 0;
+    return 0;
+}
 
 EXPORT void pqc_randombytes_seed(const uint8_t *seed, size_t seed_len) {
     drbg_init(&global_drbg, seed, seed_len);
@@ -137,13 +128,8 @@ int randombytes(uint8_t *output, size_t n) {
     if (drbg_initialized) {
         return drbg_generate(&global_drbg, output, n);
     }
-#ifndef NDEBUG
-    /* Debug guard: OS fallback without explicit opt-in is a bug.
-     * Either seed with pqc_randombytes_seed() / pqc_set_udbf(),
-     * or call pqc_randombytes_use_os_rng() to acknowledge the choice. */
-    assert(g_randombytes_use_os_rng &&
-           "randombytes: OS fallback reached without seeding; "
-           "call pqc_randombytes_use_os_rng() to opt in explicitly");
-#endif
+    if (!g_randombytes_allow_os_rng) {
+        return -1;
+    }
     return randombytes_os(output, n);
 }

@@ -1,8 +1,9 @@
 /* bcrypt_adapter.c — Bcrypt KDF hash adapter (Plan 40002)
  *
- * Bcrypt generates its own salt internally. The adapter's salt field holds
- * 16 bytes of raw entropy that are base64-encoded into the setting string.
- *   salt == NULL  →  16 random bytes via entropy_getrandom()
+ * Bcrypt generates its own setting string internally. The adapter's salt
+ * field holds 16 bytes of caller-provided raw salt that are base64-encoded
+ * into the setting string.
+ *   salt == NULL  →  invalid; caller must provide 16 bytes explicitly
  *   salt != NULL  →  user-supplied 16 bytes (deterministic output)
  *
  * Output: 32 raw bytes derived from the 31-char bcrypt base64 hash (same
@@ -66,12 +67,12 @@ static int do_hash(bcrypt_impl_t *p,
                    const uint8_t *data, size_t data_len,
                    uint8_t *out, size_t out_len)
 {
-    /* Get or generate 16 bytes of salt */
+    /* Use caller-provided salt when present, otherwise generate 16 random bytes. */
     uint8_t raw_salt[16];
-    if (p->salt) {
+    if (p->salt && p->salt_len >= sizeof(raw_salt)) {
         memcpy(raw_salt, p->salt, 16);
     } else {
-        if (entropy_getrandom(raw_salt, sizeof(raw_salt)) != 0) return -1;
+        if (kdf_adapter_fill_auto_salt(raw_salt, sizeof(raw_salt)) != 0) return -1;
     }
 
     /* Build setting string: "$2b$XX$" + 22-char base64 salt */

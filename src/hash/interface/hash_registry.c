@@ -20,6 +20,7 @@
 #include <string.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdatomic.h>
 
 /* =========================================================================
  * SHA-224
@@ -466,36 +467,6 @@ const hash_ops_t argon2d_ops = {
     .parallelism = 1
 };
 
-/* --- Argon2 (compatibility/default entry point) --- */
-static void argon2_ops_init  (void *c)                               { argon2_ops_init_common(c); }
-static void argon2_ops_update(void *c, const uint8_t *d, size_t l)   { argon2_ops_update_common(c, d, l); }
-static void argon2_ops_final (void *c, uint8_t *out) {
-    argon2_ops_ctx_t *ctx = (argon2_ops_ctx_t *)c;
-    const uint8_t *s   = ctx->salt_len ? ctx->salt : s_argon2_ops_salt;
-    size_t         sln = ctx->salt_len ? ctx->salt_len : sizeof(s_argon2_ops_salt);
-    argon2_hash(ARGON2_OPS_TCOST, ARGON2_OPS_MCOST, ARGON2_OPS_PAR,
-                ctx->buf, ctx->len, s, sln,
-                out, 32,
-                NULL, 0,
-                Argon2_id,
-                ARGON2_VERSION_NUMBER);
-    secure_zero(ctx->buf, ctx->len);
-    ctx->len = 0;
-}
-
-const hash_ops_t argon2_ops = {
-    .name        = "argon2",
-    .digest_size = 32,
-    .block_size  = 64,
-    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
-    .init        = argon2_ops_init,
-    .update      = argon2_ops_update,
-    .final       = argon2_ops_final,
-    .wu_per_eval = 5000.0,
-    .mu_per_eval = 64.0,
-    .parallelism = 1
-};
-
 /* =========================================================================
  * Legacy hashes — SHA-1, SHA-0
  * All follow (digest, ctx) _final convention confirmed by header audit.
@@ -880,7 +851,7 @@ const hash_ops_t kmac256_ops = {
  * ========================================================================= */
 static const hash_ops_t *s_registry[HASH_REGISTRY_MAX];
 static int s_count = 0;
-static int s_initialised = 0;
+static atomic_int s_initialised = ATOMIC_VAR_INIT(0);
 
 int hash_register(const hash_ops_t *ops) {
     if (!ops) return -1;
@@ -914,6 +885,17 @@ const hash_ops_t *hash_lookup(const char *name) {
     return NULL;
 }
 
+size_t hash_registry_count(void) {
+    return (size_t)s_count;
+}
+
+const hash_ops_t *hash_registry_at(size_t index) {
+    if (index >= (size_t)s_count) {
+        return NULL;
+    }
+    return s_registry[index];
+}
+
 /* -------------------------------------------------------------------------
  * Typed accessors — return NULL if the hash doesn't support the operation.
  * ------------------------------------------------------------------------- */
@@ -943,8 +925,17 @@ const hash_ops_t *hash_for_seed(const char *name) {
 }
 
 void hash_registry_init(void) {
-    if (s_initialised) return;
-    s_initialised = 1;
+    int state = atomic_load_explicit(&s_initialised, memory_order_acquire);
+    if (state == 2) return;
+
+    state = 0;
+    if (!atomic_compare_exchange_strong_explicit(
+            &s_initialised, &state, 1,
+            memory_order_acq_rel, memory_order_acquire)) {
+        while (atomic_load_explicit(&s_initialised, memory_order_acquire) == 1) {
+        }
+        return;
+    }
 
     /* --- Fast SHA-2 --- */
     hash_register(&sha224_ops);
@@ -1006,4 +997,6 @@ void hash_registry_init(void) {
     hash_register(&skein256_ops);
     hash_register(&skein512_ops);
     hash_register(&skein1024_ops);
+
+    atomic_store_explicit(&s_initialised, 2, memory_order_release);
 }

@@ -51,15 +51,6 @@ static hash_adapter_t *make_adapter(const char *name, const void *cp, size_t cs)
         }
         return a;
     }
-    if (strcmp(name, "argon2") == 0) {
-        hash_adapter_t *a = argon2_adapter_create();
-        if (!a) return NULL;
-        if (cp && cs >= sizeof(hash_cost_params_argon2_t)) {
-            const hash_cost_params_argon2_t *p = cp;
-            argon2_adapter_config(a, p->m_kib, p->t_cost, p->p, 32, NULL, 0);
-        }
-        return a;
-    }
     if (strcmp(name, "argon2i") == 0) {
         hash_adapter_t *a = argon2i_adapter_create();
         if (!a) return NULL;

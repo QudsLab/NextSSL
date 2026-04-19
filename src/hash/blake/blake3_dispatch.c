@@ -6,6 +6,8 @@
 
 #if defined(_MSC_VER)
 #include <Windows.h>
+#else
+#include <stdatomic.h>
 #endif
 
 #if defined(IS_X86)
@@ -19,15 +21,11 @@
 #endif
 
 #if !defined(BLAKE3_ATOMICS)
-#if defined(__has_include)
-#if __has_include(<stdatomic.h>) && !defined(_MSC_VER)
+#if !defined(_MSC_VER)
 #define BLAKE3_ATOMICS 1
 #else
 #define BLAKE3_ATOMICS 0
-#endif /* __has_include(<stdatomic.h>) && !defined(_MSC_VER) */
-#else
-#define BLAKE3_ATOMICS 0
-#endif /* defined(__has_include) */
+#endif
 #endif /* BLAKE3_ATOMICS */
 
 #if BLAKE3_ATOMICS

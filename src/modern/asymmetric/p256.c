@@ -11,12 +11,14 @@
  */
 #include "p256.h"
 #include "micro_ecc/uECC.h"
-#include "../../seed/rng/rng.h"
+#include "../../seed/random/seed_derive_random.h"
+#include "../../seed/drbg/drbg.h"
+#include "../../common/secure_zero.h"
 #include <string.h>
 
 /* ---- RNG callback wired to OS entropy ----------------------------------- */
 static int p256_rng_cb(uint8_t *dest, unsigned size) {
-    return (rng_fill(dest, (size_t)size) == 0) ? 1 : 0;
+    return (seed_derive_random_label("modern:p256:keypair", dest, (size_t)size) == 0) ? 1 : 0;
 }
 
 static void p256_ensure_rng(void) {
@@ -33,6 +35,33 @@ int p256_keygen(uint8_t private_key[P256_PRIVATE_KEY_SIZE],
     p256_ensure_rng();
     /* micro-ecc: make_key(public_key, private_key, curve) — note arg order */
     return uECC_make_key(public_key, private_key, uECC_secp256r1()) ? 0 : -1;
+}
+
+int p256_keygen_from_seed(const uint8_t *seed, size_t seed_len,
+                          uint8_t private_key[P256_PRIVATE_KEY_SIZE],
+                          uint8_t public_key[P256_PUBLIC_KEY_SIZE])
+{
+    DRBG_CTX drbg;
+    uint8_t candidate[P256_PRIVATE_KEY_SIZE];
+    size_t attempt;
+
+    if (!seed || seed_len == 0 || !private_key || !public_key) return -1;
+
+    drbg_init(&drbg, seed, seed_len);
+    for (attempt = 0; attempt < 32; ++attempt) {
+        if (drbg_generate(&drbg, candidate, sizeof(candidate)) != 0) break;
+        candidate[0] |= 0x01;
+        if (uECC_compute_public_key(candidate, public_key, uECC_secp256r1())) {
+            memcpy(private_key, candidate, sizeof(candidate));
+            secure_zero(candidate, sizeof(candidate));
+            drbg_wipe(&drbg);
+            return 0;
+        }
+    }
+
+    secure_zero(candidate, sizeof(candidate));
+    drbg_wipe(&drbg);
+    return -1;
 }
 
 int p256_ecdh(const uint8_t their_public[P256_PUBLIC_KEY_SIZE],

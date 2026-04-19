@@ -4,8 +4,12 @@
  * algorithm-specific parameters (memory cost, work factor, salt, etc.).
  *
  * Salt rules (applies to all KDF adapters):
- *   adapter->salt == NULL  →  generate random salt via entropy_getrandom()
+ *   adapter->salt == NULL  →  auto-generate random salt via OS entropy
  *   adapter->salt != NULL  →  use pre-configured salt (deterministic output)
+ *
+ * Salt remains mandatory for safe KDF operation, but it is not mandatory for
+ * callers to provide one explicitly because the adapters generate a random
+ * default when omitted.
  *
  * Config must be called before hash.
  * Destroy with hash_adapter_free().
@@ -14,8 +18,58 @@
 #define KDF_ADAPTERS_H
 
 #include "hash_adapter.h"
+#include "../memory_hard/argon2.h"
+#include "../../seed/random/entropy.h"
 #include <stdint.h>
 #include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
+
+static inline int kdf_adapter_fill_auto_salt(uint8_t *salt,
+                                             size_t salt_len)
+{
+    return entropy_getrandom(salt, salt_len);
+}
+
+static inline int kdf_adapter_buffer_append(uint8_t **buf,
+                                            size_t *buf_len,
+                                            size_t *buf_cap,
+                                            const uint8_t *data,
+                                            size_t data_len)
+{
+    size_t need;
+    size_t new_cap;
+    uint8_t *new_buf;
+
+    if (!data || data_len == 0) return 0;
+    if (*buf_len > ((size_t)-1) - data_len) return -1;
+
+    need = *buf_len + data_len;
+    if (need <= *buf_cap) {
+        memcpy(*buf + *buf_len, data, data_len);
+        *buf_len = need;
+        return 0;
+    }
+
+    new_cap = (*buf_cap > 0) ? *buf_cap : 256;
+    while (new_cap < need) {
+        size_t grown = new_cap * 2;
+        if (grown <= new_cap) {
+            new_cap = need;
+            break;
+        }
+        new_cap = grown;
+    }
+
+    new_buf = (uint8_t *)realloc(*buf, new_cap);
+    if (!new_buf) return -1;
+
+    memcpy(new_buf + *buf_len, data, data_len);
+    *buf = new_buf;
+    *buf_cap = new_cap;
+    *buf_len = need;
+    return 0;
+}
 
 /* ── Argon2id ──────────────────────────────────────────────────────────── */
 hash_adapter_t *argon2id_adapter_create(void);
@@ -40,12 +94,13 @@ void argon2d_adapter_config(hash_adapter_t *a,
                              uint32_t parallelism, uint32_t key_length,
                              const uint8_t *salt, size_t salt_len);
 
-/* ── Argon2 (compatibility/default entry point) ───────────────────────── */
+/* ── Argon2 (generic family entry point; caller must supply type) ─────── */
 hash_adapter_t *argon2_adapter_create(void);
 void argon2_adapter_config(hash_adapter_t *a,
                             uint32_t memory, uint32_t iterations,
                             uint32_t parallelism, uint32_t key_length,
-                            const uint8_t *salt, size_t salt_len);
+                            const uint8_t *salt, size_t salt_len,
+                            argon2_type type);
 
 /* ── Bcrypt ────────────────────────────────────────────────────────────── */
 hash_adapter_t *bcrypt_adapter_create(void);

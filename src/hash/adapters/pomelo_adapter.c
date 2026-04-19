@@ -26,7 +26,7 @@ static int do_hash(pomelo_impl_t *p,
     if (p->salt_set) {
         memcpy(active_salt, p->salt, POMELO_SALT_LEN);
     } else {
-        if (entropy_getrandom(active_salt, POMELO_SALT_LEN) != 0) return -1;
+        if (kdf_adapter_fill_auto_salt(active_salt, POMELO_SALT_LEN) != 0) return -1;
     }
     size_t klen = (out_len < p->key_length ? out_len : p->key_length);
     int rc = PHS(out, klen, data, data_len,

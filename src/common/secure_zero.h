@@ -29,6 +29,9 @@
 #else
    static inline void secure_zero(void *buf, size_t len) {
        if (!buf || !len) return;
+   /* The volatile byte loop is the guaranteed portable wipe path.
+    * The GNU/Clang compiler fence below is only a belt-and-suspenders
+    * barrier to keep surrounding reordering conservative. */
        volatile unsigned char *p = (volatile unsigned char *)buf;
        while (len--) *p++ = 0;
 #  ifdef __GNUC__

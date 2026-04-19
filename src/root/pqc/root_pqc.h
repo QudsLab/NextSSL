@@ -4,7 +4,7 @@
  * Thin wrappers over pqc_main.c; each nextssl_pqc_* function calls
  * the corresponding pqc_* function.
  *
- * Guards: compiled conditionally on the same ENABLE_* macros as pqc_main.c
+ * Core PQC families are part of the unified public surface.
  */
 #ifndef ROOT_PQC_H
 #define ROOT_PQC_H
@@ -35,7 +35,6 @@ NEXTSSL_API int  nextssl_pqc_set_mode(int unsafe);
 /* =========================================================================
  * ML-KEM (Kyber)
  * =========================================================================*/
-#ifdef ENABLE_ML_KEM
 NEXTSSL_API int nextssl_pqc_mlkem512_keypair(uint8_t *pk, uint8_t *sk);
 NEXTSSL_API int nextssl_pqc_mlkem512_keypair_derand(uint8_t *pk, uint8_t *sk, const uint8_t *coins);
 NEXTSSL_API int nextssl_pqc_mlkem512_encaps(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
@@ -53,12 +52,10 @@ NEXTSSL_API int nextssl_pqc_mlkem1024_keypair_derand(uint8_t *pk, uint8_t *sk, c
 NEXTSSL_API int nextssl_pqc_mlkem1024_encaps(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
 NEXTSSL_API int nextssl_pqc_mlkem1024_encaps_derand(uint8_t *ct, uint8_t *ss, const uint8_t *pk, const uint8_t *coins);
 NEXTSSL_API int nextssl_pqc_mlkem1024_decaps(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
-#endif /* ENABLE_ML_KEM */
 
 /* =========================================================================
  * ML-DSA (Dilithium)
  * =========================================================================*/
-#ifdef ENABLE_ML_DSA
 NEXTSSL_API int nextssl_pqc_mldsa44_keypair(uint8_t *pk, uint8_t *sk);
 NEXTSSL_API int nextssl_pqc_mldsa44_keypair_derand(uint8_t *pk, uint8_t *sk, const uint8_t *seed);
 NEXTSSL_API int nextssl_pqc_mldsa44_sign(uint8_t *sig, size_t *sig_len, const uint8_t *m, size_t mlen, const uint8_t *sk);
@@ -76,12 +73,10 @@ NEXTSSL_API int nextssl_pqc_mldsa87_keypair_derand(uint8_t *pk, uint8_t *sk, con
 NEXTSSL_API int nextssl_pqc_mldsa87_sign(uint8_t *sig, size_t *sig_len, const uint8_t *m, size_t mlen, const uint8_t *sk);
 NEXTSSL_API int nextssl_pqc_mldsa87_sign_derand(uint8_t *sig, size_t *sig_len, const uint8_t *m, size_t mlen, const uint8_t *ctx, size_t ctxlen, const uint8_t *sk, const uint8_t *rnd);
 NEXTSSL_API int nextssl_pqc_mldsa87_verify(const uint8_t *sig, size_t sig_len, const uint8_t *m, size_t mlen, const uint8_t *pk);
-#endif /* ENABLE_ML_DSA */
 
 /* =========================================================================
  * Falcon
  * =========================================================================*/
-#ifdef ENABLE_FALCON
 NEXTSSL_API int nextssl_pqc_falcon512_keypair(uint8_t *pk, uint8_t *sk);
 NEXTSSL_API int nextssl_pqc_falcon512_keypair_derand(uint8_t *pk, uint8_t *sk, const uint8_t *seed);
 NEXTSSL_API int nextssl_pqc_falcon512_sign(uint8_t *sig, size_t *sig_len, const uint8_t *m, size_t mlen, const uint8_t *sk);
@@ -105,12 +100,10 @@ NEXTSSL_API int nextssl_pqc_falconpadded1024_keypair_derand(uint8_t *pk, uint8_t
 NEXTSSL_API int nextssl_pqc_falconpadded1024_sign(uint8_t *sig, size_t *sig_len, const uint8_t *m, size_t mlen, const uint8_t *sk);
 NEXTSSL_API int nextssl_pqc_falconpadded1024_sign_derand(uint8_t *sig, size_t *sig_len, const uint8_t *m, size_t mlen, const uint8_t *sk, const uint8_t *rnd);
 NEXTSSL_API int nextssl_pqc_falconpadded1024_verify(const uint8_t *sig, size_t sig_len, const uint8_t *m, size_t mlen, const uint8_t *pk);
-#endif /* ENABLE_FALCON */
 
 /* =========================================================================
  * HQC
  * =========================================================================*/
-#ifdef ENABLE_HQC
 NEXTSSL_API int nextssl_pqc_hqc128_keypair(uint8_t *pk, uint8_t *sk);
 NEXTSSL_API int nextssl_pqc_hqc128_keypair_derand(uint8_t *pk, uint8_t *sk, const uint8_t *entropy);
 NEXTSSL_API int nextssl_pqc_hqc128_encaps(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
@@ -128,12 +121,10 @@ NEXTSSL_API int nextssl_pqc_hqc256_keypair_derand(uint8_t *pk, uint8_t *sk, cons
 NEXTSSL_API int nextssl_pqc_hqc256_encaps(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
 NEXTSSL_API int nextssl_pqc_hqc256_encaps_derand(uint8_t *ct, uint8_t *ss, const uint8_t *pk, const uint8_t *entropy);
 NEXTSSL_API int nextssl_pqc_hqc256_decaps(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
-#endif /* ENABLE_HQC */
 
 /* =========================================================================
  * Classic McEliece (10 parameter sets)
  * =========================================================================*/
-#ifdef ENABLE_MCELIECE
 NEXTSSL_API int nextssl_pqc_mceliece348864_keypair(uint8_t *pk, uint8_t *sk);
 NEXTSSL_API int nextssl_pqc_mceliece348864_keypair_derand(uint8_t *pk, uint8_t *sk, const uint8_t *entropy);
 NEXTSSL_API int nextssl_pqc_mceliece348864_encaps(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
@@ -193,12 +184,10 @@ NEXTSSL_API int nextssl_pqc_mceliece8192128f_keypair_derand(uint8_t *pk, uint8_t
 NEXTSSL_API int nextssl_pqc_mceliece8192128f_encaps(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
 NEXTSSL_API int nextssl_pqc_mceliece8192128f_encaps_derand(uint8_t *ct, uint8_t *ss, const uint8_t *pk, const uint8_t *entropy);
 NEXTSSL_API int nextssl_pqc_mceliece8192128f_decaps(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
-#endif /* ENABLE_MCELIECE */
 
 /* =========================================================================
  * SPHINCS+ (SHA-2 and SHAKE families, all 12 parameter sets)
  * =========================================================================*/
-#ifdef ENABLE_SPHINCS
 NEXTSSL_API int nextssl_pqc_sphincs_sha2_128f_keypair(uint8_t *pk, uint8_t *sk);
 NEXTSSL_API int nextssl_pqc_sphincs_sha2_128f_keypair_derand(uint8_t *pk, uint8_t *sk, const uint8_t *seed);
 NEXTSSL_API int nextssl_pqc_sphincs_sha2_128f_sign(uint8_t *sig, size_t *sig_len, const uint8_t *m, size_t mlen, const uint8_t *sk);
@@ -270,7 +259,6 @@ NEXTSSL_API int nextssl_pqc_sphincs_shake_256s_keypair_derand(uint8_t *pk, uint8
 NEXTSSL_API int nextssl_pqc_sphincs_shake_256s_sign(uint8_t *sig, size_t *sig_len, const uint8_t *m, size_t mlen, const uint8_t *sk);
 NEXTSSL_API int nextssl_pqc_sphincs_shake_256s_sign_derand(uint8_t *sig, size_t *sig_len, const uint8_t *m, size_t mlen, const uint8_t *sk, const uint8_t *rnd);
 NEXTSSL_API int nextssl_pqc_sphincs_shake_256s_verify(const uint8_t *sig, size_t sig_len, const uint8_t *m, size_t mlen, const uint8_t *pk);
-#endif /* ENABLE_SPHINCS */
 
 #ifdef __cplusplus
 }

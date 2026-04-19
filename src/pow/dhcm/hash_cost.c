@@ -380,6 +380,10 @@ static void scrypt_cost(const void *p, size_t sz, hash_cost_t *out)
 /* ---- yescrypt (classic mode and extended) ----------------------------
  * Classic mode (flags=0, t=0): identical to scrypt.
  * Extended mode (t>0): t extra ROM passes; total passes = 1 + t.
+ *
+ * The implementation contains OpenMP and scalar paths. This model tracks the
+ * configured lane count `p`, but callers should expect scalar execution when
+ * the library is built without OpenMP support.
  * ----------------------------------------------------------------------- */
 static void yescrypt_cost(const void *p, size_t sz, hash_cost_t *out)
 {
@@ -469,7 +473,8 @@ static void catena_cost(const void *p, size_t sz, hash_cost_t *out)
  * Wandering    : t_cost × nrows steps; each step duplex-absorbs 2~rows of ncols cells
  * Total sponge calls ≈ nrows×ncols + t_cost×nrows×ncols×2
  *
- * nPARALLEL compile-time default = 2 → parallel_limit = 2.
+ * OpenMP builds keep the original two-lane model. Non-OpenMP builds use the
+ * scalar fallback and must report parallel_limit = 1.
  * ----------------------------------------------------------------------- */
 static void lyra2_cost(const void *p, size_t sz, hash_cost_t *out)
 {
@@ -493,8 +498,13 @@ static void lyra2_cost(const void *p, size_t sz, hash_cost_t *out)
     out->bandwidth_bytes     = bw;
     out->primitive_calls     = prims;
     out->primitive_id        = HASH_PRIM_BLAKMA;
-    out->dependency_depth    = prims / 2;   /* nPARALLEL=2 lanes can run in parallel */
+#ifdef _OPENMP
+    out->dependency_depth    = prims / 2;
     out->parallel_limit      = 2;
+#else
+    out->dependency_depth    = prims;
+    out->parallel_limit      = 1;
+#endif
     out->access_pattern      = HASH_ACCESS_RANDOM;
     out->memory_tier         = hash_mem_tier(peak);
     out->memory_reread_factor= reread_factor(bw, peak);
@@ -645,7 +655,6 @@ static const hash_cost_plugin_t s_plugins[] = {
     { "argon2id",    HASH_PRIM_ARGON2G,       sizeof(hash_cost_params_argon2_t),  argon2_cost  },
     { "argon2i",     HASH_PRIM_ARGON2G,       sizeof(hash_cost_params_argon2_t),  argon2i_cost },
     { "argon2d",     HASH_PRIM_ARGON2G,       sizeof(hash_cost_params_argon2_t),  argon2_cost  },
-    { "argon2",      HASH_PRIM_ARGON2G,       sizeof(hash_cost_params_argon2_t),  argon2_cost  },
     { "scrypt",      HASH_PRIM_SALSA20_8,     sizeof(hash_cost_params_scrypt_t),  scrypt_cost  },
     { "yescrypt",    HASH_PRIM_SALSA20_8,     sizeof(hash_cost_params_yescrypt_t),yescrypt_cost},
     { "bcrypt",      HASH_PRIM_BLOWFISH_KS,   sizeof(hash_cost_params_bcrypt_t),  bcrypt_cost  },

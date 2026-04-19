@@ -42,6 +42,6 @@ uint64_t xorshift1024star();
 
 /* Safely erase the pwd by making sure the compiler isn't skipping this step
  */
-void erasepwd(uint8_t* pwd, const uint32_t pwdlen);
+void erasepwd(const uint8_t* pwd, const uint32_t pwdlen);
 
 #endif

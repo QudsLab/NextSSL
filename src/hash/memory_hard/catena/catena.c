@@ -23,29 +23,30 @@
 #include "catena-helpers.h"
 #include "hash.h"
 
-#if __BYTE_ORDER == __LITTLE_ENDIAN
+#if defined(_WIN32) || defined(_WIN64) || defined(__LITTLE_ENDIAN__) || \
+    defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || \
+    defined(_M_IX86) || defined(__aarch64__) || defined(_M_ARM64)
   #define TO_LITTLE_ENDIAN_64(n) (n)
   #define TO_LITTLE_ENDIAN_32(n) (n)
-#elif __BYTE_ORDER == __BIG_ENDIAN
+#elif defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
+  #define TO_LITTLE_ENDIAN_64(n) (n)
+  #define TO_LITTLE_ENDIAN_32(n) (n)
+#elif defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+  #define TO_LITTLE_ENDIAN_64(n) bswap_64(n)
+  #define TO_LITTLE_ENDIAN_32(n) bswap_32(n)
+#elif defined(__BYTE_ORDER) && (__BYTE_ORDER == __LITTLE_ENDIAN)
+  #define TO_LITTLE_ENDIAN_64(n) (n)
+  #define TO_LITTLE_ENDIAN_32(n) (n)
+#elif defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)
   #define TO_LITTLE_ENDIAN_64(n) bswap_64(n)
   #define TO_LITTLE_ENDIAN_32(n) bswap_32(n)
 #else
-  #warning "byte order couldn't be detected. This affects key generation and keyed hashing"
-  #define TO_LITTLE_ENDIAN_64(n) (n)
-  #define TO_LITTLE_ENDIAN_32(n) (n)
-#endif
-
-/* Ensure that a pointer passed to the PHS interface stays const
- */
-#ifdef OVERWRITE
-  #define MAYBECONST 
-#else
-  #define MAYBECONST const
+  #error "Catena requires explicit little-endian or big-endian detection; refusing to guess"
 #endif
 
 /***************************************************/
 
-int __Catena(MAYBECONST uint8_t *pwd,   const uint32_t pwdlen,
+int __Catena(const uint8_t *pwd,   const uint32_t pwdlen,
 	     const uint8_t *salt,  const uint8_t  saltlen,
 	     const uint8_t *data,  const uint32_t datalen,
 	     const uint8_t lambda, const uint8_t  min_garlic,
@@ -77,10 +78,7 @@ int __Catena(MAYBECONST uint8_t *pwd,   const uint32_t pwdlen,
   /* Compute the initial value to hash  */
   __Hash5(hv, H_LEN, t, 4, x, H_LEN, pwd,  pwdlen, salt, saltlen, x);
 
-  /*Overwrite Password if enabled*/
-#ifdef OVERWRITE
   erasepwd(pwd,pwdlen);
-#endif
 
   Flap(x, lambda, (min_garlic+1)/2, salt, saltlen, x);
 

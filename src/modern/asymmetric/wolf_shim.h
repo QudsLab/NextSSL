@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include "../../seed/random/entropy.h"
 
 // Types
 typedef uint8_t word8;
@@ -80,7 +81,6 @@ typedef unsigned int WC_BITFIELD;
 #ifndef HAVE_CURVE448_KEY_IMPORT
 #define HAVE_CURVE448_KEY_IMPORT
 #endif
-// #define CURVE448_SMALL // Uncomment for small implementation
 
 // Error Codes
 #define ECC_BAD_ARG_E -123
@@ -97,10 +97,8 @@ typedef unsigned int WC_BITFIELD;
 
 // RNG Shim
 static inline int wc_RNG_GenerateBlock(WC_RNG* rng, byte* b, word32 sz) {
-    // TODO: Connect to real RNG
-    // For now, fail or zero
-    memset(b, 0, sz); 
-    return 0; // Return 0 for success? Or implement randombytes
+    (void)rng;
+    return entropy_getrandom(b, (size_t)sz) == 0 ? 0 : RNG_FAILURE_E;
 }
 
 // SHAKE Shim

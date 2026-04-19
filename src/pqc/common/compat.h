@@ -66,6 +66,9 @@ UNALIGNED_VECTOR_POLYFILL_GCC
   // units, but we expect that downstream consumers will copy this code and/or
   // change how it is built.
 # define NEXTSSL_PREVENT_BRANCH_HACK(b)  __asm__("" : "+r"(b) : /* no inputs */);
+#elif defined(_MSC_VER)
+# include <intrin.h>
+# define NEXTSSL_PREVENT_BRANCH_HACK(b)  do { (void)(b); _ReadWriteBarrier(); } while (0)
 #else
 # define NEXTSSL_PREVENT_BRANCH_HACK(b)
 #endif

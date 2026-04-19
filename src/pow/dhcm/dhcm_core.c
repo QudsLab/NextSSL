@@ -540,7 +540,6 @@ DHCMAlgorithm dhcm_algo_from_name(const char *name)
     if (strcmp(name, "argon2id")   == 0) return DHCM_ARGON2ID;
     if (strcmp(name, "argon2i")    == 0) return DHCM_ARGON2I;
     if (strcmp(name, "argon2d")    == 0) return DHCM_ARGON2D;
-    if (strcmp(name, "argon2")     == 0) return DHCM_ARGON2ID; /* compatibility default */
     if (strcmp(name, "scrypt")     == 0) return DHCM_SCRYPT;
     if (strcmp(name, "yescrypt")   == 0) return DHCM_YESCRYPT;
     if (strcmp(name, "catena")     == 0) return DHCM_CATENA;

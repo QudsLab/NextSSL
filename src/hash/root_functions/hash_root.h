@@ -6,8 +6,9 @@
  * Plain hash functions:
  *   int nextssl_sha256(data, data_len, out, out_len);
  *
- * KDF functions accept algorithm-specific parameters.  Pass 0 / NULL for any
- * parameter to use the adapter's built-in safe default.
+ * KDF functions accept algorithm-specific parameters. Pass 0 / NULL only for
+ * parameters documented as defaultable. The bare Argon2 family entry point is
+ * typed and requires an explicit Argon2_d, Argon2_i, or Argon2_id selector.
  *
  * Return values:
  *   0   — success
@@ -17,6 +18,7 @@
 #ifndef HASH_ROOT_H
 #define HASH_ROOT_H
 
+#include "../memory_hard/argon2.h"
 #include <stdint.h>
 #include <stddef.h>
 
@@ -101,7 +103,8 @@ int nextssl_argon2d (const uint8_t *data, size_t data_len,
 int nextssl_argon2  (const uint8_t *data, size_t data_len,
                      uint8_t *out, size_t out_len,
                      uint32_t memory, uint32_t iterations, uint32_t parallelism,
-                     uint32_t key_length, const uint8_t *salt, size_t salt_len);
+                     uint32_t key_length, const uint8_t *salt, size_t salt_len,
+                     argon2_type type);
 
 /* ---- Scrypt ---- */
 int nextssl_scrypt  (const uint8_t *data, size_t data_len,

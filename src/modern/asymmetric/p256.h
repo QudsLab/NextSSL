@@ -17,6 +17,10 @@
 int p256_keygen(uint8_t private_key[P256_PRIVATE_KEY_SIZE],
                 uint8_t public_key[P256_PUBLIC_KEY_SIZE]);
 
+int p256_keygen_from_seed(const uint8_t *seed, size_t seed_len,
+                          uint8_t private_key[P256_PRIVATE_KEY_SIZE],
+                          uint8_t public_key[P256_PUBLIC_KEY_SIZE]);
+
 /* ECDH shared-secret derivation */
 int p256_ecdh(const uint8_t their_public[P256_PUBLIC_KEY_SIZE],
               const uint8_t our_private[P256_PRIVATE_KEY_SIZE],

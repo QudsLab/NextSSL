@@ -21,13 +21,17 @@ extern "C" {
 int randombytes(uint8_t *output, size_t n);
 
 /*
- * GAP-5: Explicit OS-RNG opt-in (debug builds only).
- * Call once before using randombytes() without prior seeding.
- * See randombytes.c for rationale.
+ * Explicit OS-RNG opt-in helper.
+ * Call before using randombytes() without prior DRBG/UDBF seeding.
  */
-#ifndef NDEBUG
 void pqc_randombytes_use_os_rng(void);
-#endif
+
+/*
+ * Enable or disable the direct OS-RNG fallback path.
+ * Pass non-zero to allow randombytes() to use the OS RNG when no DRBG seed
+ * or UDBF source has been configured yet.
+ */
+int pqc_randombytes_set_mode(int unsafe);
 
 #ifdef __cplusplus
 }

@@ -31,30 +31,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../../common/secure_zero.h"
 
 #include "core.h"
 #include "thread.h"
 #include "blake2.h"
 #include "blake2-impl.h"
 
-#ifdef GENKAT
-#include "genkat.h"
-#endif
-
-#if defined(__clang__)
-#if __has_attribute(optnone)
-#define NOT_OPTIMIZED __attribute__((optnone))
-#endif
-#elif defined(__GNUC__)
-#define GCC_VERSION                                                            \
-    (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
-#if GCC_VERSION >= 40400
-#define NOT_OPTIMIZED __attribute__((optimize("O0")))
-#endif
-#endif
-#ifndef NOT_OPTIMIZED
-#define NOT_OPTIMIZED
-#endif
 
 /***************Instance and Position constructors**********/
 void init_block_value(block *b, uint8_t in) { memset(b->v, in, sizeof(b->v)); }
@@ -131,17 +114,11 @@ void free_memory(const argon2_context *context, uint8_t *memory,
 #endif
 #endif
 
-void NOT_OPTIMIZED secure_wipe_memory(void *v, size_t n) {
-#if defined(_MSC_VER) && VC_GE_2005(_MSC_VER) || defined(__MINGW32__)
-    SecureZeroMemory(v, n);
-#elif defined memset_s
-    memset_s(v, n, 0, n);
-#elif defined(HAVE_EXPLICIT_BZERO)
-    explicit_bzero(v, n);
-#else
-    static void *(*const volatile memset_sec)(void *, int, size_t) = &memset;
-    memset_sec(v, 0, n);
-#endif
+void secure_wipe_memory(void *v, size_t n) {
+    if (!v || n == 0) {
+        return;
+    }
+    secure_zero(v, n);
 }
 
 /* Memory clear flag defaults to true. */
@@ -619,10 +596,6 @@ int initialize(argon2_instance_t *instance, argon2_context *context) {
     clear_internal_memory(blockhash + ARGON2_PREHASH_DIGEST_LENGTH,
                           ARGON2_PREHASH_SEED_LENGTH -
                               ARGON2_PREHASH_DIGEST_LENGTH);
-
-#ifdef GENKAT
-    initial_kat(blockhash, context, instance->type);
-#endif
 
     /* 3. Creating first blocks, we always have at least two blocks in a slice
      */

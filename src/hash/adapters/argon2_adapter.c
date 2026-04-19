@@ -1,8 +1,7 @@
-/* argon2_adapter.c — Argon2 compatibility/default adapter (Plan 40002)
+/* argon2_adapter.c — Generic Argon2 family adapter (Plan 40002)
  *
  * This adapter uses the generic Argon2 API from argon2.h directly.
- * For the no-suffix "argon2" entry point, NextSSL defaults to Argon2id.
- * Callers that need a specific variant should use argon2id/argon2i/argon2d.
+ * The caller must configure an explicit argon2_type before hashing.
  */
 #include "kdf_adapters.h"
 #include "../memory_hard/argon2.h"
@@ -16,6 +15,7 @@ typedef struct {
     uint32_t iterations;
     uint32_t parallelism;
     uint32_t key_length;
+    argon2_type type;
     uint8_t *salt;
     size_t   salt_len;
     uint8_t  buf[2040];
@@ -26,7 +26,6 @@ static int do_hash(argon2_impl_t *p,
                    const uint8_t *data, size_t data_len,
                    uint8_t *out, size_t out_len)
 {
-    uint8_t tmp_salt[16];
     const uint8_t *salt_bytes;
     size_t current_salt_len;
 
@@ -34,17 +33,32 @@ static int do_hash(argon2_impl_t *p,
         salt_bytes = p->salt;
         current_salt_len = p->salt_len;
     } else {
-        if (entropy_getrandom(tmp_salt, sizeof(tmp_salt)) != 0) return -1;
+        uint8_t tmp_salt[16];
+        if (kdf_adapter_fill_auto_salt(tmp_salt, sizeof(tmp_salt)) != 0) return -1;
         salt_bytes = tmp_salt;
         current_salt_len = sizeof(tmp_salt);
+
+        if (p->type != Argon2_d && p->type != Argon2_i && p->type != Argon2_id)
+            return -1;
+
+        return argon2_hash(p->iterations, p->memory, p->parallelism,
+                           data, data_len,
+                           salt_bytes, current_salt_len,
+                           out, out_len > 0 ? out_len : p->key_length,
+                           NULL, 0,
+                           p->type,
+                           ARGON2_VERSION_NUMBER);
     }
+
+    if (p->type != Argon2_d && p->type != Argon2_i && p->type != Argon2_id)
+        return -1;
 
     return argon2_hash(p->iterations, p->memory, p->parallelism,
                        data, data_len,
                        salt_bytes, current_salt_len,
                        out, out_len > 0 ? out_len : p->key_length,
                        NULL, 0,
-                       Argon2_id,
+                       p->type,
                        ARGON2_VERSION_NUMBER);
 }
 
@@ -92,6 +106,7 @@ hash_adapter_t *argon2_adapter_create(void)
     p->iterations = 2;
     p->parallelism = 1;
     p->key_length = 32;
+    p->type = (argon2_type)0xff;
     p->salt = NULL;
     p->salt_len = 0;
     p->buf_len = 0;
@@ -111,7 +126,8 @@ hash_adapter_t *argon2_adapter_create(void)
 void argon2_adapter_config(hash_adapter_t *a,
                            uint32_t memory, uint32_t iterations,
                            uint32_t parallelism, uint32_t key_length,
-                           const uint8_t *salt, size_t salt_len)
+                           const uint8_t *salt, size_t salt_len,
+                           argon2_type type)
 {
     if (!a || !a->impl) return;
     argon2_impl_t *p = (argon2_impl_t *)a->impl;
@@ -123,6 +139,8 @@ void argon2_adapter_config(hash_adapter_t *a,
         p->key_length = key_length;
         a->digest_size = key_length;
     }
+    if (type == Argon2_d || type == Argon2_i || type == Argon2_id)
+        p->type = type;
 
     if (p->salt) {
         secure_zero(p->salt, p->salt_len);

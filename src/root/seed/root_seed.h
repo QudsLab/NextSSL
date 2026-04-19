@@ -37,6 +37,9 @@ NEXTSSL_API int nextssl_seed_random(uint8_t *out, size_t len);
  * out_len   — number of bytes to derive (max 1 MB)
  *
  * Result is deterministic: same algo + label + seed → same output.
+ * The 45 registered hash/KDF engines are derivation backends only; modern and
+ * PQC APIs consume this path explicitly through their own seeded wrappers and
+ * do not auto-wire themselves implicitly.
  * Returns 0 on success, -1 on error.
  */
 NEXTSSL_API int nextssl_seed_derive(

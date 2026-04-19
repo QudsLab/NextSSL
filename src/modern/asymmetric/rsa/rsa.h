@@ -95,6 +95,8 @@ rsa_keypair_t *rsa_keypair_dup(const rsa_keypair_t *src);
  * @return 0 on success, -1 on error (invalid bits or PRNG failure).
  */
 int rsa_keygen(rsa_keypair_t *kp, unsigned bits);
+int rsa_keygen_seeded(rsa_keypair_t *kp, unsigned bits,
+                      const uint8_t *seed, size_t seed_len);
 
 /* ---- PKCS#1 v1.5 sign / verify ------------------------------------------ */
 

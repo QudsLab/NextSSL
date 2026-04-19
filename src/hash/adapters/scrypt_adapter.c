@@ -21,12 +21,15 @@ static int do_hash(scrypt_impl_t *p,
                    const uint8_t *data, size_t data_len,
                    uint8_t *out, size_t out_len)
 {
-    uint8_t tmp_salt[16];
     const uint8_t *s; size_t slen;
     if (p->salt) { s = p->salt; slen = p->salt_len; }
     else {
-        if (entropy_getrandom(tmp_salt, sizeof(tmp_salt)) != 0) return -1;
+        uint8_t tmp_salt[16];
+        if (kdf_adapter_fill_auto_salt(tmp_salt, sizeof(tmp_salt)) != 0) return -1;
         s = tmp_salt; slen = sizeof(tmp_salt);
+        return crypto_scrypt(data, data_len, s, slen,
+                             p->N, p->r, p->p,
+                             out, out_len > 0 ? out_len : (size_t)p->key_length);
     }
     return crypto_scrypt(data, data_len, s, slen,
                          p->N, p->r, p->p,

@@ -82,10 +82,10 @@
 EXPORT void pqc_randombytes_seed(const uint8_t *seed, size_t seed_len);
 EXPORT void pqc_randombytes_reseed(const uint8_t *seed, size_t seed_len);
 EXPORT void pqc_set_udbf(const uint8_t *buf, size_t len);
+EXPORT int pqc_randombytes_set_mode(int unsafe);
 
 EXPORT int pqc_set_mode(int unsafe) {
-    (void)unsafe;
-    return 0;
+    return pqc_randombytes_set_mode(unsafe);
 }
 
 /*

@@ -1,7 +1,7 @@
 /* root_hash.h — Exported Hash API (Plan 405)
  *
  * Provides one-shot hash computation and algorithm metadata query over
- * all 41+ algorithms registered in the hash registry.
+ * the runtime registry surface.
  */
 #ifndef ROOT_HASH_H
 #define ROOT_HASH_H
@@ -45,7 +45,10 @@ NEXTSSL_API size_t nextssl_hash_digest_size(const char *algo);
 NEXTSSL_API size_t nextssl_hash_block_size(const char *algo);
 
 /* -------------------------------------------------------------------------
- * nextssl_hash_list — Return NULL-terminated array of registered algo names
+ * nextssl_hash_list — Return NULL-terminated array of canonical registered names
+ * This is the runtime registry surface only. Direct typed root functions such
+ * as nextssl_argon2() are documented separately and are not implied to appear
+ * here one-for-one.
  * The returned pointer is to a static string array; do not free or modify it.
  */
 NEXTSSL_API const char **nextssl_hash_list(void);

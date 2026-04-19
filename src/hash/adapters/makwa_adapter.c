@@ -25,7 +25,7 @@ static int do_hash(makwa_impl_t *p,
     if (p->salt_set) {
         memcpy(active_salt, p->salt, MAKWA_SALT_LEN);
     } else {
-        if (entropy_getrandom(active_salt, MAKWA_SALT_LEN) != 0) return -1;
+        if (kdf_adapter_fill_auto_salt(active_salt, MAKWA_SALT_LEN) != 0) return -1;
     }
     size_t klen = (out_len < p->key_length ? out_len : p->key_length);
     int rc = makwa_hash(data, data_len, active_salt, MAKWA_SALT_LEN,

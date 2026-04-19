@@ -1,4 +1,4 @@
-/* seed_derive_random.h — TIER 1 Entry Point for Random Derivation
+/* seed_derive_random.h - TIER 1 Entry Point for Random Derivation
  *
  * Simple interface to generate random bytes from the OS RNG.
  */
@@ -9,18 +9,13 @@
 #include <stddef.h>
 
 /* -------------------------------------------------------------------------
- * seed_derive_random — Generate random bytes (PATH 1)
- * -------------------------------------------------------------------------
- * Generates out_len bytes of random data from the OS cryptographic RNG.
- *
- * Args:
- *   out     — output buffer (caller-allocated)
- *   out_len — number of bytes to generate (must be > 0)
- *
- * Returns:
- *   0   — success, out filled with random bytes
- *  -1   — error (RNG unavailable or invalid argument)
- */
+ * seed_derive_random - Generate random bytes (PATH 1)
+ * -------------------------------------------------------------------------*/
 int seed_derive_random(uint8_t *out, size_t out_len);
+
+/* -------------------------------------------------------------------------
+ * seed_derive_random_label - Generate bytes with optional UDBF override label
+ * -------------------------------------------------------------------------*/
+int seed_derive_random_label(const char *label, uint8_t *out, size_t out_len);
 
 #endif /* SEED_DERIVE_RANDOM_H */

@@ -14,10 +14,11 @@
 #include "hash/root_hash.h"
 #include "../hash/interface/hash_registry.h"
 #include "../pow/dhcm/hash_cost.h"
+#include <stdatomic.h>
 #include <stdint.h>
 
 /* ── Idempotency flag ─────────────────────────────────────────────────────*/
-static int s_initialised = 0;
+static atomic_int s_initialised = ATOMIC_VAR_INIT(0);
 
 /* ── nextssl_init ─────────────────────────────────────────────────────────
  * Subsystem init order (dependency graph):
@@ -32,14 +33,27 @@ static int s_initialised = 0;
  * --------------------------------------------------------------------------*/
 int nextssl_init(void)
 {
-    if (s_initialised) return 0;
+    int state = atomic_load_explicit(&s_initialised, memory_order_acquire);
+    if (state == 2) return 0;
+
+    state = 0;
+    if (!atomic_compare_exchange_strong_explicit(
+            &s_initialised, &state, 1,
+            memory_order_acq_rel, memory_order_acquire)) {
+        while (atomic_load_explicit(&s_initialised, memory_order_acquire) == 1) {
+        }
+        return atomic_load_explicit(&s_initialised, memory_order_acquire) == 2 ? 0 : -1;
+    }
 
     /* 1. Hash algorithm registry */
     hash_registry_init();
 
     /* 2. Cost plugin table validation */
-    if (hash_cost_registry_init() != 0) return -1;
+    if (hash_cost_registry_init() != 0) {
+        atomic_store_explicit(&s_initialised, 0, memory_order_release);
+        return -1;
+    }
 
-    s_initialised = 1;
+    atomic_store_explicit(&s_initialised, 2, memory_order_release);
     return 0;
 }

@@ -29,9 +29,6 @@ static void config_argon2i(hash_adapter_t *a, const pow_kdf_params_t *k) {
 static void config_argon2d(hash_adapter_t *a, const pow_kdf_params_t *k) {
     argon2d_adapter_config(a, k->m_kib, k->t, k->p, 32, k->salt, k->salt_len);
 }
-static void config_argon2(hash_adapter_t *a, const pow_kdf_params_t *k) {
-    argon2_adapter_config(a, k->m_kib, k->t, k->p, 32, k->salt, k->salt_len);
-}
 static void config_scrypt(hash_adapter_t *a, const pow_kdf_params_t *k) {
     scrypt_adapter_config(a, k->scrypt_N, k->scrypt_r, k->scrypt_p,
                           32, k->salt, k->salt_len);
@@ -133,7 +130,6 @@ static const pow_entry_t s_algos[] = {
     { "argon2id",   argon2id_adapter_create,   config_argon2id },
     { "argon2i",    argon2i_adapter_create,    config_argon2i  },
     { "argon2d",    argon2d_adapter_create,    config_argon2d  },
-    { "argon2",     argon2_adapter_create,     config_argon2   },
     { "scrypt",     scrypt_adapter_create,     config_scrypt   },
     { "yescrypt",   yescrypt_adapter_create,   config_yescrypt },
     { "catena",     catena_adapter_create,     config_catena   },
