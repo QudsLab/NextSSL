@@ -12,7 +12,6 @@
 #ifndef NEXTSSL_HASH_H
 #define NEXTSSL_HASH_H
 
-#include "../memory_hard/argon2.h"
 #include <stdint.h>
 #include <stddef.h>
 
@@ -24,12 +23,10 @@
  * defaults when they are zero.
  * -------------------------------------------------------------------------*/
 typedef struct {
-    /* ---- Argon2id / Argon2i / Argon2d / Argon2 ---- */
+    /* ---- Argon2id / Argon2i / Argon2d ---- */
     uint32_t memory;        /* KiB; 0 = default 65536                      */
     uint32_t iterations;    /* time cost; 0 = default 2                    */
     uint32_t parallelism;   /* threads;   0 = default 1                    */
-    int      argon2_type_set; /* 1 = use argon2_type for bare "argon2"    */
-    argon2_type argon2_type;  /* valid only when argon2_type_set == 1      */
 
     /* ---- Scrypt / Yescrypt ---- */
     uint64_t N;             /* CPU/mem cost factor; 0 = default 16384      */
@@ -65,16 +62,13 @@ typedef struct {
 /* -------------------------------------------------------------------------
  * nextssl_hash — one-shot hash / KDF dispatch
  *
- * algo_name  — lower-case algorithm name: "sha256", "argon2", "argon2id", "bcrypt", …
+ * algo_name  — lower-case algorithm name: "sha256", "argon2id", "argon2i", "argon2d", "bcrypt", …
  * data       — input bytes (password for KDFs)
  * data_len   — input length
  * out        — caller-allocated output buffer
  * out_len    — desired output length in bytes
  * config     — pointer to nextssl_hash_config_t, or NULL to use defaults
  *              (optional for KDF algorithms; omitted salt defaults to random)
- *              For bare "argon2", config->argon2_type_set must be 1 and
- *              config->argon2_type must be one of Argon2_d, Argon2_i,
- *              or Argon2_id.
  *
  * Returns  0 on success.
  * Returns -1 if algo_name is not found.

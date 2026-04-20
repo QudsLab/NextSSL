@@ -33,16 +33,6 @@ typedef struct {
 
 /* ---- Per-KDF apply helpers -------------------------------------------- */
 
-static int apply_argon2(hash_adapter_t *a, const nextssl_hash_config_t *c)
-{
-    if (!c->argon2_type_set) return -1;
-    if (c->argon2_type != Argon2_d && c->argon2_type != Argon2_i && c->argon2_type != Argon2_id)
-        return -1;
-    argon2_adapter_config(a, c->memory, c->iterations, c->parallelism,
-                          c->key_length, c->salt, c->salt_len, c->argon2_type);
-    return 0;
-}
-
 static int apply_argon2id(hash_adapter_t *a, const nextssl_hash_config_t *c)
 { argon2id_adapter_config(a, c->memory, c->iterations, c->parallelism, c->key_length, c->salt, c->salt_len); return 0; }
 
@@ -78,7 +68,6 @@ static int apply_makwa(hash_adapter_t *a, const nextssl_hash_config_t *c)
 
 /* ---- Static factory table --------------------------------------------- */
 static const kdf_factory_t s_kdf_table[] = {
-    { "argon2",    argon2_adapter_create,    apply_argon2    },
     { "argon2id",  argon2id_adapter_create,  apply_argon2id  },
     { "argon2i",   argon2i_adapter_create,   apply_argon2i   },
     { "argon2d",   argon2d_adapter_create,   apply_argon2d   },

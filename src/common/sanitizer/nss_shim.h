@@ -66,15 +66,14 @@ extern "C" {
  *
  * For HEX/BASE64 types the decode buffer must be provided separately;
  * use nss_sanitize() directly in those cases.
- * ================================================================ */
+ * =============================================================== */
 #define NSS_CALL(_inp, _len, _type, _var)                           \
-    NSS_Data _var;                                                   \
-    do {                                                             \
+    NSS_Data _var;                                                  \
+    do {                                                            \
         int _rc = nss_sanitize((_inp), (_len), (_type),             \
-                               NULL, 0, &(_var));                   \
-        if (_rc != 0) return _rc;                                    \
+                                NULL, 0, &(_var));                  \
+        if (_rc != 0) return _rc;                                   \
     } while (0)
-
 /* ================================================================
  * HASH SHIMS
  * All hash functions accept any byte buffer.  NSS_TYPE_AUTO is the

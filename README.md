@@ -3,8 +3,8 @@
 <br/><br/>
 </div>
 
-
 # NextSSL
+
 **Next Super Secure Layer**
 
 NextSSL is a security-first cryptographic library designed for the post-quantum era with a revolutionary 4-layer interface architecture. It provides everything from ultra-simple one-line APIs to low-level primitives, making it suitable for both beginners and cryptography experts.
@@ -16,6 +16,7 @@ NextSSL is a security-first cryptographic library designed for the post-quantum 
 NextSSL offers **4 API layers** - start simple, go deep when needed:
 
 1. **Layer 4 (Primary)** - Ultra-Simple Unified API
+
    ```c
    #include "primary/nextssl.h"
    
@@ -23,6 +24,7 @@ NextSSL offers **4 API layers** - start simple, go deep when needed:
    ```
 
 2. **Layer 3 (Main)** - High-Level APIs
+
    ```c
    #include "main/aead.h"
    
@@ -30,6 +32,7 @@ NextSSL offers **4 API layers** - start simple, go deep when needed:
    ```
 
 3. **Layer 2 (Base)** - Category Aggregations
+
    ```c
    #include "base/core.h"
    
@@ -74,6 +77,7 @@ Choose the right size for your needs:
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - **CMake** 3.15+
 - **C Compiler**: GCC 4.8+, Clang 3.4+, or MSVC 2015+
 - **Python** 3.7+ (optional, for testing)
@@ -111,6 +115,7 @@ int main(void) {
 ```
 
 Compile and run:
+
 ```bash
 gcc your_app.c -lnextssl -o your_app
 ./your_app
@@ -119,6 +124,7 @@ gcc your_app.c -lnextssl -o your_app
 ## 🎯 Key Features
 
 ### Modern Cryptography
+
 - **Encryption**: AES-256-GCM, ChaCha20-Poly1305, AES-GCM-SIV
 - **Hashing**: SHA-256/512, SHA3-256/512, BLAKE2b/s, BLAKE3
 - **Password Hashing**: Argon2id, scrypt, bcrypt (OWASP 2023 compliant)
@@ -126,10 +132,12 @@ gcc your_app.c -lnextssl -o your_app
 - **Signatures**: Ed25519, ECDSA P-256
 
 ### Post-Quantum Ready (Full Variant)
+
 - **KEM**: ML-KEM-768/1024 (NIST FIPS 203)
 - **Signatures**: ML-DSA-65/87 (NIST FIPS 204)
 
 ### Developer Experience
+
 - **Simple APIs**: One-line encryption, hashing, password verification
 - **Safe Defaults**: No configuration needed, just works
 - **Hard to Misuse**: Automatic nonce handling, constant-time verification

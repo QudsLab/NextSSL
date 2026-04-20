@@ -9,6 +9,7 @@ This release marks the completion of the foundational interface architecture wit
 #### Added
 
 **Build System:**
+
 - ✅ CMake build system with full variant support (Lite/Full)
 - ✅ Platform-specific configurations (Linux, macOS, Windows)
 - ✅ Symbol visibility control system
@@ -20,12 +21,14 @@ This release marks the completion of the foundational interface architecture wit
 **Interface Architecture (62 interfaces total):**
 
 **Layer 4 (Primary) - 1 interface:**
+
 - `primary/nextssl.h` - Unified ultra-simple API (~400 lines)
   - Single-header convenience for common operations
   - Version 0.0.1-beta
   - Quick start guide embedded in header
 
 **Layer 3 (Main) - 7 interfaces:**
+
 - `main/core.h` - High-level core operations
 - `main/hash.h` - Simple hashing (SHA-256 default)
 - `main/pow.h` - Simple password hashing (Argon2id)
@@ -35,6 +38,7 @@ This release marks the completion of the foundational interface architecture wit
 - `main/aead.h` - Simple AEAD (AES-GCM)
 
 **Layer 2 (Base) - 14 interfaces:**
+
 - `base/core.h` - Core primitives aggregation
 - `base/hash.h` - Hash functions (SHA-2/3, BLAKE2/3)
 - `base/pow.h` - Password hashing (Argon2id, scrypt, bcrypt)
@@ -51,21 +55,25 @@ This release marks the completion of the foundational interface architecture wit
 - `base/ecc.h` - ECC operations (Curve25519/448, P-256/384/521)
 
 **Layer 1 (Partial) - 40 interfaces:**
+
 - All low-level primitives across Core, DHCM, Hash, PoW, and PQC categories
 - Hidden from external users (NEXTSSL_PARTIAL_API)
 - Internal implementation details
 
 **Examples:**
+
 - `example_quickstart.c` - Comprehensive getting started example
 - Examples CMake configuration with automatic discovery
 
 **Documentation:**
+
 - BUILD.md - Complete build and installation guide
 - Updated README.md with 4-layer architecture explanation
 - Enhanced ALGORITHM.md references
 - CI/CD workflow (.github/workflows/ci.yml)
 
 **Development Tools:**
+
 - VS Code IntelliSense configuration (.vscode/c_cpp_properties.json)
 - Test suite CMake configuration
 - Symbol visibility header (`visibility.h`)
@@ -100,6 +108,7 @@ This release marks the completion of the foundational interface architecture wit
 ## [Unreleased] - 2026-02-12-
 
 ### System & Workflow [T-6]
+
 - **Prompt Upgrade (Addendum)**:
   - Added strict logging rules for `log/chat` and `log/prompt`.
   - Documented purpose and usage for all `note/` subdirectories (`tasks`, `changes`, `bin`, `code`, `features`, `idea`).

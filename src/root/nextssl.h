@@ -106,6 +106,7 @@ NEXTSSL_API int nextssl_init(void);
  * Do NOT include these individually in consumer code — include nextssl.h only.
  * --------------------------------------------------------------------------*/
 #include "hash/root_hash.h"
+#include "hash/root_hash_record.h"
 #include "seed/root_seed.h"
 #include "modern/root_modern.h"
 #include "pow/root_pow.h"

@@ -105,7 +105,6 @@ def main():
     if build_cache.exists() and not any(build_cache.iterdir()):
         logger.info("Removing empty scratch cache dir %s ...", build_cache.relative_to(ROOT))
         build_cache.rmdir()
-
     print(f"\nDone. Log: {log_path}")
 
 if __name__ == "__main__":

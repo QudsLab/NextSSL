@@ -47,8 +47,8 @@ NEXTSSL_API size_t nextssl_hash_block_size(const char *algo);
 /* -------------------------------------------------------------------------
  * nextssl_hash_list — Return NULL-terminated array of canonical registered names
  * This is the runtime registry surface only. Direct typed root functions such
- * as nextssl_argon2() are documented separately and are not implied to appear
- * here one-for-one.
+ * as nextssl_argon2id(), nextssl_argon2i(), and nextssl_argon2d() are
+ * documented separately and are not implied to appear here one-for-one.
  * The returned pointer is to a static string array; do not free or modify it.
  */
 NEXTSSL_API const char **nextssl_hash_list(void);
