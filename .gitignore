@@ -16,5 +16,7 @@ HASH_COST.md
 .x.md
 /temp
 kat.txt
-/KAT
 /paper
+/md
+*.pyc
+/KAT/temp

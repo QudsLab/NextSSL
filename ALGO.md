@@ -152,3 +152,52 @@ Notes:
 33. `sphincs-shake-192s`
 34. `sphincs-shake-256f`
 35. `sphincs-shake-256s`
+
+## 5. Threshold Cryptography (NIST Standards in Development)
+
+**Note:** NIST has not yet finalized specific threshold cryptography standards. Current work is in the "call for proposals" phase (NIST IR 8214C, January 2026). However, threshold schemes can be applied to the following NIST-approved primitives:
+
+1. `threshold-ecdsa` (FIPS 186-4)
+2. `threshold-schnorr` (FIPS 186-5)
+3. `threshold-ecdh` (SP 800-56A)
+4. `threshold-rsa` (SP 800-56B)
+5. `threshold-aes` (FIPS 197)
+6. `threshold-ed25519` (draft)
+7. `threshold-ed448` (draft)
+
+**Key NIST Publications:**
+
+- **NIST IR 8214C** (2026): First Call for Multi-Party Threshold Schemes
+- **NIST IR 8214A** (2020): Roadmap Toward Criteria for Threshold Schemes
+- **NIST IR 8214** (2019): Challenges and Opportunities in Standardization
+
+### NIST IR 8214C Submissions (First Call - 2026)
+
+1. `frost` (Threshold Schnorr Sign)
+2. `tbla` (Threshold BLS Sign)
+3. `gargos` (Threshold Schnorr Sign)
+4. `tecla` (2-party Threshold ECDSA)
+5. `the-clash` (n-party Threshold ECDSA)
+6. `classic-schnorr` (Threshold Schnorr Sign)
+7. `bam` (2-party ECDSA)
+8. `ccgmp` (n-party ECDSA)
+9. `haystack` (Threshold HBS)
+10. `mithril` (Threshold ML-DSA)
+11. `quorus` (Threshold ML-DSA)
+12. `redeta` (Threshold ECDLP-based Signatures)
+13. `splitkey` (Server-assisted threshold signatures and PKE)
+14. `minimpc` (Threshold AES+SHA+MAC and gadgets)
+15. `maestro` (T-AES, T-SHA, T-MAC and gadgets)
+16. `amber` (Threshold Lattice-based KEM)
+17. `hermine` (Threshold Sign [Lattice-based])
+18. `least` (Threshold Sign [code-based group-actions])
+19. `tanuki` (Threshold Lattice-based Signature)
+20. `vinaigrette` (Threshold UOV+MAYO Signatures)
+21. `pantheria` (RLWE-based FHE and Threshold FHE)
+22. `zama-tfhe` (TFHE, Threshold FHE)
+23. `zama-zhenith` (ZKP)
+24. `piver` (Verifiable Secret Sharing)
+25. `schmivitz` (VOLEith-based ZKPoK)
+26. `smallwood` (Hash-based ZKPoK)
+
+(End of file - total 200 lines)
