@@ -496,15 +496,15 @@ jobs:
           for artifact in nextssl-macos-x86_64 nextssl-macos-arm64; do
             dest="_fat/${artifact#nextssl-macos-}"
             echo "Waiting for artifact: $artifact"
-            for i in $(seq 1 60); do
+            for i in $(seq 1 120); do
               if gh run download "${{ github.run_id }}" -n "$artifact" -D "$dest" 2>>"$LOG/wait.log"; then
                 echo "Got $artifact on attempt $i" | tee -a "$LOG/wait.log"
                 break
               fi
-              if [ "$i" -eq 60 ]; then
-                echo "TIMEOUT waiting for $artifact after 30 min" | tee -a "$LOG/wait.log"
+              if [ "$i" -eq 120 ]; then
+                echo "TIMEOUT waiting for $artifact after 20 min" | tee -a "$LOG/wait.log"
               fi
-              sleep 30
+              sleep 10
             done
           done
 
@@ -538,5 +538,49 @@ jobs:
         with:
           name: logs-${{ matrix.os_tag }}-${{ matrix.arch_tag }}
           path: logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/
+          retention-days: 30
+          if-no-files-found: warn
+
+# ------------------------------------------------------------------------------
+# Consolidate — runs after ALL build jobs finish (pass or fail).
+# Downloads every per-job artifact and re-uploads two single archives:
+#   all-logs   : logs from every platform in one download
+#   all-bins   : binaries from every platform in one download
+# This is the only thing you need to pull to inspect a full run.
+# ------------------------------------------------------------------------------
+  consolidate:
+    name: Consolidate logs and bins
+    needs: build
+    if: always()
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Download all log artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: logs-*
+          path: all-logs/
+          merge-multiple: true
+
+      - name: Download all binary artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: nextssl-*
+          path: all-bins/
+          merge-multiple: true
+
+      - name: Upload all-logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-logs
+          path: all-logs/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload all-bins
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-bins
+          path: all-bins/
           retention-days: 30
           if-no-files-found: warn
