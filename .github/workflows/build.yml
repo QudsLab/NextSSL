@@ -32,6 +32,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Run all JavaScript actions on Node.js 24 (suppresses Node.js 20 deprecation
+# warnings across every job without having to bump every action version).
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 # ------------------------------------------------------------------------------
 # Builds
 # ------------------------------------------------------------------------------
@@ -512,19 +517,21 @@ jobs:
             "${{ github.run_id }}" "${{ github.sha }}" "${{ github.ref }}" \
             "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > logs/macos/universal/job_info.txt
 
-      - name: Download macOS x86_64 artifact
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: nextssl-macos-x86_64
-          path: _fat/x86_64/
+      - name: Download macOS artifacts (gh CLI - no error annotations on missing)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LOG="logs/macos/universal/lipo.log"
+          mkdir -p _fat/x86_64 _fat/arm64
 
-      - name: Download macOS arm64 artifact
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: nextssl-macos-arm64
-          path: _fat/arm64/
+          for art in x86_64 arm64; do
+            if gh run download "${{ github.run_id }}" -n "nextssl-macos-${art}" -D "_fat/${art}" 2>&1; then
+              echo "Downloaded nextssl-macos-${art}" | tee -a "$LOG"
+            else
+              echo "SKIP nextssl-macos-${art}: artifact not found or build failed" | tee -a "$LOG"
+            fi
+          done
 
       - name: Create universal binary with lipo
         shell: bash
@@ -582,14 +589,14 @@ jobs:
         with:
           pattern: logs-*
           path: all-logs/
-          merge-multiple: true
+          merge-multiple: false
 
       - name: Download all binary artifacts
         uses: actions/download-artifact@v4
         with:
           pattern: nextssl-*
           path: all-bins/
-          merge-multiple: true
+          merge-multiple: false
 
       - name: Upload all-logs
         uses: actions/upload-artifact@v4
