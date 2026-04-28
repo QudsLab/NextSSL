@@ -18,10 +18,18 @@ Everything after the lone '--' is the command to run.
 """
 
 import argparse
+import io
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+# Force UTF-8 on stdout/stderr so Unicode chars never crash on Windows cp1252.
+# Must happen before ANY print() call.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 def _utcnow() -> str:
@@ -56,7 +64,7 @@ def main() -> None:
         lf.write("=" * 70 + "\n\n")
         lf.flush()
 
-        # Emit the GitHub Actions group START — output after this is collapsible
+        # Emit the GitHub Actions group START - output after this is collapsible
         print(f"::group::{args.group}", flush=True)
 
         if not cmd:
@@ -82,12 +90,12 @@ def main() -> None:
                 proc.wait()
                 exit_code = proc.returncode
             except FileNotFoundError as exc:
-                msg = f"ci_wrapper: command not found — {exc}"
+                msg = f"ci_wrapper: command not found - {exc}"
                 print(msg, flush=True)
                 lf.write(msg + "\n")
                 exit_code = 127
             except Exception as exc:  # noqa: BLE001
-                msg = f"ci_wrapper: unexpected error — {exc}"
+                msg = f"ci_wrapper: unexpected error - {exc}"
                 print(msg, flush=True)
                 lf.write(msg + "\n")
                 exit_code = -1
@@ -99,7 +107,7 @@ def main() -> None:
     # Close the group; status line is printed outside so it's always visible
     print("::endgroup::", flush=True)
     status = "OK" if exit_code == 0 else f"FAILED (exit {exit_code})"
-    print(f"[ci_wrapper] {args.group} — {status}  →  {log_path}", flush=True)
+    print(f"[ci_wrapper] {args.group} - {status} -> {log_path}", flush=True)
 
     # ALWAYS exit 0.  Failures are in the log; the CI job stays green.
     sys.exit(0)

@@ -187,7 +187,7 @@ jobs:
         if: runner.os == 'Linux' && matrix.toolchain != 'emscripten'
         shell: bash
         run: |
-          echo "::group::Setup — ${{ matrix.label }}"
+          echo "::group::Setup - ${{ matrix.label }}"
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
             cmake ninja-build ccache ${{ matrix.apt_extra }}
@@ -198,7 +198,7 @@ jobs:
         if: runner.os == 'macOS'
         shell: bash
         run: |
-          echo "::group::Setup — ${{ matrix.label }}"
+          echo "::group::Setup - ${{ matrix.label }}"
           for pkg in cmake ninja ccache; do
             brew upgrade "$pkg" 2>/dev/null || brew install "$pkg"
           done
@@ -209,7 +209,7 @@ jobs:
         if: matrix.toolchain == 'emscripten'
         shell: bash
         run: |
-          echo "::group::Setup — ${{ matrix.label }}"
+          echo "::group::Setup - ${{ matrix.label }}"
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends cmake ninja-build ccache
           echo "::endgroup::"
@@ -227,7 +227,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          Write-Host "::group::Setup — ${{ matrix.label }}"
+          Write-Host "::group::Setup - ${{ matrix.label }}"
           if (-not (Get-Command ninja -ErrorAction SilentlyContinue)) {
             choco install ninja --yes --no-progress
           }
@@ -280,7 +280,7 @@ jobs:
             sccache --start-server
             Write-Host "sccache server started"
           } else {
-            Write-Host "sccache not found — compiler caching disabled for this job"
+            Write-Host "sccache not found - compiler caching disabled for this job"
           }
 
       # ========================================================================
@@ -301,7 +301,7 @@ jobs:
                          "-DCMAKE_BUILD_TYPE=Release", "-DNEXTSSL_SHARED=${{ matrix.shared }}")
           if ($launcher) { $cmakeArgs += "-DCMAKE_C_COMPILER_LAUNCHER=$launcher" }
           $wrapArgs = @("build/ci_wrapper.py",
-                        "--group", "Configure — ${{ matrix.label }}",
+                        "--group", "Configure - ${{ matrix.label }}",
                         "--log",   "$logDir\configure.log",
                         "--") + @("cmake") + $cmakeArgs
           python @wrapArgs
@@ -311,7 +311,7 @@ jobs:
         shell: bash
         run: |
           python build/ci_wrapper.py \
-            --group "Configure — ${{ matrix.label }}" \
+            --group "Configure - ${{ matrix.label }}" \
             --log   "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log" \
             -- cmake -S . -B _build -G Ninja \
                -DCMAKE_BUILD_TYPE=Release \
@@ -324,7 +324,7 @@ jobs:
         shell: bash
         run: |
           python build/ci_wrapper.py \
-            --group "Configure — ${{ matrix.label }}" \
+            --group "Configure - ${{ matrix.label }}" \
             --log   "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log" \
             -- emcmake cmake -S . -B _build -G Ninja \
                -DCMAKE_BUILD_TYPE=Release \
@@ -345,7 +345,7 @@ jobs:
           $logDir = "logs\${{ matrix.os_tag }}\${{ matrix.arch_tag }}"
           New-Item -ItemType Directory -Force $logDir | Out-Null
           python build/ci_wrapper.py `
-            --group "Build — ${{ matrix.label }}" `
+            --group "Build - ${{ matrix.label }}" `
             --log   "$logDir\build.log" `
             -- cmake --build _build --config Release --parallel
 
@@ -354,7 +354,7 @@ jobs:
         shell: bash
         run: |
           python build/ci_wrapper.py \
-            --group "Build — ${{ matrix.label }}" \
+            --group "Build - ${{ matrix.label }}" \
             --log   "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/build.log" \
             -- cmake --build _build --parallel -- -k 0
 
