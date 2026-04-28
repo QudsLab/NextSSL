@@ -89,18 +89,22 @@ set(SRC "${CMAKE_SOURCE_DIR}/src")
 # ─────────────────────────────────────────────────────────────────
 file(GLOB_RECURSE NEXTSSL_SOURCES "${SRC}/*.c")
 
-# ── ARM-only files (require arm_neon.h — not available on x86) ──
-if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64|aarch64|arm")
+# ── AArch64-only files (require 64-bit ARM — not available on armv7 or x86) ──
+# keccak2x uses vzip1q_u64/vld1q_u64_x2 which are AArch64-only NEON intrinsics.
+# aarch64/ asm blobs are obviously AArch64-only too.
+if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64|aarch64")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/aarch64/")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/common/keccak2x/")
 endif()
 
 # ── x86-only SIMD files (require x86 intrinsics — not available on non-x86) ──
+# keccak4x (KeccakP-1600-times4-SIMD256.c) uses immintrin.h (AVX2/AVX512).
 if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i686|i386")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_avx2\\.c$")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_avx512\\.c$")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_sse2\\.c$")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_sse41\\.c$")
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/common/keccak4x/")
 endif()
 
 # ── PQC avx2/ — pqc_main.c only uses ref/ APIs; avx2/ = dead code on Windows
