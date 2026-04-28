@@ -20,3 +20,4 @@ kat.txt
 /md
 *.pyc
 /KAT/temp
+/KAT/.temp

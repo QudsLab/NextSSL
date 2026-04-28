@@ -118,7 +118,7 @@ jobs:
             os_tag:     linux
             arch_tag:   riscv64
             toolchain:  cross
-            apt_extra:  "gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu"
+            apt_extra:  "gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu libc6-dev-riscv64-cross"
             cross_args: >-
               -DCMAKE_SYSTEM_NAME=Linux
               -DCMAKE_SYSTEM_PROCESSOR=riscv64
