@@ -397,10 +397,11 @@ jobs:
           )) {
             if (Test-Path $f) { Copy-Item $f logs\ }
           }
+          $clVer = if (Get-Command cl -ErrorAction SilentlyContinue) { (cl 2>&1 | Select-Object -First 1) } else { 'cl not in PATH (expected for cross/ARM64 jobs)' }
           @(
-            "=== cmake ===", (cmake --version),
-            "=== cl ===",    (cl 2>&1 | Select-Object -First 1),
-            "=== uname ===", ([System.Environment]::OSVersion)
+            "=== cmake ===", (cmake --version | Out-String).Trim(),
+            "=== cl ===",    $clVer,
+            "=== uname ===", [System.Environment]::OSVersion.ToString()
           ) | Out-File logs\env.txt -Encoding utf8
 
       # ========================================================================
