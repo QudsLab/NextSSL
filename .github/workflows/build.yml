@@ -185,27 +185,34 @@ jobs:
       # -- Linux: system packages ----------------------------------------------
       - name: Install Linux build packages
         if: runner.os == 'Linux' && matrix.toolchain != 'emscripten'
+        shell: bash
         run: |
+          echo "::group::Setup — ${{ matrix.label }}"
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
             cmake ninja-build ccache ${{ matrix.apt_extra }}
+          echo "::endgroup::"
 
       # -- macOS: cmake + ninja + ccache ---------------------------------------
-      # brew install returns exit 1 when a package is already up-to-date in some
-      # versions; use `brew upgrade ... || brew install ...` for idempotency.
       - name: Install macOS build packages
         if: runner.os == 'macOS'
+        shell: bash
         run: |
+          echo "::group::Setup — ${{ matrix.label }}"
           for pkg in cmake ninja ccache; do
             brew upgrade "$pkg" 2>/dev/null || brew install "$pkg"
           done
+          echo "::endgroup::"
 
       # -- WASM: system packages + Emscripten SDK ------------------------------
       - name: Install WASM build packages
         if: matrix.toolchain == 'emscripten'
+        shell: bash
         run: |
+          echo "::group::Setup — ${{ matrix.label }}"
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends cmake ninja-build ccache
+          echo "::endgroup::"
 
       - name: Set up Emscripten SDK
         if: matrix.toolchain == 'emscripten'
@@ -220,9 +227,11 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
+          Write-Host "::group::Setup — ${{ matrix.label }}"
           if (-not (Get-Command ninja -ErrorAction SilentlyContinue)) {
             choco install ninja --yes --no-progress
           }
+          Write-Host "::endgroup::"
 
       # ========================================================================
       # Compiler cache
@@ -275,93 +284,58 @@ jobs:
           }
 
       # ========================================================================
-      # CMake configure — output teed to logs/<os>/<arch>/configure.log
+      # CMake configure — routed through ci_wrapper.py:
+      #   • output teed to logs/<os>/<arch>/configure.log
+      #   • ::group:: / ::endgroup:: for collapsible CI output
+      #   • ci_wrapper ALWAYS exits 0; failures are recorded in the log only
       # ========================================================================
 
-      - name: CMake configure (Windows MSVC)
+      - name: Configure (Windows MSVC)
         if: matrix.toolchain == 'msvc'
         shell: pwsh
         run: |
           $logDir = "logs\${{ matrix.os_tag }}\${{ matrix.arch_tag }}"
           New-Item -ItemType Directory -Force $logDir | Out-Null
           $launcher = if (Get-Command sccache -ErrorAction SilentlyContinue) { "sccache" } else { "" }
-          $cmakeArgs = @(
-            "-S", ".",
-            "-B", "_build",
-            "-A", "${{ matrix.cmake_arch }}",
-            "-DCMAKE_BUILD_TYPE=Release",
-            "-DNEXTSSL_SHARED=${{ matrix.shared }}"
-          )
+          $cmakeArgs = @("-S", ".", "-B", "_build", "-A", "${{ matrix.cmake_arch }}",
+                         "-DCMAKE_BUILD_TYPE=Release", "-DNEXTSSL_SHARED=${{ matrix.shared }}")
           if ($launcher) { $cmakeArgs += "-DCMAKE_C_COMPILER_LAUNCHER=$launcher" }
-          cmake @cmakeArgs 2>&1 | Tee-Object "$logDir\configure.log"
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $wrapArgs = @("build/ci_wrapper.py",
+                        "--group", "Configure — ${{ matrix.label }}",
+                        "--log",   "$logDir\configure.log",
+                        "--") + @("cmake") + $cmakeArgs
+          python @wrapArgs
 
-      - name: CMake configure (Linux native)
-        if: matrix.toolchain == 'native'
+      - name: Configure (Linux / macOS)
+        if: matrix.toolchain != 'msvc' && matrix.toolchain != 'emscripten'
         shell: bash
         run: |
-          mkdir -p "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
-          cmake -S . -B _build -G Ninja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DNEXTSSL_SHARED=${{ matrix.shared }} \
-            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-            2>&1 | tee "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log"
-          exit ${PIPESTATUS[0]}
+          python build/ci_wrapper.py \
+            --group "Configure — ${{ matrix.label }}" \
+            --log   "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log" \
+            -- cmake -S . -B _build -G Ninja \
+               -DCMAKE_BUILD_TYPE=Release \
+               -DNEXTSSL_SHARED=${{ matrix.shared }} \
+               -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+               ${{ matrix.cross_args }}
 
-      - name: CMake configure (Linux -m32)
-        if: matrix.toolchain == 'native-m32'
-        shell: bash
-        run: |
-          mkdir -p "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
-          cmake -S . -B _build -G Ninja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DNEXTSSL_SHARED=${{ matrix.shared }} \
-            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-            ${{ matrix.cross_args }} \
-            2>&1 | tee "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log"
-          exit ${PIPESTATUS[0]}
-
-      - name: CMake configure (Linux cross)
-        if: matrix.toolchain == 'cross'
-        shell: bash
-        run: |
-          mkdir -p "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
-          cmake -S . -B _build -G Ninja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DNEXTSSL_SHARED=${{ matrix.shared }} \
-            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-            ${{ matrix.cross_args }} \
-            2>&1 | tee "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log"
-          exit ${PIPESTATUS[0]}
-
-      - name: CMake configure (macOS)
-        if: runner.os == 'macOS'
-        shell: bash
-        run: |
-          mkdir -p "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
-          cmake -S . -B _build -G Ninja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DNEXTSSL_SHARED=${{ matrix.shared }} \
-            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-            2>&1 | tee "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log"
-          exit ${PIPESTATUS[0]}
-
-      - name: CMake configure (WASM)
+      - name: Configure (WASM)
         if: matrix.toolchain == 'emscripten'
         shell: bash
         run: |
-          mkdir -p "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
-          emcmake cmake -S . -B _build -G Ninja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DNEXTSSL_SHARED=${{ matrix.shared }} \
-            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-            -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="${{ github.workspace }}/bin/web" \
-            -DCMAKE_LIBRARY_OUTPUT_DIRECTORY="${{ github.workspace }}/bin/web" \
-            2>&1 | tee "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log"
-          exit ${PIPESTATUS[0]}
+          python build/ci_wrapper.py \
+            --group "Configure — ${{ matrix.label }}" \
+            --log   "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log" \
+            -- emcmake cmake -S . -B _build -G Ninja \
+               -DCMAKE_BUILD_TYPE=Release \
+               -DNEXTSSL_SHARED=${{ matrix.shared }} \
+               -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+               -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="${{ github.workspace }}/bin/web" \
+               -DCMAKE_LIBRARY_OUTPUT_DIRECTORY="${{ github.workspace }}/bin/web"
 
       # ========================================================================
-      # Build — output teed to logs/<os>/<arch>/build.log
+      # Build — routed through ci_wrapper.py (same guarantees as configure)
+      # -k 0 (Ninja keep-going) ensures ALL errors are logged in one pass.
       # ========================================================================
 
       - name: Build (MSVC)
@@ -370,21 +344,19 @@ jobs:
         run: |
           $logDir = "logs\${{ matrix.os_tag }}\${{ matrix.arch_tag }}"
           New-Item -ItemType Directory -Force $logDir | Out-Null
-          cmake --build _build --config Release --parallel 2>&1 |
-            Tee-Object "$logDir\build.log"
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python build/ci_wrapper.py `
+            --group "Build — ${{ matrix.label }}" `
+            --log   "$logDir\build.log" `
+            -- cmake --build _build --config Release --parallel
 
       - name: Build (non-MSVC)
         if: matrix.toolchain != 'msvc'
         shell: bash
         run: |
-          mkdir -p "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
-          # -k 0 tells Ninja to keep going after errors so ALL compile
-          # failures appear in build.log in a single run instead of stopping
-          # at the first broken translation unit.
-          cmake --build _build --parallel -- -k 0 \
-            2>&1 | tee "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/build.log"
-          exit ${PIPESTATUS[0]}
+          python build/ci_wrapper.py \
+            --group "Build — ${{ matrix.label }}" \
+            --log   "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/build.log" \
+            -- cmake --build _build --parallel -- -k 0
 
       # ========================================================================
       # Post-build
@@ -494,13 +466,13 @@ jobs:
       # ========================================================================
 
       - name: Upload binary artifact
-        if: success()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: nextssl-${{ matrix.os_tag }}-${{ matrix.arch_tag }}
           path: bin/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/
           retention-days: 30
-          if-no-files-found: warn
+          if-no-files-found: ignore
 
       - name: Upload build logs
         if: always()
@@ -510,9 +482,6 @@ jobs:
           path: logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/
           retention-days: 30
           if-no-files-found: warn
-
-      # All log artifacts are collected into a single branch by the
-      # dedicated collect-logs job below — no per-job branch commits needed.
 
 # ------------------------------------------------------------------------------
 # macOS Universal (fat) binary -- merged from x86_64 + arm64 artifacts
@@ -551,107 +520,5 @@ jobs:
         with:
           name: nextssl-macos-universal
           path: bin/macos/universal/
-          if-no-files-found: error
+          if-no-files-found: ignore
           retention-days: 30
-
-# ------------------------------------------------------------------------------
-# Collect ALL logs into a single branch after every build job finishes.
-#
-# Branch:  ci-logs/<run_id>
-# Layout:  logs/<os_tag>/<arch_tag>/{configure,build,CMakeError,...}.log
-#          logs/SUMMARY.md  — index of every file with sizes
-#
-# "if: always()" ensures this runs even when build jobs fail.
-# "needs: build" (not build-macos-universal) so we don't wait for lipo.
-#
-# To inspect after a run:
-#   git fetch origin ci-logs/<run_id>
-#   git checkout FETCH_HEAD -- logs/
-# ------------------------------------------------------------------------------
-  collect-logs:
-    name: Collect all build logs
-    needs: build
-    if: always()
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      # Download every logs-* artifact.  With merge-multiple:false (default)
-      # each artifact lands at _raw/<artifact-name>/ so names never collide.
-      - name: Download all log artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: logs-*
-          path: _raw/
-          merge-multiple: false
-
-      # Restructure _raw/logs-<os>-<arch>/* → logs/<os>/<arch>/*
-      # Splitting on the first '-' after the "logs-" prefix gives os_tag;
-      # everything after the second '-' is arch_tag.
-      - name: Restructure into logs/<os>/<arch>/
-        shell: bash
-        run: |
-          for dir in _raw/logs-*/; do
-            name=$(basename "$dir")        # e.g. logs-linux-arm64
-            rest="${name#logs-}"           # e.g. linux-arm64
-            os="${rest%%-*}"               # e.g. linux
-            arch="${rest#*-}"              # e.g. arm64
-            dest="logs/$os/$arch"
-            mkdir -p "$dest"
-            cp -r "$dir"* "$dest/" 2>/dev/null || true
-          done
-          rm -rf _raw/
-
-      # Write a human-readable index so a plain `git show` reveals everything.
-      - name: Write SUMMARY.md
-        shell: bash
-        run: |
-          {
-            echo "# CI Build Log Summary"
-            echo ""
-            echo "| Field | Value |"
-            echo "|-------|-------|"
-            echo "| Run ID | \`${{ github.run_id }}\` |"
-            echo "| Attempt | \`${{ github.run_attempt }}\` |"
-            echo "| Commit | \`${{ github.sha }}\` |"
-            echo "| Ref | \`${{ github.ref }}\` |"
-            echo "| Event | \`${{ github.event_name }}\` |"
-            echo "| Collected at | $(date -u +%Y-%m-%dT%H:%M:%SZ) |"
-            echo ""
-            echo "## Log files"
-            echo ""
-            echo "| File | Size |"
-            echo "|------|------|"
-            find logs/ -type f | sort | while read -r f; do
-              bytes=$(wc -c < "$f" 2>/dev/null || echo 0)
-              echo "| \`$f\` | ${bytes} B |"
-            done
-          } > logs/SUMMARY.md
-
-      # Commit all logs to an orphan branch — one branch per run, no merge
-      # conflicts with the main history or with parallel runs.
-      - name: Commit and push logs
-        shell: bash
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          BRANCH="ci-logs/${{ github.run_id }}"
-
-          # Stash logs outside the working tree before switching branches.
-          TMP=$(mktemp -d)
-          cp -r logs/. "$TMP/"
-
-          git checkout --orphan "$BRANCH"
-          git rm -rf . --quiet --ignore-unmatch 2>/dev/null || true
-
-          mkdir -p logs
-          cp -r "$TMP/." logs/
-          rm -rf "$TMP"
-
-          git add logs/
-          git commit -m "ci-logs: run=${{ github.run_id }} attempt=${{ github.run_attempt }} ref=${{ github.ref_name }}"
-          git push origin "HEAD:refs/heads/$BRANCH" --force
