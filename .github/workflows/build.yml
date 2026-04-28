@@ -132,11 +132,15 @@ jobs:
             shared:     ON
 
           # -- macOS -----------------------------------------------------------
+          # Both macOS jobs run on macos-14 (arm64 hardware, large pool).
+          # x86_64 cross-compiles via -DCMAKE_OSX_ARCHITECTURES=x86_64 --
+          # Apple Clang supports this natively with no extra toolchain.
           - label:      "macOS x86_64 (Apple Clang)"
-            runner:     macos-13
+            runner:     macos-14
             os_tag:     macos
             arch_tag:   x86_64
             toolchain:  native
+            osx_arch:   x86_64
             shared:     ON
 
           - label:      "macOS arm64 / M-series (Apple Clang)"
@@ -322,6 +326,8 @@ jobs:
         if: matrix.toolchain != 'msvc' && matrix.toolchain != 'emscripten' && matrix.toolchain != 'lipo'
         shell: bash
         run: |
+          OSX_ARCH="${{ matrix.osx_arch }}"
+          OSX_FLAG="${OSX_ARCH:+-DCMAKE_OSX_ARCHITECTURES=$OSX_ARCH}"
           python build/ci_wrapper.py \
             --group "Configure - ${{ matrix.label }}" \
             --log   "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/configure.log" \
@@ -329,7 +335,8 @@ jobs:
                -DCMAKE_BUILD_TYPE=Release \
                -DNEXTSSL_SHARED=${{ matrix.shared }} \
                -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-               ${{ matrix.cross_args }}
+               ${{ matrix.cross_args }} \
+               $OSX_FLAG
 
       - name: Configure (WASM)
         if: matrix.toolchain == 'emscripten'
