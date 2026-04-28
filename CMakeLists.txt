@@ -110,8 +110,13 @@ endif()
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/.*/avx2/")
 
 # ── Duplicate definitions (only one variant needed) ─────────────
-# Argon2: opt.c is the optimised x86 version; ref.c is a duplicate
-list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/ref\\.c$")
+# Argon2: opt.c uses x86 SSE2 intrinsics (emmintrin.h); ref.c is the portable fallback.
+# On x86/x86_64 use opt.c (exclude ref.c); on all other arches use ref.c (exclude opt.c).
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i686|i386")
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/ref\\.c$")
+else()
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/opt\\.c$")
+endif()
 # Skein: skein_block.c is the primary; skeinBlockNo3F.c is a duplicate
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/skeinBlockNo3F\\.c$")
 # PoW public wrappers live in src/root/pow/root_pow.c; exclude legacy duplicate
