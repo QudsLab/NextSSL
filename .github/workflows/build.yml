@@ -158,18 +158,6 @@ jobs:
             toolchain:  emscripten
             shared:     ON
 
-          # -- macOS universal (lipo) ------------------------------------------
-          # Runs on the same runner pool as arm64.  Polls every 30 s (up to
-          # 30 min) until both nextssl-macos-x86_64 and nextssl-macos-arm64
-          # artifacts are uploaded by their sibling matrix jobs, then merges
-          # them with lipo.  This keeps all 12 builds in one visual group.
-          - label:      "macOS universal (lipo)"
-            runner:     macos-14
-            os_tag:     macos
-            arch_tag:   universal
-            toolchain:  lipo
-            shared:     ON
-
     steps:
       - uses: actions/checkout@v4
 
@@ -200,7 +188,7 @@ jobs:
 
       # -- Linux: system packages ----------------------------------------------
       - name: Install Linux build packages
-        if: runner.os == 'Linux' && matrix.toolchain != 'emscripten' && matrix.toolchain != 'lipo'
+        if: runner.os == 'Linux' && matrix.toolchain != 'emscripten'
         shell: bash
         run: |
           echo "::group::Setup - ${{ matrix.label }}"
@@ -211,7 +199,7 @@ jobs:
 
       # -- macOS: cmake + ninja + ccache ---------------------------------------
       - name: Install macOS build packages
-        if: runner.os == 'macOS' && matrix.toolchain != 'lipo'
+        if: runner.os == 'macOS'
         shell: bash
         run: |
           echo "::group::Setup - ${{ matrix.label }}"
@@ -258,7 +246,7 @@ jobs:
       # ========================================================================
 
       - name: Cache ccache (Linux / macOS)
-        if: runner.os != 'Windows' && matrix.toolchain != 'lipo'
+        if: runner.os != 'Windows'
         uses: actions/cache@v4
         continue-on-error: true
         with:
@@ -269,7 +257,7 @@ jobs:
             ccache-${{ runner.os }}-
 
       - name: Configure ccache limits
-        if: runner.os != 'Windows' && matrix.toolchain != 'lipo'
+        if: runner.os != 'Windows'
         run: |
           ccache --set-config=max_size=500M
           ccache --set-config=compression=true
@@ -323,7 +311,7 @@ jobs:
           python @wrapArgs
 
       - name: Configure (Linux / macOS)
-        if: matrix.toolchain != 'msvc' && matrix.toolchain != 'emscripten' && matrix.toolchain != 'lipo'
+        if: matrix.toolchain != 'msvc' && matrix.toolchain != 'emscripten'
         shell: bash
         run: |
           OSX_ARCH="${{ matrix.osx_arch }}"
@@ -369,7 +357,7 @@ jobs:
             -- cmake --build _build --config Release --parallel
 
       - name: Build (non-MSVC)
-        if: matrix.toolchain != 'msvc' && matrix.toolchain != 'lipo'
+        if: matrix.toolchain != 'msvc'
         shell: bash
         run: |
           python build/ci_wrapper.py \
@@ -382,7 +370,7 @@ jobs:
       # ========================================================================
 
       - name: Show ccache stats
-        if: runner.os != 'Windows' && matrix.toolchain != 'lipo'
+        if: runner.os != 'Windows'
         run: ccache -s
 
       - name: Show sccache stats
@@ -394,7 +382,7 @@ jobs:
       # Normalise output directory: CMakeLists.txt names the dir from
       # CMAKE_SYSTEM_PROCESSOR which may differ from our arch_tag for cross builds.
       - name: Normalise output directory
-        if: runner.os != 'Windows' && matrix.toolchain != 'lipo'
+        if: runner.os != 'Windows'
         shell: bash
         run: |
           DST="bin/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
@@ -411,7 +399,7 @@ jobs:
       # ========================================================================
 
       - name: Collect logs (Linux / macOS / WASM)
-        if: always() && runner.os != 'Windows' && matrix.toolchain != 'lipo'
+        if: always() && runner.os != 'Windows'
         shell: bash
         run: |
           LOG="logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
@@ -481,45 +469,6 @@ jobs:
           $lines | Out-File "$logDir\env.txt" -Encoding utf8
 
       # ========================================================================
-      # macOS universal — poll until both macOS artifacts are uploaded, then lipo
-      # ========================================================================
-
-      - name: Wait for macOS artifacts and create universal binary
-        if: matrix.toolchain == 'lipo'
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          LOG="logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
-          mkdir -p "$LOG" _fat/x86_64 _fat/arm64
-
-          for artifact in nextssl-macos-x86_64 nextssl-macos-arm64; do
-            dest="_fat/${artifact#nextssl-macos-}"
-            echo "Waiting for artifact: $artifact"
-            for i in $(seq 1 120); do
-              if gh run download "${{ github.run_id }}" -n "$artifact" -D "$dest" 2>>"$LOG/wait.log"; then
-                echo "Got $artifact on attempt $i" | tee -a "$LOG/wait.log"
-                break
-              fi
-              if [ "$i" -eq 120 ]; then
-                echo "TIMEOUT waiting for $artifact after 20 min" | tee -a "$LOG/wait.log"
-              fi
-              sleep 10
-            done
-          done
-
-          mkdir -p bin/macos/universal
-          if [ -f "_fat/x86_64/libnextssl.dylib" ] && [ -f "_fat/arm64/libnextssl.dylib" ]; then
-            lipo -create \
-              _fat/x86_64/libnextssl.dylib \
-              _fat/arm64/libnextssl.dylib \
-              -output bin/macos/universal/libnextssl.dylib
-            lipo -info bin/macos/universal/libnextssl.dylib | tee -a "$LOG/lipo.log"
-          else
-            echo "One or both macOS dylibs missing - skipping lipo" | tee -a "$LOG/lipo.log"
-          fi
-
-      # ========================================================================
       # Artifact uploads — binary (always) + logs (always)
       # ========================================================================
 
@@ -542,6 +491,77 @@ jobs:
           if-no-files-found: warn
 
 # ------------------------------------------------------------------------------
+# lipo — runs after ALL build jobs finish (needs: build).
+# Downloads nextssl-macos-x86_64 and nextssl-macos-arm64 (already uploaded by
+# the build job) and merges them into a fat universal binary with lipo.
+# No polling needed — needs: build guarantees the artifacts exist.
+# ------------------------------------------------------------------------------
+  lipo:
+    name: macOS universal (lipo)
+    needs: build
+    if: always()
+    runs-on: macos-14
+
+    steps:
+      - name: Initialize log directory
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p logs/macos/universal
+          printf 'job:      lipo\nrun_id:   %s\nsha:      %s\nref:      %s\nstarted:  %s\n' \
+            "${{ github.run_id }}" "${{ github.sha }}" "${{ github.ref }}" \
+            "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > logs/macos/universal/job_info.txt
+
+      - name: Download macOS x86_64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nextssl-macos-x86_64
+          path: _fat/x86_64/
+
+      - name: Download macOS arm64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nextssl-macos-arm64
+          path: _fat/arm64/
+
+      - name: Create universal binary with lipo
+        shell: bash
+        run: |
+          mkdir -p bin/macos/universal
+          X86="_fat/x86_64/libnextssl.dylib"
+          ARM="_fat/arm64/libnextssl.dylib"
+          OUT="bin/macos/universal/libnextssl.dylib"
+          LOG="logs/macos/universal/lipo.log"
+
+          if [ -f "$X86" ] && [ -f "$ARM" ]; then
+            lipo -create "$X86" "$ARM" -output "$OUT" | tee -a "$LOG"
+            lipo -info "$OUT" | tee -a "$LOG"
+            echo "lipo: OK" | tee -a "$LOG"
+          else
+            echo "lipo: SKIP - missing dylib(s)" | tee -a "$LOG"
+            [ -f "$X86" ] || echo "  missing: $X86" | tee -a "$LOG"
+            [ -f "$ARM" ] || echo "  missing: $ARM" | tee -a "$LOG"
+          fi
+
+      - name: Upload universal binary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextssl-macos-universal
+          path: bin/macos/universal/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload lipo logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-macos-universal
+          path: logs/macos/universal/
+          retention-days: 30
+          if-no-files-found: warn
+
+# ------------------------------------------------------------------------------
 # Consolidate — runs after ALL build jobs finish (pass or fail).
 # Downloads every per-job artifact and re-uploads two single archives:
 #   all-logs   : logs from every platform in one download
@@ -550,7 +570,7 @@ jobs:
 # ------------------------------------------------------------------------------
   consolidate:
     name: Consolidate logs and bins
-    needs: build
+    needs: [build, lipo]
     if: always()
     runs-on: ubuntu-22.04
 
