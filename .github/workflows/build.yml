@@ -11,9 +11,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     name: Build ${{ matrix.label }}
@@ -38,7 +35,7 @@ jobs:
             cmake_arch: ARM64
 
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v6
 
       # -----------------------------------------------------------------------
       # Log dir — created first so it always exists even if later steps crash
@@ -74,7 +71,7 @@ jobs:
       # sccache compiler cache
       # -----------------------------------------------------------------------
       - name: Cache sccache store
-        uses: actions/cache@v4.2.3
+        uses: actions/cache@v5
         continue-on-error: true
         with:
           path: ${{ env.LOCALAPPDATA }}\Mozilla\sccache
@@ -188,7 +185,7 @@ jobs:
       # -----------------------------------------------------------------------
       - name: Upload binary
         if: success()
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: nextssl-win-${{ matrix.arch_tag }}
           path: bin/win/${{ matrix.arch_tag }}/
@@ -197,7 +194,7 @@ jobs:
 
       - name: Upload logs
         if: always()
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: logs-win-${{ matrix.arch_tag }}
           path: logs/win/${{ matrix.arch_tag }}/
@@ -210,23 +207,94 @@ jobs:
   # This is the only artifact you need to pull to inspect a full run.
   # ---------------------------------------------------------------------------
   collect:
-    name: Collect all logs
+    name: Collect and publish logs
     needs: build
     if: always()
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
 
     steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
       - name: Download all log artifacts
-        uses: actions/download-artifact@v4.3.0
+        uses: actions/download-artifact@v8
         with:
           pattern: logs-win-*
-          path: all-logs/
+          path: _ci_logs_artifacts/
           merge-multiple: false
 
       - name: Upload all-logs
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v7
         with:
           name: all-logs
-          path: all-logs/
+          path: _ci_logs_artifacts/
           retention-days: 30
-          if-no-files-found: warn
+          if-no-files-found: error
+
+      - name: Publish logs to ci-logs branch
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin ci-logs || true
+
+          if git show-ref --verify --quiet refs/remotes/origin/ci-logs; then
+            git switch -C ci-logs refs/remotes/origin/ci-logs
+          else
+            git switch --orphan ci-logs
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
+
+          mkdir -p "logs/runs/${{ github.run_id }}" "logs/latest"
+          rm -rf logs/latest/*
+
+          cp -R _ci_logs_artifacts/. "logs/runs/${{ github.run_id }}/"
+          cp -R _ci_logs_artifacts/. "logs/latest/"
+
+          cat > "logs/latest/RUN_INFO.txt" <<EOF
+          run_id:   ${{ github.run_id }}
+          attempt:  ${{ github.run_attempt }}
+          sha:      ${{ github.sha }}
+          ref:      ${{ github.ref }}
+          branch:   ci-logs
+          EOF
+
+          cat > "logs/runs/${{ github.run_id }}/RUN_INFO.txt" <<EOF
+          run_id:   ${{ github.run_id }}
+          attempt:  ${{ github.run_attempt }}
+          sha:      ${{ github.sha }}
+          ref:      ${{ github.ref }}
+          branch:   ci-logs
+          EOF
+
+          git add logs
+          if git diff --cached --quiet; then
+            echo "No log changes to commit"
+          else
+            git commit -m "CI logs for run ${{ github.run_id }}"
+            git push origin HEAD:ci-logs
+          fi
+
+      - name: Write pull instructions
+        shell: bash
+        run: |
+          {
+            echo "## Pullable logs"
+            echo
+            echo "Logs are published to branch: ci-logs"
+            echo
+            echo "Commands:"
+            echo "git fetch origin ci-logs"
+            echo "git switch ci-logs"
+            echo
+            echo "Latest logs path: logs/latest/"
+            echo "Run logs path: logs/runs/${{ github.run_id }}/"
+            echo
+            echo "Fallback artifact: all-logs"
+          } >> "$GITHUB_STEP_SUMMARY"
