@@ -513,12 +513,14 @@ jobs:
             "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > logs/macos/universal/job_info.txt
 
       - name: Download macOS x86_64 artifact
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: nextssl-macos-x86_64
           path: _fat/x86_64/
 
       - name: Download macOS arm64 artifact
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: nextssl-macos-arm64
