@@ -309,15 +309,26 @@ jobs:
 
       # ========================================================================
       # Build
+      # Pipe output through tee so errors appear in the runner log AND are
+      # saved to logs/build.log for the artifact upload below.
       # ========================================================================
 
       - name: Build (MSVC)
         if: matrix.toolchain == 'msvc'
-        run: cmake --build _build --config Release --parallel
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force logs | Out-Null
+          cmake --build _build --config Release --parallel 2>&1 |
+            Tee-Object logs\build.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Build (non-MSVC)
         if: matrix.toolchain != 'msvc'
-        run: cmake --build _build --parallel
+        shell: bash
+        run: |
+          mkdir -p logs
+          cmake --build _build --parallel 2>&1 | tee logs/build.log
+          exit ${PIPESTATUS[0]}
 
       # ========================================================================
       # Post-build
@@ -346,13 +357,73 @@ jobs:
             cp -r "$SRC"/. "$DST/"
           fi
 
+      # ========================================================================
+      # Log collection — runs ALWAYS (success or failure)
+      # Collects: build output, CMake configure logs, compiler/tool versions.
+      # ========================================================================
+
+      - name: Collect build logs
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p logs
+          # CMake configure logs (present even when build fails at configure)
+          for f in \
+            _build/CMakeFiles/CMakeError.log \
+            _build/CMakeFiles/CMakeOutput.log \
+            _build/CMakeFiles/cmake.check_cache; do
+            [ -f "$f" ] && cp "$f" "logs/$(basename $f)" || true
+          done
+          # Tool version info (helps reproduce failures locally)
+          {
+            echo "=== cmake ==="
+            cmake --version
+            echo "=== ninja ==="
+            ninja --version 2>/dev/null || echo "n/a"
+            echo "=== cc ==="
+            ${CC:-cc} --version 2>/dev/null || echo "n/a"
+            echo "=== uname ==="
+            uname -a
+          } > logs/env.txt 2>&1 || true
+
+      - name: Collect build logs (Windows)
+        if: always() && runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force logs | Out-Null
+          foreach ($f in @(
+            "_build\CMakeFiles\CMakeError.log",
+            "_build\CMakeFiles\CMakeOutput.log"
+          )) {
+            if (Test-Path $f) { Copy-Item $f logs\ }
+          }
+          @(
+            "=== cmake ===", (cmake --version),
+            "=== cl ===",    (cl 2>&1 | Select-Object -First 1),
+            "=== uname ===", ([System.Environment]::OSVersion)
+          ) | Out-File logs\env.txt -Encoding utf8
+
+      # ========================================================================
+      # Artifact uploads — binary (only on success) + logs (always)
+      # ========================================================================
+
       - name: Upload binary artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: nextssl-${{ matrix.os_tag }}-${{ matrix.arch_tag }}
           path: bin/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/
-          if-no-files-found: error
           retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ matrix.os_tag }}-${{ matrix.arch_tag }}
+          path: logs/
+          retention-days: 30
+          if-no-files-found: ignore
 
 # ------------------------------------------------------------------------------
 # macOS Universal (fat) binary -- merged from x86_64 + arm64 artifacts
