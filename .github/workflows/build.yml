@@ -1,0 +1,329 @@
+# NextSSL — Multi-platform CI/CD
+#
+# Triggers:
+#   - Push to main / master
+#   - Pull request against main / master
+#   - Manual via "Run workflow" button
+#
+# Jobs produced:
+#   - build  : compile nextssl for every platform × arch matrix entry
+#   - test   : run KAT test suite (pure-Python, platform-independent)
+#
+# Artifacts uploaded per job:
+#   bin/win/<arch>/nextssl.dll
+#   bin/linux/<arch>/libnextssl.so
+#   bin/macos/<arch>/libnextssl.dylib
+#   bin/web/libnextssl.wasm  +  libnextssl.js
+
+name: Build
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+# Cancel in-flight runs for the same ref (saves minutes)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ──────────────────────────────────────────────────────────────────────────────
+# KAT Tests (always run first; pure Python, no native build needed)
+# ──────────────────────────────────────────────────────────────────────────────
+jobs:
+  test:
+    name: KAT Tests
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run KAT test suite
+        run: python test.py
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Native Builds
+# ──────────────────────────────────────────────────────────────────────────────
+  build:
+    name: Build ${{ matrix.label }}
+    needs: test
+    runs-on: ${{ matrix.runner }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+
+          # ── Windows ─────────────────────────────────────────────────────────
+          - label:       "Windows x86_64 (MSVC)"
+            runner:      windows-2022
+            os_tag:      win
+            arch_tag:    x86_64
+            cmake_arch:  x64            # Visual Studio -A flag
+            toolchain:   msvc
+            shared:      ON
+
+          - label:       "Windows x86 / i686 (MSVC)"
+            runner:      windows-2022
+            os_tag:      win
+            arch_tag:    x86
+            cmake_arch:  Win32
+            toolchain:   msvc
+            shared:      ON
+
+          - label:       "Windows arm64 (MSVC cross)"
+            runner:      windows-2022
+            os_tag:      win
+            arch_tag:    arm64
+            cmake_arch:  ARM64
+            toolchain:   msvc
+            shared:      ON
+
+          # ── Linux (glibc) — native ──────────────────────────────────────────
+          - label:       "Linux x86_64 (GCC)"
+            runner:      ubuntu-22.04
+            os_tag:      linux
+            arch_tag:    x86_64
+            toolchain:   native
+            apt_extra:   ""
+            cross_args:  ""
+            shared:      ON
+
+          - label:       "Linux x86 / i686 (GCC -m32)"
+            runner:      ubuntu-22.04
+            os_tag:      linux
+            arch_tag:    x86
+            toolchain:   native-m32
+            apt_extra:   "gcc-multilib"
+            cross_args:  "-DCMAKE_C_FLAGS=-m32 -DCMAKE_SYSTEM_PROCESSOR=i686"
+            shared:      ON
+
+          # ── Linux (glibc) — cross-compiled ──────────────────────────────────
+          - label:       "Linux arm64 / AArch64 (cross)"
+            runner:      ubuntu-22.04
+            os_tag:      linux
+            arch_tag:    arm64
+            toolchain:   cross
+            apt_extra:   "gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu"
+            cross_args:  >-
+              -DCMAKE_SYSTEM_NAME=Linux
+              -DCMAKE_SYSTEM_PROCESSOR=aarch64
+              -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc
+            shared:      ON
+
+          - label:       "Linux armv7hf (cross)"
+            runner:      ubuntu-22.04
+            os_tag:      linux
+            arch_tag:    armv7
+            toolchain:   cross
+            apt_extra:   "gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf"
+            cross_args:  >-
+              -DCMAKE_SYSTEM_NAME=Linux
+              -DCMAKE_SYSTEM_PROCESSOR=armv7
+              -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc
+            shared:      ON
+
+          - label:       "Linux riscv64 (cross)"
+            runner:      ubuntu-22.04
+            os_tag:      linux
+            arch_tag:    riscv64
+            toolchain:   cross
+            apt_extra:   "gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu"
+            cross_args:  >-
+              -DCMAKE_SYSTEM_NAME=Linux
+              -DCMAKE_SYSTEM_PROCESSOR=riscv64
+              -DCMAKE_C_COMPILER=riscv64-linux-gnu-gcc
+            shared:      ON
+
+          # ── macOS ────────────────────────────────────────────────────────────
+          - label:       "macOS x86_64 (Apple Clang)"
+            runner:      macos-13
+            os_tag:      macos
+            arch_tag:    x86_64
+            toolchain:   native
+            shared:      ON
+
+          - label:       "macOS arm64 / M-series (Apple Clang)"
+            runner:      macos-14
+            os_tag:      macos
+            arch_tag:    arm64
+            toolchain:   native
+            shared:      ON
+
+          # ── WebAssembly ───────────────────────────────────────────────────────
+          - label:       "WASM (Emscripten)"
+            runner:      ubuntu-22.04
+            os_tag:      web
+            arch_tag:    wasm32
+            toolchain:   emscripten
+            shared:      ON
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # ── Linux: install system packages ──────────────────────────────────────
+      - name: Install Linux packages
+        if: runner.os == 'Linux' && matrix.toolchain != 'emscripten'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            cmake ninja-build ${{ matrix.apt_extra }}
+
+      # ── Linux: install cmake (system) ───────────────────────────────────────
+      - name: Install cmake on macOS
+        if: runner.os == 'macOS'
+        run: brew install cmake ninja
+
+      # ── WASM: install Emscripten ─────────────────────────────────────────────
+      - name: Set up Emscripten
+        if: matrix.toolchain == 'emscripten'
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: latest
+
+      # ── Windows: MSVC is already on the runner; add ninja ───────────────────
+      - name: Add Ninja to PATH (Windows)
+        if: runner.os == 'Windows'
+        uses: seanmiddleditch/gha-setup-ninja@v5
+
+      # ── Configure ────────────────────────────────────────────────────────────
+
+      # Windows MSVC (uses -A <arch> for multi-arch support)
+      - name: CMake configure (Windows MSVC)
+        if: matrix.toolchain == 'msvc'
+        run: >
+          cmake -B _build
+          -A ${{ matrix.cmake_arch }}
+          -DCMAKE_BUILD_TYPE=Release
+          -DNEXTSSL_SHARED=${{ matrix.shared }}
+
+      # Linux native
+      - name: CMake configure (Linux native)
+        if: matrix.toolchain == 'native'
+        run: >
+          cmake -B _build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DNEXTSSL_SHARED=${{ matrix.shared }}
+
+      # Linux native -m32
+      - name: CMake configure (Linux -m32)
+        if: matrix.toolchain == 'native-m32'
+        run: >
+          cmake -B _build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DNEXTSSL_SHARED=${{ matrix.shared }}
+          ${{ matrix.cross_args }}
+
+      # Linux cross-compile
+      - name: CMake configure (Linux cross)
+        if: matrix.toolchain == 'cross'
+        run: >
+          cmake -B _build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DNEXTSSL_SHARED=${{ matrix.shared }}
+          ${{ matrix.cross_args }}
+
+      # macOS native
+      - name: CMake configure (macOS)
+        if: runner.os == 'macOS'
+        run: >
+          cmake -B _build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DNEXTSSL_SHARED=${{ matrix.shared }}
+
+      # WASM — use emcmake wrapper
+      - name: CMake configure (WASM)
+        if: matrix.toolchain == 'emscripten'
+        run: >
+          emcmake cmake -B _build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="${{ github.workspace }}/bin/web"
+          -DCMAKE_LIBRARY_OUTPUT_DIRECTORY="${{ github.workspace }}/bin/web"
+
+      # ── Build ─────────────────────────────────────────────────────────────────
+      - name: Build (MSVC)
+        if: matrix.toolchain == 'msvc'
+        run: cmake --build _build --config Release --parallel
+
+      - name: Build (non-MSVC)
+        if: matrix.toolchain != 'msvc'
+        run: cmake --build _build --parallel
+
+      # ── Rename/flatten arm output directory ──────────────────────────────────
+      # CMakeLists detects SYSTEM_PROCESSOR; for cross-compile jobs the value
+      # we pass may differ from what CMake records (e.g. "armv7" vs "arm").
+      # We normalise to the arch_tag used in the matrix.
+      - name: Normalise output directory
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          SRC=$(find bin -mindepth 2 -maxdepth 2 -type d | head -1)
+          DST="bin/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
+          if [ -n "$SRC" ] && [ "$SRC" != "$DST" ]; then
+            mkdir -p "$DST"
+            cp -r "$SRC"/. "$DST/"
+          fi
+
+      # ── macOS universal fat binary ────────────────────────────────────────────
+      # Only runs when BOTH x86_64 AND arm64 artifacts are available.
+      # This step is deliberately left as a separate job below (build-universal).
+
+      # ── Upload artifacts ───────────────────────────────────────────────────────
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextssl-${{ matrix.os_tag }}-${{ matrix.arch_tag }}
+          path: bin/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/
+          if-no-files-found: error
+          retention-days: 30
+
+# ──────────────────────────────────────────────────────────────────────────────
+# macOS Universal (fat) binary — merged from x86_64 + arm64 artifacts
+# ──────────────────────────────────────────────────────────────────────────────
+  build-macos-universal:
+    name: Build macOS universal (fat)
+    needs: build
+    runs-on: macos-14
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download macOS x86_64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nextssl-macos-x86_64
+          path: _fat/x86_64
+
+      - name: Download macOS arm64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nextssl-macos-arm64
+          path: _fat/arm64
+
+      - name: Create universal binary with lipo
+        run: |
+          mkdir -p bin/macos/universal
+          lipo -create \
+            _fat/x86_64/libnextssl.dylib \
+            _fat/arm64/libnextssl.dylib \
+            -output bin/macos/universal/libnextssl.dylib
+          lipo -info bin/macos/universal/libnextssl.dylib
+
+      - name: Upload universal artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextssl-macos-universal
+          path: bin/macos/universal/
+          if-no-files-found: error
+          retention-days: 30
