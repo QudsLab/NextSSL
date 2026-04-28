@@ -32,12 +32,9 @@ THE SOFTWARE.
  */
 #include "../../seed/rng/rng.h"
 #include <assert.h>
+#include "nextssl_export.h"
 
-#ifdef _WIN32
-    #define EXPORT __declspec(dllexport)
-#else
-    #define EXPORT __attribute__((visibility("default")))
-#endif
+#define EXPORT NEXTSSL_API
 
 static DRBG_CTX global_drbg;
 static int drbg_initialized = 0;

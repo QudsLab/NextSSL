@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include "nextssl_export.h"
 
 #ifdef _WIN32
 /* Load size_t on windows */
@@ -24,14 +25,14 @@ int randombytes(uint8_t *output, size_t n);
  * Explicit OS-RNG opt-in helper.
  * Call before using randombytes() without prior DRBG/UDBF seeding.
  */
-void pqc_randombytes_use_os_rng(void);
+NEXTSSL_API void pqc_randombytes_use_os_rng(void);
 
 /*
  * Enable or disable the direct OS-RNG fallback path.
  * Pass non-zero to allow randombytes() to use the OS RNG when no DRBG seed
  * or UDBF source has been configured yet.
  */
-int pqc_randombytes_set_mode(int unsafe);
+NEXTSSL_API int pqc_randombytes_set_mode(int unsafe);
 
 #ifdef __cplusplus
 }

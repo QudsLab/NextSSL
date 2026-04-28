@@ -3,8 +3,9 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include "../../root/nextssl_export.h"
 
-char AES_XTS_encrypt(const uint8_t* keys, const uint8_t* tweak, const void* pntxt, const size_t ptextLen, void* crtxt);
-char AES_XTS_decrypt(const uint8_t* keys, const uint8_t* tweak, const void* crtxt, const size_t crtxtLen, void* pntxt);
+NEXTSSL_API char AES_XTS_encrypt(const uint8_t* keys, const uint8_t* tweak, const void* pntxt, const size_t ptextLen, void* crtxt);
+NEXTSSL_API char AES_XTS_decrypt(const uint8_t* keys, const uint8_t* tweak, const void* crtxt, const size_t crtxtLen, void* pntxt);
 
 #endif
