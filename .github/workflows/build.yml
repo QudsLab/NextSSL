@@ -36,6 +36,8 @@ jobs:
   build:
     name: Build ${{ matrix.label }}
     runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: write   # required for the "Commit logs to branch" step
 
     strategy:
       fail-fast: false
@@ -356,7 +358,10 @@ jobs:
         shell: bash
         run: |
           mkdir -p "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
-          cmake --build _build --parallel \
+          # -k 0 tells Ninja to keep going after errors so ALL compile
+          # failures appear in build.log in a single run instead of stopping
+          # at the first broken translation unit.
+          cmake --build _build --parallel -- -k 0 \
             2>&1 | tee "logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/build.log"
           exit ${PIPESTATUS[0]}
 
@@ -484,6 +489,50 @@ jobs:
           path: logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/
           retention-days: 30
           if-no-files-found: ignore
+
+      # ======================================================================
+      # Commit logs to a dedicated branch so they are visible directly in
+      # the repository without downloading artifacts.
+      #
+      # Branch name:  ci-logs/<run_id>/<os_tag>-<arch_tag>
+      # Each job uses a unique branch → zero merge conflicts even with 11
+      # parallel jobs.  Orphan commits keep history clean.
+      #
+      # Requires:  permissions.contents = write  (set on the job above)
+      # ======================================================================
+      - name: Commit logs to branch
+        if: always()
+        continue-on-error: true   # never let a git-push glitch fail the job
+        shell: bash
+        run: |
+          LOG_DIR="logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
+          mkdir -p "$LOG_DIR"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH="ci-logs/${{ github.run_id }}/${{ matrix.os_tag }}-${{ matrix.arch_tag }}"
+
+          # Copy log files to a temp dir outside the working tree so that
+          # git rm -rf . does not destroy them.
+          TMP=$(mktemp -d)
+          cp -r "$LOG_DIR/." "$TMP/"
+
+          # Create a fresh orphan branch — no shared history with main,
+          # no conflicts with any other job running in parallel.
+          git checkout --orphan "$BRANCH"
+          git rm -rf . --quiet --ignore-unmatch 2>/dev/null || true
+
+          # Put only the log files into the new branch and commit.
+          mkdir -p "$LOG_DIR"
+          cp -r "$TMP/." "$LOG_DIR/"
+          rm -rf "$TMP"
+
+          git add "$LOG_DIR/"
+          git commit -m "ci-logs: ${{ matrix.label }} | run=${{ github.run_id }} attempt=${{ github.run_attempt }}" \
+            2>/dev/null || true
+
+          git push origin "HEAD:refs/heads/$BRANCH" --force
 
 # ------------------------------------------------------------------------------
 # macOS Universal (fat) binary -- merged from x86_64 + arm64 artifacts
