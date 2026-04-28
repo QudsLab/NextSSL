@@ -24,10 +24,6 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
-# Silence Node.js 20 deprecation warnings -- opt into Node.js 24 now
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 # Cancel in-flight runs for the same ref (saves minutes)
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -101,6 +97,7 @@ jobs:
               -DCMAKE_SYSTEM_NAME=Linux
               -DCMAKE_SYSTEM_PROCESSOR=aarch64
               -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc
+              -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
             shared:     ON
 
           - label:      "Linux armv7hf (cross)"
@@ -113,6 +110,7 @@ jobs:
               -DCMAKE_SYSTEM_NAME=Linux
               -DCMAKE_SYSTEM_PROCESSOR=armv7
               -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc
+              -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
             shared:     ON
 
           - label:      "Linux riscv64 (cross)"
@@ -125,6 +123,7 @@ jobs:
               -DCMAKE_SYSTEM_NAME=Linux
               -DCMAKE_SYSTEM_PROCESSOR=riscv64
               -DCMAKE_C_COMPILER=riscv64-linux-gnu-gcc
+              -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
             shared:     ON
 
           # -- macOS -----------------------------------------------------------
@@ -161,12 +160,14 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
             cmake ninja-build ccache ${{ matrix.apt_extra }}
 
-      # -- macOS: cmake + ninja + ccache (skip if already present) -------------
+      # -- macOS: cmake + ninja + ccache ---------------------------------------
+      # brew install returns exit 1 when a package is already up-to-date in some
+      # versions; use `brew upgrade ... || brew install ...` for idempotency.
       - name: Install macOS build packages
         if: runner.os == 'macOS'
         run: |
           for pkg in cmake ninja ccache; do
-            brew list "$pkg" &>/dev/null || brew install "$pkg"
+            brew upgrade "$pkg" 2>/dev/null || brew install "$pkg"
           done
 
       # -- WASM: system packages + Emscripten SDK ------------------------------
@@ -183,23 +184,27 @@ jobs:
           version: latest
           actions-cache-folder: .emsdk-cache
 
-      # -- Windows: Ninja (MSVC + sccache pre-installed on windows-2022) -------
-      - name: Add Ninja to PATH (Windows)
+      # -- Windows: install Ninja via Chocolatey (no third-party action needed)
+      - name: Install Ninja (Windows)
         if: runner.os == 'Windows'
-        uses: seanmiddleditch/gha-setup-ninja@v5
+        shell: pwsh
+        run: |
+          if (-not (Get-Command ninja -ErrorAction SilentlyContinue)) {
+            choco install ninja --yes --no-progress
+          }
 
       # ========================================================================
       # Compiler cache
       # Cache key:     runner.os + arch_tag + hash(CMakeLists + src)
-      # Restore-keys:  fall back to same OS/arch (different src hash), then OS only
-      # This means all jobs on the same runner OS share a common cache pool,
-      # so the first build seeds it and subsequent builds (different arches) get
-      # partial hits from shared object files compiled for the same headers.
+      # Restore-keys:  fall back to same OS/arch, then OS only so all jobs on the
+      #                same runner OS share a cache pool and seed each other.
+      # continue-on-error: true so a cache service hiccup never fails a build.
       # ========================================================================
 
       - name: Cache ccache (Linux / macOS)
         if: runner.os != 'Windows'
         uses: actions/cache@v4
+        continue-on-error: true
         with:
           path: ~/.ccache
           key: ccache-${{ runner.os }}-${{ matrix.arch_tag }}-${{ hashFiles('CMakeLists.txt', 'src/**/*.c', 'src/**/*.h') }}
@@ -217,6 +222,7 @@ jobs:
       - name: Cache sccache (Windows)
         if: runner.os == 'Windows'
         uses: actions/cache@v4
+        continue-on-error: true
         with:
           path: ${{ env.LOCALAPPDATA }}\Mozilla\sccache
           key: sccache-win-${{ matrix.arch_tag }}-${{ hashFiles('CMakeLists.txt', 'src/**/*.c', 'src/**/*.h') }}
@@ -224,27 +230,43 @@ jobs:
             sccache-win-${{ matrix.arch_tag }}-
             sccache-win-
 
+      # sccache is pre-installed on windows-2022 runners; --start-server is
+      # idempotent (exits 0 even if already running).
       - name: Start sccache server (Windows)
         if: runner.os == 'Windows'
-        run: sccache --start-server
+        shell: pwsh
+        run: |
+          if (Get-Command sccache -ErrorAction SilentlyContinue) {
+            sccache --start-server
+            Write-Host "sccache server started"
+          } else {
+            Write-Host "sccache not found — compiler caching disabled for this job"
+          }
 
       # ========================================================================
       # CMake configure
+      # All steps use -S . to make the source directory explicit.
       # ========================================================================
 
       - name: CMake configure (Windows MSVC)
         if: matrix.toolchain == 'msvc'
-        run: >
-          cmake -B _build
-          -A ${{ matrix.cmake_arch }}
-          -DCMAKE_BUILD_TYPE=Release
-          -DNEXTSSL_SHARED=${{ matrix.shared }}
-          -DCMAKE_C_COMPILER_LAUNCHER=sccache
+        shell: pwsh
+        run: |
+          $launcher = if (Get-Command sccache -ErrorAction SilentlyContinue) { "sccache" } else { "" }
+          $args = @(
+            "-S", ".",
+            "-B", "_build",
+            "-A", "${{ matrix.cmake_arch }}",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DNEXTSSL_SHARED=${{ matrix.shared }}"
+          )
+          if ($launcher) { $args += "-DCMAKE_C_COMPILER_LAUNCHER=$launcher" }
+          cmake @args
 
       - name: CMake configure (Linux native)
         if: matrix.toolchain == 'native'
         run: >
-          cmake -B _build -G Ninja
+          cmake -S . -B _build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DNEXTSSL_SHARED=${{ matrix.shared }}
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
@@ -252,7 +274,7 @@ jobs:
       - name: CMake configure (Linux -m32)
         if: matrix.toolchain == 'native-m32'
         run: >
-          cmake -B _build -G Ninja
+          cmake -S . -B _build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DNEXTSSL_SHARED=${{ matrix.shared }}
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
@@ -261,7 +283,7 @@ jobs:
       - name: CMake configure (Linux cross)
         if: matrix.toolchain == 'cross'
         run: >
-          cmake -B _build -G Ninja
+          cmake -S . -B _build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DNEXTSSL_SHARED=${{ matrix.shared }}
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
@@ -270,7 +292,7 @@ jobs:
       - name: CMake configure (macOS)
         if: runner.os == 'macOS'
         run: >
-          cmake -B _build -G Ninja
+          cmake -S . -B _build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
           -DNEXTSSL_SHARED=${{ matrix.shared }}
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
@@ -278,8 +300,9 @@ jobs:
       - name: CMake configure (WASM)
         if: matrix.toolchain == 'emscripten'
         run: >
-          emcmake cmake -B _build -G Ninja
+          emcmake cmake -S . -B _build -G Ninja
           -DCMAKE_BUILD_TYPE=Release
+          -DNEXTSSL_SHARED=${{ matrix.shared }}
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
           -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="${{ github.workspace }}/bin/web"
           -DCMAKE_LIBRARY_OUTPUT_DIRECTORY="${{ github.workspace }}/bin/web"
@@ -306,7 +329,9 @@ jobs:
 
       - name: Show sccache stats
         if: runner.os == 'Windows'
-        run: sccache --show-stats
+        shell: pwsh
+        run: |
+          if (Get-Command sccache -ErrorAction SilentlyContinue) { sccache --show-stats }
 
       # Normalise output directory: CMakeLists.txt names the dir from
       # CMAKE_SYSTEM_PROCESSOR which may differ from our arch_tag for cross builds.
