@@ -8,6 +8,9 @@
 # Jobs:
 #   build                 : compile nextssl for every platform x arch matrix entry
 #   build-macos-universal : lipo-merge x86_64 + arm64 into a fat dylib
+#   collect-logs          : waits for all build jobs (pass OR fail) → downloads
+#                           every log artifact → commits them all into one branch:
+#                           ci-logs/<run_id>   (one branch per run, easy to pull)
 #
 # Artifacts (12 total):
 #   nextssl-win-x86_64 / x86 / arm64
@@ -153,6 +156,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      # ========================================================================
+      # FIRST thing after checkout: create the log directory so it exists even
+      # if every downstream step fails before it would normally create it.
+      # Also write basic job metadata so there is always at least one file.
+      # ========================================================================
+      - name: Initialize log directory
+        if: always()
+        shell: bash
+        run: |
+          LOG="logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
+          mkdir -p "$LOG"
+          printf 'label:    %s\n' "${{ matrix.label }}"  > "$LOG/job_info.txt"
+          printf 'run_id:   %s\n' "${{ github.run_id }}" >> "$LOG/job_info.txt"
+          printf 'attempt:  %s\n' "${{ github.run_attempt }}" >> "$LOG/job_info.txt"
+          printf 'sha:      %s\n' "${{ github.sha }}"    >> "$LOG/job_info.txt"
+          printf 'ref:      %s\n' "${{ github.ref }}"    >> "$LOG/job_info.txt"
+          printf 'started:  %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$LOG/job_info.txt"
 
       # ========================================================================
       # Every step that writes logs uses this path:
@@ -488,51 +509,10 @@ jobs:
           name: logs-${{ matrix.os_tag }}-${{ matrix.arch_tag }}
           path: logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}/
           retention-days: 30
-          if-no-files-found: ignore
+          if-no-files-found: warn
 
-      # ======================================================================
-      # Commit logs to a dedicated branch so they are visible directly in
-      # the repository without downloading artifacts.
-      #
-      # Branch name:  ci-logs/<run_id>/<os_tag>-<arch_tag>
-      # Each job uses a unique branch → zero merge conflicts even with 11
-      # parallel jobs.  Orphan commits keep history clean.
-      #
-      # Requires:  permissions.contents = write  (set on the job above)
-      # ======================================================================
-      - name: Commit logs to branch
-        if: always()
-        continue-on-error: true   # never let a git-push glitch fail the job
-        shell: bash
-        run: |
-          LOG_DIR="logs/${{ matrix.os_tag }}/${{ matrix.arch_tag }}"
-          mkdir -p "$LOG_DIR"
-
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          BRANCH="ci-logs/${{ github.run_id }}/${{ matrix.os_tag }}-${{ matrix.arch_tag }}"
-
-          # Copy log files to a temp dir outside the working tree so that
-          # git rm -rf . does not destroy them.
-          TMP=$(mktemp -d)
-          cp -r "$LOG_DIR/." "$TMP/"
-
-          # Create a fresh orphan branch — no shared history with main,
-          # no conflicts with any other job running in parallel.
-          git checkout --orphan "$BRANCH"
-          git rm -rf . --quiet --ignore-unmatch 2>/dev/null || true
-
-          # Put only the log files into the new branch and commit.
-          mkdir -p "$LOG_DIR"
-          cp -r "$TMP/." "$LOG_DIR/"
-          rm -rf "$TMP"
-
-          git add "$LOG_DIR/"
-          git commit -m "ci-logs: ${{ matrix.label }} | run=${{ github.run_id }} attempt=${{ github.run_attempt }}" \
-            2>/dev/null || true
-
-          git push origin "HEAD:refs/heads/$BRANCH" --force
+      # All log artifacts are collected into a single branch by the
+      # dedicated collect-logs job below — no per-job branch commits needed.
 
 # ------------------------------------------------------------------------------
 # macOS Universal (fat) binary -- merged from x86_64 + arm64 artifacts
@@ -573,3 +553,105 @@ jobs:
           path: bin/macos/universal/
           if-no-files-found: error
           retention-days: 30
+
+# ------------------------------------------------------------------------------
+# Collect ALL logs into a single branch after every build job finishes.
+#
+# Branch:  ci-logs/<run_id>
+# Layout:  logs/<os_tag>/<arch_tag>/{configure,build,CMakeError,...}.log
+#          logs/SUMMARY.md  — index of every file with sizes
+#
+# "if: always()" ensures this runs even when build jobs fail.
+# "needs: build" (not build-macos-universal) so we don't wait for lipo.
+#
+# To inspect after a run:
+#   git fetch origin ci-logs/<run_id>
+#   git checkout FETCH_HEAD -- logs/
+# ------------------------------------------------------------------------------
+  collect-logs:
+    name: Collect all build logs
+    needs: build
+    if: always()
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Download every logs-* artifact.  With merge-multiple:false (default)
+      # each artifact lands at _raw/<artifact-name>/ so names never collide.
+      - name: Download all log artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: logs-*
+          path: _raw/
+          merge-multiple: false
+
+      # Restructure _raw/logs-<os>-<arch>/* → logs/<os>/<arch>/*
+      # Splitting on the first '-' after the "logs-" prefix gives os_tag;
+      # everything after the second '-' is arch_tag.
+      - name: Restructure into logs/<os>/<arch>/
+        shell: bash
+        run: |
+          for dir in _raw/logs-*/; do
+            name=$(basename "$dir")        # e.g. logs-linux-arm64
+            rest="${name#logs-}"           # e.g. linux-arm64
+            os="${rest%%-*}"               # e.g. linux
+            arch="${rest#*-}"              # e.g. arm64
+            dest="logs/$os/$arch"
+            mkdir -p "$dest"
+            cp -r "$dir"* "$dest/" 2>/dev/null || true
+          done
+          rm -rf _raw/
+
+      # Write a human-readable index so a plain `git show` reveals everything.
+      - name: Write SUMMARY.md
+        shell: bash
+        run: |
+          {
+            echo "# CI Build Log Summary"
+            echo ""
+            echo "| Field | Value |"
+            echo "|-------|-------|"
+            echo "| Run ID | \`${{ github.run_id }}\` |"
+            echo "| Attempt | \`${{ github.run_attempt }}\` |"
+            echo "| Commit | \`${{ github.sha }}\` |"
+            echo "| Ref | \`${{ github.ref }}\` |"
+            echo "| Event | \`${{ github.event_name }}\` |"
+            echo "| Collected at | $(date -u +%Y-%m-%dT%H:%M:%SZ) |"
+            echo ""
+            echo "## Log files"
+            echo ""
+            echo "| File | Size |"
+            echo "|------|------|"
+            find logs/ -type f | sort | while read -r f; do
+              bytes=$(wc -c < "$f" 2>/dev/null || echo 0)
+              echo "| \`$f\` | ${bytes} B |"
+            done
+          } > logs/SUMMARY.md
+
+      # Commit all logs to an orphan branch — one branch per run, no merge
+      # conflicts with the main history or with parallel runs.
+      - name: Commit and push logs
+        shell: bash
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH="ci-logs/${{ github.run_id }}"
+
+          # Stash logs outside the working tree before switching branches.
+          TMP=$(mktemp -d)
+          cp -r logs/. "$TMP/"
+
+          git checkout --orphan "$BRANCH"
+          git rm -rf . --quiet --ignore-unmatch 2>/dev/null || true
+
+          mkdir -p logs
+          cp -r "$TMP/." logs/
+          rm -rf "$TMP"
+
+          git add logs/
+          git commit -m "ci-logs: run=${{ github.run_id }} attempt=${{ github.run_attempt }} ref=${{ github.ref_name }}"
+          git push origin "HEAD:refs/heads/$BRANCH" --force
