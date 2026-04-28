@@ -79,7 +79,8 @@ int entropy_getrandom(uint8_t *out, size_t out_len)
     return 0;
 
 #elif defined(__APPLE__)
-    /* macOS / BSD: arc4random_buf */
+    /* macOS / BSD: arc4random_buf (declared in <stdlib.h>) */
+    #include <stdlib.h>
     arc4random_buf(out, out_len);
     return 0;
 
