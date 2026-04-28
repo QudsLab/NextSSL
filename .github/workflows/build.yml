@@ -38,7 +38,7 @@ jobs:
             cmake_arch: ARM64
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
 
       # -----------------------------------------------------------------------
       # Log dir — created first so it always exists even if later steps crash
@@ -74,7 +74,7 @@ jobs:
       # sccache compiler cache
       # -----------------------------------------------------------------------
       - name: Cache sccache store
-        uses: actions/cache@v4
+        uses: actions/cache@v4.2.3
         continue-on-error: true
         with:
           path: ${{ env.LOCALAPPDATA }}\Mozilla\sccache
@@ -188,7 +188,7 @@ jobs:
       # -----------------------------------------------------------------------
       - name: Upload binary
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: nextssl-win-${{ matrix.arch_tag }}
           path: bin/win/${{ matrix.arch_tag }}/
@@ -197,9 +197,36 @@ jobs:
 
       - name: Upload logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: logs-win-${{ matrix.arch_tag }}
           path: logs/win/${{ matrix.arch_tag }}/
           retention-days: 30
           if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # collect — runs after all build jobs, always.
+  # Downloads every logs-win-* artifact and merges into ONE download: all-logs
+  # This is the only artifact you need to pull to inspect a full run.
+  # ---------------------------------------------------------------------------
+  collect:
+    name: Collect all logs
+    needs: build
+    if: always()
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Download all log artifacts
+        uses: actions/download-artifact@v4.3.0
+        with:
+          pattern: logs-win-*
+          path: all-logs/
+          merge-multiple: false
+
+      - name: Upload all-logs
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: all-logs
+          path: all-logs/
+          retention-days: 30
+          if-no-files-found: warn
