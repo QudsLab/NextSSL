@@ -92,7 +92,7 @@ jobs:
             os_tag:     linux
             arch_tag:   arm64
             toolchain:  cross
-            apt_extra:  "gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu"
+            apt_extra:  "gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross"
             cross_args: >-
               -DCMAKE_SYSTEM_NAME=Linux
               -DCMAKE_SYSTEM_PROCESSOR=aarch64
@@ -105,7 +105,7 @@ jobs:
             os_tag:     linux
             arch_tag:   armv7
             toolchain:  cross
-            apt_extra:  "gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf"
+            apt_extra:  "gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross"
             cross_args: >-
               -DCMAKE_SYSTEM_NAME=Linux
               -DCMAKE_SYSTEM_PROCESSOR=armv7

@@ -95,6 +95,14 @@ if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64|aarch64|arm")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/common/keccak2x/")
 endif()
 
+# ── x86-only SIMD files (require x86 intrinsics — not available on non-x86) ──
+if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i686|i386")
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_avx2\\.c$")
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_avx512\\.c$")
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_sse2\\.c$")
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_sse41\\.c$")
+endif()
+
 # ── PQC avx2/ — pqc_main.c only uses ref/ APIs; avx2/ = dead code on Windows
 #    McEliece avx2: uses ELF-only .hidden ASM directives (unsupported on COFF)
 #    ML-KEM/ML-DSA/Falcon/SPHINCS+ avx2: build requires -mavx2 but all callers
@@ -199,6 +207,8 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i686|i386")
     set_source_files_properties("${SRC}/hash/blake/blake3_avx512.c" PROPERTIES COMPILE_FLAGS "-mavx512f -mavx512vl")
     set_source_files_properties("${SRC}/hash/blake/blake3_sse2.c"   PROPERTIES COMPILE_FLAGS "-msse2")
     set_source_files_properties("${SRC}/hash/blake/blake3_sse41.c"  PROPERTIES COMPILE_FLAGS "-msse4.1")
+    # Argon2 opt.c uses SSE2; must be explicit for -m32 (i686) where SSE2 is not the default
+    set_source_files_properties("${SRC}/hash/memory_hard/opt.c"     PROPERTIES COMPILE_FLAGS "-msse2")
     # PQC Keccak-4x AVX2 (used by ML-KEM, ML-DSA, Falcon, HQC, SPHINCS+ ref/)
     set_source_files_properties(
         "${SRC}/pqc/common/keccak4x/KeccakP-1600-times4-SIMD256.c"
@@ -213,7 +223,7 @@ endif()
 # Compiler warnings / optimization
 # ─────────────────────────────────────────────────────────────────
 if(MSVC)
-    target_compile_options(nextssl PRIVATE /W3 /wd4996)
+    target_compile_options(nextssl PRIVATE /W3 /wd4996 /std:c11)
 else()
     target_compile_options(nextssl PRIVATE
         -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare

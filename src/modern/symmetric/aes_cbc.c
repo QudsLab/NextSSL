@@ -1,11 +1,8 @@
 #include "aes_cbc.h"
 #include "aes_internal.h"
+#include "nextssl_export.h"
 
-#ifdef _WIN32
-#define EXPORT __declspec(dllexport)
-#else
-#define EXPORT
-#endif
+#define EXPORT NEXTSSL_API
 
 /* CTS (Ciphertext Stealing) is enabled by default in micro-AES if CBC is enabled. 
    We will support it here implicitly or explicitly. 

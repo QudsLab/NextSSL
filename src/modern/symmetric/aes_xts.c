@@ -1,11 +1,8 @@
 #include "aes_xts.h"
 #include "aes_internal.h"
+#include "nextssl_export.h"
 
-#ifdef _WIN32
-#define EXPORT __declspec(dllexport)
-#else
-#define EXPORT
-#endif
+#define EXPORT NEXTSSL_API
 
 static void XTS_cipher( const uint8_t* keypair, const char mode,
                         const block_t tweak, const size_t sectid,
