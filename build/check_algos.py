@@ -8,6 +8,8 @@ Checks:
 
 Usage:
     python build/check_algos.py
+
+Runs with plain Python 3.8+ and stdlib only. No virtual environment is required.
 """
 import re
 import sys

@@ -80,7 +80,7 @@ Choose the right size for your needs:
 
 - **CMake** 3.15+
 - **C Compiler**: GCC 4.8+, Clang 3.4+, or MSVC 2015+
-- **Python** 3.7+ (optional, for testing)
+- **Python** 3.8+ (optional, for build helpers and tests; no virtualenv required)
 
 ### Build in 3 Commands
 
@@ -146,7 +146,7 @@ gcc your_app.c -lnextssl -o your_app
 
 ## 🛠️ Build System
 
-NextSSL supports both **CMake** (recommended) and **Python runner** (legacy).
+NextSSL supports both **CMake** (recommended) and **Python build helpers**.
 
 ### CMake (New, Recommended)
 
@@ -166,13 +166,16 @@ cd build && ctest --output-on-failure
 sudo cmake --install build
 ```
 
-### Python Runner (Legacy)
+### Python Build Helpers
 
 ```bash
-python runner.py                    # Build and test
-python runner.py --build hash       # Build hash primitives
-python runner.py --test core:aead   # Test AEAD modes
+python build/build.py --check
+python test.py
+python build.py --platform win x86_64
+python build/ci_runner.py --platform linux --variants x86_64 x86 arm64 armv7 riscv64 --jobs 4
 ```
+
+The Python helpers use the standard library only and can be run with `python`, `python3`, or `py -3`.
 
 See **[BUILD.md](BUILD.md)** for complete build options and troubleshooting.
 

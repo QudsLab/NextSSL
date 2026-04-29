@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""build.py — NextSSL build entry point.
+"""build.py — NextSSL build helper entry point.
 
 Usage:
     python build/build.py                     # Default: run checks only (no compile yet)
     python build/build.py --check             # Export + algo audit
     python build/build.py --list-features     # List all feature flags
     python build/build.py --feature ML_KEM    # Toggle/show specific feature
+
+Works with any Python 3.8+ interpreter on PATH. No virtual environment is required.
 """
 import argparse
 import subprocess
@@ -54,7 +56,9 @@ def cmd_list_features():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="NextSSL build system")
+    parser = argparse.ArgumentParser(
+        description="NextSSL build checks using system Python (no virtualenv required)"
+    )
     parser.add_argument("--check", action="store_true",
                         help="Run export + algorithm audit checks")
     parser.add_argument("--list-features", action="store_true",

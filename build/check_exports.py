@@ -4,6 +4,8 @@
 Usage:
     python build/check_exports.py          # run from project root
     python build/check_exports.py --json   # machine-readable output
+
+Runs with plain Python 3.8+ and stdlib only. No virtual environment is required.
 """
 import argparse
 import json

@@ -1,4 +1,8 @@
-"""Sequential CI build runner with durable per-variant logs."""
+"""Sequential CI build runner with durable per-variant logs.
+
+This runner uses the Python interpreter that launched it and does not require
+activating a virtual environment.
+"""
 
 from __future__ import annotations
 
@@ -156,9 +160,20 @@ def cleanup_build_dir(build_dir: Path) -> None:
         BUILD_ROOT.rmdir()
 
 
-def record_result(log_dir: Path, success: bool, exit_code: int) -> None:
-    status = "success" if success else "failed"
-    write_lines(log_dir / "result.txt", [f"status: {status}", f"exit_code: {exit_code}"])
+def record_result(log_dir: Path, status: str, exit_code: int | None = None,
+                  reason: str | None = None) -> None:
+    lines = [f"status: {status}"]
+    if exit_code is not None:
+        lines.append(f"exit_code: {exit_code}")
+    if reason:
+        lines.append(f"reason: {reason}")
+    write_lines(log_dir / "result.txt", lines)
+
+
+def record_skipped_variant(platform: str, variant: str, reason: str) -> None:
+    log_dir = LOGS_ROOT / platform / variant
+    reset_dir(log_dir)
+    record_result(log_dir, "skipped", reason=reason)
 
 
 def annotate_windows_arm64_failure(log_path: Path) -> None:
@@ -324,11 +339,11 @@ def run_cmake_variant(platform: str, variant: str, jobs: int) -> tuple[bool, int
                 configure_args = unix_configure_args(platform, variant, build_dir, bin_dir)
         except FileNotFoundError as exc:
             write_lines(configure_log, [f"Missing toolchain executables: {exc}"])
-            record_result(log_dir, False, 1)
+            record_result(log_dir, "failed", exit_code=1)
             return False, 1
         except ValueError as exc:
             write_lines(configure_log, [str(exc)])
-            record_result(log_dir, False, 1)
+            record_result(log_dir, "failed", exit_code=1)
             return False, 1
 
         configure_exit = run_logged(configure_args, configure_log)
@@ -336,7 +351,7 @@ def run_cmake_variant(platform: str, variant: str, jobs: int) -> tuple[bool, int
         if configure_exit != 0:
             if platform == "win" and variant == "arm64":
                 annotate_windows_arm64_failure(configure_log)
-            record_result(log_dir, False, configure_exit)
+            record_result(log_dir, "failed", exit_code=configure_exit)
             return False, configure_exit
 
         build_exit = run_logged(cmake_build_args(build_dir, platform == "win", jobs), build_log)
@@ -344,7 +359,7 @@ def run_cmake_variant(platform: str, variant: str, jobs: int) -> tuple[bool, int
             collect_windows_debug_files(build_dir, bin_dir)
 
         success = build_exit == 0
-        record_result(log_dir, success, build_exit)
+        record_result(log_dir, "success" if success else "failed", exit_code=build_exit)
         return success, build_exit
     finally:
         cleanup_build_dir(build_dir)
@@ -392,7 +407,7 @@ def run_wasm_variant(variant: str, jobs: int) -> tuple[bool, int]:
                 shutil.copy2(item, target)
 
     success = process.returncode == 0
-    record_result(log_dir, success, process.returncode)
+    record_result(log_dir, "success" if success else "failed", exit_code=process.returncode)
     return success, process.returncode
 
 
@@ -403,7 +418,9 @@ def run_variant(platform: str, variant: str, jobs: int) -> tuple[bool, int]:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run CI builds sequentially per platform.")
+    parser = argparse.ArgumentParser(
+        description="Run CI builds sequentially per platform with the current Python interpreter."
+    )
     parser.add_argument("--platform", choices=sorted(DEFAULT_VARIANTS), required=True)
     parser.add_argument("--variants", nargs="+", help="Explicit variant order for the selected platform.")
     parser.add_argument("--jobs", type=int, default=4)
@@ -430,13 +447,19 @@ def main() -> int:
 
     summary_lines = []
     failed_variants = []
-    for variant in variants:
+    for index, variant in enumerate(variants):
         print(f"==> {platform}/{variant}")
         success, exit_code = run_variant(platform, variant, args.jobs)
         status = "SUCCESS" if success else f"FAILED ({exit_code})"
         summary_lines.append(f"{variant}: {status}")
         if not success:
             failed_variants.append(variant)
+            skip_reason = f"stopped after {variant} failed with exit code {exit_code}"
+            for skipped_variant in variants[index + 1:]:
+                print(f"==> {platform}/{skipped_variant} [skipped]")
+                record_skipped_variant(platform, skipped_variant, skip_reason)
+                summary_lines.append(f"{skipped_variant}: SKIPPED ({skip_reason})")
+            break
 
     write_lines(platform_logs / "SUMMARY.txt", summary_lines)
 
