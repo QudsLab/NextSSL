@@ -1,0 +1,40 @@
+-- The C compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - failed
+-- Check for working C compiler: /usr/bin/arm-linux-gnueabihf-gcc
+-- Check for working C compiler: /usr/bin/arm-linux-gnueabihf-gcc - broken
+CMake Error at /usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:67 (message):
+  The C compiler
+
+    "/usr/bin/arm-linux-gnueabihf-gcc"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: '/home/runner/work/NextSSL/NextSSL/.ci_build/linux/armv7/CMakeFiles/CMakeScratch/TryCompile-J0DP0G'
+    
+    Run Build Command(s): /usr/local/bin/ninja -v cmTC_ca795
+    [1/2] /usr/bin/arm-linux-gnueabihf-gcc    -o CMakeFiles/cmTC_ca795.dir/testCCompiler.c.o -c /home/runner/work/NextSSL/NextSSL/.ci_build/linux/armv7/CMakeFiles/CMakeScratch/TryCompile-J0DP0G/testCCompiler.c
+    [2/2] : && /usr/local/bin/cmake -E rm -f libcmTC_ca795.a && /home/runner/work/NextSSL/NextSSL/arm-linux-gnueabihf-ar qc libcmTC_ca795.a  CMakeFiles/cmTC_ca795.dir/testCCompiler.c.o && /home/runner/work/NextSSL/NextSSL/arm-linux-gnueabihf-ranlib libcmTC_ca795.a && :
+    FAILED: [code=127] libcmTC_ca795.a 
+    : && /usr/local/bin/cmake -E rm -f libcmTC_ca795.a && /home/runner/work/NextSSL/NextSSL/arm-linux-gnueabihf-ar qc libcmTC_ca795.a  CMakeFiles/cmTC_ca795.dir/testCCompiler.c.o && /home/runner/work/NextSSL/NextSSL/arm-linux-gnueabihf-ranlib libcmTC_ca795.a && :
+    /bin/sh: 1: /home/runner/work/NextSSL/NextSSL/arm-linux-gnueabihf-ar: not found
+    ninja: build stopped: subcommand failed.
+    
+    
+
+  
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:2 (project)
+
+
+-- Configuring incomplete, errors occurred!
+
+==============================================================================
+CMD: cmake -S /home/runner/work/NextSSL/NextSSL -B /home/runner/work/NextSSL/NextSSL/.ci_build/linux/armv7 -G Ninja -DCMAKE_BUILD_TYPE=Release -DNEXTSSL_SHARED=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux/armv7 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux/armv7 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux/armv7 -DCMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=armv7 -DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++ -DCMAKE_AR=arm-linux-gnueabihf-ar -DCMAKE_RANLIB=arm-linux-gnueabihf-ranlib -DCMAKE_FIND_ROOT_PATH=/usr/arm-linux-gnueabihf -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
+CWD: /home/runner/work/NextSSL/NextSSL
+==============================================================================
+
