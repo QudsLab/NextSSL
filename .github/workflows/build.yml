@@ -3,8 +3,12 @@
 on:
   push:
     branches: [ main, master ]
+    paths-ignore:
+      - logs/**
   pull_request:
     branches: [ main, master ]
+    paths-ignore:
+      - logs/**
   workflow_dispatch:
 
 concurrency:
@@ -234,7 +238,8 @@ jobs:
           retention-days: 30
           if-no-files-found: error
 
-      - name: Publish logs to ci-logs branch
+      - name: Publish logs to main branch
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
@@ -242,14 +247,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git fetch origin ci-logs || true
-
-          if git show-ref --verify --quiet refs/remotes/origin/ci-logs; then
-            git switch -C ci-logs refs/remotes/origin/ci-logs
-          else
-            git switch --orphan ci-logs
-            git rm -rf . >/dev/null 2>&1 || true
-          fi
+          git fetch origin main
+          git switch -C main origin/main
 
           mkdir -p "logs/runs/${{ github.run_id }}" "logs/latest"
           rm -rf logs/latest/*
@@ -262,7 +261,7 @@ jobs:
           attempt:  ${{ github.run_attempt }}
           sha:      ${{ github.sha }}
           ref:      ${{ github.ref }}
-          branch:   ci-logs
+          branch:   main
           EOF
 
           cat > "logs/runs/${{ github.run_id }}/RUN_INFO.txt" <<EOF
@@ -270,7 +269,7 @@ jobs:
           attempt:  ${{ github.run_attempt }}
           sha:      ${{ github.sha }}
           ref:      ${{ github.ref }}
-          branch:   ci-logs
+          branch:   main
           EOF
 
           git add logs
@@ -278,7 +277,7 @@ jobs:
             echo "No log changes to commit"
           else
             git commit -m "CI logs for run ${{ github.run_id }}"
-            git push origin HEAD:ci-logs
+            git push origin HEAD:main
           fi
 
       - name: Write pull instructions
@@ -287,11 +286,11 @@ jobs:
           {
             echo "## Pullable logs"
             echo
-            echo "Logs are published to branch: ci-logs"
+            echo "Logs are published to branch: main"
             echo
             echo "Commands:"
-            echo "git fetch origin ci-logs"
-            echo "git switch ci-logs"
+            echo "git fetch origin main"
+            echo "git switch main"
             echo
             echo "Latest logs path: logs/latest/"
             echo "Run logs path: logs/runs/${{ github.run_id }}/"
