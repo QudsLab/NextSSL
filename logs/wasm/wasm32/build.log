@@ -4,18 +4,18 @@ CMD: /usr/bin/python3 /home/runner/work/NextSSL/NextSSL/build.py --platform wasm
 CWD: /home/runner/work/NextSSL/NextSSL
 ==============================================================================
 
-2026-04-29 15:34:33 INFO     NextSSL WASM Build  variant=wasm32
-2026-04-29 15:34:33 INFO     emcc    : /home/runner/work/_temp/emsdk/upstream/emscripten/emcc
-2026-04-29 15:34:33 INFO     Variant : wasm32
-2026-04-29 15:34:33 INFO     Out     : bin/web/
-2026-04-29 15:34:33 INFO     Cleaning .build_cache/wasm_wasm32 ...
-2026-04-29 15:34:33 INFO     Sources : 622 .c files
-2026-04-29 15:34:33 INFO     Exports : 374 symbols
-2026-04-29 15:34:33 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (61006 bytes)
-2026-04-29 15:34:33 INFO     Step 1/1: Compiling all sources to WASM ...
-2026-04-29 15:34:33 INFO     Running: emcc @response_file
-2026-04-29 15:34:33 DEBUG    CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
-2026-04-29 15:34:33 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
+2026-04-29 17:56:58 INFO     NextSSL WASM Build  variant=wasm32
+2026-04-29 17:56:58 INFO     emcc    : /home/runner/work/_temp/emsdk/upstream/emscripten/emcc
+2026-04-29 17:56:58 INFO     Variant : wasm32
+2026-04-29 17:56:58 INFO     Out     : bin/web/
+2026-04-29 17:56:58 INFO     Cleaning .build_cache/wasm_wasm32 ...
+2026-04-29 17:56:58 INFO     Sources : 622 .c files
+2026-04-29 17:56:58 INFO     Exports : 374 symbols
+2026-04-29 17:56:58 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (61006 bytes)
+2026-04-29 17:56:58 INFO     Step 1/1: Compiling all sources to WASM ...
+2026-04-29 17:56:58 INFO     Running: emcc @response_file
+2026-04-29 17:56:58 DEBUG    CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-04-29 17:56:58 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
 shared:INFO: (Emscripten: Running sanity checks)
 /home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512.c:101:27: warning: shift count >= width of type [-Wshift-count-overflow]
   101 |     ctx->count[1] += (len >> 61);
@@ -26,108 +26,108 @@ shared:INFO: (Emscripten: Running sanity checks)
       |             ^
 1 warning generated.
 wasm-ld: error: duplicate symbol: nextssl_pow_server_generate_challenge
->>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
->>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
 
 wasm-ld: error: duplicate symbol: nextssl_pow_server_verify_solution
->>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
->>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
 
 wasm-ld: error: duplicate symbol: nextssl_pow_client_parse_challenge
->>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
->>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
 
 wasm-ld: error: duplicate symbol: nextssl_pow_client_solve
->>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
->>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
 
 wasm-ld: error: duplicate symbol: nextssl_pow_client_check_limits
->>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
->>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
 
 wasm-ld: error: duplicate symbol: nextssl_pow_challenge_encode
->>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
->>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
 
 wasm-ld: error: duplicate symbol: nextssl_pow_solution_encode
->>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
->>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
 
 wasm-ld: error: duplicate symbol: nextssl_pow_solution_decode
->>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
->>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
 
 wasm-ld: error: duplicate symbol: nextssl_pow_algo_name_normalise
->>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
->>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-emcc: error: '/home/runner/work/_temp/emsdk/upstream/bin/wasm-ld @/tmp/emscripten_3xzjzr8l.rsp.utf-8' failed (returned 1)
+>>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+>>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+emcc: error: '/home/runner/work/_temp/emsdk/upstream/bin/wasm-ld @/tmp/emscripten_kzbcd3rt.rsp.utf-8' failed (returned 1)
 
 ============================================================
 CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
 CWD: /home/runner/work/NextSSL/NextSSL
 ============================================================
 
-2026-04-29 15:35:02 DEBUG    emcc @response_file exited with code 1
-2026-04-29 15:35:02 ERROR    emcc failed (exit 1)
-2026-04-29 15:35:02 ERROR    ── Last 60 lines of build.log ──
-2026-04-29 15:35:02 ERROR      2026-04-29 15:34:33 INFO     Sources : 622 .c files
-2026-04-29 15:35:02 ERROR      2026-04-29 15:34:33 INFO     Exports : 374 symbols
-2026-04-29 15:35:02 ERROR      2026-04-29 15:34:33 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (61006 bytes)
-2026-04-29 15:35:02 ERROR      2026-04-29 15:34:33 INFO     Step 1/1: Compiling all sources to WASM ...
-2026-04-29 15:35:02 ERROR      2026-04-29 15:34:33 INFO     Running: emcc @response_file
-2026-04-29 15:35:02 ERROR      2026-04-29 15:34:33 DEBUG    CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
-2026-04-29 15:35:02 ERROR      2026-04-29 15:34:33 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
-2026-04-29 15:35:02 ERROR      shared:INFO: (Emscripten: Running sanity checks)
-2026-04-29 15:35:02 ERROR      /home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512.c:101:27: warning: shift count >= width of type [-Wshift-count-overflow]
-2026-04-29 15:35:02 ERROR        101 |     ctx->count[1] += (len >> 61);
-2026-04-29 15:35:02 ERROR            |                           ^  ~~
-2026-04-29 15:35:02 ERROR      1 warning generated.
-2026-04-29 15:35:02 ERROR      /home/runner/work/NextSSL/NextSSL/src/common/encoding/base64url.c:125:13: warning: variable 'chars_processed' set but not used [-Wunused-but-set-variable]
-2026-04-29 15:35:02 ERROR        125 |         int chars_processed = 0;
-2026-04-29 15:35:02 ERROR            |             ^
-2026-04-29 15:35:02 ERROR      1 warning generated.
-2026-04-29 15:35:02 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_server_generate_challenge
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_server_verify_solution
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_client_parse_challenge
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_client_solve
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_client_check_limits
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_challenge_encode
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_solution_encode
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_solution_decode
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_algo_name_normalise
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/pow_api.o
-2026-04-29 15:35:02 ERROR      >>> defined in /tmp/emscripten_temp_9pzkgedf/root_pow.o
-2026-04-29 15:35:02 ERROR      emcc: error: '/home/runner/work/_temp/emsdk/upstream/bin/wasm-ld @/tmp/emscripten_3xzjzr8l.rsp.utf-8' failed (returned 1)
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      ============================================================
-2026-04-29 15:35:02 ERROR      CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
-2026-04-29 15:35:02 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
-2026-04-29 15:35:02 ERROR      ============================================================
-2026-04-29 15:35:02 ERROR      
-2026-04-29 15:35:02 ERROR      2026-04-29 15:35:02 DEBUG    emcc @response_file exited with code 1
-2026-04-29 15:35:02 ERROR      2026-04-29 15:35:02 ERROR    emcc failed (exit 1)
-2026-04-29 15:35:02 ERROR    ──────────────────────────────────────────
+2026-04-29 17:57:20 DEBUG    emcc @response_file exited with code 1
+2026-04-29 17:57:20 ERROR    emcc failed (exit 1)
+2026-04-29 17:57:20 ERROR    ── Last 60 lines of build.log ──
+2026-04-29 17:57:20 ERROR      2026-04-29 17:56:58 INFO     Sources : 622 .c files
+2026-04-29 17:57:20 ERROR      2026-04-29 17:56:58 INFO     Exports : 374 symbols
+2026-04-29 17:57:20 ERROR      2026-04-29 17:56:58 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (61006 bytes)
+2026-04-29 17:57:20 ERROR      2026-04-29 17:56:58 INFO     Step 1/1: Compiling all sources to WASM ...
+2026-04-29 17:57:20 ERROR      2026-04-29 17:56:58 INFO     Running: emcc @response_file
+2026-04-29 17:57:20 ERROR      2026-04-29 17:56:58 DEBUG    CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-04-29 17:57:20 ERROR      2026-04-29 17:56:58 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
+2026-04-29 17:57:20 ERROR      shared:INFO: (Emscripten: Running sanity checks)
+2026-04-29 17:57:20 ERROR      /home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512.c:101:27: warning: shift count >= width of type [-Wshift-count-overflow]
+2026-04-29 17:57:20 ERROR        101 |     ctx->count[1] += (len >> 61);
+2026-04-29 17:57:20 ERROR            |                           ^  ~~
+2026-04-29 17:57:20 ERROR      1 warning generated.
+2026-04-29 17:57:20 ERROR      /home/runner/work/NextSSL/NextSSL/src/common/encoding/base64url.c:125:13: warning: variable 'chars_processed' set but not used [-Wunused-but-set-variable]
+2026-04-29 17:57:20 ERROR        125 |         int chars_processed = 0;
+2026-04-29 17:57:20 ERROR            |             ^
+2026-04-29 17:57:20 ERROR      1 warning generated.
+2026-04-29 17:57:20 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_server_generate_challenge
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_server_verify_solution
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_client_parse_challenge
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_client_solve
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_client_check_limits
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_challenge_encode
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_solution_encode
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_solution_decode
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      wasm-ld: error: duplicate symbol: nextssl_pow_algo_name_normalise
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/pow_api.o
+2026-04-29 17:57:20 ERROR      >>> defined in /tmp/emscripten_temp_k2a785mi/root_pow.o
+2026-04-29 17:57:20 ERROR      emcc: error: '/home/runner/work/_temp/emsdk/upstream/bin/wasm-ld @/tmp/emscripten_kzbcd3rt.rsp.utf-8' failed (returned 1)
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      ============================================================
+2026-04-29 17:57:20 ERROR      CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-04-29 17:57:20 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
+2026-04-29 17:57:20 ERROR      ============================================================
+2026-04-29 17:57:20 ERROR      
+2026-04-29 17:57:20 ERROR      2026-04-29 17:57:20 DEBUG    emcc @response_file exited with code 1
+2026-04-29 17:57:20 ERROR      2026-04-29 17:57:20 ERROR    emcc failed (exit 1)
+2026-04-29 17:57:20 ERROR    ──────────────────────────────────────────

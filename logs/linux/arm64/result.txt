@@ -1,2 +1,2 @@
-status: failed
-exit_code: 1
+status: skipped
+reason: stopped after x86 failed with exit code 1

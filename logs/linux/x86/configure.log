@@ -12,13 +12,13 @@ CMake Error at /usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:67 (
 
   It fails with the following output:
 
-    Change Dir: '/home/runner/work/NextSSL/NextSSL/.ci_build/linux/x86/CMakeFiles/CMakeScratch/TryCompile-7mL7mv'
+    Change Dir: '/home/runner/work/NextSSL/NextSSL/.ci_build/linux/x86/CMakeFiles/CMakeScratch/TryCompile-SdqUO3'
     
-    Run Build Command(s): /usr/local/bin/ninja -v cmTC_21782
-    [1/2] /usr/bin/i686-linux-gnu-gcc    -o CMakeFiles/cmTC_21782.dir/testCCompiler.c.o -c /home/runner/work/NextSSL/NextSSL/.ci_build/linux/x86/CMakeFiles/CMakeScratch/TryCompile-7mL7mv/testCCompiler.c
-    [2/2] : && /usr/local/bin/cmake -E rm -f libcmTC_21782.a && /home/runner/work/NextSSL/NextSSL/i686-linux-gnu-ar qc libcmTC_21782.a  CMakeFiles/cmTC_21782.dir/testCCompiler.c.o && /home/runner/work/NextSSL/NextSSL/i686-linux-gnu-ranlib libcmTC_21782.a && :
-    FAILED: [code=127] libcmTC_21782.a 
-    : && /usr/local/bin/cmake -E rm -f libcmTC_21782.a && /home/runner/work/NextSSL/NextSSL/i686-linux-gnu-ar qc libcmTC_21782.a  CMakeFiles/cmTC_21782.dir/testCCompiler.c.o && /home/runner/work/NextSSL/NextSSL/i686-linux-gnu-ranlib libcmTC_21782.a && :
+    Run Build Command(s): /usr/local/bin/ninja -v cmTC_b6ff7
+    [1/2] /usr/bin/i686-linux-gnu-gcc    -o CMakeFiles/cmTC_b6ff7.dir/testCCompiler.c.o -c /home/runner/work/NextSSL/NextSSL/.ci_build/linux/x86/CMakeFiles/CMakeScratch/TryCompile-SdqUO3/testCCompiler.c
+    [2/2] : && /usr/local/bin/cmake -E rm -f libcmTC_b6ff7.a && /home/runner/work/NextSSL/NextSSL/i686-linux-gnu-ar qc libcmTC_b6ff7.a  CMakeFiles/cmTC_b6ff7.dir/testCCompiler.c.o && /home/runner/work/NextSSL/NextSSL/i686-linux-gnu-ranlib libcmTC_b6ff7.a && :
+    FAILED: [code=127] libcmTC_b6ff7.a 
+    : && /usr/local/bin/cmake -E rm -f libcmTC_b6ff7.a && /home/runner/work/NextSSL/NextSSL/i686-linux-gnu-ar qc libcmTC_b6ff7.a  CMakeFiles/cmTC_b6ff7.dir/testCCompiler.c.o && /home/runner/work/NextSSL/NextSSL/i686-linux-gnu-ranlib libcmTC_b6ff7.a && :
     /bin/sh: 1: /home/runner/work/NextSSL/NextSSL/i686-linux-gnu-ar: not found
     ninja: build stopped: subcommand failed.
     
