@@ -1,2 +1,0 @@
-x86_64: SUCCESS
-arm64: FAILED (1)

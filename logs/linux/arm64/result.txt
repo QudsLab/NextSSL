@@ -1,2 +1,0 @@
-status: skipped
-reason: stopped after x86 failed with exit code 1

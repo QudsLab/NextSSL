@@ -1,5 +1,0 @@
-x86_64: SUCCESS
-x86: FAILED (1)
-arm64: SKIPPED (stopped after x86 failed with exit code 1)
-armv7: SKIPPED (stopped after x86 failed with exit code 1)
-riscv64: SKIPPED (stopped after x86 failed with exit code 1)

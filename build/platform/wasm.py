@@ -190,6 +190,7 @@ def collect_sources() -> list:
         "/aarch64/",
         "/pqc/common/keccak2x/",
         "/hash/interface/hash_ops_disabled_stubs.c",
+        "/pow/pow_api.c",
         "/pqc/kem/",
         "/pqc/sign/",
         "/memory_hard/balloon/",

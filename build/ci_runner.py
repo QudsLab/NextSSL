@@ -86,6 +86,13 @@ def find_tool(name: str) -> str | None:
     return shutil.which(name)
 
 
+def require_tool(name: str) -> str:
+    resolved = find_tool(name)
+    if not resolved:
+        raise FileNotFoundError(name)
+    return resolved
+
+
 def build_common_cmake_args(bin_dir: Path) -> list[str]:
     return [
         "-DCMAKE_BUILD_TYPE=Release",
@@ -218,13 +225,17 @@ def linux_variant_flags(variant: str) -> list[str]:
     if variant == "x86_64":
         return []
     if variant == "x86":
+        compiler = require_tool("i686-linux-gnu-gcc")
+        cxx = require_tool("i686-linux-gnu-g++")
+        ar = require_tool("i686-linux-gnu-ar")
+        ranlib = require_tool("i686-linux-gnu-ranlib")
         return [
             "-DCMAKE_SYSTEM_NAME=Linux",
             "-DCMAKE_SYSTEM_PROCESSOR=i686",
-            "-DCMAKE_C_COMPILER=i686-linux-gnu-gcc",
-            "-DCMAKE_CXX_COMPILER=i686-linux-gnu-g++",
-            "-DCMAKE_AR=i686-linux-gnu-ar",
-            "-DCMAKE_RANLIB=i686-linux-gnu-ranlib",
+            f"-DCMAKE_C_COMPILER={compiler}",
+            f"-DCMAKE_CXX_COMPILER={cxx}",
+            f"-DCMAKE_AR={ar}",
+            f"-DCMAKE_RANLIB={ranlib}",
             "-DCMAKE_FIND_ROOT_PATH=/usr/i686-linux-gnu",
             "-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER",
             "-DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY",
@@ -262,20 +273,18 @@ def linux_variant_flags(variant: str) -> list[str]:
     if not config:
         raise ValueError(f"Unsupported Linux variant: {variant}")
 
-    missing_tools = [
-        tool for tool in [config["compiler"], config["cxx"], config["ar"], config["ranlib"]]
-        if not find_tool(tool)
-    ]
-    if missing_tools:
-        raise FileNotFoundError(", ".join(missing_tools))
+    compiler = require_tool(config["compiler"])
+    cxx = require_tool(config["cxx"])
+    ar = require_tool(config["ar"])
+    ranlib = require_tool(config["ranlib"])
 
     return [
         "-DCMAKE_SYSTEM_NAME=Linux",
         f"-DCMAKE_SYSTEM_PROCESSOR={config['processor']}",
-        f"-DCMAKE_C_COMPILER={config['compiler']}",
-        f"-DCMAKE_CXX_COMPILER={config['cxx']}",
-        f"-DCMAKE_AR={config['ar']}",
-        f"-DCMAKE_RANLIB={config['ranlib']}",
+        f"-DCMAKE_C_COMPILER={compiler}",
+        f"-DCMAKE_CXX_COMPILER={cxx}",
+        f"-DCMAKE_AR={ar}",
+        f"-DCMAKE_RANLIB={ranlib}",
         f"-DCMAKE_FIND_ROOT_PATH={config['root']}",
         "-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER",
         "-DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY",

@@ -113,7 +113,9 @@
       defined( vax )       || defined( vms )     || defined( VMS )        || \
       defined( __VMS )     || defined( _M_X64 )  || defined( AVR )        || \
       defined( __x86_64__ ) || defined( __x86_64 ) || defined( __amd64__ ) || \
-      defined( __amd64 )  || defined( _M_AMD64 ) || defined( __MINGW32__ )
+      defined( __amd64 )  || defined( _M_AMD64 ) || defined( __MINGW32__ ) || \
+      defined( __aarch64__ ) || defined( __arm64__ ) || defined( _M_ARM64 ) || \
+      defined( _M_ARM64EC )
 #  define PLATFORM_BYTE_ORDER IS_LITTLE_ENDIAN
 
 #elif defined( AMIGA )   || defined( applec )    || defined( __AS400__ )  || \
