@@ -204,11 +204,17 @@ def linux_variant_flags(variant: str) -> list[str]:
         return []
     if variant == "x86":
         return [
+            "-DCMAKE_SYSTEM_NAME=Linux",
             "-DCMAKE_SYSTEM_PROCESSOR=i686",
-            "-DCMAKE_C_FLAGS=-m32",
-            "-DCMAKE_CXX_FLAGS=-m32",
-            "-DCMAKE_EXE_LINKER_FLAGS=-m32",
-            "-DCMAKE_SHARED_LINKER_FLAGS=-m32",
+            "-DCMAKE_C_COMPILER=i686-linux-gnu-gcc",
+            "-DCMAKE_CXX_COMPILER=i686-linux-gnu-g++",
+            "-DCMAKE_AR=i686-linux-gnu-ar",
+            "-DCMAKE_RANLIB=i686-linux-gnu-ranlib",
+            "-DCMAKE_FIND_ROOT_PATH=/usr/i686-linux-gnu",
+            "-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER",
+            "-DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY",
+            "-DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY",
+            "-DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY",
         ]
 
     cross_map = {

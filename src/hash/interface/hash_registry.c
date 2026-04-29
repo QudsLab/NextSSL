@@ -970,13 +970,25 @@ void hash_registry_init(void) {
     hash_register(&argon2id_ops);
     hash_register(&argon2i_ops);
     hash_register(&argon2d_ops);
+#if defined(ENABLE_SCRYPT)
     hash_register(&scrypt_ops);
+#endif
+#if defined(ENABLE_YESCRYPT)
     hash_register(&yescrypt_ops);
+#endif
+#if defined(ENABLE_CATENA)
     hash_register(&catena_ops);
+#endif
+#if defined(ENABLE_LYRA2)
     hash_register(&lyra2_ops);
+#endif
     hash_register(&bcrypt_ops);
+#if defined(NEXTSSL_HAS_POMELO)
     hash_register(&pomelo_ops);
+#endif
+#if defined(NEXTSSL_HAS_MAKWA)
     hash_register(&makwa_ops);
+#endif
     hash_register(&ripemd128_ops);
     hash_register(&ripemd160_ops);
     hash_register(&ripemd256_ops);

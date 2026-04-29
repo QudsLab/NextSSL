@@ -189,6 +189,7 @@ def collect_sources() -> list:
     exclude_patterns = [
         "/aarch64/",
         "/pqc/common/keccak2x/",
+        "/hash/interface/hash_ops_disabled_stubs.c",
         "/pqc/kem/",
         "/pqc/sign/",
         "/memory_hard/balloon/",

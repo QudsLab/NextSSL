@@ -11,6 +11,8 @@
 #elif defined(_WIN32)
     #include <windows.h>
     #include <wincrypt.h>
+#elif defined(__APPLE__)
+    #include <stdlib.h>
 #else
     #include <unistd.h>
     #include <sys/syscall.h>
@@ -80,7 +82,6 @@ int entropy_getrandom(uint8_t *out, size_t out_len)
 
 #elif defined(__APPLE__)
     /* macOS / BSD: arc4random_buf (declared in <stdlib.h>) */
-    #include <stdlib.h>
     arc4random_buf(out, out_len);
     return 0;
 

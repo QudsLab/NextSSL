@@ -58,13 +58,25 @@ extern const hash_ops_t shake256_ops;
 extern const hash_ops_t argon2id_ops;
 extern const hash_ops_t argon2i_ops;
 extern const hash_ops_t argon2d_ops;
+#if defined(ENABLE_SCRYPT)
 extern const hash_ops_t scrypt_ops;
+#endif
+#if defined(ENABLE_YESCRYPT)
 extern const hash_ops_t yescrypt_ops;
+#endif
+#if defined(ENABLE_CATENA)
 extern const hash_ops_t catena_ops;
+#endif
+#if defined(ENABLE_LYRA2)
 extern const hash_ops_t lyra2_ops;
+#endif
 extern const hash_ops_t bcrypt_ops;
+#if defined(NEXTSSL_HAS_POMELO)
 extern const hash_ops_t pomelo_ops;
+#endif
+#if defined(NEXTSSL_HAS_MAKWA)
 extern const hash_ops_t makwa_ops;
+#endif
 
 /* Legacy ⚠️ — weak/broken, correctness-tested only */
 extern const hash_ops_t sha1_ops;
