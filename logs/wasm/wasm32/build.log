@@ -1,0 +1,92 @@
+
+==============================================================================
+CMD: /usr/bin/python3 /home/runner/work/NextSSL/NextSSL/build.py --platform wasm wasm32 --clean --jobs 4 --log-level debug --log-file /home/runner/work/NextSSL/NextSSL/logs/wasm/wasm32/build.log
+CWD: /home/runner/work/NextSSL/NextSSL
+==============================================================================
+
+2026-04-29 08:20:39 INFO     NextSSL WASM Build  variant=wasm32
+2026-04-29 08:20:39 INFO     emcc    : /home/runner/work/_temp/emsdk/upstream/emscripten/emcc
+2026-04-29 08:20:39 INFO     Variant : wasm32
+2026-04-29 08:20:39 INFO     Out     : bin/web/
+2026-04-29 08:20:39 INFO     Cleaning .build_cache/wasm_wasm32 ...
+2026-04-29 08:20:39 INFO     Sources : 623 .c files
+2026-04-29 08:20:39 INFO     Exports : 374 symbols
+2026-04-29 08:20:39 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (61085 bytes)
+2026-04-29 08:20:39 INFO     Step 1/1: Compiling all sources to WASM ...
+2026-04-29 08:20:39 INFO     Running: emcc @response_file
+2026-04-29 08:20:39 DEBUG    CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-04-29 08:20:39 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
+shared:INFO: (Emscripten: Running sanity checks)
+/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512.c:101:27: warning: shift count >= width of type [-Wshift-count-overflow]
+  101 |     ctx->count[1] += (len >> 61);
+      |                           ^  ~~
+1 warning generated.
+/home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c:8:2: error: "ENABLE_SCRYPT must be enabled or scrypt must be removed from the registry; silent disabled stubs are forbidden"
+    8 | #error "ENABLE_SCRYPT must be enabled or scrypt must be removed from the registry; silent disabled stubs are forbidden"
+      |  ^
+/home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c:12:2: error: "ENABLE_YESCRYPT must be enabled or yescrypt must be removed from the registry; silent disabled stubs are forbidden"
+   12 | #error "ENABLE_YESCRYPT must be enabled or yescrypt must be removed from the registry; silent disabled stubs are forbidden"
+      |  ^
+/home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c:16:2: error: "ENABLE_CATENA must be enabled or catena must be removed from the registry; silent disabled stubs are forbidden"
+   16 | #error "ENABLE_CATENA must be enabled or catena must be removed from the registry; silent disabled stubs are forbidden"
+      |  ^
+/home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c:20:2: error: "ENABLE_LYRA2 must be enabled or lyra2 must be removed from the registry; silent disabled stubs are forbidden"
+   20 | #error "ENABLE_LYRA2 must be enabled or lyra2 must be removed from the registry; silent disabled stubs are forbidden"
+      |  ^
+4 errors generated.
+emcc: error: '/home/runner/work/_temp/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/home/runner/work/_temp/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/encoding -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/encoding -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/micro_ecc -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -O2 -std=gnu11 -Wall -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -DENABLE_ML_KEM -DENABLE_ML_DSA -DENABLE_FALCON -DENABLE_HQC -DENABLE_MCELIECE -DENABLE_SPHINCS -DHAVE_ED448 -DHAVE_CURVE448 -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -c /home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c -o /tmp/emscripten_temp_dukvnbai/hash_ops_disabled_stubs.o' failed (returned 1)
+
+============================================================
+CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+CWD: /home/runner/work/NextSSL/NextSSL
+============================================================
+
+2026-04-29 08:20:40 DEBUG    emcc @response_file exited with code 1
+2026-04-29 08:20:40 ERROR    emcc failed (exit 1)
+2026-04-29 08:20:40 ERROR    ── Last 45 lines of build.log ──
+2026-04-29 08:20:40 ERROR      
+2026-04-29 08:20:40 ERROR      ==============================================================================
+2026-04-29 08:20:40 ERROR      CMD: /usr/bin/python3 /home/runner/work/NextSSL/NextSSL/build.py --platform wasm wasm32 --clean --jobs 4 --log-level debug --log-file /home/runner/work/NextSSL/NextSSL/logs/wasm/wasm32/build.log
+2026-04-29 08:20:40 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
+2026-04-29 08:20:40 ERROR      ==============================================================================
+2026-04-29 08:20:40 ERROR      
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 INFO     NextSSL WASM Build  variant=wasm32
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 INFO     emcc    : /home/runner/work/_temp/emsdk/upstream/emscripten/emcc
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 INFO     Variant : wasm32
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 INFO     Out     : bin/web/
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 INFO     Cleaning .build_cache/wasm_wasm32 ...
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 INFO     Sources : 623 .c files
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 INFO     Exports : 374 symbols
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (61085 bytes)
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 INFO     Step 1/1: Compiling all sources to WASM ...
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 INFO     Running: emcc @response_file
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 DEBUG    CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:39 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
+2026-04-29 08:20:40 ERROR      shared:INFO: (Emscripten: Running sanity checks)
+2026-04-29 08:20:40 ERROR      /home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512.c:101:27: warning: shift count >= width of type [-Wshift-count-overflow]
+2026-04-29 08:20:40 ERROR        101 |     ctx->count[1] += (len >> 61);
+2026-04-29 08:20:40 ERROR            |                           ^  ~~
+2026-04-29 08:20:40 ERROR      1 warning generated.
+2026-04-29 08:20:40 ERROR      /home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c:8:2: error: "ENABLE_SCRYPT must be enabled or scrypt must be removed from the registry; silent disabled stubs are forbidden"
+2026-04-29 08:20:40 ERROR          8 | #error "ENABLE_SCRYPT must be enabled or scrypt must be removed from the registry; silent disabled stubs are forbidden"
+2026-04-29 08:20:40 ERROR            |  ^
+2026-04-29 08:20:40 ERROR      /home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c:12:2: error: "ENABLE_YESCRYPT must be enabled or yescrypt must be removed from the registry; silent disabled stubs are forbidden"
+2026-04-29 08:20:40 ERROR         12 | #error "ENABLE_YESCRYPT must be enabled or yescrypt must be removed from the registry; silent disabled stubs are forbidden"
+2026-04-29 08:20:40 ERROR            |  ^
+2026-04-29 08:20:40 ERROR      /home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c:16:2: error: "ENABLE_CATENA must be enabled or catena must be removed from the registry; silent disabled stubs are forbidden"
+2026-04-29 08:20:40 ERROR         16 | #error "ENABLE_CATENA must be enabled or catena must be removed from the registry; silent disabled stubs are forbidden"
+2026-04-29 08:20:40 ERROR            |  ^
+2026-04-29 08:20:40 ERROR      /home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c:20:2: error: "ENABLE_LYRA2 must be enabled or lyra2 must be removed from the registry; silent disabled stubs are forbidden"
+2026-04-29 08:20:40 ERROR         20 | #error "ENABLE_LYRA2 must be enabled or lyra2 must be removed from the registry; silent disabled stubs are forbidden"
+2026-04-29 08:20:40 ERROR            |  ^
+2026-04-29 08:20:40 ERROR      4 errors generated.
+2026-04-29 08:20:40 ERROR      emcc: error: '/home/runner/work/_temp/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/home/runner/work/_temp/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/encoding -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/encoding -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/micro_ecc -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -O2 -std=gnu11 -Wall -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -DENABLE_ML_KEM -DENABLE_ML_DSA -DENABLE_FALCON -DENABLE_HQC -DENABLE_MCELIECE -DENABLE_SPHINCS -DHAVE_ED448 -DHAVE_CURVE448 -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -c /home/runner/work/NextSSL/NextSSL/src/hash/interface/hash_ops_disabled_stubs.c -o /tmp/emscripten_temp_dukvnbai/hash_ops_disabled_stubs.o' failed (returned 1)
+2026-04-29 08:20:40 ERROR      
+2026-04-29 08:20:40 ERROR      ============================================================
+2026-04-29 08:20:40 ERROR      CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-04-29 08:20:40 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
+2026-04-29 08:20:40 ERROR      ============================================================
+2026-04-29 08:20:40 ERROR      
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:40 DEBUG    emcc @response_file exited with code 1
+2026-04-29 08:20:40 ERROR      2026-04-29 08:20:40 ERROR    emcc failed (exit 1)
+2026-04-29 08:20:40 ERROR    ──────────────────────────────────────────
