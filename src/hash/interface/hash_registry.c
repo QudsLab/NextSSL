@@ -851,7 +851,7 @@ const hash_ops_t kmac256_ops = {
  * ========================================================================= */
 static const hash_ops_t *s_registry[HASH_REGISTRY_MAX];
 static int s_count = 0;
-static atomic_int s_initialised = ATOMIC_VAR_INIT(0);
+static atomic_int s_initialised = 0;
 
 int hash_register(const hash_ops_t *ops) {
     if (!ops) return -1;

@@ -1,4 +1,4 @@
-﻿name: Build
+name: Build
 
 on:
   push:
@@ -16,183 +16,45 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build ${{ matrix.label }}
+  win:
+    name: Build Windows
     runs-on: windows-2022
     permissions:
       contents: read
 
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - label:      "Windows x86_64"
-            arch_tag:   x86_64
-            cmake_arch: x64
-
-          - label:      "Windows x86"
-            arch_tag:   x86
-            cmake_arch: Win32
-
-          - label:      "Windows arm64"
-            arch_tag:   arm64
-            cmake_arch: ARM64
-
     steps:
       - uses: actions/checkout@v6
 
-      # -----------------------------------------------------------------------
-      # Log dir — created first so it always exists even if later steps crash
-      # -----------------------------------------------------------------------
-      - name: Init log directory
+      - name: Initialize Windows logs
         if: always()
         shell: pwsh
         run: |
-          $log = "logs\win\${{ matrix.arch_tag }}"
-          New-Item -ItemType Directory -Force $log | Out-Null
+          $logDir = "logs\win"
+          New-Item -ItemType Directory -Force $logDir | Out-Null
           @(
-            "label:    ${{ matrix.label }}",
-            "run_id:   ${{ github.run_id }}",
-            "attempt:  ${{ github.run_attempt }}",
-            "sha:      ${{ github.sha }}",
-            "ref:      ${{ github.ref }}",
-            "started:  $(Get-Date -Format 'yyyy-MM-ddTHH:mm:ssZ' -AsUTC)"
-          ) | Out-File "$log\job_info.txt" -Encoding utf8
+            "platform: win",
+            "run_id: ${{ github.run_id }}",
+            "attempt: ${{ github.run_attempt }}",
+            "sha: ${{ github.sha }}",
+            "ref: ${{ github.ref }}"
+          ) | Out-File "$logDir\job_info.txt" -Encoding utf8
 
-      # -----------------------------------------------------------------------
-      # Ninja — pre-installed on windows-2022 via VS, choco fallback
-      # -----------------------------------------------------------------------
-      - name: Ensure Ninja available
+      - name: Build variants with Python runner
         shell: pwsh
         run: |
-          if (-not (Get-Command ninja -ErrorAction SilentlyContinue)) {
-            choco install ninja --yes --no-progress
-          } else {
-            Write-Host "ninja $(ninja --version)"
+          $log = "logs\win\bootstrap.log"
+          python --version 2>&1 | Tee-Object -FilePath $log
+          python build/ci_runner.py --platform win --variants x86_64 x86 arm64 --jobs 4 2>&1 | Tee-Object -FilePath $log -Append
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
           }
 
-      # -----------------------------------------------------------------------
-      # sccache compiler cache
-      # -----------------------------------------------------------------------
-      - name: Cache sccache store
-        uses: actions/cache@v5
-        continue-on-error: true
-        with:
-          path: ${{ env.LOCALAPPDATA }}\Mozilla\sccache
-          key: sccache-win-${{ matrix.arch_tag }}-${{ hashFiles('CMakeLists.txt', 'src/**/*.c', 'src/**/*.h') }}
-          restore-keys: |
-            sccache-win-${{ matrix.arch_tag }}-
-            sccache-win-
-
-      - name: Start sccache server
-        shell: pwsh
-        run: |
-          if (Get-Command sccache -ErrorAction SilentlyContinue) {
-            sccache --start-server
-            Write-Host "sccache started"
-          } else {
-            Write-Host "sccache not available - skipping compiler cache"
-          }
-
-      # -----------------------------------------------------------------------
-      # Configure — real exit code, job turns red on failure
-      # -----------------------------------------------------------------------
-      - name: Configure
-        shell: pwsh
-        run: |
-          $log = "logs\win\${{ matrix.arch_tag }}"
-          $launcher = if (Get-Command sccache -ErrorAction SilentlyContinue) { "sccache" } else { $null }
-
-          $cmakeArgs = @(
-            "-S", ".",
-            "-B", "_build",
-            "-A", "${{ matrix.cmake_arch }}",
-            "-DCMAKE_BUILD_TYPE=Release",
-            "-DNEXTSSL_SHARED=ON"
-          )
-          if ($launcher) { $cmakeArgs += "-DCMAKE_C_COMPILER_LAUNCHER=$launcher" }
-
-          Write-Host "::group::Configure - ${{ matrix.label }}"
-          cmake @cmakeArgs 2>&1 | Tee-Object -FilePath "$log\configure.log"
-          $exitCode = $LASTEXITCODE
-          Write-Host "::endgroup::"
-
-          foreach ($f in @("_build\CMakeFiles\CMakeError.log", "_build\CMakeFiles\CMakeOutput.log")) {
-            if (Test-Path $f) { Copy-Item $f "$log\" -Force }
-          }
-
-          if ($exitCode -ne 0) {
-            Write-Host "::error::Configure failed (exit $exitCode)"
-            exit $exitCode
-          }
-
-      # -----------------------------------------------------------------------
-      # Build — real exit code
-      # -----------------------------------------------------------------------
-      - name: Build
-        shell: pwsh
-        run: |
-          $log = "logs\win\${{ matrix.arch_tag }}"
-
-          Write-Host "::group::Build - ${{ matrix.label }}"
-          cmake --build _build --config Release --parallel 2>&1 | Tee-Object -FilePath "$log\build.log"
-          $exitCode = $LASTEXITCODE
-          Write-Host "::endgroup::"
-
-          if ($exitCode -ne 0) {
-            Write-Host "::error::Build failed (exit $exitCode)"
-            exit $exitCode
-          }
-
-      # -----------------------------------------------------------------------
-      # Copy output to bin/win/<arch>/
-      # -----------------------------------------------------------------------
-      - name: Collect binary
-        shell: pwsh
-        run: |
-          $dst = "bin\win\${{ matrix.arch_tag }}"
-          New-Item -ItemType Directory -Force $dst | Out-Null
-          $files = Get-ChildItem "_build" -Recurse -Include "*.dll","*.lib","*.pdb" -ErrorAction SilentlyContinue
-          foreach ($f in $files) { Copy-Item $f.FullName $dst\ -Force }
-          Write-Host "Collected $($files.Count) file(s) to $dst"
-
-      # -----------------------------------------------------------------------
-      # Collect logs — always, captures sccache stats + env snapshot
-      # -----------------------------------------------------------------------
-      - name: Collect logs
+      - name: Upload binaries
         if: always()
-        shell: pwsh
-        run: |
-          $log = "logs\win\${{ matrix.arch_tag }}"
-          New-Item -ItemType Directory -Force $log | Out-Null
-
-          if (Get-Command sccache -ErrorAction SilentlyContinue) {
-            sccache --show-stats 2>&1 | Out-File "$log\sccache_stats.txt" -Encoding utf8
-          }
-
-          $cmakeVer = try { (cmake --version 2>&1 | Out-String).Trim() } catch { "cmake: not found" }
-          $clVer    = try { (cl 2>&1 | Select-Object -First 1 | Out-String).Trim() } catch { "cl: not found" }
-          $envVars  = Get-ChildItem Env: |
-                        Where-Object { $_.Name -match 'CC|CXX|CMAKE|PATH|MSVC|VCTools' } |
-                        ForEach-Object { "$($_.Name)=$($_.Value)" }
-          @(
-            "=== cmake ===", $cmakeVer, "",
-            "=== cl ===",    $clVer,    "",
-            "=== os ===",    [System.Environment]::OSVersion.ToString(), "",
-            "=== env ===",   ($envVars | Out-String).Trim()
-          ) | Out-File "$log\env.txt" -Encoding utf8
-
-      # -----------------------------------------------------------------------
-      # Artifacts
-      #   bin  — only on success (nothing to upload if build failed)
-      #   logs — always, mandatory (if-no-files-found: error so we notice)
-      # -----------------------------------------------------------------------
-      - name: Upload binary
-        if: success()
         uses: actions/upload-artifact@v7
         with:
-          name: nextssl-win-${{ matrix.arch_tag }}
-          path: bin/win/${{ matrix.arch_tag }}/
+          name: nextssl-win
+          path: bin/win/
           retention-days: 30
           if-no-files-found: warn
 
@@ -200,19 +62,183 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: logs-win-${{ matrix.arch_tag }}
-          path: logs/win/${{ matrix.arch_tag }}/
+          name: logs-win
+          path: logs/win/
           retention-days: 30
           if-no-files-found: error
 
-  # ---------------------------------------------------------------------------
-  # collect — runs after all build jobs, always.
-  # Downloads every logs-win-* artifact and merges into ONE download: all-logs
-  # This is the only artifact you need to pull to inspect a full run.
-  # ---------------------------------------------------------------------------
+  linux:
+    name: Build Linux
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Initialize Linux logs
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p logs/linux
+          cat > logs/linux/job_info.txt <<'EOF'
+          platform: linux
+          run_id: ${{ github.run_id }}
+          attempt: ${{ github.run_attempt }}
+          sha: ${{ github.sha }}
+          ref: ${{ github.ref }}
+          EOF
+
+      - name: Install Linux toolchains
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update 2>&1 | tee -a logs/linux/bootstrap.log
+          sudo apt-get install -y \
+            cmake ninja-build ccache \
+            gcc g++ gcc-multilib g++-multilib \
+            gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross \
+            gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross \
+            gcc-riscv64-linux-gnu g++-riscv64-linux-gnu binutils-riscv64-linux-gnu libc6-dev-riscv64-cross 2>&1 | tee -a logs/linux/bootstrap.log
+
+      - name: Build variants with Python runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 --version 2>&1 | tee -a logs/linux/bootstrap.log
+          python3 build/ci_runner.py --platform linux --variants x86_64 x86 arm64 armv7 riscv64 --jobs 4 2>&1 | tee -a logs/linux/bootstrap.log
+
+      - name: Upload binaries
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: nextssl-linux
+          path: bin/linux/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: logs-linux
+          path: logs/linux/
+          retention-days: 30
+          if-no-files-found: error
+
+  macos:
+    name: Build macOS
+    runs-on: macos-14
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Initialize macOS logs
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p logs/macos
+          cat > logs/macos/job_info.txt <<'EOF'
+          platform: macos
+          run_id: ${{ github.run_id }}
+          attempt: ${{ github.run_attempt }}
+          sha: ${{ github.sha }}
+          ref: ${{ github.ref }}
+          EOF
+
+      - name: Install macOS build tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          brew list cmake >/dev/null 2>&1 || brew install cmake 2>&1 | tee -a logs/macos/bootstrap.log
+          brew list ninja >/dev/null 2>&1 || brew install ninja 2>&1 | tee -a logs/macos/bootstrap.log
+          brew list ccache >/dev/null 2>&1 || brew install ccache 2>&1 | tee -a logs/macos/bootstrap.log
+
+      - name: Build variants with Python runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 --version 2>&1 | tee -a logs/macos/bootstrap.log
+          python3 build/ci_runner.py --platform macos --variants x86_64 arm64 --jobs 4 2>&1 | tee -a logs/macos/bootstrap.log
+
+      - name: Upload binaries
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: nextssl-macos
+          path: bin/macos/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: logs-macos
+          path: logs/macos/
+          retention-days: 30
+          if-no-files-found: error
+
+  wasm:
+    name: Build WASM
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Initialize WASM logs
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p logs/wasm
+          cat > logs/wasm/job_info.txt <<'EOF'
+          platform: wasm
+          run_id: ${{ github.run_id }}
+          attempt: ${{ github.run_attempt }}
+          sha: ${{ github.sha }}
+          ref: ${{ github.ref }}
+          EOF
+
+      - name: Install Emscripten and build variants
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update 2>&1 | tee -a logs/wasm/bootstrap.log
+          sudo apt-get install -y cmake ninja-build git python3 2>&1 | tee -a logs/wasm/bootstrap.log
+          git clone https://github.com/emscripten-core/emsdk.git "$RUNNER_TEMP/emsdk" 2>&1 | tee -a logs/wasm/bootstrap.log
+          "$RUNNER_TEMP/emsdk/emsdk" install latest 2>&1 | tee -a logs/wasm/bootstrap.log
+          "$RUNNER_TEMP/emsdk/emsdk" activate latest 2>&1 | tee -a logs/wasm/bootstrap.log
+          source "$RUNNER_TEMP/emsdk/emsdk_env.sh"
+          python3 build/ci_runner.py --platform wasm --variants wasm32 --jobs 4 2>&1 | tee -a logs/wasm/bootstrap.log
+
+      - name: Upload binaries
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: nextssl-wasm
+          path: bin/wasm/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: logs-wasm
+          path: logs/wasm/
+          retention-days: 30
+          if-no-files-found: error
+
   collect:
     name: Collect and publish logs
-    needs: build
+    needs: [win, linux, macos, wasm]
     if: always()
     runs-on: ubuntu-22.04
     permissions:
@@ -226,15 +252,38 @@ jobs:
       - name: Download all log artifacts
         uses: actions/download-artifact@v8
         with:
-          pattern: logs-win-*
+          pattern: logs-*
           path: _ci_logs_artifacts/
           merge-multiple: false
+
+      - name: Normalize log layout
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf merged-logs
+          mkdir -p merged-logs
+
+          declare -A targets=(
+            [logs-win]=win
+            [logs-linux]=linux
+            [logs-macos]=macos
+            [logs-wasm]=wasm
+          )
+
+          for artifact in "${!targets[@]}"; do
+            source_dir="_ci_logs_artifacts/$artifact"
+            target_dir="merged-logs/${targets[$artifact]}"
+            if [ -d "$source_dir" ]; then
+              mkdir -p "$target_dir"
+              cp -R "$source_dir/." "$target_dir/"
+            fi
+          done
 
       - name: Upload all-logs
         uses: actions/upload-artifact@v7
         with:
           name: all-logs
-          path: _ci_logs_artifacts/
+          path: merged-logs/
           retention-days: 30
           if-no-files-found: error
 
@@ -250,27 +299,9 @@ jobs:
           git fetch origin main
           git switch -C main origin/main
 
-          mkdir -p "logs/runs/${{ github.run_id }}" "logs/latest"
-          rm -rf logs/latest/*
-
-          cp -R _ci_logs_artifacts/. "logs/runs/${{ github.run_id }}/"
-          cp -R _ci_logs_artifacts/. "logs/latest/"
-
-          cat > "logs/latest/RUN_INFO.txt" <<EOF
-          run_id:   ${{ github.run_id }}
-          attempt:  ${{ github.run_attempt }}
-          sha:      ${{ github.sha }}
-          ref:      ${{ github.ref }}
-          branch:   main
-          EOF
-
-          cat > "logs/runs/${{ github.run_id }}/RUN_INFO.txt" <<EOF
-          run_id:   ${{ github.run_id }}
-          attempt:  ${{ github.run_attempt }}
-          sha:      ${{ github.sha }}
-          ref:      ${{ github.ref }}
-          branch:   main
-          EOF
+          rm -rf logs
+          mkdir -p logs
+          cp -R merged-logs/. logs/
 
           git add logs
           if git diff --cached --quiet; then
@@ -292,8 +323,7 @@ jobs:
             echo "git fetch origin main"
             echo "git switch main"
             echo
-            echo "Latest logs path: logs/latest/"
-            echo "Run logs path: logs/runs/${{ github.run_id }}/"
+            echo "Logs path: logs/<platform>/<variant>/"
             echo
             echo "Fallback artifact: all-logs"
           } >> "$GITHUB_STEP_SUMMARY"

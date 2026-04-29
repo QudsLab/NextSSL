@@ -232,7 +232,7 @@ endif()
 # Compiler warnings / optimization
 # ─────────────────────────────────────────────────────────────────
 if(MSVC)
-    target_compile_options(nextssl PRIVATE /W3 /wd4996 /std:c11)
+    target_compile_options(nextssl PRIVATE /W3 /wd4996 /std:c11 /experimental:c11atomics)
 else()
     target_compile_options(nextssl PRIVATE
         -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare

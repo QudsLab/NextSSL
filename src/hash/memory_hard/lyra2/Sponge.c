@@ -84,7 +84,7 @@ inline static void reducedSpongeLyra(uint64_t *v) {
  * 
  * @param state         The 1024-bit array to be initialized
  */
-inline void initState(uint64_t state[/*16*/]) {
+void initState(uint64_t state[/*16*/]) {
     //First 512 bis are zeros
     memset(state, 0, 64); 
     //Remainder BLOCK_LEN_BLAKE2_SAFE_BYTES are reserved to the IV
@@ -105,7 +105,7 @@ inline void initState(uint64_t state[/*16*/]) {
  * @param state The current state of the sponge 
  * @param in    The block to be absorbed (BLOCK_LEN_BLAKE2_SAFE_INT64 words)
  */
-inline void absorbBlockBlake2Safe(uint64_t *state, const uint64_t *in) {
+void absorbBlockBlake2Safe(uint64_t *state, const uint64_t *in) {
     //XORs the first BLOCK_LEN_BLAKE2_SAFE_INT64 words of "in" with the current state
     state[0] ^= in[0];
     state[1] ^= in[1];
@@ -128,7 +128,7 @@ inline void absorbBlockBlake2Safe(uint64_t *state, const uint64_t *in) {
  * @param state     The current state of the sponge 
  * @param rowOut    Row to receive the data squeezed
  */
-inline void reducedSqueezeRow0(uint64_t* state, uint64_t* rowOut) {
+void reducedSqueezeRow0(uint64_t* state, uint64_t* rowOut) {
     uint64_t* ptrWord = rowOut + (N_COLS-1)*BLOCK_LEN_INT64; //In Lyra2: pointer to M[0][C-1]
     int i, j;
     //M[0][C-1-col] = H.reduced_squeeze()    
@@ -154,7 +154,7 @@ inline void reducedSqueezeRow0(uint64_t* state, uint64_t* rowOut) {
  * @param rowIn		Row to feed the sponge
  * @param rowOut	Row to receive the sponge's output
  */
-inline void reducedDuplexRow1and2(uint64_t *state, uint64_t *rowIn, uint64_t *rowOut) {
+void reducedDuplexRow1and2(uint64_t *state, uint64_t *rowIn, uint64_t *rowOut) {
     uint64_t* ptrWordIn = rowIn;				//In Lyra2: pointer to prev
     uint64_t* ptrWordOut = rowOut + (N_COLS-1)*BLOCK_LEN_INT64; //In Lyra2: pointer to row
     int i, j;
@@ -199,7 +199,7 @@ inline void reducedDuplexRow1and2(uint64_t *state, uint64_t *rowIn, uint64_t *ro
  * @param rowOut         Row receiving the output
  *
  */
-inline void reducedDuplexRowFilling(uint64_t *state, uint64_t *rowInOut, uint64_t *rowIn0, uint64_t *rowIn1, uint64_t *rowOut) {
+void reducedDuplexRowFilling(uint64_t *state, uint64_t *rowInOut, uint64_t *rowIn0, uint64_t *rowIn1, uint64_t *rowOut) {
     uint64_t* ptrWordIn0 = rowIn0;				//In Lyra2: pointer to prev0, the last row ever initialized
     uint64_t* ptrWordIn1 = rowIn1;				//In Lyra2: pointer to prev1, the last row ever revisited and updated
     uint64_t* ptrWordInOut = rowInOut;				//In Lyra2: pointer to row1, to be revisited and updated
@@ -257,7 +257,7 @@ inline void reducedDuplexRowFilling(uint64_t *state, uint64_t *rowInOut, uint64_
  * @param rowIn1         Another row used only as input
  *
  */
-inline void reducedDuplexRowWandering(uint64_t *state, uint64_t *rowInOut0, uint64_t *rowInOut1, uint64_t *rowIn0, uint64_t *rowIn1) {
+void reducedDuplexRowWandering(uint64_t *state, uint64_t *rowInOut0, uint64_t *rowInOut1, uint64_t *rowIn0, uint64_t *rowIn1) {
     uint64_t* ptrWordInOut0 = rowInOut0; //In Lyra2: pointer to row0
     uint64_t* ptrWordInOut1 = rowInOut1; //In Lyra2: pointer to row1
     uint64_t* ptrWordIn0;                //In Lyra2: pointer to prev0
@@ -322,7 +322,7 @@ inline void reducedDuplexRowWandering(uint64_t *state, uint64_t *rowInOut0, uint
  * @param rowIn0         Another row used only as input
  *
  */
-inline void reducedDuplexRowWanderingParallel(uint64_t *state, uint64_t *rowInOut0, uint64_t *rowInP, uint64_t *rowIn0) {
+void reducedDuplexRowWanderingParallel(uint64_t *state, uint64_t *rowInOut0, uint64_t *rowInP, uint64_t *rowIn0) {
     uint64_t* ptrWordInOut0 = rowInOut0;        //In Lyra2: pointer to row0
     uint64_t* ptrWordInP = rowInP;              //In Lyra2: pointer to row0_p
     uint64_t* ptrWordIn0;                       //In Lyra2: pointer to prev0
@@ -363,7 +363,7 @@ inline void reducedDuplexRowWanderingParallel(uint64_t *state, uint64_t *rowInOu
  * @param state The current state of the sponge 
  * @param in    The row whose column (BLOCK_LEN_INT64 words) should be absorbed 
  */
-inline void absorbColumn(uint64_t *state, uint64_t *in) {
+void absorbColumn(uint64_t *state, uint64_t *in) {
     uint64_t* ptrWordIn = in;                
     int i;
     
@@ -384,7 +384,7 @@ inline void absorbColumn(uint64_t *state, uint64_t *in) {
  * @param out        Array that will receive the data squeezed
  * @param len        The number of bytes to be squeezed into the "out" array
  */
-inline void squeeze(uint64_t *state, byte *out, unsigned int len) {
+void squeeze(uint64_t *state, byte *out, unsigned int len) {
     int fullBlocks = len / BLOCK_LEN_BYTES;
     byte *ptr = out;
     int i;

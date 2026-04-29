@@ -1,0 +1,42 @@
+-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.26200.
+CMake Error at CMakeLists.txt:2 (project):
+  Failed to run MSBuild command:
+
+    C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe
+
+  to get the value of VCTargetsPath:
+
+    MSBuild version 17.14.8+a7a4d5af0 for .NET Framework
+    Build started 4/29/2026 1:47:56 PM.
+    
+    Project "C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.ci_build\win\arm64\CMakeFiles\4.0.2\VCTargetsPath.vcxproj" on node 1 (default targets).
+    C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(843,5): error : The BaseOutputPath/OutputPath property is not set for project 'VCTargetsPath.vcxproj'.  Please check to make sure that you have specified a valid combination of Configuration and Platform for this project.  Configuration='Debug'  Platform='ARM64'. You may be seeing this message because you are trying to build a project without a solution file, and have specified a non-default Configuration or Platform that doesn't exist for this project. [C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.ci_build\win\arm64\CMakeFiles\4.0.2\VCTargetsPath.vcxproj]
+    Done Building Project "C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.ci_build\win\arm64\CMakeFiles\4.0.2\VCTargetsPath.vcxproj" (default targets) -- FAILED.
+    
+    Build FAILED.
+    
+    "C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.ci_build\win\arm64\CMakeFiles\4.0.2\VCTargetsPath.vcxproj" (default target) (1) ->
+    (_CheckForInvalidConfigurationAndPlatform target) -> 
+      C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(843,5): error : The BaseOutputPath/OutputPath property is not set for project 'VCTargetsPath.vcxproj'.  Please check to make sure that you have specified a valid combination of Configuration and Platform for this project.  Configuration='Debug'  Platform='ARM64'. You may be seeing this message because you are trying to build a project without a solution file, and have specified a non-default Configuration or Platform that doesn't exist for this project. [C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.ci_build\win\arm64\CMakeFiles\4.0.2\VCTargetsPath.vcxproj]
+    
+        0 Warning(s)
+        1 Error(s)
+    
+    Time Elapsed 00:00:00.08
+    
+
+  Exit code: 1
+
+
+
+-- Configuring incomplete, errors occurred!
+
+==============================================================================
+CMD: cmake -S C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline -B C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\.ci_build\win\arm64 -G "Visual Studio 17 2022" -A ARM64 -DCMAKE_BUILD_TYPE=Release -DNEXTSSL_SHARED=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\bin\win\arm64 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\bin\win\arm64 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline\bin\win\arm64
+CWD: C:\Users\Unkn0\Desktop\VScode\Python.py\Anon-leyline
+==============================================================================
+
+
+[ci_runner] Note: local Windows ARM64 configure failed before compilation.
+[ci_runner] This machine does not appear to have the MSBuild ARM64 platform/toolset installed.
+[ci_runner] The log is complete; resolve the local Visual Studio ARM64 workload or validate ARM64 on CI.

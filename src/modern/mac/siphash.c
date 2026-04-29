@@ -64,13 +64,6 @@
     } while (0)
 
 #define TRACE
-
-#ifdef _WIN32
-#define EXPORT __declspec(dllexport)
-#else
-#define EXPORT
-#endif
-
 /*
     Computes a SipHash value
     *in: pointer to input data (read-only)
@@ -79,7 +72,7 @@
     *out: pointer to output data (write-only), outlen bytes must be allocated
     outlen: length of the output in bytes, must be 8 or 16
 */
-EXPORT int siphash(const void *in, const size_t inlen, const void *k, uint8_t *out,
+int siphash(const void *in, const size_t inlen, const void *k, uint8_t *out,
             const size_t outlen) {
 
     const unsigned char *ni = (const unsigned char *)in;

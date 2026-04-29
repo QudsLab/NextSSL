@@ -9,6 +9,15 @@
 #define EP1(x)     (ROR(x,6) ^ ROR(x,11) ^ ROR(x,25))
 #define SIG0(x)    (ROR(x,7) ^ ROR(x,18) ^ ((x) >> 3))
 #define SIG1(x)    (ROR(x,17) ^ ROR(x,19) ^ ((x) >> 10))
+
+#if defined(_MSC_VER)
+#define SHA256_ALIGN64 __declspec(align(64))
+#elif defined(__GNUC__) || defined(__clang__)
+#define SHA256_ALIGN64 __attribute__((aligned(64)))
+#else
+#define SHA256_ALIGN64
+#endif
+
 // Round macro for maximum inlining
 #define SHA256_ROUND(a,b,c,d,e,f,g,h,i) do { \
     t1 = h + EP1(e) + CH(e,f,g) + k[i] + w[i]; \
@@ -17,7 +26,7 @@
     h = t1 + t2; \
 } while(0)
 // K constants aligned for better cache performance
-static const uint32_t k[64] __attribute__((aligned(64))) = {
+SHA256_ALIGN64 static const uint32_t k[64] = {
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
     0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
     0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,

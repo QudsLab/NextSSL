@@ -84,7 +84,7 @@ static const uint8_t N_BE[256] = {
 static bn_t     g_n;        /* modulus N as little-endian limbs              */
 static bn_t     g_r2n;      /* R² mod N = 2^4096 mod N, for to-Montgomery   */
 static uint32_t g_n0;       /* -N⁻¹ mod 2^32 (Montgomery constant)          */
-static atomic_int g_init = ATOMIC_VAR_INIT(0); /* 0=off, 1=busy, 2=ready */
+static atomic_int g_init = 0; /* 0=off, 1=busy, 2=ready */
 
 /* ────────────────────────────────────────────────────────────────────────
  * Big-integer helper functions

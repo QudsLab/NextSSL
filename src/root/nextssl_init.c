@@ -18,7 +18,7 @@
 #include <stdint.h>
 
 /* ── Idempotency flag ─────────────────────────────────────────────────────*/
-static atomic_int s_initialised = ATOMIC_VAR_INIT(0);
+static atomic_int s_initialised = 0;
 
 /* ── nextssl_init ─────────────────────────────────────────────────────────
  * Subsystem init order (dependency graph):

@@ -2,12 +2,6 @@
 #include "../symmetric/aes_internal.h"
 #include "../symmetric/aes_ctr.h"
 
-#ifdef _WIN32
-#define EXPORT __declspec(dllexport)
-#else
-#define EXPORT
-#endif
-
 #define GCM_NONCE_LEN    12
 #define GCM_TAG_LEN      16
 
@@ -37,7 +31,7 @@ static void GCMsetup( const uint8_t* key,
     iv[LAST] = 1;
 }
 
-EXPORT void AES_GCM_encrypt( const uint8_t* key, const uint8_t* nonce,
+void AES_GCM_encrypt( const uint8_t* key, const uint8_t* nonce,
                       const void* aData, const size_t aDataLen,
                       const void* pntxt, const size_t ptextLen, void* crtxt )
 {
@@ -61,7 +55,7 @@ EXPORT void AES_GCM_encrypt( const uint8_t* key, const uint8_t* nonce,
     memcpy( tag, G, GCM_TAG_LEN );
 }
 
-EXPORT char AES_GCM_decrypt( const uint8_t* key, const uint8_t* nonce,
+char AES_GCM_decrypt( const uint8_t* key, const uint8_t* nonce,
                       const void* aData, const size_t aDataLen,
                       const void* crtxt, const size_t crtxtLen, void* pntxt )
 {

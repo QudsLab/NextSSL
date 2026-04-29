@@ -1,13 +1,7 @@
 #include "ed25519.h"
 #include "fe.h"
 
-#ifdef _WIN32
-#define EXPORT __declspec(dllexport)
-#else
-#define EXPORT
-#endif
-
-EXPORT void ed25519_key_exchange(unsigned char *shared_secret, const unsigned char *public_key, const unsigned char *private_key) {
+ED25519_DECLSPEC void ed25519_key_exchange(unsigned char *shared_secret, const unsigned char *public_key, const unsigned char *private_key) {
     unsigned char e[32];
     unsigned int i;
     
@@ -84,7 +78,7 @@ EXPORT void ed25519_key_exchange(unsigned char *shared_secret, const unsigned ch
     fe_tobytes(shared_secret, x2);
 }
 
-EXPORT void curve25519(unsigned char *shared_secret, const unsigned char *public_key, const unsigned char *private_key) {
+ED25519_DECLSPEC void curve25519(unsigned char *shared_secret, const unsigned char *public_key, const unsigned char *private_key) {
     unsigned char e[32];
     unsigned int i;
     

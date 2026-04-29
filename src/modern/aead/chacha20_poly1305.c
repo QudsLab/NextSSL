@@ -2,19 +2,13 @@
 #include "monocypher.h"
 #include <string.h>
 
-#ifdef _WIN32
-#define EXPORT __declspec(dllexport)
-#else
-#define EXPORT
-#endif
-
 #define CHACHA20_TAG_LEN 16
 
 // Error codes matching AES suite for consistency
 #define M_AUTHENTICATION_ERROR 0x1A
 #define M_RESULT_SUCCESS       0
 
-EXPORT void ChaCha20_Poly1305_encrypt(const uint8_t* key, const uint8_t* nonce, const void* aData, const size_t aDataLen, const void* pntxt, const size_t ptextLen, void* crtxt)
+void ChaCha20_Poly1305_encrypt(const uint8_t* key, const uint8_t* nonce, const void* aData, const size_t aDataLen, const void* pntxt, const size_t ptextLen, void* crtxt)
 {
     crypto_aead_ctx ctx;
     uint8_t mac[CHACHA20_TAG_LEN];
@@ -32,7 +26,7 @@ EXPORT void ChaCha20_Poly1305_encrypt(const uint8_t* key, const uint8_t* nonce, 
     crypto_wipe(&ctx, sizeof(ctx));
 }
 
-EXPORT char ChaCha20_Poly1305_decrypt(const uint8_t* key, const uint8_t* nonce, const void* aData, const size_t aDataLen, const void* crtxt, const size_t crtxtLen, void* pntxt)
+char ChaCha20_Poly1305_decrypt(const uint8_t* key, const uint8_t* nonce, const void* aData, const size_t aDataLen, const void* crtxt, const size_t crtxtLen, void* pntxt)
 {
     crypto_aead_ctx ctx;
     uint8_t mac[CHACHA20_TAG_LEN];

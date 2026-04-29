@@ -110,13 +110,14 @@ int
 bitstream_fill_buffer (struct bitstream *b, void *out, size_t outlen)
 {
   int error;
+  uint8_t *out_bytes = (uint8_t *)out;
   if (!b->initialized)
     return BALLOON_BITSTREAM_UNINITIALIZED;
 
   size_t total = 0;
   while (total < outlen) {
     const int to_encrypt = MIN(outlen - total, BITSTREAM_BUF_SIZE);
-    if ((error = encrypt_partial (b, out + total, to_encrypt)))
+    if ((error = encrypt_partial (b, out_bytes + total, to_encrypt)))
       return error;
 
     total += to_encrypt;
@@ -132,7 +133,7 @@ bitstream_rand_uint64 (struct bitstream *b, uint64_t *out)
 {
   int error; 
   const int n_bytes = 8;
-  uint8_t buf[n_bytes];
+  uint8_t buf[8];
 
   if ((error = bitstream_fill_buffer (b, buf, n_bytes)))
     return error;

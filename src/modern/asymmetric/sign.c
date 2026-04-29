@@ -3,14 +3,8 @@
 #include "ge.h"
 #include "sc.h"
 
-#ifdef _WIN32
-#define EXPORT __declspec(dllexport)
-#else
-#define EXPORT
-#endif
 
-
-EXPORT void ed25519_sign(unsigned char *signature, const unsigned char *message, size_t message_len, const unsigned char *public_key, const unsigned char *private_key) {
+ED25519_DECLSPEC void ed25519_sign(unsigned char *signature, const unsigned char *message, size_t message_len, const unsigned char *public_key, const unsigned char *private_key) {
     sha512_context hash;
     unsigned char hram[64];
     unsigned char r[64];
