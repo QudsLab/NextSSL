@@ -1,0 +1,536 @@
+MSBuild version 17.14.40+3e7442088 for .NET Framework
+
+  1>Checking Build System
+  Building Custom Rule D:/a/NextSSL/NextSSL/CMakeLists.txt
+  base16.c
+  base32.c
+  base58.c
+  base64.c
+  base64url.c
+  ff70.c
+  hex.c
+  radix_common.c
+  nextssl_sanitizer.c
+  argon2_adapter.c
+D:\a\NextSSL\NextSSL\src\common\encoding\base64url.c(158,27): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\common\encoding\ff70.c(117,52): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  argon2d_adapter.c
+  argon2i_adapter.c
+  argon2id_adapter.c
+  balloon_adapter.c
+  bcrypt_adapter.c
+  catena_adapter.c
+  lyra2_adapter.c
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(31,37): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(32,38): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(33,35): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(34,23): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(37,33): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(38,34): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(39,31): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(40,19): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  makwa_adapter.c
+  plain_hash_adapter.c
+  pomelo_adapter.c
+  Generating Code...
+  Compiling...
+  scrypt_adapter.c
+  yescrypt_adapter.c
+  blake2s.c
+  blake3.c
+  blake3_dispatch.c
+  blake3_portable.c
+  sha224.c
+  sha256.c
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(20,29): error C2061: syntax error: identifier '__attribute__' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(20,29): error C2059: syntax error: ';' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(20,52): error C2143: syntax error: missing ')' before 'constant' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(20,54): error C2059: syntax error: ')' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(20,55): error C2059: syntax error: ')' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(20,56): error C2059: syntax error: ')' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(67,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(67,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(68,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(68,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(69,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(69,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(70,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(70,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(71,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(71,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(72,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(72,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(73,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(73,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(74,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(74,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(75,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(75,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(76,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(76,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(77,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(77,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(78,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(78,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(79,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(79,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(80,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(80,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(81,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(81,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(82,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(82,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(83,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(83,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(84,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(84,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(85,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(85,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(86,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(86,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(87,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(87,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(88,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(88,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(89,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(89,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(90,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(90,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(91,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(91,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(92,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(92,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(93,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(93,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(94,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(94,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(95,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(95,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(96,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(96,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(97,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(97,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(98,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(98,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(99,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(99,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(100,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(100,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(101,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(101,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(102,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(102,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(103,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(103,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(104,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(104,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(105,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(105,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(106,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(106,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(107,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(107,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(108,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(108,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(109,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(109,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(110,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(110,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(111,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(111,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(112,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(112,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(113,5): error C2065: 'k': undeclared identifier [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(113,5): error C2109: subscript requires array or pointer type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(113,5): error C1003: error count exceeds 100; stopping compilation [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  sha512_224.c
+  sha512_256.c
+  sm3_ext.c
+  sm3_impl.c
+  sm3_ops.c
+  nextssl_hash.c
+  hash_ops_disabled_stubs.c
+  has160.c
+  md2.c
+D:\a\NextSSL\NextSSL\src\hash\legacy\md2.c(79,27): warning C4267: '+=': conversion from 'size_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\legacy\md2.c(99,22): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\legacy\md2.c(109,21): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  md4.c
+  md5.c
+  nt.c
+  Generating Code...
+  Compiling...
+  ripemd128.c
+  ripemd160.c
+  ripemd256.c
+  ripemd320.c
+  sha0.c
+  sha1.c
+  tiger.c
+  tiger_sbox.c
+  whirlpool.c
+  argon2.c
+  argon2d.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2.h(292,19): error C2375: 'argon2d_hash_encoded': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  argon2i.c
+  (compiling source file '../src/hash/memory_hard/argon2d.c')
+      D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2d.h(7,5):
+      see declaration of 'argon2d_hash_encoded'
+  
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2.h(300,19): error C2375: 'argon2d_hash_raw': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/hash/memory_hard/argon2d.c')
+      D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2d.h(13,5):
+      see declaration of 'argon2d_hash_raw'
+  
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2.h(340,19): error C2375: 'argon2d_verify': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/hash/memory_hard/argon2d.c')
+      D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2d.h(18,5):
+      see declaration of 'argon2d_verify'
+  
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2.h(264,19): error C2375: 'argon2i_hash_encoded': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/hash/memory_hard/argon2i.c')
+      D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2i.h(7,5):
+      see declaration of 'argon2i_hash_encoded'
+  
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2.h(286,19): error C2375: 'argon2i_hash_raw': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/hash/memory_hard/argon2i.c')
+      D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2i.h(13,5):
+      see declaration of 'argon2i_hash_raw'
+  
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2.h(337,19): error C2375: 'argon2i_verify': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/hash/memory_hard/argon2i.c')
+      D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2i.h(18,5):
+      see declaration of 'argon2i_verify'
+  
+  argon2id.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2.h(306,19): error C2375: 'argon2id_hash_encoded': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/hash/memory_hard/argon2id.c')
+      D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2id.h(7,5):
+      see declaration of 'argon2id_hash_encoded'
+  
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2.h(314,19): error C2375: 'argon2id_hash_raw': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/hash/memory_hard/argon2id.c')
+      D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2id.h(13,5):
+      see declaration of 'argon2id_hash_raw'
+  
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2.h(343,19): error C2375: 'argon2id_verify': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/hash/memory_hard/argon2id.c')
+      D:\a\NextSSL\NextSSL\src\hash\memory_hard\argon2id.h(18,5):
+      see declaration of 'argon2id_verify'
+  
+  balloon_openssl_compat.c
+  balloon_ops.c
+  bitstream.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\bitstream.c(119,42): error C2036: 'void *': unknown size [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\bitstream.c(118,28): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\bitstream.c(135,15): error C2057: expected constant expression [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\bitstream.c(135,15): error C2466: cannot allocate an array of constant size 0 [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\bitstream.c(135,11): error C2133: 'buf': unknown size [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  compress.c
+  encode.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\encode.c(26,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  hash_state.c
+  bcrypt_ops.c
+  Generating Code...
+  Compiling...
+  crypt_blowfish.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\bcrypt\crypt_blowfish.c(899,18): warning C4244: '=': conversion from 'unsigned long' to 'char', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  crypt_gensalt.c
+  blake2b-ref.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\blake2b-ref.c(290,20): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\blake2b-ref.c(301,20): warning C4244: '+=': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  catena-BRG.c
+  catena-blake2b-ref.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-blake2b-ref.c(238,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-blake2b-ref.c(243,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  catena-helpers.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(29,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(54,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(85,23): warning C4244: 'function': conversion from 'const uint16_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  catena.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(67,23): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(123,38): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(124,25): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(125,25): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(323,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(332,41): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(332,54): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(333,36): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(337,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  catena_ops.c
+  core.c
+  encoding.c
+  Lyra2.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(53,23): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(53,35): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(53,48): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  Sponge.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Sponge.c(408,19): warning C4018: '<': signed/unsigned mismatch [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  lyra2_ops.c
+  makwa.c
+  makwa_ops.c
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\vcruntime_c11_stdatomic.h(12,1): error C1189: #error:  "C atomic support is not enabled" [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/hash/memory_hard/makwa/makwa.c')
+  
+  pomelo.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(52,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(53,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(54,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(65,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(91,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  pomelo_ops.c
+  crypto_scrypt-ref.c
+  insecure_memzero.c
+  scrypt_ops.c
+  Generating Code...
+  Compiling...
+  sha256_portable.c
+  thread.c
+  yescrypt-common.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-common.c(289,10): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  yescrypt-opt.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(131,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(132,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(133,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(134,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(135,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(136,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(137,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(138,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1079,16): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1286,14): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1286,33): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1299,37): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1300,8): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  yescrypt_ops.c
+  hash_record_core.c
+  hash_root.c
+  skein.c
+  skeinApi.c
+  skein_block.c
+  skein_ops.c
+  threefish1024Block.c
+  threefish256Block.c
+  threefish512Block.c
+  threefishApi.c
+  keccak.c
+  sha3.c
+  sha3_224.c
+  sha3_384.c
+  shake.c
+  Generating Code...
+  Compiling...
+  kmac.c
+  aes_ccm.c
+  aes_eax.c
+  aes_gcm.c
+D:\a\NextSSL\NextSSL\src\modern\aead\aes_gcm.c(40,13): error C2375: 'AES_GCM_encrypt': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+      D:\a\NextSSL\NextSSL\src\modern\aead\aes_gcm.h(7,6):
+      see declaration of 'AES_GCM_encrypt'
+  
+D:\a\NextSSL\NextSSL\src\modern\aead\aes_gcm.c(64,13): error C2375: 'AES_GCM_decrypt': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+      D:\a\NextSSL\NextSSL\src\modern\aead\aes_gcm.h(8,6):
+      see declaration of 'AES_GCM_decrypt'
+  
+  aes_gcm_siv.c
+  aes_ocb.c
+D:\a\NextSSL\NextSSL\src\modern\aead\aes_ocb.c(75,51): warning C4267: 'function': conversion from 'size_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  aes_poly1305.c
+D:\a\NextSSL\NextSSL\src\modern\aead\aes_poly1305.c(67,18): warning C4267: '=': conversion from 'size_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\modern\aead\aes_poly1305.c(85,23): warning C4267: 'function': conversion from 'size_t' to 'int32_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  aes_siv.c
+  chacha20_poly1305.c
+D:\a\NextSSL\NextSSL\src\modern\aead\chacha20_poly1305.c(17,13): error C2375: 'ChaCha20_Poly1305_encrypt': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+      D:\a\NextSSL\NextSSL\src\modern\aead\chacha20_poly1305.h(7,6):
+      see declaration of 'ChaCha20_Poly1305_encrypt'
+  
+D:\a\NextSSL\NextSSL\src\modern\aead\chacha20_poly1305.c(35,13): error C2375: 'ChaCha20_Poly1305_decrypt': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+      D:\a\NextSSL\NextSSL\src\modern\aead\chacha20_poly1305.h(8,6):
+      see declaration of 'ChaCha20_Poly1305_decrypt'
+  
+  monocypher-ed25519.c
+  monocypher.c
+  add_scalar.c
+  curve448.c
+  curve448_det.c
+  ed448.c
+  fe.c
+  fe_448.c
+  ge.c
+  ge_448.c
+  key_exchange.c
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\key_exchange.c(10,13): error C2375: 'ed25519_key_exchange': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+      D:\a\NextSSL\NextSSL\src\modern\asymmetric\ed25519.h(31,23):
+      see declaration of 'ed25519_key_exchange'
+  
+  Generating Code...
+  Compiling...
+  keypair.c
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\keypair.c(13,13): error C2375: 'ed25519_create_keypair': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+      D:\a\NextSSL\NextSSL\src\modern\asymmetric\ed25519.h(27,23):
+      see declaration of 'ed25519_create_keypair'
+  
+  uECC.c
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\uECC.c(262,68): warning C4244: 'return': conversion from 'uECC_word_t' to 'bitcount_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\uECC.c(315,20): warning C4244: 'return': conversion from 'uECC_word_t' to 'cmpresult_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(390,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(394,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(397,18): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(707,14): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(713,14): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(717,22): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(994,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1000,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1001,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1008,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1015,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1022,14): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1029,14): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1036,14): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1043,14): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1047,22): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\curve-specific.inc(1051,22): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/asymmetric/micro_ecc/uECC.c')
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\micro_ecc\uECC.c(1003,47): warning C4244: '=': conversion from 'const uECC_word_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  p256.c
+  p384.c
+  p521.c
+  rsa.c
+  sc.c
+  seed.c
+  sm2.c
+  base_encryption.c
+  elligator2.c
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(26,35): warning C4142: 'uint32_t': benign redefinition of type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(24,28):
+      see declaration of 'uint32_t'
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(37,33): warning C4142: 'int32_t': benign redefinition of type [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(20,28):
+      see declaration of 'int32_t'
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(69,17): warning C4005: 'UINT64_C': macro redefinition [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(131,9):
+      see previous definition of 'UINT64_C'
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(70,17): warning C4005: 'INT64_C': macro redefinition [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(126,9):
+      see previous definition of 'INT64_C'
+  
+  ristretto255.c
+  base58check.c
+  base62.c
+  base85.c
+  bech32.c
+  crc32.c
+  crc64.c
+  pem.c
+  pbkdf2.c
+  Generating Code...
+  Compiling...
+  aes_cmac.c
+D:\a\NextSSL\NextSSL\src\modern\mac\aes_cmac.c(10,13): error C2375: 'AES_CMAC': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+      D:\a\NextSSL\NextSSL\src\modern\mac\aes_cmac.h(8,6):
+      see declaration of 'AES_CMAC'
+  
+  hmac.c
+  poly1305.c
+  siphash.c
+D:\a\NextSSL\NextSSL\src\modern\mac\siphash.c(82,12): error C2375: 'siphash': redefinition; different linkage [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+      D:\a\NextSSL\NextSSL\src\modern\mac\siphash.h(21,5):
+      see declaration of 'siphash'
+  
+  aes_cbc.c
+  aes_cfb.c
+  aes_core.c
+  aes_ctr.c
+  aes_ecb.c
+  aes_fpe.c
+  aes_kw.c
+  aes_ofb.c
+  aes_xts.c
+  chacha20.c
+  sm4_impl.c
+  three_des.c
+  pow_limits.c
+  pow_reject.c
+  pow_solver.c
+  pow_timer.c
+  Generating Code...
+  Compiling...
+  pow_difficulty.c
+  pow_parser.c
+  dhcm_core.c
+  dhcm_difficulty.c
+  dhcm_math.c
+  hash_cost.c
+  hash_cost_probe.c
+  dispatcher.c
+  pow_engine.c
+  pow_challenge.c
+  pow_verify.c
+  aes.c
+  drbg.c
+  fips202.c
+  nistseedexpander.c
+  randombytes.c
+D:\a\NextSSL\NextSSL\src\pqc\common\randombytes.c(110,29): warning C4267: 'function': conversion from 'size_t' to 'unsigned long', possible loss of data [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  sha2.c
+  sp800-185.c
+  pqc_main.c
+  root_hash.c
+  Generating Code...
+  Compiling...
+  root_hash_record.c
+  root_modern.c
+  nextssl_init.c
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\vcruntime_c11_stdatomic.h(12,1): error C1189: #error:  "C atomic support is not enabled" [D:\a\NextSSL\NextSSL\_build\nextssl.vcxproj]
+  (compiling source file '../src/root/nextssl_init.c')
+  
+  root_pow.c
+  root_pqc.c
+  root_seed.c
+  ctr_mode.c
+  hash_ops.c
+  seed_core.c
+  entropy.c
+  seed_derive_random.c
+  udbf.c
+  Generating Code...
