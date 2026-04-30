@@ -18,8 +18,8 @@
 --   Balloon     : ON (always)
 --   Pomelo      : ON (always)
 --   Makwa       : ON (always)
--- Configuring done (2.5s)
--- Generating done (0.0s)
+-- Configuring done (4.1s)
+-- Generating done (0.1s)
 -- Build files have been written to: /Users/runner/work/NextSSL/NextSSL/.ci_build/ios/sim-x86_64
 
 ==============================================================================

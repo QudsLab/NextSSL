@@ -1,1 +1,2 @@
-wasi-wasm32: SKIPPED (queue stopped after emscripten-wasm32 (failed))
+emscripten-wasm32: SUCCESS
+wasi-wasm32: SUCCESS
