@@ -1,3 +1,2 @@
-arm64: SUCCESS
-armv7: SUCCESS
-x86_64: SUCCESS
+arm64: SKIPPED (queue stopped after x86_64 (failed))
+armv7: SKIPPED (queue stopped after x86_64 (failed))

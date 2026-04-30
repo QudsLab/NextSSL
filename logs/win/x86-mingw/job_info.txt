@@ -1,7 +1,9 @@
 platform: win
 variant: x86-mingw
-run_id: 25190339548
+run_id: 25191385112
 attempt: 1
-sha: 9f3326f4cefb5512bbbade09b44e799586886706
+sha: 1c5d77ab9f2d7bf5748890704593527fa15c9ae3
 ref: refs/heads/main
-started: 2026-04-30T21:45:24Z
+started: 2026-04-30T22:01:31Z
+blocked_by: x86_64-msvc
+blocked_status: failed
