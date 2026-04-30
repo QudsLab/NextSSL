@@ -1,7 +1,0 @@
-platform: win
-variant: x86_64-msvc
-run_id: 25189240280
-attempt: 1
-sha: 717ac5efc50a9d43925af4c9e6e80643f8cb2e6f
-ref: refs/heads/main
-started: 2026-04-30T21:04:38Z
