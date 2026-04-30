@@ -344,7 +344,7 @@ def windows_configure_args(variant: str, build_dir: Path, bin_dir: Path) -> list
     ]
     rc_compiler = find_tool("windres")
     if rc_compiler:
-        args.append(f"-DCMAKE_RC_COMPILER={rc_compiler}")
+        args.append(f"-DCMAKE_RC_COMPILER={Path(rc_compiler).as_posix()}")
     return args
 
 

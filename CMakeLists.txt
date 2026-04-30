@@ -83,6 +83,14 @@ endif()
 # ─────────────────────────────────────────────────────────────────
 set(NEXTSSL_DEFS NEXTSSL_BUILDING_DLL NEXTSSL_SUPPRESS_UPSTREAM_WARNINGS)
 
+if(DEFINED CMAKE_C_COMPILER_TARGET AND CMAKE_C_COMPILER_TARGET MATCHES "musl" AND _NEXTSSL_ARCH MATCHES "x86_64|x86")
+    list(APPEND NEXTSSL_DEFS BLAKE3_NO_AVX512)
+endif()
+
+if(CMAKE_SYSTEM_NAME STREQUAL "WASI")
+    list(APPEND NEXTSSL_DEFS ARGON2_NO_THREADS)
+endif()
+
 list(APPEND NEXTSSL_DEFS
     ENABLE_ML_KEM
     ENABLE_ML_DSA
@@ -123,6 +131,12 @@ if(NOT _NEXTSSL_ARCH MATCHES "x86_64|x86")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_sse2\\.c$")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_sse41\\.c$")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/common/keccak4x/")
+endif()
+
+# Zig musl x86 targets reject the AVX-512 BLAKE3 backend even with per-file
+# ISA flags, so keep the portable and narrower SIMD backends only there.
+if(DEFINED CMAKE_C_COMPILER_TARGET AND CMAKE_C_COMPILER_TARGET MATCHES "musl" AND _NEXTSSL_ARCH MATCHES "x86_64|x86")
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_avx512\.c$")
 endif()
 
 # ── PQC avx2/ — pqc_main.c only uses ref/ APIs; avx2/ = dead code on Windows
