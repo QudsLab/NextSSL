@@ -1,0 +1,325 @@
+MSBuild version 17.14.40+3e7442088 for .NET Framework
+
+  1>Checking Build System
+  Building Custom Rule D:/a/NextSSL/NextSSL/CMakeLists.txt
+  base16.c
+  base32.c
+  base58.c
+  base64.c
+  base64url.c
+  ff70.c
+  hex.c
+  radix_common.c
+  nextssl_sanitizer.c
+  argon2_adapter.c
+  argon2d_adapter.c
+  argon2i_adapter.c
+  argon2id_adapter.c
+  balloon_adapter.c
+  bcrypt_adapter.c
+  catena_adapter.c
+  lyra2_adapter.c
+  makwa_adapter.c
+  plain_hash_adapter.c
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(34,23): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(40,19): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  pomelo_adapter.c
+  Generating Code...
+  Compiling...
+  scrypt_adapter.c
+  yescrypt_adapter.c
+  blake2s.c
+  blake3.c
+D:\a\NextSSL\NextSSL\src\hash\blake\blake3.c(165,48): warning C4244: 'return': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\blake\blake3.c(527,26): warning C4244: 'initializing': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  blake3_dispatch.c
+  blake3_portable.c
+  sha224.c
+  sha256.c
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(194,24): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(195,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(196,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(197,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(198,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(199,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(200,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  sha512_224.c
+  sha512_256.c
+  sm3_ext.c
+  sm3_impl.c
+  sm3_ops.c
+  nextssl_hash.c
+  hash_ops_disabled_stubs.c
+  has160.c
+  md2.c
+  md4.c
+  md5.c
+  nt.c
+  Generating Code...
+  Compiling...
+  ripemd128.c
+  ripemd160.c
+  ripemd256.c
+  ripemd320.c
+  sha0.c
+  sha1.c
+  tiger.c
+  tiger_sbox.c
+  whirlpool.c
+  argon2.c
+  argon2d.c
+  argon2i.c
+  argon2id.c
+  balloon_openssl_compat.c
+  balloon_ops.c
+  bitstream.c
+  compress.c
+  encode.c
+  hash_state.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\hash_state.c(50,38): warning C4244: 'function': conversion from 'const uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\hash_state.c(69,35): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\hash_state.c(139,49): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\hash_state.c(169,44): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  bcrypt_ops.c
+  Generating Code...
+  Compiling...
+  crypt_blowfish.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\bcrypt\crypt_blowfish.c(899,18): warning C4244: '=': conversion from 'unsigned long' to 'char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  crypt_gensalt.c
+  blake2b-ref.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\blake2b-ref.c(306,34): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\blake2b-ref.c(307,20): warning C4244: '+=': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  catena-BRG.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-BRG.c(37,38): warning C4244: 'function': conversion from 'const uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  catena-blake2b-ref.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-blake2b-ref.c(238,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-blake2b-ref.c(243,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  catena-helpers.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(29,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(54,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(85,23): warning C4244: 'function': conversion from 'const uint16_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  catena.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(124,25): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(323,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(332,54): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(333,36): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(337,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  catena_ops.c
+  core.c
+  encoding.c
+  Lyra2.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(99,36): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(126,37): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  Sponge.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Sponge.c(408,19): warning C4018: '<': signed/unsigned mismatch [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  lyra2_ops.c
+  makwa.c
+  makwa_ops.c
+  pomelo.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(40,38): warning C4244: 'function': conversion from 'unsigned __int64' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(52,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(53,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(54,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(65,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(91,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(117,22): warning C4244: 'function': conversion from 'unsigned __int64' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(123,18): warning C4244: 'function': conversion from 'unsigned __int64' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  pomelo_ops.c
+  ref.c
+  crypto_scrypt-ref.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\scrypt\crypto_scrypt-ref.c(253,26): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  insecure_memzero.c
+  Generating Code...
+  Compiling...
+  scrypt_ops.c
+  sha256_portable.c
+  thread.c
+  yescrypt-common.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-common.c(289,10): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  yescrypt-opt.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(131,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(132,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(133,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(134,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(135,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(136,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(137,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(138,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1079,16): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1213,27): warning C4244: '=': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1286,14): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1286,33): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1299,37): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1300,8): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  yescrypt_ops.c
+  hash_record_core.c
+  hash_root.c
+  skein.c
+D:\a\NextSSL\NextSSL\src\hash\skein\brg_endian.h(135,1): error C1189: #error:  Please edit lines 126 or 128 in brg_endian.h to set the platform byte order [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/hash/skein/skein.c')
+  
+  skeinApi.c
+D:\a\NextSSL\NextSSL\src\hash\skein\brg_endian.h(135,1): error C1189: #error:  Please edit lines 126 or 128 in brg_endian.h to set the platform byte order [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/hash/skein/skeinApi.c')
+  
+  skein_block.c
+D:\a\NextSSL\NextSSL\src\hash\skein\brg_endian.h(135,1): error C1189: #error:  Please edit lines 126 or 128 in brg_endian.h to set the platform byte order [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/hash/skein/skein_block.c')
+  
+  skein_ops.c
+D:\a\NextSSL\NextSSL\src\hash\skein\brg_endian.h(135,1): error C1189: #error:  Please edit lines 126 or 128 in brg_endian.h to set the platform byte order [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/hash/skein/skein_ops.c')
+  
+  threefish1024Block.c
+D:\a\NextSSL\NextSSL\src\hash\skein\brg_endian.h(135,1): error C1189: #error:  Please edit lines 126 or 128 in brg_endian.h to set the platform byte order [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/hash/skein/threefish1024Block.c')
+  
+  threefish256Block.c
+D:\a\NextSSL\NextSSL\src\hash\skein\brg_endian.h(135,1): error C1189: #error:  Please edit lines 126 or 128 in brg_endian.h to set the platform byte order [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/hash/skein/threefish256Block.c')
+  
+  threefish512Block.c
+D:\a\NextSSL\NextSSL\src\hash\skein\brg_endian.h(135,1): error C1189: #error:  Please edit lines 126 or 128 in brg_endian.h to set the platform byte order [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/hash/skein/threefish512Block.c')
+  
+  threefishApi.c
+D:\a\NextSSL\NextSSL\src\hash\skein\brg_endian.h(135,1): error C1189: #error:  Please edit lines 126 or 128 in brg_endian.h to set the platform byte order [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/hash/skein/threefishApi.c')
+  
+  keccak.c
+  sha3.c
+  sha3_224.c
+  sha3_384.c
+  Generating Code...
+  Compiling...
+  shake.c
+  kmac.c
+  aes_ccm.c
+  aes_eax.c
+  aes_gcm.c
+  aes_gcm_siv.c
+  aes_ocb.c
+D:\a\NextSSL\NextSSL\src\modern\aead\aes_ocb.c(75,51): warning C4267: 'function': conversion from 'size_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  aes_poly1305.c
+D:\a\NextSSL\NextSSL\src\modern\aead\aes_poly1305.c(67,18): warning C4267: '=': conversion from 'size_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  aes_siv.c
+  chacha20_poly1305.c
+  monocypher-ed25519.c
+  monocypher.c
+  add_scalar.c
+  curve448.c
+  curve448_det.c
+  ed448.c
+  fe.c
+  fe_448.c
+  ge.c
+  ge_448.c
+  Generating Code...
+  Compiling...
+  key_exchange.c
+  keypair.c
+  uECC.c
+  p256.c
+  p384.c
+  p521.c
+  rsa.c
+  sc.c
+  seed.c
+  sm2.c
+  base_encryption.c
+  elligator2.c
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(26,35): warning C4142: 'uint32_t': benign redefinition of type [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(24,28):
+      see declaration of 'uint32_t'
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(37,33): warning C4142: 'int32_t': benign redefinition of type [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(20,28):
+      see declaration of 'int32_t'
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(69,17): warning C4005: 'UINT64_C': macro redefinition [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(131,9):
+      see previous definition of 'UINT64_C'
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(70,17): warning C4005: 'INT64_C': macro redefinition [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(126,9):
+      see previous definition of 'INT64_C'
+  
+  ristretto255.c
+  base58check.c
+  base62.c
+  base85.c
+  bech32.c
+  crc32.c
+  crc64.c
+  pem.c
+  Generating Code...
+  Compiling...
+  pbkdf2.c
+  aes_cmac.c
+  hmac.c
+  poly1305.c
+  siphash.c
+  aes_cbc.c
+  aes_cfb.c
+  aes_core.c
+  aes_ctr.c
+  aes_ecb.c
+  aes_fpe.c
+D:\a\NextSSL\NextSSL\src\modern\symmetric\aes_fpe.c(159,18): warning C4018: '<': signed/unsigned mismatch [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  aes_kw.c
+  aes_ofb.c
+  aes_xts.c
+  chacha20.c
+  sm4_impl.c
+  three_des.c
+  pow_limits.c
+  pow_reject.c
+  pow_solver.c
+  Generating Code...
+  Compiling...
+  pow_timer.c
+  pow_difficulty.c
+  pow_parser.c
+  dhcm_core.c
+  dhcm_difficulty.c
+  dhcm_math.c
+  hash_cost.c
+  hash_cost_probe.c
+  dispatcher.c
+  pow_engine.c
+  pow_challenge.c
+  pow_verify.c
+  aes.c
+  drbg.c
+  fips202.c
+  nistseedexpander.c
+  randombytes.c
+  sha2.c
+  sp800-185.c
+  pqc_main.c
+  Generating Code...
+  Compiling...
+  root_hash.c
+  root_hash_record.c
+  root_modern.c
+  nextssl_init.c
+  root_pow.c
+  root_pqc.c
+  root_seed.c
+  ctr_mode.c
+  hash_ops.c
+  seed_core.c
+  entropy.c
+  seed_derive_random.c
+  udbf.c
+  Generating Code...
+
+==============================================================================
+CMD: cmake --build D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc --config Release --parallel 6
+CWD: D:\a\NextSSL\NextSSL
+==============================================================================
+

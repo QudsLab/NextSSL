@@ -1,0 +1,6 @@
+arm64-msvc: SUCCESS
+armv7-msvc: FAILED (1)
+x86-mingw: SUCCESS
+x86-msvc: SUCCESS
+x86_64-mingw: SUCCESS
+x86_64-msvc: SUCCESS

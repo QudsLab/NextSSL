@@ -1,0 +1,7 @@
+platform: linux-glibc
+variant: ppc64le
+run_id: 25190339548
+attempt: 1
+sha: 9f3326f4cefb5512bbbade09b44e799586886706
+ref: refs/heads/main
+started: 2026-04-30T21:40:20Z
