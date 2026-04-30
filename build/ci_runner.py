@@ -326,6 +326,10 @@ def windows_configure_args(variant: str, build_dir: Path, bin_dir: Path) -> list
         generator = os.environ.get("NEXTSSL_WINDOWS_GENERATOR", "Visual Studio 17 2022")
         args += ["-G", generator, "-A", profile["generator_arch"]]
 
+        if variant == "armv7-msvc":
+            sdk_version = os.environ.get("NEXTSSL_ARMV7_WINDOWS_SDK", "10.0.22621.0")
+            args.append(f"-DCMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION={sdk_version}")
+
         launcher = find_tool("sccache")
         if launcher:
             args.append(f"-DCMAKE_C_COMPILER_LAUNCHER={launcher}")
