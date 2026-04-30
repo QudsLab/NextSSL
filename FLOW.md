@@ -2,122 +2,133 @@
 
 ## Status
 
-This file now describes the workflow that is actually implemented in `.github/workflows/build.yml`.
+This file describes the workflow that is now implemented in `.github/workflows/build.yml`.
 
-The current CI only runs four platform jobs plus the final log collector:
+The CI has seven visible platform groups plus the final log collector:
 
 - `win`
-- `linux`
+- `linux-glibc`
+- `linux-musl`
 - `macos`
 - `wasm`
+- `android`
+- `ios`
 - `collect`
 
-The broader seven-platform matrix in `BINARY.md` is not fully implemented in code yet.
+Each variant is now its own GitHub Actions job, so the Actions UI shows internal variant progress directly instead of hiding it inside one long per-platform step.
 
 ## Current Behavior
 
-- The workflow starts the four implemented platform jobs in parallel.
-- Each platform job initializes its own log directory and then calls `build/ci_runner.py`.
-- Variants run one by one inside that platform job.
-- The first failed variant stops the rest of that platform queue and later variants are recorded as skipped.
-- Each platform uploads `bin/<platform>/` as a CI artifact and uploads `logs/<platform>/` as a log artifact.
-- `collect` always runs, merges the downloaded log artifacts, uploads `all-logs`, and publishes only `logs/` back to `main`.
+- The workflow starts one queue per platform group in parallel.
+- Inside a platform group, variants are chained one after another as visible jobs.
+- The first failed variant closes that platform queue.
+- Remaining jobs in that platform queue still run, but they record `status: skipped` logs instead of attempting a build.
+- Each visible variant uploads `bin/<platform>/<variant>/` as its binary artifact.
+- Each visible variant uploads `logs/<platform>/<variant>/` as its log artifact.
+- `collect` always runs, merges the per-variant log artifacts back into `logs/<platform>/<variant>/`, regenerates per-platform `SUMMARY.txt`, uploads `all-logs`, and publishes only `logs/` back to the repo when the run is on `main` or `master` and not a pull request.
+- The job summary now tells the truth: it distinguishes between repo publication, no-op publication, artifact-only runs, and publish failures.
 
-There is no standalone `main` prep job in the current workflow.
-There are no current workflow jobs for `linux-musl`, `android`, or `ios`.
-Binaries are uploaded as CI artifacts only; the repository publish step commits logs only.
+Binaries are uploaded as CI artifacts only. The repository publish step commits logs only.
 
-## Implemented Variant Queues
+## Platform Queues
 
-- `win`: `x86_64 -> x86 -> arm64`
-- `linux`: `x86_64 -> x86 -> arm64 -> armv7 -> riscv64`
-- `macos`: `x86_64 -> arm64`
-- `wasm`: `wasm32`
+- `win`: `x86_64-msvc -> x86-msvc -> arm64-msvc -> x86_64-mingw -> x86-mingw -> armv7-msvc`
+- `linux-glibc`: `x86_64 -> x86 -> arm64 -> armv7 -> riscv64 -> s390x -> ppc64le -> loongarch64`
+- `linux-musl`: `x86_64 -> arm64 -> armv7`
+- `macos`: `x86_64 -> arm64 -> universal`
+- `wasm`: `emscripten-wasm32 -> wasi-wasm32`
+- `android`: `arm64-v8a -> armeabi-v7a -> x86_64 -> x86`
+- `ios`: `device-arm64 -> sim-arm64 -> sim-x86_64`
 
 ## Layout Contract
 
 - Logs: `logs/<platform>/<variant>/`
 - Binaries: `bin/<platform>/<variant>/`
 
-Each successful native variant is now expected to leave an actual library file under its own variant bin directory.
-If a build exits successfully but stages no artifact into that directory, `build/ci_runner.py` treats the variant as failed.
+Each successful variant is expected to stage at least one matching artifact into its own variant bin directory.
+If a build exits successfully but stages nothing into that directory, `build/ci_runner.py` records the variant as failed.
 
 ## Mermaid
 
 ```mermaid
 flowchart TD
-A[Trigger push PR or manual run] --> W0
-A --> L0
-A --> M0
-A --> S0
+A[Trigger push PR or manual run] --> W1
+A --> LG1
+A --> LM1
+A --> M1
+A --> WS1
+A --> AD1
+A --> I1
 
 subgraph WIN[win]
-W0[x86_64] --> W0Q{success?}
-W0Q -->|yes| W1[x86]
-W0Q -->|no| WX[stop remaining win variants]
-W1 --> W1Q{success?}
-W1Q -->|yes| W2[arm64]
-W1Q -->|no| WX
-W2 --> W2Q{success?}
-W2Q -->|yes| WD[win done]
-W2Q -->|no| WX
+W1[x86_64-msvc] --> W2[x86-msvc] --> W3[arm64-msvc] --> W4[x86_64-mingw] --> W5[x86-mingw] --> W6[armv7-msvc]
+W1 -. failure closes queue .-> WX[record remaining win variants as skipped]
+W2 -. failure closes queue .-> WX
+W3 -. failure closes queue .-> WX
+W4 -. failure closes queue .-> WX
+W5 -. failure closes queue .-> WX
 end
 
-subgraph LINUX[linux]
-L0[x86_64] --> L0Q{success?}
-L0Q -->|yes| L1[x86]
-L0Q -->|no| LX[stop remaining linux variants]
-L1 --> L1Q{success?}
-L1Q -->|yes| L2[arm64]
-L1Q -->|no| LX
-L2 --> L2Q{success?}
-L2Q -->|yes| L3[armv7]
-L2Q -->|no| LX
-L3 --> L3Q{success?}
-L3Q -->|yes| L4[riscv64]
-L3Q -->|no| LX
-L4 --> L4Q{success?}
-L4Q -->|yes| LD[linux done]
-L4Q -->|no| LX
+subgraph LINUX_GLIBC[linux-glibc]
+LG1[x86_64] --> LG2[x86] --> LG3[arm64] --> LG4[armv7] --> LG5[riscv64] --> LG6[s390x] --> LG7[ppc64le] --> LG8[loongarch64]
+LG1 -. failure closes queue .-> LGX[record remaining linux-glibc variants as skipped]
+LG2 -. failure closes queue .-> LGX
+LG3 -. failure closes queue .-> LGX
+LG4 -. failure closes queue .-> LGX
+LG5 -. failure closes queue .-> LGX
+LG6 -. failure closes queue .-> LGX
+LG7 -. failure closes queue .-> LGX
+end
+
+subgraph LINUX_MUSL[linux-musl]
+LM1[x86_64] --> LM2[arm64] --> LM3[armv7]
+LM1 -. failure closes queue .-> LMX[record remaining linux-musl variants as skipped]
+LM2 -. failure closes queue .-> LMX
 end
 
 subgraph MACOS[macos]
-M0[x86_64] --> M0Q{success?}
-M0Q -->|yes| M1[arm64]
-M0Q -->|no| MX[stop remaining macOS variants]
-M1 --> M1Q{success?}
-M1Q -->|yes| MD[macOS done]
-M1Q -->|no| MX
+M1[x86_64] --> M2[arm64] --> M3[universal]
+M1 -. failure closes queue .-> MX[record remaining macOS variants as skipped]
+M2 -. failure closes queue .-> MX
 end
 
 subgraph WASM[wasm]
-S0[wasm32] --> S0Q{success?}
-S0Q -->|yes| SD[wasm done]
-S0Q -->|no| SX[stop remaining wasm variants]
+WS1[emscripten-wasm32] --> WS2[wasi-wasm32]
+WS1 -. failure closes queue .-> WSX[record remaining wasm variants as skipped]
 end
 
-WD --> Z[collect job\ndownload log artifacts\nmerge logs\nupload all-logs\npublish logs to main]
+subgraph ANDROID[android]
+AD1[arm64-v8a] --> AD2[armeabi-v7a] --> AD3[x86_64] --> AD4[x86]
+AD1 -. failure closes queue .-> ADX[record remaining android variants as skipped]
+AD2 -. failure closes queue .-> ADX
+AD3 -. failure closes queue .-> ADX
+end
+
+subgraph IOS[ios]
+I1[device-arm64] --> I2[sim-arm64] --> I3[sim-x86_64]
+I1 -. failure closes queue .-> IX[record remaining ios variants as skipped]
+I2 -. failure closes queue .-> IX
+end
+
+W6 --> Z[collect job\ndownload logs__* artifacts\nmerge logs/<platform>/<variant>/\nrebuild SUMMARY.txt\nupload all-logs\npublish logs when allowed]
 WX --> Z
-LD --> Z
-LX --> Z
-MD --> Z
+LG8 --> Z
+LGX --> Z
+LM3 --> Z
+LMX --> Z
+M3 --> Z
 MX --> Z
-SD --> Z
-SX --> Z
+WS2 --> Z
+WSX --> Z
+AD4 --> Z
+ADX --> Z
+I3 --> Z
+IX --> Z
 ```
 
-## Not Yet Implemented
+## Notes
 
-These platform groups exist in `BINARY.md`, but they are not wired into the current workflow or the platform adapter code:
-
-- `linux-musl`
-- `android`
-- `ios`
-
-They are not impossible on GitHub-hosted runners, but each one still needs real build support in this repo before it should appear in the current flow chart:
-
-- `linux-musl` needs musl toolchains and a dedicated runner branch.
-- `android` needs NDK-based build adapters and artifact normalization.
-- `ios` needs macOS-only SDK and simulator/device build adapters.
-
-Until those adapters exist, they should stay out of the current CI flow description.
+- The reusable workflow lives in `.github/workflows/build-variant.yml`.
+- Queue stop behavior is enforced by workflow chaining and by `build/ci_skip.py` for blocked variants.
+- Log normalization in `collect` is handled by `build/ci_merge_logs.py`.
+- Direct local `build.py` adapters are still narrower than the CI matrix; CI-only profiles are driven through `build/ci_runner.py` plus toolchain setup in the workflow.

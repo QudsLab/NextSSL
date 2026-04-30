@@ -112,14 +112,14 @@ file(GLOB_RECURSE NEXTSSL_SOURCES "${SRC}/*.c")
 # ── AArch64-only files (require 64-bit ARM — not available on armv7 or x86) ──
 # keccak2x uses vzip1q_u64/vld1q_u64_x2 which are AArch64-only NEON intrinsics.
 # aarch64/ asm blobs are obviously AArch64-only too.
-if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64|aarch64")
+if(NOT _NEXTSSL_ARCH MATCHES "arm64")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/aarch64/")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/common/keccak2x/")
 endif()
 
 # ── x86-only SIMD files (require x86 intrinsics — not available on non-x86) ──
 # keccak4x (KeccakP-1600-times4-SIMD256.c) uses immintrin.h (AVX2/AVX512).
-if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i686|i386")
+if(NOT _NEXTSSL_ARCH MATCHES "x86_64|x86")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_avx2\\.c$")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_avx512\\.c$")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/blake3_sse2\\.c$")
@@ -136,7 +136,7 @@ list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/.*/avx2/")
 # ── Duplicate definitions (only one variant needed) ─────────────
 # Argon2: opt.c uses x86 SSE2 intrinsics (emmintrin.h); ref.c is the portable fallback.
 # On x86/x86_64 use opt.c (exclude ref.c); on all other arches use ref.c (exclude opt.c).
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i686|i386")
+if(_NEXTSSL_ARCH MATCHES "x86_64|x86")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/ref\\.c$")
 else()
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/opt\\.c$")
@@ -231,7 +231,7 @@ target_include_directories(nextssl PRIVATE "${SRC}/hash/memory_hard/balloon")
 # ─────────────────────────────────────────────────────────────────
 # BLAKE3 SIMD — disable intrinsics on non-x86 or when unavailable
 # ─────────────────────────────────────────────────────────────────
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64|i686|i386")
+if(_NEXTSSL_ARCH MATCHES "x86_64|x86")
     set_source_files_properties("${SRC}/hash/blake/blake3_avx2.c"   PROPERTIES COMPILE_FLAGS "-mavx2")
     set_source_files_properties("${SRC}/hash/blake/blake3_avx512.c" PROPERTIES COMPILE_FLAGS "-mavx512f -mavx512vl")
     set_source_files_properties("${SRC}/hash/blake/blake3_sse2.c"   PROPERTIES COMPILE_FLAGS "-msse2")

@@ -65,20 +65,21 @@ The CI runner writes durable logs to `logs/<platform>/<variant>/` and stops the 
 
 ## Current Adapter Coverage
 
-The currently implemented Python platform adapters are:
+The direct `build.py` platform adapters are still:
 
 - `win`
 - `linux`
 - `macos`
 - `wasm`
 
-The wider seven-platform CI topology described in `FLOW.md` is the target design.
-Additional adapters such as `linux-musl`, `android`, and `ios` still need real build implementations before they can be enabled in CI.
+The CI matrix is broader than the direct adapter list.
+Visible CI jobs for `linux-glibc`, `linux-musl`, `android`, `ios`, and `wasi-wasm32` are driven through `build/ci_runner.py` with workflow-provided toolchains rather than through additional `build/platform/*.py` entry points.
 
 ## CI Notes
 
 - CI should use system Python from the runner image
 - build helpers should not assume an activated virtual environment
 - logs should always be uploaded, even when a platform queue stops early
+- the collect job should only report repo publication when a real push happened
 
-See `FLOW.md` for the target CI topology and `BINARY.md` for the full platform and variant matrix.
+See `FLOW.md` for the live CI topology and `BINARY.md` for the full platform and variant matrix.
