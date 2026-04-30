@@ -107,15 +107,15 @@
 /*  set this define using common machine defines                    */
 #if !defined(PLATFORM_BYTE_ORDER)
 
-#if   defined( __alpha__ ) || defined( __alpha ) || defined( i386 )       || \
-      defined( __i386__ )  || defined( _M_I86 )  || defined( _M_IX86 )    || \
-      defined( __OS2__ )   || defined( sun386 )  || defined( __TURBOC__ ) || \
-      defined( vax )       || defined( vms )     || defined( VMS )        || \
-      defined( __VMS )     || defined( _M_X64 )  || defined( AVR )        || \
-      defined( __x86_64__ ) || defined( __x86_64 ) || defined( __amd64__ ) || \
-      defined( __amd64 )  || defined( _M_AMD64 ) || defined( __MINGW32__ ) || \
-      defined( __aarch64__ ) || defined( __arm64__ ) || defined( _M_ARM ) || \
-      defined( _M_ARM64 ) || \
+#if   defined( __alpha__ )   || defined( __alpha )   || defined( i386 )        || \
+      defined( __i386__ )    || defined( _M_I86 )    || defined( _M_IX86 )     || \
+      defined( __OS2__ )     || defined( sun386 )    || defined( __TURBOC__ )  || \
+      defined( vax )         || defined( vms )       || defined( VMS )         || \
+      defined( __VMS )       || defined( _M_X64 )    || defined( AVR )         || \
+      defined( __x86_64__ )  || defined( __x86_64 )  || defined( __amd64__ )   || \
+      defined( __amd64 )     || defined( _M_AMD64 )  || defined( __MINGW32__ ) || \
+      defined( __aarch64__ ) || defined( __arm64__ ) || defined( _M_ARM )      || \
+      defined( _M_ARM64 )    || \
       defined( _M_ARM64EC )
 #  define PLATFORM_BYTE_ORDER IS_LITTLE_ENDIAN
 
