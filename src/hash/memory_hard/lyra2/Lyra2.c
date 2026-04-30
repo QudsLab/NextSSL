@@ -24,7 +24,11 @@
 #ifdef _OPENMP
 #include <omp.h>
 #else
+#if defined(__clang__) || defined(__GNUC__)
+static inline __attribute__((unused)) int omp_get_thread_num(void) { return 0; }
+#else
 static inline int omp_get_thread_num(void) { return 0; }
+#endif
 #endif
 
 #include "Lyra2.h"

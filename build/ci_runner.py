@@ -82,6 +82,18 @@ def copy_if_exists(source: Path, dest: Path) -> None:
         shutil.copy2(source, dest)
 
 
+def collect_native_artifacts(platform: str, bin_dir: Path) -> list[Path]:
+    patterns = {
+        "win": ("*.dll", "*.lib"),
+        "linux": ("*.so", "*.a"),
+        "macos": ("*.dylib", "*.a"),
+    }
+    artifacts: list[Path] = []
+    for pattern in patterns.get(platform, ()): 
+        artifacts.extend(sorted(bin_dir.rglob(pattern)))
+    return artifacts
+
+
 def find_tool(name: str) -> str | None:
     return shutil.which(name)
 
@@ -145,6 +157,13 @@ def copy_cmake_diagnostics(build_dir: Path, log_dir: Path) -> None:
     cmake_dir = build_dir / "CMakeFiles"
     copy_if_exists(cmake_dir / "CMakeError.log", log_dir / "CMakeError.log")
     copy_if_exists(cmake_dir / "CMakeOutput.log", log_dir / "CMakeOutput.log")
+
+
+def write_artifacts_info(log_dir: Path, artifacts: list[Path]) -> None:
+    write_lines(
+        log_dir / "artifacts.txt",
+        [str(path.relative_to(ROOT)) for path in artifacts],
+    )
 
 
 def append_lines(path: Path, lines: list[str]) -> None:
@@ -226,20 +245,14 @@ def linux_variant_flags(variant: str) -> list[str]:
         return []
     if variant == "x86":
         compiler = require_tool("i686-linux-gnu-gcc")
-        cxx = require_tool("i686-linux-gnu-g++")
         ar = require_tool("i686-linux-gnu-ar")
         ranlib = require_tool("i686-linux-gnu-ranlib")
         return [
             "-DCMAKE_SYSTEM_NAME=Linux",
             "-DCMAKE_SYSTEM_PROCESSOR=i686",
             f"-DCMAKE_C_COMPILER={compiler}",
-            f"-DCMAKE_CXX_COMPILER={cxx}",
             f"-DCMAKE_AR={ar}",
             f"-DCMAKE_RANLIB={ranlib}",
-            "-DCMAKE_FIND_ROOT_PATH=/usr/i686-linux-gnu",
-            "-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER",
-            "-DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY",
-            "-DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY",
             "-DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY",
         ]
 
@@ -247,26 +260,20 @@ def linux_variant_flags(variant: str) -> list[str]:
         "arm64": {
             "processor": "aarch64",
             "compiler": "aarch64-linux-gnu-gcc",
-            "cxx": "aarch64-linux-gnu-g++",
             "ar": "aarch64-linux-gnu-ar",
             "ranlib": "aarch64-linux-gnu-ranlib",
-            "root": "/usr/aarch64-linux-gnu",
         },
         "armv7": {
             "processor": "armv7",
             "compiler": "arm-linux-gnueabihf-gcc",
-            "cxx": "arm-linux-gnueabihf-g++",
             "ar": "arm-linux-gnueabihf-ar",
             "ranlib": "arm-linux-gnueabihf-ranlib",
-            "root": "/usr/arm-linux-gnueabihf",
         },
         "riscv64": {
             "processor": "riscv64",
             "compiler": "riscv64-linux-gnu-gcc",
-            "cxx": "riscv64-linux-gnu-g++",
             "ar": "riscv64-linux-gnu-ar",
             "ranlib": "riscv64-linux-gnu-ranlib",
-            "root": "/usr/riscv64-linux-gnu",
         },
     }
     config = cross_map.get(variant)
@@ -274,7 +281,6 @@ def linux_variant_flags(variant: str) -> list[str]:
         raise ValueError(f"Unsupported Linux variant: {variant}")
 
     compiler = require_tool(config["compiler"])
-    cxx = require_tool(config["cxx"])
     ar = require_tool(config["ar"])
     ranlib = require_tool(config["ranlib"])
 
@@ -282,13 +288,8 @@ def linux_variant_flags(variant: str) -> list[str]:
         "-DCMAKE_SYSTEM_NAME=Linux",
         f"-DCMAKE_SYSTEM_PROCESSOR={config['processor']}",
         f"-DCMAKE_C_COMPILER={compiler}",
-        f"-DCMAKE_CXX_COMPILER={cxx}",
         f"-DCMAKE_AR={ar}",
         f"-DCMAKE_RANLIB={ranlib}",
-        f"-DCMAKE_FIND_ROOT_PATH={config['root']}",
-        "-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER",
-        "-DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY",
-        "-DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY",
         "-DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY",
     ]
 
@@ -368,7 +369,26 @@ def run_cmake_variant(platform: str, variant: str, jobs: int) -> tuple[bool, int
             collect_windows_debug_files(build_dir, bin_dir)
 
         success = build_exit == 0
-        record_result(log_dir, "success" if success else "failed", exit_code=build_exit)
+        failure_reason = None
+        if success:
+            artifacts = collect_native_artifacts(platform, bin_dir)
+            if artifacts:
+                write_artifacts_info(log_dir, artifacts)
+            else:
+                success = False
+                build_exit = 1
+                failure_reason = f"no staged artifacts found in {bin_dir}"
+                append_lines(
+                    build_log,
+                    [f"[ci_runner] Build completed but no expected artifacts were found under {bin_dir}"],
+                )
+
+        record_result(
+            log_dir,
+            "success" if success else "failed",
+            exit_code=build_exit,
+            reason=failure_reason,
+        )
         return success, build_exit
     finally:
         cleanup_build_dir(build_dir)

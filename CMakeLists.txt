@@ -44,19 +44,39 @@ else()
     set(_NEXTSSL_OS "linux")
 endif()
 
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64|x86_64")
+if(DEFINED NEXTSSL_OUTPUT_ARCH AND NOT NEXTSSL_OUTPUT_ARCH STREQUAL "")
+    set(_NEXTSSL_ARCH "${NEXTSSL_OUTPUT_ARCH}")
+elseif(APPLE AND DEFINED CMAKE_OSX_ARCHITECTURES AND NOT CMAKE_OSX_ARCHITECTURES STREQUAL "")
+    set(_NEXTSSL_OSX_ARCHES ${CMAKE_OSX_ARCHITECTURES})
+    list(LENGTH _NEXTSSL_OSX_ARCHES _NEXTSSL_OSX_ARCH_COUNT)
+    if(_NEXTSSL_OSX_ARCH_COUNT EQUAL 1)
+        list(GET _NEXTSSL_OSX_ARCHES 0 _NEXTSSL_ARCH)
+    else()
+        set(_NEXTSSL_ARCH "universal")
+    endif()
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64|x86_64")
     set(_NEXTSSL_ARCH "x86_64")
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "i[3-6]86|x86")
+    set(_NEXTSSL_ARCH "x86")
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64|aarch64")
     set(_NEXTSSL_ARCH "arm64")
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "armv7|arm")
+    set(_NEXTSSL_ARCH "armv7")
 else()
     set(_NEXTSSL_ARCH "${CMAKE_SYSTEM_PROCESSOR}")
 endif()
 
 set(_BIN_DIR "${PROJECT_SOURCE_DIR}/bin/${_NEXTSSL_OS}/${_NEXTSSL_ARCH}")
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${_BIN_DIR}")  # .dll on Windows
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${_BIN_DIR}")  # .so on Linux/macOS
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${_BIN_DIR}")  # .a / .lib
+if(NOT DEFINED CMAKE_RUNTIME_OUTPUT_DIRECTORY OR CMAKE_RUNTIME_OUTPUT_DIRECTORY STREQUAL "")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${_BIN_DIR}")  # .dll on Windows
+endif()
+if(NOT DEFINED CMAKE_LIBRARY_OUTPUT_DIRECTORY OR CMAKE_LIBRARY_OUTPUT_DIRECTORY STREQUAL "")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${_BIN_DIR}")  # .so on Linux/macOS
+endif()
+if(NOT DEFINED CMAKE_ARCHIVE_OUTPUT_DIRECTORY OR CMAKE_ARCHIVE_OUTPUT_DIRECTORY STREQUAL "")
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${_BIN_DIR}")  # .a / .lib
+endif()
 
 # ─────────────────────────────────────────────────────────────────
 # Compile definitions from feature flags
@@ -240,10 +260,12 @@ else()
         $<$<CONFIG:Release>:-O3>
         $<$<CONFIG:Debug>:-g -O0>
     )
-    # Strip debug symbols in Release → smaller DLL
-    target_link_options(nextssl PRIVATE
-        $<$<CONFIG:Release>:-Wl,-s>
-    )
+    if(NOT APPLE)
+        # Apple ld warns that -s is obsolete; keep the strip flag on ELF targets only.
+        target_link_options(nextssl PRIVATE
+            $<$<CONFIG:Release>:-Wl,-s>
+        )
+    endif()
 endif()
 
 # ─────────────────────────────────────────────────────────────────

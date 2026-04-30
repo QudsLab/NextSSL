@@ -30,7 +30,7 @@ void threefishEncryptBlockBytes(ThreefishKey_t* keyCtx, uint8_t* in,
     u64b_t cipher[SKEIN_MAX_STATE_WORDS];
     
     Skein_Get64_LSB_First(plain, in, keyCtx->stateSize / 64);   /* bytes to words */
-    threefishEncryptBlockWords(keyCtx, plain, cipher);
+    threefishEncryptBlockWords(keyCtx, (uint64_t *)plain, (uint64_t *)cipher);
     Skein_Put64_LSB_First(out, cipher, keyCtx->stateSize / 8);  /* words to bytes */
 }
 
@@ -57,7 +57,7 @@ void threefishDecryptBlockBytes(ThreefishKey_t* keyCtx, uint8_t* in,
     u64b_t cipher[SKEIN_MAX_STATE_WORDS];
     
     Skein_Get64_LSB_First(cipher, in, keyCtx->stateSize / 64);  /* bytes to words */
-    threefishDecryptBlockWords(keyCtx, cipher, plain);
+    threefishDecryptBlockWords(keyCtx, (uint64_t *)cipher, (uint64_t *)plain);
     Skein_Put64_LSB_First(out, plain, keyCtx->stateSize / 8);   /* words to bytes */
 }
 

@@ -93,12 +93,13 @@ void sha384_init(SHA512_CTX *ctx) {
 
 void sha512_update(SHA512_CTX *ctx, const uint8_t *data, size_t len) {
     size_t i, index, partLen;
+    uint64_t bit_len = ((uint64_t)len) << 3;
     
     index = (size_t)((ctx->count[0] >> 3) & 0x7F);
     
-    if ((ctx->count[0] += (len << 3)) < (len << 3))
+    if ((ctx->count[0] += bit_len) < bit_len)
         ctx->count[1]++;
-    ctx->count[1] += (len >> 61);
+    ctx->count[1] += ((uint64_t)len >> 61);
     
     partLen = 128 - index;
     

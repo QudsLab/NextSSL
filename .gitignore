@@ -2,7 +2,6 @@
 /.temp
 /build_dir
 /tools
-/build.py
 /.vscode
 /.github/prompts
 /example
@@ -19,3 +18,4 @@ kat.txt
 *.pyc
 /KAT/temp
 /KAT/.temp
+/.ci_probe

@@ -798,7 +798,7 @@ static void XYcZ_add(uECC_word_t * X1,
                      uECC_word_t * sub,
                      uECC_Curve curve) {
     /* t1 = X1, t2 = Y1, t3 = X2, t4 = Y2 */
-    uECC_word_t t5[uECC_MAX_WORDS];
+    uECC_word_t t5[uECC_MAX_WORDS] = {0};
     wordcount_t num_words = curve->num_words;
 
     uECC_vli_modSub(t5, X2, X1, curve->p, num_words);  /* t5 = x2 - x1 */

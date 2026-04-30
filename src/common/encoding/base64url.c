@@ -122,7 +122,6 @@ int radix_base64url_decode(const char *input, size_t input_len,
     size_t i = 0, j = 0;
     while (i < input_len) {
         uint32_t val = 0;
-        int chars_processed = 0;
         
         for (int k = 0; k < 4; k++) {
             if (i + k >= input_len) {
@@ -140,7 +139,6 @@ int radix_base64url_decode(const char *input, size_t input_len,
             int v = base64url_char_to_val(c);
             if (v < 0) return RADIX_ERROR_INVALID_ENCODING;
             val = (val << 6) | v;
-            chars_processed++;
         }
         
         // Output bytes
@@ -153,11 +151,13 @@ int radix_base64url_decode(const char *input, size_t input_len,
         // If i + 4 > input_len, implicit padding
         // Or explicit '='
         
-        int block_pad = 0;
+        size_t block_pad = 0;
         if (i + 4 > input_len) {
             block_pad = 4 - (input_len - i);
         } else {
-            for (int k=0; k<4; k++) if (input[i+k] == '=') block_pad++;
+            for (size_t k = 0; k < 4; k++) {
+                if (input[i + k] == '=') block_pad++;
+            }
         }
         
         if (j < output_len) output[j++] = (val >> 16) & 0xFF;
