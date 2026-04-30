@@ -1,0 +1,1 @@
+bin/ios/device-arm64/libnextssl.a

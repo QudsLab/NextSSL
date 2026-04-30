@@ -1,0 +1,100 @@
+
+==============================================================================
+CMD: /usr/bin/python3 /home/runner/work/NextSSL/NextSSL/build.py --platform wasm wasm32 --clean --jobs 4 --log-level debug --log-file /home/runner/work/NextSSL/NextSSL/logs/wasm/emscripten-wasm32/build.log
+CWD: /home/runner/work/NextSSL/NextSSL
+==============================================================================
+
+2026-04-30 19:08:20 INFO     NextSSL WASM Build  variant=wasm32
+2026-04-30 19:08:20 INFO     emcc    : /home/runner/work/_temp/emsdk/upstream/emscripten/emcc
+2026-04-30 19:08:20 INFO     Variant : wasm32
+2026-04-30 19:08:20 INFO     Out     : bin/web/
+2026-04-30 19:08:20 INFO     Cleaning .build_cache/wasm_wasm32 ...
+2026-04-30 19:08:20 INFO     Sources : 646 .c files
+2026-04-30 19:08:20 INFO     Exports : 374 symbols
+2026-04-30 19:08:20 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (62875 bytes)
+2026-04-30 19:08:20 INFO     Step 1/1: Compiling all sources to WASM ...
+2026-04-30 19:08:20 INFO     Running: emcc @response_file
+2026-04-30 19:08:20 DEBUG    CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-04-30 19:08:20 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
+shared:INFO: (Emscripten: Running sanity checks)
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_drbg_reseed
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_drbg_seed
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_keypair
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_keypair_derand
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_sign
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_sign_derand
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_verify
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_keypair
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_keypair_derand
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_sign
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_sign_derand
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_verify
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_keypair
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_keypair_derand
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_sign
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_sign_derand
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_verify
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded512_keypair
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded512_keypair_derand
+wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded512_sign
+wasm-ld: error: too many errors emitted, stopping now (use -error-limit=0 to see all errors)
+emcc: error: '/home/runner/work/_temp/emsdk/upstream/bin/wasm-ld @/tmp/emscripten_e_n6xyc3.rsp.utf-8' failed (returned 1)
+
+============================================================
+CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+CWD: /home/runner/work/NextSSL/NextSSL
+============================================================
+
+2026-04-30 19:08:50 DEBUG    emcc @response_file exited with code 1
+2026-04-30 19:08:50 ERROR    emcc failed (exit 1)
+2026-04-30 19:08:50 ERROR    ── Last 49 lines of build.log ──
+2026-04-30 19:08:50 ERROR      
+2026-04-30 19:08:50 ERROR      ==============================================================================
+2026-04-30 19:08:50 ERROR      CMD: /usr/bin/python3 /home/runner/work/NextSSL/NextSSL/build.py --platform wasm wasm32 --clean --jobs 4 --log-level debug --log-file /home/runner/work/NextSSL/NextSSL/logs/wasm/emscripten-wasm32/build.log
+2026-04-30 19:08:50 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
+2026-04-30 19:08:50 ERROR      ==============================================================================
+2026-04-30 19:08:50 ERROR      
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 INFO     NextSSL WASM Build  variant=wasm32
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 INFO     emcc    : /home/runner/work/_temp/emsdk/upstream/emscripten/emcc
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 INFO     Variant : wasm32
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 INFO     Out     : bin/web/
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 INFO     Cleaning .build_cache/wasm_wasm32 ...
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 INFO     Sources : 646 .c files
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 INFO     Exports : 374 symbols
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (62875 bytes)
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 INFO     Step 1/1: Compiling all sources to WASM ...
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 INFO     Running: emcc @response_file
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 DEBUG    CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:20 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
+2026-04-30 19:08:50 ERROR      shared:INFO: (Emscripten: Running sanity checks)
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_drbg_reseed
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_drbg_seed
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_keypair
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_keypair_derand
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_sign
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_sign_derand
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon1024_verify
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_keypair
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_keypair_derand
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_sign
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_sign_derand
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falcon512_verify
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_keypair
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_keypair_derand
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_sign
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_sign_derand
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded1024_verify
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded512_keypair
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded512_keypair_derand
+2026-04-30 19:08:50 ERROR      wasm-ld: error: symbol exported via --export not found: nextssl_pqc_falconpadded512_sign
+2026-04-30 19:08:50 ERROR      wasm-ld: error: too many errors emitted, stopping now (use -error-limit=0 to see all errors)
+2026-04-30 19:08:50 ERROR      emcc: error: '/home/runner/work/_temp/emsdk/upstream/bin/wasm-ld @/tmp/emscripten_e_n6xyc3.rsp.utf-8' failed (returned 1)
+2026-04-30 19:08:50 ERROR      
+2026-04-30 19:08:50 ERROR      ============================================================
+2026-04-30 19:08:50 ERROR      CMD: /home/runner/work/_temp/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-04-30 19:08:50 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
+2026-04-30 19:08:50 ERROR      ============================================================
+2026-04-30 19:08:50 ERROR      
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:50 DEBUG    emcc @response_file exited with code 1
+2026-04-30 19:08:50 ERROR      2026-04-30 19:08:50 ERROR    emcc failed (exit 1)
+2026-04-30 19:08:50 ERROR    ──────────────────────────────────────────

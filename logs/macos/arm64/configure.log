@@ -18,12 +18,12 @@
 --   Balloon     : ON (always)
 --   Pomelo      : ON (always)
 --   Makwa       : ON (always)
--- Configuring done (0.3s)
+-- Configuring done (1.5s)
 -- Generating done (0.1s)
 -- Build files have been written to: /Users/runner/work/NextSSL/NextSSL/.ci_build/macos/arm64
 
 ==============================================================================
-CMD: cmake -S /Users/runner/work/NextSSL/NextSSL -B /Users/runner/work/NextSSL/NextSSL/.ci_build/macos/arm64 -G Ninja -DCMAKE_BUILD_TYPE=Release -DNEXTSSL_SHARED=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=/Users/runner/work/NextSSL/NextSSL/bin/macos/arm64 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/runner/work/NextSSL/NextSSL/bin/macos/arm64 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=/Users/runner/work/NextSSL/NextSSL/bin/macos/arm64 -DCMAKE_C_COMPILER_LAUNCHER=/opt/homebrew/bin/ccache -DCMAKE_CXX_COMPILER_LAUNCHER=/opt/homebrew/bin/ccache -DCMAKE_OSX_ARCHITECTURES=arm64
+CMD: cmake -S /Users/runner/work/NextSSL/NextSSL -B /Users/runner/work/NextSSL/NextSSL/.ci_build/macos/arm64 -G Ninja -DCMAKE_BUILD_TYPE=Release -DNEXTSSL_SHARED=ON -DNEXTSSL_OUTPUT_ARCH=arm64 -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=/Users/runner/work/NextSSL/NextSSL/bin/macos/arm64 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/runner/work/NextSSL/NextSSL/bin/macos/arm64 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=/Users/runner/work/NextSSL/NextSSL/bin/macos/arm64 -DCMAKE_C_COMPILER_LAUNCHER=/opt/homebrew/bin/ccache -DCMAKE_CXX_COMPILER_LAUNCHER=/opt/homebrew/bin/ccache -DCMAKE_OSX_ARCHITECTURES=arm64
 CWD: /Users/runner/work/NextSSL/NextSSL
 ==============================================================================
 
