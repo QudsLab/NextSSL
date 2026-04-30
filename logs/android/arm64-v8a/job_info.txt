@@ -1,7 +1,0 @@
-platform: android
-variant: arm64-v8a
-run_id: 25188070220
-attempt: 1
-sha: e327577dba2ce100e37c00ae09bc12681e7280de
-ref: refs/heads/main
-started: 2026-04-30T20:37:38Z

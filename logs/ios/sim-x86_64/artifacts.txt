@@ -1,1 +1,0 @@
-bin/ios/sim-x86_64/libnextssl.a
