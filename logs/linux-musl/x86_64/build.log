@@ -1,0 +1,99 @@
+[1/654] Building C object CMakeFiles/nextssl.dir/src/common/encoding/base16.c.o
+[2/654] Building C object CMakeFiles/nextssl.dir/src/common/encoding/base58.c.o
+[3/654] Building C object CMakeFiles/nextssl.dir/src/common/encoding/base64.c.o
+[4/654] Building C object CMakeFiles/nextssl.dir/src/common/encoding/base32.c.o
+[5/654] Building C object CMakeFiles/nextssl.dir/src/common/encoding/hex.c.o
+[6/654] Building C object CMakeFiles/nextssl.dir/src/common/encoding/radix_common.c.o
+[7/654] Building C object CMakeFiles/nextssl.dir/src/common/encoding/base64url.c.o
+[8/654] Building C object CMakeFiles/nextssl.dir/src/common/sanitizer/nextssl_sanitizer.c.o
+[9/654] Building C object CMakeFiles/nextssl.dir/src/common/encoding/ff70.c.o
+[10/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2_adapter.c.o
+[11/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2d_adapter.c.o
+[12/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2i_adapter.c.o
+[13/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2id_adapter.c.o
+[14/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/balloon_adapter.c.o
+[15/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/bcrypt_adapter.c.o
+[16/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/catena_adapter.c.o
+[17/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/makwa_adapter.c.o
+[18/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/lyra2_adapter.c.o
+[19/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/pomelo_adapter.c.o
+[20/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/scrypt_adapter.c.o
+[21/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/yescrypt_adapter.c.o
+[22/654] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/plain_hash_adapter.c.o
+[23/654] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2s.c.o
+[24/654] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3.c.o
+[25/654] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2b.c.o
+[26/654] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_portable.c.o
+[27/654] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_dispatch.c.o
+[28/654] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_avx512.c.o
+FAILED: [code=1] CMakeFiles/nextssl.dir/src/hash/blake/blake3_avx512.c.o 
+/usr/bin/ccache /home/runner/work/_temp/zig-linux-x86_64-0.14.0/zig cc --target=x86_64-linux-musl -DENABLE_CATENA -DENABLE_FALCON -DENABLE_HQC -DENABLE_LYRA2 -DENABLE_MCELIECE -DENABLE_ML_DSA -DENABLE_ML_KEM -DENABLE_SCRYPT -DENABLE_SPHINCS -DENABLE_YESCRYPT -DHAVE_CURVE448 -DHAVE_ED448 -DNEXTSSL_BUILDING_DLL -DNEXTSSL_HAS_BALLOON -DNEXTSSL_HAS_MAKWA -DNEXTSSL_HAS_POMELO -DNEXTSSL_SUPPRESS_UPSTREAM_WARNINGS -Dnextssl_EXPORTS -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/encoding -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/hash/adapters -I/home/runner/work/NextSSL/NextSSL/src/hash/generic -I/home/runner/work/NextSSL/NextSSL/src/hash/root_functions -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/encoding -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/micro_ecc -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/balloon -O3 -DNDEBUG -std=gnu11 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -O3 -mavx512f -mavx512vl -MD -MT CMakeFiles/nextssl.dir/src/hash/blake/blake3_avx512.c.o -MF CMakeFiles/nextssl.dir/src/hash/blake/blake3_avx512.c.o.d -o CMakeFiles/nextssl.dir/src/hash/blake/blake3_avx512.c.o -c /home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1175:7: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1175 |       set1_512(key[0]), set1_512(key[1]), set1_512(key[2]), set1_512(key[3]),
+      |       ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1175:25: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1175 |       set1_512(key[0]), set1_512(key[1]), set1_512(key[2]), set1_512(key[3]),
+      |                         ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1175:43: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1175 |       set1_512(key[0]), set1_512(key[1]), set1_512(key[2]), set1_512(key[3]),
+      |                                           ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1175:61: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1175 |       set1_512(key[0]), set1_512(key[1]), set1_512(key[2]), set1_512(key[3]),
+      |                                                             ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1176:7: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1176 |       set1_512(key[4]), set1_512(key[5]), set1_512(key[6]), set1_512(key[7]),
+      |       ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1176:25: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1176 |       set1_512(key[4]), set1_512(key[5]), set1_512(key[6]), set1_512(key[7]),
+      |                         ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1176:43: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1176 |       set1_512(key[4]), set1_512(key[5]), set1_512(key[6]), set1_512(key[7]),
+      |                                           ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1176:61: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1176 |       set1_512(key[4]), set1_512(key[5]), set1_512(key[6]), set1_512(key[7]),
+      |                                                             ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1187:29: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1187 |     __m512i block_len_vec = set1_512(BLAKE3_BLOCK_LEN);
+      |                             ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1188:31: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1188 |     __m512i block_flags_vec = set1_512(block_flags);
+      |                               ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1195:9: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1195 |         set1_512(IV[0]), set1_512(IV[1]),  set1_512(IV[2]), set1_512(IV[3]),
+      |         ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1195:26: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1195 |         set1_512(IV[0]), set1_512(IV[1]),  set1_512(IV[2]), set1_512(IV[3]),
+      |                          ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1195:44: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1195 |         set1_512(IV[0]), set1_512(IV[1]),  set1_512(IV[2]), set1_512(IV[3]),
+      |                                            ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1195:61: error: AVX vector return of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1195 |         set1_512(IV[0]), set1_512(IV[1]),  set1_512(IV[2]), set1_512(IV[3]),
+      |                                                             ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1205:17: error: AVX vector argument of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1205 |     h_vecs[0] = xor_512(v[0], v[8]);
+      |                 ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1206:17: error: AVX vector argument of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1206 |     h_vecs[1] = xor_512(v[1], v[9]);
+      |                 ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1207:17: error: AVX vector argument of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1207 |     h_vecs[2] = xor_512(v[2], v[10]);
+      |                 ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1208:17: error: AVX vector argument of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1208 |     h_vecs[3] = xor_512(v[3], v[11]);
+      |                 ^
+/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3_avx512.c:1209:17: error: AVX vector argument of type '__m512i' (vector of 8 'long long' values) without 'evex512' enabled changes the ABI
+ 1209 |     h_vecs[4] = xor_512(v[4], v[12]);
+      |                 ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[29/654] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_avx2.c.o
+[30/654] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_sse2.c.o
+[31/654] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_sse41.c.o
+ninja: build stopped: subcommand failed.
+
+==============================================================================
+CMD: cmake --build /home/runner/work/NextSSL/NextSSL/.ci_build/linux-musl/x86_64 --parallel 4
+CWD: /home/runner/work/NextSSL/NextSSL
+==============================================================================
+

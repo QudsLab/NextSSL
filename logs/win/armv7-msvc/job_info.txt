@@ -1,0 +1,9 @@
+platform: win
+variant: armv7-msvc
+run_id: 25185780891
+attempt: 1
+sha: 226a7c6548006dca01cbb39343dfc530f6e3c976
+ref: refs/heads/main
+started: 2026-04-30T19:58:25Z
+blocked_by: x86_64-mingw
+blocked_status: failed

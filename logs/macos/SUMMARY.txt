@@ -1,0 +1,3 @@
+arm64: SUCCESS
+universal: SUCCESS
+x86_64: SUCCESS
