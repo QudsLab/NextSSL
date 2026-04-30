@@ -1,4 +1,0 @@
-[ci_skip] skipped win/armv7-msvc
-[ci_skip] reason: queue stopped after x86_64-mingw (failed)
-[ci_skip] blocked_by: x86_64-mingw
-[ci_skip] blocked_status: failed

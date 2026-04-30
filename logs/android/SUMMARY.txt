@@ -1,4 +1,4 @@
 arm64-v8a: SUCCESS
 armeabi-v7a: SUCCESS
-x86: FAILED (1)
+x86: SUCCESS
 x86_64: SUCCESS

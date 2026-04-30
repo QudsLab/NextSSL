@@ -46,13 +46,13 @@ clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [24/649] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[25/649] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha224.c.obj
+[25/649] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2s.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[26/649] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2s.c.obj
+[26/649] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha224.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[27/649] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_portable.c.obj
+[27/649] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2b.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[28/649] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2b.c.obj
+[28/649] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_portable.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [29/649] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512_224.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
@@ -100,9 +100,9 @@ clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [51/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[52/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2d.c.obj
+[52/649] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd320.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[53/649] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd320.c.obj
+[53/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2d.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [54/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2i.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
@@ -112,11 +112,11 @@ clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [57/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/balloon_openssl_compat.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[58/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/balloon_ops.c.obj
+[58/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/bitstream.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[59/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/compress.c.obj
+[59/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/balloon_ops.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[60/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/bitstream.c.obj
+[60/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/compress.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [61/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/encode.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
@@ -152,11 +152,11 @@ clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [77/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/bcrypt/crypt_blowfish.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[78/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/Sponge.c.obj
+[78/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/makwa/makwa.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[79/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/makwa/makwa.c.obj
+[79/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/pomelo/pomelo_ops.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-[80/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/pomelo/pomelo_ops.c.obj
+[80/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/Sponge.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [81/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/pomelo/pomelo.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
@@ -165,27 +165,1196 @@ clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm
 [83/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/scrypt_ops.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [84/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/thread.c.obj
-FAILED: [code=1] CMakeFiles/nextssl.dir/src/hash/memory_hard/thread.c.obj 
-/home/runner/work/_temp/wasi-sdk-32.0-x86_64-linux/bin/clang --target=wasm32-wasi -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -DENABLE_CATENA -DENABLE_FALCON -DENABLE_HQC -DENABLE_LYRA2 -DENABLE_MCELIECE -DENABLE_ML_DSA -DENABLE_ML_KEM -DENABLE_SCRYPT -DENABLE_SPHINCS -DENABLE_YESCRYPT -DHAVE_CURVE448 -DHAVE_ED448 -DNEXTSSL_BUILDING_DLL -DNEXTSSL_HAS_BALLOON -DNEXTSSL_HAS_MAKWA -DNEXTSSL_HAS_POMELO -DNEXTSSL_SUPPRESS_UPSTREAM_WARNINGS -Dnextssl_EXPORTS -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/encoding -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/hash/adapters -I/home/runner/work/NextSSL/NextSSL/src/hash/generic -I/home/runner/work/NextSSL/NextSSL/src/hash/root_functions -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/encoding -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/micro_ecc -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/balloon -O3 -DNDEBUG -std=gnu11 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -O3 -MD -MT CMakeFiles/nextssl.dir/src/hash/memory_hard/thread.c.obj -MF CMakeFiles/nextssl.dir/src/hash/memory_hard/thread.c.obj.d -o CMakeFiles/nextssl.dir/src/hash/memory_hard/thread.c.obj -c /home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/thread.c
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/thread.c:53:5: error: call to undeclared function 'pthread_exit'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-   53 |     pthread_exit(NULL);
-      |     ^
-/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/thread.c:53:5: note: did you mean 'pthread_join'?
-/home/runner/work/_temp/wasi-sdk-32.0-x86_64-linux/bin/../share/wasi-sysroot/include/wasm32-wasi/pthread.h:89:5: note: 'pthread_join' declared here
-   89 | int pthread_join(pthread_t, void **);
-      |     ^
-1 error generated.
 [85/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/crypto_scrypt-ref.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [86/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/ref.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
 [87/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/sha256_portable.c.obj
 clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
-ninja: build stopped: subcommand failed.
+[88/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt_ops.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[89/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt-common.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[90/649] Building C object CMakeFiles/nextssl.dir/src/hash/root_functions/hash_root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[91/649] Building C object CMakeFiles/nextssl.dir/src/hash/record/hash_record_core.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[92/649] Building C object CMakeFiles/nextssl.dir/src/hash/skein/skeinApi.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[93/649] Building C object CMakeFiles/nextssl.dir/src/hash/skein/skein.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[94/649] Building C object CMakeFiles/nextssl.dir/src/hash/skein/skein_ops.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[95/649] Building C object CMakeFiles/nextssl.dir/src/hash/skein/threefish256Block.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[96/649] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt-opt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[97/649] Building C object CMakeFiles/nextssl.dir/src/hash/skein/threefishApi.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[98/649] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/keccak.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[99/649] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[100/649] Building C object CMakeFiles/nextssl.dir/src/hash/skein/threefish512Block.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[101/649] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3_224.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[102/649] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3_384.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[103/649] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/kmac.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[104/649] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[105/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_ccm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[106/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_eax.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[107/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gcm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[108/649] Building C object CMakeFiles/nextssl.dir/src/hash/skein/threefish1024Block.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[109/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gcm_siv.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[110/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_ocb.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[111/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_siv.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[112/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/chacha20_poly1305.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[113/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_poly1305.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[114/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/add_scalar.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[115/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/monocypher-ed25519.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[116/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448_det.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[117/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[118/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/ed448.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[119/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/fe.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[120/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/fe_448.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[121/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/ge.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[122/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/key_exchange.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[123/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/keypair.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[124/649] Building C object CMakeFiles/nextssl.dir/src/hash/skein/skein_block.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[125/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/p256.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[126/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/p384.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[127/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/p521.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[128/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/rsa/rsa.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[129/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/ge_448.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[130/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/seed.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[131/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/sc.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[132/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[133/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/sm2/sm2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[134/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/sha512.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[135/649] Building C object CMakeFiles/nextssl.dir/src/modern/base_encryption.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[136/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/verify.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[137/649] Building C object CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[138/649] Building C object CMakeFiles/nextssl.dir/src/modern/encoding/base58check.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[139/649] Building C object CMakeFiles/nextssl.dir/src/modern/curve_math/elligator2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[140/649] Building C object CMakeFiles/nextssl.dir/src/modern/encoding/base62.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+/home/runner/work/NextSSL/NextSSL/src/modern/encoding/base62.c:13:5: warning: initializer-string for character array is too long, array size is 62 but initializer has size 63 (including the null terminating character); did you mean to use the 'nonstring' attribute? [-Wunterminated-string-initialization]
+   13 |     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+[141/649] Building C object CMakeFiles/nextssl.dir/src/modern/encoding/base85.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+/home/runner/work/NextSSL/NextSSL/src/modern/encoding/base85.c:41:5: warning: initializer-string for character array is too long, array size is 85 but initializer has size 86 (including the null terminating character); did you mean to use the 'nonstring' attribute? [-Wunterminated-string-initialization]
+   41 |     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   42 |     "!#$%&()*+-;<=>?@^_`{|}~";
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+[142/649] Building C object CMakeFiles/nextssl.dir/src/modern/encoding/crc32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[143/649] Building C object CMakeFiles/nextssl.dir/src/modern/encoding/bech32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[144/649] Building C object CMakeFiles/nextssl.dir/src/modern/encoding/crc64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[145/649] Building C object CMakeFiles/nextssl.dir/src/modern/encoding/pem.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[146/649] Building C object CMakeFiles/nextssl.dir/src/modern/kdf/hkdf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[147/649] Building C object CMakeFiles/nextssl.dir/src/modern/aead/monocypher.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[148/649] Building C object CMakeFiles/nextssl.dir/src/modern/kdf/pbkdf2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[149/649] Building C object CMakeFiles/nextssl.dir/src/modern/mac/aes_cmac.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[150/649] Building C object CMakeFiles/nextssl.dir/src/modern/mac/poly1305.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[151/649] Building C object CMakeFiles/nextssl.dir/src/modern/mac/siphash.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[152/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/aes_cbc.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[153/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/aes_cfb.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[154/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/aes_ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[155/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/aes_ecb.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[156/649] Building C object CMakeFiles/nextssl.dir/src/modern/mac/hmac.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[157/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/aes_kw.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[158/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/aes_ofb.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[159/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/aes_fpe.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[160/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/chacha20.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[161/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/aes_xts.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[162/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/aes_core.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_core.c:5:5: warning: initializer-string for character array is too long, array size is 256 but initializer has size 257 (including the null terminating character); did you mean to use the 'nonstring' attribute? [-Wunterminated-string-initialization]
+    5 |     "c|w{\362ko\3050\01g+\376\327\253v\312\202\311}""\372YG\360\255\324\242\257"
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    6 |     "\234\244r\300\267\375\223&6\?\367\3144\245\345\361q\3301\25\4\307#\303\030"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    7 |     "\226\5\232\a\22\200\342\353\'\262u\t\203,\32\33nZ\240R;\326\263)\343/\204S"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    8 |     "\321\0\355 \374\261[j\313\2769JLX\317\320\357\252\373CM3\205E\371\02\177P<"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    9 |     "\237\250Q\243@\217\222\2358\365\274\266\332!\20\377\363\322\315\f\023\354_"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   10 |     "\227D\27\304\247~=d]\31s`\201O\334\"*\220\210F\356\270\24\336^\v\333\3402:"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   11 |     "\nI\06$\\\302\323\254b\221\225\344y\347\3107m\215\325N\251lV\364\352ez\256"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   12 |     "\b\272x%.\034\246\264\306\350\335t\37K\275\213\212p>\265fH\3\366\16a5W\271"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   13 |     "\206\301\035\236\341\370\230\21i\331\216\224\233\036\207\351\316U(\337\214"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   14 |     "\241\211\r\277\346BhA\231-\17\260T\273\26";
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_core.c:17:5: warning: initializer-string for character array is too long, array size is 256 but initializer has size 257 (including the null terminating character); did you mean to use the 'nonstring' attribute? [-Wunterminated-string-initialization]
+   17 |     "R\tj\32506\2458\277@\243\236\201\363\327\373|\3439\202\233/\377\2074\216CD"
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   18 |     "\304\336\351\313T{\2242\246\302#=\356L\225\vB\372\303N\b.\241f(\331$\262v["
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   19 |     "\242Im\213\321%r\370\366d\206h\230\026\324\244\\\314]e\266\222lpHP\375\355"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   20 |     "\271\332^\25FW\247\215\235\204\220\330\253\0\214\274\323\n\367\344X\05\270"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   21 |     "\263E\6\320,\036\217\312?\17\2\301\257\275\3\1\023\212k:\221\21AOg\334\352"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   22 |     "\227\362\317\316\360\264\346s\226\254t\"\347\2555\205\342\3717\350\34u\337"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   23 |     "nG\361\32q\35)\305\211o\267b\16\252\30\276\33\374V>K\306\322y \232\333\300"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   24 |     "\376x\315Z\364\037\335\2503\210\a\3071\261\22\20Y\'\200\354_`Q\177\251\031"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   25 |     "\265J\r-\345z\237\223\311\234\357\240\340;M\256*\365\260\310\353\273<\203S"
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   26 |     "\231a\027+\004~\272w\326&\341i\024cU!\f}";
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2 warnings generated.
+[163/649] Building C object CMakeFiles/nextssl.dir/src/pow/client/pow_limits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[164/649] Building C object CMakeFiles/nextssl.dir/src/pow/client/pow_reject.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[165/649] Building C object CMakeFiles/nextssl.dir/src/pow/client/pow_solver.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[166/649] Building C object CMakeFiles/nextssl.dir/src/pow/client/pow_timer.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[167/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/three_des.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[168/649] Building C object CMakeFiles/nextssl.dir/src/pow/core/pow_difficulty.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[169/649] Building C object CMakeFiles/nextssl.dir/src/pow/core/pow_parser.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[170/649] Building C object CMakeFiles/nextssl.dir/src/pow/dhcm/dhcm_difficulty.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[171/649] Building C object CMakeFiles/nextssl.dir/src/pow/dhcm/dhcm_core.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[172/649] Building C object CMakeFiles/nextssl.dir/src/pow/dhcm/dhcm_math.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[173/649] Building C object CMakeFiles/nextssl.dir/src/pow/dhcm/hash_cost_probe.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[174/649] Building C object CMakeFiles/nextssl.dir/src/pow/dispatcher.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[175/649] Building C object CMakeFiles/nextssl.dir/src/pow/dhcm/hash_cost.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[176/649] Building C object CMakeFiles/nextssl.dir/src/pow/pow_engine.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[177/649] Building C object CMakeFiles/nextssl.dir/src/pow/server/pow_challenge.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[178/649] Building C object CMakeFiles/nextssl.dir/src/pow/server/pow_verify.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[179/649] Building C object CMakeFiles/nextssl.dir/src/pqc/common/drbg/drbg.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[180/649] Building C object CMakeFiles/nextssl.dir/src/pqc/common/aes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[181/649] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/micro_ecc/uECC.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[182/649] Building C object CMakeFiles/nextssl.dir/src/pqc/common/hkdf/hkdf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[183/649] Building C object CMakeFiles/nextssl.dir/src/pqc/common/nistseedexpander.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[184/649] Building C object CMakeFiles/nextssl.dir/src/pqc/common/randombytes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[185/649] Building C object CMakeFiles/nextssl.dir/src/pqc/common/sp800-185.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[186/649] Building C object CMakeFiles/nextssl.dir/src/modern/symmetric/sm4/sm4_impl.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[187/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/code.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[188/649] Building C object CMakeFiles/nextssl.dir/src/pqc/common/fips202.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[189/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/fft.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[190/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[191/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/gf2x.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[192/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/hqc.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[193/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/kem.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[194/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/parsing.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[195/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/reed_muller.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[196/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/shake_ds.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[197/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/shake_prng.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[198/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/code.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[199/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/reed_solomon.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[200/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-128/ref/vector.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[201/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/gf2x.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[202/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/fft.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[203/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[204/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/hqc.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[205/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/kem.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[206/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/parsing.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[207/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/shake_ds.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[208/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/reed_muller.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[209/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/shake_prng.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[210/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/code.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[211/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/vector.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[212/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-192/ref/reed_solomon.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[213/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/gf2x.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[214/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/fft.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[215/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[216/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/hqc.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[217/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/kem.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[218/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/parsing.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[219/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/shake_ds.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[220/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/reed_muller.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[221/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/shake_prng.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[222/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[223/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/vector.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[224/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/hqc-256/ref/reed_solomon.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[225/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[226/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[227/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[228/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[229/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[230/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[231/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[232/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[233/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[234/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[235/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[236/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[237/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[238/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[239/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[240/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[241/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[242/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[243/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[244/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[245/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[246/649] Building C object CMakeFiles/nextssl.dir/src/pqc/common/sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[247/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[248/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[249/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[250/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[251/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[252/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[253/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[254/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[255/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[256/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[257/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[258/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[259/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[260/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[261/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[262/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[263/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[264/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece348864f/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[265/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[266/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[267/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[268/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[269/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[270/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[271/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[272/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[273/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[274/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[275/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[276/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[277/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[278/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[279/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[280/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[281/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[282/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[283/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[284/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[285/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[286/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[287/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[288/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[289/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[290/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[291/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[292/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[293/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[294/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[295/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[296/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[297/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[298/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[299/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[300/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[301/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[302/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[303/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[304/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece460896f/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[305/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[306/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[307/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[308/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[309/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[310/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[311/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[312/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[313/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[314/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[315/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[316/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[317/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[318/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[319/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[320/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[321/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[322/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[323/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[324/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[325/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[326/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[327/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[328/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[329/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[330/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[331/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[332/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[333/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[334/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[335/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[336/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[337/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[338/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[339/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[340/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[341/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[342/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[343/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6688128f/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[344/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[345/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[346/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[347/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[348/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[349/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[350/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[351/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[352/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[353/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[354/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[355/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[356/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[357/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[358/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[359/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[360/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[361/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[362/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[363/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[364/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[365/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[366/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[367/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[368/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[369/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[370/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[371/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[372/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[373/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[374/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[375/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[376/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[377/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[378/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[379/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[380/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[381/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece6960119f/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[382/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[383/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[384/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[385/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[386/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[387/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[388/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[389/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[390/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[391/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[392/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[393/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[394/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/aes256ctr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[395/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[396/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/bm.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[397/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/crypto_int16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[398/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/crypto_int32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[399/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/crypto_uint16.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[400/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/crypto_uint32.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[401/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[402/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/crypto_uint64.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[403/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/controlbits.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[404/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/decrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[405/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/encrypt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[406/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/operations.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[407/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/root.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[408/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/sk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[409/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/gf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[410/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/synd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[411/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/pk_gen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[412/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/util.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[413/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/transpose.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[414/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-1024/ref/cbd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[415/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-1024/ref/kem.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[416/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-1024/ref/indcpa.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[417/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-1024/ref/polyvec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[418/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-1024/ref/ntt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[419/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/mceliece8192128f/ref/benes.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[420/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-1024/ref/poly.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[421/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-1024/ref/reduce.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[422/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-1024/ref/symmetric-shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[423/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-1024/ref/verify.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[424/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-512/ref/cbd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[425/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-512/ref/kem.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[426/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-512/ref/indcpa.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[427/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-512/ref/reduce.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[428/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-512/ref/polyvec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[429/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-512/ref/poly.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[430/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-512/ref/symmetric-shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[431/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-512/ref/ntt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[432/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-512/ref/verify.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[433/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-768/ref/cbd.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[434/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-768/ref/kem.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[435/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-768/ref/indcpa.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[436/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-768/ref/reduce.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[437/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-768/ref/poly.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[438/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-768/ref/polyvec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[439/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-768/ref/symmetric-shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[440/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-768/ref/ntt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[441/649] Building C object CMakeFiles/nextssl.dir/src/pqc/kem/ml-kem-768/ref/verify.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[442/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-1024/ref/common.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[443/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-1024/ref/falcon_wrap.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[444/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-1024/ref/codec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[445/649] Building C object CMakeFiles/nextssl.dir/src/pqc/pqc_main.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[446/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-1024/ref/fft.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[447/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-1024/ref/fpr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[448/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-1024/ref/rng.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[449/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-512/ref/codec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[450/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-1024/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[451/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-512/ref/common.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[452/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-512/ref/falcon_wrap.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[453/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-1024/ref/vrfy.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[454/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-512/ref/fft.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[455/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-512/ref/fpr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[456/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-512/ref/rng.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[457/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-512/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[458/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-512/ref/vrfy.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[459/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-1024/ref/codec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[460/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-1024/ref/common.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[461/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-1024/ref/falcon_wrap.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[462/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-1024/ref/fft.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[463/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-1024/ref/fpr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[464/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-1024/ref/rng.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[465/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-1024/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[466/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-1024/ref/vrfy.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[467/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-1024/ref/keygen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[468/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-512/ref/common.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[469/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-512/ref/codec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[470/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-512/ref/falcon_wrap.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[471/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-512/ref/fft.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[472/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-512/ref/fpr.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[473/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-512/ref/keygen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[474/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-512/ref/rng.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[475/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-512/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[476/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-512/ref/vrfy.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[477/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-44/ref/ntt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[478/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-44/ref/packing.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[479/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-44/ref/polyvec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[480/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-44/ref/reduce.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[481/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-44/ref/rounding.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[482/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-44/ref/poly.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[483/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-44/ref/symmetric-shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[484/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-44/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[485/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-65/ref/ntt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[486/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-1024/ref/keygen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[487/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-65/ref/packing.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[488/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-65/ref/reduce.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[489/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-65/ref/polyvec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[490/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-65/ref/rounding.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[491/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-65/ref/symmetric-shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[492/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-65/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[493/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-65/ref/poly.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[494/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-87/ref/ntt.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[495/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-87/ref/packing.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[496/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-87/ref/reduce.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[497/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-87/ref/polyvec.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[498/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-87/ref/poly.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[499/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-87/ref/rounding.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[500/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-87/ref/symmetric-shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[501/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[502/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/context_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[503/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/ml-dsa-87/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[504/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[505/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[506/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/hash_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[507/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/thash_sha2_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[508/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[509/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[510/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[511/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[512/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[513/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128f-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[514/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/context_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[515/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[516/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/hash_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[517/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[518/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/thash_sha2_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[519/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[520/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[521/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[522/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[523/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[524/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-128s-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[525/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/context_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[526/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[527/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/hash_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[528/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[529/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/thash_sha2_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[530/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[531/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[532/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[533/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[534/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[535/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192f-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[536/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/context_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[537/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[538/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[539/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/falcon-padded-512/ref/keygen.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[540/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/hash_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[541/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/thash_sha2_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[542/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[543/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[544/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[545/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[546/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[547/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-192s-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[548/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/context_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[549/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[550/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[551/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/hash_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[552/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[553/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/thash_sha2_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[554/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[555/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[556/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[557/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256f-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[558/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/context_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[559/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[560/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[561/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[562/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/hash_sha2.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[563/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/thash_sha2_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[564/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[565/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[566/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[567/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[568/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/context_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[569/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-sha2-256s-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[570/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[571/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[572/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[573/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/hash_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[574/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[575/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[576/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/thash_shake_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[577/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[578/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[579/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/context_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[580/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[581/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128f-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[582/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/hash_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[583/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[584/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[585/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/thash_shake_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[586/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[587/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[588/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[589/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[590/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-128s-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[591/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/context_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[592/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[593/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/hash_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[594/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[595/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[596/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/thash_shake_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[597/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[598/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[599/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[600/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[601/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/context_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[602/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[603/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192f-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[604/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/hash_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[605/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[606/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[607/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[608/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/thash_shake_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[609/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[610/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[611/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[612/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/context_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[613/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[614/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-192s-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[615/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[616/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/hash_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[617/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[618/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[619/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/thash_shake_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[620/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[621/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[622/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[623/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/address.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[624/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256f-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[625/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/context_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[626/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/hash_shake.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[627/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/merkle.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[628/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/fors.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[629/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/thash_shake_simple.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[630/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/sign.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[631/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/utilsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[632/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/utils.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[633/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/wotsx1.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[634/649] Building C object CMakeFiles/nextssl.dir/src/pqc/sign/sphincs-shake-256s-simple/ref/wots.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[635/649] Building C object CMakeFiles/nextssl.dir/src/root/hash/root_hash.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[636/649] Building C object CMakeFiles/nextssl.dir/src/root/nextssl_init.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[637/649] Building C object CMakeFiles/nextssl.dir/src/root/pow/root_pow.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[638/649] Building C object CMakeFiles/nextssl.dir/src/root/hash/root_hash_record.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[639/649] Building C object CMakeFiles/nextssl.dir/src/root/seed/root_seed.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[640/649] Building C object CMakeFiles/nextssl.dir/src/seed/hash/hash_ops.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[641/649] Building C object CMakeFiles/nextssl.dir/src/seed/hash/ctr_mode.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[642/649] Building C object CMakeFiles/nextssl.dir/src/seed/hash/hash_registry.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[643/649] Building C object CMakeFiles/nextssl.dir/src/seed/hash/seed_core.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[644/649] Building C object CMakeFiles/nextssl.dir/src/root/modern/root_modern.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[645/649] Building C object CMakeFiles/nextssl.dir/src/seed/random/entropy.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[646/649] Building C object CMakeFiles/nextssl.dir/src/root/pqc/root_pqc.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[647/649] Building C object CMakeFiles/nextssl.dir/src/seed/random/seed_derive_random.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[648/649] Building C object CMakeFiles/nextssl.dir/src/seed/udbf/udbf.c.obj
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+[649/649] Linking C shared library /home/runner/work/NextSSL/NextSSL/bin/wasm/wasi-wasm32/libnextssl.so
+clang: warning: argument '--target=wasm32-wasi' is deprecated, use --target=wasm32-wasip1 instead [-Wdeprecated]
+wasm-ld: warning: creating shared libraries, with -shared, is not yet stable
 
 ==============================================================================
 CMD: cmake --build /home/runner/work/NextSSL/NextSSL/.ci_build/wasm/wasi-wasm32 --parallel 4
 CWD: /home/runner/work/NextSSL/NextSSL
 ==============================================================================
 
+
+[ci_runner] Build completed but no expected artifacts were found under /home/runner/work/NextSSL/NextSSL/bin/wasm/wasi-wasm32
