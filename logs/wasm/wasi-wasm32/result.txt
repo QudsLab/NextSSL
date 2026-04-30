@@ -1,0 +1,3 @@
+status: failed
+exit_code: 1
+reason: no staged artifacts found in /home/runner/work/NextSSL/NextSSL/bin/wasm/wasi-wasm32

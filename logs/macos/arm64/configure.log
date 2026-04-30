@@ -1,0 +1,29 @@
+-- The C compiler identification is AppleClang 15.0.0.15000309
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- NextSSL build configuration:
+--   Type        : Release
+--   Shared lib  : ON
+--   ML-KEM      : ON
+--   ML-DSA      : ON
+--   Falcon      : ON
+--   HQC         : ON
+--   McEliece    : ON
+--   SPHINCS+    : ON
+--   GmSSL       : OFF
+--   Ed448/X448  : ON
+--   Balloon     : ON (always)
+--   Pomelo      : ON (always)
+--   Makwa       : ON (always)
+-- Configuring done (1.7s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/runner/work/NextSSL/NextSSL/.ci_build/macos/arm64
+
+==============================================================================
+CMD: cmake -S /Users/runner/work/NextSSL/NextSSL -B /Users/runner/work/NextSSL/NextSSL/.ci_build/macos/arm64 -G Ninja -DCMAKE_BUILD_TYPE=Release -DNEXTSSL_SHARED=ON -DNEXTSSL_OUTPUT_ARCH=arm64 -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=/Users/runner/work/NextSSL/NextSSL/bin/macos/arm64 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/runner/work/NextSSL/NextSSL/bin/macos/arm64 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=/Users/runner/work/NextSSL/NextSSL/bin/macos/arm64 -DCMAKE_C_COMPILER_LAUNCHER=/opt/homebrew/bin/ccache -DCMAKE_CXX_COMPILER_LAUNCHER=/opt/homebrew/bin/ccache -DCMAKE_OSX_ARCHITECTURES=arm64
+CWD: /Users/runner/work/NextSSL/NextSSL
+==============================================================================
+

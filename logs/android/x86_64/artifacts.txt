@@ -1,0 +1,1 @@
+bin/android/x86_64/libnextssl.so

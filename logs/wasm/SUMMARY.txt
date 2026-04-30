@@ -1,0 +1,2 @@
+emscripten-wasm32: SUCCESS
+wasi-wasm32: FAILED (1) [no staged artifacts found in /home/runner/work/NextSSL/NextSSL/bin/wasm/wasi-wasm32]
