@@ -1,7 +1,7 @@
 platform: win
-variant: x86_64
+variant: arm64
 run_id: 25150308892
 attempt: 1
 sha: 5d6c3f5a43cea680e61d66413e7d5422efceeece
 ref: refs/heads/main
-started: 2026-04-30T06:10:42Z
+started: 2026-04-30T06:18:29Z

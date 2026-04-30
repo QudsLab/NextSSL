@@ -19,19 +19,11 @@
 --   Pomelo      : ON (always)
 --   Makwa       : ON (always)
 -- Configuring done (0.2s)
--- Generating done (0.1s)
-CMake Warning:
-  Manually-specified variables were not used by the project:
-
-    CMAKE_CXX_COMPILER
-    CMAKE_FIND_ROOT_PATH
-    CMAKE_FIND_ROOT_PATH_MODE_LIBRARY
-
-
+-- Generating done (0.0s)
 -- Build files have been written to: /home/runner/work/NextSSL/NextSSL/.ci_build/linux/riscv64
 
 ==============================================================================
-CMD: cmake -S /home/runner/work/NextSSL/NextSSL -B /home/runner/work/NextSSL/NextSSL/.ci_build/linux/riscv64 -G Ninja -DCMAKE_BUILD_TYPE=Release -DNEXTSSL_SHARED=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux/riscv64 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux/riscv64 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux/riscv64 -DCMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=riscv64 -DCMAKE_C_COMPILER=/usr/bin/riscv64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=/usr/bin/riscv64-linux-gnu-g++ -DCMAKE_AR=/usr/bin/riscv64-linux-gnu-ar -DCMAKE_RANLIB=/usr/bin/riscv64-linux-gnu-ranlib -DCMAKE_FIND_ROOT_PATH=/usr/riscv64-linux-gnu -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
+CMD: cmake -S /home/runner/work/NextSSL/NextSSL -B /home/runner/work/NextSSL/NextSSL/.ci_build/linux/riscv64 -G Ninja -DCMAKE_BUILD_TYPE=Release -DNEXTSSL_SHARED=ON -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux/riscv64 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux/riscv64 -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux/riscv64 -DCMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=riscv64 -DCMAKE_C_COMPILER=/usr/bin/riscv64-linux-gnu-gcc -DCMAKE_AR=/usr/bin/riscv64-linux-gnu-ar -DCMAKE_RANLIB=/usr/bin/riscv64-linux-gnu-ranlib -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
 CWD: /home/runner/work/NextSSL/NextSSL
 ==============================================================================
 

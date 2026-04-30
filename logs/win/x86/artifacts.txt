@@ -1,0 +1,2 @@
+bin\win\x86\Release\nextssl.dll
+bin\win\x86\Release\nextssl.lib
