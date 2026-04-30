@@ -110,11 +110,9 @@ set(SRC "${CMAKE_SOURCE_DIR}/src")
 file(GLOB_RECURSE NEXTSSL_SOURCES "${SRC}/*.c")
 
 # ── AArch64-only files (require 64-bit ARM — not available on armv7 or x86) ──
-# keccak2x uses vzip1q_u64/vld1q_u64_x2 which are AArch64-only NEON intrinsics.
 # aarch64/ asm blobs are obviously AArch64-only too.
 if(NOT _NEXTSSL_ARCH MATCHES "arm64")
     list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/aarch64/")
-    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/common/keccak2x/")
 endif()
 
 # ── x86-only SIMD files (require x86 intrinsics — not available on non-x86) ──
@@ -132,6 +130,12 @@ endif()
 #    ML-KEM/ML-DSA/Falcon/SPHINCS+ avx2: build requires -mavx2 but all callers
 #    use the ref/ namespace — exclude to avoid dead-code linker noise and errors
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/.*/avx2/")
+
+# ── PQC arm64 optimized paths — current source glob only collects .c files, not
+#    the companion assembly sources those implementations require. Keep the
+#    algorithm surface stable by using the portable ref/ code paths instead.
+list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/.*/aarch64/")
+list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/common/keccak2x/")
 
 # ── Duplicate definitions (only one variant needed) ─────────────
 # Argon2: opt.c uses x86 SSE2 intrinsics (emmintrin.h); ref.c is the portable fallback.

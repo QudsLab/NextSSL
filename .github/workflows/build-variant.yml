@@ -148,7 +148,13 @@ jobs:
 
             linux-musl)
               sudo apt-get update 2>&1 | tee -a "${bootstrap}"
-              sudo apt-get install -y cmake ninja-build ccache python3 zig 2>&1 | tee -a "${bootstrap}"
+              sudo apt-get install -y cmake ninja-build ccache curl python3 xz-utils 2>&1 | tee -a "${bootstrap}"
+              zig_version="${ZIG_VERSION:-0.14.0}"
+              zig_archive="zig-linux-x86_64-${zig_version}.tar.xz"
+              curl -fL "https://ziglang.org/download/${zig_version}/${zig_archive}" -o "${RUNNER_TEMP}/${zig_archive}" 2>&1 | tee -a "${bootstrap}"
+              tar -C "${RUNNER_TEMP}" -xJf "${RUNNER_TEMP}/${zig_archive}" 2>&1 | tee -a "${bootstrap}"
+              export PATH="${RUNNER_TEMP}/zig-linux-x86_64-${zig_version}:${PATH}"
+              echo "${RUNNER_TEMP}/zig-linux-x86_64-${zig_version}" >> "${GITHUB_PATH}"
               python3 --version 2>&1 | tee -a "${bootstrap}"
               python3 build/ci_runner.py --platform "${CI_PLATFORM}" --variants "${CI_VARIANT}" --jobs "${CI_JOBS}" 2>&1 | tee -a "${bootstrap}"
               ;;
@@ -263,7 +269,7 @@ jobs:
 
       - name: Upload binaries
         timeout-minutes: 25
-        if: always()
+        if: ${{ always() && steps.queue.outputs.variant_status == 'success' }}
         uses: actions/upload-artifact@v7
         with:
           name: nextssl__${{ inputs.platform }}__${{ inputs.variant }}

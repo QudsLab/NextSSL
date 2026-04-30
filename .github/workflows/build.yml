@@ -359,7 +359,7 @@ jobs:
       blocked_status: ${{ needs.ios_sim_arm64.outputs.blocking_status || needs.ios_sim_arm64.result }}
 
   collect:
-    name: Collect and publish logs
+    name: Collect and publish outputs
     needs:
       - win_armv7_msvc
       - linux_glibc_loongarch64
@@ -387,12 +387,28 @@ jobs:
           path: _ci_logs_artifacts/
           merge-multiple: false
 
+      - name: Download all successful binary artifacts
+        timeout-minutes: 25
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          pattern: nextssl__*
+          path: _ci_bin_artifacts/
+          merge-multiple: false
+
       - name: Merge log artifacts
         timeout-minutes: 25
         shell: bash
         run: |
           set -euo pipefail
           python3 build/ci_merge_logs.py _ci_logs_artifacts merged-logs
+
+      - name: Merge successful binary artifacts
+        timeout-minutes: 25
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 build/ci_merge_bins.py _ci_bin_artifacts merged-bins
 
       - name: Upload all-logs
         timeout-minutes: 25
@@ -402,6 +418,15 @@ jobs:
           path: merged-logs/
           retention-days: 30
           if-no-files-found: error
+
+      - name: Upload all-bins
+        timeout-minutes: 25
+        uses: actions/upload-artifact@v7
+        with:
+          name: all-bins
+          path: merged-bins/
+          retention-days: 30
+          if-no-files-found: warn
 
       - name: Determine publish target
         id: publish_target
@@ -422,8 +447,8 @@ jobs:
             echo "reason=workflow runs on branch ${{ github.ref_name }}, so logs were not pushed back to the repository" >> "${GITHUB_OUTPUT}"
           fi
 
-      - name: Publish logs to repo branch
-        id: publish_logs
+      - name: Publish logs and bins to repo branch
+        id: publish_outputs
         timeout-minutes: 25
         if: steps.publish_target.outputs.should_publish == 'true'
         continue-on-error: true
@@ -443,11 +468,21 @@ jobs:
           mkdir -p logs
           cp -R merged-logs/. logs/
 
-          git add logs
+          mkdir -p bin
+          if [ -d merged-bins ]; then
+            find merged-bins -mindepth 2 -maxdepth 2 -type d | while read -r variant_dir; do
+              rel_path="${variant_dir#merged-bins/}"
+              rm -rf "bin/${rel_path}"
+              mkdir -p "$(dirname "bin/${rel_path}")"
+              cp -R "${variant_dir}" "bin/${rel_path}"
+            done
+          fi
+
+          git add logs bin
           if git diff --cached --quiet; then
             echo "publish_state=no-changes" >> "${GITHUB_OUTPUT}"
           else
-            git commit -m "CI logs for run ${{ github.run_id }}"
+            git commit -m "CI outputs for run ${{ github.run_id }}"
             git push origin HEAD:"${branch}"
             echo "publish_state=published" >> "${GITHUB_OUTPUT}"
           fi
@@ -464,31 +499,31 @@ jobs:
           publish_branch="${{ steps.publish_target.outputs.branch }}"
 
           if [ "${{ steps.publish_target.outputs.should_publish }}" = "true" ]; then
-            if [ "${{ steps.publish_logs.outcome }}" = "success" ]; then
-              publish_state="${{ steps.publish_logs.outputs.publish_state }}"
-            elif [ "${{ steps.publish_logs.outcome }}" = "failure" ]; then
+            if [ "${{ steps.publish_outputs.outcome }}" = "success" ]; then
+              publish_state="${{ steps.publish_outputs.outputs.publish_state }}"
+            elif [ "${{ steps.publish_outputs.outcome }}" = "failure" ]; then
               publish_state="publish-failed"
               publish_reason="repository push failed; see the collect job log for details"
             fi
           fi
 
           {
-            echo "## Pullable logs"
+            echo "## Pullable outputs"
             echo
             case "${publish_state}" in
               published)
-                echo "Logs were published to branch: ${publish_branch}"
+                echo "Logs and successful bins were published to branch: ${publish_branch}"
                 ;;
               no-changes)
-                echo "Logs already matched branch: ${publish_branch}"
+                echo "Logs and successful bins already matched branch: ${publish_branch}"
                 ;;
               publish-failed)
-                echo "Logs were uploaded as artifacts, but publication to ${publish_branch} failed."
+                echo "Logs and successful bins were uploaded as artifacts, but publication to ${publish_branch} failed."
                 echo
                 echo "Reason: ${publish_reason}"
                 ;;
               *)
-                echo "Logs were uploaded as artifacts only."
+                echo "Logs and successful bins were uploaded as artifacts only."
                 echo
                 echo "Reason: ${publish_reason}"
                 ;;
@@ -504,12 +539,14 @@ jobs:
             fi
             echo
             echo "Logs path: logs/<platform>/<variant>/"
+            echo "Bins path: bin/<platform>/<variant>/"
             echo
             echo "Fallback artifact: all-logs"
+            echo "Fallback artifact: all-bins"
           } >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Fail collect job when publish failed
         timeout-minutes: 25
-        if: ${{ steps.publish_target.outputs.should_publish == 'true' && steps.publish_logs.outcome == 'failure' }}
+        if: ${{ steps.publish_target.outputs.should_publish == 'true' && steps.publish_outputs.outcome == 'failure' }}
         shell: bash
         run: exit 1

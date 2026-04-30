@@ -191,7 +191,7 @@ def collect_sources() -> list:
         "/pqc/common/keccak2x/",
         "/hash/interface/hash_ops_disabled_stubs.c",
         "/pow/pow_api.c",
-        "/pqc/",
+        "/src/pqc/",
         "skeinBlockNo3F",
         "blake3_avx2",
         "blake3_avx512",
