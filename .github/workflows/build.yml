@@ -228,7 +228,7 @@ jobs:
     with:
       platform: macos
       variant: x86_64
-      runner: macos-13
+      runner: macos-14
 
   macos_arm64:
     name: macOS arm64
@@ -353,7 +353,7 @@ jobs:
     with:
       platform: ios
       variant: sim-x86_64
-      runner: macos-13
+      runner: macos-14
       should_build: ${{ needs.ios_sim_arm64.result == 'success' && needs.ios_sim_arm64.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.ios_sim_arm64.outputs.blocking_variant || 'iOS simulator arm64' }}
       blocked_status: ${{ needs.ios_sim_arm64.outputs.blocking_status || needs.ios_sim_arm64.result }}
