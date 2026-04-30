@@ -1,7 +1,0 @@
-platform: macos
-variant: arm64
-run_id: 25184206668
-attempt: 1
-sha: 89eb3262b26535b3bbfc92fa089fd44151a0a11e
-ref: refs/heads/main
-started: 2026-04-30T19:09:05Z

@@ -1,4 +1,0 @@
-arm64-v8a: FAILED (1)
-armeabi-v7a: SKIPPED (queue stopped after arm64-v8a (failed))
-x86: SKIPPED (queue stopped after arm64-v8a (failed))
-x86_64: SKIPPED (queue stopped after arm64-v8a (failed))
