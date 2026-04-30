@@ -66,7 +66,7 @@ and static library builds.  Each row represents one distinct binary artifact.
 
 | # | OS | Architecture | ABI / Toolchain | Binary Name | Build Host | Status |
 |---|----|--------------|-----------------|-----------  |------------|--------|
-| 18 | macOS 13 (Ventura) | x86\_64 (Intel) | Apple Clang 15 | `libnextssl.dylib` | `macos-13` | 🔄 CI |
+| 18 | macOS x86\_64 target | x86\_64 (Intel) | Apple Clang 15 | `libnextssl.dylib` | `macos-14` | 🔄 CI |
 | 19 | macOS 14 (Sonoma) | arm64 (M1/M2/M3) | Apple Clang 15 | `libnextssl.dylib` | `macos-14` | 🔄 CI |
 | 20 | macOS 13/14 | universal (fat) | Apple Clang universal build | `libnextssl.dylib` | `macos-14` | 🔄 CI |
 
@@ -119,7 +119,7 @@ third-party binaries in the App Store.
 |---|--------|--------------|-----|-------------|------------|--------|
 | 27 | iOS device (iPhone/iPad) | arm64 | Apple Clang + Xcode 15 | `libnextssl.a` | `macos-14` | 🔄 CI |
 | 28 | iOS Simulator (M-chip Mac) | arm64 | Apple Clang + Xcode 15 | `libnextssl.a` | `macos-14` | 🔄 CI |
-| 29 | iOS Simulator (Intel Mac) | x86\_64 | Apple Clang + Xcode 15 | `libnextssl.a` | `macos-13` | 🔄 CI |
+| 29 | iOS Simulator (x86\_64 target) | x86\_64 | Apple Clang + Xcode 15 | `libnextssl.a` | `macos-14` | 🔄 CI |
 
 > **CI artifact path**: `bin/ios/<variant>/`
 

@@ -1,0 +1,288 @@
+name: Build Variant
+
+on:
+  workflow_call:
+    inputs:
+      platform:
+        required: true
+        type: string
+      variant:
+        required: true
+        type: string
+      runner:
+        required: true
+        type: string
+      jobs:
+        required: false
+        type: number
+        default: 4
+      should_build:
+        required: false
+        type: boolean
+        default: true
+      blocked_by:
+        required: false
+        type: string
+        default: ""
+      blocked_status:
+        required: false
+        type: string
+        default: ""
+    outputs:
+      continue_queue:
+        description: Whether the next variant in this platform queue should run.
+        value: ${{ jobs.build.outputs.continue_queue }}
+      variant_status:
+        description: Final status recorded for this visible variant job.
+        value: ${{ jobs.build.outputs.variant_status }}
+      blocking_variant:
+        description: The variant that closed this platform queue.
+        value: ${{ jobs.build.outputs.blocking_variant }}
+      blocking_status:
+        description: The status of the variant that closed this platform queue.
+        value: ${{ jobs.build.outputs.blocking_status }}
+
+jobs:
+  build:
+    name: ${{ inputs.platform }} / ${{ inputs.variant }}
+    runs-on: ${{ inputs.runner }}
+    permissions:
+      contents: read
+    outputs:
+      continue_queue: ${{ steps.queue.outputs.continue_queue }}
+      variant_status: ${{ steps.queue.outputs.variant_status }}
+      blocking_variant: ${{ steps.queue.outputs.blocking_variant }}
+      blocking_status: ${{ steps.queue.outputs.blocking_status }}
+
+    steps:
+      - uses: actions/checkout@v6
+        timeout-minutes: 25
+
+      - name: Configure MinGW toolchain path
+        timeout-minutes: 25
+        if: runner.os == 'Windows' && inputs.should_build && contains(inputs.variant, '-mingw')
+        shell: pwsh
+        env:
+          CI_VARIANT: ${{ inputs.variant }}
+        run: |
+          $toolRoot = if ($env:CI_VARIANT -eq 'x86_64-mingw') { 'C:\msys64\mingw64\bin' } else { 'C:\msys64\mingw32\bin' }
+          $toolRoot | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          'C:\msys64\usr\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Build requested Windows variant
+        id: build_windows
+        timeout-minutes: 25
+        if: runner.os == 'Windows' && inputs.should_build
+        continue-on-error: true
+        shell: pwsh
+        env:
+          CI_PLATFORM: ${{ inputs.platform }}
+          CI_VARIANT: ${{ inputs.variant }}
+          CI_JOBS: ${{ inputs.jobs }}
+        run: |
+          $logDir = Join-Path "logs\$env:CI_PLATFORM" $env:CI_VARIANT
+          New-Item -ItemType Directory -Force $logDir | Out-Null
+          $bootstrap = Join-Path $logDir "bootstrap.log"
+
+          python --version 2>&1 | Tee-Object -FilePath $bootstrap
+          python build/ci_runner.py --platform $env:CI_PLATFORM --variants $env:CI_VARIANT --jobs $env:CI_JOBS 2>&1 | Tee-Object -FilePath $bootstrap -Append
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+
+      - name: Build requested Unix variant
+        id: build_unix
+        timeout-minutes: 25
+        if: runner.os != 'Windows' && inputs.should_build
+        continue-on-error: true
+        shell: bash
+        env:
+          CI_PLATFORM: ${{ inputs.platform }}
+          CI_VARIANT: ${{ inputs.variant }}
+          CI_JOBS: ${{ inputs.jobs }}
+        run: |
+          set -euo pipefail
+
+          log_dir="logs/${CI_PLATFORM}/${CI_VARIANT}"
+          bootstrap="${log_dir}/bootstrap.log"
+          mkdir -p "${log_dir}"
+          : > "${bootstrap}"
+
+          case "${CI_PLATFORM}" in
+            linux-glibc)
+              packages=(cmake ninja-build ccache gcc g++ python3)
+              case "${CI_VARIANT}" in
+                x86_64)
+                  ;;
+                x86)
+                  packages+=(gcc-i686-linux-gnu binutils-i686-linux-gnu libc6-dev-i386-cross)
+                  ;;
+                arm64)
+                  packages+=(gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu libc6-dev-arm64-cross)
+                  ;;
+                armv7)
+                  packages+=(gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross)
+                  ;;
+                riscv64)
+                  packages+=(gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu libc6-dev-riscv64-cross)
+                  ;;
+                s390x)
+                  packages+=(gcc-s390x-linux-gnu binutils-s390x-linux-gnu libc6-dev-s390x-cross)
+                  ;;
+                ppc64le)
+                  packages+=(gcc-powerpc64le-linux-gnu binutils-powerpc64le-linux-gnu libc6-dev-ppc64el-cross)
+                  ;;
+                loongarch64)
+                  packages+=(gcc-14-loongarch64-linux-gnu binutils-loongarch64-linux-gnu libc6-dev-loong64-cross)
+                  ;;
+                *)
+                  echo "Unsupported linux-glibc variant: ${CI_VARIANT}" >&2
+                  exit 1
+                  ;;
+              esac
+              sudo apt-get update 2>&1 | tee -a "${bootstrap}"
+              sudo apt-get install -y "${packages[@]}" 2>&1 | tee -a "${bootstrap}"
+              python3 --version 2>&1 | tee -a "${bootstrap}"
+              python3 build/ci_runner.py --platform "${CI_PLATFORM}" --variants "${CI_VARIANT}" --jobs "${CI_JOBS}" 2>&1 | tee -a "${bootstrap}"
+              ;;
+
+            linux-musl)
+              sudo apt-get update 2>&1 | tee -a "${bootstrap}"
+              sudo apt-get install -y cmake ninja-build ccache python3 zig 2>&1 | tee -a "${bootstrap}"
+              python3 --version 2>&1 | tee -a "${bootstrap}"
+              python3 build/ci_runner.py --platform "${CI_PLATFORM}" --variants "${CI_VARIANT}" --jobs "${CI_JOBS}" 2>&1 | tee -a "${bootstrap}"
+              ;;
+
+            macos|ios)
+              brew list cmake >/dev/null 2>&1 || brew install cmake 2>&1 | tee -a "${bootstrap}"
+              brew list ninja >/dev/null 2>&1 || brew install ninja 2>&1 | tee -a "${bootstrap}"
+              brew list ccache >/dev/null 2>&1 || brew install ccache 2>&1 | tee -a "${bootstrap}"
+              xcodebuild -version 2>&1 | tee -a "${bootstrap}"
+              python3 --version 2>&1 | tee -a "${bootstrap}"
+              python3 build/ci_runner.py --platform "${CI_PLATFORM}" --variants "${CI_VARIANT}" --jobs "${CI_JOBS}" 2>&1 | tee -a "${bootstrap}"
+              ;;
+
+            wasm)
+              sudo apt-get update 2>&1 | tee -a "${bootstrap}"
+              if [ "${CI_VARIANT}" = "emscripten-wasm32" ]; then
+                sudo apt-get install -y cmake ninja-build git python3 2>&1 | tee -a "${bootstrap}"
+                git clone https://github.com/emscripten-core/emsdk.git "${RUNNER_TEMP}/emsdk" 2>&1 | tee -a "${bootstrap}"
+                "${RUNNER_TEMP}/emsdk/emsdk" install latest 2>&1 | tee -a "${bootstrap}"
+                "${RUNNER_TEMP}/emsdk/emsdk" activate latest 2>&1 | tee -a "${bootstrap}"
+                # shellcheck disable=SC1091
+                source "${RUNNER_TEMP}/emsdk/emsdk_env.sh"
+              else
+                sudo apt-get install -y cmake ninja-build curl python3 xz-utils 2>&1 | tee -a "${bootstrap}"
+                wasi_version="${WASI_SDK_VERSION:-32}"
+                wasi_archive="wasi-sdk-${wasi_version}.0-x86_64-linux.tar.gz"
+                curl -fL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${wasi_version}/${wasi_archive}" -o "${RUNNER_TEMP}/${wasi_archive}" 2>&1 | tee -a "${bootstrap}"
+                tar -C "${RUNNER_TEMP}" -xzf "${RUNNER_TEMP}/${wasi_archive}" 2>&1 | tee -a "${bootstrap}"
+                export WASI_SDK_PATH="${RUNNER_TEMP}/wasi-sdk-${wasi_version}.0-x86_64-linux"
+              fi
+              python3 --version 2>&1 | tee -a "${bootstrap}"
+              python3 build/ci_runner.py --platform "${CI_PLATFORM}" --variants "${CI_VARIANT}" --jobs "${CI_JOBS}" 2>&1 | tee -a "${bootstrap}"
+              ;;
+
+            android)
+              sudo apt-get update 2>&1 | tee -a "${bootstrap}"
+              sudo apt-get install -y cmake ninja-build curl unzip python3 2>&1 | tee -a "${bootstrap}"
+              ndk_version="${ANDROID_NDK_VERSION:-r27d}"
+              ndk_archive="android-ndk-${ndk_version}-linux.zip"
+              curl -fL "https://dl.google.com/android/repository/${ndk_archive}" -o "${RUNNER_TEMP}/${ndk_archive}" 2>&1 | tee -a "${bootstrap}"
+              unzip -q "${RUNNER_TEMP}/${ndk_archive}" -d "${RUNNER_TEMP}"
+              export ANDROID_NDK_HOME="${RUNNER_TEMP}/android-ndk-${ndk_version}"
+              python3 --version 2>&1 | tee -a "${bootstrap}"
+              python3 build/ci_runner.py --platform "${CI_PLATFORM}" --variants "${CI_VARIANT}" --jobs "${CI_JOBS}" 2>&1 | tee -a "${bootstrap}"
+              ;;
+
+            *)
+              echo "Unsupported platform: ${CI_PLATFORM}" >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Record skipped variant
+        timeout-minutes: 25
+        if: ${{ !inputs.should_build }}
+        shell: bash
+        env:
+          CI_PLATFORM: ${{ inputs.platform }}
+          CI_VARIANT: ${{ inputs.variant }}
+          CI_BLOCKED_BY: ${{ inputs.blocked_by }}
+          CI_BLOCKED_STATUS: ${{ inputs.blocked_status }}
+        run: |
+          set -euo pipefail
+          python_cmd=python3
+          if [ "${RUNNER_OS}" = "Windows" ]; then
+            python_cmd=python
+          fi
+          "${python_cmd}" build/ci_skip.py \
+            --platform "${CI_PLATFORM}" \
+            --variant "${CI_VARIANT}" \
+            --reason "queue stopped after ${CI_BLOCKED_BY:-an earlier variant} (${CI_BLOCKED_STATUS:-blocked})" \
+            --blocked-by "${CI_BLOCKED_BY}" \
+            --blocked-status "${CI_BLOCKED_STATUS}"
+
+      - name: Set queue outputs
+        id: queue
+        timeout-minutes: 25
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          blocking_variant="${{ inputs.variant }}"
+          blocking_status="success"
+
+          if [ "${{ inputs.should_build }}" != "true" ]; then
+            continue_queue=false
+            variant_status=skipped
+            blocking_variant="${{ inputs.blocked_by }}"
+            blocking_status="${{ inputs.blocked_status }}"
+            if [ -z "${blocking_variant}" ]; then
+              blocking_variant="${{ inputs.variant }}"
+            fi
+            if [ -z "${blocking_status}" ]; then
+              blocking_status=blocked
+            fi
+          elif [ "${{ steps.build_windows.outcome }}" = "success" ] || [ "${{ steps.build_unix.outcome }}" = "success" ]; then
+            continue_queue=true
+            variant_status=success
+          else
+            continue_queue=false
+            variant_status=failed
+            blocking_status=failed
+          fi
+
+          {
+            echo "continue_queue=${continue_queue}"
+            echo "variant_status=${variant_status}"
+            echo "blocking_variant=${blocking_variant}"
+            echo "blocking_status=${blocking_status}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Upload binaries
+        timeout-minutes: 25
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: nextssl__${{ inputs.platform }}__${{ inputs.variant }}
+          path: bin/${{ inputs.platform }}/${{ inputs.variant }}/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload logs
+        timeout-minutes: 25
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: logs__${{ inputs.platform }}__${{ inputs.variant }}
+          path: logs/${{ inputs.platform }}/${{ inputs.variant }}/
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Fail job when build failed
+        timeout-minutes: 25
+        if: ${{ inputs.should_build && (steps.build_windows.outcome == 'failure' || steps.build_unix.outcome == 'failure') }}
+        shell: bash
+        run: exit 1

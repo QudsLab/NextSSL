@@ -1,0 +1,515 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, master ]
+    paths-ignore:
+      - logs/**
+  pull_request:
+    branches: [ main, master ]
+    paths-ignore:
+      - logs/**
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  win_x86_64_msvc:
+    name: Windows x86_64 MSVC
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: win
+      variant: x86_64-msvc
+      runner: windows-2022
+
+  win_x86_msvc:
+    name: Windows x86 MSVC
+    needs: [win_x86_64_msvc]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: win
+      variant: x86-msvc
+      runner: windows-2022
+      should_build: ${{ needs.win_x86_64_msvc.result == 'success' && needs.win_x86_64_msvc.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_x86_64_msvc.outputs.blocking_variant || 'Windows x86_64 MSVC' }}
+      blocked_status: ${{ needs.win_x86_64_msvc.outputs.blocking_status || needs.win_x86_64_msvc.result }}
+
+  win_arm64_msvc:
+    name: Windows arm64 MSVC
+    needs: [win_x86_msvc]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: win
+      variant: arm64-msvc
+      runner: windows-2022
+      should_build: ${{ needs.win_x86_msvc.result == 'success' && needs.win_x86_msvc.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_x86_msvc.outputs.blocking_variant || 'Windows x86 MSVC' }}
+      blocked_status: ${{ needs.win_x86_msvc.outputs.blocking_status || needs.win_x86_msvc.result }}
+
+  win_x86_64_mingw:
+    name: Windows x86_64 MinGW
+    needs: [win_arm64_msvc]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: win
+      variant: x86_64-mingw
+      runner: windows-2022
+      should_build: ${{ needs.win_arm64_msvc.result == 'success' && needs.win_arm64_msvc.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_arm64_msvc.outputs.blocking_variant || 'Windows arm64 MSVC' }}
+      blocked_status: ${{ needs.win_arm64_msvc.outputs.blocking_status || needs.win_arm64_msvc.result }}
+
+  win_x86_mingw:
+    name: Windows x86 MinGW
+    needs: [win_x86_64_mingw]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: win
+      variant: x86-mingw
+      runner: windows-2022
+      should_build: ${{ needs.win_x86_64_mingw.result == 'success' && needs.win_x86_64_mingw.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_x86_64_mingw.outputs.blocking_variant || 'Windows x86_64 MinGW' }}
+      blocked_status: ${{ needs.win_x86_64_mingw.outputs.blocking_status || needs.win_x86_64_mingw.result }}
+
+  win_armv7_msvc:
+    name: Windows ARMv7 MSVC
+    needs: [win_x86_mingw]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: win
+      variant: armv7-msvc
+      runner: windows-2022
+      should_build: ${{ needs.win_x86_mingw.result == 'success' && needs.win_x86_mingw.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_x86_mingw.outputs.blocking_variant || 'Windows x86 MinGW' }}
+      blocked_status: ${{ needs.win_x86_mingw.outputs.blocking_status || needs.win_x86_mingw.result }}
+
+  linux_glibc_x86_64:
+    name: Linux glibc x86_64
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-glibc
+      variant: x86_64
+      runner: ubuntu-24.04
+
+  linux_glibc_x86:
+    name: Linux glibc x86
+    needs: [linux_glibc_x86_64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-glibc
+      variant: x86
+      runner: ubuntu-24.04
+      should_build: ${{ needs.linux_glibc_x86_64.result == 'success' && needs.linux_glibc_x86_64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_x86_64.outputs.blocking_variant || 'Linux glibc x86_64' }}
+      blocked_status: ${{ needs.linux_glibc_x86_64.outputs.blocking_status || needs.linux_glibc_x86_64.result }}
+
+  linux_glibc_arm64:
+    name: Linux glibc arm64
+    needs: [linux_glibc_x86]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-glibc
+      variant: arm64
+      runner: ubuntu-24.04
+      should_build: ${{ needs.linux_glibc_x86.result == 'success' && needs.linux_glibc_x86.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_x86.outputs.blocking_variant || 'Linux glibc x86' }}
+      blocked_status: ${{ needs.linux_glibc_x86.outputs.blocking_status || needs.linux_glibc_x86.result }}
+
+  linux_glibc_armv7:
+    name: Linux glibc armv7
+    needs: [linux_glibc_arm64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-glibc
+      variant: armv7
+      runner: ubuntu-24.04
+      should_build: ${{ needs.linux_glibc_arm64.result == 'success' && needs.linux_glibc_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_arm64.outputs.blocking_variant || 'Linux glibc arm64' }}
+      blocked_status: ${{ needs.linux_glibc_arm64.outputs.blocking_status || needs.linux_glibc_arm64.result }}
+
+  linux_glibc_riscv64:
+    name: Linux glibc riscv64
+    needs: [linux_glibc_armv7]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-glibc
+      variant: riscv64
+      runner: ubuntu-24.04
+      should_build: ${{ needs.linux_glibc_armv7.result == 'success' && needs.linux_glibc_armv7.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_armv7.outputs.blocking_variant || 'Linux glibc armv7' }}
+      blocked_status: ${{ needs.linux_glibc_armv7.outputs.blocking_status || needs.linux_glibc_armv7.result }}
+
+  linux_glibc_s390x:
+    name: Linux glibc s390x
+    needs: [linux_glibc_riscv64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-glibc
+      variant: s390x
+      runner: ubuntu-24.04
+      should_build: ${{ needs.linux_glibc_riscv64.result == 'success' && needs.linux_glibc_riscv64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_riscv64.outputs.blocking_variant || 'Linux glibc riscv64' }}
+      blocked_status: ${{ needs.linux_glibc_riscv64.outputs.blocking_status || needs.linux_glibc_riscv64.result }}
+
+  linux_glibc_ppc64le:
+    name: Linux glibc ppc64le
+    needs: [linux_glibc_s390x]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-glibc
+      variant: ppc64le
+      runner: ubuntu-24.04
+      should_build: ${{ needs.linux_glibc_s390x.result == 'success' && needs.linux_glibc_s390x.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_s390x.outputs.blocking_variant || 'Linux glibc s390x' }}
+      blocked_status: ${{ needs.linux_glibc_s390x.outputs.blocking_status || needs.linux_glibc_s390x.result }}
+
+  linux_glibc_loongarch64:
+    name: Linux glibc loongarch64
+    needs: [linux_glibc_ppc64le]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-glibc
+      variant: loongarch64
+      runner: ubuntu-24.04
+      should_build: ${{ needs.linux_glibc_ppc64le.result == 'success' && needs.linux_glibc_ppc64le.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_ppc64le.outputs.blocking_variant || 'Linux glibc ppc64le' }}
+      blocked_status: ${{ needs.linux_glibc_ppc64le.outputs.blocking_status || needs.linux_glibc_ppc64le.result }}
+
+  linux_musl_x86_64:
+    name: Linux musl x86_64
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-musl
+      variant: x86_64
+      runner: ubuntu-24.04
+
+  linux_musl_arm64:
+    name: Linux musl arm64
+    needs: [linux_musl_x86_64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-musl
+      variant: arm64
+      runner: ubuntu-24.04
+      should_build: ${{ needs.linux_musl_x86_64.result == 'success' && needs.linux_musl_x86_64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_musl_x86_64.outputs.blocking_variant || 'Linux musl x86_64' }}
+      blocked_status: ${{ needs.linux_musl_x86_64.outputs.blocking_status || needs.linux_musl_x86_64.result }}
+
+  linux_musl_armv7:
+    name: Linux musl armv7
+    needs: [linux_musl_arm64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: linux-musl
+      variant: armv7
+      runner: ubuntu-24.04
+      should_build: ${{ needs.linux_musl_arm64.result == 'success' && needs.linux_musl_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_musl_arm64.outputs.blocking_variant || 'Linux musl arm64' }}
+      blocked_status: ${{ needs.linux_musl_arm64.outputs.blocking_status || needs.linux_musl_arm64.result }}
+
+  macos_x86_64:
+    name: macOS x86_64
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: macos
+      variant: x86_64
+      runner: macos-14
+
+  macos_arm64:
+    name: macOS arm64
+    needs: [macos_x86_64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: macos
+      variant: arm64
+      runner: macos-14
+      should_build: ${{ needs.macos_x86_64.result == 'success' && needs.macos_x86_64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.macos_x86_64.outputs.blocking_variant || 'macOS x86_64' }}
+      blocked_status: ${{ needs.macos_x86_64.outputs.blocking_status || needs.macos_x86_64.result }}
+
+  macos_universal:
+    name: macOS universal
+    needs: [macos_arm64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: macos
+      variant: universal
+      runner: macos-14
+      should_build: ${{ needs.macos_arm64.result == 'success' && needs.macos_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.macos_arm64.outputs.blocking_variant || 'macOS arm64' }}
+      blocked_status: ${{ needs.macos_arm64.outputs.blocking_status || needs.macos_arm64.result }}
+
+  wasm_emscripten_wasm32:
+    name: WASM emscripten-wasm32
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: wasm
+      variant: emscripten-wasm32
+      runner: ubuntu-24.04
+
+  wasm_wasi_wasm32:
+    name: WASM wasi-wasm32
+    needs: [wasm_emscripten_wasm32]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: wasm
+      variant: wasi-wasm32
+      runner: ubuntu-24.04
+      should_build: ${{ needs.wasm_emscripten_wasm32.result == 'success' && needs.wasm_emscripten_wasm32.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.wasm_emscripten_wasm32.outputs.blocking_variant || 'WASM emscripten-wasm32' }}
+      blocked_status: ${{ needs.wasm_emscripten_wasm32.outputs.blocking_status || needs.wasm_emscripten_wasm32.result }}
+
+  android_arm64_v8a:
+    name: Android arm64-v8a
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: android
+      variant: arm64-v8a
+      runner: ubuntu-24.04
+
+  android_armeabi_v7a:
+    name: Android armeabi-v7a
+    needs: [android_arm64_v8a]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: android
+      variant: armeabi-v7a
+      runner: ubuntu-24.04
+      should_build: ${{ needs.android_arm64_v8a.result == 'success' && needs.android_arm64_v8a.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.android_arm64_v8a.outputs.blocking_variant || 'Android arm64-v8a' }}
+      blocked_status: ${{ needs.android_arm64_v8a.outputs.blocking_status || needs.android_arm64_v8a.result }}
+
+  android_x86_64:
+    name: Android x86_64
+    needs: [android_armeabi_v7a]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: android
+      variant: x86_64
+      runner: ubuntu-24.04
+      should_build: ${{ needs.android_armeabi_v7a.result == 'success' && needs.android_armeabi_v7a.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.android_armeabi_v7a.outputs.blocking_variant || 'Android armeabi-v7a' }}
+      blocked_status: ${{ needs.android_armeabi_v7a.outputs.blocking_status || needs.android_armeabi_v7a.result }}
+
+  android_x86:
+    name: Android x86
+    needs: [android_x86_64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: android
+      variant: x86
+      runner: ubuntu-24.04
+      should_build: ${{ needs.android_x86_64.result == 'success' && needs.android_x86_64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.android_x86_64.outputs.blocking_variant || 'Android x86_64' }}
+      blocked_status: ${{ needs.android_x86_64.outputs.blocking_status || needs.android_x86_64.result }}
+
+  ios_device_arm64:
+    name: iOS device arm64
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: ios
+      variant: device-arm64
+      runner: macos-14
+
+  ios_sim_arm64:
+    name: iOS simulator arm64
+    needs: [ios_device_arm64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: ios
+      variant: sim-arm64
+      runner: macos-14
+      should_build: ${{ needs.ios_device_arm64.result == 'success' && needs.ios_device_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.ios_device_arm64.outputs.blocking_variant || 'iOS device arm64' }}
+      blocked_status: ${{ needs.ios_device_arm64.outputs.blocking_status || needs.ios_device_arm64.result }}
+
+  ios_sim_x86_64:
+    name: iOS simulator x86_64
+    needs: [ios_sim_arm64]
+    if: always()
+    uses: ./.github/workflows/build-variant.yml
+    with:
+      platform: ios
+      variant: sim-x86_64
+      runner: macos-14
+      should_build: ${{ needs.ios_sim_arm64.result == 'success' && needs.ios_sim_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.ios_sim_arm64.outputs.blocking_variant || 'iOS simulator arm64' }}
+      blocked_status: ${{ needs.ios_sim_arm64.outputs.blocking_status || needs.ios_sim_arm64.result }}
+
+  collect:
+    name: Collect and publish logs
+    needs:
+      - win_armv7_msvc
+      - linux_glibc_loongarch64
+      - linux_musl_armv7
+      - macos_universal
+      - wasm_wasi_wasm32
+      - android_x86
+      - ios_sim_x86_64
+    if: always()
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v6
+        timeout-minutes: 25
+        with:
+          fetch-depth: 0
+
+      - name: Download all log artifacts
+        timeout-minutes: 25
+        uses: actions/download-artifact@v8
+        with:
+          pattern: logs__*
+          path: _ci_logs_artifacts/
+          merge-multiple: false
+
+      - name: Merge log artifacts
+        timeout-minutes: 25
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 build/ci_merge_logs.py _ci_logs_artifacts merged-logs
+
+      - name: Upload all-logs
+        timeout-minutes: 25
+        uses: actions/upload-artifact@v7
+        with:
+          name: all-logs
+          path: merged-logs/
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Determine publish target
+        id: publish_target
+        timeout-minutes: 25
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "should_publish=false" >> "${GITHUB_OUTPUT}"
+            echo "publish_state=artifact-only" >> "${GITHUB_OUTPUT}"
+            echo "reason=pull request runs upload artifacts only" >> "${GITHUB_OUTPUT}"
+          elif [ "${{ github.ref_name }}" = "main" ] || [ "${{ github.ref_name }}" = "master" ]; then
+            echo "should_publish=true" >> "${GITHUB_OUTPUT}"
+            echo "branch=${{ github.ref_name }}" >> "${GITHUB_OUTPUT}"
+          else
+            echo "should_publish=false" >> "${GITHUB_OUTPUT}"
+            echo "publish_state=artifact-only" >> "${GITHUB_OUTPUT}"
+            echo "reason=workflow runs on branch ${{ github.ref_name }}, so logs were not pushed back to the repository" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Publish logs to repo branch
+        id: publish_logs
+        timeout-minutes: 25
+        if: steps.publish_target.outputs.should_publish == 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          branch="${{ steps.publish_target.outputs.branch }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin "${branch}"
+          git switch -C "${branch}" "origin/${branch}"
+
+          rm -rf logs
+          mkdir -p logs
+          cp -R merged-logs/. logs/
+
+          git add logs
+          if git diff --cached --quiet; then
+            echo "publish_state=no-changes" >> "${GITHUB_OUTPUT}"
+          else
+            git commit -m "CI logs for run ${{ github.run_id }}"
+            git push origin HEAD:"${branch}"
+            echo "publish_state=published" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Write pull instructions
+        timeout-minutes: 25
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          publish_state="${{ steps.publish_target.outputs.publish_state }}"
+          publish_reason="${{ steps.publish_target.outputs.reason }}"
+          publish_branch="${{ steps.publish_target.outputs.branch }}"
+
+          if [ "${{ steps.publish_target.outputs.should_publish }}" = "true" ]; then
+            if [ "${{ steps.publish_logs.outcome }}" = "success" ]; then
+              publish_state="${{ steps.publish_logs.outputs.publish_state }}"
+            elif [ "${{ steps.publish_logs.outcome }}" = "failure" ]; then
+              publish_state="publish-failed"
+              publish_reason="repository push failed; see the collect job log for details"
+            fi
+          fi
+
+          {
+            echo "## Pullable logs"
+            echo
+            case "${publish_state}" in
+              published)
+                echo "Logs were published to branch: ${publish_branch}"
+                ;;
+              no-changes)
+                echo "Logs already matched branch: ${publish_branch}"
+                ;;
+              publish-failed)
+                echo "Logs were uploaded as artifacts, but publication to ${publish_branch} failed."
+                echo
+                echo "Reason: ${publish_reason}"
+                ;;
+              *)
+                echo "Logs were uploaded as artifacts only."
+                echo
+                echo "Reason: ${publish_reason}"
+                ;;
+            esac
+            echo
+            echo "Commands:"
+            if [ -n "${publish_branch}" ]; then
+              echo "git fetch origin ${publish_branch}"
+              echo "git switch ${publish_branch}"
+            else
+              echo "git fetch origin main"
+              echo "git switch main"
+            fi
+            echo
+            echo "Logs path: logs/<platform>/<variant>/"
+            echo
+            echo "Fallback artifact: all-logs"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Fail collect job when publish failed
+        timeout-minutes: 25
+        if: ${{ steps.publish_target.outputs.should_publish == 'true' && steps.publish_logs.outcome == 'failure' }}
+        shell: bash
+        run: exit 1

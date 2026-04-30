@@ -131,4 +131,5 @@ IX --> Z
 - The reusable workflow lives in `.github/workflows/build-variant.yml`.
 - Queue stop behavior is enforced by workflow chaining and by `build/ci_skip.py` for blocked variants.
 - Log normalization in `collect` is handled by `build/ci_merge_logs.py`.
+- Apple x86_64 target jobs run on `macos-14`; the workflow cross-compiles those targets there to avoid `macos-13` runner starvation.
 - Direct local `build.py` adapters are still narrower than the CI matrix; CI-only profiles are driven through `build/ci_runner.py` plus toolchain setup in the workflow.
