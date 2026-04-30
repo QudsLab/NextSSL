@@ -15,7 +15,7 @@ on:
       jobs:
         required: false
         type: number
-        default: 4
+        default: 6
       should_build:
         required: false
         type: boolean
@@ -57,6 +57,60 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         timeout-minutes: 25
+        with:
+          fetch-depth: 1
+
+      - name: Cache Unix compiler outputs
+        timeout-minutes: 25
+        if: runner.os != 'Windows' && inputs.should_build
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ccache
+          key: ${{ runner.os }}-ccache-${{ inputs.platform }}-${{ inputs.variant }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-ccache-${{ inputs.platform }}-${{ inputs.variant }}-
+
+      - name: Cache Windows compiler outputs
+        timeout-minutes: 25
+        if: runner.os == 'Windows' && inputs.should_build
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}\sccache-cache
+          key: ${{ runner.os }}-sccache-${{ inputs.platform }}-${{ inputs.variant }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-sccache-${{ inputs.platform }}-${{ inputs.variant }}-
+
+      - name: Cache Zig toolchain
+        timeout-minutes: 25
+        if: runner.os != 'Windows' && inputs.should_build && inputs.platform == 'linux-musl'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/nextssl-tools/zig
+          key: ${{ runner.os }}-zig-0.14.0
+
+      - name: Cache Emscripten SDK
+        timeout-minutes: 25
+        if: runner.os != 'Windows' && inputs.should_build && inputs.platform == 'wasm' && inputs.variant == 'emscripten-wasm32'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/nextssl-tools/emsdk
+          key: ${{ runner.os }}-emsdk-latest
+
+      - name: Cache WASI SDK
+        timeout-minutes: 25
+        if: runner.os != 'Windows' && inputs.should_build && inputs.platform == 'wasm' && inputs.variant == 'wasi-wasm32'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/nextssl-tools/wasi-sdk
+          key: ${{ runner.os }}-wasi-sdk-32
+
+      - name: Cache Android NDK
+        timeout-minutes: 25
+        if: runner.os != 'Windows' && inputs.should_build && inputs.platform == 'android'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/nextssl-tools/android-ndk
+          key: ${{ runner.os }}-android-ndk-r27d
 
       - name: Configure MinGW toolchain path
         timeout-minutes: 25
@@ -79,10 +133,15 @@ jobs:
           CI_PLATFORM: ${{ inputs.platform }}
           CI_VARIANT: ${{ inputs.variant }}
           CI_JOBS: ${{ inputs.jobs }}
+          SCCACHE_DIR: ${{ runner.temp }}\sccache-cache
         run: |
           $logDir = Join-Path "logs\$env:CI_PLATFORM" $env:CI_VARIANT
           New-Item -ItemType Directory -Force $logDir | Out-Null
           $bootstrap = Join-Path $logDir "bootstrap.log"
+
+          if ($env:CI_VARIANT -eq 'armv7-msvc') {
+            $env:WindowsSDKVersion = '10.0.22621.0'
+          }
 
           python --version 2>&1 | Tee-Object -FilePath $bootstrap
           python build/ci_runner.py --platform $env:CI_PLATFORM --variants $env:CI_VARIANT --jobs $env:CI_JOBS 2>&1 | Tee-Object -FilePath $bootstrap -Append
@@ -102,6 +161,8 @@ jobs:
           CI_JOBS: ${{ inputs.jobs }}
         run: |
           set -euo pipefail
+          export CCACHE_DIR="${HOME}/.cache/ccache"
+          mkdir -p "${CCACHE_DIR}"
 
           log_dir="logs/${CI_PLATFORM}/${CI_VARIANT}"
           bootstrap="${log_dir}/bootstrap.log"
@@ -151,10 +212,15 @@ jobs:
               sudo apt-get install -y cmake ninja-build ccache curl python3 xz-utils 2>&1 | tee -a "${bootstrap}"
               zig_version="${ZIG_VERSION:-0.14.0}"
               zig_archive="zig-linux-x86_64-${zig_version}.tar.xz"
-              curl -fL "https://ziglang.org/download/${zig_version}/${zig_archive}" -o "${RUNNER_TEMP}/${zig_archive}" 2>&1 | tee -a "${bootstrap}"
-              tar -C "${RUNNER_TEMP}" -xJf "${RUNNER_TEMP}/${zig_archive}" 2>&1 | tee -a "${bootstrap}"
-              export PATH="${RUNNER_TEMP}/zig-linux-x86_64-${zig_version}:${PATH}"
-              echo "${RUNNER_TEMP}/zig-linux-x86_64-${zig_version}" >> "${GITHUB_PATH}"
+              zig_root="${HOME}/.cache/nextssl-tools/zig/zig-linux-x86_64-${zig_version}"
+              if [ ! -x "${zig_root}/zig" ]; then
+                mkdir -p "${HOME}/.cache/nextssl-tools/zig"
+                rm -rf "${zig_root}"
+                curl -fL "https://ziglang.org/download/${zig_version}/${zig_archive}" -o "${RUNNER_TEMP}/${zig_archive}" 2>&1 | tee -a "${bootstrap}"
+                tar -C "${HOME}/.cache/nextssl-tools/zig" -xJf "${RUNNER_TEMP}/${zig_archive}" 2>&1 | tee -a "${bootstrap}"
+              fi
+              export PATH="${zig_root}:${PATH}"
+              echo "${zig_root}" >> "${GITHUB_PATH}"
               python3 --version 2>&1 | tee -a "${bootstrap}"
               python3 build/ci_runner.py --platform "${CI_PLATFORM}" --variants "${CI_VARIANT}" --jobs "${CI_JOBS}" 2>&1 | tee -a "${bootstrap}"
               ;;
@@ -172,18 +238,31 @@ jobs:
               sudo apt-get update 2>&1 | tee -a "${bootstrap}"
               if [ "${CI_VARIANT}" = "emscripten-wasm32" ]; then
                 sudo apt-get install -y cmake ninja-build git python3 2>&1 | tee -a "${bootstrap}"
-                git clone https://github.com/emscripten-core/emsdk.git "${RUNNER_TEMP}/emsdk" 2>&1 | tee -a "${bootstrap}"
-                "${RUNNER_TEMP}/emsdk/emsdk" install latest 2>&1 | tee -a "${bootstrap}"
-                "${RUNNER_TEMP}/emsdk/emsdk" activate latest 2>&1 | tee -a "${bootstrap}"
+                emsdk_version="${EMSDK_VERSION:-latest}"
+                emsdk_root="${HOME}/.cache/nextssl-tools/emsdk"
+                if [ ! -x "${emsdk_root}/emsdk" ]; then
+                  mkdir -p "$(dirname "${emsdk_root}")"
+                  rm -rf "${emsdk_root}"
+                  git clone https://github.com/emscripten-core/emsdk.git "${emsdk_root}" 2>&1 | tee -a "${bootstrap}"
+                fi
+                if [ ! -d "${emsdk_root}/upstream/emscripten" ]; then
+                  "${emsdk_root}/emsdk" install "${emsdk_version}" 2>&1 | tee -a "${bootstrap}"
+                fi
+                "${emsdk_root}/emsdk" activate "${emsdk_version}" 2>&1 | tee -a "${bootstrap}"
                 # shellcheck disable=SC1091
-                source "${RUNNER_TEMP}/emsdk/emsdk_env.sh"
+                source "${emsdk_root}/emsdk_env.sh"
               else
                 sudo apt-get install -y cmake ninja-build curl python3 xz-utils 2>&1 | tee -a "${bootstrap}"
                 wasi_version="${WASI_SDK_VERSION:-32}"
                 wasi_archive="wasi-sdk-${wasi_version}.0-x86_64-linux.tar.gz"
-                curl -fL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${wasi_version}/${wasi_archive}" -o "${RUNNER_TEMP}/${wasi_archive}" 2>&1 | tee -a "${bootstrap}"
-                tar -C "${RUNNER_TEMP}" -xzf "${RUNNER_TEMP}/${wasi_archive}" 2>&1 | tee -a "${bootstrap}"
-                export WASI_SDK_PATH="${RUNNER_TEMP}/wasi-sdk-${wasi_version}.0-x86_64-linux"
+                wasi_root="${HOME}/.cache/nextssl-tools/wasi-sdk/wasi-sdk-${wasi_version}.0-x86_64-linux"
+                if [ ! -x "${wasi_root}/bin/clang" ]; then
+                  mkdir -p "${HOME}/.cache/nextssl-tools/wasi-sdk"
+                  rm -rf "${wasi_root}"
+                  curl -fL "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${wasi_version}/${wasi_archive}" -o "${RUNNER_TEMP}/${wasi_archive}" 2>&1 | tee -a "${bootstrap}"
+                  tar -C "${HOME}/.cache/nextssl-tools/wasi-sdk" -xzf "${RUNNER_TEMP}/${wasi_archive}" 2>&1 | tee -a "${bootstrap}"
+                fi
+                export WASI_SDK_PATH="${wasi_root}"
               fi
               python3 --version 2>&1 | tee -a "${bootstrap}"
               python3 build/ci_runner.py --platform "${CI_PLATFORM}" --variants "${CI_VARIANT}" --jobs "${CI_JOBS}" 2>&1 | tee -a "${bootstrap}"
@@ -194,9 +273,14 @@ jobs:
               sudo apt-get install -y cmake ninja-build curl unzip python3 2>&1 | tee -a "${bootstrap}"
               ndk_version="${ANDROID_NDK_VERSION:-r27d}"
               ndk_archive="android-ndk-${ndk_version}-linux.zip"
-              curl -fL "https://dl.google.com/android/repository/${ndk_archive}" -o "${RUNNER_TEMP}/${ndk_archive}" 2>&1 | tee -a "${bootstrap}"
-              unzip -q "${RUNNER_TEMP}/${ndk_archive}" -d "${RUNNER_TEMP}"
-              export ANDROID_NDK_HOME="${RUNNER_TEMP}/android-ndk-${ndk_version}"
+              ndk_root="${HOME}/.cache/nextssl-tools/android-ndk/android-ndk-${ndk_version}"
+              if [ ! -d "${ndk_root}" ]; then
+                mkdir -p "${HOME}/.cache/nextssl-tools/android-ndk"
+                rm -rf "${ndk_root}"
+                curl -fL "https://dl.google.com/android/repository/${ndk_archive}" -o "${RUNNER_TEMP}/${ndk_archive}" 2>&1 | tee -a "${bootstrap}"
+                unzip -q "${RUNNER_TEMP}/${ndk_archive}" -d "${HOME}/.cache/nextssl-tools/android-ndk"
+              fi
+              export ANDROID_NDK_HOME="${ndk_root}"
               python3 --version 2>&1 | tee -a "${bootstrap}"
               python3 build/ci_runner.py --platform "${CI_PLATFORM}" --variants "${CI_VARIANT}" --jobs "${CI_JOBS}" 2>&1 | tee -a "${bootstrap}"
               ;;

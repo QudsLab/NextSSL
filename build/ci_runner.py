@@ -132,7 +132,7 @@ def write_lines(path: Path, lines: list[str]) -> None:
 
 
 def run_logged(command: list[object], log_path: Path, cwd: Path | None = None,
-               env: dict[str, str] | None = None) -> int:
+                env: dict[str, str] | None = None) -> int:
     ensure_dir(log_path.parent)
     with log_path.open("a", encoding="utf-8", errors="replace") as handle:
         handle.write("\n" + "=" * 78 + "\n")
@@ -165,7 +165,7 @@ def collect_native_artifacts(platform: str, bin_dir: Path) -> list[Path]:
         "macos": ("*.dylib", "*.a"),
         "android": ("*.so",),
         "ios": ("*.a",),
-        "wasm": ("*.wasm", "*.js"),
+        "wasm": ("*.wasm", "*.js", "*.so", "*.a"),
     }
     artifacts: list[Path] = []
     for pattern in patterns.get(platform, ()): 
@@ -324,11 +324,13 @@ def windows_configure_args(variant: str, build_dir: Path, bin_dir: Path) -> list
 
     if profile["toolchain"] == "msvc":
         generator = os.environ.get("NEXTSSL_WINDOWS_GENERATOR", "Visual Studio 17 2022")
-        args += ["-G", generator, "-A", profile["generator_arch"]]
-
         if variant == "armv7-msvc":
             sdk_version = os.environ.get("NEXTSSL_ARMV7_WINDOWS_SDK", "10.0.22621.0")
+            args += ["-G", generator, "-A", f"{profile['generator_arch']},version={sdk_version}"]
+            args.append(f"-DCMAKE_SYSTEM_VERSION={sdk_version}")
             args.append(f"-DCMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION={sdk_version}")
+        else:
+            args += ["-G", generator, "-A", profile["generator_arch"]]
 
         launcher = find_tool("sccache")
         if launcher:
