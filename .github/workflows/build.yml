@@ -16,18 +16,61 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build_intent:
+    name: Resolve build intent
+    runs-on: ubuntu-24.04
+    outputs:
+      should_build: ${{ steps.intent.outputs.should_build }}
+      reason: ${{ steps.intent.outputs.reason }}
+    steps:
+      - name: Resolve push build marker
+        id: intent
+        shell: bash
+        env:
+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" != "push" ]; then
+            echo "should_build=true" >> "${GITHUB_OUTPUT}"
+            echo "reason=non-push runs always build" >> "${GITHUB_OUTPUT}"
+          elif printf '%s\n' "${HEAD_COMMIT_MESSAGE}" | grep -Eq '(^|[[:space:]])-B([[:space:]]|$)'; then
+            echo "should_build=true" >> "${GITHUB_OUTPUT}"
+            echo "reason=push summary contains -B" >> "${GITHUB_OUTPUT}"
+          else
+            echo "should_build=false" >> "${GITHUB_OUTPUT}"
+            echo "reason=push summary missing -B build marker" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Write build intent summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Build marker"
+            echo
+            echo "Pushes build only when the push summary or commit message contains -B."
+            echo "Without -B, only this controller job runs and the platform queues stay unscheduled."
+            echo
+            echo "Current run: ${{ steps.intent.outputs.reason }}"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
   win_x86_64_msvc:
     name: Windows x86_64 MSVC
+    needs: [build_intent]
+    if: ${{ needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: win
       variant: x86_64-msvc
       runner: windows-2022
+      should_build: ${{ needs.build_intent.outputs.should_build == 'true' }}
+      blocked_by: ${{ needs.build_intent.outputs.reason }}
+      blocked_status: skipped
 
   win_x86_msvc:
     name: Windows x86 MSVC
-    needs: [win_x86_64_msvc]
-    if: always()
+    needs: [build_intent, win_x86_64_msvc]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: win
@@ -39,8 +82,8 @@ jobs:
 
   win_arm64_msvc:
     name: Windows arm64 MSVC
-    needs: [win_x86_msvc]
-    if: always()
+    needs: [build_intent, win_x86_msvc]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: win
@@ -52,8 +95,8 @@ jobs:
 
   win_x86_64_mingw:
     name: Windows x86_64 MinGW
-    needs: [win_arm64_msvc]
-    if: always()
+    needs: [build_intent, win_arm64_msvc]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: win
@@ -65,8 +108,8 @@ jobs:
 
   win_x86_mingw:
     name: Windows x86 MinGW
-    needs: [win_x86_64_mingw]
-    if: always()
+    needs: [build_intent, win_x86_64_mingw]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: win
@@ -78,8 +121,8 @@ jobs:
 
   win_armv7_msvc:
     name: Windows ARMv7 MSVC
-    needs: [win_x86_mingw]
-    if: always()
+    needs: [build_intent, win_x86_mingw]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: win
@@ -91,16 +134,21 @@ jobs:
 
   linux_glibc_x86_64:
     name: Linux glibc x86_64
+    needs: [build_intent]
+    if: ${{ needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-glibc
       variant: x86_64
       runner: ubuntu-24.04
+      should_build: ${{ needs.build_intent.outputs.should_build == 'true' }}
+      blocked_by: ${{ needs.build_intent.outputs.reason }}
+      blocked_status: skipped
 
   linux_glibc_x86:
     name: Linux glibc x86
-    needs: [linux_glibc_x86_64]
-    if: always()
+    needs: [build_intent, linux_glibc_x86_64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-glibc
@@ -112,8 +160,8 @@ jobs:
 
   linux_glibc_arm64:
     name: Linux glibc arm64
-    needs: [linux_glibc_x86]
-    if: always()
+    needs: [build_intent, linux_glibc_x86]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-glibc
@@ -125,8 +173,8 @@ jobs:
 
   linux_glibc_armv7:
     name: Linux glibc armv7
-    needs: [linux_glibc_arm64]
-    if: always()
+    needs: [build_intent, linux_glibc_arm64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-glibc
@@ -138,8 +186,8 @@ jobs:
 
   linux_glibc_riscv64:
     name: Linux glibc riscv64
-    needs: [linux_glibc_armv7]
-    if: always()
+    needs: [build_intent, linux_glibc_armv7]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-glibc
@@ -151,8 +199,8 @@ jobs:
 
   linux_glibc_s390x:
     name: Linux glibc s390x
-    needs: [linux_glibc_riscv64]
-    if: always()
+    needs: [build_intent, linux_glibc_riscv64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-glibc
@@ -164,8 +212,8 @@ jobs:
 
   linux_glibc_ppc64le:
     name: Linux glibc ppc64le
-    needs: [linux_glibc_s390x]
-    if: always()
+    needs: [build_intent, linux_glibc_s390x]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-glibc
@@ -177,8 +225,8 @@ jobs:
 
   linux_glibc_loongarch64:
     name: Linux glibc loongarch64
-    needs: [linux_glibc_ppc64le]
-    if: always()
+    needs: [build_intent, linux_glibc_ppc64le]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-glibc
@@ -190,16 +238,21 @@ jobs:
 
   linux_musl_x86_64:
     name: Linux musl x86_64
+    needs: [build_intent]
+    if: ${{ needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-musl
       variant: x86_64
       runner: ubuntu-24.04
+      should_build: ${{ needs.build_intent.outputs.should_build == 'true' }}
+      blocked_by: ${{ needs.build_intent.outputs.reason }}
+      blocked_status: skipped
 
   linux_musl_arm64:
     name: Linux musl arm64
-    needs: [linux_musl_x86_64]
-    if: always()
+    needs: [build_intent, linux_musl_x86_64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-musl
@@ -211,8 +264,8 @@ jobs:
 
   linux_musl_armv7:
     name: Linux musl armv7
-    needs: [linux_musl_arm64]
-    if: always()
+    needs: [build_intent, linux_musl_arm64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: linux-musl
@@ -224,16 +277,21 @@ jobs:
 
   macos_x86_64:
     name: macOS x86_64
+    needs: [build_intent]
+    if: ${{ needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: macos
       variant: x86_64
       runner: macos-14
+      should_build: ${{ needs.build_intent.outputs.should_build == 'true' }}
+      blocked_by: ${{ needs.build_intent.outputs.reason }}
+      blocked_status: skipped
 
   macos_arm64:
     name: macOS arm64
-    needs: [macos_x86_64]
-    if: always()
+    needs: [build_intent, macos_x86_64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: macos
@@ -245,8 +303,8 @@ jobs:
 
   macos_universal:
     name: macOS universal
-    needs: [macos_arm64]
-    if: always()
+    needs: [build_intent, macos_arm64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: macos
@@ -258,16 +316,21 @@ jobs:
 
   wasm_emscripten_wasm32:
     name: WASM emscripten-wasm32
+    needs: [build_intent]
+    if: ${{ needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: wasm
       variant: emscripten-wasm32
       runner: ubuntu-24.04
+      should_build: ${{ needs.build_intent.outputs.should_build == 'true' }}
+      blocked_by: ${{ needs.build_intent.outputs.reason }}
+      blocked_status: skipped
 
   wasm_wasi_wasm32:
     name: WASM wasi-wasm32
-    needs: [wasm_emscripten_wasm32]
-    if: always()
+    needs: [build_intent, wasm_emscripten_wasm32]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: wasm
@@ -279,16 +342,21 @@ jobs:
 
   android_arm64_v8a:
     name: Android arm64-v8a
+    needs: [build_intent]
+    if: ${{ needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: android
       variant: arm64-v8a
       runner: ubuntu-24.04
+      should_build: ${{ needs.build_intent.outputs.should_build == 'true' }}
+      blocked_by: ${{ needs.build_intent.outputs.reason }}
+      blocked_status: skipped
 
   android_armeabi_v7a:
     name: Android armeabi-v7a
-    needs: [android_arm64_v8a]
-    if: always()
+    needs: [build_intent, android_arm64_v8a]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: android
@@ -300,8 +368,8 @@ jobs:
 
   android_x86_64:
     name: Android x86_64
-    needs: [android_armeabi_v7a]
-    if: always()
+    needs: [build_intent, android_armeabi_v7a]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: android
@@ -313,8 +381,8 @@ jobs:
 
   android_x86:
     name: Android x86
-    needs: [android_x86_64]
-    if: always()
+    needs: [build_intent, android_x86_64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: android
@@ -326,16 +394,21 @@ jobs:
 
   ios_device_arm64:
     name: iOS device arm64
+    needs: [build_intent]
+    if: ${{ needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: ios
       variant: device-arm64
       runner: macos-14
+      should_build: ${{ needs.build_intent.outputs.should_build == 'true' }}
+      blocked_by: ${{ needs.build_intent.outputs.reason }}
+      blocked_status: skipped
 
   ios_sim_arm64:
     name: iOS simulator arm64
-    needs: [ios_device_arm64]
-    if: always()
+    needs: [build_intent, ios_device_arm64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: ios
@@ -347,8 +420,8 @@ jobs:
 
   ios_sim_x86_64:
     name: iOS simulator x86_64
-    needs: [ios_sim_arm64]
-    if: always()
+    needs: [build_intent, ios_sim_arm64]
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     uses: ./.github/workflows/build-variant.yml
     with:
       platform: ios
@@ -361,6 +434,7 @@ jobs:
   collect:
     name: Collect and publish outputs
     needs:
+      - build_intent
       - win_armv7_msvc
       - linux_glibc_loongarch64
       - linux_musl_armv7
@@ -368,7 +442,7 @@ jobs:
       - wasm_wasi_wasm32
       - android_x86
       - ios_sim_x86_64
-    if: always()
+    if: ${{ always() && needs.build_intent.outputs.should_build == 'true' }}
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -540,6 +614,8 @@ jobs:
             echo
             echo "Logs path: logs/<platform>/<variant>/"
             echo "Bins path: bin/<platform>/<variant>/"
+            echo
+            echo "Push build marker: include -B in the push summary or commit message when a push should run the build."
             echo
             echo "Fallback artifact: all-logs"
             echo "Fallback artifact: all-bins"
