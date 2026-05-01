@@ -1,0 +1,852 @@
+﻿name: Test
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - logs/**
+      - bin/**
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+  workflow_run:
+    workflows: [Build]
+    types: [completed]
+    branches: [main, master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ---------------------------------------------------------------------------
+# test_intent — gate: only fans out when push contains -T, workflow_dispatch,
+# or a successful Build workflow just completed.
+# ---------------------------------------------------------------------------
+jobs:
+  test_intent:
+    name: Resolve test intent
+    runs-on: ubuntu-24.04
+    outputs:
+      should_test: ${{ steps.intent.outputs.should_test }}
+      reason:      ${{ steps.intent.outputs.reason }}
+    steps:
+      - name: Resolve test marker
+        id: intent
+        shell: bash
+        env:
+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          EVENT_NAME:          ${{ github.event_name }}
+          BUILD_CONCLUSION:    ${{ github.event.workflow_run.conclusion }}
+        run: |
+          should_test=false
+          reason="no -T marker in push; tests skipped"
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            should_test=true; reason="manual workflow_dispatch"
+          elif [[ "$EVENT_NAME" == "workflow_run" ]]; then
+            if [[ "$BUILD_CONCLUSION" == "success" ]]; then
+              should_test=true; reason="Build workflow completed successfully"
+            else
+              reason="Build workflow did not succeed (conclusion=$BUILD_CONCLUSION)"
+            fi
+          elif echo "$HEAD_COMMIT_MESSAGE" | grep -qF -- '-T'; then
+            should_test=true; reason="push commit message contains -T"
+          fi
+          echo "should_test=$should_test" >> "$GITHUB_OUTPUT"
+          echo "reason=$reason"           >> "$GITHUB_OUTPUT"
+
+      - name: Write test intent summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Test marker"
+            echo
+            echo "Tests fan out when push message contains **-T**, after a successful Build run, or via workflow_dispatch."
+            echo "Without -T on a plain push, only this controller job runs."
+            echo
+            echo "Current run: ${{ steps.intent.outputs.reason }}"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+  # ===========================================================================
+  # WINDOWS — windows-2022 runner
+  # x86_64-msvc and x86_64-mingw run natively.
+  # arm64-msvc and armv7-msvc: PE header check only (cannot execute cross-arch).
+  # ===========================================================================
+
+  test_win_x86_64_msvc:
+    name: Test win x86_64-msvc
+    needs: [test_intent]
+    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__win__x86_64-msvc
+          path: _art
+      - name: Run KATs
+        shell: bash
+        run: |
+          LIB=$(find _art -name "*.dll" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_win_x86_msvc:
+    name: Test win x86-msvc
+    needs: [test_intent, test_win_x86_64_msvc]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__win__x86-msvc
+          path: _art
+      - name: Run KATs
+        shell: bash
+        run: |
+          LIB=$(find _art -name "*.dll" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_win_arm64_msvc:
+    name: Test win arm64-msvc (PE header check)
+    needs: [test_intent, test_win_x86_msvc]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__win__arm64-msvc
+          path: _art
+      - name: Verify PE binary
+        shell: bash
+        run: |
+          LIB=$(find _art -name "*.dll" | head -1)
+          python -c "
+          from pathlib import Path; p=Path('$LIB')
+          assert p.exists() and p.stat().st_size > 0
+          assert p.read_bytes()[:2]==b'MZ', 'Not PE'
+          print('OK (PE verified, execution skipped on x86_64 runner):', p.name)
+          "
+
+  test_win_x86_64_mingw:
+    name: Test win x86_64-mingw
+    needs: [test_intent, test_win_arm64_msvc]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__win__x86_64-mingw
+          path: _art
+      - name: Run KATs
+        shell: bash
+        run: |
+          LIB=$(find _art -name "*.dll" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_win_x86_mingw:
+    name: Test win x86-mingw
+    needs: [test_intent, test_win_x86_64_mingw]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__win__x86-mingw
+          path: _art
+      - name: Run KATs
+        shell: bash
+        run: |
+          LIB=$(find _art -name "*.dll" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_win_armv7_msvc:
+    name: Test win armv7-msvc (PE header check)
+    needs: [test_intent, test_win_x86_mingw]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__win__armv7-msvc
+          path: _art
+      - name: Verify PE binary
+        shell: bash
+        run: |
+          LIB=$(find _art -name "*.dll" | head -1)
+          python -c "
+          from pathlib import Path; p=Path('$LIB')
+          assert p.exists() and p.stat().st_size > 0
+          assert p.read_bytes()[:2]==b'MZ', 'Not PE'
+          print('OK (PE verified, ARMv7 execution skipped on x86_64 runner):', p.name)
+          "
+
+  # ===========================================================================
+  # LINUX GLIBC — ubuntu-24.04, QEMU user-mode for cross-arch
+  # ===========================================================================
+
+  test_linux_glibc_x86_64:
+    name: Test linux-glibc x86_64
+    needs: [test_intent]
+    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-glibc__x86_64
+          path: _art
+      - name: Run KATs (native)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_linux_glibc_x86:
+    name: Test linux-glibc x86
+    needs: [test_intent, test_linux_glibc_x86_64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU + i386 libs
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user qemu-user-static gcc-multilib libc6-i386
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-glibc__x86
+          path: _art
+      - name: Run KATs (QEMU i386)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          QEMU_LD_PREFIX=/usr/i686-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+
+  test_linux_glibc_arm64:
+    name: Test linux-glibc arm64
+    needs: [test_intent, test_linux_glibc_x86]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU aarch64
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-aarch64
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-glibc__arm64
+          path: _art
+      - name: Run KATs (QEMU aarch64)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          QEMU_LD_PREFIX=/usr/aarch64-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+
+  test_linux_glibc_armv7:
+    name: Test linux-glibc armv7
+    needs: [test_intent, test_linux_glibc_arm64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU arm
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-arm
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-glibc__armv7
+          path: _art
+      - name: Run KATs (QEMU arm)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf python test/run_tests.py --lib "$LIB" --verbose
+
+  test_linux_glibc_riscv64:
+    name: Test linux-glibc riscv64
+    needs: [test_intent, test_linux_glibc_armv7]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU riscv64
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-riscv64
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-glibc__riscv64
+          path: _art
+      - name: Run KATs (QEMU riscv64)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          QEMU_LD_PREFIX=/usr/riscv64-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+
+  test_linux_glibc_s390x:
+    name: Test linux-glibc s390x
+    needs: [test_intent, test_linux_glibc_riscv64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU s390x
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-s390x
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-glibc__s390x
+          path: _art
+      - name: Run KATs (QEMU s390x)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          QEMU_LD_PREFIX=/usr/s390x-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+
+  test_linux_glibc_ppc64le:
+    name: Test linux-glibc ppc64le
+    needs: [test_intent, test_linux_glibc_s390x]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU ppc64le
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-ppc64le
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-glibc__ppc64le
+          path: _art
+      - name: Run KATs (QEMU ppc64le)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          QEMU_LD_PREFIX=/usr/powerpc64le-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+
+  test_linux_glibc_loongarch64:
+    name: Test linux-glibc loongarch64
+    needs: [test_intent, test_linux_glibc_ppc64le]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU loongarch64
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-loongarch64 || true
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-glibc__loongarch64
+          path: _art
+      - name: Run KATs (QEMU loongarch64)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          QEMU_LD_PREFIX=/usr/loongarch64-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+
+  # ===========================================================================
+  # LINUX MUSL — ubuntu-24.04 + musl loader / QEMU for cross-arch
+  # ===========================================================================
+
+  test_linux_musl_x86_64:
+    name: Test linux-musl x86_64
+    needs: [test_intent]
+    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install musl tools
+        run: sudo apt-get update -q && sudo apt-get install -y musl musl-tools
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-musl__x86_64
+          path: _art
+      - name: Run KATs (musl x86_64)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_linux_musl_arm64:
+    name: Test linux-musl arm64
+    needs: [test_intent, test_linux_musl_x86_64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU aarch64
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-aarch64
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-musl__arm64
+          path: _art
+      - name: Run KATs (QEMU aarch64 musl)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_linux_musl_armv7:
+    name: Test linux-musl armv7
+    needs: [test_intent, test_linux_musl_arm64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU arm
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-arm
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__linux-musl__armv7
+          path: _art
+      - name: Run KATs (QEMU arm musl)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  # ===========================================================================
+  # macOS — macos-14 runner (Apple Silicon / M1)
+  # ===========================================================================
+
+  test_macos_x86_64:
+    name: Test macOS x86_64
+    needs: [test_intent]
+    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__macos__x86_64
+          path: _art
+      - name: Run KATs
+        run: |
+          LIB=$(find _art -name "*.dylib" | head -1)
+          python3 test/run_tests.py --lib "$LIB" --verbose
+
+  test_macos_arm64:
+    name: Test macOS arm64
+    needs: [test_intent, test_macos_x86_64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__macos__arm64
+          path: _art
+      - name: Run KATs
+        run: |
+          LIB=$(find _art -name "*.dylib" | head -1)
+          python3 test/run_tests.py --lib "$LIB" --verbose
+
+  test_macos_universal:
+    name: Test macOS universal
+    needs: [test_intent, test_macos_arm64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__macos__universal
+          path: _art
+      - name: Run KATs
+        run: |
+          LIB=$(find _art -name "*.dylib" | head -1)
+          python3 test/run_tests.py --lib "$LIB" --verbose
+
+  # ===========================================================================
+  # WASM
+  # ===========================================================================
+
+  test_wasm_emscripten:
+    name: Test WASM emscripten-wasm32
+    needs: [test_intent]
+    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__wasm__emscripten-wasm32
+          path: _art
+      - name: Run KATs (WASM/Node.js)
+        run: |
+          JS=$(find _art -name "*.js" | head -1)
+          python test/run_tests.py --wasm "$JS" --group hash --verbose
+
+  test_wasm_wasi:
+    name: Test WASM wasi-wasm32
+    needs: [test_intent, test_wasm_emscripten]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install wasmtime
+        run: |
+          curl -fsSL https://wasmtime.dev/install.sh | bash
+          echo "$HOME/.wasmtime/bin" >> "$GITHUB_PATH"
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__wasm__wasi-wasm32
+          path: _art
+      - name: Run KATs (WASM/WASI)
+        run: |
+          WASM=$(find _art -name "*.wasm" | head -1)
+          python test/run_tests.py --wasm-wasi "$WASM" --group hash --verbose
+
+  # ===========================================================================
+  # ANDROID — ubuntu-24.04 + QEMU for arm/arm64; x86_64 native
+  # ===========================================================================
+
+  test_android_arm64_v8a:
+    name: Test android arm64-v8a
+    needs: [test_intent]
+    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU aarch64
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-aarch64
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__android__arm64-v8a
+          path: _art
+      - name: Run KATs (QEMU aarch64)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_android_armeabi_v7a:
+    name: Test android armeabi-v7a
+    needs: [test_intent, test_android_arm64_v8a]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU arm
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user-static && sudo update-binfmts --enable qemu-arm
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__android__armeabi-v7a
+          path: _art
+      - name: Run KATs (QEMU arm)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_android_x86_64:
+    name: Test android x86_64
+    needs: [test_intent, test_android_armeabi_v7a]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__android__x86_64
+          path: _art
+      - name: Run KATs (native x86_64)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          python test/run_tests.py --lib "$LIB" --verbose
+
+  test_android_x86:
+    name: Test android x86
+    needs: [test_intent, test_android_x86_64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - name: Install QEMU + i386 libs
+        run: sudo apt-get update -q && sudo apt-get install -y qemu-user qemu-user-static gcc-multilib libc6-i386
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__android__x86
+          path: _art
+      - name: Run KATs (QEMU i386)
+        run: |
+          LIB=$(find _art -name "*.so" | head -1)
+          QEMU_LD_PREFIX=/usr/i686-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+
+  # ===========================================================================
+  # iOS — macos-14 runner
+  # device-arm64: Mach-O header check only (cannot run on CI without device/code-sign)
+  # sim-arm64: runs natively on macos-14 (M1)
+  # sim-x86_64: Mach-O header check (M1 runner cannot execute x86_64 slice alone)
+  # ===========================================================================
+
+  test_ios_device_arm64:
+    name: Test iOS device-arm64 (Mach-O check)
+    needs: [test_intent]
+    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__ios__device-arm64
+          path: _art
+      - name: Verify Mach-O
+        run: |
+          LIB=$(find _art \( -name "*.dylib" -o -name "*.a" \) | head -1)
+          python3 -c "
+          from pathlib import Path; p=Path('$LIB')
+          assert p.exists() and p.stat().st_size>0
+          magic=p.read_bytes()[:4]
+          ok=magic in (b'\xca\xfe\xba\xbe',b'\xce\xfa\xed\xfe',b'\xcf\xfa\xed\xfe',b'\xbe\xba\xfe\xca',b'\xfe\xed\xfa\xce',b'\xfe\xed\xfa\xcf')
+          assert ok, f'Not Mach-O: {magic.hex()}'
+          print('OK (Mach-O verified, device execution skipped in CI):', p.name)
+          "
+
+  test_ios_sim_arm64:
+    name: Test iOS sim-arm64
+    needs: [test_intent, test_ios_device_arm64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__ios__sim-arm64
+          path: _art
+      - name: Run KATs (sim arm64 — native on M1 macos-14)
+        run: |
+          LIB=$(find _art -name "*.dylib" | head -1)
+          python3 test/run_tests.py --lib "$LIB" --verbose
+
+  test_ios_sim_x86_64:
+    name: Test iOS sim-x86_64 (Mach-O check)
+    needs: [test_intent, test_ios_sim_arm64]
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: dawidd6/action-download-artifact@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: nextssl__ios__sim-x86_64
+          path: _art
+      - name: Verify Mach-O
+        run: |
+          LIB=$(find _art -name "*.dylib" | head -1)
+          python3 -c "
+          from pathlib import Path; p=Path('$LIB')
+          assert p.exists() and p.stat().st_size>0
+          magic=p.read_bytes()[:4]
+          ok=magic in (b'\xca\xfe\xba\xbe',b'\xce\xfa\xed\xfe',b'\xcf\xfa\xed\xfe',b'\xbe\xba\xfe\xca',b'\xfe\xed\xfa\xce',b'\xfe\xed\xfa\xcf')
+          assert ok, f'Not Mach-O: {magic.hex()}'
+          print('OK (Mach-O verified):', p.name)
+          "
+
+  # ===========================================================================
+  # REPORT — one final summary table
+  # ===========================================================================
+
+  report:
+    name: Test report
+    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs:
+      - test_intent
+      - test_win_x86_64_msvc
+      - test_win_x86_msvc
+      - test_win_arm64_msvc
+      - test_win_x86_64_mingw
+      - test_win_x86_mingw
+      - test_win_armv7_msvc
+      - test_linux_glibc_x86_64
+      - test_linux_glibc_x86
+      - test_linux_glibc_arm64
+      - test_linux_glibc_armv7
+      - test_linux_glibc_riscv64
+      - test_linux_glibc_s390x
+      - test_linux_glibc_ppc64le
+      - test_linux_glibc_loongarch64
+      - test_linux_musl_x86_64
+      - test_linux_musl_arm64
+      - test_linux_musl_armv7
+      - test_macos_x86_64
+      - test_macos_arm64
+      - test_macos_universal
+      - test_wasm_emscripten
+      - test_wasm_wasi
+      - test_android_arm64_v8a
+      - test_android_armeabi_v7a
+      - test_android_x86_64
+      - test_android_x86
+      - test_ios_device_arm64
+      - test_ios_sim_arm64
+      - test_ios_sim_x86_64
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Write combined summary
+        shell: bash
+        env:
+          R_WIN_X64_MSVC:  ${{ needs.test_win_x86_64_msvc.result }}
+          R_WIN_X86_MSVC:  ${{ needs.test_win_x86_msvc.result }}
+          R_WIN_A64_MSVC:  ${{ needs.test_win_arm64_msvc.result }}
+          R_WIN_X64_MGW:   ${{ needs.test_win_x86_64_mingw.result }}
+          R_WIN_X86_MGW:   ${{ needs.test_win_x86_mingw.result }}
+          R_WIN_AV7_MSVC:  ${{ needs.test_win_armv7_msvc.result }}
+          R_GLI_X64:       ${{ needs.test_linux_glibc_x86_64.result }}
+          R_GLI_X86:       ${{ needs.test_linux_glibc_x86.result }}
+          R_GLI_A64:       ${{ needs.test_linux_glibc_arm64.result }}
+          R_GLI_AV7:       ${{ needs.test_linux_glibc_armv7.result }}
+          R_GLI_RV64:      ${{ needs.test_linux_glibc_riscv64.result }}
+          R_GLI_S390:      ${{ needs.test_linux_glibc_s390x.result }}
+          R_GLI_PPC:       ${{ needs.test_linux_glibc_ppc64le.result }}
+          R_GLI_LOONG:     ${{ needs.test_linux_glibc_loongarch64.result }}
+          R_MUS_X64:       ${{ needs.test_linux_musl_x86_64.result }}
+          R_MUS_A64:       ${{ needs.test_linux_musl_arm64.result }}
+          R_MUS_AV7:       ${{ needs.test_linux_musl_armv7.result }}
+          R_MAC_X64:       ${{ needs.test_macos_x86_64.result }}
+          R_MAC_A64:       ${{ needs.test_macos_arm64.result }}
+          R_MAC_UNI:       ${{ needs.test_macos_universal.result }}
+          R_WASM_EM:       ${{ needs.test_wasm_emscripten.result }}
+          R_WASM_WASI:     ${{ needs.test_wasm_wasi.result }}
+          R_AND_A64:       ${{ needs.test_android_arm64_v8a.result }}
+          R_AND_AV7:       ${{ needs.test_android_armeabi_v7a.result }}
+          R_AND_X64:       ${{ needs.test_android_x86_64.result }}
+          R_AND_X86:       ${{ needs.test_android_x86.result }}
+          R_IOS_DEV:       ${{ needs.test_ios_device_arm64.result }}
+          R_IOS_SIM_A64:   ${{ needs.test_ios_sim_arm64.result }}
+          R_IOS_SIM_X64:   ${{ needs.test_ios_sim_x86_64.result }}
+        run: |
+          {
+            echo "## Test suite — all 29 variants"
+            echo
+            echo "| Group | Variant | Result |"
+            echo "|-------|---------|--------|"
+            echo "| Windows     | x86_64-msvc    | $R_WIN_X64_MSVC |"
+            echo "| Windows     | x86-msvc       | $R_WIN_X86_MSVC |"
+            echo "| Windows     | arm64-msvc     | $R_WIN_A64_MSVC |"
+            echo "| Windows     | x86_64-mingw   | $R_WIN_X64_MGW  |"
+            echo "| Windows     | x86-mingw      | $R_WIN_X86_MGW  |"
+            echo "| Windows     | armv7-msvc     | $R_WIN_AV7_MSVC |"
+            echo "| linux-glibc | x86_64         | $R_GLI_X64  |"
+            echo "| linux-glibc | x86            | $R_GLI_X86  |"
+            echo "| linux-glibc | arm64          | $R_GLI_A64  |"
+            echo "| linux-glibc | armv7          | $R_GLI_AV7  |"
+            echo "| linux-glibc | riscv64        | $R_GLI_RV64 |"
+            echo "| linux-glibc | s390x          | $R_GLI_S390 |"
+            echo "| linux-glibc | ppc64le        | $R_GLI_PPC  |"
+            echo "| linux-glibc | loongarch64    | $R_GLI_LOONG|"
+            echo "| linux-musl  | x86_64         | $R_MUS_X64  |"
+            echo "| linux-musl  | arm64          | $R_MUS_A64  |"
+            echo "| linux-musl  | armv7          | $R_MUS_AV7  |"
+            echo "| macOS       | x86_64         | $R_MAC_X64  |"
+            echo "| macOS       | arm64          | $R_MAC_A64  |"
+            echo "| macOS       | universal      | $R_MAC_UNI  |"
+            echo "| WASM        | emscripten     | $R_WASM_EM  |"
+            echo "| WASM        | wasi           | $R_WASM_WASI|"
+            echo "| Android     | arm64-v8a      | $R_AND_A64  |"
+            echo "| Android     | armeabi-v7a    | $R_AND_AV7  |"
+            echo "| Android     | x86_64         | $R_AND_X64  |"
+            echo "| Android     | x86            | $R_AND_X86  |"
+            echo "| iOS         | device-arm64   | $R_IOS_DEV     |"
+            echo "| iOS         | sim-arm64      | $R_IOS_SIM_A64 |"
+            echo "| iOS         | sim-x86_64     | $R_IOS_SIM_X64 |"
+          } >> "${GITHUB_STEP_SUMMARY}"
