@@ -18,14 +18,13 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# No flag gate — every trigger runs all 29 test jobs unconditionally.
-# The build_run_id is forwarded when triggered by workflow_run so each
-# test-variant job downloads from exactly the right build run.
+# No flag gate. Seven platform queues start in parallel; inside each queue
+# variants are chained. A failure closes that queue (remaining are skipped).
 
 jobs:
 
   # ===========================================================================
-  # WINDOWS — windows-2022
+  # WINDOWS queue: x86_64-msvc -> x86-msvc -> arm64-msvc -> x86_64-mingw -> x86-mingw -> armv7-msvc
   # ===========================================================================
 
   win_x86_64_msvc:
@@ -41,6 +40,8 @@ jobs:
 
   win_x86_msvc:
     name: Test Windows x86 MSVC
+    needs: [win_x86_64_msvc]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: win
@@ -49,9 +50,14 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: kat
       lib_glob: "*.dll"
+      should_test: ${{ needs.win_x86_64_msvc.result == 'success' && needs.win_x86_64_msvc.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_x86_64_msvc.outputs.blocking_variant || 'x86_64-msvc' }}
+      blocked_status: ${{ needs.win_x86_64_msvc.outputs.blocking_status || needs.win_x86_64_msvc.result }}
 
   win_arm64_msvc:
     name: Test Windows arm64 MSVC
+    needs: [win_x86_msvc]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: win
@@ -60,9 +66,14 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: pe-header
       lib_glob: "*.dll"
+      should_test: ${{ needs.win_x86_msvc.result == 'success' && needs.win_x86_msvc.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_x86_msvc.outputs.blocking_variant || 'x86-msvc' }}
+      blocked_status: ${{ needs.win_x86_msvc.outputs.blocking_status || needs.win_x86_msvc.result }}
 
   win_x86_64_mingw:
     name: Test Windows x86_64 MinGW
+    needs: [win_arm64_msvc]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: win
@@ -71,9 +82,14 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: kat
       lib_glob: "*.dll"
+      should_test: ${{ needs.win_arm64_msvc.result == 'success' && needs.win_arm64_msvc.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_arm64_msvc.outputs.blocking_variant || 'arm64-msvc' }}
+      blocked_status: ${{ needs.win_arm64_msvc.outputs.blocking_status || needs.win_arm64_msvc.result }}
 
   win_x86_mingw:
     name: Test Windows x86 MinGW
+    needs: [win_x86_64_mingw]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: win
@@ -82,9 +98,14 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: kat
       lib_glob: "*.dll"
+      should_test: ${{ needs.win_x86_64_mingw.result == 'success' && needs.win_x86_64_mingw.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_x86_64_mingw.outputs.blocking_variant || 'x86_64-mingw' }}
+      blocked_status: ${{ needs.win_x86_64_mingw.outputs.blocking_status || needs.win_x86_64_mingw.result }}
 
   win_armv7_msvc:
     name: Test Windows armv7 MSVC
+    needs: [win_x86_mingw]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: win
@@ -93,9 +114,12 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: pe-header
       lib_glob: "*.dll"
+      should_test: ${{ needs.win_x86_mingw.result == 'success' && needs.win_x86_mingw.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.win_x86_mingw.outputs.blocking_variant || 'x86-mingw' }}
+      blocked_status: ${{ needs.win_x86_mingw.outputs.blocking_status || needs.win_x86_mingw.result }}
 
   # ===========================================================================
-  # LINUX GLIBC — ubuntu-24.04
+  # LINUX GLIBC queue: x86_64 -> x86 -> arm64 -> armv7 -> riscv64 -> s390x -> ppc64le -> loongarch64
   # ===========================================================================
 
   linux_glibc_x86_64:
@@ -111,6 +135,8 @@ jobs:
 
   linux_glibc_x86:
     name: Test linux-glibc x86
+    needs: [linux_glibc_x86_64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: linux-glibc
@@ -121,9 +147,14 @@ jobs:
       lib_glob: "*.so"
       apt_packages: "qemu-user qemu-user-static gcc-multilib libc6-i386"
       qemu_ld_prefix: /usr/i686-linux-gnu
+      should_test: ${{ needs.linux_glibc_x86_64.result == 'success' && needs.linux_glibc_x86_64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_x86_64.outputs.blocking_variant || 'x86_64' }}
+      blocked_status: ${{ needs.linux_glibc_x86_64.outputs.blocking_status || needs.linux_glibc_x86_64.result }}
 
   linux_glibc_arm64:
     name: Test linux-glibc arm64
+    needs: [linux_glibc_x86]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: linux-glibc
@@ -134,9 +165,14 @@ jobs:
       lib_glob: "*.so"
       qemu_arch: aarch64
       qemu_ld_prefix: /usr/aarch64-linux-gnu
+      should_test: ${{ needs.linux_glibc_x86.result == 'success' && needs.linux_glibc_x86.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_x86.outputs.blocking_variant || 'x86' }}
+      blocked_status: ${{ needs.linux_glibc_x86.outputs.blocking_status || needs.linux_glibc_x86.result }}
 
   linux_glibc_armv7:
     name: Test linux-glibc armv7
+    needs: [linux_glibc_arm64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: linux-glibc
@@ -147,9 +183,14 @@ jobs:
       lib_glob: "*.so"
       qemu_arch: arm
       qemu_ld_prefix: /usr/arm-linux-gnueabihf
+      should_test: ${{ needs.linux_glibc_arm64.result == 'success' && needs.linux_glibc_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_arm64.outputs.blocking_variant || 'arm64' }}
+      blocked_status: ${{ needs.linux_glibc_arm64.outputs.blocking_status || needs.linux_glibc_arm64.result }}
 
   linux_glibc_riscv64:
     name: Test linux-glibc riscv64
+    needs: [linux_glibc_armv7]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: linux-glibc
@@ -160,9 +201,14 @@ jobs:
       lib_glob: "*.so"
       qemu_arch: riscv64
       qemu_ld_prefix: /usr/riscv64-linux-gnu
+      should_test: ${{ needs.linux_glibc_armv7.result == 'success' && needs.linux_glibc_armv7.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_armv7.outputs.blocking_variant || 'armv7' }}
+      blocked_status: ${{ needs.linux_glibc_armv7.outputs.blocking_status || needs.linux_glibc_armv7.result }}
 
   linux_glibc_s390x:
     name: Test linux-glibc s390x
+    needs: [linux_glibc_riscv64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: linux-glibc
@@ -173,9 +219,14 @@ jobs:
       lib_glob: "*.so"
       qemu_arch: s390x
       qemu_ld_prefix: /usr/s390x-linux-gnu
+      should_test: ${{ needs.linux_glibc_riscv64.result == 'success' && needs.linux_glibc_riscv64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_riscv64.outputs.blocking_variant || 'riscv64' }}
+      blocked_status: ${{ needs.linux_glibc_riscv64.outputs.blocking_status || needs.linux_glibc_riscv64.result }}
 
   linux_glibc_ppc64le:
     name: Test linux-glibc ppc64le
+    needs: [linux_glibc_s390x]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: linux-glibc
@@ -186,9 +237,14 @@ jobs:
       lib_glob: "*.so"
       qemu_arch: ppc64le
       qemu_ld_prefix: /usr/powerpc64le-linux-gnu
+      should_test: ${{ needs.linux_glibc_s390x.result == 'success' && needs.linux_glibc_s390x.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_s390x.outputs.blocking_variant || 's390x' }}
+      blocked_status: ${{ needs.linux_glibc_s390x.outputs.blocking_status || needs.linux_glibc_s390x.result }}
 
   linux_glibc_loongarch64:
     name: Test linux-glibc loongarch64
+    needs: [linux_glibc_ppc64le]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: linux-glibc
@@ -199,9 +255,12 @@ jobs:
       lib_glob: "*.so"
       qemu_arch: loongarch64
       qemu_ld_prefix: /usr/loongarch64-linux-gnu
+      should_test: ${{ needs.linux_glibc_ppc64le.result == 'success' && needs.linux_glibc_ppc64le.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_glibc_ppc64le.outputs.blocking_variant || 'ppc64le' }}
+      blocked_status: ${{ needs.linux_glibc_ppc64le.outputs.blocking_status || needs.linux_glibc_ppc64le.result }}
 
   # ===========================================================================
-  # LINUX MUSL — ubuntu-24.04
+  # LINUX MUSL queue: x86_64 -> arm64 -> armv7
   # ===========================================================================
 
   linux_musl_x86_64:
@@ -218,6 +277,8 @@ jobs:
 
   linux_musl_arm64:
     name: Test linux-musl arm64
+    needs: [linux_musl_x86_64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: linux-musl
@@ -227,9 +288,14 @@ jobs:
       test_mode: kat
       lib_glob: "*.so"
       qemu_arch: aarch64
+      should_test: ${{ needs.linux_musl_x86_64.result == 'success' && needs.linux_musl_x86_64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_musl_x86_64.outputs.blocking_variant || 'x86_64' }}
+      blocked_status: ${{ needs.linux_musl_x86_64.outputs.blocking_status || needs.linux_musl_x86_64.result }}
 
   linux_musl_armv7:
     name: Test linux-musl armv7
+    needs: [linux_musl_arm64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: linux-musl
@@ -239,9 +305,12 @@ jobs:
       test_mode: kat
       lib_glob: "*.so"
       qemu_arch: arm
+      should_test: ${{ needs.linux_musl_arm64.result == 'success' && needs.linux_musl_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.linux_musl_arm64.outputs.blocking_variant || 'arm64' }}
+      blocked_status: ${{ needs.linux_musl_arm64.outputs.blocking_status || needs.linux_musl_arm64.result }}
 
   # ===========================================================================
-  # macOS — macos-14 (Apple Silicon)
+  # macOS queue: x86_64 -> arm64 -> universal
   # ===========================================================================
 
   macos_x86_64:
@@ -257,6 +326,8 @@ jobs:
 
   macos_arm64:
     name: Test macOS arm64
+    needs: [macos_x86_64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: macos
@@ -265,9 +336,14 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: kat
       lib_glob: "*.dylib"
+      should_test: ${{ needs.macos_x86_64.result == 'success' && needs.macos_x86_64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.macos_x86_64.outputs.blocking_variant || 'x86_64' }}
+      blocked_status: ${{ needs.macos_x86_64.outputs.blocking_status || needs.macos_x86_64.result }}
 
   macos_universal:
     name: Test macOS universal
+    needs: [macos_arm64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: macos
@@ -276,9 +352,12 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: kat
       lib_glob: "*.dylib"
+      should_test: ${{ needs.macos_arm64.result == 'success' && needs.macos_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.macos_arm64.outputs.blocking_variant || 'arm64' }}
+      blocked_status: ${{ needs.macos_arm64.outputs.blocking_status || needs.macos_arm64.result }}
 
   # ===========================================================================
-  # WASM — ubuntu-24.04
+  # WASM queue: emscripten-wasm32 -> wasi-wasm32
   # ===========================================================================
 
   wasm_emscripten:
@@ -294,6 +373,8 @@ jobs:
 
   wasm_wasi:
     name: Test WASM wasi-wasm32
+    needs: [wasm_emscripten]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: wasm
@@ -302,9 +383,12 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: wasm-wasi
       lib_glob: "*.wasm"
+      should_test: ${{ needs.wasm_emscripten.result == 'success' && needs.wasm_emscripten.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.wasm_emscripten.outputs.blocking_variant || 'emscripten-wasm32' }}
+      blocked_status: ${{ needs.wasm_emscripten.outputs.blocking_status || needs.wasm_emscripten.result }}
 
   # ===========================================================================
-  # ANDROID — ubuntu-24.04
+  # ANDROID queue: arm64-v8a -> armeabi-v7a -> x86_64 -> x86
   # ===========================================================================
 
   android_arm64_v8a:
@@ -321,6 +405,8 @@ jobs:
 
   android_armeabi_v7a:
     name: Test Android armeabi-v7a
+    needs: [android_arm64_v8a]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: android
@@ -330,9 +416,14 @@ jobs:
       test_mode: kat
       lib_glob: "*.so"
       qemu_arch: arm
+      should_test: ${{ needs.android_arm64_v8a.result == 'success' && needs.android_arm64_v8a.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.android_arm64_v8a.outputs.blocking_variant || 'arm64-v8a' }}
+      blocked_status: ${{ needs.android_arm64_v8a.outputs.blocking_status || needs.android_arm64_v8a.result }}
 
   android_x86_64:
     name: Test Android x86_64
+    needs: [android_armeabi_v7a]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: android
@@ -341,9 +432,14 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: kat
       lib_glob: "*.so"
+      should_test: ${{ needs.android_armeabi_v7a.result == 'success' && needs.android_armeabi_v7a.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.android_armeabi_v7a.outputs.blocking_variant || 'armeabi-v7a' }}
+      blocked_status: ${{ needs.android_armeabi_v7a.outputs.blocking_status || needs.android_armeabi_v7a.result }}
 
   android_x86:
     name: Test Android x86
+    needs: [android_x86_64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: android
@@ -354,11 +450,12 @@ jobs:
       lib_glob: "*.so"
       apt_packages: "qemu-user qemu-user-static gcc-multilib libc6-i386"
       qemu_ld_prefix: /usr/i686-linux-gnu
+      should_test: ${{ needs.android_x86_64.result == 'success' && needs.android_x86_64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.android_x86_64.outputs.blocking_variant || 'x86_64' }}
+      blocked_status: ${{ needs.android_x86_64.outputs.blocking_status || needs.android_x86_64.result }}
 
   # ===========================================================================
-  # iOS — macos-14
-  # device-arm64 / sim-x86_64: Mach-O header check only (no code-sign in CI)
-  # sim-arm64: native execution on the M1 macos-14 runner
+  # iOS queue: device-arm64 -> sim-arm64 -> sim-x86_64
   # ===========================================================================
 
   ios_device_arm64:
@@ -374,6 +471,8 @@ jobs:
 
   ios_sim_arm64:
     name: Test iOS sim-arm64
+    needs: [ios_device_arm64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: ios
@@ -382,9 +481,14 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: kat
       lib_glob: "*.dylib"
+      should_test: ${{ needs.ios_device_arm64.result == 'success' && needs.ios_device_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.ios_device_arm64.outputs.blocking_variant || 'device-arm64' }}
+      blocked_status: ${{ needs.ios_device_arm64.outputs.blocking_status || needs.ios_device_arm64.result }}
 
   ios_sim_x86_64:
     name: Test iOS sim-x86_64
+    needs: [ios_sim_arm64]
+    if: always()
     uses: ./.github/workflows/test-variant.yml
     with:
       platform: ios
@@ -393,9 +497,12 @@ jobs:
       build_run_id: ${{ github.event.workflow_run.id }}
       test_mode: macho-header
       lib_glob: "*.dylib"
+      should_test: ${{ needs.ios_sim_arm64.result == 'success' && needs.ios_sim_arm64.outputs.continue_queue == 'true' }}
+      blocked_by: ${{ needs.ios_sim_arm64.outputs.blocking_variant || 'sim-arm64' }}
+      blocked_status: ${{ needs.ios_sim_arm64.outputs.blocking_status || needs.ios_sim_arm64.result }}
 
   # ===========================================================================
-  # REPORT — collect all 29 variant_status outputs into one summary table
+  # REPORT — always runs, collects variant_status from all 29 jobs
   # ===========================================================================
 
   report:

@@ -1,4 +1,4 @@
-name: Test Variant
+﻿name: Test Variant
 
 on:
   workflow_call:
@@ -16,7 +16,7 @@ on:
         required: false
         type: string
         default: ""
-        description: "Run ID of the build.yml run that produced the artifact (leave empty to search latest successful run)"
+        description: "Run ID of the build.yml run that produced the artifact"
       test_mode:
         required: false
         type: string
@@ -31,7 +31,7 @@ on:
         required: false
         type: string
         default: ""
-        description: "QEMU arch name to enable via update-binfmts (e.g. aarch64, arm, riscv64, s390x, ppc64le, loongarch64)"
+        description: "QEMU arch name to enable via update-binfmts"
       qemu_ld_prefix:
         required: false
         type: string
@@ -42,10 +42,32 @@ on:
         type: string
         default: ""
         description: "Extra space-separated apt packages to install before the test"
+      should_test:
+        required: false
+        type: boolean
+        default: true
+        description: "Set false to record a skipped entry and stop the queue"
+      blocked_by:
+        required: false
+        type: string
+        default: ""
+      blocked_status:
+        required: false
+        type: string
+        default: ""
     outputs:
+      continue_queue:
+        description: Whether the next variant in this platform queue should run.
+        value: ${{ jobs.test.outputs.continue_queue }}
       variant_status:
-        description: "success | failed | skipped"
+        description: Final status recorded for this visible variant job.
         value: ${{ jobs.test.outputs.variant_status }}
+      blocking_variant:
+        description: The variant that closed this platform queue.
+        value: ${{ jobs.test.outputs.blocking_variant }}
+      blocking_status:
+        description: The status of the variant that closed this platform queue.
+        value: ${{ jobs.test.outputs.blocking_status }}
 
 jobs:
   test:
@@ -54,7 +76,10 @@ jobs:
     permissions:
       contents: read
     outputs:
-      variant_status: ${{ steps.record.outputs.variant_status }}
+      continue_queue: ${{ steps.queue.outputs.continue_queue }}
+      variant_status: ${{ steps.queue.outputs.variant_status }}
+      blocking_variant: ${{ steps.queue.outputs.blocking_variant }}
+      blocking_status: ${{ steps.queue.outputs.blocking_status }}
 
     steps:
       - uses: actions/checkout@v6
@@ -62,13 +87,9 @@ jobs:
         with:
           fetch-depth: 1
 
-      # -------------------------------------------------------------------------
-      # Install runtime prerequisites (QEMU, cross-arch libs, musl tools, etc.)
-      # -------------------------------------------------------------------------
-
       - name: Install QEMU and apt prerequisites
         timeout-minutes: 25
-        if: ${{ inputs.qemu_arch != '' || inputs.apt_packages != '' }}
+        if: ${{ inputs.should_test && (inputs.qemu_arch != '' || inputs.apt_packages != '') }}
         shell: bash
         run: |
           set -euo pipefail
@@ -90,39 +111,32 @@ jobs:
 
       - name: Setup Node.js (WASM emscripten)
         timeout-minutes: 25
-        if: ${{ inputs.test_mode == 'wasm-node' }}
+        if: ${{ inputs.should_test && inputs.test_mode == 'wasm-node' }}
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
       - name: Install wasmtime (WASM WASI)
         timeout-minutes: 25
-        if: ${{ inputs.test_mode == 'wasm-wasi' }}
+        if: ${{ inputs.should_test && inputs.test_mode == 'wasm-wasi' }}
         shell: bash
         run: |
           set -euo pipefail
           curl -fsSL https://wasmtime.dev/install.sh | bash
           echo "${HOME}/.wasmtime/bin" >> "${GITHUB_PATH}"
 
-      # -------------------------------------------------------------------------
-      # Create the log directory unconditionally — must happen before download
-      # so the upload step always finds something even on download failure.
-      # -------------------------------------------------------------------------
-
+      # Create log directory unconditionally — must exist before download so
+      # upload always finds something even on download failure.
       - name: Create log directory
         timeout-minutes: 5
         if: always()
         shell: bash
         run: mkdir -p "logs/test/${{ inputs.platform }}/${{ inputs.variant }}"
 
-      # -------------------------------------------------------------------------
-      # Download the build artifact produced by build.yml.
-      # continue-on-error so missing artifacts don't skip the upload/record steps.
-      # -------------------------------------------------------------------------
-
       - name: Download build artifact
         id: download
         timeout-minutes: 25
+        if: ${{ inputs.should_test }}
         continue-on-error: true
         uses: dawidd6/action-download-artifact@v6
         with:
@@ -134,14 +148,10 @@ jobs:
           path: _art
           if_no_artifact_found: warn
 
-      # -------------------------------------------------------------------------
-      # Run the test.  continue-on-error keeps record/upload alive on failure.
-      # Log output is tee'd into the log directory so it is always captured.
-      # -------------------------------------------------------------------------
-
       - name: Run test
         id: run_test
         timeout-minutes: 25
+        if: ${{ inputs.should_test }}
         continue-on-error: true
         shell: bash
         env:
@@ -203,40 +213,72 @@ jobs:
               ;;
           esac
 
-      # -------------------------------------------------------------------------
-      # Record result — mirrors ci_runner.py's result.txt so ci_merge_logs.py
-      # can produce per-platform SUMMARY.txt files.
-      # -------------------------------------------------------------------------
+      - name: Record skipped variant
+        timeout-minutes: 5
+        if: ${{ !inputs.should_test }}
+        shell: bash
+        env:
+          CI_BLOCKED_BY: ${{ inputs.blocked_by }}
+          CI_BLOCKED_STATUS: ${{ inputs.blocked_status }}
+        run: |
+          set -euo pipefail
+          log_dir="logs/test/${{ inputs.platform }}/${{ inputs.variant }}"
+          {
+            echo "status: skipped"
+            echo "platform: ${{ inputs.platform }}"
+            echo "variant: ${{ inputs.variant }}"
+            echo "reason: queue stopped after ${CI_BLOCKED_BY:-an earlier variant} (${CI_BLOCKED_STATUS:-blocked})"
+          } > "${log_dir}/result.txt"
+          echo "Skipped: queue stopped after ${CI_BLOCKED_BY:-an earlier variant}"
 
-      - name: Record result
-        id: record
+      - name: Set queue outputs
+        id: queue
         timeout-minutes: 5
         if: always()
         shell: bash
         run: |
-          log_dir="logs/test/${{ inputs.platform }}/${{ inputs.variant }}"
-          mkdir -p "${log_dir}"
+          set -euo pipefail
 
-          outcome="${{ steps.run_test.outcome }}"
-          case "${outcome}" in
-            success) status=success ;;
-            skipped) status=skipped ;;
-            *)        status=failed  ;;
-          esac
+          blocking_variant="${{ inputs.variant }}"
+          blocking_status="success"
+
+          if [ "${{ inputs.should_test }}" != "true" ]; then
+            continue_queue=false
+            variant_status=skipped
+            blocking_variant="${{ inputs.blocked_by }}"
+            blocking_status="${{ inputs.blocked_status }}"
+            if [ -z "${blocking_variant}" ]; then
+              blocking_variant="${{ inputs.variant }}"
+            fi
+            if [ -z "${blocking_status}" ]; then
+              blocking_status=blocked
+            fi
+          elif [ "${{ steps.run_test.outcome }}" = "success" ]; then
+            continue_queue=true
+            variant_status=success
+          else
+            continue_queue=false
+            variant_status=failed
+            blocking_status=failed
+          fi
 
           {
-            echo "status: ${status}"
-            echo "platform: ${{ inputs.platform }}"
-            echo "variant: ${{ inputs.variant }}"
-            echo "download: ${{ steps.download.outcome }}"
-            echo "run_test: ${outcome}"
-          } > "${log_dir}/result.txt"
+            echo "continue_queue=${continue_queue}"
+            echo "variant_status=${variant_status}"
+            echo "blocking_variant=${blocking_variant}"
+            echo "blocking_status=${blocking_status}"
+          } >> "${GITHUB_OUTPUT}"
 
-          echo "variant_status=${status}" >> "${GITHUB_OUTPUT}"
-
-      # -------------------------------------------------------------------------
-      # Upload logs — always, even when cancelled, matching build-variant.yml.
-      # -------------------------------------------------------------------------
+          if [ "${{ inputs.should_test }}" = "true" ]; then
+            log_dir="logs/test/${{ inputs.platform }}/${{ inputs.variant }}"
+            {
+              echo "status: ${variant_status}"
+              echo "platform: ${{ inputs.platform }}"
+              echo "variant: ${{ inputs.variant }}"
+              echo "download: ${{ steps.download.outcome }}"
+              echo "run_test: ${{ steps.run_test.outcome }}"
+            } > "${log_dir}/result.txt"
+          fi
 
       - name: Upload logs
         timeout-minutes: 25
@@ -248,13 +290,8 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
 
-      # -------------------------------------------------------------------------
-      # Fail the job explicitly — same pattern as build-variant.yml's
-      # "Fail job when build failed" step.
-      # -------------------------------------------------------------------------
-
       - name: Fail job when test failed
         timeout-minutes: 5
-        if: ${{ steps.run_test.outcome == 'failure' }}
+        if: ${{ inputs.should_test && steps.run_test.outcome == 'failure' }}
         shell: bash
         run: exit 1
