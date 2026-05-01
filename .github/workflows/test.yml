@@ -15,8 +15,11 @@ on:
     branches: [main, master]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # workflow_run triggers are unique per build run — give each its own group so
+  # a second triggered test run never cancels a still-running first.
+  # push/PR triggers keep the old ref-based group so redundant runs are cancelled.
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_run' }}
 
 # No flag gate. Seven platform queues start in parallel; inside each queue
 # variants are chained. A failure closes that queue (remaining are skipped).
@@ -608,3 +611,158 @@ jobs:
             echo "| iOS         | sim-arm64      | ${R_IOS_SIM_A64}  |"
             echo "| iOS         | sim-x86_64     | ${R_IOS_SIM_X64}  |"
           } >> "${GITHUB_STEP_SUMMARY}"
+
+  # ===========================================================================
+  # COLLECT — downloads logs__test__* artifacts from this run, merges them,
+  # and commits logs/test/ to the repository (main/master only).
+  # Runs after report so all 29 variant jobs have finished uploading their logs.
+  # ===========================================================================
+
+  collect:
+    name: Collect and publish test logs
+    needs: [report]
+    if: always()
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v6
+        timeout-minutes: 25
+        with:
+          fetch-depth: 0
+
+      - name: Download all test log artifacts
+        timeout-minutes: 25
+        uses: actions/download-artifact@v8
+        with:
+          pattern: logs__test__*
+          path: _ci_test_logs/
+          merge-multiple: false
+
+      - name: Merge test log artifacts
+        timeout-minutes: 25
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 build/ci_merge_logs.py _ci_test_logs merged-test-logs
+
+      - name: Upload all-test-logs artifact
+        timeout-minutes: 25
+        uses: actions/upload-artifact@v7
+        with:
+          name: all-test-logs
+          path: merged-test-logs/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Determine publish target
+        id: publish_target
+        timeout-minutes: 25
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "should_publish=false" >> "${GITHUB_OUTPUT}"
+            echo "publish_state=artifact-only" >> "${GITHUB_OUTPUT}"
+            echo "reason=pull request runs upload artifacts only" >> "${GITHUB_OUTPUT}"
+          elif [ "${{ github.ref_name }}" = "main" ] || [ "${{ github.ref_name }}" = "master" ]; then
+            echo "should_publish=true" >> "${GITHUB_OUTPUT}"
+            echo "branch=${{ github.ref_name }}" >> "${GITHUB_OUTPUT}"
+          else
+            echo "should_publish=false" >> "${GITHUB_OUTPUT}"
+            echo "publish_state=artifact-only" >> "${GITHUB_OUTPUT}"
+            echo "reason=workflow runs on branch ${{ github.ref_name }}, so logs were not pushed back to the repository" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Publish test logs to repo branch
+        id: publish_outputs
+        timeout-minutes: 25
+        if: steps.publish_target.outputs.should_publish == 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          branch="${{ steps.publish_target.outputs.branch }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin "${branch}"
+          git switch -C "${branch}" "origin/${branch}"
+
+          # Only replace logs/test/ — do not disturb logs/build/ written by build.yml
+          rm -rf logs/test
+          mkdir -p logs/test
+          if [ -d merged-test-logs/test ]; then
+            cp -R merged-test-logs/test/. logs/test/
+          fi
+
+          git add logs/test
+          if git diff --cached --quiet; then
+            echo "publish_state=no-changes" >> "${GITHUB_OUTPUT}"
+          else
+            git commit -m "CI test logs for run ${{ github.run_id }}"
+            git push origin HEAD:"${branch}"
+            echo "publish_state=published" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Write pull instructions
+        timeout-minutes: 25
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          publish_state="${{ steps.publish_target.outputs.publish_state }}"
+          publish_reason="${{ steps.publish_target.outputs.reason }}"
+          publish_branch="${{ steps.publish_target.outputs.branch }}"
+
+          if [ "${{ steps.publish_target.outputs.should_publish }}" = "true" ]; then
+            if [ "${{ steps.publish_outputs.outcome }}" = "success" ]; then
+              publish_state="${{ steps.publish_outputs.outputs.publish_state }}"
+            elif [ "${{ steps.publish_outputs.outcome }}" = "failure" ]; then
+              publish_state="publish-failed"
+              publish_reason="repository push failed; see the collect job log for details"
+            fi
+          fi
+
+          {
+            echo "## Test log outputs"
+            echo
+            case "${publish_state}" in
+              published)
+                echo "Test logs were published to branch: ${publish_branch}"
+                ;;
+              no-changes)
+                echo "Test logs already matched branch: ${publish_branch}"
+                ;;
+              publish-failed)
+                echo "Test logs were uploaded as artifacts, but publication to ${publish_branch} failed."
+                echo
+                echo "Reason: ${publish_reason}"
+                ;;
+              *)
+                echo "Test logs were uploaded as artifacts only."
+                echo
+                echo "Reason: ${publish_reason}"
+                ;;
+            esac
+            echo
+            if [ -n "${publish_branch}" ]; then
+              echo "Commands:"
+              echo "git fetch origin ${publish_branch}"
+              echo "git switch ${publish_branch}"
+            fi
+            echo
+            echo "Test logs path: logs/test/<platform>/<variant>/"
+            echo
+            echo "Fallback artifact: all-test-logs"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Fail collect job when publish failed
+        timeout-minutes: 25
+        if: ${{ steps.publish_target.outputs.should_publish == 'true' && steps.publish_outputs.outcome == 'failure' }}
+        shell: bash
+        run: exit 1
