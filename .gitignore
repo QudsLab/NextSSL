@@ -19,3 +19,5 @@ kat.txt
 /KAT/temp
 /KAT/.temp
 /.ci_probe
+/KAT
+/examples
