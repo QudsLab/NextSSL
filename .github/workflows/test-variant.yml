@@ -186,32 +186,15 @@ jobs:
               ;;
 
             pe-header)
-              export _CHECK_LIB="${lib_file}"
-              "${python_cmd}" -c '
-import os, sys
-from pathlib import Path
-p = Path(os.environ["_CHECK_LIB"])
-assert p.exists() and p.stat().st_size > 0, "File missing or empty: " + str(p)
-magic = p.read_bytes()[:2]
-assert magic == b"MZ", "Not PE (MZ): got " + magic.hex()
-print("OK PE (execution skipped on this runner):", p.name)
-' 2>&1 | tee "${LOG_DIR}/header.log"
+              _LIB="${lib_file}" "${python_cmd}" -c \
+                'import os; from pathlib import Path; p=Path(os.environ["_LIB"]); assert p.exists() and p.stat().st_size>0, "missing: "+str(p); m=p.read_bytes()[:2]; assert m==b"MZ", "Not PE: "+m.hex(); print("OK PE (exec skipped):", p.name)' \
+                2>&1 | tee "${LOG_DIR}/header.log"
               ;;
 
             macho-header)
-              export _CHECK_LIB="${lib_file}"
-              "${python_cmd}" -c '
-import os
-from pathlib import Path
-p = Path(os.environ["_CHECK_LIB"])
-assert p.exists() and p.stat().st_size > 0, "File missing or empty: " + str(p)
-magic = p.read_bytes()[:4]
-fat = b"\xca\xfe\xba\xbe"
-m64 = b"\xcf\xfa\xed\xfe"
-m32 = b"\xce\xfa\xed\xfe"
-assert magic in (fat, m64, m32, fat[::-1], m64[::-1], m32[::-1]), "Not Mach-O: " + magic.hex()
-print("OK Mach-O (execution skipped):", p.name)
-' 2>&1 | tee "${LOG_DIR}/header.log"
+              _LIB="${lib_file}" "${python_cmd}" -c \
+                'import os; from pathlib import Path; p=Path(os.environ["_LIB"]); assert p.exists() and p.stat().st_size>0, "missing: "+str(p); m=p.read_bytes()[:4]; ok=m in {bytes.fromhex(h) for h in ["cafebabe","cefaedfe","cffaedfe","bebafeca","feedface","feedfacf"]}; assert ok, "Not Mach-O: "+m.hex(); print("OK Mach-O (exec skipped):", p.name)' \
+                2>&1 | tee "${LOG_DIR}/header.log"
               ;;
 
             *)
