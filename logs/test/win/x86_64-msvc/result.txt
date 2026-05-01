@@ -1,0 +1,5 @@
+status: failed
+platform: win
+variant: x86_64-msvc
+download: success
+run_test: failure

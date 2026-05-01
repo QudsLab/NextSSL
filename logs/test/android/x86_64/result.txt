@@ -1,0 +1,4 @@
+status: skipped
+platform: android
+variant: x86_64
+reason: queue stopped after arm64-v8a (failed)
