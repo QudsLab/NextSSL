@@ -17,7 +17,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-LOGS_ROOT = ROOT / "logs"
+LOGS_ROOT = ROOT / "logs" / "build"
 BIN_ROOT = ROOT / "bin"
 BUILD_ROOT = ROOT / ".ci_build"
 

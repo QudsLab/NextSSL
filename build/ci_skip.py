@@ -13,7 +13,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-LOGS_ROOT = ROOT / "logs"
+LOGS_ROOT = ROOT / "logs" / "build"
 
 
 def write_lines(path: Path, lines: list[str]) -> None:

@@ -22,11 +22,18 @@ def copy_tree(source: Path, target: Path) -> None:
             shutil.copy2(item, destination)
 
 
-def parse_artifact_name(name: str) -> tuple[str, str] | None:
-    parts = name.split("__", 2)
-    if len(parts) != 3 or parts[0] != "logs":
-        return None
-    return parts[1], parts[2]
+def parse_artifact_name(name: str) -> tuple[str, str, str] | None:
+    """Parse artifact names.
+
+    New format:    logs__<type>__<platform>__<variant>  (4 parts)
+    Legacy format: logs__<platform>__<variant>           (3 parts, treated as type="build")
+    """
+    parts = name.split("__")
+    if len(parts) == 4 and parts[0] == "logs":
+        return parts[1], parts[2], parts[3]
+    if len(parts) == 3 and parts[0] == "logs":
+        return "build", parts[1], parts[2]
+    return None
 
 
 def read_result(path: Path) -> dict[str, str]:
@@ -61,15 +68,16 @@ def format_summary_line(variant_dir: Path) -> str:
 
 
 def generate_summaries(output_dir: Path) -> None:
-    for platform_dir in sorted(path for path in output_dir.iterdir() if path.is_dir()):
-        variant_dirs = sorted(path for path in platform_dir.iterdir() if path.is_dir())
-        if not variant_dirs:
-            continue
-        write_lines(platform_dir / "SUMMARY.txt", [format_summary_line(path) for path in variant_dirs])
+    for type_dir in sorted(path for path in output_dir.iterdir() if path.is_dir()):
+        for platform_dir in sorted(path for path in type_dir.iterdir() if path.is_dir()):
+            variant_dirs = sorted(path for path in platform_dir.iterdir() if path.is_dir())
+            if not variant_dirs:
+                continue
+            write_lines(platform_dir / "SUMMARY.txt", [format_summary_line(path) for path in variant_dirs])
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Merge CI log artifacts into logs/<platform>/<variant>/.")
+    parser = argparse.ArgumentParser(description="Merge CI log artifacts into <type>/<platform>/<variant>/.")
     parser.add_argument("artifacts_dir", type=Path)
     parser.add_argument("output_dir", type=Path)
     args = parser.parse_args()
@@ -82,8 +90,8 @@ def main() -> int:
         parsed = parse_artifact_name(artifact_dir.name)
         if not parsed:
             continue
-        platform, variant = parsed
-        copy_tree(artifact_dir, args.output_dir / platform / variant)
+        log_type, platform, variant = parsed
+        copy_tree(artifact_dir, args.output_dir / log_type / platform / variant)
 
     generate_summaries(args.output_dir)
     return 0

@@ -18,65 +18,19 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# ---------------------------------------------------------------------------
-# test_intent — gate: only fans out when push contains -T, workflow_dispatch,
-# or a successful Build workflow just completed.
-# ---------------------------------------------------------------------------
-jobs:
-  test_intent:
-    name: Resolve test intent
-    runs-on: ubuntu-24.04
-    outputs:
-      should_test: ${{ steps.intent.outputs.should_test }}
-      reason:      ${{ steps.intent.outputs.reason }}
-    steps:
-      - name: Resolve test marker
-        id: intent
-        shell: bash
-        env:
-          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-          EVENT_NAME:          ${{ github.event_name }}
-          BUILD_CONCLUSION:    ${{ github.event.workflow_run.conclusion }}
-        run: |
-          should_test=false
-          reason="no -T marker in push; tests skipped"
-          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            should_test=true; reason="manual workflow_dispatch"
-          elif [[ "$EVENT_NAME" == "workflow_run" ]]; then
-            if [[ "$BUILD_CONCLUSION" == "success" ]]; then
-              should_test=true; reason="Build workflow completed successfully"
-            else
-              reason="Build workflow did not succeed (conclusion=$BUILD_CONCLUSION)"
-            fi
-          elif echo "$HEAD_COMMIT_MESSAGE" | grep -qF -- '-T'; then
-            should_test=true; reason="push commit message contains -T"
-          fi
-          echo "should_test=$should_test" >> "$GITHUB_OUTPUT"
-          echo "reason=$reason"           >> "$GITHUB_OUTPUT"
+# No flag gate — every trigger runs all jobs.
+# Build workflow has its own -B gate; tests run whenever this workflow fires.
 
-      - name: Write test intent summary
-        if: always()
-        shell: bash
-        run: |
-          {
-            echo "## Test marker"
-            echo
-            echo "Tests fan out when push message contains **-T**, after a successful Build run, or via workflow_dispatch."
-            echo "Without -T on a plain push, only this controller job runs."
-            echo
-            echo "Current run: ${{ steps.intent.outputs.reason }}"
-          } >> "${GITHUB_STEP_SUMMARY}"
+jobs:
 
   # ===========================================================================
   # WINDOWS — windows-2022 runner
-  # x86_64-msvc and x86_64-mingw run natively.
-  # arm64-msvc and armv7-msvc: PE header check only (cannot execute cross-arch).
+  # x86_64-msvc and x86_64-mingw: native KAT execution
+  # arm64-msvc and armv7-msvc: PE header check only (cannot exec cross-arch)
   # ===========================================================================
 
   test_win_x86_64_msvc:
     name: Test win x86_64-msvc
-    needs: [test_intent]
-    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
@@ -91,13 +45,21 @@ jobs:
       - name: Run KATs
         shell: bash
         run: |
+          mkdir -p logs/test/win/x86_64-msvc
           LIB=$(find _art -name "*.dll" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/win/x86_64-msvc/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__win__x86_64-msvc
+          path: logs/test/win/x86_64-msvc/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_win_x86_msvc:
     name: Test win x86-msvc
-    needs: [test_intent, test_win_x86_64_msvc]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_win_x86_64_msvc]
+    if: always()
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
@@ -112,13 +74,21 @@ jobs:
       - name: Run KATs
         shell: bash
         run: |
+          mkdir -p logs/test/win/x86-msvc
           LIB=$(find _art -name "*.dll" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/win/x86-msvc/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__win__x86-msvc
+          path: logs/test/win/x86-msvc/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_win_arm64_msvc:
     name: Test win arm64-msvc (PE header check)
-    needs: [test_intent, test_win_x86_msvc]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_win_x86_msvc]
+    if: always()
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
@@ -133,18 +103,26 @@ jobs:
       - name: Verify PE binary
         shell: bash
         run: |
+          mkdir -p logs/test/win/arm64-msvc
           LIB=$(find _art -name "*.dll" | head -1)
           python -c "
           from pathlib import Path; p=Path('$LIB')
           assert p.exists() and p.stat().st_size > 0
           assert p.read_bytes()[:2]==b'MZ', 'Not PE'
           print('OK (PE verified, execution skipped on x86_64 runner):', p.name)
-          "
+          " 2>&1 | tee logs/test/win/arm64-msvc/header.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__win__arm64-msvc
+          path: logs/test/win/arm64-msvc/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_win_x86_64_mingw:
     name: Test win x86_64-mingw
-    needs: [test_intent, test_win_arm64_msvc]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_win_arm64_msvc]
+    if: always()
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
@@ -159,13 +137,21 @@ jobs:
       - name: Run KATs
         shell: bash
         run: |
+          mkdir -p logs/test/win/x86_64-mingw
           LIB=$(find _art -name "*.dll" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/win/x86_64-mingw/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__win__x86_64-mingw
+          path: logs/test/win/x86_64-mingw/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_win_x86_mingw:
     name: Test win x86-mingw
-    needs: [test_intent, test_win_x86_64_mingw]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_win_x86_64_mingw]
+    if: always()
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
@@ -180,13 +166,21 @@ jobs:
       - name: Run KATs
         shell: bash
         run: |
+          mkdir -p logs/test/win/x86-mingw
           LIB=$(find _art -name "*.dll" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/win/x86-mingw/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__win__x86-mingw
+          path: logs/test/win/x86-mingw/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_win_armv7_msvc:
     name: Test win armv7-msvc (PE header check)
-    needs: [test_intent, test_win_x86_mingw]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_win_x86_mingw]
+    if: always()
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
@@ -201,13 +195,21 @@ jobs:
       - name: Verify PE binary
         shell: bash
         run: |
+          mkdir -p logs/test/win/armv7-msvc
           LIB=$(find _art -name "*.dll" | head -1)
           python -c "
           from pathlib import Path; p=Path('$LIB')
           assert p.exists() and p.stat().st_size > 0
           assert p.read_bytes()[:2]==b'MZ', 'Not PE'
           print('OK (PE verified, ARMv7 execution skipped on x86_64 runner):', p.name)
-          "
+          " 2>&1 | tee logs/test/win/armv7-msvc/header.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__win__armv7-msvc
+          path: logs/test/win/armv7-msvc/
+          retention-days: 30
+          if-no-files-found: warn
 
   # ===========================================================================
   # LINUX GLIBC — ubuntu-24.04, QEMU user-mode for cross-arch
@@ -215,8 +217,6 @@ jobs:
 
   test_linux_glibc_x86_64:
     name: Test linux-glibc x86_64
-    needs: [test_intent]
-    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -230,13 +230,21 @@ jobs:
           path: _art
       - name: Run KATs (native)
         run: |
+          mkdir -p logs/test/linux-glibc/x86_64
           LIB=$(find _art -name "*.so" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-glibc/x86_64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-glibc__x86_64
+          path: logs/test/linux-glibc/x86_64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_linux_glibc_x86:
     name: Test linux-glibc x86
-    needs: [test_intent, test_linux_glibc_x86_64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_linux_glibc_x86_64]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -252,13 +260,21 @@ jobs:
           path: _art
       - name: Run KATs (QEMU i386)
         run: |
+          mkdir -p logs/test/linux-glibc/x86
           LIB=$(find _art -name "*.so" | head -1)
-          QEMU_LD_PREFIX=/usr/i686-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+          QEMU_LD_PREFIX=/usr/i686-linux-gnu python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-glibc/x86/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-glibc__x86
+          path: logs/test/linux-glibc/x86/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_linux_glibc_arm64:
     name: Test linux-glibc arm64
-    needs: [test_intent, test_linux_glibc_x86]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_linux_glibc_x86]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -274,13 +290,21 @@ jobs:
           path: _art
       - name: Run KATs (QEMU aarch64)
         run: |
+          mkdir -p logs/test/linux-glibc/arm64
           LIB=$(find _art -name "*.so" | head -1)
-          QEMU_LD_PREFIX=/usr/aarch64-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+          QEMU_LD_PREFIX=/usr/aarch64-linux-gnu python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-glibc/arm64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-glibc__arm64
+          path: logs/test/linux-glibc/arm64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_linux_glibc_armv7:
     name: Test linux-glibc armv7
-    needs: [test_intent, test_linux_glibc_arm64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_linux_glibc_arm64]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -296,13 +320,21 @@ jobs:
           path: _art
       - name: Run KATs (QEMU arm)
         run: |
+          mkdir -p logs/test/linux-glibc/armv7
           LIB=$(find _art -name "*.so" | head -1)
-          QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf python test/run_tests.py --lib "$LIB" --verbose
+          QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-glibc/armv7/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-glibc__armv7
+          path: logs/test/linux-glibc/armv7/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_linux_glibc_riscv64:
     name: Test linux-glibc riscv64
-    needs: [test_intent, test_linux_glibc_armv7]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_linux_glibc_armv7]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -318,13 +350,21 @@ jobs:
           path: _art
       - name: Run KATs (QEMU riscv64)
         run: |
+          mkdir -p logs/test/linux-glibc/riscv64
           LIB=$(find _art -name "*.so" | head -1)
-          QEMU_LD_PREFIX=/usr/riscv64-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+          QEMU_LD_PREFIX=/usr/riscv64-linux-gnu python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-glibc/riscv64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-glibc__riscv64
+          path: logs/test/linux-glibc/riscv64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_linux_glibc_s390x:
     name: Test linux-glibc s390x
-    needs: [test_intent, test_linux_glibc_riscv64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_linux_glibc_riscv64]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -340,13 +380,21 @@ jobs:
           path: _art
       - name: Run KATs (QEMU s390x)
         run: |
+          mkdir -p logs/test/linux-glibc/s390x
           LIB=$(find _art -name "*.so" | head -1)
-          QEMU_LD_PREFIX=/usr/s390x-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+          QEMU_LD_PREFIX=/usr/s390x-linux-gnu python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-glibc/s390x/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-glibc__s390x
+          path: logs/test/linux-glibc/s390x/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_linux_glibc_ppc64le:
     name: Test linux-glibc ppc64le
-    needs: [test_intent, test_linux_glibc_s390x]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_linux_glibc_s390x]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -362,13 +410,21 @@ jobs:
           path: _art
       - name: Run KATs (QEMU ppc64le)
         run: |
+          mkdir -p logs/test/linux-glibc/ppc64le
           LIB=$(find _art -name "*.so" | head -1)
-          QEMU_LD_PREFIX=/usr/powerpc64le-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+          QEMU_LD_PREFIX=/usr/powerpc64le-linux-gnu python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-glibc/ppc64le/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-glibc__ppc64le
+          path: logs/test/linux-glibc/ppc64le/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_linux_glibc_loongarch64:
     name: Test linux-glibc loongarch64
-    needs: [test_intent, test_linux_glibc_ppc64le]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_linux_glibc_ppc64le]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -384,8 +440,16 @@ jobs:
           path: _art
       - name: Run KATs (QEMU loongarch64)
         run: |
+          mkdir -p logs/test/linux-glibc/loongarch64
           LIB=$(find _art -name "*.so" | head -1)
-          QEMU_LD_PREFIX=/usr/loongarch64-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+          QEMU_LD_PREFIX=/usr/loongarch64-linux-gnu python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-glibc/loongarch64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-glibc__loongarch64
+          path: logs/test/linux-glibc/loongarch64/
+          retention-days: 30
+          if-no-files-found: warn
 
   # ===========================================================================
   # LINUX MUSL — ubuntu-24.04 + musl loader / QEMU for cross-arch
@@ -393,8 +457,6 @@ jobs:
 
   test_linux_musl_x86_64:
     name: Test linux-musl x86_64
-    needs: [test_intent]
-    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -410,13 +472,21 @@ jobs:
           path: _art
       - name: Run KATs (musl x86_64)
         run: |
+          mkdir -p logs/test/linux-musl/x86_64
           LIB=$(find _art -name "*.so" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-musl/x86_64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-musl__x86_64
+          path: logs/test/linux-musl/x86_64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_linux_musl_arm64:
     name: Test linux-musl arm64
-    needs: [test_intent, test_linux_musl_x86_64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_linux_musl_x86_64]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -432,13 +502,21 @@ jobs:
           path: _art
       - name: Run KATs (QEMU aarch64 musl)
         run: |
+          mkdir -p logs/test/linux-musl/arm64
           LIB=$(find _art -name "*.so" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-musl/arm64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-musl__arm64
+          path: logs/test/linux-musl/arm64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_linux_musl_armv7:
     name: Test linux-musl armv7
-    needs: [test_intent, test_linux_musl_arm64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_linux_musl_arm64]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -454,8 +532,16 @@ jobs:
           path: _art
       - name: Run KATs (QEMU arm musl)
         run: |
+          mkdir -p logs/test/linux-musl/armv7
           LIB=$(find _art -name "*.so" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/linux-musl/armv7/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__linux-musl__armv7
+          path: logs/test/linux-musl/armv7/
+          retention-days: 30
+          if-no-files-found: warn
 
   # ===========================================================================
   # macOS — macos-14 runner (Apple Silicon / M1)
@@ -463,8 +549,6 @@ jobs:
 
   test_macos_x86_64:
     name: Test macOS x86_64
-    needs: [test_intent]
-    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
@@ -478,13 +562,21 @@ jobs:
           path: _art
       - name: Run KATs
         run: |
+          mkdir -p logs/test/macos/x86_64
           LIB=$(find _art -name "*.dylib" | head -1)
-          python3 test/run_tests.py --lib "$LIB" --verbose
+          python3 test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/macos/x86_64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__macos__x86_64
+          path: logs/test/macos/x86_64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_macos_arm64:
     name: Test macOS arm64
-    needs: [test_intent, test_macos_x86_64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_macos_x86_64]
+    if: always()
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
@@ -498,13 +590,21 @@ jobs:
           path: _art
       - name: Run KATs
         run: |
+          mkdir -p logs/test/macos/arm64
           LIB=$(find _art -name "*.dylib" | head -1)
-          python3 test/run_tests.py --lib "$LIB" --verbose
+          python3 test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/macos/arm64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__macos__arm64
+          path: logs/test/macos/arm64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_macos_universal:
     name: Test macOS universal
-    needs: [test_intent, test_macos_arm64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_macos_arm64]
+    if: always()
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
@@ -518,8 +618,16 @@ jobs:
           path: _art
       - name: Run KATs
         run: |
+          mkdir -p logs/test/macos/universal
           LIB=$(find _art -name "*.dylib" | head -1)
-          python3 test/run_tests.py --lib "$LIB" --verbose
+          python3 test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/macos/universal/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__macos__universal
+          path: logs/test/macos/universal/
+          retention-days: 30
+          if-no-files-found: warn
 
   # ===========================================================================
   # WASM
@@ -527,8 +635,6 @@ jobs:
 
   test_wasm_emscripten:
     name: Test WASM emscripten-wasm32
-    needs: [test_intent]
-    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -544,13 +650,21 @@ jobs:
           path: _art
       - name: Run KATs (WASM/Node.js)
         run: |
+          mkdir -p logs/test/wasm/emscripten-wasm32
           JS=$(find _art -name "*.js" | head -1)
-          python test/run_tests.py --wasm "$JS" --group hash --verbose
+          python test/run_tests.py --wasm "$JS" --group hash --verbose 2>&1 | tee logs/test/wasm/emscripten-wasm32/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__wasm__emscripten-wasm32
+          path: logs/test/wasm/emscripten-wasm32/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_wasm_wasi:
     name: Test WASM wasi-wasm32
-    needs: [test_intent, test_wasm_emscripten]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_wasm_emscripten]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -568,8 +682,16 @@ jobs:
           path: _art
       - name: Run KATs (WASM/WASI)
         run: |
+          mkdir -p logs/test/wasm/wasi-wasm32
           WASM=$(find _art -name "*.wasm" | head -1)
-          python test/run_tests.py --wasm-wasi "$WASM" --group hash --verbose
+          python test/run_tests.py --wasm-wasi "$WASM" --group hash --verbose 2>&1 | tee logs/test/wasm/wasi-wasm32/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__wasm__wasi-wasm32
+          path: logs/test/wasm/wasi-wasm32/
+          retention-days: 30
+          if-no-files-found: warn
 
   # ===========================================================================
   # ANDROID — ubuntu-24.04 + QEMU for arm/arm64; x86_64 native
@@ -577,8 +699,6 @@ jobs:
 
   test_android_arm64_v8a:
     name: Test android arm64-v8a
-    needs: [test_intent]
-    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -594,13 +714,21 @@ jobs:
           path: _art
       - name: Run KATs (QEMU aarch64)
         run: |
+          mkdir -p logs/test/android/arm64-v8a
           LIB=$(find _art -name "*.so" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/android/arm64-v8a/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__android__arm64-v8a
+          path: logs/test/android/arm64-v8a/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_android_armeabi_v7a:
     name: Test android armeabi-v7a
-    needs: [test_intent, test_android_arm64_v8a]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_android_arm64_v8a]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -616,13 +744,21 @@ jobs:
           path: _art
       - name: Run KATs (QEMU arm)
         run: |
+          mkdir -p logs/test/android/armeabi-v7a
           LIB=$(find _art -name "*.so" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/android/armeabi-v7a/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__android__armeabi-v7a
+          path: logs/test/android/armeabi-v7a/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_android_x86_64:
     name: Test android x86_64
-    needs: [test_intent, test_android_armeabi_v7a]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_android_armeabi_v7a]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -636,13 +772,21 @@ jobs:
           path: _art
       - name: Run KATs (native x86_64)
         run: |
+          mkdir -p logs/test/android/x86_64
           LIB=$(find _art -name "*.so" | head -1)
-          python test/run_tests.py --lib "$LIB" --verbose
+          python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/android/x86_64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__android__x86_64
+          path: logs/test/android/x86_64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_android_x86:
     name: Test android x86
-    needs: [test_intent, test_android_x86_64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_android_x86_64]
+    if: always()
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -658,20 +802,26 @@ jobs:
           path: _art
       - name: Run KATs (QEMU i386)
         run: |
+          mkdir -p logs/test/android/x86
           LIB=$(find _art -name "*.so" | head -1)
-          QEMU_LD_PREFIX=/usr/i686-linux-gnu python test/run_tests.py --lib "$LIB" --verbose
+          QEMU_LD_PREFIX=/usr/i686-linux-gnu python test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/android/x86/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__android__x86
+          path: logs/test/android/x86/
+          retention-days: 30
+          if-no-files-found: warn
 
   # ===========================================================================
   # iOS — macos-14 runner
-  # device-arm64: Mach-O header check only (cannot run on CI without device/code-sign)
+  # device-arm64: Mach-O header check only (no code-sign in CI)
   # sim-arm64: runs natively on macos-14 (M1)
   # sim-x86_64: Mach-O header check (M1 runner cannot execute x86_64 slice alone)
   # ===========================================================================
 
   test_ios_device_arm64:
     name: Test iOS device-arm64 (Mach-O check)
-    needs: [test_intent]
-    if: ${{ needs.test_intent.outputs.should_test == 'true' }}
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
@@ -685,6 +835,7 @@ jobs:
           path: _art
       - name: Verify Mach-O
         run: |
+          mkdir -p logs/test/ios/device-arm64
           LIB=$(find _art \( -name "*.dylib" -o -name "*.a" \) | head -1)
           python3 -c "
           from pathlib import Path; p=Path('$LIB')
@@ -693,12 +844,19 @@ jobs:
           ok=magic in (b'\xca\xfe\xba\xbe',b'\xce\xfa\xed\xfe',b'\xcf\xfa\xed\xfe',b'\xbe\xba\xfe\xca',b'\xfe\xed\xfa\xce',b'\xfe\xed\xfa\xcf')
           assert ok, f'Not Mach-O: {magic.hex()}'
           print('OK (Mach-O verified, device execution skipped in CI):', p.name)
-          "
+          " 2>&1 | tee logs/test/ios/device-arm64/header.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__ios__device-arm64
+          path: logs/test/ios/device-arm64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_ios_sim_arm64:
     name: Test iOS sim-arm64
-    needs: [test_intent, test_ios_device_arm64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_ios_device_arm64]
+    if: always()
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
@@ -712,13 +870,21 @@ jobs:
           path: _art
       - name: Run KATs (sim arm64 — native on M1 macos-14)
         run: |
+          mkdir -p logs/test/ios/sim-arm64
           LIB=$(find _art -name "*.dylib" | head -1)
-          python3 test/run_tests.py --lib "$LIB" --verbose
+          python3 test/run_tests.py --lib "$LIB" --verbose 2>&1 | tee logs/test/ios/sim-arm64/kat.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__ios__sim-arm64
+          path: logs/test/ios/sim-arm64/
+          retention-days: 30
+          if-no-files-found: warn
 
   test_ios_sim_x86_64:
     name: Test iOS sim-x86_64 (Mach-O check)
-    needs: [test_intent, test_ios_sim_arm64]
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    needs: [test_ios_sim_arm64]
+    if: always()
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
@@ -732,6 +898,7 @@ jobs:
           path: _art
       - name: Verify Mach-O
         run: |
+          mkdir -p logs/test/ios/sim-x86_64
           LIB=$(find _art -name "*.dylib" | head -1)
           python3 -c "
           from pathlib import Path; p=Path('$LIB')
@@ -740,7 +907,14 @@ jobs:
           ok=magic in (b'\xca\xfe\xba\xbe',b'\xce\xfa\xed\xfe',b'\xcf\xfa\xed\xfe',b'\xbe\xba\xfe\xca',b'\xfe\xed\xfa\xce',b'\xfe\xed\xfa\xcf')
           assert ok, f'Not Mach-O: {magic.hex()}'
           print('OK (Mach-O verified):', p.name)
-          "
+          " 2>&1 | tee logs/test/ios/sim-x86_64/header.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs__test__ios__sim-x86_64
+          path: logs/test/ios/sim-x86_64/
+          retention-days: 30
+          if-no-files-found: warn
 
   # ===========================================================================
   # REPORT — one final summary table
@@ -748,9 +922,8 @@ jobs:
 
   report:
     name: Test report
-    if: ${{ always() && needs.test_intent.outputs.should_test == 'true' }}
+    if: always()
     needs:
-      - test_intent
       - test_win_x86_64_msvc
       - test_win_x86_msvc
       - test_win_arm64_msvc
