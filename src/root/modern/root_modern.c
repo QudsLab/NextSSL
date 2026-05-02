@@ -728,7 +728,7 @@ int nextssl_mac_siphash(
  * Asymmetric — Ed448
  * =========================================================================*/
 #ifdef HAVE_ED448
-#include "../../modern/asymmetric/ed448.h"
+#include "../../modern/asymmetric/curve448/ed448.h"
 
 static int ed448_keypair_from_bytes(uint8_t pk[57], uint8_t sk[57])
 {
@@ -859,8 +859,8 @@ int nextssl_asym_ed448_verify(
  * Asymmetric — X448 / Curve448
  * =========================================================================*/
 #ifdef HAVE_CURVE448
-#include "../../modern/asymmetric/curve448.h"
-#include "../../modern/asymmetric/curve448_det.h"
+#include "../../modern/asymmetric/curve448/curve448.h"
+#include "../../modern/asymmetric/curve448/curve448_det.h"
 
 int nextssl_asym_x448_keypair(uint8_t pk[56], uint8_t sk[56])
 {
@@ -1183,7 +1183,7 @@ int nextssl_asym_sm2_decrypt(
 /* =========================================================================
  * Encoding — Base58Check
  * =========================================================================*/
-#include "../../modern/encoding/base58check.h"
+#include "../../encoding/base58check.h"
 
 int nextssl_enc_base58check_encode(
     uint8_t version, const uint8_t *payload, size_t payload_len,
@@ -1203,7 +1203,7 @@ int nextssl_enc_base58check_decode(
 /* =========================================================================
  * Encoding — Base62
  * =========================================================================*/
-#include "../../modern/encoding/base62.h"
+#include "../../encoding/base62.h"
 
 int nextssl_enc_base62_encode(const uint8_t *src, size_t src_len,
     char *dst, size_t dst_cap, size_t *out_len)
@@ -1220,7 +1220,7 @@ int nextssl_enc_base62_decode(const char *src, size_t src_len,
 /* =========================================================================
  * Encoding — Base85
  * =========================================================================*/
-#include "../../modern/encoding/base85.h"
+#include "../../encoding/base85.h"
 
 int nextssl_enc_base85_encode(const uint8_t *src, size_t src_len,
     char *dst, size_t dst_cap, size_t *out_len)
@@ -1237,7 +1237,7 @@ int nextssl_enc_base85_decode(const char *src, size_t src_len,
 /* =========================================================================
  * Encoding — Bech32
  * =========================================================================*/
-#include "../../modern/encoding/bech32.h"
+#include "../../encoding/bech32.h"
 
 int nextssl_enc_bech32_encode(
     const char *hrp, const uint8_t *data5, size_t data5_len,
@@ -1265,8 +1265,8 @@ int nextssl_enc_bech32_convert_bits(
 /* =========================================================================
  * Encoding — CRC32 / CRC64
  * =========================================================================*/
-#include "../../modern/encoding/crc32.h"
-#include "../../modern/encoding/crc64.h"
+#include "../../encoding/crc32.h"
+#include "../../encoding/crc64.h"
 
 uint32_t nextssl_enc_crc32(const uint8_t *data, size_t len)                     { return crc32_compute(data, len); }
 uint32_t nextssl_enc_crc32_update(uint32_t crc, const uint8_t *data, size_t len) { return crc32_update(crc, data, len); }
@@ -1276,7 +1276,7 @@ uint64_t nextssl_enc_crc64_update(uint64_t crc, const uint8_t *data, size_t len)
 /* =========================================================================
  * Encoding — PEM
  * =========================================================================*/
-#include "../../modern/encoding/pem.h"
+#include "../../encoding/pem.h"
 
 int nextssl_enc_pem_encode(
     const char *type, const uint8_t *der, size_t der_len,

@@ -20,8 +20,8 @@
 #include <limits.h>
 
 /* Encoding helpers from src/common/encoding/ */
-#include "../encoding/hex.h"
-#include "../encoding/base64.h"
+#include "../../encoding/hex.h"
+#include "../../encoding/base64.h"
 
 /* ================================================================
  * INTERNAL HELPERS

@@ -1,6 +1,6 @@
 #include "hash_record_core.h"
 
-#include "../../common/encoding/base16.h"
+#include "../../encoding/base16.h"
 #include "../adapters/kdf_adapters.h"
 #include "../../seed/hash/hash_registry.h"
 #include <stdlib.h>

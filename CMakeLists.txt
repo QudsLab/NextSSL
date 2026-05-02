@@ -197,8 +197,8 @@ target_include_directories(nextssl PUBLIC
 )
 target_include_directories(nextssl PRIVATE
     "${SRC}"
+    "${SRC}/encoding"
     "${SRC}/common"
-    "${SRC}/common/encoding"
     "${SRC}/common/sanitizer"
     "${SRC}/hash"
     "${SRC}/hash/interface"
@@ -222,9 +222,9 @@ target_include_directories(nextssl PRIVATE
     "${SRC}/modern/aead"
     "${SRC}/modern/mac"
     "${SRC}/modern/kdf"
-    "${SRC}/modern/encoding"
     "${SRC}/modern/curve_math"
     "${SRC}/modern/asymmetric"
+    "${SRC}/modern/asymmetric/curve448"
     "${SRC}/modern/asymmetric/rsa"
     "${SRC}/modern/asymmetric/micro_ecc"
     "${SRC}/pow"
