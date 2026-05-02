@@ -1,5 +1,0 @@
-status: failed
-platform: macos
-variant: x86_64
-download: success
-run_test: failure

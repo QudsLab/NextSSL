@@ -21,7 +21,9 @@ extern "C" {
  * data     — input bytes (may be NULL if data_len == 0)
  * data_len — length of input
  * out      — caller-allocated output buffer; must be >= *out_len bytes
- * out_len  — IN: capacity of out; OUT: bytes written (digest size)
+ * out_len  — IN: desired output length for variable-output algorithms
+ *            (currently blake2b, shake128, shake256, skein1024), otherwise
+ *            capacity of out; OUT: bytes written
  *
  * Returns 0 on success, -1 on error (unknown algo, NULL out, capacity too small).
  */

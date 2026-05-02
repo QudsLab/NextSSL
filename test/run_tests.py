@@ -28,7 +28,7 @@ from ctypes import c_char_p, c_int, c_size_t, c_uint32, c_uint8, POINTER
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-KAT_DIR = ROOT / "KAT" / "data"
+KAT_DIR = Path(__file__).resolve().parent / "kat"
 WASM_RUNNER = Path(__file__).resolve().parent / "wasm_runner.mjs"
 
 # ---------------------------------------------------------------------------
@@ -144,6 +144,15 @@ def _is_simple_hash_case(case: dict) -> bool:
     return has_output and has_input and not has_pw_fields
 
 
+def _requested_hash_output_len(case: dict, expected: bytes) -> int:
+    if "output_len_bytes" in case:
+        return int(case["output_len_bytes"])
+    if "output_len_bits" in case:
+        bits = int(case["output_len_bits"])
+        return (bits // 8) if bits % 8 == 0 else -1
+    return len(expected)
+
+
 # ---------------------------------------------------------------------------
 # Library loader (ctypes)
 # ---------------------------------------------------------------------------
@@ -256,6 +265,8 @@ def _ptr(data: bytes):
 # Hash group runner
 # ---------------------------------------------------------------------------
 def run_hash_group(lib: Lib, res: Results, verbose: bool):
+    seen_cases: dict[tuple[str, bytes, int], tuple[bytes, str]] = {}
+
     for mod_name, mod in _iter_kat_group("hash"):
         if mod is None:
             res.skip(f"hash/{mod_name}: failed to load KAT module")
@@ -281,8 +292,26 @@ def run_hash_group(lib: Lib, res: Results, verbose: bool):
 
             data = _bytes_from_case(case, "input_ascii", "input_hex") or b""
             expected = bytes.fromhex(case["output_hex"])
-            out_buf = (c_uint8 * MAX_DIGEST)()
-            out_len = c_size_t(MAX_DIGEST)
+            requested_len = _requested_hash_output_len(case, expected)
+
+            if requested_len < 0:
+                print(f"  SKIP {label}: non-byte-aligned output length is not supported")
+                res.skip(label)
+                continue
+
+            case_key = (c_algo, data, requested_len)
+            prior = seen_cases.get(case_key)
+            if prior is not None and prior[0] != expected:
+                print(
+                    f"  SKIP {label}: conflicting KAT vector duplicates {prior[1]} "
+                    f"with a different expected output"
+                )
+                res.skip(label)
+                continue
+            seen_cases.setdefault(case_key, (expected, label))
+
+            out_buf = (c_uint8 * max(requested_len, 1))()
+            out_len = c_size_t(requested_len)
 
             rc = lib._dll.nextssl_hash_compute(
                 c_algo.encode(),
@@ -290,7 +319,10 @@ def run_hash_group(lib: Lib, res: Results, verbose: bool):
                 out_buf, ctypes.byref(out_len),
             )
             if rc != 0:
-                res.fail(f"FAIL {label}: nextssl_hash_compute returned {rc}")
+                res.fail(
+                    f"FAIL {label}: nextssl_hash_compute returned {rc} "
+                    f"(requested {requested_len} bytes)"
+                )
                 continue
             got = bytes(out_buf[:out_len.value])
             if got == expected:

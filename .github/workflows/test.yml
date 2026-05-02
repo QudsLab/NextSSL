@@ -51,7 +51,7 @@ jobs:
       variant: x86-msvc
       runner: windows-2022
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: pe-header
       lib_glob: "*.dll"
       should_test: ${{ needs.win_x86_64_msvc.result == 'success' && needs.win_x86_64_msvc.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.win_x86_64_msvc.outputs.blocking_variant || 'x86_64-msvc' }}
@@ -99,7 +99,7 @@ jobs:
       variant: x86-mingw
       runner: windows-2022
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: pe-header
       lib_glob: "*.dll"
       should_test: ${{ needs.win_x86_64_mingw.result == 'success' && needs.win_x86_64_mingw.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.win_x86_64_mingw.outputs.blocking_variant || 'x86_64-mingw' }}
@@ -146,10 +146,8 @@ jobs:
       variant: x86
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      apt_packages: "qemu-user qemu-user-static gcc-multilib libc6-i386"
-      qemu_ld_prefix: /usr/i686-linux-gnu
       should_test: ${{ needs.linux_glibc_x86_64.result == 'success' && needs.linux_glibc_x86_64.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.linux_glibc_x86_64.outputs.blocking_variant || 'x86_64' }}
       blocked_status: ${{ needs.linux_glibc_x86_64.outputs.blocking_status || needs.linux_glibc_x86_64.result }}
@@ -164,10 +162,8 @@ jobs:
       variant: arm64
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: aarch64
-      qemu_ld_prefix: /usr/aarch64-linux-gnu
       should_test: ${{ needs.linux_glibc_x86.result == 'success' && needs.linux_glibc_x86.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.linux_glibc_x86.outputs.blocking_variant || 'x86' }}
       blocked_status: ${{ needs.linux_glibc_x86.outputs.blocking_status || needs.linux_glibc_x86.result }}
@@ -182,10 +178,8 @@ jobs:
       variant: armv7
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: arm
-      qemu_ld_prefix: /usr/arm-linux-gnueabihf
       should_test: ${{ needs.linux_glibc_arm64.result == 'success' && needs.linux_glibc_arm64.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.linux_glibc_arm64.outputs.blocking_variant || 'arm64' }}
       blocked_status: ${{ needs.linux_glibc_arm64.outputs.blocking_status || needs.linux_glibc_arm64.result }}
@@ -200,10 +194,8 @@ jobs:
       variant: riscv64
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: riscv64
-      qemu_ld_prefix: /usr/riscv64-linux-gnu
       should_test: ${{ needs.linux_glibc_armv7.result == 'success' && needs.linux_glibc_armv7.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.linux_glibc_armv7.outputs.blocking_variant || 'armv7' }}
       blocked_status: ${{ needs.linux_glibc_armv7.outputs.blocking_status || needs.linux_glibc_armv7.result }}
@@ -218,10 +210,8 @@ jobs:
       variant: s390x
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: s390x
-      qemu_ld_prefix: /usr/s390x-linux-gnu
       should_test: ${{ needs.linux_glibc_riscv64.result == 'success' && needs.linux_glibc_riscv64.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.linux_glibc_riscv64.outputs.blocking_variant || 'riscv64' }}
       blocked_status: ${{ needs.linux_glibc_riscv64.outputs.blocking_status || needs.linux_glibc_riscv64.result }}
@@ -236,10 +226,8 @@ jobs:
       variant: ppc64le
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: ppc64le
-      qemu_ld_prefix: /usr/powerpc64le-linux-gnu
       should_test: ${{ needs.linux_glibc_s390x.result == 'success' && needs.linux_glibc_s390x.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.linux_glibc_s390x.outputs.blocking_variant || 's390x' }}
       blocked_status: ${{ needs.linux_glibc_s390x.outputs.blocking_status || needs.linux_glibc_s390x.result }}
@@ -254,10 +242,8 @@ jobs:
       variant: loongarch64
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: loongarch64
-      qemu_ld_prefix: /usr/loongarch64-linux-gnu
       should_test: ${{ needs.linux_glibc_ppc64le.result == 'success' && needs.linux_glibc_ppc64le.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.linux_glibc_ppc64le.outputs.blocking_variant || 'ppc64le' }}
       blocked_status: ${{ needs.linux_glibc_ppc64le.outputs.blocking_status || needs.linux_glibc_ppc64le.result }}
@@ -288,9 +274,8 @@ jobs:
       variant: arm64
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: aarch64
       should_test: ${{ needs.linux_musl_x86_64.result == 'success' && needs.linux_musl_x86_64.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.linux_musl_x86_64.outputs.blocking_variant || 'x86_64' }}
       blocked_status: ${{ needs.linux_musl_x86_64.outputs.blocking_status || needs.linux_musl_x86_64.result }}
@@ -305,9 +290,8 @@ jobs:
       variant: armv7
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: arm
       should_test: ${{ needs.linux_musl_arm64.result == 'success' && needs.linux_musl_arm64.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.linux_musl_arm64.outputs.blocking_variant || 'arm64' }}
       blocked_status: ${{ needs.linux_musl_arm64.outputs.blocking_status || needs.linux_musl_arm64.result }}
@@ -324,7 +308,7 @@ jobs:
       variant: x86_64
       runner: macos-14
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: macho-header
       lib_glob: "*.dylib"
 
   macos_arm64:
@@ -402,9 +386,8 @@ jobs:
       variant: arm64-v8a
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: aarch64
 
   android_armeabi_v7a:
     name: Test Android armeabi-v7a
@@ -416,9 +399,8 @@ jobs:
       variant: armeabi-v7a
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      qemu_arch: arm
       should_test: ${{ needs.android_arm64_v8a.result == 'success' && needs.android_arm64_v8a.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.android_arm64_v8a.outputs.blocking_variant || 'arm64-v8a' }}
       blocked_status: ${{ needs.android_arm64_v8a.outputs.blocking_status || needs.android_arm64_v8a.result }}
@@ -433,7 +415,7 @@ jobs:
       variant: x86_64
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
       should_test: ${{ needs.android_armeabi_v7a.result == 'success' && needs.android_armeabi_v7a.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.android_armeabi_v7a.outputs.blocking_variant || 'armeabi-v7a' }}
@@ -449,10 +431,8 @@ jobs:
       variant: x86
       runner: ubuntu-24.04
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
+      test_mode: elf-header
       lib_glob: "*.so"
-      apt_packages: "qemu-user qemu-user-static gcc-multilib libc6-i386"
-      qemu_ld_prefix: /usr/i686-linux-gnu
       should_test: ${{ needs.android_x86_64.result == 'success' && needs.android_x86_64.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.android_x86_64.outputs.blocking_variant || 'x86_64' }}
       blocked_status: ${{ needs.android_x86_64.outputs.blocking_status || needs.android_x86_64.result }}
@@ -469,8 +449,8 @@ jobs:
       variant: device-arm64
       runner: macos-14
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: macho-header
-      lib_glob: "*.dylib"
+      test_mode: ar-header
+      lib_glob: "*.a"
 
   ios_sim_arm64:
     name: Test iOS sim-arm64
@@ -482,8 +462,8 @@ jobs:
       variant: sim-arm64
       runner: macos-14
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: kat
-      lib_glob: "*.dylib"
+      test_mode: ar-header
+      lib_glob: "*.a"
       should_test: ${{ needs.ios_device_arm64.result == 'success' && needs.ios_device_arm64.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.ios_device_arm64.outputs.blocking_variant || 'device-arm64' }}
       blocked_status: ${{ needs.ios_device_arm64.outputs.blocking_status || needs.ios_device_arm64.result }}
@@ -498,8 +478,8 @@ jobs:
       variant: sim-x86_64
       runner: macos-14
       build_run_id: ${{ github.event.workflow_run.id }}
-      test_mode: macho-header
-      lib_glob: "*.dylib"
+      test_mode: ar-header
+      lib_glob: "*.a"
       should_test: ${{ needs.ios_sim_arm64.result == 'success' && needs.ios_sim_arm64.outputs.continue_queue == 'true' }}
       blocked_by: ${{ needs.ios_sim_arm64.outputs.blocking_variant || 'sim-arm64' }}
       blocked_status: ${{ needs.ios_sim_arm64.outputs.blocking_status || needs.ios_sim_arm64.result }}

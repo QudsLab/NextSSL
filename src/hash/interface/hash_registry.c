@@ -569,11 +569,10 @@ const hash_ops_t md2_ops = {
 /* =========================================================================
  * NT-HASH — accumulator adapter (no streaming API in nt.h)
  *
- * nt.h only provides one-shot nt_hash_unicode(utf16le, len, digest).
- * The adapter accumulates bytes and passes the buffer as raw UTF-16LE.
- * This is the correct interpretation: NTLM hash = MD4(UTF-16LE(password)).
- * When using this via hash_ops_t, the caller must supply UTF-16LE bytes
- * directly. Buffer limit: 2040 bytes = 1020 UTF-16LE characters.
+ * nt.h only provides one-shot NT hashing helpers. The runtime registry takes
+ * byte strings from nextssl_hash_compute(), so interpret each byte as a single
+ * password code unit and expand it to UTF-16LE before hashing.
+ * Buffer limit: 2040 bytes = 2040 password characters / 4080 UTF-16LE bytes.
  * ========================================================================= */
 #include "../legacy/nt.h"
 #include "../legacy/tiger.h"
@@ -598,7 +597,15 @@ static void nt_ops_update(void *c, const uint8_t *d, size_t l) {
 
 static void nt_ops_final(void *c, uint8_t *out) {
     nt_ops_ctx_t *ctx = (nt_ops_ctx_t *)c;
-    nt_hash_unicode(ctx->buf, ctx->len, out);
+    uint8_t utf16[sizeof(ctx->buf) * 2];
+
+    for (size_t i = 0; i < ctx->len; ++i) {
+        utf16[i * 2] = ctx->buf[i];
+        utf16[i * 2 + 1] = 0;
+    }
+
+    nt_hash_unicode(utf16, ctx->len * 2, out);
+    secure_zero(utf16, ctx->len * 2);
     secure_zero(ctx->buf, ctx->len);
     ctx->len = 0;
 }
