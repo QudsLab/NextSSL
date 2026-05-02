@@ -1,0 +1,4 @@
+status: skipped
+platform: win
+variant: x86-mingw
+reason: queue stopped after x86_64-msvc (failed)

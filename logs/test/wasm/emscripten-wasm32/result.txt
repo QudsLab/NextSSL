@@ -1,0 +1,5 @@
+status: failed
+platform: wasm
+variant: emscripten-wasm32
+download: success
+run_test: failure

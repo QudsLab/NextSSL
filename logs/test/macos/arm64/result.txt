@@ -1,0 +1,4 @@
+status: skipped
+platform: macos
+variant: arm64
+reason: queue stopped after x86_64 (failed)

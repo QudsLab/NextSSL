@@ -1,0 +1,4 @@
+status: skipped
+platform: ios
+variant: sim-arm64
+reason: queue stopped after device-arm64 (failed)

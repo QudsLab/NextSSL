@@ -1,0 +1,4 @@
+status: skipped
+platform: linux-glibc
+variant: s390x
+reason: queue stopped after x86_64 (failed)

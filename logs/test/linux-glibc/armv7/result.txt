@@ -1,0 +1,4 @@
+status: skipped
+platform: linux-glibc
+variant: armv7
+reason: queue stopped after x86_64 (failed)

@@ -1,0 +1,5 @@
+status: failed
+platform: android
+variant: arm64-v8a
+download: success
+run_test: failure
