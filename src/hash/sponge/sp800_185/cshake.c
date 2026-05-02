@@ -99,10 +99,10 @@ void cshake_squeeze(CSHAKE_CTX *ctx, uint8_t *out, size_t outlen)
     shake_squeeze(&ctx->shake, out, outlen);
 }
 
-void cshake128(const uint8_t *N, size_t Nlen,
-               const uint8_t *S, size_t Slen,
-               const uint8_t *data, size_t dlen,
-               uint8_t *out, size_t outlen)
+void cshake128_oneshot(const uint8_t *N, size_t Nlen,
+                       const uint8_t *S, size_t Slen,
+                       const uint8_t *data, size_t dlen,
+                       uint8_t *out, size_t outlen)
 {
     CSHAKE_CTX ctx;
     cshake128_init(&ctx, N, Nlen, S, Slen);
@@ -110,10 +110,10 @@ void cshake128(const uint8_t *N, size_t Nlen,
     cshake_squeeze(&ctx, out, outlen);
 }
 
-void cshake256(const uint8_t *N, size_t Nlen,
-               const uint8_t *S, size_t Slen,
-               const uint8_t *data, size_t dlen,
-               uint8_t *out, size_t outlen)
+void cshake256_oneshot(const uint8_t *N, size_t Nlen,
+                       const uint8_t *S, size_t Slen,
+                       const uint8_t *data, size_t dlen,
+                       uint8_t *out, size_t outlen)
 {
     CSHAKE_CTX ctx;
     cshake256_init(&ctx, N, Nlen, S, Slen);

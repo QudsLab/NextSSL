@@ -64,13 +64,16 @@ static int parallelhash_impl(int bits128,
             block_len    = end - start;
             block        = data + start;
         }
-        /* Inner hash: cSHAKE(block, 256, "", "") == SHAKE (pure_shake path) */
-        if (bits128)
-            cshake128(NULL, 0, NULL, 0, block, block_len,
-                      z + i * PH_INNER_BYTES, PH_INNER_BYTES);
-        else
-            cshake256(NULL, 0, NULL, 0, block, block_len,
-                      z + i * PH_INNER_BYTES, PH_INNER_BYTES);
+        /* Inner hash: cSHAKE(block, L, "", "") == SHAKE (N=S=empty → pure_shake) */
+        {
+            CSHAKE_CTX ictx;
+            if (bits128)
+                cshake128_init(&ictx, NULL, 0, NULL, 0);
+            else
+                cshake256_init(&ictx, NULL, 0, NULL, 0);
+            cshake_update(&ictx, block, block_len);
+            cshake_squeeze(&ictx, z + i * PH_INNER_BYTES, PH_INNER_BYTES);
+        }
     }
 
     /* Build final message: left_encode(B) || z || right_encode(n) || right_encode(L) */
