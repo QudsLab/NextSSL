@@ -1,4 +1,0 @@
-status: skipped
-platform: win
-variant: armv7-msvc
-reason: queue stopped after x86_64-msvc (failed)

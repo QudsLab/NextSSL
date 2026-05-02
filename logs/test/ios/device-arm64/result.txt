@@ -1,5 +1,0 @@
-status: failed
-platform: ios
-variant: device-arm64
-download: success
-run_test: failure

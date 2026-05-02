@@ -1,0 +1,4 @@
+[ci_skip] skipped wasm/wasi-wasm32
+[ci_skip] reason: queue stopped after emscripten-wasm32 (failed)
+[ci_skip] blocked_by: emscripten-wasm32
+[ci_skip] blocked_status: failed

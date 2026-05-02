@@ -1,0 +1,163 @@
+[1/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base58check.c.o
+[2/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base58.c.o
+[3/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base62.c.o
+[4/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base16.c.o
+[5/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base32.c.o
+[6/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base85.c.o
+[7/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base64.c.o
+[8/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base64url.c.o
+[9/665] Building C object CMakeFiles/nextssl.dir/src/common/sanitizer/nextssl_sanitizer.c.o
+[10/665] Building C object CMakeFiles/nextssl.dir/src/encoding/crc32.c.o
+[11/665] Building C object CMakeFiles/nextssl.dir/src/encoding/bech32.c.o
+[12/665] Building C object CMakeFiles/nextssl.dir/src/encoding/crc64.c.o
+[13/665] Building C object CMakeFiles/nextssl.dir/src/encoding/radix_common.c.o
+[14/665] Building C object CMakeFiles/nextssl.dir/src/encoding/hex.c.o
+[15/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2_adapter.c.o
+[16/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2d_adapter.c.o
+[17/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2i_adapter.c.o
+[18/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2id_adapter.c.o
+[19/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/balloon_adapter.c.o
+[20/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/bcrypt_adapter.c.o
+[21/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/lyra2_adapter.c.o
+[22/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/catena_adapter.c.o
+[23/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/plain_hash_adapter.c.o
+[24/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/makwa_adapter.c.o
+[25/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/pomelo_adapter.c.o
+[26/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/scrypt_adapter.c.o
+[27/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2b.c.o
+[28/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/yescrypt_adapter.c.o
+[29/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3.c.o
+[30/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2s.c.o
+[31/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_portable.c.o
+[32/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3_dispatch.c.o
+[33/665] Building C object CMakeFiles/nextssl.dir/src/encoding/pem.c.o
+[34/665] Building C object CMakeFiles/nextssl.dir/src/encoding/ff70.c.o
+[35/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha224.c.o
+[36/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512.c.o
+[37/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512_256.c.o
+[38/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha256.c.o
+[39/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512_224.c.o
+[40/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sm3/sm3_ops.c.o
+[41/665] Building C object CMakeFiles/nextssl.dir/src/hash/interface/hash_ops_disabled_stubs.c.o
+[42/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sm3/sm3_impl.c.o
+[43/665] Building C object CMakeFiles/nextssl.dir/src/hash/generic/nextssl_hash.c.o
+[44/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/has160.c.o
+[45/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sm3/sm3_ext.c.o
+[46/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/md2.c.o
+[47/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/md5.c.o
+[48/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/md4.c.o
+[49/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd160.c.o
+[50/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/nt.c.o
+[51/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd128.c.o
+[52/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd256.c.o
+[53/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/sha0.c.o
+[54/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd320.c.o
+[55/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/tiger_sbox.c.o
+[56/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/sha1.c.o
+[57/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/tiger.c.o
+[58/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/whirlpool.c.o
+[59/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2d.c.o
+[60/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2i.c.o
+[61/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2id.c.o
+[62/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/balloon_openssl_compat.c.o
+[63/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/balloon_ops.c.o
+[64/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/bitstream.c.o
+[65/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2.c.o
+[66/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/encode.c.o
+[67/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/compress.c.o
+[68/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/bcrypt/crypt_blowfish.c.o
+[69/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/bcrypt/bcrypt_ops.c.o
+[70/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/bcrypt/crypt_gensalt.c.o
+[71/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/hash_state.c.o
+[72/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/blake2b-ref.c.o
+[73/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena-BRG.c.o
+[74/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/blake2b.c.o
+[75/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena-blake2b-ref.c.o
+[76/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena-helpers.c.o
+[77/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena.c.o
+[78/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena_ops.c.o
+[79/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/core.c.o
+[80/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/Sponge.c.o
+[81/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/lyra2_ops.c.o
+[82/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/Lyra2.c.o
+[83/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/makwa/makwa_ops.c.o
+[84/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/pomelo/pomelo_ops.c.o
+[85/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/makwa/makwa.c.o
+[86/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/pomelo/pomelo.c.o
+[87/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/insecure_memzero.c.o
+[88/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/ref.c.o
+[89/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/crypto_scrypt-ref.c.o
+[90/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/scrypt_ops.c.o
+[91/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/sha256_portable.c.o
+[92/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/thread.c.o
+[93/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt-common.c.o
+[94/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt-opt.c.o
+[95/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt_ops.c.o
+[96/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/lms/lms_params.c.o
+[97/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2_encoding.c.o
+[98/665] Building C object CMakeFiles/nextssl.dir/src/hash/interface/hash_registry.c.o
+[99/665] Building C object CMakeFiles/nextssl.dir/src/hash/root_functions/hash_root.c.o
+[100/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/skein.c.o
+[101/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/skeinApi.c.o
+[102/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/skein_ops.c.o
+[103/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/skein_block.c.o
+[104/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/threefish1024Block.c.o
+[105/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/lms/lms.c.o
+[106/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/threefish256Block.c.o
+[107/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/threefish512Block.c.o
+[108/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/threefishApi.c.o
+[109/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/keccak.c.o
+[110/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3.c.o
+[111/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3_224.c.o
+[112/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3_384.c.o
+[113/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/shake.c.o
+[114/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/kmac.c.o
+[115/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/lms/lmots.c.o
+/Users/runner/work/NextSSL/NextSSL/src/hash/record/lms/lmots.c:38:12: warning: unused variable 'byte_idx' [-Wunused-variable]
+    size_t byte_idx = (i * w) / 8;
+           ^
+/Users/runner/work/NextSSL/NextSSL/src/hash/record/lms/lmots.c:26:13: warning: unused function 'H2' [-Wunused-function]
+static void H2(const uint8_t *a, size_t alen, const uint8_t *b, size_t blen, uint8_t out[32])
+            ^
+2 warnings generated.
+[116/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/cshake.c.o
+[117/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_ccm.c.o
+[118/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/tuplehash.c.o
+[119/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/hash_record_core.c.o
+[120/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/parallelhash.c.o
+[121/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gcm.c.o
+[122/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_ocb.c.o
+[123/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_eax.c.o
+[124/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gcm_siv.c.o
+[125/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_poly1305.c.o
+[126/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_siv.c.o
+[127/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gmac.c.o
+[128/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/chacha20_poly1305.c.o
+[129/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/ascon_hash256.c.o
+[130/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/ascon_core.c.o
+[131/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/ascon_xof128.c.o
+[132/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/monocypher-ed25519.c.o
+[133/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/ascon_cxof128.c.o
+[134/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/monocypher.c.o
+[135/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/add_scalar.c.o
+[136/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/ascon_aead128.c.o
+[137/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/curve448_det.c.o
+FAILED: [code=1] CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/curve448_det.c.o 
+/opt/homebrew/bin/ccache /usr/bin/cc -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -DENABLE_CATENA -DENABLE_FALCON -DENABLE_HQC -DENABLE_LYRA2 -DENABLE_MCELIECE -DENABLE_ML_DSA -DENABLE_ML_KEM -DENABLE_SCRYPT -DENABLE_SPHINCS -DENABLE_YESCRYPT -DHAVE_CURVE448 -DHAVE_ED448 -DNEXTSSL_BUILDING_DLL -DNEXTSSL_HAS_BALLOON -DNEXTSSL_HAS_MAKWA -DNEXTSSL_HAS_POMELO -DNEXTSSL_SUPPRESS_UPSTREAM_WARNINGS -I/Users/runner/work/NextSSL/NextSSL/src/root -I/Users/runner/work/NextSSL/NextSSL/src -I/Users/runner/work/NextSSL/NextSSL/src/encoding -I/Users/runner/work/NextSSL/NextSSL/src/common -I/Users/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/Users/runner/work/NextSSL/NextSSL/src/hash -I/Users/runner/work/NextSSL/NextSSL/src/hash/interface -I/Users/runner/work/NextSSL/NextSSL/src/hash/fast -I/Users/runner/work/NextSSL/NextSSL/src/hash/blake -I/Users/runner/work/NextSSL/NextSSL/src/hash/legacy -I/Users/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/Users/runner/work/NextSSL/NextSSL/src/hash/skein -I/Users/runner/work/NextSSL/NextSSL/src/hash/sponge -I/Users/runner/work/NextSSL/NextSSL/src/hash/adapters -I/Users/runner/work/NextSSL/NextSSL/src/hash/generic -I/Users/runner/work/NextSSL/NextSSL/src/hash/root_functions -I/Users/runner/work/NextSSL/NextSSL/src/seed -I/Users/runner/work/NextSSL/NextSSL/src/seed/hash -I/Users/runner/work/NextSSL/NextSSL/src/seed/random -I/Users/runner/work/NextSSL/NextSSL/src/seed/rng -I/Users/runner/work/NextSSL/NextSSL/src/seed/drbg -I/Users/runner/work/NextSSL/NextSSL/src/seed/udbf -I/Users/runner/work/NextSSL/NextSSL/src/modern -I/Users/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/Users/runner/work/NextSSL/NextSSL/src/modern/aead -I/Users/runner/work/NextSSL/NextSSL/src/modern/mac -I/Users/runner/work/NextSSL/NextSSL/src/modern/kdf -I/Users/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/Users/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/Users/runner/work/NextSSL/NextSSL/src/modern/asymmetric/curve448 -I/Users/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/Users/runner/work/NextSSL/NextSSL/src/modern/asymmetric/micro_ecc -I/Users/runner/work/NextSSL/NextSSL/src/pow -I/Users/runner/work/NextSSL/NextSSL/src/pow/core -I/Users/runner/work/NextSSL/NextSSL/src/pow/client -I/Users/runner/work/NextSSL/NextSSL/src/pow/server -I/Users/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/Users/runner/work/NextSSL/NextSSL/src/pqc -I/Users/runner/work/NextSSL/NextSSL/src/pqc/common -I/Users/runner/work/NextSSL/NextSSL/src/root/hash -I/Users/runner/work/NextSSL/NextSSL/src/root/seed -I/Users/runner/work/NextSSL/NextSSL/src/root/modern -I/Users/runner/work/NextSSL/NextSSL/src/root/pqc -I/Users/runner/work/NextSSL/NextSSL/src/root/pow -I/Users/runner/work/NextSSL/NextSSL/src/hash/memory_hard/balloon -O3 -DNDEBUG -std=gnu11 -arch arm64 -isysroot /Applications/Xcode_15.4.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.5.sdk -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -O3 -MD -MT CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/curve448_det.c.o -MF CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/curve448_det.c.o.d -o CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/curve448_det.c.o -c /Users/runner/work/NextSSL/NextSSL/src/modern/asymmetric/curve448/curve448_det.c
+/Users/runner/work/NextSSL/NextSSL/src/modern/asymmetric/curve448/curve448_det.c:2:10: error: '../../../../seed/drbg/drbg.h' file not found, did you mean 'seed/drbg/drbg.h'?
+#include "../../../../seed/drbg/drbg.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         "seed/drbg/drbg.h"
+1 error generated.
+[138/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/ed448.c.o
+[139/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/det_ecdsa.c.o
+[140/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/curve448.c.o
+[141/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/fe_448.c.o
+[142/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/ge_448.c.o
+ninja: build stopped: subcommand failed.
+
+==============================================================================
+CMD: cmake --build /Users/runner/work/NextSSL/NextSSL/.ci_build/ios/device-arm64 --parallel 6
+CWD: /Users/runner/work/NextSSL/NextSSL
+==============================================================================
+

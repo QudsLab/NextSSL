@@ -1,4 +1,0 @@
-status: skipped
-platform: linux-glibc
-variant: x86
-reason: queue stopped after x86_64 (failed)

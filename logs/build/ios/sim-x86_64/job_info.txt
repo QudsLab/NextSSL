@@ -1,0 +1,9 @@
+platform: ios
+variant: sim-x86_64
+run_id: 25263793345
+attempt: 1
+sha: 20f9e316d855af24c394b9d2bef5e1158aee941a
+ref: refs/heads/main
+started: 2026-05-02T22:47:55Z
+blocked_by: device-arm64
+blocked_status: failed
