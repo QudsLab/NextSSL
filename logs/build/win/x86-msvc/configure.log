@@ -1,0 +1,30 @@
+-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.20348.
+-- The C compiler identification is MSVC 19.44.35225.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x86/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- NextSSL build configuration:
+--   Type        : Release
+--   Shared lib  : ON
+--   ML-KEM      : ON
+--   ML-DSA      : ON
+--   Falcon      : ON
+--   HQC         : ON
+--   McEliece    : ON
+--   SPHINCS+    : ON
+--   GmSSL       : OFF
+--   Ed448/X448  : ON
+--   Balloon     : ON (always)
+--   Pomelo      : ON (always)
+--   Makwa       : ON (always)
+-- Configuring done (9.9s)
+-- Generating done (0.1s)
+-- Build files have been written to: D:/a/NextSSL/NextSSL/.ci_build/win/x86-msvc
+
+==============================================================================
+CMD: cmake -S D:\a\NextSSL\NextSSL -B D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc -DCMAKE_BUILD_TYPE=Release -DNEXTSSL_SHARED=ON -DNEXTSSL_OUTPUT_ARCH=x86-msvc -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=D:\a\NextSSL\NextSSL\bin\win\x86-msvc -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=D:\a\NextSSL\NextSSL\bin\win\x86-msvc -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=D:\a\NextSSL\NextSSL\bin\win\x86-msvc -G "Visual Studio 17 2022" -A Win32
+CWD: D:\a\NextSSL\NextSSL
+==============================================================================
+

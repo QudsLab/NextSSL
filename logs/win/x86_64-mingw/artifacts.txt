@@ -1,2 +1,0 @@
-bin\win\x86_64-mingw\libnextssl.dll
-bin\win\x86_64-mingw\libnextssl.dll.a

@@ -1,0 +1,1813 @@
+MSBuild version 17.14.40+3e7442088 for .NET Framework
+
+  1>Checking Build System
+  Building Custom Rule D:/a/NextSSL/NextSSL/CMakeLists.txt
+  base16.c
+  base32.c
+  base58.c
+  base64.c
+  base64url.c
+  ff70.c
+  hex.c
+  radix_common.c
+  nextssl_sanitizer.c
+  argon2_adapter.c
+  argon2d_adapter.c
+  argon2i_adapter.c
+  argon2id_adapter.c
+  balloon_adapter.c
+  bcrypt_adapter.c
+  catena_adapter.c
+  lyra2_adapter.c
+  makwa_adapter.c
+  plain_hash_adapter.c
+  pomelo_adapter.c
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(34,23): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(40,19): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  Generating Code...
+  Compiling...
+  scrypt_adapter.c
+  yescrypt_adapter.c
+  blake2s.c
+  blake3.c
+D:\a\NextSSL\NextSSL\src\hash\blake\blake3.c(165,48): warning C4244: 'return': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\blake\blake3.c(527,26): warning C4244: 'initializing': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  blake3_dispatch.c
+  blake3_portable.c
+  sha224.c
+  sha256.c
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(194,24): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(195,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(196,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(197,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(198,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(199,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\fast\sha256.c(200,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  sha512_224.c
+  sha512_256.c
+  sm3_ext.c
+  sm3_impl.c
+  sm3_ops.c
+  nextssl_hash.c
+  hash_ops_disabled_stubs.c
+  has160.c
+  md2.c
+  md4.c
+  md5.c
+  nt.c
+  Generating Code...
+  Compiling...
+  ripemd128.c
+  ripemd160.c
+  ripemd256.c
+  ripemd320.c
+  sha0.c
+  sha1.c
+  tiger.c
+  tiger_sbox.c
+  whirlpool.c
+  argon2.c
+  argon2d.c
+  argon2i.c
+  argon2id.c
+  balloon_openssl_compat.c
+  balloon_ops.c
+  bitstream.c
+  compress.c
+  encode.c
+  hash_state.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\hash_state.c(50,38): warning C4244: 'function': conversion from 'const uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\hash_state.c(69,35): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\hash_state.c(139,49): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\hash_state.c(169,44): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  bcrypt_ops.c
+  Generating Code...
+  Compiling...
+  crypt_blowfish.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\bcrypt\crypt_blowfish.c(899,18): warning C4244: '=': conversion from 'unsigned long' to 'char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypt_gensalt.c
+  blake2b-ref.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\blake2b-ref.c(306,34): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\blake2b-ref.c(307,20): warning C4244: '+=': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  catena-BRG.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-BRG.c(37,38): warning C4244: 'function': conversion from 'const uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  catena-blake2b-ref.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-blake2b-ref.c(238,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-blake2b-ref.c(243,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  catena-helpers.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(29,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(54,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(85,23): warning C4244: 'function': conversion from 'const uint16_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  catena.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(124,25): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(323,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(332,54): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(333,36): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(337,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  catena_ops.c
+  core.c
+  encoding.c
+  Lyra2.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(99,36): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(126,37): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  Sponge.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Sponge.c(408,19): warning C4018: '<': signed/unsigned mismatch [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  lyra2_ops.c
+  makwa.c
+  makwa_ops.c
+  pomelo.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(40,38): warning C4244: 'function': conversion from 'unsigned __int64' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(52,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(53,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(54,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(65,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(91,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(117,22): warning C4244: 'function': conversion from 'unsigned __int64' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(123,18): warning C4244: 'function': conversion from 'unsigned __int64' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  pomelo_ops.c
+  crypto_scrypt-ref.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\scrypt\crypto_scrypt-ref.c(253,26): warning C4244: 'function': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  insecure_memzero.c
+  scrypt_ops.c
+  Generating Code...
+  Compiling...
+  sha256_portable.c
+  thread.c
+  yescrypt-common.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-common.c(289,10): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  yescrypt-opt.c
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(131,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(132,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(133,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(134,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(135,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(136,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(137,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(138,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1079,16): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1213,27): warning C4244: '=': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1286,14): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1286,33): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1299,37): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1300,8): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  yescrypt_ops.c
+  hash_record_core.c
+  hash_root.c
+  skein.c
+  skeinApi.c
+D:\a\NextSSL\NextSSL\src\hash\skein\skeinApi.c(56,26): warning C4244: '=': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\skein\skeinApi.c(94,26): warning C4244: '=': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\skein\skeinApi.c(135,26): warning C4244: '=': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  skein_block.c
+  skein_ops.c
+  threefish1024Block.c
+  threefish256Block.c
+  threefish512Block.c
+  threefishApi.c
+D:\a\NextSSL\NextSSL\src\hash\skein\threefishApi.c(32,5): warning C4244: 'function': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\skein\threefishApi.c(34,5): warning C4244: 'function': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\skein\threefishApi.c(59,5): warning C4244: 'function': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\skein\threefishApi.c(61,5): warning C4244: 'function': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  keccak.c
+  sha3.c
+  sha3_224.c
+  sha3_384.c
+  shake.c
+  Generating Code...
+  Compiling...
+  kmac.c
+  aes_ccm.c
+  aes_eax.c
+  aes_gcm.c
+  aes_gcm_siv.c
+  aes_ocb.c
+D:\a\NextSSL\NextSSL\src\modern\aead\aes_ocb.c(75,51): warning C4267: 'function': conversion from 'size_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  aes_poly1305.c
+D:\a\NextSSL\NextSSL\src\modern\aead\aes_poly1305.c(67,18): warning C4267: '=': conversion from 'size_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  aes_siv.c
+  chacha20_poly1305.c
+  monocypher-ed25519.c
+  monocypher.c
+  add_scalar.c
+  curve448.c
+  curve448_det.c
+  ed448.c
+  fe.c
+  fe_448.c
+  ge.c
+  ge_448.c
+  key_exchange.c
+  Generating Code...
+  Compiling...
+  keypair.c
+  uECC.c
+  p256.c
+  p384.c
+  p521.c
+  rsa.c
+  sc.c
+  seed.c
+  sm2.c
+  base_encryption.c
+  elligator2.c
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(26,35): warning C4142: 'uint32_t': benign redefinition of type [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(24,28):
+      see declaration of 'uint32_t'
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(37,33): warning C4142: 'int32_t': benign redefinition of type [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(20,28):
+      see declaration of 'int32_t'
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(69,17): warning C4005: 'UINT64_C': macro redefinition [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(131,9):
+      see previous definition of 'UINT64_C'
+  
+D:\a\NextSSL\NextSSL\src\modern\asymmetric\fixedint.h(70,17): warning C4005: 'INT64_C': macro redefinition [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/modern/curve_math/elligator2.c')
+      C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(126,9):
+      see previous definition of 'INT64_C'
+  
+  ristretto255.c
+  base58check.c
+  base62.c
+  base85.c
+  bech32.c
+  crc32.c
+  crc64.c
+  pem.c
+  pbkdf2.c
+  Generating Code...
+  Compiling...
+  aes_cmac.c
+  hmac.c
+  poly1305.c
+  siphash.c
+  aes_cbc.c
+  aes_cfb.c
+  aes_core.c
+  aes_ctr.c
+  aes_ecb.c
+  aes_fpe.c
+D:\a\NextSSL\NextSSL\src\modern\symmetric\aes_fpe.c(159,18): warning C4018: '<': signed/unsigned mismatch [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  aes_kw.c
+  aes_ofb.c
+  aes_xts.c
+  chacha20.c
+  sm4_impl.c
+  three_des.c
+  pow_limits.c
+  pow_reject.c
+  pow_solver.c
+  pow_timer.c
+  Generating Code...
+  Compiling...
+  pow_difficulty.c
+  pow_parser.c
+  dhcm_core.c
+  dhcm_difficulty.c
+  dhcm_math.c
+  hash_cost.c
+  hash_cost_probe.c
+  dispatcher.c
+  pow_engine.c
+  pow_challenge.c
+  pow_verify.c
+  aes.c
+  drbg.c
+  fips202.c
+  nistseedexpander.c
+  randombytes.c
+  sha2.c
+  sp800-185.c
+  pqc_main.c
+  root_hash.c
+  Generating Code...
+  Compiling...
+  root_hash_record.c
+  root_modern.c
+  nextssl_init.c
+  root_pow.c
+  root_pqc.c
+  root_seed.c
+  ctr_mode.c
+  hash_ops.c
+  seed_core.c
+  entropy.c
+  seed_derive_random.c
+  udbf.c
+  Generating Code...
+  blake2b.c
+cl : command line  warning D9002: ignoring unknown option '-mavx2' [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  blake3_avx2.c
+  KeccakP-1600-times4-SIMD256.c
+  Generating Code...
+cl : command line  warning D9002: ignoring unknown option '-mavx512f' [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+cl : command line  warning D9002: ignoring unknown option '-mavx512vl' [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  blake3_avx512.c
+cl : command line  warning D9002: ignoring unknown option '-msse2' [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  blake3_sse2.c
+  opt.c
+  Generating Code...
+cl : command line  warning D9002: ignoring unknown option '-msse4.1' [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  blake3_sse41.c
+  sha512.c
+  hash_registry.c
+  blake2b.c
+  sha512.c
+  sign.c
+  verify.c
+  hkdf.c
+  hkdf.c
+  code.c
+  fft.c
+  gf.c
+  gf2x.c
+  hqc.c
+  kem.c
+  parsing.c
+  reed_muller.c
+  reed_solomon.c
+  shake_ds.c
+  shake_prng.c
+  vector.c
+  code.c
+  fft.c
+  gf.c
+  gf2x.c
+  hqc.c
+  kem.c
+  parsing.c
+  reed_muller.c
+  reed_solomon.c
+  shake_ds.c
+  shake_prng.c
+  vector.c
+  code.c
+  fft.c
+  gf.c
+  gf2x.c
+  hqc.c
+  kem.c
+  parsing.c
+  reed_muller.c
+  reed_solomon.c
+  shake_ds.c
+  shake_prng.c
+  vector.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864\ref\encrypt.c(40,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece348864/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece348864/ref/pk_gen.c')
+  
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864f\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864f\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864f\ref\encrypt.c(40,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864f\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece348864f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864f\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece348864f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864f\ref\pk_gen.c(53,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece348864f\ref\pk_gen.c(96,20): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896\ref\encrypt.c(40,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece460896/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece460896/ref/pk_gen.c')
+  
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896f\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896f\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896f\ref\encrypt.c(40,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896f\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece460896f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896f\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece460896f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896f\ref\pk_gen.c(53,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece460896f\ref\pk_gen.c(96,20): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128\ref\encrypt.c(40,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece6688128/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece6688128/ref/pk_gen.c')
+  
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128f\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128f\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128f\ref\encrypt.c(40,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128f\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece6688128f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128f\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece6688128f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128f\ref\pk_gen.c(53,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6688128f\ref\pk_gen.c(96,20): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119\ref\encrypt.c(40,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece6960119/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece6960119/ref/pk_gen.c')
+  
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119f\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119f\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119f\ref\encrypt.c(40,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119f\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece6960119f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119f\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece6960119f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119f\ref\pk_gen.c(53,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece6960119f\ref\pk_gen.c(105,20): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128\ref\encrypt.c(33,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece8192128/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece8192128/ref/pk_gen.c')
+  
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  aes256ctr.c
+  benes.c
+  bm.c
+  controlbits.c
+  crypto_int16.c
+  crypto_int32.c
+  crypto_uint16.c
+  crypto_uint32.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128f\ref\crypto_uint32.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  crypto_uint64.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128f\ref\crypto_uint64.c(8,101): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  decrypt.c
+  encrypt.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128f\ref\encrypt.c(33,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  gf.c
+  operations.c
+  pk_gen.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128f\ref\uint64_sort.h(34,17): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece8192128f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128f\ref\uint64_sort.h(43,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/kem/mceliece8192128f/ref/pk_gen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128f\ref\pk_gen.c(53,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\kem\mceliece8192128f\ref\pk_gen.c(96,20): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  root.c
+  sk_gen.c
+  synd.c
+  transpose.c
+  util.c
+  cbd.c
+  indcpa.c
+  kem.c
+  ntt.c
+  poly.c
+  polyvec.c
+  reduce.c
+  symmetric-shake.c
+  verify.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\ml-kem-1024\ref\verify.c(25,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  cbd.c
+  indcpa.c
+  kem.c
+  ntt.c
+  poly.c
+  polyvec.c
+  reduce.c
+  symmetric-shake.c
+  verify.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\ml-kem-512\ref\verify.c(25,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  cbd.c
+  indcpa.c
+  kem.c
+  ntt.c
+  poly.c
+  polyvec.c
+  reduce.c
+  symmetric-shake.c
+  verify.c
+D:\a\NextSSL\NextSSL\src\pqc\kem\ml-kem-768\ref\verify.c(25,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  codec.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\codec.c(187,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\codec.c(188,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\codec.c(194,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\codec.c(281,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\codec.c(282,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\codec.c(454,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  common.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\common.c(226,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\common.c(278,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\common.c(291,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\common.c(299,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  falcon_wrap.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/falcon_wrap.c')
+  
+  fft.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fft.c')
+  
+  fpr.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(109,5): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(124,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(155,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(156,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(185,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(199,29): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(206,5): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(296,23): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(328,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(371,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(382,21): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(414,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(442,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(477,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.c(490,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  keygen.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(635,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(660,35): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(683,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(695,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(723,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(754,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(807,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1138,9): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1199,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1218,26): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1281,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1281,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1386,9): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1479,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1480,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1820,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1821,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1824,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1825,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1835,44): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1836,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1867,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1893,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(1956,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(2028,15): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(2289,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(2297,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(2418,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(3263,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(3267,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\keygen.c(4173,34): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  rng.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/rng.c')
+  
+  sign.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\sign.c(725,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\sign.c(931,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\sign.c(1043,23): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  vrfy.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(336,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(355,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(371,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(380,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(417,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(647,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(666,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(737,21): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(761,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(792,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(796,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-1024\ref\vrfy.c(840,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  codec.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\codec.c(187,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\codec.c(188,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\codec.c(194,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\codec.c(281,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\codec.c(282,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\codec.c(454,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  common.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\common.c(226,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\common.c(278,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\common.c(291,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\common.c(299,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  falcon_wrap.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/falcon_wrap.c')
+  
+  fft.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fft.c')
+  
+  fpr.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(109,5): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(124,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(155,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(156,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(185,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(199,29): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(206,5): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(296,23): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(328,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(371,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(382,21): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(414,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(442,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(477,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.c(490,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  keygen.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(635,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(660,35): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(683,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(695,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(723,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(754,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(807,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1138,9): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1199,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1218,26): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1281,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1281,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1386,9): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1479,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1480,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1820,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1821,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1824,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1825,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1835,44): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1836,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1867,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1893,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(1956,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(2028,15): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(2289,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(2297,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(2418,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(3263,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(3267,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\keygen.c(4173,34): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  rng.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/rng.c')
+  
+  sign.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\sign.c(725,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\sign.c(931,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\sign.c(1043,23): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  vrfy.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(336,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(355,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(371,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(380,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(417,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(647,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(666,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(737,21): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(761,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(792,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(796,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-512\ref\vrfy.c(840,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  codec.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\codec.c(187,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\codec.c(188,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\codec.c(194,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\codec.c(281,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\codec.c(282,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\codec.c(454,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  common.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\common.c(226,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\common.c(278,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\common.c(291,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\common.c(299,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  falcon_wrap.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/falcon_wrap.c')
+  
+  fft.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fft.c')
+  
+  fpr.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(109,5): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(124,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(155,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(156,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(185,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(199,29): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(206,5): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(296,23): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(328,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(371,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(382,21): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(414,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(442,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(477,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.c(490,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  keygen.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(635,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(660,35): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(683,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(695,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(723,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(754,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(807,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1138,9): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1199,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1218,26): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1281,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1281,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1386,9): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1479,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1480,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1820,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1821,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1824,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1825,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1835,44): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1836,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1867,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1893,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(1956,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(2028,15): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(2289,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(2297,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(2418,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(3263,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(3267,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\keygen.c(4173,34): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  rng.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/rng.c')
+  
+  sign.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\sign.c(725,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\sign.c(931,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\sign.c(1043,23): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  vrfy.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-1024/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(336,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(355,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(371,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(380,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(417,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(647,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(666,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(737,21): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(761,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(792,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(796,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-1024\ref\vrfy.c(840,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  codec.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/codec.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\codec.c(187,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\codec.c(188,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\codec.c(194,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\codec.c(281,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\codec.c(282,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\codec.c(454,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  common.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/common.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\common.c(226,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\common.c(278,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\common.c(291,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\common.c(299,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  falcon_wrap.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/falcon_wrap.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/falcon_wrap.c')
+  
+  fft.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fft.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fft.c')
+  
+  fpr.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/fpr.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(109,5): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(124,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(155,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(156,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(185,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(199,29): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(206,5): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(296,23): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(328,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(371,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(382,21): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(414,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(442,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(477,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.c(490,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  keygen.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/keygen.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(635,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(660,35): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(683,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(695,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(723,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(754,19): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(807,25): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1138,9): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1199,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1218,26): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1281,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1281,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1386,9): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1479,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1480,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1820,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1821,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1824,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1825,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1835,44): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1836,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1867,30): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1893,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(1956,13): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(2028,15): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(2289,22): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(2297,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(2418,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(3263,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(3267,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\keygen.c(4173,34): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  rng.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/rng.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/rng.c')
+  
+  sign.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/sign.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\sign.c(725,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\sign.c(931,12): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\sign.c(1043,23): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  vrfy.c
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(127,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(151,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(285,10): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(304,38): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(377,11): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\fpr.h(383,16): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  (compiling source file '../../../src/pqc/sign/falcon-padded-512/ref/vrfy.c')
+  
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(336,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(355,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(371,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(380,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(417,14): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(647,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(666,28): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(737,21): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(761,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(792,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(796,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(840,18): warning C4146: unary minus operator applied to unsigned type, result still unsigned [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+  ntt.c
+  packing.c
+  poly.c
+  polyvec.c
+  reduce.c
+  rounding.c
+  sign.c
+  symmetric-shake.c
+  ntt.c
+  packing.c
+  poly.c
+  polyvec.c
+  reduce.c
+  rounding.c
+  sign.c
+  symmetric-shake.c
+  ntt.c
+  packing.c
+  poly.c
+  polyvec.c
+  reduce.c
+  rounding.c
+  sign.c
+  symmetric-shake.c
+  address.c
+  context_sha2.c
+  fors.c
+  hash_sha2.c
+  merkle.c
+  sign.c
+  thash_sha2_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_sha2.c
+  fors.c
+  hash_sha2.c
+  merkle.c
+  sign.c
+  thash_sha2_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_sha2.c
+  fors.c
+  hash_sha2.c
+  merkle.c
+  sign.c
+  thash_sha2_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_sha2.c
+  fors.c
+  hash_sha2.c
+  merkle.c
+  sign.c
+  thash_sha2_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_sha2.c
+  fors.c
+  hash_sha2.c
+  merkle.c
+  sign.c
+  thash_sha2_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_sha2.c
+  fors.c
+  hash_sha2.c
+  merkle.c
+  sign.c
+  thash_sha2_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_shake.c
+  fors.c
+  hash_shake.c
+  merkle.c
+  sign.c
+  thash_shake_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_shake.c
+  fors.c
+  hash_shake.c
+  merkle.c
+  sign.c
+  thash_shake_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_shake.c
+  fors.c
+  hash_shake.c
+  merkle.c
+  sign.c
+  thash_shake_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_shake.c
+  fors.c
+  hash_shake.c
+  merkle.c
+  sign.c
+  thash_shake_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_shake.c
+  fors.c
+  hash_shake.c
+  merkle.c
+  sign.c
+  thash_shake_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  address.c
+  context_shake.c
+  fors.c
+  hash_shake.c
+  merkle.c
+  sign.c
+  thash_shake_simple.c
+  utils.c
+  utilsx1.c
+  wots.c
+  wotsx1.c
+  hash_registry.c
+     Creating library D:/a/NextSSL/NextSSL/bin/win/x86-msvc/Release/nextssl.lib and object D:/a/NextSSL/NextSSL/bin/win/x86-msvc/Release/nextssl.exp
+  nextssl.vcxproj -> D:\a\NextSSL\NextSSL\bin\win\x86-msvc\Release\nextssl.dll
+  Building Custom Rule D:/a/NextSSL/NextSSL/CMakeLists.txt
+
+==============================================================================
+CMD: cmake --build D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc --config Release --parallel 6
+CWD: D:\a\NextSSL\NextSSL
+==============================================================================
+
