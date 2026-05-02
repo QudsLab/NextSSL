@@ -1,0 +1,29 @@
+-- The C compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/powerpc64le-linux-gnu-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- NextSSL build configuration:
+--   Type        : Release
+--   Shared lib  : ON
+--   ML-KEM      : ON
+--   ML-DSA      : ON
+--   Falcon      : ON
+--   HQC         : ON
+--   McEliece    : ON
+--   SPHINCS+    : ON
+--   GmSSL       : OFF
+--   Ed448/X448  : ON
+--   Balloon     : ON (always)
+--   Pomelo      : ON (always)
+--   Makwa       : ON (always)
+-- Configuring done (3.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/runner/work/NextSSL/NextSSL/.ci_build/linux-glibc/ppc64le
+
+==============================================================================
+CMD: cmake -S /home/runner/work/NextSSL/NextSSL -B /home/runner/work/NextSSL/NextSSL/.ci_build/linux-glibc/ppc64le -G Ninja -DCMAKE_BUILD_TYPE=Release -DNEXTSSL_SHARED=ON -DNEXTSSL_OUTPUT_ARCH=ppc64le -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux-glibc/ppc64le -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux-glibc/ppc64le -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY=/home/runner/work/NextSSL/NextSSL/bin/linux-glibc/ppc64le -DCMAKE_C_COMPILER_LAUNCHER=/usr/bin/ccache -DCMAKE_CXX_COMPILER_LAUNCHER=/usr/bin/ccache -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=ppc64le -DCMAKE_C_COMPILER=/usr/bin/powerpc64le-linux-gnu-gcc -DCMAKE_AR=/usr/bin/powerpc64le-linux-gnu-ar -DCMAKE_RANLIB=/usr/bin/powerpc64le-linux-gnu-ranlib -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
+CWD: /home/runner/work/NextSSL/NextSSL
+==============================================================================
+
