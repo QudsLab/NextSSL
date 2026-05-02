@@ -22,22 +22,9 @@ static void H(const uint8_t *data, size_t len, uint8_t out[32])
     sha256(data, len, out);
 }
 
-/* SHA-256 with two parts concatenated */
-static void H2(const uint8_t *a, size_t alen, const uint8_t *b, size_t blen, uint8_t out[32])
-{
-    SHA256_CTX ctx;
-    sha256_init(&ctx);
-    sha256_update(&ctx, a, alen);
-    sha256_update(&ctx, b, blen);
-    sha256_final(&ctx, out);
-}
-
 /* Coef(S, i, w): extract w-bit integer at position i from byte string S */
 static uint8_t coef(const uint8_t *S, size_t i, uint32_t w)
 {
-    size_t byte_idx = (i * w) / 8;
-    size_t bit_shift = 8 - (w * ((i * w) % 8)) / 1 - w;  /* simplified for w=1,2,4,8 */
-    (void)bit_shift;
     /* Simple extraction for power-of-2 widths */
     uint32_t mask = (1u << w) - 1u;
     size_t boff = i * w;

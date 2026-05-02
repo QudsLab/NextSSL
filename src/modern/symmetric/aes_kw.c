@@ -126,11 +126,8 @@ char AES_KWP_wrap(const uint8_t *kek,
         return (char)M_RESULT_SUCCESS;
     }
 
-    /* General case: same W-cycle as KW but over wrap_in */
-    char rc = AES_KEY_wrap(kek, wrap_in + HB, padded, wrapped);
-    /* AES_KEY_wrap prepends its own A[0..7] — but for KWP we supply our own AIV.
-     * We must run the W-cycle ourselves with the KWP AIV. */
-    /* Redo manually with the KWP AIV */
+    /* General case: run W-cycle manually with the KWP AIV */
+    /* (We do not call AES_KEY_wrap here because it would overwrite our AIV.) */
     uint8_t *w = (uint8_t *)wrapped;
     uint8_t *r = w + HB;
     uint8_t *endpoint = w + padded;
@@ -190,7 +187,6 @@ char AES_KWP_unwrap(const uint8_t *kek,
 
     block_t A;
     count_t i, rounds = (padded / HB) * 6;
-    uint8_t *end = r + padded - HB;
 
     memcpy(A, w, HB);
     memcpy(r, w + HB, padded);
@@ -198,15 +194,12 @@ char AES_KWP_unwrap(const uint8_t *kek,
 
     AES_setkey(kek);
     for (i = rounds; i; --i) {
-        uint8_t *rp = (r == r ? end : r); /* placeholder — compute pointer correctly */
-        /* Pointer arithmetic mirrors KW unwrap */
         size_t blk_idx = ((i - 1) % (padded / HB));
         uint8_t *block = r + blk_idx * HB;
         xorBEint(A, i, MIDST);
         memcpy(A + HB, block, HB);
         rijndaelDecrypt(A, A);
         memcpy(block, A + HB, HB);
-        (void)rp;
     }
     AES_burn();
 
