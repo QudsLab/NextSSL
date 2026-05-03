@@ -1,6 +1,6 @@
 /* scrypt_adapter.c — Scrypt KDF hash adapter (Plan 40002) */
 #include "kdf_adapters.h"
-#include "../memory_hard/scrypt/crypto_scrypt.h"
+#include "crypto_scrypt.h"
 #include "../../seed/random/entropy.h"
 #include "../../common/secure_zero.h"
 #include <stdlib.h>

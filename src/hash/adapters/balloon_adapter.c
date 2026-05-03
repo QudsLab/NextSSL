@@ -1,8 +1,8 @@
 /* balloon_adapter.c — Balloon KDF hash adapter (Plan 40002) */
 #include "kdf_adapters.h"
-#include "../memory_hard/balloon/constants.h"   /* defines SALT_LEN, BLOCK_SIZE — must come first */
-#include "../memory_hard/balloon/balloon.h"
-#include "../memory_hard/balloon/hash_state.h"
+#include "constants.h"   /* defines SALT_LEN, BLOCK_SIZE — must come first */
+#include "balloon.h"
+#include "hash_state.h"
 #include "../../seed/random/entropy.h"
 #include "../../common/secure_zero.h"
 #include <stdlib.h>

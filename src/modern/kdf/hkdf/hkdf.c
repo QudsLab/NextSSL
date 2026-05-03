@@ -6,8 +6,8 @@
  */
 #include "hkdf.h"
 #include "hmac.h"
-#include "../../hash/interface/hash_registry.h"
-#include "../../common/secure_zero.h"
+#include "../../../hash/interface/hash_registry.h"
+#include "../../../common/secure_zero.h"
 
 #include <string.h>
 #include <stdint.h>
@@ -181,7 +181,7 @@ int hkdf_expand_label_ex(const hash_ops_t *hash,
 /* =========================================================================
  * hkdf_ex_adapter — combined Extract + Expand using hash_adapter_t (Plan 40002)
  * ========================================================================= */
-#include "../../hash/adapters/hash_adapter.h"
+#include "../../../hash/adapters/hash_adapter.h"
 #include "hmac.h"   /* hmac_compute_adapter */
 
 int hkdf_ex_adapter(const hash_adapter_t *ha,

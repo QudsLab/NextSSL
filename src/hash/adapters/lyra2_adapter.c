@@ -1,6 +1,6 @@
 /* lyra2_adapter.c — Lyra2 KDF hash adapter (Plan 40002) */
 #include "kdf_adapters.h"
-#include "../memory_hard/lyra2/Lyra2.h"
+#include "Lyra2.h"
 #include "../../seed/random/entropy.h"
 #include "../../common/secure_zero.h"
 #include <stdlib.h>

@@ -1,6 +1,6 @@
 /* makwa_adapter.c — Makwa KDF hash adapter (Plan 40002) */
 #include "kdf_adapters.h"
-#include "../memory_hard/makwa/makwa.h"
+#include "makwa.h"
 #include "../../seed/random/entropy.h"
 #include "../../common/secure_zero.h"
 #include <stdlib.h>

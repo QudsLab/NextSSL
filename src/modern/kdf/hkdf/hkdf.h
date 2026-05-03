@@ -11,7 +11,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "../../hash/interface/hash_ops.h"
+#include "../../../hash/interface/hash_ops.h"
 
 /* -------------------------------------------------------------------------
  * hkdf_extract_ex — RFC 5869 §2.2 Extract
@@ -81,7 +81,7 @@ int hkdf_expand_label_ex(const hash_ops_t *hash,
  *
  * Returns 0 on success, -1 on invalid arguments or internal error.
  * -------------------------------------------------------------------------*/
-#include "../../hash/adapters/hash_adapter.h"
+#include "../../../hash/adapters/hash_adapter.h"
 int hkdf_ex_adapter(const hash_adapter_t *ha,
                     const uint8_t *salt,    size_t salt_len,
                     const uint8_t *ikm,     size_t ikm_len,

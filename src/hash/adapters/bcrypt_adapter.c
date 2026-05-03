@@ -10,8 +10,8 @@
  * decode method as bcrypt_ops.c).
  */
 #include "kdf_adapters.h"
-#include "../memory_hard/bcrypt/crypt_blowfish.h"
-#include "../memory_hard/bcrypt/crypt_gensalt.h"
+#include "crypt_blowfish.h"
+#include "crypt_gensalt.h"
 #include "../../seed/random/entropy.h"
 #include "../../common/secure_zero.h"
 #include <stdlib.h>

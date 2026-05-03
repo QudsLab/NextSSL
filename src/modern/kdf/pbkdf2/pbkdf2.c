@@ -9,8 +9,8 @@
  */
 #include "pbkdf2.h"
 #include "hmac.h"
-#include "../../hash/interface/hash_registry.h"
-#include "../../common/secure_zero.h"
+#include "../../../hash/interface/hash_registry.h"
+#include "../../../common/secure_zero.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -105,7 +105,7 @@ err:
 /* =========================================================================
  * pbkdf2_ex_adapter — PBKDF2 using a hash_adapter_t as the PRF (Plan 40002)
  * ========================================================================= */
-#include "../../hash/adapters/hash_adapter.h"
+#include "../../../hash/adapters/hash_adapter.h"
 
 int pbkdf2_ex_adapter(const hash_adapter_t *ha,
                       const uint8_t *password, size_t pwdlen,

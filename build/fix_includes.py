@@ -149,9 +149,41 @@ p(rm, '"../../modern/symmetric/aes_cbc_cs.h"',     '"aes_cbc_cs.h"')
 p(rm, '"../../modern/symmetric/aes_xpn.h"',        '"aes_xpn.h"')
 p(rm, '"../../modern/mac/aes_gmac.h"',             '"aes_gmac.h"')
 
-# ── hash/fast/sm3/sm3_ops.c ──────────────────────────────────────
-# sm3_ops.c uses "../../interface/hash_registry.h" — sm3 is in fast/sm3/
-# (unchanged folder, relative path still valid)
+# ── Depth-shift fixes: algo dirs moved from hash/<subsystem>/<algo>/ to hash/<algo>/ ──
+# These were 2 levels under hash/; now 1 level.  ../../interface/ now overshoots to src/.
+# Fix: ../../interface/ -> ../interface/  and  ../../../common/ -> ../../common/
+
+_MH_OPS = [
+    "hash/balloon/balloon_ops.c",
+    "hash/bcrypt/bcrypt_ops.c",
+    "hash/catena/catena_ops.c",
+    "hash/lyra2/lyra2_ops.c",
+    "hash/makwa/makwa_ops.c",
+    "hash/pomelo/pomelo_ops.c",
+    "hash/scrypt/scrypt_ops.c",
+    "hash/sm3/sm3_ops.c",
+    "hash/yescrypt/yescrypt_ops.c",
+]
+for _f in _MH_OPS:
+    p(_f, '"../../interface/hash_registry.h"', '"../interface/hash_registry.h"')
+    p(_f, '"../../../common/secure_zero.h"',    '"../../common/secure_zero.h"')
+
+# makwa.c also has the ../../../common/ pattern
+p("hash/makwa/makwa.c", '"../../../common/secure_zero.h"', '"../../common/secure_zero.h"')
+
+# ── Adapter files: ../memory_hard/<algo>/header.h -> flat header name ──
+# (all algo dirs are now listed in target_include_directories)
+p("hash/adapters/balloon_adapter.c", '"../memory_hard/balloon/constants.h"',   '"constants.h"')
+p("hash/adapters/balloon_adapter.c", '"../memory_hard/balloon/balloon.h"',      '"balloon.h"')
+p("hash/adapters/balloon_adapter.c", '"../memory_hard/balloon/hash_state.h"',   '"hash_state.h"')
+p("hash/adapters/bcrypt_adapter.c",  '"../memory_hard/bcrypt/crypt_blowfish.h"','"crypt_blowfish.h"')
+p("hash/adapters/bcrypt_adapter.c",  '"../memory_hard/bcrypt/crypt_gensalt.h"', '"crypt_gensalt.h"')
+p("hash/adapters/catena_adapter.c",  '"../memory_hard/catena/catena.h"',        '"catena.h"')
+p("hash/adapters/lyra2_adapter.c",   '"../memory_hard/lyra2/Lyra2.h"',          '"Lyra2.h"')
+p("hash/adapters/makwa_adapter.c",   '"../memory_hard/makwa/makwa.h"',           '"makwa.h"')
+p("hash/adapters/pomelo_adapter.c",  '"../memory_hard/pomelo/pomelo.h"',         '"pomelo.h"')
+p("hash/adapters/scrypt_adapter.c",  '"../memory_hard/scrypt/crypto_scrypt.h"',  '"crypto_scrypt.h"')
+p("hash/adapters/yescrypt_adapter.c",'"../memory_hard/yescrypt/yescrypt.h"',     '"yescrypt.h"')
 
 # ─────────────────────────────────────────────────────────────────
 # Apply patches

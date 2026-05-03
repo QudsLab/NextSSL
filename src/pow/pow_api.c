@@ -21,7 +21,7 @@
 #include "core/pow_parser.h"
 #include "core/pow_types.h"
 
-#include "../../root/nextssl_export.h"
+#include "../root/nextssl_export.h"
 #define POW_EXPORT NEXTSSL_API
 
 /* -------------------------------------------------------------------------

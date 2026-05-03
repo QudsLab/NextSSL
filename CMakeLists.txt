@@ -168,13 +168,13 @@ list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pow/pow_api\\.c$")
 # scrypt/yescrypt/catena/lyra2/balloon/pomelo/makwa always included via main GLOB.
 # Exclusions still needed for files that conflict or are included via #include:  
 # balloon/balloon.c: uses pthread_create — not needed; adapter calls hash_state_* directly
-list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/balloon/balloon\\.c$")
+list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/balloon/balloon\\.c$")
 # scrypt's original sha256.c requires cpusupport.h — use sha256_portable.c instead
-list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/scrypt/sha256\\.c$")
+list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/scrypt/sha256\\.c$")
 # yescrypt's sha256.c uses same libcperciva_ namespace — scrypt's portable covers both
-list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/yescrypt/sha256\\.c$")
+list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/yescrypt/sha256\\.c$")
 # yescrypt's insecure_memzero.c duplicates scrypt's — share from scrypt
-list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/yescrypt/insecure_memzero\\.c$")
+list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/yescrypt/insecure_memzero\\.c$")
 # yescrypt-platform.c is #include'd by yescrypt-opt.c, not compiled separately
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/yescrypt-platform\\.c$")
 
@@ -202,15 +202,65 @@ target_include_directories(nextssl PRIVATE
     "${SRC}/common/sanitizer"
     "${SRC}/hash"
     "${SRC}/hash/interface"
-    "${SRC}/hash/fast"
-    "${SRC}/hash/blake"
-    "${SRC}/hash/legacy"
-    "${SRC}/hash/memory_hard"
-    "${SRC}/hash/skein"
-    "${SRC}/hash/sponge"
     "${SRC}/hash/adapters"
     "${SRC}/hash/generic"
     "${SRC}/hash/root_functions"
+    # ── hash family dirs ─────────────────────────────────────────────
+    "${SRC}/hash/_argon2"
+    "${SRC}/hash/_keccak"
+    "${SRC}/hash/_skein"
+    # ── hash algo dirs (flat) ─────────────────────────────────────────
+    "${SRC}/hash/blake2b"
+    "${SRC}/hash/blake2s"
+    "${SRC}/hash/blake3"
+    "${SRC}/hash/sha224"
+    "${SRC}/hash/sha256"
+    "${SRC}/hash/sha384"
+    "${SRC}/hash/sha512"
+    "${SRC}/hash/sha512_224"
+    "${SRC}/hash/sha512_256"
+    "${SRC}/hash/sm3"
+    "${SRC}/hash/has160"
+    "${SRC}/hash/md2"
+    "${SRC}/hash/md4"
+    "${SRC}/hash/md5"
+    "${SRC}/hash/nt"
+    "${SRC}/hash/ripemd128"
+    "${SRC}/hash/ripemd160"
+    "${SRC}/hash/ripemd256"
+    "${SRC}/hash/ripemd320"
+    "${SRC}/hash/sha0"
+    "${SRC}/hash/sha1"
+    "${SRC}/hash/tiger"
+    "${SRC}/hash/whirlpool"
+    "${SRC}/hash/argon2d"
+    "${SRC}/hash/argon2i"
+    "${SRC}/hash/argon2id"
+    "${SRC}/hash/balloon"
+    "${SRC}/hash/bcrypt"
+    "${SRC}/hash/catena"
+    "${SRC}/hash/lyra2"
+    "${SRC}/hash/makwa"
+    "${SRC}/hash/pomelo"
+    "${SRC}/hash/scrypt"
+    "${SRC}/hash/yescrypt"
+    "${SRC}/hash/keccak256"
+    "${SRC}/hash/sha3_224"
+    "${SRC}/hash/sha3_256"
+    "${SRC}/hash/sha3_384"
+    "${SRC}/hash/sha3_512"
+    "${SRC}/hash/shake"
+    "${SRC}/hash/shake128"
+    "${SRC}/hash/shake256"
+    "${SRC}/hash/skein256"
+    "${SRC}/hash/skein512"
+    "${SRC}/hash/skein1024"
+    "${SRC}/hash/kmac"
+    "${SRC}/hash/kmac128"
+    "${SRC}/hash/kmac256"
+    "${SRC}/hash/cshake"
+    "${SRC}/hash/parallelhash"
+    "${SRC}/hash/tuplehash"
     "${SRC}/seed"
     "${SRC}/seed/hash"
     "${SRC}/seed/random"
@@ -226,49 +276,6 @@ target_include_directories(nextssl PRIVATE
     "${SRC}/modern/asymmetric"
     "${SRC}/modern/asymmetric/curve448"
     "${SRC}/modern/asymmetric/rsa"
-    # ── hash/blake per-algo ──────────────────────────────────────────
-    "${SRC}/hash/blake/blake2b"
-    "${SRC}/hash/blake/blake2s"
-    "${SRC}/hash/blake/blake3"
-    # ── hash/fast per-algo ───────────────────────────────────────────
-    "${SRC}/hash/fast/sha224"
-    "${SRC}/hash/fast/sha256"
-    "${SRC}/hash/fast/sha384"
-    "${SRC}/hash/fast/sha512"
-    "${SRC}/hash/fast/sha512_224"
-    "${SRC}/hash/fast/sha512_256"
-    # ── hash/legacy per-algo ─────────────────────────────────────────
-    "${SRC}/hash/legacy/has160"
-    "${SRC}/hash/legacy/md2"
-    "${SRC}/hash/legacy/md4"
-    "${SRC}/hash/legacy/md5"
-    "${SRC}/hash/legacy/nt"
-    "${SRC}/hash/legacy/ripemd128"
-    "${SRC}/hash/legacy/ripemd160"
-    "${SRC}/hash/legacy/ripemd256"
-    "${SRC}/hash/legacy/ripemd320"
-    "${SRC}/hash/legacy/sha0"
-    "${SRC}/hash/legacy/sha1"
-    "${SRC}/hash/legacy/tiger"
-    "${SRC}/hash/legacy/whirlpool"
-    # ── hash/memory_hard: argon2 family ──────────────────────────────
-    "${SRC}/hash/memory_hard/_argon2"
-    "${SRC}/hash/memory_hard/argon2d"
-    "${SRC}/hash/memory_hard/argon2i"
-    "${SRC}/hash/memory_hard/argon2id"
-    # ── hash/skein shared infra ───────────────────────────────────────
-    "${SRC}/hash/skein/_skein"
-    # ── hash/sponge per-algo ─────────────────────────────────────────
-    "${SRC}/hash/sponge/_keccak"
-    "${SRC}/hash/sponge/sha3"
-    "${SRC}/hash/sponge/sha3_224"
-    "${SRC}/hash/sponge/sha3_384"
-    "${SRC}/hash/sponge/shake"
-    "${SRC}/hash/sponge/sp800_185"
-    "${SRC}/hash/sponge/sp800_185/cshake"
-    "${SRC}/hash/sponge/sp800_185/kmac"
-    "${SRC}/hash/sponge/sp800_185/parallelhash"
-    "${SRC}/hash/sponge/sp800_185/tuplehash"
     # ── modern/symmetric per-algo ────────────────────────────────────
     "${SRC}/modern/symmetric/_aes"
     "${SRC}/modern/symmetric/aes_cbc"
@@ -329,18 +336,18 @@ target_include_directories(nextssl PRIVATE
 if(ENABLE_GMSSL)
     target_include_directories(nextssl PRIVATE "${SRC}/modern/asymmetric/sm2")
 endif()
-target_include_directories(nextssl PRIVATE "${SRC}/hash/memory_hard/balloon")
+target_include_directories(nextssl PRIVATE "${SRC}/hash/balloon")
 
 # ─────────────────────────────────────────────────────────────────
 # BLAKE3 SIMD — disable intrinsics on non-x86 or when unavailable
 # ─────────────────────────────────────────────────────────────────
 if(_NEXTSSL_ARCH MATCHES "x86_64|x86")
-    set_source_files_properties("${SRC}/hash/blake/blake3/blake3_avx2.c"   PROPERTIES COMPILE_FLAGS "-mavx2")
-    set_source_files_properties("${SRC}/hash/blake/blake3/blake3_avx512.c" PROPERTIES COMPILE_FLAGS "-mavx512f -mavx512vl")
-    set_source_files_properties("${SRC}/hash/blake/blake3/blake3_sse2.c"   PROPERTIES COMPILE_FLAGS "-msse2")
-    set_source_files_properties("${SRC}/hash/blake/blake3/blake3_sse41.c"  PROPERTIES COMPILE_FLAGS "-msse4.1")
+    set_source_files_properties("${SRC}/hash/blake3/blake3_avx2.c"   PROPERTIES COMPILE_FLAGS "-mavx2")
+    set_source_files_properties("${SRC}/hash/blake3/blake3_avx512.c" PROPERTIES COMPILE_FLAGS "-mavx512f -mavx512vl")
+    set_source_files_properties("${SRC}/hash/blake3/blake3_sse2.c"   PROPERTIES COMPILE_FLAGS "-msse2")
+    set_source_files_properties("${SRC}/hash/blake3/blake3_sse41.c"  PROPERTIES COMPILE_FLAGS "-msse4.1")
     # Argon2 opt.c uses SSE2; must be explicit for -m32 (i686) where SSE2 is not the default
-    set_source_files_properties("${SRC}/hash/memory_hard/_argon2/opt.c"    PROPERTIES COMPILE_FLAGS "-msse2")
+    set_source_files_properties("${SRC}/hash/_argon2/opt.c"    PROPERTIES COMPILE_FLAGS "-msse2")
     # PQC Keccak-4x AVX2 (used by ML-KEM, ML-DSA, Falcon, HQC, SPHINCS+ ref/)
     set_source_files_properties(
         "${SRC}/pqc/common/keccak4x/KeccakP-1600-times4-SIMD256.c"

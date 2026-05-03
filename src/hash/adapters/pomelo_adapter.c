@@ -1,6 +1,6 @@
 /* pomelo_adapter.c — Pomelo KDF hash adapter (Plan 40002) */
 #include "kdf_adapters.h"
-#include "../memory_hard/pomelo/pomelo.h"
+#include "pomelo.h"
 #include "../../seed/random/entropy.h"
 #include "../../common/secure_zero.h"
 #include <stdlib.h>

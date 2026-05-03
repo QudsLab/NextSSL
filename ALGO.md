@@ -201,3 +201,59 @@ Notes:
 26. `smallwood` (Hash-based ZKPoK)
 
 (End of file - total 200 lines)
+
+
+
+
+
+
+
+
+
+
+hash/
+|-    /blake2b
+|-    /blake2s
+|-    /blake3
+|-    /sha224
+|-    /sha256
+|-    /sha384
+|-    /sha512
+|-    /sha512-224
+|-    /sha512-256
+|-    /sm3
+|-    /has160
+|-    /md2
+|-    /md4
+|-    /md5
+|-    /nt
+|-    /ripemd128
+|-    /ripemd160
+|-    /ripemd256
+|-    /ripemd320
+|-    /sha0
+|-    /sha1
+|-    /whirlpool
+|-    /argon2d
+|-    /argon2i
+|-    /argon2id
+|-    /bcrypt
+|-    /catena
+|-    /lyra2
+|-    /scrypt
+|-    /yescrypt
+|-    /balloon
+|-    /pomelo
+|-    /makwa
+|-    /keccak256
+|-    /sha3-224
+|-    /sha3-256
+|-    /sha3-384
+|-    /sha3-512
+|-    /shake128
+|-    /shake256
+|-    /skein256
+|-    /skein512
+|-    /skein1024
+|-    /kmac128
+|_    /kmac256
