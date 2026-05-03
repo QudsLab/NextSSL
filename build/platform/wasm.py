@@ -293,7 +293,7 @@ def collect_sources() -> list:
         "/memory_hard/yescrypt/sha256.c",
         "/memory_hard/yescrypt/insecure_memzero.c",
         "/memory_hard/yescrypt/yescrypt-platform.c",
-        "/memory_hard/opt.c",
+        "/_argon2/opt.c",
     ]
     sources = []
     for f in SRC.rglob("*.c"):
