@@ -1,0 +1,4 @@
+[ci_skip] skipped ios/sim-arm64
+[ci_skip] reason: queue stopped after device-arm64 (failed)
+[ci_skip] blocked_by: device-arm64
+[ci_skip] blocked_status: failed
