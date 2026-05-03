@@ -1,7 +1,7 @@
 platform: ios
 variant: device-arm64
-run_id: 25268151975
+run_id: 25268648498
 attempt: 1
-sha: c6a96c5192858895884126e0e90e0fba42449540
+sha: a6d9593d4a4ebffaa90f5ed2e2db1780024e9b44
 ref: refs/heads/main
-started: 2026-05-03T02:52:27Z
+started: 2026-05-03T03:20:47Z
