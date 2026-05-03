@@ -1,4 +1,4 @@
 [ci_skip] skipped linux-glibc/riscv64
-[ci_skip] reason: queue stopped after x86_64 (failed)
-[ci_skip] blocked_by: x86_64
+[ci_skip] reason: queue stopped after armv7 (failed)
+[ci_skip] blocked_by: armv7
 [ci_skip] blocked_status: failed

@@ -1,2 +1,2 @@
-status: skipped
-reason: queue stopped after x86_64 (failed)
+status: failed
+exit_code: 1

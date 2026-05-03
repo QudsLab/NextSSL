@@ -1,2 +1,2 @@
-status: skipped
-reason: queue stopped after emscripten-wasm32 (failed)
+status: success
+exit_code: 0

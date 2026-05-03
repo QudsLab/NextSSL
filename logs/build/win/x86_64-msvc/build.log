@@ -88,18 +88,18 @@ D:\a\NextSSL\NextSSL\src\hash\catena\catena-blake2b-ref.c(243,9): warning C4068:
   catena-helpers.c
 D:\a\NextSSL\NextSSL\src\hash\catena\catena-helpers.c(29,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena-helpers.c(54,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  catena.c
 D:\a\NextSSL\NextSSL\src\hash\catena\catena-helpers.c(85,23): warning C4244: 'function': conversion from 'const uint16_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  catena.c
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(67,23): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(123,38): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(124,25): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(125,25): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  catena_ops.c
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(323,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(332,41): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(332,54): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(333,36): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(337,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  catena_ops.c
   cshake.c
   nextssl_hash.c
   has160.c
@@ -164,7 +164,6 @@ D:\a\NextSSL\NextSSL\src\hash\sha256\sha256.c(200,33): warning C4244: '=': conve
   sha3.c
   sha3_384.c
   sha3_512.c
-D:\a\NextSSL\NextSSL\src\hash\sha3_512\sha3_512.c(7,5): warning C4013: 'keccak_hash' undefined; assuming extern returning int [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   sha512_224.c
   sha512_256.c
   shake.c
@@ -230,8 +229,8 @@ D:\a\NextSSL\NextSSL\src\modern\aead\aes_poly1305\aes_poly1305.c(85,23): warning
   uECC.c
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\uECC.c(262,68): warning C4244: 'return': conversion from 'uECC_word_t' to 'bitcount_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\uECC.c(315,20): warning C4244: 'return': conversion from 'uECC_word_t' to 'cmpresult_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  curve448.c
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.inc(390,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  curve448.c
   (compiling source file '../../../src/modern/asymmetric/_nist_ecc/micro_ecc/uECC.c')
   
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.inc(394,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
@@ -1883,10 +1882,9 @@ D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(840,18): warning 
   wots.c
   wotsx1.c
   hash_registry.c
-sha3_512.obj : error LNK2005: sha3_512_hash already defined in sha3.obj [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
      Creating library D:/a/NextSSL/NextSSL/bin/win/x86_64-msvc/Release/nextssl.lib and object D:/a/NextSSL/NextSSL/bin/win/x86_64-msvc/Release/nextssl.exp
-sha3_512.obj : error LNK2019: unresolved external symbol keccak_hash referenced in function sha3_512_hash [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\bin\win\x86_64-msvc\Release\nextssl.dll : fatal error LNK1120: 1 unresolved externals [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  nextssl.vcxproj -> D:\a\NextSSL\NextSSL\bin\win\x86_64-msvc\Release\nextssl.dll
+  Building Custom Rule D:/a/NextSSL/NextSSL/CMakeLists.txt
 
 ==============================================================================
 CMD: cmake --build D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc --config Release --parallel 6
