@@ -1,8 +1,5 @@
-/* sha3_512.c — SHA3-512 (rate=72, capacity=128, output=64 bytes) */
+/* sha3_512.c — SHA3-512 is implemented in sha3_256/sha3.c
+ * This file exists only to satisfy CMake GLOB_RECURSE discovery.
+ * All sha3_512_* symbols are provided by sha3.h / sha3.c.
+ */
 #include "sha3_512.h"
-#include "keccak.h"
-#include <string.h>
-
-void sha3_512_hash(const uint8_t *in, size_t inlen, uint8_t out[64]) {
-    keccak_hash(in, inlen, out, 64, 72, 0x06);
-}
