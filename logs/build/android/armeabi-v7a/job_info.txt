@@ -1,7 +1,9 @@
 platform: android
 variant: armeabi-v7a
-run_id: 25264626449
+run_id: 25266108524
 attempt: 1
-sha: 3683d54fd27a60e7f24549413c0c5b39808c3cc4
+sha: c48de52305071ae98e5b195aac2ad4db40607f82
 ref: refs/heads/main
-started: 2026-05-02T23:33:33Z
+started: 2026-05-03T00:57:18Z
+blocked_by: arm64-v8a
+blocked_status: failed

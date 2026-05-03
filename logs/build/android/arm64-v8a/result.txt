@@ -1,2 +1,2 @@
-status: success
-exit_code: 0
+status: failed
+exit_code: 1

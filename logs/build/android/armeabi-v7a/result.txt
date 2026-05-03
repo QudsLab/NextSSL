@@ -1,2 +1,2 @@
-status: success
-exit_code: 0
+status: skipped
+reason: queue stopped after arm64-v8a (failed)
