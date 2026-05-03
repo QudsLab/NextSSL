@@ -4,6 +4,6 @@
 
 #pragma once
 
-#include "../asymmetric/sc.h"
+#include "sc.h"
 
 #endif /* NEXTSSL_BRIDGE_ED25519_SC_H */

@@ -4,7 +4,7 @@
  * The caller must configure an explicit argon2_type before hashing.
  */
 #include "kdf_adapters.h"
-#include "../memory_hard/argon2.h"
+#include "argon2.h"
 #include "../../seed/random/entropy.h"
 #include "../../common/secure_zero.h"
 #include <stdlib.h>

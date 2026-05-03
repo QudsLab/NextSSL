@@ -155,9 +155,9 @@ list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/pqc/common/keccak2x/")
 # Argon2: opt.c uses x86 SSE2 intrinsics (emmintrin.h); ref.c is the portable fallback.
 # On x86/x86_64 use opt.c (exclude ref.c); on all other arches use ref.c (exclude opt.c).
 if(_NEXTSSL_ARCH MATCHES "x86_64|x86")
-    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/ref\\.c$")
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/_argon2/ref\.c$")
 else()
-    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/memory_hard/opt\\.c$")
+    list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/_argon2/opt\.c$")
 endif()
 # Skein: skein_block.c is the primary; skeinBlockNo3F.c is a duplicate
 list(FILTER NEXTSSL_SOURCES EXCLUDE REGEX "/skeinBlockNo3F\\.c$")
@@ -226,7 +226,92 @@ target_include_directories(nextssl PRIVATE
     "${SRC}/modern/asymmetric"
     "${SRC}/modern/asymmetric/curve448"
     "${SRC}/modern/asymmetric/rsa"
-    "${SRC}/modern/asymmetric/micro_ecc"
+    # ── hash/blake per-algo ──────────────────────────────────────────
+    "${SRC}/hash/blake/blake2b"
+    "${SRC}/hash/blake/blake2s"
+    "${SRC}/hash/blake/blake3"
+    # ── hash/fast per-algo ───────────────────────────────────────────
+    "${SRC}/hash/fast/sha224"
+    "${SRC}/hash/fast/sha256"
+    "${SRC}/hash/fast/sha384"
+    "${SRC}/hash/fast/sha512"
+    "${SRC}/hash/fast/sha512_224"
+    "${SRC}/hash/fast/sha512_256"
+    # ── hash/legacy per-algo ─────────────────────────────────────────
+    "${SRC}/hash/legacy/has160"
+    "${SRC}/hash/legacy/md2"
+    "${SRC}/hash/legacy/md4"
+    "${SRC}/hash/legacy/md5"
+    "${SRC}/hash/legacy/nt"
+    "${SRC}/hash/legacy/ripemd128"
+    "${SRC}/hash/legacy/ripemd160"
+    "${SRC}/hash/legacy/ripemd256"
+    "${SRC}/hash/legacy/ripemd320"
+    "${SRC}/hash/legacy/sha0"
+    "${SRC}/hash/legacy/sha1"
+    "${SRC}/hash/legacy/tiger"
+    "${SRC}/hash/legacy/whirlpool"
+    # ── hash/memory_hard: argon2 family ──────────────────────────────
+    "${SRC}/hash/memory_hard/_argon2"
+    "${SRC}/hash/memory_hard/argon2d"
+    "${SRC}/hash/memory_hard/argon2i"
+    "${SRC}/hash/memory_hard/argon2id"
+    # ── hash/skein shared infra ───────────────────────────────────────
+    "${SRC}/hash/skein/_skein"
+    # ── hash/sponge per-algo ─────────────────────────────────────────
+    "${SRC}/hash/sponge/_keccak"
+    "${SRC}/hash/sponge/sha3"
+    "${SRC}/hash/sponge/sha3_224"
+    "${SRC}/hash/sponge/sha3_384"
+    "${SRC}/hash/sponge/shake"
+    "${SRC}/hash/sponge/sp800_185"
+    "${SRC}/hash/sponge/sp800_185/cshake"
+    "${SRC}/hash/sponge/sp800_185/kmac"
+    "${SRC}/hash/sponge/sp800_185/parallelhash"
+    "${SRC}/hash/sponge/sp800_185/tuplehash"
+    # ── modern/symmetric per-algo ────────────────────────────────────
+    "${SRC}/modern/symmetric/_aes"
+    "${SRC}/modern/symmetric/aes_cbc"
+    "${SRC}/modern/symmetric/aes_cbc_cs"
+    "${SRC}/modern/symmetric/aes_cfb"
+    "${SRC}/modern/symmetric/aes_ctr"
+    "${SRC}/modern/symmetric/aes_ecb"
+    "${SRC}/modern/symmetric/aes_fpe"
+    "${SRC}/modern/symmetric/aes_kw"
+    "${SRC}/modern/symmetric/aes_ofb"
+    "${SRC}/modern/symmetric/aes_xpn"
+    "${SRC}/modern/symmetric/aes_xts"
+    "${SRC}/modern/symmetric/chacha20"
+    "${SRC}/modern/symmetric/three_des"
+    # ── modern/aead per-algo ─────────────────────────────────────────
+    "${SRC}/modern/aead/_monocypher"
+    "${SRC}/modern/aead/aes_ccm"
+    "${SRC}/modern/aead/aes_eax"
+    "${SRC}/modern/aead/aes_gcm"
+    "${SRC}/modern/aead/aes_gcm_siv"
+    "${SRC}/modern/aead/aes_gmac"
+    "${SRC}/modern/aead/aes_ocb"
+    "${SRC}/modern/aead/aes_poly1305"
+    "${SRC}/modern/aead/aes_siv"
+    "${SRC}/modern/aead/chacha20_poly1305"
+    "${SRC}/modern/aead/ascon/_ascon"
+    # ── modern/mac per-algo ──────────────────────────────────────────
+    "${SRC}/modern/mac/aes_cmac"
+    "${SRC}/modern/mac/hmac"
+    "${SRC}/modern/mac/poly1305"
+    "${SRC}/modern/mac/siphash"
+    # ── modern/kdf per-algo ──────────────────────────────────────────
+    "${SRC}/modern/kdf/hkdf"
+    "${SRC}/modern/kdf/pbkdf2"
+    # ── modern/asymmetric: ed25519 + nist_ecc families ───────────────
+    "${SRC}/modern/asymmetric/_ed25519"
+    "${SRC}/modern/asymmetric/_nist_ecc"
+    "${SRC}/modern/asymmetric/_nist_ecc/micro_ecc"
+    "${SRC}/modern/asymmetric/p256"
+    "${SRC}/modern/asymmetric/p384"
+    "${SRC}/modern/asymmetric/p521"
+    "${SRC}/modern/asymmetric/det_ecdsa"
+    "${SRC}/modern/asymmetric/dsa"
     "${SRC}/pow"
     "${SRC}/pow/core"
     "${SRC}/pow/client"
@@ -250,12 +335,12 @@ target_include_directories(nextssl PRIVATE "${SRC}/hash/memory_hard/balloon")
 # BLAKE3 SIMD — disable intrinsics on non-x86 or when unavailable
 # ─────────────────────────────────────────────────────────────────
 if(_NEXTSSL_ARCH MATCHES "x86_64|x86")
-    set_source_files_properties("${SRC}/hash/blake/blake3_avx2.c"   PROPERTIES COMPILE_FLAGS "-mavx2")
-    set_source_files_properties("${SRC}/hash/blake/blake3_avx512.c" PROPERTIES COMPILE_FLAGS "-mavx512f -mavx512vl")
-    set_source_files_properties("${SRC}/hash/blake/blake3_sse2.c"   PROPERTIES COMPILE_FLAGS "-msse2")
-    set_source_files_properties("${SRC}/hash/blake/blake3_sse41.c"  PROPERTIES COMPILE_FLAGS "-msse4.1")
+    set_source_files_properties("${SRC}/hash/blake/blake3/blake3_avx2.c"   PROPERTIES COMPILE_FLAGS "-mavx2")
+    set_source_files_properties("${SRC}/hash/blake/blake3/blake3_avx512.c" PROPERTIES COMPILE_FLAGS "-mavx512f -mavx512vl")
+    set_source_files_properties("${SRC}/hash/blake/blake3/blake3_sse2.c"   PROPERTIES COMPILE_FLAGS "-msse2")
+    set_source_files_properties("${SRC}/hash/blake/blake3/blake3_sse41.c"  PROPERTIES COMPILE_FLAGS "-msse4.1")
     # Argon2 opt.c uses SSE2; must be explicit for -m32 (i686) where SSE2 is not the default
-    set_source_files_properties("${SRC}/hash/memory_hard/opt.c"     PROPERTIES COMPILE_FLAGS "-msse2")
+    set_source_files_properties("${SRC}/hash/memory_hard/_argon2/opt.c"    PROPERTIES COMPILE_FLAGS "-msse2")
     # PQC Keccak-4x AVX2 (used by ML-KEM, ML-DSA, Falcon, HQC, SPHINCS+ ref/)
     set_source_files_properties(
         "${SRC}/pqc/common/keccak4x/KeccakP-1600-times4-SIMD256.c"

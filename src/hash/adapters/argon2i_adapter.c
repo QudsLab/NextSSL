@@ -1,7 +1,7 @@
 /* argon2i_adapter.c — Argon2i KDF hash adapter (Plan 40002)
  * Identical to argon2id_adapter.c except calls argon2i_hash_raw(). */
 #include "kdf_adapters.h"
-#include "../memory_hard/argon2i.h"
+#include "argon2i.h"
 #include "../../seed/random/entropy.h"
 #include "../../common/secure_zero.h"
 #include <stdlib.h>

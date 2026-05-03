@@ -1,6 +1,6 @@
 /* argon2id_adapter.c — Argon2id KDF hash adapter (Plan 40002) */
 #include "kdf_adapters.h"
-#include "../memory_hard/argon2id.h"
+#include "argon2id.h"
 #include "../../seed/random/entropy.h"
 #include "../../common/secure_zero.h"
 #include <stdlib.h>
