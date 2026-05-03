@@ -4,63 +4,63 @@ CMD: /usr/bin/python3 /home/runner/work/NextSSL/NextSSL/build.py --platform wasm
 CWD: /home/runner/work/NextSSL/NextSSL
 ==============================================================================
 
-2026-05-03 01:24:09 INFO     NextSSL WASM Build  variant=wasm32
-2026-05-03 01:24:09 INFO     emcc    : /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc
-2026-05-03 01:24:09 INFO     Variant : wasm32
-2026-05-03 01:24:09 INFO     Out     : bin/web/
-2026-05-03 01:24:09 INFO     Cleaning .build_cache/wasm_wasm32 ...
-2026-05-03 01:24:09 INFO     Sources : 664 .c files
-2026-05-03 01:24:09 INFO     Exports : 374 symbols
-2026-05-03 01:24:09 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (64658 bytes)
-2026-05-03 01:24:09 INFO     Step 1/1: Compiling all sources to WASM ...
-2026-05-03 01:24:09 INFO     Running: emcc @response_file
-2026-05-03 01:24:09 DEBUG    CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
-2026-05-03 01:24:09 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
+2026-05-03 02:01:15 INFO     NextSSL WASM Build  variant=wasm32
+2026-05-03 02:01:15 INFO     emcc    : /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc
+2026-05-03 02:01:15 INFO     Variant : wasm32
+2026-05-03 02:01:15 INFO     Out     : bin/web/
+2026-05-03 02:01:15 INFO     Cleaning .build_cache/wasm_wasm32 ...
+2026-05-03 02:01:15 INFO     Sources : 664 .c files
+2026-05-03 02:01:15 INFO     Exports : 374 symbols
+2026-05-03 02:01:15 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (64658 bytes)
+2026-05-03 02:01:15 INFO     Step 1/1: Compiling all sources to WASM ...
+2026-05-03 02:01:15 INFO     Running: emcc @response_file
+2026-05-03 02:01:15 DEBUG    CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-05-03 02:01:15 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
 In file included from /home/runner/work/NextSSL/NextSSL/src/pow/pow_engine.c:13:
 /home/runner/work/NextSSL/NextSSL/src/pow/../hash/adapters/kdf_adapters.h:21:10: fatal error: 'argon2.h' file not found
    21 | #include "argon2.h"
       |          ^~~~~~~~~~
 1 error generated.
-emcc: error: '/home/runner/.cache/nextssl-tools/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -O2 -std=gnu11 -Wall -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -DENABLE_ML_KEM -DENABLE_ML_DSA -DENABLE_FALCON -DENABLE_HQC -DENABLE_MCELIECE -DENABLE_SPHINCS -DHAVE_ED448 -DHAVE_CURVE448 -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -c /home/runner/work/NextSSL/NextSSL/src/pow/pow_engine.c -o /tmp/emscripten_temp_g0ibg9tt/pow_engine.o' failed (returned 1)
+emcc: error: '/home/runner/.cache/nextssl-tools/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -O2 -std=gnu11 -Wall -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -DENABLE_ML_KEM -DENABLE_ML_DSA -DENABLE_FALCON -DENABLE_HQC -DENABLE_MCELIECE -DENABLE_SPHINCS -DHAVE_ED448 -DHAVE_CURVE448 -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -c /home/runner/work/NextSSL/NextSSL/src/pow/pow_engine.c -o /tmp/emscripten_temp_x5qsvpby/pow_engine.o' failed (returned 1)
 
 ============================================================
 CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
 CWD: /home/runner/work/NextSSL/NextSSL
 ============================================================
 
-2026-05-03 01:24:09 DEBUG    emcc @response_file exited with code 1
-2026-05-03 01:24:09 ERROR    emcc failed (exit 1)
-2026-05-03 01:24:09 ERROR    ── Last 32 lines of build.log ──
-2026-05-03 01:24:09 ERROR      
-2026-05-03 01:24:09 ERROR      ==============================================================================
-2026-05-03 01:24:09 ERROR      CMD: /usr/bin/python3 /home/runner/work/NextSSL/NextSSL/build.py --platform wasm wasm32 --clean --jobs 6 --log-level debug --log-file /home/runner/work/NextSSL/NextSSL/logs/build/wasm/emscripten-wasm32/build.log
-2026-05-03 01:24:09 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
-2026-05-03 01:24:09 ERROR      ==============================================================================
-2026-05-03 01:24:09 ERROR      
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 INFO     NextSSL WASM Build  variant=wasm32
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 INFO     emcc    : /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 INFO     Variant : wasm32
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 INFO     Out     : bin/web/
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 INFO     Cleaning .build_cache/wasm_wasm32 ...
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 INFO     Sources : 664 .c files
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 INFO     Exports : 374 symbols
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (64658 bytes)
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 INFO     Step 1/1: Compiling all sources to WASM ...
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 INFO     Running: emcc @response_file
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 DEBUG    CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
-2026-05-03 01:24:09 ERROR      In file included from /home/runner/work/NextSSL/NextSSL/src/pow/pow_engine.c:13:
-2026-05-03 01:24:09 ERROR      /home/runner/work/NextSSL/NextSSL/src/pow/../hash/adapters/kdf_adapters.h:21:10: fatal error: 'argon2.h' file not found
-2026-05-03 01:24:09 ERROR         21 | #include "argon2.h"
-2026-05-03 01:24:09 ERROR            |          ^~~~~~~~~~
-2026-05-03 01:24:09 ERROR      1 error generated.
-2026-05-03 01:24:09 ERROR      emcc: error: '/home/runner/.cache/nextssl-tools/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -O2 -std=gnu11 -Wall -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -DENABLE_ML_KEM -DENABLE_ML_DSA -DENABLE_FALCON -DENABLE_HQC -DENABLE_MCELIECE -DENABLE_SPHINCS -DHAVE_ED448 -DHAVE_CURVE448 -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -c /home/runner/work/NextSSL/NextSSL/src/pow/pow_engine.c -o /tmp/emscripten_temp_g0ibg9tt/pow_engine.o' failed (returned 1)
-2026-05-03 01:24:09 ERROR      
-2026-05-03 01:24:09 ERROR      ============================================================
-2026-05-03 01:24:09 ERROR      CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
-2026-05-03 01:24:09 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
-2026-05-03 01:24:09 ERROR      ============================================================
-2026-05-03 01:24:09 ERROR      
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 DEBUG    emcc @response_file exited with code 1
-2026-05-03 01:24:09 ERROR      2026-05-03 01:24:09 ERROR    emcc failed (exit 1)
-2026-05-03 01:24:09 ERROR    ──────────────────────────────────────────
+2026-05-03 02:01:15 DEBUG    emcc @response_file exited with code 1
+2026-05-03 02:01:15 ERROR    emcc failed (exit 1)
+2026-05-03 02:01:15 ERROR    ── Last 32 lines of build.log ──
+2026-05-03 02:01:15 ERROR      
+2026-05-03 02:01:15 ERROR      ==============================================================================
+2026-05-03 02:01:15 ERROR      CMD: /usr/bin/python3 /home/runner/work/NextSSL/NextSSL/build.py --platform wasm wasm32 --clean --jobs 6 --log-level debug --log-file /home/runner/work/NextSSL/NextSSL/logs/build/wasm/emscripten-wasm32/build.log
+2026-05-03 02:01:15 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
+2026-05-03 02:01:15 ERROR      ==============================================================================
+2026-05-03 02:01:15 ERROR      
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 INFO     NextSSL WASM Build  variant=wasm32
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 INFO     emcc    : /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 INFO     Variant : wasm32
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 INFO     Out     : bin/web/
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 INFO     Cleaning .build_cache/wasm_wasm32 ...
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 INFO     Sources : 664 .c files
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 INFO     Exports : 374 symbols
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (64658 bytes)
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 INFO     Step 1/1: Compiling all sources to WASM ...
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 INFO     Running: emcc @response_file
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 DEBUG    CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
+2026-05-03 02:01:15 ERROR      In file included from /home/runner/work/NextSSL/NextSSL/src/pow/pow_engine.c:13:
+2026-05-03 02:01:15 ERROR      /home/runner/work/NextSSL/NextSSL/src/pow/../hash/adapters/kdf_adapters.h:21:10: fatal error: 'argon2.h' file not found
+2026-05-03 02:01:15 ERROR         21 | #include "argon2.h"
+2026-05-03 02:01:15 ERROR            |          ^~~~~~~~~~
+2026-05-03 02:01:15 ERROR      1 error generated.
+2026-05-03 02:01:15 ERROR      emcc: error: '/home/runner/.cache/nextssl-tools/emsdk/upstream/bin/clang -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr --sysroot=/home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/cache/sysroot -Xclang -iwithsysroot/include/fakesdl -Xclang -iwithsysroot/include/compat -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -O2 -std=gnu11 -Wall -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -DENABLE_ML_KEM -DENABLE_ML_DSA -DENABLE_FALCON -DENABLE_HQC -DENABLE_MCELIECE -DENABLE_SPHINCS -DHAVE_ED448 -DHAVE_CURVE448 -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -c /home/runner/work/NextSSL/NextSSL/src/pow/pow_engine.c -o /tmp/emscripten_temp_x5qsvpby/pow_engine.o' failed (returned 1)
+2026-05-03 02:01:15 ERROR      
+2026-05-03 02:01:15 ERROR      ============================================================
+2026-05-03 02:01:15 ERROR      CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-05-03 02:01:15 ERROR      CWD: /home/runner/work/NextSSL/NextSSL
+2026-05-03 02:01:15 ERROR      ============================================================
+2026-05-03 02:01:15 ERROR      
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 DEBUG    emcc @response_file exited with code 1
+2026-05-03 02:01:15 ERROR      2026-05-03 02:01:15 ERROR    emcc failed (exit 1)
+2026-05-03 02:01:15 ERROR    ──────────────────────────────────────────
