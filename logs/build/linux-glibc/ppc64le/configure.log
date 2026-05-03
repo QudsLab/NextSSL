@@ -18,7 +18,7 @@
 --   Balloon     : ON (always)
 --   Pomelo      : ON (always)
 --   Makwa       : ON (always)
--- Configuring done (5.2s)
+-- Configuring done (4.4s)
 -- Generating done (0.1s)
 -- Build files have been written to: /home/runner/work/NextSSL/NextSSL/.ci_build/linux-glibc/ppc64le
 

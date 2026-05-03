@@ -218,6 +218,7 @@ D:\a\NextSSL\NextSSL\src\modern\aead\aes_poly1305\aes_poly1305.c(85,23): warning
   uECC.c
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\uECC.c(262,68): warning C4244: 'return': conversion from 'uECC_word_t' to 'bitcount_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\uECC.c(315,20): warning C4244: 'return': conversion from 'uECC_word_t' to 'cmpresult_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  curve448.c
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.inc(390,14): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   (compiling source file '../../../src/modern/asymmetric/_nist_ecc/micro_ecc/uECC.c')
   
@@ -266,7 +267,6 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.in
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.inc(1047,22): warning C4244: '+=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   (compiling source file '../../../src/modern/asymmetric/_nist_ecc/micro_ecc/uECC.c')
   
-  curve448.c
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.inc(1051,22): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   (compiling source file '../../../src/modern/asymmetric/_nist_ecc/micro_ecc/uECC.c')
   
