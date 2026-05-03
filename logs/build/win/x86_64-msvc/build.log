@@ -18,13 +18,26 @@ MSBuild version 17.14.40+3e7442088 for .NET Framework
   hex.c
   pem.c
   radix_common.c
-  argon2_adapter.c
+  argon2.c
+  argon2_encoding.c
+  core.c
 D:\a\NextSSL\NextSSL\src\encoding\ff70.c(117,52): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  thread.c
+  Generating Code...
+  Compiling...
+  keccak.c
+  skein.c
+  skeinApi.c
+  skein_block.c
+  skein_ops.c
+  threefish1024Block.c
+  threefish256Block.c
+  threefish512Block.c
+  threefishApi.c
+  argon2_adapter.c
   argon2d_adapter.c
   argon2i_adapter.c
   argon2id_adapter.c
-  Generating Code...
-  Compiling...
   balloon_adapter.c
   bcrypt_adapter.c
   catena_adapter.c
@@ -40,161 +53,158 @@ D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(40,19): warning C4244: 'f
   makwa_adapter.c
   plain_hash_adapter.c
   pomelo_adapter.c
+  Generating Code...
+  Compiling...
   scrypt_adapter.c
   yescrypt_adapter.c
-  blake2s.c
-  blake3.c
-  blake3_dispatch.c
-  blake3_portable.c
-  sha224.c
-  sha256.c
-D:\a\NextSSL\NextSSL\src\hash\fast\sha256\sha256.c(194,24): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\fast\sha256\sha256.c(195,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\fast\sha256\sha256.c(196,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\fast\sha256\sha256.c(197,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\fast\sha256\sha256.c(198,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\fast\sha256\sha256.c(199,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\fast\sha256\sha256.c(200,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  sha512_224.c
-  sha512_256.c
-  sm3_ext.c
-  sm3_impl.c
-  sm3_ops.c
-  Generating Code...
-  Compiling...
-  nextssl_hash.c
-  hash_ops_disabled_stubs.c
-  has160.c
-  md2.c
-D:\a\NextSSL\NextSSL\src\hash\legacy\md2\md2.c(79,27): warning C4267: '+=': conversion from 'size_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\legacy\md2\md2.c(99,22): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\legacy\md2\md2.c(109,21): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  md4.c
-  md5.c
-  nt.c
-  ripemd128.c
-  ripemd160.c
-  ripemd256.c
-  ripemd320.c
-  sha0.c
-  sha1.c
-  tiger.c
-  tiger_sbox.c
-  whirlpool.c
-  argon2.c
-  argon2_encoding.c
-  core.c
-  thread.c
-  Generating Code...
-  Compiling...
   argon2d.c
   argon2i.c
   argon2id.c
   balloon_openssl_compat.c
   balloon_ops.c
   bitstream.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\bitstream.c(119,28): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\balloon\bitstream.c(119,28): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   compress.c
   encode.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\balloon\encode.c(26,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\balloon\encode.c(26,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   hash_state.c
   bcrypt_ops.c
   crypt_blowfish.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\bcrypt\crypt_blowfish.c(899,18): warning C4244: '=': conversion from 'unsigned long' to 'char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\bcrypt\crypt_blowfish.c(899,18): warning C4244: '=': conversion from 'unsigned long' to 'char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   crypt_gensalt.c
+  blake2s.c
+  blake3.c
+  blake3_dispatch.c
+  blake3_portable.c
   blake2b-ref.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\blake2b-ref.c(296,20): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\blake2b-ref.c(307,20): warning C4244: '+=': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\blake2b-ref.c(296,20): warning C4267: '+=': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\blake2b-ref.c(307,20): warning C4244: '+=': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   catena-BRG.c
-  catena-blake2b-ref.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-blake2b-ref.c(238,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-blake2b-ref.c(243,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  catena-helpers.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(29,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(54,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena-helpers.c(85,23): warning C4244: 'function': conversion from 'const uint16_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  catena.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(67,23): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(123,38): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(124,25): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(125,25): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(323,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(332,41): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(332,54): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(333,36): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\catena\catena.c(337,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  catena_ops.c
-  Lyra2.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(57,23): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(57,35): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Lyra2.c(57,48): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  Sponge.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\lyra2\Sponge.c(408,19): warning C4018: '<': signed/unsigned mismatch [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   Generating Code...
   Compiling...
+  catena-blake2b-ref.c
+D:\a\NextSSL\NextSSL\src\hash\catena\catena-blake2b-ref.c(238,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena-blake2b-ref.c(243,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  catena-helpers.c
+D:\a\NextSSL\NextSSL\src\hash\catena\catena-helpers.c(29,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena-helpers.c(54,16): warning C4244: 'function': conversion from 'uint64_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  catena.c
+D:\a\NextSSL\NextSSL\src\hash\catena\catena-helpers.c(85,23): warning C4244: 'function': conversion from 'const uint16_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(67,23): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(123,38): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(124,25): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(125,25): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(323,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(332,41): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(332,54): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(333,36): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(337,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  catena_ops.c
+  cshake.c
+  nextssl_hash.c
+  has160.c
+  hash_ops_disabled_stubs.c
+  keccak256.c
+  kmac.c
+  kmac128.c
+  kmac256.c
+  Lyra2.c
+D:\a\NextSSL\NextSSL\src\hash\lyra2\Lyra2.c(57,23): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\lyra2\Lyra2.c(57,35): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\lyra2\Lyra2.c(57,48): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  Sponge.c
+D:\a\NextSSL\NextSSL\src\hash\lyra2\Sponge.c(408,19): warning C4018: '<': signed/unsigned mismatch [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   lyra2_ops.c
   makwa.c
   makwa_ops.c
+  md2.c
+D:\a\NextSSL\NextSSL\src\hash\md2\md2.c(79,27): warning C4267: '+=': conversion from 'size_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\md2\md2.c(99,22): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\md2\md2.c(109,21): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  md4.c
+  md5.c
+  Generating Code...
+  Compiling...
+  nt.c
+  parallelhash.c
   pomelo.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(52,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(53,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(54,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(65,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\pomelo\pomelo.c(91,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\pomelo\pomelo.c(52,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\pomelo\pomelo.c(53,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\pomelo\pomelo.c(54,32): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\pomelo\pomelo.c(65,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\pomelo\pomelo.c(91,24): warning C4334: '<<': result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?) [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   pomelo_ops.c
-  crypto_scrypt-ref.c
-  insecure_memzero.c
-  scrypt_ops.c
-  sha256_portable.c
-  yescrypt-common.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-common.c(289,10): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  yescrypt-opt.c
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(131,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(132,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(133,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(134,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(135,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(136,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(137,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(138,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1079,16): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1286,14): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1286,33): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1299,37): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\memory_hard\yescrypt\yescrypt-opt.c(1300,8): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  yescrypt_ops.c
   hash_record_core.c
   lmots.c
   lms.c
   lms_params.c
+  ripemd128.c
+  ripemd160.c
+  ripemd256.c
+  ripemd320.c
   hash_root.c
-  skein.c
-  skeinApi.c
-  skein_block.c
+  crypto_scrypt-ref.c
+  insecure_memzero.c
+  scrypt_ops.c
+  sha256_portable.c
+  sha0.c
+  sha1.c
+  sha224.c
   Generating Code...
   Compiling...
-  skein_ops.c
-  threefish1024Block.c
-  threefish256Block.c
-  threefish512Block.c
-  threefishApi.c
-  keccak.c
-  sha3.c
+  sha256.c
+D:\a\NextSSL\NextSSL\src\hash\sha256\sha256.c(194,24): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\sha256\sha256.c(195,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\sha256\sha256.c(196,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\sha256\sha256.c(197,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\sha256\sha256.c(198,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\sha256\sha256.c(199,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\sha256\sha256.c(200,33): warning C4244: '=': conversion from 'uint64_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   sha3_224.c
+  sha3.c
   sha3_384.c
+  sha3_512.c
+D:\a\NextSSL\NextSSL\src\hash\sha3_512\sha3_512.c(7,5): warning C4013: 'keccak_hash' undefined; assuming extern returning int [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  sha512_224.c
+  sha512_256.c
   shake.c
-  cshake.c
-  kmac.c
-  parallelhash.c
+  shake128.c
+  shake256.c
+  skein1024.c
+  skein256.c
+  skein512.c
+  sm3_ext.c
+  sm3_impl.c
+  sm3_ops.c
+  tiger.c
+  tiger_sbox.c
   tuplehash.c
+  whirlpool.c
+  Generating Code...
+  Compiling...
+  yescrypt-common.c
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-common.c(289,10): warning C4267: '=': conversion from 'size_t' to 'unsigned char', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  yescrypt-opt.c
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(131,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(132,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(133,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(134,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(135,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(136,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(137,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(138,2): warning C4244: '=': conversion from 'const uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(1079,16): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(1286,14): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(1286,33): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(1299,37): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\yescrypt\yescrypt-opt.c(1300,8): warning C4244: 'function': conversion from 'uint64_t' to 'uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  yescrypt_ops.c
   monocypher-ed25519.c
   monocypher.c
   aes_ccm.c
   aes_eax.c
   aes_gcm.c
   aes_gcm_siv.c
-  Generating Code...
-  Compiling...
   aes_gmac.c
   aes_ocb.c
 D:\a\NextSSL\NextSSL\src\modern\aead\aes_ocb\aes_ocb.c(75,51): warning C4267: 'function': conversion from 'size_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
@@ -209,6 +219,8 @@ D:\a\NextSSL\NextSSL\src\modern\aead\aes_poly1305\aes_poly1305.c(85,23): warning
   ascon_xof128.c
   chacha20_poly1305.c
   add_scalar.c
+  Generating Code...
+  Compiling...
   fe.c
   ge.c
   key_exchange.c
@@ -272,8 +284,6 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.in
   
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\uECC.c(1003,47): warning C4244: '=': conversion from 'const uECC_word_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   curve448_det.c
-  Generating Code...
-  Compiling...
   ed448.c
   fe_448.c
   ge_448.c
@@ -285,6 +295,8 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\uECC.c(1003,47): 
   rsa.c
   sm2.c
   base_encryption.c
+  Generating Code...
+  Compiling...
   elligator2.c
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_ed25519\fixedint.h(26,35): warning C4142: 'uint32_t': benign redefinition of type [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   (compiling source file '../../../src/modern/curve_math/elligator2.c')
@@ -314,8 +326,6 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_ed25519\fixedint.h(70,17): warning C
   siphash.c
   aes_core.c
   aes_cbc.c
-  Generating Code...
-  Compiling...
   aes_cbc_cs.c
   aes_cfb.c
   aes_ctr.c
@@ -327,6 +337,8 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_ed25519\fixedint.h(70,17): warning C
   aes_xts.c
   chacha20.c
   sm4_impl.c
+  Generating Code...
+  Compiling...
   three_des.c
   pow_limits.c
   pow_reject.c
@@ -336,8 +348,6 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_ed25519\fixedint.h(70,17): warning C
   pow_parser.c
   dhcm_core.c
   dhcm_difficulty.c
-  Generating Code...
-  Compiling...
   dhcm_math.c
   hash_cost.c
   hash_cost_probe.c
@@ -349,6 +359,8 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_ed25519\fixedint.h(70,17): warning C
   drbg.c
   fips202.c
   nistseedexpander.c
+  Generating Code...
+  Compiling...
   randombytes.c
 D:\a\NextSSL\NextSSL\src\pqc\common\randombytes.c(110,29): warning C4267: 'function': conversion from 'size_t' to 'unsigned long', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   sha2.c
@@ -359,8 +371,6 @@ D:\a\NextSSL\NextSSL\src\pqc\common\randombytes.c(110,29): warning C4267: 'funct
   root_modern.c
   nextssl_init.c
   root_pow.c
-  Generating Code...
-  Compiling...
   root_pqc.c
   root_seed.c
   ctr_mode.c
@@ -371,6 +381,11 @@ D:\a\NextSSL\NextSSL\src\pqc\common\randombytes.c(110,29): warning C4267: 'funct
   udbf.c
   Generating Code...
   blake2b.c
+cl : command line  warning D9002: ignoring unknown option '-msse2' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  opt.c
+  blake3_sse2.c
+  Generating Code...
+  blake2b.c
 cl : command line  warning D9002: ignoring unknown option '-mavx2' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   blake3_avx2.c
   KeccakP-1600-times4-SIMD256.c
@@ -378,15 +393,10 @@ cl : command line  warning D9002: ignoring unknown option '-mavx2' [D:\a\NextSSL
 cl : command line  warning D9002: ignoring unknown option '-mavx512f' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 cl : command line  warning D9002: ignoring unknown option '-mavx512vl' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   blake3_avx512.c
-cl : command line  warning D9002: ignoring unknown option '-msse2' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  blake3_sse2.c
-  opt.c
-  Generating Code...
 cl : command line  warning D9002: ignoring unknown option '-msse4.1' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   blake3_sse41.c
-  sha512.c
   hash_registry.c
-  blake2b.c
+  sha512.c
   sha512.c
   sign.c
   verify.c
@@ -1873,9 +1883,10 @@ D:\a\NextSSL\NextSSL\src\pqc\sign\falcon-padded-512\ref\vrfy.c(840,18): warning 
   wots.c
   wotsx1.c
   hash_registry.c
+sha3_512.obj : error LNK2005: sha3_512_hash already defined in sha3.obj [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
      Creating library D:/a/NextSSL/NextSSL/bin/win/x86_64-msvc/Release/nextssl.lib and object D:/a/NextSSL/NextSSL/bin/win/x86_64-msvc/Release/nextssl.exp
-  nextssl.vcxproj -> D:\a\NextSSL\NextSSL\bin\win\x86_64-msvc\Release\nextssl.dll
-  Building Custom Rule D:/a/NextSSL/NextSSL/CMakeLists.txt
+sha3_512.obj : error LNK2019: unresolved external symbol keccak_hash referenced in function sha3_512_hash [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\bin\win\x86_64-msvc\Release\nextssl.dll : fatal error LNK1120: 1 unresolved externals [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 
 ==============================================================================
 CMD: cmake --build D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc --config Release --parallel 6

@@ -1,6 +1,6 @@
-arm64-msvc: SUCCESS
-armv7-msvc: SUCCESS
-x86-mingw: SUCCESS
-x86-msvc: SUCCESS
-x86_64-mingw: SUCCESS
-x86_64-msvc: SUCCESS
+arm64-msvc: SKIPPED (queue stopped after x86_64-msvc (failed))
+armv7-msvc: SKIPPED (queue stopped after x86_64-msvc (failed))
+x86-mingw: SKIPPED (queue stopped after x86_64-msvc (failed))
+x86-msvc: SKIPPED (queue stopped after x86_64-msvc (failed))
+x86_64-mingw: SKIPPED (queue stopped after x86_64-msvc (failed))
+x86_64-msvc: FAILED (1)
