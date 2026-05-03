@@ -4,24 +4,24 @@ CMD: /usr/bin/python3 /home/runner/work/NextSSL/NextSSL/build.py --platform wasm
 CWD: /home/runner/work/NextSSL/NextSSL
 ==============================================================================
 
-2026-05-03 03:20:51 INFO     NextSSL WASM Build  variant=wasm32
-2026-05-03 03:20:51 INFO     emcc    : /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc
-2026-05-03 03:20:51 INFO     Variant : wasm32
-2026-05-03 03:20:51 INFO     Out     : bin/web/
-2026-05-03 03:20:51 INFO     Cleaning .build_cache/wasm_wasm32 ...
-2026-05-03 03:20:51 INFO     Sources : 663 .c files
-2026-05-03 03:20:51 INFO     Exports : 374 symbols
-2026-05-03 03:20:51 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (69570 bytes)
-2026-05-03 03:20:51 INFO     Step 1/1: Compiling all sources to WASM ...
-2026-05-03 03:20:51 INFO     Running: emcc @response_file
-2026-05-03 03:20:51 DEBUG    CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
-2026-05-03 03:20:51 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
+2026-05-03 15:08:03 INFO     NextSSL WASM Build  variant=wasm32
+2026-05-03 15:08:03 INFO     emcc    : /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc
+2026-05-03 15:08:03 INFO     Variant : wasm32
+2026-05-03 15:08:03 INFO     Out     : bin/web/
+2026-05-03 15:08:03 INFO     Cleaning .build_cache/wasm_wasm32 ...
+2026-05-03 15:08:03 INFO     Sources : 663 .c files
+2026-05-03 15:08:03 INFO     Exports : 374 symbols
+2026-05-03 15:08:03 DEBUG    Response file: /home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp (69570 bytes)
+2026-05-03 15:08:03 INFO     Step 1/1: Compiling all sources to WASM ...
+2026-05-03 15:08:03 INFO     Running: emcc @response_file
+2026-05-03 15:08:03 DEBUG    CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
+2026-05-03 15:08:03 DEBUG    CWD: /home/runner/work/NextSSL/NextSSL
 
 ============================================================
 CMD: /home/runner/.cache/nextssl-tools/emsdk/upstream/emscripten/emcc @/home/runner/work/NextSSL/NextSSL/temp/emcc_args.rsp
 CWD: /home/runner/work/NextSSL/NextSSL
 ============================================================
 
-2026-05-03 03:21:27 DEBUG    emcc @response_file exited with code 0
-2026-05-03 03:21:27 INFO     [OK] bin/web/libnextssl.js    (73380 bytes)
-2026-05-03 03:21:27 INFO     [OK] bin/web/libnextssl.wasm  (1141629 bytes)
+2026-05-03 15:08:33 DEBUG    emcc @response_file exited with code 0
+2026-05-03 15:08:33 INFO     [OK] bin/web/libnextssl.js    (73380 bytes)
+2026-05-03 15:08:33 INFO     [OK] bin/web/libnextssl.wasm  (1141629 bytes)

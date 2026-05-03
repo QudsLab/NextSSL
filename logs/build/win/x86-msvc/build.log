@@ -31,12 +31,12 @@ MSBuild version 17.14.40+3e7442088 for .NET Framework
   makwa_adapter.c
   plain_hash_adapter.c
   pomelo_adapter.c
-D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(34,23): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
-D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(40,19): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
   scrypt_adapter.c
   yescrypt_adapter.c
   blake2s.c
   blake3.c
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(34,23): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
+D:\a\NextSSL\NextSSL\src\hash\adapters\lyra2_adapter.c(40,19): warning C4244: 'function': conversion from 'uint64_t' to 'unsigned int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\blake\blake3\blake3.c(165,48): warning C4244: 'return': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\blake\blake3\blake3.c(527,26): warning C4244: 'initializing': conversion from 'uint64_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
   blake3_dispatch.c
@@ -234,7 +234,6 @@ D:\a\NextSSL\NextSSL\src\modern\aead\aes_poly1305\aes_poly1305.c(67,18): warning
   base_encryption.c
   elligator2.c
   ristretto255.c
-  pbkdf2.c
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_ed25519\fixedint.h(26,35): warning C4142: 'uint32_t': benign redefinition of type [D:\a\NextSSL\NextSSL\.ci_build\win\x86-msvc\nextssl.vcxproj]
   (compiling source file '../../../src/modern/curve_math/elligator2.c')
       C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(24,28):
@@ -255,6 +254,7 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_ed25519\fixedint.h(70,17): warning C
       C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\include\stdint.h(126,9):
       see previous definition of 'INT64_C'
   
+  pbkdf2.c
   aes_cmac.c
   hmac.c
   poly1305.c

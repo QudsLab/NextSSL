@@ -1,0 +1,7 @@
+platform: win
+variant: x86-mingw
+run_id: 25282677098
+attempt: 1
+sha: b99eb369737fbb3457dd8f621597f3bf77240bb0
+ref: refs/heads/main
+started: 2026-05-03T15:23:51Z
