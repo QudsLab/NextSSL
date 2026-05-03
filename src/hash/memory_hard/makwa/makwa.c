@@ -24,7 +24,7 @@
  */
 
 #include "makwa.h"
-#include "../../fast/sha256.h"
+#include "sha256.h"
 #include "../../../common/secure_zero.h"
 #include <stdatomic.h>
 #include <string.h>

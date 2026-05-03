@@ -14,7 +14,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
-#include "../shake.h"
+#include "shake.h"
 
 typedef struct {
     SHAKE_CTX shake;

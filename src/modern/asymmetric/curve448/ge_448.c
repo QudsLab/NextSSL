@@ -29,7 +29,7 @@
  *   ./gen-curve448.sh
  */
 
-#include "../wolf_shim.h"
+#include "wolf_shim.h"
 
 #ifdef HAVE_ED448
 

@@ -3,10 +3,10 @@
  * Thin export layer over hash/interface/hash_registry.c.
  */
 #include "root_hash.h"
-#include "../../hash/blake/blake2b.h"
+#include "blake2b.h"
 #include "../../hash/interface/hash_registry.h"
-#include "../../hash/skein/skeinApi.h"
-#include "../../hash/sponge/shake.h"
+#include "skeinApi.h"
+#include "shake.h"
 #include <string.h>
 
 static const char *s_algo_list[HASH_REGISTRY_MAX + 1];

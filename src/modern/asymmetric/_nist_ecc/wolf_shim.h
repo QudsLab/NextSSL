@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <string.h>
-#include "../../seed/random/entropy.h"
+#include "entropy.h"
 
 // Types
 typedef uint8_t word8;
@@ -47,7 +47,7 @@ typedef uint8_t byte;
 #define WOLFSSL_LOCAL
 #define WOLFSSL_API
 
-#include "../../hash/sponge_xof/shake/shake.h"
+#include "shake.h"
 typedef SHAKE_CTX wc_Shake;
 
 typedef struct WC_RNG WC_RNG;

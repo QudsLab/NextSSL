@@ -1,4 +1,0 @@
-[ci_skip] skipped win/x86_64-mingw
-[ci_skip] reason: queue stopped after x86_64-msvc (failed)
-[ci_skip] blocked_by: x86_64-msvc
-[ci_skip] blocked_status: failed

@@ -1,7 +1,7 @@
 #ifndef WOLF_CRYPT_CURVE448_H
 #define WOLF_CRYPT_CURVE448_H
 
-#include "../wolf_shim.h"
+#include "wolf_shim.h"
 
 #ifdef HAVE_CURVE448
 

@@ -1,3 +1,0 @@
-device-arm64: FAILED (1)
-sim-arm64: SKIPPED (queue stopped after device-arm64 (failed))
-sim-x86_64: SKIPPED (queue stopped after device-arm64 (failed))

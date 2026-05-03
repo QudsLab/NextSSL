@@ -5,7 +5,7 @@
  *   before returning on every code path.
  */
 #include "hkdf.h"
-#include "../mac/hmac.h"
+#include "hmac.h"
 #include "../../hash/interface/hash_registry.h"
 #include "../../common/secure_zero.h"
 
@@ -182,7 +182,7 @@ int hkdf_expand_label_ex(const hash_ops_t *hash,
  * hkdf_ex_adapter — combined Extract + Expand using hash_adapter_t (Plan 40002)
  * ========================================================================= */
 #include "../../hash/adapters/hash_adapter.h"
-#include "../mac/hmac.h"   /* hmac_compute_adapter */
+#include "hmac.h"   /* hmac_compute_adapter */
 
 int hkdf_ex_adapter(const hash_adapter_t *ha,
                     const uint8_t *salt,    size_t salt_len,

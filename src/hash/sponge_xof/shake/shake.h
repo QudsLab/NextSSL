@@ -4,6 +4,6 @@
 
 #pragma once
 
-#include "../../sponge/shake.h"
+#include "shake.h"
 
 #endif /* NEXTSSL_BRIDGE_SHAKE_H */

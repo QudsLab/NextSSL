@@ -8,7 +8,7 @@
  * Plan 204: U_prev and U_curr wiped after each block.
  */
 #include "pbkdf2.h"
-#include "../mac/hmac.h"
+#include "hmac.h"
 #include "../../hash/interface/hash_registry.h"
 #include "../../common/secure_zero.h"
 

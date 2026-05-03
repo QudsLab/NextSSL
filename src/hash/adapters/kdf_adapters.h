@@ -18,7 +18,7 @@
 #define KDF_ADAPTERS_H
 
 #include "hash_adapter.h"
-#include "../memory_hard/argon2.h"
+#include "argon2.h"
 #include "../../seed/random/entropy.h"
 #include <stdint.h>
 #include <stddef.h>

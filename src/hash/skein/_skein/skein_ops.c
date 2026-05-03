@@ -8,7 +8,7 @@
  *
  * Context: SkeinCtx_t is ~424 bytes — well within HASH_OPS_CTX_MAX (2048).
  */
-#include "../interface/hash_registry.h"
+#include "hash_registry.h"
 #include "skeinApi.h"
 
 /* =========================================================================

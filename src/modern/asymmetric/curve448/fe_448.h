@@ -1,7 +1,7 @@
 #ifndef WOLF_CRYPT_FE_448_H
 #define WOLF_CRYPT_FE_448_H
 
-#include "../wolf_shim.h"
+#include "wolf_shim.h"
 
 #if defined(HAVE_CURVE448) || defined(HAVE_ED448)
 

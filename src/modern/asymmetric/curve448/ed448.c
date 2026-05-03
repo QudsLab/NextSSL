@@ -30,7 +30,7 @@
  *     Check that the private key didn't change during the signing operations.
  */
 
-#include "../wolf_shim.h"
+#include "wolf_shim.h"
 
 #ifdef HAVE_ED448
 #include "ed448.h"

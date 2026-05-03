@@ -8,7 +8,7 @@
  *   T[2^h]..T[2^(h+1)-1] = leaf nodes (LM-OTS public keys K[q])
  */
 #include "lms.h"
-#include "../../../hash/fast/sha256.h"
+#include "sha256.h"
 #include <string.h>
 #include <stdlib.h>
 

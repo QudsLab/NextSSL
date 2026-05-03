@@ -24,7 +24,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "../shake.h"
+#include "shake.h"
 
 /* -------------------------------------------------------------------------
  * Streaming context

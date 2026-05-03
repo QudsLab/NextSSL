@@ -4,7 +4,7 @@
  * All multi-byte integers are big-endian per RFC 8554.
  */
 #include "lmots.h"
-#include "../../../hash/fast/sha256.h"
+#include "sha256.h"
 #include <string.h>
 #include <stdlib.h>
 

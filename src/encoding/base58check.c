@@ -6,7 +6,7 @@
  */
 #include "base58check.h"
 #include "base58.h"
-#include "../hash/fast/sha256.h"
+#include "sha256.h"
 #include <string.h>
 
 /* SHA-256 digest length */

@@ -17,7 +17,7 @@
 
 /* Bring in project SHA-256 (defines sha256_init, sha256_update, sha256_final,
  * and SHA256_CTX as the 108-byte internal struct). */
-#include "../../fast/sha256.h"
+#include "sha256.h"
 
 #include <stdlib.h>
 #include <string.h>

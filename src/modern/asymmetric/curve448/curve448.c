@@ -25,7 +25,7 @@
  * Reworked for curve448 by Sean Parkinson.
  */
 
-#include "../wolf_shim.h"
+#include "wolf_shim.h"
 
 #ifdef HAVE_CURVE448
 

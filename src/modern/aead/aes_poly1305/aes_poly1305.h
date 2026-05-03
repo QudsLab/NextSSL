@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "../symmetric/aes_internal.h"
+#include "aes_internal.h"
 
 void AES_Poly1305(const uint8_t* keys, const block_t nonce, const void* data, const size_t dataSize, block_t mac);
 

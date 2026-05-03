@@ -1,5 +1,5 @@
 #include "aes_cmac.h"
-#include "../symmetric/aes_internal.h"
+#include "aes_internal.h"
 void AES_CMAC( const uint8_t* key,
                const void* data, const size_t dataSize, block_t mac )
 {

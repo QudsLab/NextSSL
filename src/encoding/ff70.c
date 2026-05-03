@@ -1,5 +1,5 @@
 #include "ff70.h"
-#include "../hash/blake/blake3.h"
+#include "blake3.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>

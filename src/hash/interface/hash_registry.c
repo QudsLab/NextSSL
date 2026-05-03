@@ -6,16 +6,16 @@
  */
 #include "hash_registry.h"
 
-#include "../fast/sha224.h"
-#include "../fast/sha256.h"
-#include "../fast/sha384.h"
-#include "../fast/sha512.h"
-#include "../blake/blake2b.h"
-#include "../blake/blake2s.h"
-#include "../blake/blake3.h"
-#include "../sponge/sha3_224.h"
-#include "../sponge/sha3.h"
-#include "../sponge/sha3_384.h"
+#include "sha224.h"
+#include "sha256.h"
+#include "sha384.h"
+#include "sha512.h"
+#include "blake2b.h"
+#include "blake2s.h"
+#include "blake3.h"
+#include "sha3_224.h"
+#include "sha3.h"
+#include "sha3_384.h"
 
 #include <string.h>
 #include <stddef.h>
@@ -266,7 +266,7 @@ const hash_ops_t keccak256_ops = {
 /* =========================================================================
  * SHAKE-128  (XOF — output fixed to 32 bytes for hash_ops_t compatibility)
  * ========================================================================= */
-#include "../sponge/shake.h"
+#include "shake.h"
 
 static void shake128_ops_init  (void *c)                              { shake128_init((SHAKE_CTX *)c); }
 static void shake128_ops_update(void *c, const uint8_t *d, size_t l)  { shake_update((SHAKE_CTX *)c, d, l); }
@@ -329,10 +329,10 @@ const hash_ops_t shake256_ops = {
  *   salt_len  > 0  → use caller-provided salt from ctx->salt[]
  *   Call argon2_ops_set_salt(ctx, s, len) once before init/update/final.
  * ========================================================================= */
-#include "../memory_hard/argon2.h"
-#include "../memory_hard/argon2id.h"
-#include "../memory_hard/argon2i.h"
-#include "../memory_hard/argon2d.h"
+#include "argon2.h"
+#include "argon2id.h"
+#include "argon2i.h"
+#include "argon2d.h"
 #include "../../common/secure_zero.h"
 #include <string.h>
 
@@ -471,8 +471,8 @@ const hash_ops_t argon2d_ops = {
  * Legacy hashes — SHA-1, SHA-0
  * All follow (digest, ctx) _final convention confirmed by header audit.
  * ========================================================================= */
-#include "../legacy/sha1.h"
-#include "../legacy/sha0.h"
+#include "sha1.h"
+#include "sha0.h"
 
 static void sha1_ops_init  (void *c)                               { sha1_init((SHA1_CTX *)c); }
 static void sha1_ops_update(void *c, const uint8_t *d, size_t l)   { sha1_update((SHA1_CTX *)c, d, l); }
@@ -511,9 +511,9 @@ const hash_ops_t sha0_ops = {
 /* =========================================================================
  * Legacy hashes — MD5, MD4, MD2
  * ========================================================================= */
-#include "../legacy/md5.h"
-#include "../legacy/md4.h"
-#include "../legacy/md2.h"
+#include "md5.h"
+#include "md4.h"
+#include "md2.h"
 
 static void md5_ops_init  (void *c)                               { md5_init((MD5_CTX *)c); }
 static void md5_ops_update(void *c, const uint8_t *d, size_t l)   { md5_update((MD5_CTX *)c, d, l); }
@@ -574,8 +574,8 @@ const hash_ops_t md2_ops = {
  * password code unit and expand it to UTF-16LE before hashing.
  * Buffer limit: 2040 bytes = 2040 password characters / 4080 UTF-16LE bytes.
  * ========================================================================= */
-#include "../legacy/nt.h"
-#include "../legacy/tiger.h"
+#include "nt.h"
+#include "tiger.h"
 
 typedef struct {
     uint8_t buf[2040];
@@ -646,10 +646,10 @@ const hash_ops_t tiger_ops = {
 /* =========================================================================
  * RIPEMD family
  * ========================================================================= */
-#include "../legacy/ripemd128.h"
-#include "../legacy/ripemd160.h"
-#include "../legacy/ripemd256.h"
-#include "../legacy/ripemd320.h"
+#include "ripemd128.h"
+#include "ripemd160.h"
+#include "ripemd256.h"
+#include "ripemd320.h"
 
 static void ripemd128_ops_init  (void *c)                               { ripemd128_init((RIPEMD128_CTX *)c); }
 static void ripemd128_ops_update(void *c, const uint8_t *d, size_t l)   { ripemd128_update((RIPEMD128_CTX *)c, d, l); }
@@ -722,7 +722,7 @@ const hash_ops_t ripemd320_ops = {
 /* =========================================================================
  * Whirlpool
  * ========================================================================= */
-#include "../legacy/whirlpool.h"
+#include "whirlpool.h"
 
 static void whirlpool_ops_init  (void *c)                               { whirlpool_init((WHIRLPOOL_CTX *)c); }
 static void whirlpool_ops_update(void *c, const uint8_t *d, size_t l)   { whirlpool_update((WHIRLPOOL_CTX *)c, d, l); }
@@ -744,7 +744,7 @@ const hash_ops_t whirlpool_ops = {
 /* =========================================================================
  * HAS-160  (Korean KISA standard)
  * ========================================================================= */
-#include "../legacy/has160.h"
+#include "has160.h"
 
 static void has160_ops_init  (void *c)                               { has160_init((HAS160_CTX *)c); }
 static void has160_ops_update(void *c, const uint8_t *d, size_t l)   { has160_update((HAS160_CTX *)c, d, l); }
@@ -763,9 +763,9 @@ const hash_ops_t has160_ops = {
     .parallelism = 1
 };
 
-#include "../fast/sha512_224.h"
-#include "../fast/sha512_256.h"
-#include "../sponge/sp800_185/kmac.h"
+#include "sha512_224.h"
+#include "sha512_256.h"
+#include "kmac.h"
 
 /* =========================================================================
  * SHA-512/224  (FIPS 180-4 §5.3.6.1, Plan 207 Phase C)

@@ -15,7 +15,7 @@
 #include <string.h>
 
 /* Pull in SHA-256 from the hash module. */
-#include "../../hash/fast/sha256.h"
+#include "sha256.h"
 
 #define DRBG_SEED_MAX 64
 

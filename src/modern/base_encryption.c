@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "symmetric/aes_common.h"
+#include "aes_common.h"
 #include "symmetric/aes_ecb.h"
 #include "symmetric/aes_cbc.h"
 #include "symmetric/aes_ctr.h"

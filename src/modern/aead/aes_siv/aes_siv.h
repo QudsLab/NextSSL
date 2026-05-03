@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "../symmetric/aes_internal.h"
+#include "aes_internal.h"
 
 void AES_SIV_encrypt(const uint8_t* keys, const void* aData, const size_t aDataLen, const void* pntxt, const size_t ptextLen, block_t iv, void* crtxt);
 char AES_SIV_decrypt(const uint8_t* keys, const block_t iv, const void* aData, const size_t aDataLen, const void* crtxt, const size_t crtxtLen, void* pntxt);
