@@ -1,9 +1,9 @@
 platform: macos
 variant: arm64
-run_id: 25266482250
+run_id: 25266606763
 attempt: 1
-sha: 9e6993c94e1cff1a876cde589e35db34e9ef733d
+sha: efd1bc0aa04aea0ac844d26716bc0ef724a5fbf8
 ref: refs/heads/main
-started: 2026-05-03T01:17:20Z
+started: 2026-05-03T01:24:18Z
 blocked_by: x86_64
 blocked_status: failed

@@ -1,228 +1,159 @@
-[1/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base58check.c.o
-[2/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base16.c.o
+[1/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base16.c.o
+[2/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base58check.c.o
 [3/665] Building C object CMakeFiles/nextssl.dir/src/common/sanitizer/nextssl_sanitizer.c.o
-[4/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base62.c.o
-[5/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base64.c.o
+[4/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base64url.c.o
+[5/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base62.c.o
 [6/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base32.c.o
 [7/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base58.c.o
-[8/665] Building C object CMakeFiles/nextssl.dir/src/encoding/crc32.c.o
+[8/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base64.c.o
 [9/665] Building C object CMakeFiles/nextssl.dir/src/encoding/crc64.c.o
-[10/665] Building C object CMakeFiles/nextssl.dir/src/encoding/bech32.c.o
+[10/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base85.c.o
 [11/665] Building C object CMakeFiles/nextssl.dir/src/encoding/hex.c.o
-[12/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base64url.c.o
-[13/665] Building C object CMakeFiles/nextssl.dir/src/encoding/base85.c.o
+[12/665] Building C object CMakeFiles/nextssl.dir/src/encoding/bech32.c.o
+[13/665] Building C object CMakeFiles/nextssl.dir/src/encoding/crc32.c.o
 [14/665] Building C object CMakeFiles/nextssl.dir/src/encoding/radix_common.c.o
-[15/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2_adapter.c.o
-[16/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2id_adapter.c.o
-[17/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/balloon_adapter.c.o
-[18/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2d_adapter.c.o
-[19/665] Building C object CMakeFiles/nextssl.dir/src/encoding/pem.c.o
+[15/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2d_adapter.c.o
+[16/665] Building C object CMakeFiles/nextssl.dir/src/encoding/ff70.c.o
+[17/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2_adapter.c.o
+[18/665] Building C object CMakeFiles/nextssl.dir/src/encoding/pem.c.o
+[19/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/balloon_adapter.c.o
 [20/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2i_adapter.c.o
-[21/665] Building C object CMakeFiles/nextssl.dir/src/encoding/ff70.c.o
-[22/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/makwa_adapter.c.o
-[23/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/pomelo_adapter.c.o
-[24/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/bcrypt_adapter.c.o
+[21/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/argon2id_adapter.c.o
+[22/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/bcrypt_adapter.c.o
+[23/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/makwa_adapter.c.o
+[24/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/pomelo_adapter.c.o
 [25/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/catena_adapter.c.o
-[26/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/lyra2_adapter.c.o
-[27/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/yescrypt_adapter.c.o
-[28/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/plain_hash_adapter.c.o
-[29/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/scrypt_adapter.c.o
-[30/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3/blake3_dispatch.c.o
+[26/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/scrypt_adapter.c.o
+[27/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/lyra2_adapter.c.o
+[28/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/yescrypt_adapter.c.o
+[29/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3/blake3_dispatch.c.o
+[30/665] Building C object CMakeFiles/nextssl.dir/src/hash/adapters/plain_hash_adapter.c.o
 [31/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha224/sha224.c.o
-[32/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512/sha512.c.o
-[33/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512_224/sha512_224.c.o
-[34/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2b/blake2b.c.o
-[35/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512_256/sha512_256.c.o
+[32/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3/blake3_portable.c.o
+[33/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2b/blake2b.c.o
+[34/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512_256/sha512_256.c.o
+[35/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512_224/sha512_224.c.o
 [36/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sm3/sm3_ext.c.o
-[37/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sm3/sm3_ops.c.o
-[38/665] Building C object CMakeFiles/nextssl.dir/src/hash/generic/nextssl_hash.c.o
-[39/665] Building C object CMakeFiles/nextssl.dir/src/hash/interface/hash_ops_disabled_stubs.c.o
-[40/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2s/blake2s.c.o
-[41/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3/blake3.c.o
-[42/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3/blake3_portable.c.o
-[43/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha256/sha256.c.o
-[44/665] Building C object CMakeFiles/nextssl.dir/src/hash/interface/hash_registry.c.o
-[45/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/md2/md2.c.o
-[46/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/nt/nt.c.o
-[47/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/has160/has160.c.o
-[48/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/md4/md4.c.o
-[49/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sm3/sm3_impl.c.o
-[50/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/md5/md5.c.o
-[51/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd160/ripemd160.c.o
+[37/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha512/sha512.c.o
+[38/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake3/blake3.c.o
+[39/665] Building C object CMakeFiles/nextssl.dir/src/hash/blake/blake2s/blake2s.c.o
+[40/665] Building C object CMakeFiles/nextssl.dir/src/hash/interface/hash_ops_disabled_stubs.c.o
+[41/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sm3/sm3_ops.c.o
+[42/665] Building C object CMakeFiles/nextssl.dir/src/hash/generic/nextssl_hash.c.o
+[43/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/md2/md2.c.o
+[44/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/md4/md4.c.o
+[45/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/nt/nt.c.o
+[46/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/has160/has160.c.o
+[47/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sha256/sha256.c.o
+[48/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/md5/md5.c.o
+[49/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd160/ripemd160.c.o
+[50/665] Building C object CMakeFiles/nextssl.dir/src/hash/interface/hash_registry.c.o
+[51/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd128/ripemd128.c.o
 [52/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/sha0/sha0.c.o
-[53/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/tiger/tiger_sbox.c.o
-[54/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/tiger/tiger.c.o
-[55/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd128/ripemd128.c.o
-[56/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd256/ripemd256.c.o
+[53/665] Building C object CMakeFiles/nextssl.dir/src/hash/fast/sm3/sm3_impl.c.o
+[54/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd256/ripemd256.c.o
+[55/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/tiger/tiger_sbox.c.o
+[56/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/tiger/tiger.c.o
 [57/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/sha1/sha1.c.o
-[58/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/whirlpool/whirlpool.c.o
-[59/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/argon2.c.o
-[60/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd320/ripemd320.c.o
-[61/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/thread.c.o
-[62/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2d/argon2d.c.o
-[63/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/argon2_encoding.c.o
-[64/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2i/argon2i.c.o
-[65/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2id/argon2id.c.o
-[66/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/balloon_ops.c.o
+[58/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/ripemd320/ripemd320.c.o
+[59/665] Building C object CMakeFiles/nextssl.dir/src/hash/legacy/whirlpool/whirlpool.c.o
+[60/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/argon2.c.o
+[61/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/argon2_encoding.c.o
+[62/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/blake2b.c.o
+[63/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/thread.c.o
+[64/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2d/argon2d.c.o
+[65/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2i/argon2i.c.o
+[66/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/argon2id/argon2id.c.o
 [67/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/compress.c.o
-[68/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/balloon_openssl_compat.c.o
-[69/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/blake2b.c.o
-[70/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/bitstream.c.o
-[71/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/ref.c.o
+[68/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/ref.c.o
+[69/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/balloon_ops.c.o
+[70/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/balloon_openssl_compat.c.o
+[71/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/bitstream.c.o
 [72/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/bcrypt/crypt_gensalt.c.o
-[73/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/hash_state.c.o
-[74/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/encode.c.o
-[75/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/bcrypt/bcrypt_ops.c.o
-[76/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena-BRG.c.o
-[77/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena-blake2b-ref.c.o
-[78/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena_ops.c.o
-[79/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/blake2b-ref.c.o
-[80/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/Lyra2.c.o
-[81/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena-helpers.c.o
-[82/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/lyra2_ops.c.o
-[83/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/core.c.o
-[84/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena.c.o
-[85/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/bcrypt/crypt_blowfish.c.o
+[73/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/encode.c.o
+[74/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/bcrypt/bcrypt_ops.c.o
+[75/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/balloon/hash_state.c.o
+[76/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena-blake2b-ref.c.o
+[77/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/_argon2/core.c.o
+[78/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena-BRG.c.o
+[79/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena-helpers.c.o
+[80/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena_ops.c.o
+[81/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/lyra2_ops.c.o
+[82/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/Lyra2.c.o
+[83/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/catena.c.o
+[84/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/bcrypt/crypt_blowfish.c.o
+[85/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/makwa/makwa.c.o
 [86/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/makwa/makwa_ops.c.o
 [87/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/pomelo/pomelo_ops.c.o
-[88/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/pomelo/pomelo.c.o
-[89/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/insecure_memzero.c.o
-[90/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/Sponge.c.o
-[91/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/makwa/makwa.c.o
-[92/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/scrypt_ops.c.o
-[93/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt_ops.c.o
+[88/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/catena/blake2b-ref.c.o
+[89/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/pomelo/pomelo.c.o
+[90/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/insecure_memzero.c.o
+[91/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/scrypt_ops.c.o
+[92/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt_ops.c.o
+[93/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/lyra2/Sponge.c.o
 [94/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt-common.c.o
 [95/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/lms/lmots.c.o
-[96/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/crypto_scrypt-ref.c.o
-[97/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/sha256_portable.c.o
-[98/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/hash_record_core.c.o
-[99/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/lms/lms_params.c.o
+[96/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/sha256_portable.c.o
+[97/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/hash_record_core.c.o
+[98/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/lms/lms_params.c.o
+[99/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/scrypt/crypto_scrypt-ref.c.o
 [100/665] Building C object CMakeFiles/nextssl.dir/src/hash/record/lms/lms.c.o
-[101/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/skein_ops.c.o
-[102/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/skeinApi.c.o
+[101/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/skeinApi.c.o
+[102/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/skein_ops.c.o
 [103/665] Building C object CMakeFiles/nextssl.dir/src/hash/root_functions/hash_root.c.o
 [104/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/skein.c.o
 [105/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/threefishApi.c.o
 [106/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/threefish256Block.c.o
-[107/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/_keccak/keccak.c.o
+[107/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3/sha3.c.o
 [108/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3_224/sha3_224.c.o
-[109/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3_384/sha3_384.c.o
+[109/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/_keccak/keccak.c.o
 [110/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/threefish512Block.c.o
-[111/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/shake/shake.c.o
-[112/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/threefish1024Block.c.o
-[113/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3/sha3.c.o
-[114/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/parallelhash/parallelhash.c.o
-[115/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/kmac/kmac.c.o
-[116/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/cshake/cshake.c.o
-[117/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/tuplehash/tuplehash.c.o
+[111/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sha3_384/sha3_384.c.o
+[112/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/shake/shake.c.o
+[113/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/kmac/kmac.c.o
+[114/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/cshake/cshake.c.o
+[115/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt-opt.c.o
+[116/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/tuplehash/tuplehash.c.o
+[117/665] Building C object CMakeFiles/nextssl.dir/src/hash/sponge/sp800_185/parallelhash/parallelhash.c.o
 [118/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_ccm/aes_ccm.c.o
-[119/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_eax/aes_eax.c.o
-[120/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gcm/aes_gcm.c.o
-[121/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/_monocypher/monocypher-ed25519.c.o
-[122/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gmac/aes_gmac.c.o
-[123/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gcm_siv/aes_gcm_siv.c.o
-[124/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_ocb/aes_ocb.c.o
-[125/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_siv/aes_siv.c.o
-[126/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/_ascon/ascon_core.c.o
-[127/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_poly1305/aes_poly1305.c.o
-[128/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/cxof128/ascon_cxof128.c.o
-[129/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/aead128/ascon_aead128.c.o
-[130/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/hash256/ascon_hash256.c.o
-[131/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/chacha20_poly1305/chacha20_poly1305.c.o
-[132/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/xof128/ascon_xof128.c.o
+[119/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/threefish1024Block.c.o
+[120/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_eax/aes_eax.c.o
+[121/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gmac/aes_gmac.c.o
+[122/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/_monocypher/monocypher-ed25519.c.o
+[123/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gcm/aes_gcm.c.o
+[124/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_gcm_siv/aes_gcm_siv.c.o
+[125/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_ocb/aes_ocb.c.o
+[126/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_siv/aes_siv.c.o
+[127/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/aead128/ascon_aead128.c.o
+[128/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/_ascon/ascon_core.c.o
+[129/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/aes_poly1305/aes_poly1305.c.o
+[130/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/chacha20_poly1305/chacha20_poly1305.c.o
+[131/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/hash256/ascon_hash256.c.o
+[132/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/cxof128/ascon_cxof128.c.o
 [133/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/add_scalar.c.o
-[134/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/key_exchange.c.o
+[134/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/ascon/xof128/ascon_xof128.c.o
 [135/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/keypair.c.o
-[136/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/fe.c.o
-[137/665] Building C object CMakeFiles/nextssl.dir/src/hash/memory_hard/yescrypt/yescrypt-opt.c.o
-[138/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/seed.c.o
+[136/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/key_exchange.c.o
+[137/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/seed.c.o
+[138/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/ge.c.o
 [139/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/sign.c.o
 [140/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/verify.c.o
-[141/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/ge.c.o
+[141/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/fe.c.o
 [142/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/sha512.c.o
 [143/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_ed25519/sc.c.o
 [144/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/curve448_det.c.o
 [145/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/ed448.c.o
-[146/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/curve448.c.o
-[147/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/fe_448.c.o
-[148/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/dsa/dsa.c.o
-[149/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/det_ecdsa/det_ecdsa.c.o
-[150/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/p384/p384.c.o
-[151/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_nist_ecc/micro_ecc/uECC.c.o
-[152/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/rsa/rsa.c.o
-[153/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/p521/p521.c.o
+[146/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/fe_448.c.o
+[147/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/curve448.c.o
+[148/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/det_ecdsa/det_ecdsa.c.o
+[149/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/dsa/dsa.c.o
+[150/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/p256/p256.c.o
+[151/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/p384/p384.c.o
+[152/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/p521/p521.c.o
+[153/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/rsa/rsa.c.o
 [154/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/sm2/sm2.c.o
-[155/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/p256/p256.c.o
-[156/665] Building C object CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o
-FAILED: [code=1] CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o 
-/home/runner/.cache/nextssl-tools/android-ndk/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/bin/clang --target=aarch64-none-linux-android24 --sysroot=/home/runner/.cache/nextssl-tools/android-ndk/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/sysroot -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -DENABLE_CATENA -DENABLE_FALCON -DENABLE_HQC -DENABLE_LYRA2 -DENABLE_MCELIECE -DENABLE_ML_DSA -DENABLE_ML_KEM -DENABLE_SCRYPT -DENABLE_SPHINCS -DENABLE_YESCRYPT -DHAVE_CURVE448 -DHAVE_ED448 -DNEXTSSL_BUILDING_DLL -DNEXTSSL_HAS_BALLOON -DNEXTSSL_HAS_MAKWA -DNEXTSSL_HAS_POMELO -DNEXTSSL_SUPPRESS_UPSTREAM_WARNINGS -Dnextssl_EXPORTS -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/encoding -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/hash/adapters -I/home/runner/work/NextSSL/NextSSL/src/hash/generic -I/home/runner/work/NextSSL/NextSSL/src/hash/root_functions -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/curve448 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake2b -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake2s -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha224 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha256 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha384 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512_224 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512_256 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/has160 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md2 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md4 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md5 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/nt -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd128 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd160 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd256 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd320 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/sha0 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/sha1 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/tiger -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/whirlpool -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/_argon2 -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2d -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2i -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2id -I/home/runner/work/NextSSL/NextSSL/src/hash/skein/_skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/_keccak -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3_224 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3_384 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/shake -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/cshake -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/kmac -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/parallelhash -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/tuplehash -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/_aes -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cbc -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cbc_cs -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cfb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ctr -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ecb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_fpe -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_kw -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ofb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_xpn -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_xts -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/chacha20 -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/three_des -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/_monocypher -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_ccm -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_eax -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gcm -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gcm_siv -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gmac -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_ocb -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_siv -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/chacha20_poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/ascon/_ascon -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/aes_cmac -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/hmac -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/siphash -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf/hkdf -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf/pbkdf2 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_ed25519 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_nist_ecc -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_nist_ecc/micro_ecc -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p256 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p384 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p521 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/det_ecdsa -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/dsa -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/balloon -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fno-exceptions -O3 -DNDEBUG -std=gnu11 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -O3 -MD -MT CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o -MF CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o.d -o CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o -c /home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:10:14: error: unknown type name 'fe'
-   10 | static const fe fe_sqrtm1 = {
-      |              ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:15:14: error: unknown type name 'fe'
-   15 | static const fe ed25519_d = {
-      |              ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:20:14: error: unknown type name 'fe'
-   20 | static const fe ed25519_sqrtadm1 = {
-      |              ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:25:14: error: unknown type name 'fe'
-   25 | static const fe ed25519_invsqrtamd = {
-      |              ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:30:14: error: unknown type name 'fe'
-   30 | static const fe ed25519_onemsqd = {
-      |              ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:35:14: error: unknown type name 'fe'
-   35 | static const fe ed25519_sqdmone = {
-      |              ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:40:20: error: unknown type name 'fe'
-   40 | static void fe_abs(fe h) {
-      |                    ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:41:5: error: use of undeclared identifier 'fe'
-   41 |     fe neg_h;
-      |     ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:42:5: error: call to undeclared function 'fe_neg'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-   42 |     fe_neg(neg_h, h);
-      |     ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:42:12: error: use of undeclared identifier 'neg_h'
-   42 |     fe_neg(neg_h, h);
-      |            ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:43:5: error: call to undeclared function 'fe_cmov'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-   43 |     fe_cmov(h, neg_h, fe_isnegative(h));
-      |     ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:43:23: error: call to undeclared function 'fe_isnegative'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-   43 |     fe_cmov(h, neg_h, fe_isnegative(h));
-      |                       ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:43:16: error: use of undeclared identifier 'neg_h'
-   43 |     fe_cmov(h, neg_h, fe_isnegative(h));
-      |                ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:47:23: error: unknown type name 'ge_p3'
-   47 | static void ge_p3_add(ge_p3 *r, const ge_p3 *p, const ge_p3 *q) {
-      |                       ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:47:39: error: unknown type name 'ge_p3'
-   47 | static void ge_p3_add(ge_p3 *r, const ge_p3 *p, const ge_p3 *q) {
-      |                                       ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:47:55: error: unknown type name 'ge_p3'
-   47 | static void ge_p3_add(ge_p3 *r, const ge_p3 *p, const ge_p3 *q) {
-      |                                                       ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:48:5: error: use of undeclared identifier 'ge_cached'
-   48 |     ge_cached q_cached;
-      |     ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:49:5: error: use of undeclared identifier 'ge_p1p1'
-   49 |     ge_p1p1 p1p1;
-      |     ^
-/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:50:5: error: call to undeclared function 'ge_p3_to_cached'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-   50 |     ge_p3_to_cached(&q_cached, q);
-      |     ^
-fatal error: too many errors emitted, stopping now [-ferror-limit=]
-20 errors generated.
-[157/665] Building C object CMakeFiles/nextssl.dir/src/modern/base_encryption.c.o
-FAILED: [code=1] CMakeFiles/nextssl.dir/src/modern/base_encryption.c.o 
-/home/runner/.cache/nextssl-tools/android-ndk/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/bin/clang --target=aarch64-none-linux-android24 --sysroot=/home/runner/.cache/nextssl-tools/android-ndk/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/sysroot -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -DENABLE_CATENA -DENABLE_FALCON -DENABLE_HQC -DENABLE_LYRA2 -DENABLE_MCELIECE -DENABLE_ML_DSA -DENABLE_ML_KEM -DENABLE_SCRYPT -DENABLE_SPHINCS -DENABLE_YESCRYPT -DHAVE_CURVE448 -DHAVE_ED448 -DNEXTSSL_BUILDING_DLL -DNEXTSSL_HAS_BALLOON -DNEXTSSL_HAS_MAKWA -DNEXTSSL_HAS_POMELO -DNEXTSSL_SUPPRESS_UPSTREAM_WARNINGS -Dnextssl_EXPORTS -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/encoding -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/hash/adapters -I/home/runner/work/NextSSL/NextSSL/src/hash/generic -I/home/runner/work/NextSSL/NextSSL/src/hash/root_functions -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/curve448 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake2b -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake2s -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha224 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha256 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha384 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512_224 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512_256 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/has160 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md2 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md4 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md5 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/nt -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd128 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd160 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd256 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd320 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/sha0 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/sha1 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/tiger -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/whirlpool -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/_argon2 -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2d -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2i -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2id -I/home/runner/work/NextSSL/NextSSL/src/hash/skein/_skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/_keccak -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3_224 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3_384 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/shake -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/cshake -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/kmac -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/parallelhash -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/tuplehash -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/_aes -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cbc -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cbc_cs -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cfb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ctr -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ecb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_fpe -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_kw -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ofb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_xpn -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_xts -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/chacha20 -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/three_des -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/_monocypher -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_ccm -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_eax -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gcm -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gcm_siv -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gmac -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_ocb -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_siv -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/chacha20_poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/ascon/_ascon -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/aes_cmac -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/hmac -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/siphash -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf/hkdf -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf/pbkdf2 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_ed25519 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_nist_ecc -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_nist_ecc/micro_ecc -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p256 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p384 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p521 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/det_ecdsa -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/dsa -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/balloon -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fno-exceptions -O3 -DNDEBUG -std=gnu11 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -O3 -MD -MT CMakeFiles/nextssl.dir/src/modern/base_encryption.c.o -MF CMakeFiles/nextssl.dir/src/modern/base_encryption.c.o.d -o CMakeFiles/nextssl.dir/src/modern/base_encryption.c.o -c /home/runner/work/NextSSL/NextSSL/src/modern/base_encryption.c
-/home/runner/work/NextSSL/NextSSL/src/modern/base_encryption.c:4:10: fatal error: 'symmetric/aes_ecb.h' file not found
-    4 | #include "symmetric/aes_ecb.h"
-      |          ^~~~~~~~~~~~~~~~~~~~~
-1 error generated.
-[158/665] Building C object CMakeFiles/nextssl.dir/src/modern/curve_math/elligator2.c.o
+[155/665] Building C object CMakeFiles/nextssl.dir/src/modern/base_encryption.c.o
+[156/665] Building C object CMakeFiles/nextssl.dir/src/modern/curve_math/elligator2.c.o
 FAILED: [code=1] CMakeFiles/nextssl.dir/src/modern/curve_math/elligator2.c.o 
 /home/runner/.cache/nextssl-tools/android-ndk/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/bin/clang --target=aarch64-none-linux-android24 --sysroot=/home/runner/.cache/nextssl-tools/android-ndk/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/sysroot -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -DENABLE_CATENA -DENABLE_FALCON -DENABLE_HQC -DENABLE_LYRA2 -DENABLE_MCELIECE -DENABLE_ML_DSA -DENABLE_ML_KEM -DENABLE_SCRYPT -DENABLE_SPHINCS -DENABLE_YESCRYPT -DHAVE_CURVE448 -DHAVE_ED448 -DNEXTSSL_BUILDING_DLL -DNEXTSSL_HAS_BALLOON -DNEXTSSL_HAS_MAKWA -DNEXTSSL_HAS_POMELO -DNEXTSSL_SUPPRESS_UPSTREAM_WARNINGS -Dnextssl_EXPORTS -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/encoding -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/hash/adapters -I/home/runner/work/NextSSL/NextSSL/src/hash/generic -I/home/runner/work/NextSSL/NextSSL/src/hash/root_functions -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/curve448 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake2b -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake2s -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha224 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha256 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha384 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512_224 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512_256 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/has160 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md2 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md4 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md5 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/nt -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd128 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd160 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd256 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd320 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/sha0 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/sha1 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/tiger -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/whirlpool -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/_argon2 -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2d -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2i -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2id -I/home/runner/work/NextSSL/NextSSL/src/hash/skein/_skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/_keccak -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3_224 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3_384 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/shake -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/cshake -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/kmac -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/parallelhash -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/tuplehash -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/_aes -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cbc -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cbc_cs -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cfb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ctr -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ecb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_fpe -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_kw -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ofb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_xpn -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_xts -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/chacha20 -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/three_des -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/_monocypher -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_ccm -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_eax -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gcm -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gcm_siv -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gmac -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_ocb -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_siv -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/chacha20_poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/ascon/_ascon -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/aes_cmac -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/hmac -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/siphash -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf/hkdf -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf/pbkdf2 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_ed25519 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_nist_ecc -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_nist_ecc/micro_ecc -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p256 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p384 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p521 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/det_ecdsa -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/dsa -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/balloon -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fno-exceptions -O3 -DNDEBUG -std=gnu11 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -O3 -MD -MT CMakeFiles/nextssl.dir/src/modern/curve_math/elligator2.c.o -MF CMakeFiles/nextssl.dir/src/modern/curve_math/elligator2.c.o.d -o CMakeFiles/nextssl.dir/src/modern/curve_math/elligator2.c.o -c /home/runner/work/NextSSL/NextSSL/src/modern/curve_math/elligator2.c
 /home/runner/work/NextSSL/NextSSL/src/modern/curve_math/elligator2.c:13:14: error: unknown type name 'fe'
@@ -284,7 +215,70 @@ FAILED: [code=1] CMakeFiles/nextssl.dir/src/modern/curve_math/elligator2.c.o
       |     ^
 fatal error: too many errors emitted, stopping now [-ferror-limit=]
 20 errors generated.
-[159/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/ge_448.c.o
+[157/665] Building C object CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o
+FAILED: [code=1] CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o 
+/home/runner/.cache/nextssl-tools/android-ndk/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/bin/clang --target=aarch64-none-linux-android24 --sysroot=/home/runner/.cache/nextssl-tools/android-ndk/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/sysroot -DBLAKE3_NO_AVX2 -DBLAKE3_NO_AVX512 -DBLAKE3_NO_SSE2 -DBLAKE3_NO_SSE41 -DENABLE_CATENA -DENABLE_FALCON -DENABLE_HQC -DENABLE_LYRA2 -DENABLE_MCELIECE -DENABLE_ML_DSA -DENABLE_ML_KEM -DENABLE_SCRYPT -DENABLE_SPHINCS -DENABLE_YESCRYPT -DHAVE_CURVE448 -DHAVE_ED448 -DNEXTSSL_BUILDING_DLL -DNEXTSSL_HAS_BALLOON -DNEXTSSL_HAS_MAKWA -DNEXTSSL_HAS_POMELO -DNEXTSSL_SUPPRESS_UPSTREAM_WARNINGS -Dnextssl_EXPORTS -I/home/runner/work/NextSSL/NextSSL/src/root -I/home/runner/work/NextSSL/NextSSL/src -I/home/runner/work/NextSSL/NextSSL/src/encoding -I/home/runner/work/NextSSL/NextSSL/src/common -I/home/runner/work/NextSSL/NextSSL/src/common/sanitizer -I/home/runner/work/NextSSL/NextSSL/src/hash -I/home/runner/work/NextSSL/NextSSL/src/hash/interface -I/home/runner/work/NextSSL/NextSSL/src/hash/fast -I/home/runner/work/NextSSL/NextSSL/src/hash/blake -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard -I/home/runner/work/NextSSL/NextSSL/src/hash/skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge -I/home/runner/work/NextSSL/NextSSL/src/hash/adapters -I/home/runner/work/NextSSL/NextSSL/src/hash/generic -I/home/runner/work/NextSSL/NextSSL/src/hash/root_functions -I/home/runner/work/NextSSL/NextSSL/src/seed -I/home/runner/work/NextSSL/NextSSL/src/seed/hash -I/home/runner/work/NextSSL/NextSSL/src/seed/random -I/home/runner/work/NextSSL/NextSSL/src/seed/rng -I/home/runner/work/NextSSL/NextSSL/src/seed/drbg -I/home/runner/work/NextSSL/NextSSL/src/seed/udbf -I/home/runner/work/NextSSL/NextSSL/src/modern -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/aead -I/home/runner/work/NextSSL/NextSSL/src/modern/mac -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf -I/home/runner/work/NextSSL/NextSSL/src/modern/curve_math -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/curve448 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/rsa -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake2b -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake2s -I/home/runner/work/NextSSL/NextSSL/src/hash/blake/blake3 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha224 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha256 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha384 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512_224 -I/home/runner/work/NextSSL/NextSSL/src/hash/fast/sha512_256 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/has160 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md2 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md4 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/md5 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/nt -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd128 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd160 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd256 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/ripemd320 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/sha0 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/sha1 -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/tiger -I/home/runner/work/NextSSL/NextSSL/src/hash/legacy/whirlpool -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/_argon2 -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2d -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2i -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/argon2id -I/home/runner/work/NextSSL/NextSSL/src/hash/skein/_skein -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/_keccak -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3_224 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sha3_384 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/shake -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185 -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/cshake -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/kmac -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/parallelhash -I/home/runner/work/NextSSL/NextSSL/src/hash/sponge/sp800_185/tuplehash -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/_aes -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cbc -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cbc_cs -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_cfb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ctr -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ecb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_fpe -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_kw -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_ofb -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_xpn -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/aes_xts -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/chacha20 -I/home/runner/work/NextSSL/NextSSL/src/modern/symmetric/three_des -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/_monocypher -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_ccm -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_eax -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gcm -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gcm_siv -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_gmac -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_ocb -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/aes_siv -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/chacha20_poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/aead/ascon/_ascon -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/aes_cmac -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/hmac -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/poly1305 -I/home/runner/work/NextSSL/NextSSL/src/modern/mac/siphash -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf/hkdf -I/home/runner/work/NextSSL/NextSSL/src/modern/kdf/pbkdf2 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_ed25519 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_nist_ecc -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/_nist_ecc/micro_ecc -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p256 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p384 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/p521 -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/det_ecdsa -I/home/runner/work/NextSSL/NextSSL/src/modern/asymmetric/dsa -I/home/runner/work/NextSSL/NextSSL/src/pow -I/home/runner/work/NextSSL/NextSSL/src/pow/core -I/home/runner/work/NextSSL/NextSSL/src/pow/client -I/home/runner/work/NextSSL/NextSSL/src/pow/server -I/home/runner/work/NextSSL/NextSSL/src/pow/dhcm -I/home/runner/work/NextSSL/NextSSL/src/pqc -I/home/runner/work/NextSSL/NextSSL/src/pqc/common -I/home/runner/work/NextSSL/NextSSL/src/root/hash -I/home/runner/work/NextSSL/NextSSL/src/root/seed -I/home/runner/work/NextSSL/NextSSL/src/root/modern -I/home/runner/work/NextSSL/NextSSL/src/root/pqc -I/home/runner/work/NextSSL/NextSSL/src/root/pow -I/home/runner/work/NextSSL/NextSSL/src/hash/memory_hard/balloon -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fno-exceptions -O3 -DNDEBUG -std=gnu11 -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -O3 -MD -MT CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o -MF CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o.d -o CMakeFiles/nextssl.dir/src/modern/curve_math/ristretto255.c.o -c /home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:10:14: error: unknown type name 'fe'
+   10 | static const fe fe_sqrtm1 = {
+      |              ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:15:14: error: unknown type name 'fe'
+   15 | static const fe ed25519_d = {
+      |              ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:20:14: error: unknown type name 'fe'
+   20 | static const fe ed25519_sqrtadm1 = {
+      |              ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:25:14: error: unknown type name 'fe'
+   25 | static const fe ed25519_invsqrtamd = {
+      |              ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:30:14: error: unknown type name 'fe'
+   30 | static const fe ed25519_onemsqd = {
+      |              ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:35:14: error: unknown type name 'fe'
+   35 | static const fe ed25519_sqdmone = {
+      |              ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:40:20: error: unknown type name 'fe'
+   40 | static void fe_abs(fe h) {
+      |                    ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:41:5: error: use of undeclared identifier 'fe'
+   41 |     fe neg_h;
+      |     ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:42:5: error: call to undeclared function 'fe_neg'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   42 |     fe_neg(neg_h, h);
+      |     ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:42:12: error: use of undeclared identifier 'neg_h'
+   42 |     fe_neg(neg_h, h);
+      |            ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:43:5: error: call to undeclared function 'fe_cmov'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   43 |     fe_cmov(h, neg_h, fe_isnegative(h));
+      |     ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:43:23: error: call to undeclared function 'fe_isnegative'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   43 |     fe_cmov(h, neg_h, fe_isnegative(h));
+      |                       ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:43:16: error: use of undeclared identifier 'neg_h'
+   43 |     fe_cmov(h, neg_h, fe_isnegative(h));
+      |                ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:47:23: error: unknown type name 'ge_p3'
+   47 | static void ge_p3_add(ge_p3 *r, const ge_p3 *p, const ge_p3 *q) {
+      |                       ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:47:39: error: unknown type name 'ge_p3'
+   47 | static void ge_p3_add(ge_p3 *r, const ge_p3 *p, const ge_p3 *q) {
+      |                                       ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:47:55: error: unknown type name 'ge_p3'
+   47 | static void ge_p3_add(ge_p3 *r, const ge_p3 *p, const ge_p3 *q) {
+      |                                                       ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:48:5: error: use of undeclared identifier 'ge_cached'
+   48 |     ge_cached q_cached;
+      |     ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:49:5: error: use of undeclared identifier 'ge_p1p1'
+   49 |     ge_p1p1 p1p1;
+      |     ^
+/home/runner/work/NextSSL/NextSSL/src/modern/curve_math/ristretto255.c:50:5: error: call to undeclared function 'ge_p3_to_cached'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   50 |     ge_p3_to_cached(&q_cached, q);
+      |     ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[158/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/curve448/ge_448.c.o
+[159/665] Building C object CMakeFiles/nextssl.dir/src/modern/asymmetric/_nist_ecc/micro_ecc/uECC.c.o
 [160/665] Building C object CMakeFiles/nextssl.dir/src/modern/aead/_monocypher/monocypher.c.o
 [161/665] Building C object CMakeFiles/nextssl.dir/src/hash/skein/_skein/skein_block.c.o
 ninja: build stopped: subcommand failed.

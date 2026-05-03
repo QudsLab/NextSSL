@@ -230,7 +230,6 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.in
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.inc(707,14): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   (compiling source file '../../../src/modern/asymmetric/_nist_ecc/micro_ecc/uECC.c')
   
-  curve448.c
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.inc(713,14): warning C4244: '-=': conversion from 'uECC_word_t' to 'int', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   (compiling source file '../../../src/modern/asymmetric/_nist_ecc/micro_ecc/uECC.c')
   
@@ -271,6 +270,7 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\curve-specific.in
   (compiling source file '../../../src/modern/asymmetric/_nist_ecc/micro_ecc/uECC.c')
   
 D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\uECC.c(1003,47): warning C4244: '=': conversion from 'const uECC_word_t' to 'uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  curve448.c
   curve448_det.c
   Generating Code...
   Compiling...
@@ -285,7 +285,6 @@ D:\a\NextSSL\NextSSL\src\modern\asymmetric\_nist_ecc\micro_ecc\uECC.c(1003,47): 
   rsa.c
   sm2.c
   base_encryption.c
-D:\a\NextSSL\NextSSL\src\modern\base_encryption.c(4,1): error C1083: Cannot open include file: 'symmetric/aes_ecb.h': No such file or directory [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
   elligator2.c
 D:\a\NextSSL\NextSSL\src\modern\curve_math\elligator2.c(13,17): error C2061: syntax error: identifier 'fe_one' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\modern\curve_math\elligator2.c(13,17): error C2059: syntax error: ';' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
