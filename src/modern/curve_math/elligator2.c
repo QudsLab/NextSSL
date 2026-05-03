@@ -1,5 +1,5 @@
 #include "elligator2.h"
-#include "../ed25519/fe.h"
+#include "fe.h"
 #include <stddef.h>
 #include <string.h>
 
