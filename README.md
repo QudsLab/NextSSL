@@ -1,191 +1,115 @@
 <div align="center">
    <img src="assets/logo_ud.svg" style="width: 90%;" alt="NextSSL Banner" />
-<br/><br/>
 </div>
 
 # NextSSL
 
-**Next Super Secure Layer**
+**Next Super Secure Layer** is an under-development crypto archive and safety-profile toolkit.
 
-NextSSL is a security-first cryptographic library designed for the post-quantum era with a revolutionary 4-layer interface architecture. It provides everything from ultra-simple one-line APIs to low-level primitives, making it suitable for both beginners and cryptography experts.
+NextSSL is being designed as one repo with three clear domains: `experimental`, `useful`, and `safest-main`. Researchers can add and study algorithms, while normal users should get safe defaults through profiles.
 
-## ✨ What Makes NextSSL Different?
+> Status: under active development. Planned algorithm surfaces are not the same as implemented production code.
 
-### 🎯 Progressive Complexity - Choose Your Layer
+## The Shape
 
-NextSSL offers **4 API layers** - start simple, go deep when needed:
+<div align="center">
+   <img src="assets/readme_profile_funnel.svg" alt="Archive to safe-default profile funnel" />
+</div>
 
-1. **Layer 4 (Primary)** - Ultra-Simple Unified API
+NextSSL should be wide inside and careful outside:
 
-   ```c
-   #include "primary/nextssl.h"
-   
-   nextssl_encrypt(key, plaintext, len, ciphertext, &out_len);  // Done!
-   ```
+- Broad archive: catalog algorithms, variants, research candidates, legacy systems, and ecosystem-specific primitives.
+- Safe profiles: default to conservative choices unless the user explicitly customizes policy.
+- Contributor workflow: use issues, references, test vectors, and review to promote algorithms between domains.
 
-2. **Layer 3 (Main)** - High-Level APIs
+Full details live in [PLAN.md](PLAN.md). Current inventory lives in [ALGO.md](ALGO.md).
 
-   ```c
-   #include "main/aead.h"
-   
-   nextssl_aead_encrypt(key, 32, plaintext, len, ciphertext, &out_len);
-   ```
+## Algorithm Surface
 
-3. **Layer 2 (Base)** - Category Aggregations
+<div align="center">
+   <img src="assets/readme_surface_comparison.svg" alt="NextSSL planned algorithm surface comparison" />
+</div>
 
-   ```c
-   #include "base/core.h"
-   
-   nextssl_base_aead_aes256gcm_encrypt(key, nonce, plaintext, len, ...);
-   ```
+Current archive inventory: **249 planned algorithm surfaces across 8 groups**.
 
-4. **Layer 1 (Partial)** - Low-Level Primitives (Hidden)
-   - Internal implementation details, not exposed to users
+| Group | Count | Notes |
+| --- | ---: | --- |
+| Encoding | 14 | Encodings and checksum helpers |
+| Hash / KDF-hash | 59 | Hashes, XOFs, KMAC, password hashes |
+| Modern | 83 | AEAD, MAC, KDF, signatures, curves, KEX |
+| PQC | 41 | KEMs, signatures, and adjacent PQC candidates |
+| Threshold | 36 | Threshold signatures, MPC, VSS, DKG |
+| Ascon | 7 | Lightweight AEAD, hash, XOF, MAC, PRF |
+| DRBG / RNG | 7 | DRBGs and randomness infrastructure |
+| Stateful HBS | 2 | LMS and XMSS |
 
-**Most users never go below Layer 3.** Start with Layer 4 for maximum simplicity!
+Entries marked `**[NEW]**` in [ALGO.md](ALGO.md) are planned surfaces to add or expose. They are not claims of completed implementation.
 
-### 🔒 Security First
+## Library Positioning
 
-- **Constant-time operations** for side-channel resistance
-- **Secure defaults**: AES-256-GCM, SHA-256, Argon2id, X25519, Ed25519
-- **Automatic nonce generation** - no foot-guns
-- **Memory safety**: Secure zero, bounds checking
-- **NIST/RFC compliant**: FIPS 180-4, 202, 203, 204, RFC 7748, 8032, 9106
+<div align="center">
+   <img src="assets/readme_library_positioning.svg" alt="NextSSL positioning compared with other crypto libraries" />
+</div>
 
-### 📦 Two Build Variants
+NextSSL is not trying to replace mature production libraries today. Its target is different: archive breadth, explicit profiles, and a contribution model where algorithms can be studied without becoming defaults.
 
-Choose the right size for your needs:
+The graph is a project-positioning model, not a benchmark. Established libraries such as OpenSSL, BoringSSL, libsodium, Botan, Crypto++, wolfSSL, and mbedTLS remain far ahead in production maturity, audit history, and deployment.
 
-- **Lite (Default)**: 9 algorithms, 1 binary (~500KB)
-  - Perfect for 99% of applications
-  - Fast compilation and smaller binary size
-  
-- **Full**: 134 algorithms, 56 binaries (~5MB)
-  - Post-quantum crypto (ML-KEM, ML-DSA)
-  - Legacy algorithms (SHA-1, MD5, 3DES) properly isolated
-  - Specialized algorithms (yescrypt, Equihash, RandomX)
+## Profiles
 
-## 📚 Documentation
+Profiles are planned as customizable safety policies.
 
-- **[Build Guide](BUILD.md)**: Comprehensive build and installation instructions
-- **[Quick Start Example](examples/example_quickstart.c)**: Get started in 5 minutes
-- **[Algorithm Catalog](ALGORITHM.md)**: Complete reference of supported algorithms
-- **[Source Map](SOURCE.md)**: Navigate the source code structure
-- **[Security Policy](SECURITY.md)**: Vulnerability reporting and supported versions
-- **[Release Notes](note/vBeta.md)**: Current beta release notes
+```js
+const NP = NextSSL.profile.safest();
 
-## 🚀 Quick Start
+NP.default.hash = NextSSL.root.hash.sha256;
+NP.default.aead = NextSSL.root.modern["xchacha20-poly1305"];
+NP.default.signature = NextSSL.root.modern.ed25519;
 
-### Prerequisites
-
-- **CMake** 3.15+
-- **C Compiler**: GCC 4.8+, Clang 3.4+, or MSVC 2015+
-- **Python** 3.8+ (optional, for build helpers and tests; no virtualenv required)
-
-### Build in 3 Commands
-
-```bash
-cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build
-./build/examples/example_quickstart
+// Allowed only as an explicit expert override with policy warnings.
+NP.default.hash = NextSSL.root.hash.md5;
 ```
 
-See **[BUILD.md](BUILD.md)** for detailed instructions, cross-compilation, and advanced options.
+Planned profile families:
 
-### Your First Program
+| Profile | Purpose |
+| --- | --- |
+| `safest` | Conservative defaults for normal users |
+| `compatibility` | Legacy and migration support with warnings |
+| `research` | Experimental algorithms and review hooks |
+| `archive` | Full catalog inspection |
+| `pqc` | Post-quantum and hybrid migration work |
 
-```c
-#include "primary/nextssl.h"
-#include <stdio.h>
+## Platform Targets
 
-int main(void) {
-    uint8_t hash[32];
-    const char *message = "Hello, NextSSL!";
-    
-    nextssl_init();
-    nextssl_hash((uint8_t*)message, strlen(message), hash);
-    
-    printf("SHA-256: ");
-    for (int i = 0; i < 32; i++) printf("%02x", hash[i]);
-    printf("\n");
-    
-    nextssl_cleanup();
-    return 0;
-}
-```
+<div align="center">
+   <img src="assets/readme_platform_matrix.svg" alt="NextSSL platform and architecture build matrix" />
+</div>
 
-Compile and run:
+The current `bin` layout contains **29 target variants**:
 
-```bash
-gcc your_app.c -lnextssl -o your_app
-./your_app
-```
+| Family | Targets |
+| --- | --- |
+| Android | `arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64` |
+| iOS | `device-arm64`, `sim-arm64`, `sim-x86_64` |
+| Linux glibc | `arm64`, `armv7`, `loongarch64`, `ppc64le`, `riscv64`, `s390x`, `x86`, `x86_64` |
+| Linux musl | `arm64`, `armv7`, `x86_64` |
+| macOS | `arm64`, `universal`, `x86_64` |
+| WASM | `emscripten-wasm32`, `wasi-wasm32` |
+| Windows | `arm64-msvc`, `armv7-msvc`, `x86-mingw`, `x86-msvc`, `x86_64-mingw`, `x86_64-msvc` |
 
-## 🎯 Key Features
+Build documentation is still evolving. Start with [BUILD.md](BUILD.md).
 
-### Modern Cryptography
+## Docs
 
-- **Encryption**: AES-256-GCM, ChaCha20-Poly1305, AES-GCM-SIV
-- **Hashing**: SHA-256/512, SHA3-256/512, BLAKE2b/s, BLAKE3
-- **Password Hashing**: Argon2id, scrypt, bcrypt (OWASP 2023 compliant)
-- **Key Exchange**: X25519, X448, ECDH P-256
-- **Signatures**: Ed25519, ECDSA P-256
+- [PLAN.md](PLAN.md): roadmap, profiles, lifecycle, safety labels, contribution model.
+- [ALGO.md](ALGO.md): complete current inventory and planned surfaces.
+- [BUILD.md](BUILD.md): build notes.
+- [CONTRIBUTING.md](CONTRIBUTING.md): contribution guide.
+- [SECURITY.md](SECURITY.md): security reporting policy.
 
-### Post-Quantum Ready (Full Variant)
+## Rule
 
-- **KEM**: ML-KEM-768/1024 (NIST FIPS 203)
-- **Signatures**: ML-DSA-65/87 (NIST FIPS 204)
+Breadth belongs in the archive. Trust belongs in the defaults.
 
-### Developer Experience
-
-- **Simple APIs**: One-line encryption, hashing, password verification
-- **Safe Defaults**: No configuration needed, just works
-- **Hard to Misuse**: Automatic nonce handling, constant-time verification
-- **Comprehensive Examples**: 15+ example programs included
-- **Python Bindings**: PyPI package available (`nextssl` / `nextssl-full`)
-
-## 🛠️ Build System
-
-NextSSL supports both **CMake** (recommended) and **Python build helpers**.
-
-### CMake (New, Recommended)
-
-```bash
-# Lite variant (default)
-cmake -B build
-cmake --build build
-
-# Full variant (all algorithms)
-cmake -B build -DNEXTSSL_BUILD_VARIANT=full
-cmake --build build
-
-# Run tests
-cd build && ctest --output-on-failure
-
-# Install
-sudo cmake --install build
-```
-
-### Python Build Helpers
-
-```bash
-python build/build.py --check
-python test.py
-python build.py --platform win x86_64
-python build/ci_runner.py --platform linux --variants x86_64 x86 arm64 armv7 riscv64 --jobs 4
-```
-
-The Python helpers use the standard library only and can be run with `python`, `python3`, or `py -3`.
-
-See **[BUILD.md](BUILD.md)** for complete build options and troubleshooting.
-
-## 🔒 Security
-
-Security is our top priority. Please see **[SECURITY.md](SECURITY.md)** for our reporting policy and supported versions.
-
-## 🤝 Contributing
-
-We welcome contributions! Please read **[CONTRIBUTING.md](CONTRIBUTING.md)** for details on our code of conduct and the process for submitting pull requests.
-
----
-*NextSSL — A private Leyline for proper security, whether it's for a server, AI, human, or your pet frog.*
+*NextSSL is building a crypto archive with a seatbelt: wide enough for research, strict enough for users.*

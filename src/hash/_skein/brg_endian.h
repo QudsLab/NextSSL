@@ -117,7 +117,8 @@
       defined( __aarch64__ ) || defined( __arm64__ ) || defined( _M_ARM )      || \
       defined( _M_ARM64 )    || defined( _M_ARM64EC )                          || \
       defined( __arm__ )     || defined( __arm )                               || \
-      defined( __riscv )     || defined( __riscv__ )
+      defined( __riscv )     || defined( __riscv__ )                          || \
+      defined( __loongarch__ ) || defined( __loongarch64 )
 #  define PLATFORM_BYTE_ORDER IS_LITTLE_ENDIAN
 
 #elif defined( AMIGA )   || defined( applec )    || defined( __AS400__ )  || \

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="260" viewBox="0 0 920 260" role="img" aria-label="Archive to safe-default profile funnel">
+  <rect width="920" height="260" rx="10" fill="#ffffff"/>
+  <rect x="1" y="1" width="918" height="258" rx="10" fill="none" stroke="#d0d7de"/>
+  <text x="40" y="42" fill="#24292f" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Archive breadth, controlled defaults</text>
+  <text x="40" y="68" fill="#57606a" font-family="Segoe UI, Arial, sans-serif" font-size="13">Algorithms can exist in the archive without being selected by production profiles.</text>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <rect x="70" y="105" width="780" height="38" rx="4" fill="#f6f8fa" stroke="#8c959f"/>
+    <text x="460" y="129" text-anchor="middle" fill="#24292f" font-size="15" font-weight="600">experimental + useful + safest-main archive</text>
+    <rect x="180" y="157" width="560" height="34" rx="4" fill="#ddf4ff" stroke="#54aeef"/>
+    <text x="460" y="179" text-anchor="middle" fill="#0969da" font-size="14" font-weight="600">profile policy: labels, warnings, review state</text>
+    <rect x="310" y="205" width="300" height="32" rx="4" fill="#dafbe1" stroke="#2da44e"/>
+    <text x="460" y="226" text-anchor="middle" fill="#1a7f37" font-size="14" font-weight="700">safest-main defaults</text>
+  </g>
+</svg>
