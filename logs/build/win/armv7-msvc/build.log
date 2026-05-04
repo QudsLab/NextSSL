@@ -36,7 +36,6 @@ MSBuild version 17.14.40+3e7442088 for .NET Framework
   threefishApi.c
   argon2_adapter.c
   argon2d_adapter.c
-  argon2i_adapter.c
 D:\a\NextSSL\NextSSL\src\hash\_skein\skeinApi.c(56,26): warning C4244: '=': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\_skein\skeinApi.c(94,26): warning C4244: '=': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\_skein\skeinApi.c(135,26): warning C4244: '=': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
@@ -44,6 +43,7 @@ D:\a\NextSSL\NextSSL\src\hash\_skein\threefishApi.c(32,5): warning C4244: 'funct
 D:\a\NextSSL\NextSSL\src\hash\_skein\threefishApi.c(34,5): warning C4244: 'function': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\_skein\threefishApi.c(59,5): warning C4244: 'function': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\_skein\threefishApi.c(61,5): warning C4244: 'function': conversion from 'u64b_t' to 'size_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\armv7-msvc\nextssl.vcxproj]
+  argon2i_adapter.c
   argon2id_adapter.c
   balloon_adapter.c
   bcrypt_adapter.c

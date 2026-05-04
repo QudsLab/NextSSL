@@ -18,7 +18,7 @@
 --   Balloon     : ON (always)
 --   Pomelo      : ON (always)
 --   Makwa       : ON (always)
--- Configuring done (0.9s)
+-- Configuring done (3.9s)
 -- Generating done (0.1s)
 -- Build files have been written to: /home/runner/work/NextSSL/NextSSL/.ci_build/linux-musl/armv7
 
