@@ -1,2 +1,2 @@
-status: skipped
-reason: queue stopped after armv7 (failed)
+status: failed
+exit_code: 1

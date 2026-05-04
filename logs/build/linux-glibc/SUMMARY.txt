@@ -1,8 +1,8 @@
 arm64: SUCCESS
-armv7: FAILED (1)
-loongarch64: SKIPPED (queue stopped after armv7 (failed))
-ppc64le: SKIPPED (queue stopped after armv7 (failed))
-riscv64: SKIPPED (queue stopped after armv7 (failed))
-s390x: SKIPPED (queue stopped after armv7 (failed))
+armv7: SUCCESS
+loongarch64: SKIPPED (queue stopped after riscv64 (failed))
+ppc64le: SKIPPED (queue stopped after riscv64 (failed))
+riscv64: FAILED (1)
+s390x: SKIPPED (queue stopped after riscv64 (failed))
 x86: SUCCESS
 x86_64: SUCCESS

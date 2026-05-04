@@ -1,2 +1,2 @@
 status: skipped
-reason: queue stopped after armv7 (failed)
+reason: queue stopped after riscv64 (failed)

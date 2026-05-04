@@ -49,7 +49,7 @@ CMake Deprecation Warning at /home/runner/.cache/nextssl-tools/android-ndk/andro
   to work with policies introduced by <max> or earlier.
 Call Stack (most recent call first):
   /home/runner/work/NextSSL/NextSSL/.ci_build/android/x86/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
-  /home/runner/work/NextSSL/NextSSL/.ci_build/android/x86/CMakeFiles/CMakeScratch/TryCompile-X75IE6/CMakeLists.txt:4 (project)
+  /home/runner/work/NextSSL/NextSSL/.ci_build/android/x86/CMakeFiles/CMakeScratch/TryCompile-RHpsEZ/CMakeLists.txt:4 (project)
 
 
 CMake Deprecation Warning at /home/runner/.cache/nextssl-tools/android-ndk/android-ndk-r27d/build/cmake/flags.cmake:18 (cmake_minimum_required):
@@ -63,7 +63,7 @@ Call Stack (most recent call first):
   /usr/local/share/cmake-3.31/Modules/Platform/Android-Clang.cmake:23 (include)
   /usr/local/share/cmake-3.31/Modules/Platform/Android-Clang-C.cmake:1 (include)
   /usr/local/share/cmake-3.31/Modules/CMakeCInformation.cmake:48 (include)
-  /home/runner/work/NextSSL/NextSSL/.ci_build/android/x86/CMakeFiles/CMakeScratch/TryCompile-X75IE6/CMakeLists.txt:4 (project)
+  /home/runner/work/NextSSL/NextSSL/.ci_build/android/x86/CMakeFiles/CMakeScratch/TryCompile-RHpsEZ/CMakeLists.txt:4 (project)
 
 
 -- Detecting C compiler ABI info - done
@@ -84,8 +84,8 @@ Call Stack (most recent call first):
 --   Balloon     : ON (always)
 --   Pomelo      : ON (always)
 --   Makwa       : ON (always)
--- Configuring done (1.2s)
--- Generating done (0.1s)
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
 -- Build files have been written to: /home/runner/work/NextSSL/NextSSL/.ci_build/android/x86
 
 ==============================================================================

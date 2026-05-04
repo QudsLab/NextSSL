@@ -1,4 +1,4 @@
 [ci_skip] skipped linux-glibc/s390x
-[ci_skip] reason: queue stopped after armv7 (failed)
-[ci_skip] blocked_by: armv7
+[ci_skip] reason: queue stopped after riscv64 (failed)
+[ci_skip] blocked_by: riscv64
 [ci_skip] blocked_status: failed
