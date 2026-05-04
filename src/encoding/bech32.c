@@ -53,7 +53,9 @@ static uint32_t compute_checksum(const char *hrp, size_t hrplen,
 {
     /* hrp size prefix + 0 separator + data + 6 zeroes */
     size_t buflen = hrplen + 1 + hrplen + datalen + 6;
-    uint8_t buf[BECH32_MAX_HRP_LEN * 2 + 2 + 64 + 6 + 8]; /* generous */
+    /* Max possible: 2*83 + 1 + 64 + 6 = 237.  Use a safe fixed size that
+     * covers any valid bech32 input (total encoded length <= 90, data <= 64). */
+    uint8_t buf[2 * 83 + 1 + 64 + 6 + 8]; /* 244 bytes — always sufficient */
     if (buflen > sizeof(buf)) return 0; /* should never happen given our limits */
 
     size_t pos = 0;

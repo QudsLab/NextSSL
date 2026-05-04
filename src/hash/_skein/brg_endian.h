@@ -126,7 +126,8 @@
       defined( __MRC__ ) || defined( __MVS__ )   || defined( __MWERKS__ ) || \
       defined( sparc )   || defined( __sparc)    || defined( SYMANTEC_C ) || \
       defined( __VOS__ ) || defined( __TIGCC__ ) || defined( __TANDEM )   || \
-      defined( THINK_C ) || defined( __VMCMS__ )
+      defined( THINK_C ) || defined( __VMCMS__ ) || defined( __s390__ )   || \
+      defined( __s390x__ ) || defined( __zarch__ )
 #  define PLATFORM_BYTE_ORDER IS_BIG_ENDIAN
 
 #elif 0     /* **** EDIT HERE IF NECESSARY **** */
