@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="260" viewBox="0 0 920 260" role="img" aria-label="Archive to safe-default profile funnel">
-  <rect width="920" height="260" rx="10" fill="#ffffff"/>
+  <rect width="920" height="260" rx="10" fill="#f0e8cc"/>
   <rect x="1" y="1" width="918" height="258" rx="10" fill="none" stroke="#d0d7de"/>
   <text x="40" y="42" fill="#24292f" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Archive breadth, controlled defaults</text>
   <text x="40" y="68" fill="#57606a" font-family="Segoe UI, Arial, sans-serif" font-size="13">Algorithms can exist in the archive without being selected by production profiles.</text>
