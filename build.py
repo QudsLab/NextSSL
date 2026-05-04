@@ -105,7 +105,7 @@ def main():
     parser.add_argument("--log-level", choices=["debug", "info", "warning", "error"], default="info", help="Console log verbosity (default: info)")
     parser.add_argument("--logs",      nargs="*", metavar=("TAG", "VARIANT"),
                         help="List log files in .temp/ (no args), or show a specific log with optional TAG VARIANT. "
-                             "Use --tail N to show the last N lines instead of listing.")
+                            "Use --tail N to show the last N lines instead of listing.")
     parser.add_argument("--tail",      type=int, default=0,
                         help="With --logs: print the last N lines of the most-recent matching log (0 = list only)")
     args = parser.parse_args()

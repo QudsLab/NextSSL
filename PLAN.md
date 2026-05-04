@@ -121,13 +121,13 @@ Each algorithm should carry labels that profiles can understand.
 
 <svg width="760" height="220" viewBox="0 0 760 220" role="img" aria-label="NextSSL archive profile funnel">
   <rect x="0" y="0" width="760" height="220" rx="18" fill="#0f172a"/>
-  <text x="380" y="34" text-anchor="middle" fill="#e5e7eb" font-size="20" font-family="Arial, sans-serif">Archive width with safe-default funnel</text>
+  <text x="380" y="34" text-anchor="middle" fill="#e5e7eb" font-size="20" font-family="Arial, sans-serif"> Archive width with safe-default funnel </text>
   <rect x="70" y="62" width="620" height="42" rx="12" fill="#334155"/>
-  <text x="380" y="89" text-anchor="middle" fill="#f8fafc" font-size="15" font-family="Arial, sans-serif">Full archive: experimental + useful + safest-main</text>
+  <text x="380" y="89" text-anchor="middle" fill="#f8fafc" font-size="15" font-family="Arial, sans-serif"> Full archive: experimental + useful + safest-main </text>
   <rect x="150" y="116" width="460" height="36" rx="10" fill="#2563eb"/>
-  <text x="380" y="140" text-anchor="middle" fill="#eff6ff" font-size="14" font-family="Arial, sans-serif">Useful profile: practical, labeled, opt-in compatibility</text>
+  <text x="380" y="140" text-anchor="middle" fill="#eff6ff" font-size="14" font-family="Arial, sans-serif"> Useful profile: practical, labeled, opt-in compatibility </text>
   <rect x="260" y="164" width="240" height="34" rx="10" fill="#16a34a"/>
-  <text x="380" y="186" text-anchor="middle" fill="#ecfdf5" font-size="14" font-family="Arial, sans-serif">Safest-main defaults</text>
+  <text x="380" y="186" text-anchor="middle" fill="#ecfdf5" font-size="14" font-family="Arial, sans-serif"> Safest-main defaults </text>
 </svg>
 
 ## Algorithm Surface Comparison
