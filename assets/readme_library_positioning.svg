@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="430" viewBox="0 0 920 430" role="img" aria-label="NextSSL positioning compared with other crypto libraries">
-  <rect width="920" height="430" rx="10" fill="#f0e8cc"/>
+  <rect width="920" height="430" rx="10" fill="#202020"/>
   <rect x="1" y="1" width="918" height="428" rx="10" fill="none" stroke="#d0d7de"/>
-  <text x="44" y="42" fill="#24292f" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Library positioning model</text>
-  <text x="44" y="66" fill="#57606a" font-family="Segoe UI, Arial, sans-serif" font-size="13">Qualitative comparison: archive breadth vs. production-default strictness.</text>
-  <g stroke="#d0d7de" stroke-width="1">
+  <text x="44" y="42" fill="#ffffff" font-family="Roboto Mono, monospace" font-size="22" font-weight="700">Library positioning model</text>
+  <text x="44" y="66" fill="#ffffff" font-family="Roboto Mono, monospace" font-size="13">Qualitative comparison: archive breadth vs. production-default strictness.</text>
+  <g stroke="#b66c3a" stroke-width="1">
     <line x1="110" y1="340" x2="820" y2="340"/>
     <line x1="110" y1="340" x2="110" y2="100"/>
     <line x1="110" y1="280" x2="820" y2="280" stroke-dasharray="4 5"/>
@@ -13,22 +13,22 @@
     <line x1="466" y1="340" x2="466" y2="100" stroke-dasharray="4 5"/>
     <line x1="644" y1="340" x2="644" y2="100" stroke-dasharray="4 5"/>
   </g>
-  <g font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#57606a">
-    <text x="465" y="382" text-anchor="middle">archive breadth / algorithm catalog surface</text>
-    <text x="24" y="226" transform="rotate(-90 24 226)" text-anchor="middle">default strictness / profile policy</text>
+  <g font-family="Roboto Mono, monospace" font-size="12" fill="#ffffff">
+    <text x="465" y="382" text-anchor="middle" style="font-weight: bold;">archive breadth / algorithm catalog surface</text>
+    <text x="24" y="226" transform="rotate(-90 24 226)" text-anchor="middle" style="font-weight: bold;">default strictness / profile policy</text>
     <text x="110" y="362" text-anchor="middle">narrow</text>
     <text x="820" y="362" text-anchor="middle">broad</text>
     <text x="78" y="344" text-anchor="end">low</text>
     <text x="78" y="104" text-anchor="end">high</text>
   </g>
-  <g font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">
-    <circle cx="235" cy="145" r="7" fill="#1a7f37"/><text x="249" y="149" fill="#24292f">libsodium</text>
-    <circle cx="380" cy="150" r="7" fill="#0969da"/><text x="394" y="154" fill="#24292f">BoringSSL</text>
-    <circle cx="430" cy="205" r="7" fill="#6e7781"/><text x="444" y="209" fill="#24292f">mbedTLS / wolfSSL</text>
-    <circle cx="560" cy="217" r="7" fill="#6e7781"/><text x="574" y="221" fill="#24292f">OpenSSL</text>
-    <circle cx="620" cy="250" r="7" fill="#8250df"/><text x="634" y="254" fill="#24292f">Botan / Crypto++</text>
-    <circle cx="735" cy="128" r="9" fill="#bc4c00"/><text x="752" y="133" fill="#24292f">NextSSL target</text>
+  <g font-family="Roboto Mono, monospace" font-size="13" font-weight="600">
+    <circle cx="235" cy="145" r="7" fill="#eb1bd9"/><text x="249" y="149" fill="#eb1bd9">libsodium</text>
+    <circle cx="380" cy="150" r="7" fill="#ff8800"/><text x="394" y="154" fill="#ff8800">BoringSSL</text>
+    <circle cx="430" cy="205" r="7" fill="#ffffff"/><text x="444" y="209" fill="#ffffff">WolfSSL</text>
+    <circle cx="560" cy="217" r="7" fill="#00e1ff"/><text x="574" y="221" fill="#00e1ff">OpenSSL</text>
+    <circle cx="620" cy="250" r="7" fill="#5b03ff"/><text x="634" y="254" fill="#5b03ff">Botan / Crypto++</text>
+    <circle cx="735" cy="128" r="9" fill="#00db87"/><text x="752" y="133" fill="#00db87">NextSSL target</text>
   </g>
-  <rect x="44" y="392" width="832" height="1" fill="#d0d7de"/>
-  <text x="44" y="414" fill="#57606a" font-family="Segoe UI, Arial, sans-serif" font-size="12">This is positioning, not a security audit, benchmark, or exact supported-algorithm count for other projects.</text>
+  <rect x="44" y="392" width="832" height="1" fill="#ffffff"/>
+  <text x="44" y="414" fill="#ffffff" font-family="Roboto Mono, monospace" font-size="12">This is positioning, not a security audit, benchmark, or exact supported-algorithm count for other projects.</text>
 </svg>

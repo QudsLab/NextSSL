@@ -1,5 +1,10 @@
 # NextSSL Plan
 
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](LICENSE)
+![Status: Under Development](https://img.shields.io/badge/status-under%20development-orange)
+![Algorithm Surfaces: 249](https://img.shields.io/badge/algorithm%20surfaces-249-blue)
+![Profile Model](https://img.shields.io/badge/profile%20model-experimental%20%7C%20useful%20%7C%20safest--main-6d5796)
+
 NextSSL is being shaped as a crypto archive with safe defaults. The archive can grow wide, but users should land on a small, reliable, reviewed path unless they explicitly choose otherwise.
 
 See [ALGO.md](ALGO.md) for the current algorithm inventory.

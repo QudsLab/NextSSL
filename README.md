@@ -6,6 +6,12 @@
 
 **Next Super Secure Layer** is an under-development crypto archive and safety-profile toolkit.
 
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](LICENSE)
+![Status: Under Development](https://img.shields.io/badge/status-under%20development-orange)
+![Algorithm Surfaces: 249](https://img.shields.io/badge/algorithm%20surfaces-249-blue)
+![Target Builds: 29](https://img.shields.io/badge/target%20builds-29-brightgreen)
+![Profiles: experimental useful safest-main](https://img.shields.io/badge/profiles-experimental%20%7C%20useful%20%7C%20safest--main-6f42c1)
+
 NextSSL is being designed as one repo with three clear domains: `experimental`, `useful`, and `safest-main`. Researchers can add and study algorithms, while normal users should get safe defaults through profiles.
 
 > Status: under active development. Planned algorithm surfaces are not the same as implemented production code.
@@ -107,6 +113,50 @@ Build documentation is still evolving. Start with [BUILD.md](BUILD.md).
 - [BUILD.md](BUILD.md): build notes.
 - [CONTRIBUTING.md](CONTRIBUTING.md): contribution guide.
 - [SECURITY.md](SECURITY.md): security reporting policy.
+
+## Build Target Tags
+
+![android arm64-v8a](https://img.shields.io/badge/android-arm64--v8a-3DDC84?logo=android&logoColor=white)
+![android armeabi-v7a](https://img.shields.io/badge/android-armeabi--v7a-3DDC84?logo=android&logoColor=white)
+![android x86](https://img.shields.io/badge/android-x86-3DDC84?logo=android&logoColor=white)
+![android x86_64](https://img.shields.io/badge/android-x86__64-3DDC84?logo=android&logoColor=white)
+![ios device-arm64](https://img.shields.io/badge/ios-device--arm64-111111?logo=apple&logoColor=white)
+![ios sim-arm64](https://img.shields.io/badge/ios-sim--arm64-111111?logo=apple&logoColor=white)
+![ios sim-x86_64](https://img.shields.io/badge/ios-sim--x86__64-111111?logo=apple&logoColor=white)
+![linux glibc arm64](https://img.shields.io/badge/linux--glibc-arm64-FCC624?logo=linux&logoColor=black)
+![linux glibc armv7](https://img.shields.io/badge/linux--glibc-armv7-FCC624?logo=linux&logoColor=black)
+![linux glibc loongarch64](https://img.shields.io/badge/linux--glibc-loongarch64-FCC624?logo=linux&logoColor=black)
+![linux glibc ppc64le](https://img.shields.io/badge/linux--glibc-ppc64le-FCC624?logo=linux&logoColor=black)
+![linux glibc riscv64](https://img.shields.io/badge/linux--glibc-riscv64-FCC624?logo=linux&logoColor=black)
+![linux glibc s390x](https://img.shields.io/badge/linux--glibc-s390x-FCC624?logo=linux&logoColor=black)
+![linux glibc x86](https://img.shields.io/badge/linux--glibc-x86-FCC624?logo=linux&logoColor=black)
+![linux glibc x86_64](https://img.shields.io/badge/linux--glibc-x86__64-FCC624?logo=linux&logoColor=black)
+![linux musl arm64](https://img.shields.io/badge/linux--musl-arm64-4b5563?logo=linux&logoColor=white)
+![linux musl armv7](https://img.shields.io/badge/linux--musl-armv7-4b5563?logo=linux&logoColor=white)
+![linux musl x86_64](https://img.shields.io/badge/linux--musl-x86__64-4b5563?logo=linux&logoColor=white)
+![macos arm64](https://img.shields.io/badge/macos-arm64-111111?logo=apple&logoColor=white)
+![macos universal](https://img.shields.io/badge/macos-universal-111111?logo=apple&logoColor=white)
+![macos x86_64](https://img.shields.io/badge/macos-x86__64-111111?logo=apple&logoColor=white)
+![wasm emscripten-wasm32](https://img.shields.io/badge/wasm-emscripten--wasm32-654ff0?logo=webassembly&logoColor=white)
+![wasm wasi-wasm32](https://img.shields.io/badge/wasm-wasi--wasm32-654ff0?logo=webassembly&logoColor=white)
+![windows arm64-msvc](https://img.shields.io/badge/windows-arm64--msvc-0078D4?logo=microsoftwindows&logoColor=white)
+![windows armv7-msvc](https://img.shields.io/badge/windows-armv7--msvc-0078D4?logo=microsoftwindows&logoColor=white)
+![windows x86-mingw](https://img.shields.io/badge/windows-x86--mingw-0078D4?logo=microsoftwindows&logoColor=white)
+![windows x86-msvc](https://img.shields.io/badge/windows-x86--msvc-0078D4?logo=microsoftwindows&logoColor=white)
+![windows x86_64-mingw](https://img.shields.io/badge/windows-x86__64--mingw-0078D4?logo=microsoftwindows&logoColor=white)
+![windows x86_64-msvc](https://img.shields.io/badge/windows-x86__64--msvc-0078D4?logo=microsoftwindows&logoColor=white)
+
+## Algorithm Tags
+
+![encoding 14](https://img.shields.io/badge/encoding-14-2f7d4f)
+![hash 59](https://img.shields.io/badge/hash%20%2F%20KDF--hash-59-6d5796)
+![modern 83](https://img.shields.io/badge/modern-83-1f6f9f)
+![pqc 41](https://img.shields.io/badge/PQC-41-8f3f62)
+![threshold 36](https://img.shields.io/badge/threshold-36-9a5b1f)
+![ascon 7](https://img.shields.io/badge/ascon-7-2f6f9f)
+![drbg rng 7](https://img.shields.io/badge/DRBG%20%2F%20RNG-7-856404)
+![stateful hbs 2](https://img.shields.io/badge/stateful%20HBS-2-4b5563)
+![total 249](https://img.shields.io/badge/total%20algorithm%20surfaces-249-24292f)
 
 ## Rule
 
