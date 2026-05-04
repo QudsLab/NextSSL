@@ -116,13 +116,6 @@ Build documentation is still evolving. Start with [BUILD.md](BUILD.md).
 
 ## Build Target Tags
 
-![android arm64-v8a](https://img.shields.io/badge/android-arm64--v8a-3DDC84?logo=android&logoColor=white)
-![android armeabi-v7a](https://img.shields.io/badge/android-armeabi--v7a-3DDC84?logo=android&logoColor=white)
-![android x86](https://img.shields.io/badge/android-x86-3DDC84?logo=android&logoColor=white)
-![android x86_64](https://img.shields.io/badge/android-x86__64-3DDC84?logo=android&logoColor=white)
-![ios device-arm64](https://img.shields.io/badge/ios-device--arm64-111111?logo=apple&logoColor=white)
-![ios sim-arm64](https://img.shields.io/badge/ios-sim--arm64-111111?logo=apple&logoColor=white)
-![ios sim-x86_64](https://img.shields.io/badge/ios-sim--x86__64-111111?logo=apple&logoColor=white)
 ![linux glibc arm64](https://img.shields.io/badge/linux--glibc-arm64-FCC624?logo=linux&logoColor=black)
 ![linux glibc armv7](https://img.shields.io/badge/linux--glibc-armv7-FCC624?logo=linux&logoColor=black)
 ![linux glibc loongarch64](https://img.shields.io/badge/linux--glibc-loongarch64-FCC624?logo=linux&logoColor=black)
@@ -131,20 +124,34 @@ Build documentation is still evolving. Start with [BUILD.md](BUILD.md).
 ![linux glibc s390x](https://img.shields.io/badge/linux--glibc-s390x-FCC624?logo=linux&logoColor=black)
 ![linux glibc x86](https://img.shields.io/badge/linux--glibc-x86-FCC624?logo=linux&logoColor=black)
 ![linux glibc x86_64](https://img.shields.io/badge/linux--glibc-x86__64-FCC624?logo=linux&logoColor=black)
+
+![windows arm64-msvc](https://img.shields.io/badge/windows-arm64--msvc-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
+![windows armv7-msvc](https://img.shields.io/badge/windows-armv7--msvc-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
+![windows x86-mingw](https://img.shields.io/badge/windows-x86--mingw-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
+![windows x86-msvc](https://img.shields.io/badge/windows-x86--msvc-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
+![windows x86_64-mingw](https://img.shields.io/badge/windows-x86__64--mingw-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
+![windows x86_64-msvc](https://img.shields.io/badge/windows-x86__64--msvc-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
+
+![android arm64-v8a](https://img.shields.io/badge/android-arm64--v8a-3DDC84?logo=android&logoColor=white)
+![android armeabi-v7a](https://img.shields.io/badge/android-armeabi--v7a-3DDC84?logo=android&logoColor=white)
+![android x86](https://img.shields.io/badge/android-x86-3DDC84?logo=android&logoColor=white)
+![android x86_64](https://img.shields.io/badge/android-x86__64-3DDC84?logo=android&logoColor=white)
+
+![ios device-arm64](https://img.shields.io/badge/ios-device--arm64-111111?logo=apple&logoColor=white)
+![ios sim-arm64](https://img.shields.io/badge/ios-sim--arm64-111111?logo=apple&logoColor=white)
+![ios sim-x86_64](https://img.shields.io/badge/ios-sim--x86__64-111111?logo=apple&logoColor=white)
+
 ![linux musl arm64](https://img.shields.io/badge/linux--musl-arm64-4b5563?logo=linux&logoColor=white)
 ![linux musl armv7](https://img.shields.io/badge/linux--musl-armv7-4b5563?logo=linux&logoColor=white)
 ![linux musl x86_64](https://img.shields.io/badge/linux--musl-x86__64-4b5563?logo=linux&logoColor=white)
+
 ![macos arm64](https://img.shields.io/badge/macos-arm64-111111?logo=apple&logoColor=white)
 ![macos universal](https://img.shields.io/badge/macos-universal-111111?logo=apple&logoColor=white)
 ![macos x86_64](https://img.shields.io/badge/macos-x86__64-111111?logo=apple&logoColor=white)
+
 ![wasm emscripten-wasm32](https://img.shields.io/badge/wasm-emscripten--wasm32-654ff0?logo=webassembly&logoColor=white)
 ![wasm wasi-wasm32](https://img.shields.io/badge/wasm-wasi--wasm32-654ff0?logo=webassembly&logoColor=white)
-![windows arm64-msvc](https://img.shields.io/badge/windows-arm64--msvc-0078D4?logo=microsoftwindows&logoColor=white)
-![windows armv7-msvc](https://img.shields.io/badge/windows-armv7--msvc-0078D4?logo=microsoftwindows&logoColor=white)
-![windows x86-mingw](https://img.shields.io/badge/windows-x86--mingw-0078D4?logo=microsoftwindows&logoColor=white)
-![windows x86-msvc](https://img.shields.io/badge/windows-x86--msvc-0078D4?logo=microsoftwindows&logoColor=white)
-![windows x86_64-mingw](https://img.shields.io/badge/windows-x86__64--mingw-0078D4?logo=microsoftwindows&logoColor=white)
-![windows x86_64-msvc](https://img.shields.io/badge/windows-x86__64--msvc-0078D4?logo=microsoftwindows&logoColor=white)
+
 
 ## Algorithm Tags
 
