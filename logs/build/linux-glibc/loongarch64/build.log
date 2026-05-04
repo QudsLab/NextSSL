@@ -1,4 +1,4 @@
 [ci_skip] skipped linux-glibc/loongarch64
-[ci_skip] reason: queue stopped after riscv64 (failed)
-[ci_skip] blocked_by: riscv64
+[ci_skip] reason: queue stopped after s390x (failed)
+[ci_skip] blocked_by: s390x
 [ci_skip] blocked_status: failed

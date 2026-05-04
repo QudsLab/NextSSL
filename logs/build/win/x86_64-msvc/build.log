@@ -94,12 +94,12 @@ D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(67,23): warning C4267: 'function':
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(123,38): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(124,25): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(125,25): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
-  catena_ops.c
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(323,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(332,41): warning C4267: 'function': conversion from 'size_t' to 'const uint32_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(332,54): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(333,36): warning C4267: 'function': conversion from 'size_t' to 'const uint8_t', possible loss of data [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
 D:\a\NextSSL\NextSSL\src\hash\catena\catena.c(337,9): warning C4068: unknown pragma 'GCC' [D:\a\NextSSL\NextSSL\.ci_build\win\x86_64-msvc\nextssl.vcxproj]
+  catena_ops.c
   cshake.c
   nextssl_hash.c
   has160.c
