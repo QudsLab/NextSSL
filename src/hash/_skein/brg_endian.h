@@ -115,8 +115,8 @@
       defined( __x86_64__ )  || defined( __x86_64 )  || defined( __amd64__ )   || \
       defined( __amd64 )     || defined( _M_AMD64 )  || defined( __MINGW32__ ) || \
       defined( __aarch64__ ) || defined( __arm64__ ) || defined( _M_ARM )      || \
-      defined( _M_ARM64 )    || \
-      defined( _M_ARM64EC )
+      defined( _M_ARM64 )    || defined( _M_ARM64EC )                          || \
+      defined( __arm__ )     || defined( __arm )
 #  define PLATFORM_BYTE_ORDER IS_LITTLE_ENDIAN
 
 #elif defined( AMIGA )   || defined( applec )    || defined( __AS400__ )  || \
