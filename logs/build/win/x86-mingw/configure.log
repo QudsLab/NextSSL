@@ -18,8 +18,8 @@
 --   Balloon     : ON (always)
 --   Pomelo      : ON (always)
 --   Makwa       : ON (always)
--- Configuring done (3.7s)
--- Generating done (0.2s)
+-- Configuring done (4.1s)
+-- Generating done (0.1s)
 CMake Warning:
   Manually-specified variables were not used by the project:
 

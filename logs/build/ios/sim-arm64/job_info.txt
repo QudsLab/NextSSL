@@ -1,7 +1,7 @@
 platform: ios
 variant: sim-arm64
-run_id: 25296291307
+run_id: 25297207518
 attempt: 1
-sha: ac894ff230b5cde6bf735d05a43cf4076340d60c
+sha: d35126b04fb6b265de19e0430fdff690d103c495
 ref: refs/heads/main
-started: 2026-05-04T01:13:51Z
+started: 2026-05-04T01:52:39Z

@@ -1,2 +1,2 @@
-status: skipped
-reason: queue stopped after s390x (failed)
+status: success
+exit_code: 0
