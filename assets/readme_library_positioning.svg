@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="920" height="430" viewBox="0 0 920 430" role="img" aria-label="NextSSL positioning compared with other crypto libraries">
   <rect width="920" height="430" rx="10" fill="#202020"/>
-  <rect x="1" y="1" width="918" height="428" rx="10" fill="none" stroke="#d0d7de"/>
+  <rect x="1" y="1" width="918" height="428" rx="10" fill="none" stroke="#df8346"/>
   <text x="44" y="42" fill="#ffffff" font-family="Roboto Mono, monospace" font-size="22" font-weight="700">Library positioning model</text>
   <text x="44" y="66" fill="#ffffff" font-family="Roboto Mono, monospace" font-size="13">Qualitative comparison: archive breadth vs. production-default strictness.</text>
   <g stroke="#b66c3a" stroke-width="1">
