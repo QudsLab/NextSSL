@@ -146,7 +146,6 @@ Build documentation is still evolving. Start with [BUILD.md](BUILD.md).
 ![wasm emscripten-wasm32](https://img.shields.io/badge/wasm-emscripten--wasm32-654ff0?logo=webassembly&logoColor=white)
 ![wasm wasi-wasm32](https://img.shields.io/badge/wasm-wasi--wasm32-654ff0?logo=webassembly&logoColor=white)
 
-
 ## Algorithm Tags
 
 ![encoding 14](https://img.shields.io/badge/encoding-14-2f7d4f)
