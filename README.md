@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
    <img src="assets/logo_ud.svg" style="width: 90%;" alt="NextSSL Banner" />
 </div>
 
@@ -8,7 +8,7 @@
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](LICENSE)
 ![Status: Under Development](https://img.shields.io/badge/status-under%20development-orange)
-![Algorithm Surfaces: 249](https://img.shields.io/badge/algorithm%20surfaces-249-blue)
+![Algorithm Surfaces: 250](https://img.shields.io/badge/algorithm%20surfaces-250-blue)
 ![Target Builds: 29](https://img.shields.io/badge/target%20builds-29-brightgreen)
 ![Profiles: experimental useful safest-main](https://img.shields.io/badge/profiles-experimental%20%7C%20useful%20%7C%20safest--main-6f42c1)
 
@@ -36,13 +36,13 @@ Full details live in [PLAN.md](PLAN.md). Current inventory lives in [ALGO.md](AL
    <img src="assets/readme_surface_comparison.svg" alt="NextSSL planned algorithm surface comparison" />
 </div>
 
-Current archive inventory: **249 planned algorithm surfaces across 8 groups**.
+Current archive inventory: **250 planned algorithm surfaces across 8 groups**.
 
 | Group | Count | Notes |
 | --- | ---: | --- |
 | Encoding | 14 | Encodings and checksum helpers |
 | Hash / KDF-hash | 59 | Hashes, XOFs, KMAC, password hashes |
-| Modern | 83 | AEAD, MAC, KDF, signatures, curves, KEX |
+| Modern | 84 | AEAD, MAC, KDF, signatures, curves, KEX |
 | PQC | 41 | KEMs, signatures, and adjacent PQC candidates |
 | Threshold | 36 | Threshold signatures, MPC, VSS, DKG |
 | Ascon | 7 | Lightweight AEAD, hash, XOF, MAC, PRF |
@@ -151,13 +151,13 @@ Build documentation is still evolving. Start with [BUILD.md](BUILD.md).
 
 ![encoding 14](https://img.shields.io/badge/encoding-14-2f7d4f)
 ![hash 59](https://img.shields.io/badge/hash%20%2F%20KDF--hash-59-6d5796)
-![modern 83](https://img.shields.io/badge/modern-83-1f6f9f)
+![modern 84](https://img.shields.io/badge/modern-84-1f6f9f)
 ![pqc 41](https://img.shields.io/badge/PQC-41-8f3f62)
 ![threshold 36](https://img.shields.io/badge/threshold-36-9a5b1f)
 ![ascon 7](https://img.shields.io/badge/ascon-7-2f6f9f)
 ![drbg rng 7](https://img.shields.io/badge/DRBG%20%2F%20RNG-7-856404)
 ![stateful hbs 2](https://img.shields.io/badge/stateful%20HBS-2-4b5563)
-![total 249](https://img.shields.io/badge/total%20algorithm%20surfaces-249-24292f)
+![total 250](https://img.shields.io/badge/total%20algorithm%20surfaces-250-24292f)
 
 ## Rule
 

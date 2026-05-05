@@ -1,8 +1,8 @@
-# NextSSL Plan
+﻿# NextSSL Plan
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](LICENSE)
 ![Status: Under Development](https://img.shields.io/badge/status-under%20development-orange)
-![Algorithm Surfaces: 249](https://img.shields.io/badge/algorithm%20surfaces-249-blue)
+![Algorithm Surfaces: 250](https://img.shields.io/badge/algorithm%20surfaces-250-blue)
 ![Profile Model](https://img.shields.io/badge/profile%20model-experimental%20%7C%20useful%20%7C%20safest--main-6d5796)
 
 NextSSL is being shaped as a crypto archive with safe defaults. The archive can grow wide, but users should land on a small, reliable, reviewed path unless they explicitly choose otherwise.
@@ -132,7 +132,7 @@ Each algorithm should carry labels that profiles can understand.
 
 ## Algorithm Surface Comparison
 
-The current inventory tracks 249 algorithm surfaces across 8 groups. This is an archive count, not an implementation guarantee.
+The current inventory tracks 250 algorithm surfaces across 8 groups. This is an archive count, not an implementation guarantee.
 
 <svg width="760" height="310" viewBox="0 0 760 310" role="img" aria-label="Algorithm surface comparison chart">
   <rect width="760" height="310" rx="18" fill="#111827"/>
@@ -140,8 +140,8 @@ The current inventory tracks 249 algorithm surfaces across 8 groups. This is an 
   <text x="32" y="62" fill="#9ca3af" font-size="12" font-family="Arial, sans-serif">Counts come from ALGO.md and include planned NEW surfaces.</text>
   <g font-family="Arial, sans-serif" font-size="13">
     <text x="32" y="99" fill="#d1d5db">Modern</text>
-    <rect x="160" y="84" width="498" height="18" rx="4" fill="#38bdf8"/>
-    <text x="670" y="99" fill="#f9fafb">83</text>
+    <rect x="160" y="84" width="504" height="18" rx="4" fill="#38bdf8"/>
+    <text x="670" y="99" fill="#f9fafb">84</text>
     <text x="32" y="129" fill="#d1d5db">Hash / KDF-hash</text>
     <rect x="160" y="114" width="354" height="18" rx="4" fill="#a78bfa"/>
     <text x="526" y="129" fill="#f9fafb">59</text>
