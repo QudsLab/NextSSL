@@ -231,19 +231,19 @@ The current `bin` layout contains **29 target variants**. Build documentation is
 
 <table>
   <tr>
-    <td bgcolor="#181715"><img src="assets/platform/linux.svg" width="20" alt="Linux" /> <font color="#f4fffd"><b>glibc</b></font></td>
+    <td bgcolor="#000000"><img src="assets/platform/linux.svg" width="22" alt="Linux" /> <font color="#f4fffd"><b>glibc</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64</code> <code>armv7</code> <code>loongarch64</code> <code>ppc64le</code> <code>riscv64</code> <code>s390x</code> <code>x86</code> <code>x86_64</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#181715"><img src="assets/platform/linux.svg" width="20" alt="Linux" /> <font color="#f4fffd"><b>musl</b></font></td>
+    <td bgcolor="#000000"><img src="assets/platform/linux.svg" width="22" alt="Linux" /> <font color="#f4fffd"><b>musl</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64</code> <code>armv7</code> <code>x86_64</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#181715"><img src="assets/win.svg" width="20" alt="Windows" /></td>
+    <td bgcolor="#181715"><img src="assets/platform/win.svg" width="20" alt="Windows" /> <font color="#f4fffd"><b>Windows</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64-msvc</code> <code>armv7-msvc</code> <code>x86-mingw</code> <code>x86-msvc</code> <code>x86_64-mingw</code> <code>x86_64-msvc</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#181715"><img src="assets/platform/android.svg" width="20" alt="Android" /></td>
+    <td bgcolor="#181715"><img src="assets/platform/android.svg" width="20" alt="Android" /> <font color="#f4fffd"><b>Android</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64-v8a</code> <code>armeabi-v7a</code> <code>x86</code> <code>x86_64</code></font></td>
   </tr>
   <tr>
@@ -255,7 +255,7 @@ The current `bin` layout contains **29 target variants**. Build documentation is
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64</code> <code>universal</code> <code>x86_64</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#181715"><img src="assets/platform/webassembly.svg" width="20" alt="WebAssembly" /></td>
+    <td bgcolor="#181715"><img src="assets/platform/webassembly.svg" width="20" alt="WebAssembly" /> <font color="#f4fffd"><b>WASM</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>emscripten-wasm32</code> <code>wasi-wasm32</code></font></td>
   </tr>
 </table>
