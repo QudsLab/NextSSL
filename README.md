@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo_ud.svg" width="82%" alt="NextSSL Banner" />
+<img src="assets/logo_ud.svg?v38 width="82%" alt="NextSSL Banner" />
 
 <br>
 
@@ -99,7 +99,7 @@
 <table>
   <tr>
     <td bgcolor="#181715" align="center">
-      <img src="assets/readme_profile_funnel.svg" width="100%" alt="Archive to safe-default profile funnel" />
+      <img src="assets/readme_profile_funnel.svg?v38 width="100%" alt="Archive to safe-default profile funnel" />
     </td>
   </tr>
 </table>
@@ -109,7 +109,7 @@
 <table>
   <tr>
     <td bgcolor="#181715" align="center">
-      <img src="assets/readme_surface_comparison.svg" width="100%" alt="NextSSL planned algorithm surface comparison" />
+      <img src="assets/readme_surface_comparisonc" width="100%" alt="NextSSL planned algorithm surface comparison" />
     </td>
   </tr>
 </table>
@@ -185,7 +185,7 @@ Entries marked `NEW` in [ALGO.md](ALGO.md) are planned surfaces to add or expose
 <table>
   <tr>
     <td bgcolor="#181715" align="center">
-      <img src="assets/readme_library_positioning.svg" width="100%" alt="NextSSL positioning compared with other crypto libraries" />
+      <img src="assets/readme_library_positioning.svg?v38" width="100%" alt="NextSSL positioning compared with other crypto libraries" />
     </td>
   </tr>
 </table>
@@ -195,7 +195,7 @@ Entries marked `NEW` in [ALGO.md](ALGO.md) are planned surfaces to add or expose
 <table>
   <tr>
     <td bgcolor="#181715" align="center">
-      <img src="assets/readme_platform_matrix.svg" width="100%" alt="NextSSL platform and architecture build matrix" />
+      <img src="assets/readme_platform_matrix.svg?v38" width="100%" alt="NextSSL platform and architecture build matrix" />
     </td>
   </tr>
 </table>
@@ -231,31 +231,31 @@ The current `bin` layout contains **29 target variants**. Build documentation is
 
 <table>
   <tr>
-    <td bgcolor="#000000"><img src="assets/platform/linux.svg" width="22" alt="Linux" /> <font color="#f4fffd"><b>glibc</b></font></td>
+    <td bgcolor="#000000"><img src="assets/platform/linux.svg?v38 width="22" alt="Linux" /> <font color="#f4fffd"><b>glibc</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64</code> <code>armv7</code> <code>loongarch64</code> <code>ppc64le</code> <code>riscv64</code> <code>s390x</code> <code>x86</code> <code>x86_64</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#000000"><img src="assets/platform/linux.svg" width="22" alt="Linux" /> <font color="#f4fffd"><b>musl</b></font></td>
+    <td bgcolor="#000000"><img src="assets/platform/linux.svg?v38 width="22" alt="Linux" /> <font color="#f4fffd"><b>musl</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64</code> <code>armv7</code> <code>x86_64</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#181715"><img src="assets/platform/win.svg" width="20" alt="Windows" /> <font color="#f4fffd"><b>Windows</b></font></td>
+    <td bgcolor="#181715"><img src="assets/platform/win.svg?v38 width="20" alt="Windows" /> <font color="#f4fffd"><b>Windows</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64-msvc</code> <code>armv7-msvc</code> <code>x86-mingw</code> <code>x86-msvc</code> <code>x86_64-mingw</code> <code>x86_64-msvc</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#181715"><img src="assets/platform/android.svg" width="20" alt="Android" /> <font color="#f4fffd"><b>Android</b></font></td>
+    <td bgcolor="#181715"><img src="assets/platform/android.svg?v38 width="20" alt="Android" /> <font color="#f4fffd"><b>Android</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64-v8a</code> <code>armeabi-v7a</code> <code>x86</code> <code>x86_64</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#181715"><img src="assets/platform/apple.svg" width="20" alt="Apple" /> <font color="#f4fffd"><b>iOS</b></font></td>
+    <td bgcolor="#181715"><img src="assets/platform/apple.svg?v38 width="20" alt="Apple" /> <font color="#f4fffd"><b>iOS</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>device-arm64</code> <code>sim-arm64</code> <code>sim-x86_64</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#181715"><img src="assets/platform/apple.svg" width="20" alt="Apple" /> <font color="#f4fffd"><b>macOS</b></font></td>
+    <td bgcolor="#181715"><img src="assets/platform/apple.svg?v38 width="20" alt="Apple" /> <font color="#f4fffd"><b>macOS</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>arm64</code> <code>universal</code> <code>x86_64</code></font></td>
   </tr>
   <tr>
-    <td bgcolor="#181715"><img src="assets/platform/webassembly.svg" width="20" alt="WebAssembly" /> <font color="#f4fffd"><b>WASM</b></font></td>
+    <td bgcolor="#181715"><img src="assets/platform/webassembly.svg?v38 width="20" alt="WebAssembly" /> <font color="#f4fffd"><b>WASM</b></font></td>
     <td bgcolor="#252320"><font color="#cdebe6"><code>emscripten-wasm32</code> <code>wasi-wasm32</code></font></td>
   </tr>
 </table>
