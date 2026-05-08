@@ -1,82 +1,155 @@
-﻿<div align="center">
-   <img src="assets/logo_ud.svg" style="width: 90%;" alt="NextSSL Banner" />
-</div>
-
-# NextSSL
-
-**Next Super Secure Layer** is an under-development crypto archive and safety-profile toolkit.
-
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](LICENSE)
-![Status: Under Development](https://img.shields.io/badge/status-under%20development-orange)
-![Algorithm Surfaces: 250](https://img.shields.io/badge/algorithm%20surfaces-250-blue)
-![Target Builds: 29](https://img.shields.io/badge/target%20builds-29-brightgreen)
-![Profiles: experimental useful safest-main](https://img.shields.io/badge/profiles-experimental%20%7C%20useful%20%7C%20safest--main-6f42c1)
-
-NextSSL is being designed as one repo with three clear domains: `experimental`, `useful`, and `safest-main`. Researchers can add and study algorithms, while normal users should get safe defaults through profiles.
-
-> Status: under active development. Planned algorithm surfaces are not the same as implemented production code.
-
-## The Shape
-
 <div align="center">
-   <img src="assets/readme_profile_funnel.svg" alt="Archive to safe-default profile funnel" />
+
+<img src="assets/logo_ud.svg" width="82%" alt="NextSSL Banner" />
+
+<br>
+
+<a href="LICENSE"><img alt="License Apache-2.0" src="https://img.shields.io/badge/License-Apache--2.0-5db8a6?labelColor=181715"></a>
+<img alt="Status Under Development" src="https://img.shields.io/badge/status-under%20development-4f9f91?labelColor=181715">
+<img alt="Algorithm Surfaces 250" src="https://img.shields.io/badge/algorithm%20surfaces-250-5db8a6?labelColor=181715">
+<img alt="Target Builds 29" src="https://img.shields.io/badge/target%20builds-29-a8d9d1?labelColor=181715">
+<img alt="Profiles" src="https://img.shields.io/badge/profiles-experimental%20%7C%20useful%20%7C%20safest--main-5db8a6?labelColor=181715">
+
+<br><br>
+
+<a href="PLAN.md"><img alt="Plan" src="https://img.shields.io/badge/PLAN-roadmap-252320?labelColor=181715"></a>
+<a href="ALGO.md"><img alt="Algorithm inventory" src="https://img.shields.io/badge/ALGO-inventory-252320?labelColor=181715"></a>
+<a href="BUILD.md"><img alt="Build" src="https://img.shields.io/badge/BUILD-targets-252320?labelColor=181715"></a>
+<a href="SECURITY.md"><img alt="Security" src="https://img.shields.io/badge/SECURITY-reporting-252320?labelColor=181715"></a>
+<a href="CONTRIBUTING.md"><img alt="Contributing" src="https://img.shields.io/badge/CONTRIBUTING-review-252320?labelColor=181715"></a>
+
 </div>
 
-NextSSL should be wide inside and careful outside:
+<br>
 
-- Broad archive: catalog algorithms, variants, research candidates, legacy systems, and ecosystem-specific primitives.
-- Safe profiles: default to conservative choices unless the user explicitly customizes policy.
-- Contributor workflow: use issues, references, test vectors, and review to promote algorithms between domains.
+<table>
+  <tr>
+    <td bgcolor="#181715" align="center">
+      <br>
+      <font color="#5db8a6"><b>CRYPTO ARCHIVE + SAFETY-PROFILE TOOLKIT</b></font>
+      <h1><font color="#f4fffd">NextSSL</font></h1>
+      <h3><font color="#cdebe6">A wide cryptographic archive with strict, inspectable defaults.</font></h3>
+      <p>
+        <font color="#d9d4cc">
+          NextSSL is being built to sit in the top conversation for crypto libraries by combining
+          archive breadth, explicit safety profiles, portable targets, and a review-first promotion model.
+          It is ambitious by design and honest about its current under-development state.
+        </font>
+      </p>
+      <br>
+    </td>
+  </tr>
+</table>
 
-Full details live in [PLAN.md](PLAN.md). Current inventory lives in [ALGO.md](ALGO.md).
+<table>
+  <tr>
+    <td bgcolor="#252320" align="center"><font color="#f4fffd"><b>250</b><br>planned algorithm surfaces</font></td>
+    <td bgcolor="#252320" align="center"><font color="#f4fffd"><b>8</b><br>inventory groups</font></td>
+    <td bgcolor="#252320" align="center"><font color="#f4fffd"><b>29</b><br>target variants</font></td>
+    <td bgcolor="#252320" align="center"><font color="#f4fffd"><b>3</b><br>core domains</font></td>
+  </tr>
+</table>
+
+> **Status:** under active development. Planned surfaces, target badges, and profile names are roadmap and inventory signals, not production-readiness or audit claims.
+
+## Why NextSSL
+
+<table>
+  <tr>
+    <td bgcolor="#181715">
+      <font color="#5db8a6"><b>TOP-TIER DIRECTION</b></font><br>
+      <font color="#f4fffd"><b>Compete on breadth without weakening defaults.</b></font><br>
+      <font color="#cdebe6">Most crypto libraries optimize either production stability or research coverage. NextSSL is designed to make that separation explicit: broad catalog inside, strict profile outside.</font>
+    </td>
+    <td bgcolor="#252320">
+      <font color="#5db8a6"><b>SECURITY POSTURE</b></font><br>
+      <font color="#f4fffd"><b>Trust is earned by policy, review, and test vectors.</b></font><br>
+      <font color="#cdebe6">The project treats defaults as a smaller, reviewed surface. Experimental and legacy algorithms belong in the archive until a policy intentionally selects them.</font>
+    </td>
+    <td bgcolor="#1f3430">
+      <font color="#5db8a6"><b>PORTABILITY</b></font><br>
+      <font color="#f4fffd"><b>Built with cross-platform reach in mind.</b></font><br>
+      <font color="#cdebe6">The current layout tracks desktop, mobile, Linux variants, Windows toolchains, and WASM targets from the beginning.</font>
+    </td>
+  </tr>
+</table>
+
+## The Model
+
+<table>
+  <tr>
+    <td bgcolor="#181715">
+      <h3><font color="#f4fffd">Wide archive. Narrow defaults. Clear promotion path.</font></h3>
+      <p>
+        <font color="#d9d4cc">
+          NextSSL is organized around three domains: <code>experimental</code>,
+          <code>useful</code>, and <code>safest-main</code>. Algorithms can be cataloged,
+          studied, benchmarked, and tested without automatically becoming safe defaults.
+        </font>
+      </p>
+      <p>
+        <font color="#cdebe6">
+          The guiding rule is simple: breadth belongs in the archive; trust belongs in the defaults.
+        </font>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td bgcolor="#181715" align="center">
+      <img src="assets/readme_profile_funnel.svg" width="100%" alt="Archive to safe-default profile funnel" />
+    </td>
+  </tr>
+</table>
 
 ## Algorithm Surface
 
-<div align="center">
-   <img src="assets/readme_surface_comparison.svg" alt="NextSSL planned algorithm surface comparison" />
-</div>
+<table>
+  <tr>
+    <td bgcolor="#181715" align="center">
+      <img src="assets/readme_surface_comparison.svg" width="100%" alt="NextSSL planned algorithm surface comparison" />
+    </td>
+  </tr>
+</table>
 
 Current archive inventory: **250 planned algorithm surfaces across 8 groups**.
 
-| Group | Count | Notes |
+| Group | Count | Purpose |
 | --- | ---: | --- |
+| Modern | 84 | AEAD, MAC, KDF, signatures, curves, and key exchange work |
+| Hash / KDF-hash | 59 | Hashes, XOFs, KMAC, and password-hash related surfaces |
+| PQC | 41 | KEMs, signatures, and adjacent post-quantum candidates |
+| Threshold | 36 | Threshold signatures, MPC, VSS, DKG, and related protocols |
 | Encoding | 14 | Encodings and checksum helpers |
-| Hash / KDF-hash | 59 | Hashes, XOFs, KMAC, password hashes |
-| Modern | 84 | AEAD, MAC, KDF, signatures, curves, KEX |
-| PQC | 41 | KEMs, signatures, and adjacent PQC candidates |
-| Threshold | 36 | Threshold signatures, MPC, VSS, DKG |
-| Ascon | 7 | Lightweight AEAD, hash, XOF, MAC, PRF |
+| Ascon | 7 | Lightweight AEAD, hash, XOF, MAC, and PRF surfaces |
 | DRBG / RNG | 7 | DRBGs and randomness infrastructure |
 | Stateful HBS | 2 | LMS and XMSS |
 
-Entries marked `**[NEW]**` in [ALGO.md](ALGO.md) are planned surfaces to add or expose. They are not claims of completed implementation.
+Entries marked `NEW` in [ALGO.md](ALGO.md) are planned surfaces to add or expose. They are not claims of completed implementation.
 
-## Library Positioning
+## Safety Profiles
 
-<div align="center">
-   <img src="assets/readme_library_positioning.svg" alt="NextSSL positioning compared with other crypto libraries" />
-</div>
-
-NextSSL is not trying to replace mature production libraries today. Its target is different: archive breadth, explicit profiles, and a contribution model where algorithms can be studied without becoming defaults.
-
-The graph is a project-positioning model, not a benchmark. Established libraries such as OpenSSL, BoringSSL, libsodium, Botan, Crypto++, wolfSSL, and mbedTLS remain far ahead in production maturity, audit history, and deployment.
-
-## Profiles
-
-Profiles are planned as customizable safety policies.
-
-```js
-const NP = NextSSL.profile.safest();
-
-NP.default.hash = NextSSL.root.hash.sha256;
-NP.default.aead = NextSSL.root.modern["xchacha20-poly1305"];
-NP.default.signature = NextSSL.root.modern.ed25519;
-
-// Allowed only as an explicit expert override with policy warnings.
-NP.default.hash = NextSSL.root.hash.md5;
-```
-
-Planned profile families:
+<table>
+  <tr>
+    <td bgcolor="#181715">
+      <font color="#5db8a6"><b>SAFEST</b></font><br>
+      <font color="#f4fffd"><b>Conservative defaults for normal users.</b></font><br>
+      <font color="#cdebe6">The default experience should prefer reviewed, modern primitives and avoid surprising legacy choices.</font>
+    </td>
+    <td bgcolor="#252320">
+      <font color="#5db8a6"><b>COMPATIBILITY</b></font><br>
+      <font color="#f4fffd"><b>Migration support with visible warnings.</b></font><br>
+      <font color="#cdebe6">Legacy use cases can be represented without pretending they are ideal defaults.</font>
+    </td>
+    <td bgcolor="#1f3430">
+      <font color="#5db8a6"><b>RESEARCH</b></font><br>
+      <font color="#f4fffd"><b>Experimental algorithms with review hooks.</b></font><br>
+      <font color="#cdebe6">Researchers can inspect candidates, add references, and work toward promotion criteria.</font>
+    </td>
+  </tr>
+</table>
 
 | Profile | Purpose |
 | --- | --- |
@@ -86,13 +159,48 @@ Planned profile families:
 | `archive` | Full catalog inspection |
 | `pqc` | Post-quantum and hybrid migration work |
 
+## Library Positioning
+
+<table>
+  <tr>
+    <td bgcolor="#181715">
+      <h3><font color="#f4fffd">Designed for the top tier, measured honestly.</font></h3>
+      <p>
+        <font color="#d9d4cc">
+          NextSSL is not claiming to replace OpenSSL, BoringSSL, libsodium, Botan, Crypto++,
+          wolfSSL, or mbedTLS today. Those projects remain far ahead in audit history,
+          production deployment, and maturity.
+        </font>
+      </p>
+      <p>
+        <font color="#cdebe6">
+          The ambition is different: become a standout crypto toolkit for researchers and builders
+          who need broad algorithm visibility plus strict profile-based defaults.
+        </font>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td bgcolor="#181715" align="center">
+      <img src="assets/readme_library_positioning.svg" width="100%" alt="NextSSL positioning compared with other crypto libraries" />
+    </td>
+  </tr>
+</table>
+
 ## Platform Targets
 
-<div align="center">
-   <img src="assets/readme_platform_matrix.svg" alt="NextSSL platform and architecture build matrix" />
-</div>
+<table>
+  <tr>
+    <td bgcolor="#181715" align="center">
+      <img src="assets/readme_platform_matrix.svg" width="100%" alt="NextSSL platform and architecture build matrix" />
+    </td>
+  </tr>
+</table>
 
-The current `bin` layout contains **29 target variants**:
+The current `bin` layout contains **29 target variants**. Build documentation is still evolving; start with [BUILD.md](BUILD.md).
 
 | Family | Targets |
 | --- | --- |
@@ -104,62 +212,71 @@ The current `bin` layout contains **29 target variants**:
 | WASM | `emscripten-wasm32`, `wasi-wasm32` |
 | Windows | `arm64-msvc`, `armv7-msvc`, `x86-mingw`, `x86-msvc`, `x86_64-mingw`, `x86_64-msvc` |
 
-Build documentation is still evolving. Start with [BUILD.md](BUILD.md).
+## Project Docs
 
-## Docs
+<table>
+  <tr>
+    <td bgcolor="#181715"><a href="PLAN.md"><b>PLAN.md</b></a><br><font color="#cdebe6">Roadmap, profiles, lifecycle, safety labels, contribution model.</font></td>
+    <td bgcolor="#252320"><a href="ALGO.md"><b>ALGO.md</b></a><br><font color="#cdebe6">Complete current inventory and planned surfaces.</font></td>
+    <td bgcolor="#1f3430"><a href="BUILD.md"><b>BUILD.md</b></a><br><font color="#cdebe6">Build notes and target guidance.</font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#1f3430"><a href="CONTRIBUTING.md"><b>CONTRIBUTING.md</b></a><br><font color="#cdebe6">Contribution guide for adding or reviewing surfaces.</font></td>
+    <td bgcolor="#252320"><a href="SECURITY.md"><b>SECURITY.md</b></a><br><font color="#cdebe6">Security reporting policy.</font></td>
+    <td bgcolor="#181715"><a href="LICENSE"><b>LICENSE</b></a><br><font color="#cdebe6">Apache-2.0.</font></td>
+  </tr>
+</table>
 
-- [PLAN.md](PLAN.md): roadmap, profiles, lifecycle, safety labels, contribution model.
-- [ALGO.md](ALGO.md): complete current inventory and planned surfaces.
-- [BUILD.md](BUILD.md): build notes.
-- [CONTRIBUTING.md](CONTRIBUTING.md): contribution guide.
-- [SECURITY.md](SECURITY.md): security reporting policy.
+## Target Tags
 
-## Build Target Tags
-
-![linux glibc arm64](https://img.shields.io/badge/linux--glibc-arm64-FCC624?logo=linux&logoColor=black)
-![linux glibc armv7](https://img.shields.io/badge/linux--glibc-armv7-FCC624?logo=linux&logoColor=black)
-![linux glibc loongarch64](https://img.shields.io/badge/linux--glibc-loongarch64-FCC624?logo=linux&logoColor=black)
-![linux glibc ppc64le](https://img.shields.io/badge/linux--glibc-ppc64le-FCC624?logo=linux&logoColor=black)
-![linux glibc riscv64](https://img.shields.io/badge/linux--glibc-riscv64-FCC624?logo=linux&logoColor=black)
-![linux glibc s390x](https://img.shields.io/badge/linux--glibc-s390x-FCC624?logo=linux&logoColor=black)
-![linux glibc x86](https://img.shields.io/badge/linux--glibc-x86-FCC624?logo=linux&logoColor=black)
-![linux glibc x86_64](https://img.shields.io/badge/linux--glibc-x86__64-FCC624?logo=linux&logoColor=black)
-![windows arm64-msvc](https://img.shields.io/badge/windows-arm64--msvc-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
-![windows armv7-msvc](https://img.shields.io/badge/windows-armv7--msvc-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
-![windows x86-mingw](https://img.shields.io/badge/windows-x86--mingw-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
-![windows x86-msvc](https://img.shields.io/badge/windows-x86--msvc-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
-![windows x86_64-mingw](https://img.shields.io/badge/windows-x86__64--mingw-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
-![windows x86_64-msvc](https://img.shields.io/badge/windows-x86__64--msvc-0078D4?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4OCA4OCI+PHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiBmaWxsPSIjMDA3OEQ0Ii8+PHJlY3QgeD0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjxyZWN0IHk9IjQ2IiB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIGZpbGw9IiMwMDc4RDQiLz48cmVjdCB4PSI0NiIgeT0iNDYiIHdpZHRoPSI0MiIgaGVpZ2h0PSI0MiIgZmlsbD0iIzAwNzhENCIvPjwvc3ZnPg==&logoColor=white)
-![android arm64-v8a](https://img.shields.io/badge/android-arm64--v8a-3DDC84?logo=android&logoColor=white)
-![android armeabi-v7a](https://img.shields.io/badge/android-armeabi--v7a-3DDC84?logo=android&logoColor=white)
-![android x86](https://img.shields.io/badge/android-x86-3DDC84?logo=android&logoColor=white)
-![android x86_64](https://img.shields.io/badge/android-x86__64-3DDC84?logo=android&logoColor=white)
-![linux musl arm64](https://img.shields.io/badge/linux--musl-arm64-4b5563?logo=linux&logoColor=white)
-![linux musl armv7](https://img.shields.io/badge/linux--musl-armv7-4b5563?logo=linux&logoColor=white)
-![linux musl x86_64](https://img.shields.io/badge/linux--musl-x86__64-4b5563?logo=linux&logoColor=white)
-![ios device-arm64](https://img.shields.io/badge/ios-device--arm64-111111?logo=apple&logoColor=white)
-![ios sim-arm64](https://img.shields.io/badge/ios-sim--arm64-111111?logo=apple&logoColor=white)
-![ios sim-x86_64](https://img.shields.io/badge/ios-sim--x86__64-111111?logo=apple&logoColor=white)
-![macos arm64](https://img.shields.io/badge/macos-arm64-111111?logo=apple&logoColor=white)
-![macos universal](https://img.shields.io/badge/macos-universal-111111?logo=apple&logoColor=white)
-![macos x86_64](https://img.shields.io/badge/macos-x86__64-111111?logo=apple&logoColor=white)
-![wasm emscripten-wasm32](https://img.shields.io/badge/wasm-emscripten--wasm32-654ff0?logo=webassembly&logoColor=white)
-![wasm wasi-wasm32](https://img.shields.io/badge/wasm-wasi--wasm32-654ff0?logo=webassembly&logoColor=white)
+<table>
+  <tr>
+    <td bgcolor="#181715"><img src="assets/platform/linux.svg" width="20" alt="Linux" /> <font color="#f4fffd"><b>glibc</b></font></td>
+    <td bgcolor="#252320"><font color="#cdebe6"><code>arm64</code> <code>armv7</code> <code>loongarch64</code> <code>ppc64le</code> <code>riscv64</code> <code>s390x</code> <code>x86</code> <code>x86_64</code></font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#181715"><img src="assets/platform/linux.svg" width="20" alt="Linux" /> <font color="#f4fffd"><b>musl</b></font></td>
+    <td bgcolor="#252320"><font color="#cdebe6"><code>arm64</code> <code>armv7</code> <code>x86_64</code></font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#181715"><img src="assets/win.svg" width="20" alt="Windows" /></td>
+    <td bgcolor="#252320"><font color="#cdebe6"><code>arm64-msvc</code> <code>armv7-msvc</code> <code>x86-mingw</code> <code>x86-msvc</code> <code>x86_64-mingw</code> <code>x86_64-msvc</code></font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#181715"><img src="assets/platform/android.svg" width="20" alt="Android" /></td>
+    <td bgcolor="#252320"><font color="#cdebe6"><code>arm64-v8a</code> <code>armeabi-v7a</code> <code>x86</code> <code>x86_64</code></font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#181715"><img src="assets/platform/apple.svg" width="20" alt="Apple" /> <font color="#f4fffd"><b>iOS</b></font></td>
+    <td bgcolor="#252320"><font color="#cdebe6"><code>device-arm64</code> <code>sim-arm64</code> <code>sim-x86_64</code></font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#181715"><img src="assets/platform/apple.svg" width="20" alt="Apple" /> <font color="#f4fffd"><b>macOS</b></font></td>
+    <td bgcolor="#252320"><font color="#cdebe6"><code>arm64</code> <code>universal</code> <code>x86_64</code></font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#181715"><img src="assets/platform/webassembly.svg" width="20" alt="WebAssembly" /></td>
+    <td bgcolor="#252320"><font color="#cdebe6"><code>emscripten-wasm32</code> <code>wasi-wasm32</code></font></td>
+  </tr>
+</table>
 
 ## Algorithm Tags
 
-![encoding 14](https://img.shields.io/badge/encoding-14-2f7d4f)
-![hash 59](https://img.shields.io/badge/hash%20%2F%20KDF--hash-59-6d5796)
-![modern 84](https://img.shields.io/badge/modern-84-1f6f9f)
-![pqc 41](https://img.shields.io/badge/PQC-41-8f3f62)
-![threshold 36](https://img.shields.io/badge/threshold-36-9a5b1f)
-![ascon 7](https://img.shields.io/badge/ascon-7-2f6f9f)
-![drbg rng 7](https://img.shields.io/badge/DRBG%20%2F%20RNG-7-856404)
-![stateful hbs 2](https://img.shields.io/badge/stateful%20HBS-2-4b5563)
-![total 250](https://img.shields.io/badge/total%20algorithm%20surfaces-250-24292f)
+![encoding 14](https://img.shields.io/badge/encoding-14-5db8a6?labelColor=181715)
+![hash 59](https://img.shields.io/badge/hash%20%2F%20KDF--hash-59-6fbfb3?labelColor=181715)
+![modern 84](https://img.shields.io/badge/modern-84-5db8a6?labelColor=181715)
+![pqc 41](https://img.shields.io/badge/PQC-41-a8d9d1?labelColor=181715)
+![threshold 36](https://img.shields.io/badge/threshold-36-4f9f91?labelColor=181715)
+![ascon 7](https://img.shields.io/badge/ascon-7-79c8bd?labelColor=181715)
+![drbg rng 7](https://img.shields.io/badge/DRBG%20%2F%20RNG-7-8fcfc6?labelColor=181715)
+![stateful hbs 2](https://img.shields.io/badge/stateful%20HBS-2-cdebe6?labelColor=181715)
+![total 250](https://img.shields.io/badge/total%20algorithm%20surfaces-250-5db8a6?labelColor=181715)
 
-## Rule
-
-Breadth belongs in the archive. Trust belongs in the defaults.
-
-*NextSSL is building a crypto archive with a seatbelt: wide enough for research, strict enough for users.*
+<table>
+  <tr>
+    <td bgcolor="#5db8a6" align="center">
+      <h2><font color="#181715">Breadth belongs in the archive. Trust belongs in the defaults.</font></h2>
+      <p><font color="#181715"><b>NextSSL is building toward top-tier crypto-library status by making research breadth and safety policy visible from the first page.</b></font></p>
+    </td>
+  </tr>
+</table>
