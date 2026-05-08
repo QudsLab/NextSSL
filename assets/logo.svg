@@ -4,7 +4,7 @@
     <style>
       .cls-1 {
         fill: #002e32;
-        stroke: aqua;
+        stroke: #5db8a6;
         stroke-miterlimit: 10;
         stroke-width: 8px;
       }
@@ -19,7 +19,7 @@
         font-size: 351px;
         font-weight: 700;
         letter-spacing: .17em;
-        stroke: #2ff;
+        stroke: #a8d9d1;
         stroke-width: 5px;
       }
     </style>
