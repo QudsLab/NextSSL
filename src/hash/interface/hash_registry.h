@@ -109,6 +109,17 @@ extern const hash_ops_t kmac256_ops;
 /* Plan 207 Phase F — National standard hashes (GmSSL, NEXTSSL_HAS_GMSSL) */
 extern const hash_ops_t sm3_ops;
 
+/* Job 0005 — KMACXOF, KangarooTwelve, MarsupilamiFourteen,
+ *            ParallelHash128/256, TupleHash128/256 */
+extern const hash_ops_t kmacxof128_ops;
+extern const hash_ops_t kmacxof256_ops;
+extern const hash_ops_t kangarootwelve_ops;
+extern const hash_ops_t marsupilami14_ops;
+extern const hash_ops_t parallelhash128_ops;
+extern const hash_ops_t parallelhash256_ops;
+extern const hash_ops_t tuplehash128_ops;
+extern const hash_ops_t tuplehash256_ops;
+
 /* -------------------------------------------------------------------------
  * Purpose-typed registry accessors (Plan 208)
  *

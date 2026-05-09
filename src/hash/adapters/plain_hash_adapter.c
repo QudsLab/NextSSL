@@ -140,6 +140,30 @@ hash_adapter_t *kmac128_adapter_create(void) { return plain_hash_adapter_create(
 hash_adapter_t *kmac256_adapter_create(void) { return plain_hash_adapter_create(&kmac256_ops); }
 
 /* -------------------------------------------------------------------------
+ * Per-algorithm typed constructors — KMACXOF (2) — Job 0005
+ * -------------------------------------------------------------------------*/
+hash_adapter_t *kmacxof128_adapter_create(void)    { return plain_hash_adapter_create(&kmacxof128_ops);    }
+hash_adapter_t *kmacxof256_adapter_create(void)    { return plain_hash_adapter_create(&kmacxof256_ops);    }
+
+/* -------------------------------------------------------------------------
+ * Per-algorithm typed constructors — K12 / M14 (2) — Job 0005
+ * -------------------------------------------------------------------------*/
+hash_adapter_t *kangarootwelve_adapter_create(void) { return plain_hash_adapter_create(&kangarootwelve_ops); }
+hash_adapter_t *marsupilami14_adapter_create(void)  { return plain_hash_adapter_create(&marsupilami14_ops);  }
+
+/* -------------------------------------------------------------------------
+ * Per-algorithm typed constructors — ParallelHash (2) — Job 0005
+ * -------------------------------------------------------------------------*/
+hash_adapter_t *parallelhash128_adapter_create(void) { return plain_hash_adapter_create(&parallelhash128_ops); }
+hash_adapter_t *parallelhash256_adapter_create(void) { return plain_hash_adapter_create(&parallelhash256_ops); }
+
+/* -------------------------------------------------------------------------
+ * Per-algorithm typed constructors — TupleHash (2) — Job 0005
+ * -------------------------------------------------------------------------*/
+hash_adapter_t *tuplehash128_adapter_create(void) { return plain_hash_adapter_create(&tuplehash128_ops); }
+hash_adapter_t *tuplehash256_adapter_create(void) { return plain_hash_adapter_create(&tuplehash256_ops); }
+
+/* -------------------------------------------------------------------------
  * Per-algorithm typed constructors — Legacy / Weak ⚠️ (12)
  * -------------------------------------------------------------------------*/
 hash_adapter_t *has160_adapter_create(void)    { return plain_hash_adapter_create(&has160_ops);    }

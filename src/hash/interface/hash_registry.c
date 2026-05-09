@@ -854,6 +854,247 @@ const hash_ops_t kmac256_ops = {
 };
 
 /* =========================================================================
+ * KMACXOF-128  (SP 800-185 §4.3.1 XOF variant, Job 0005)
+ * Fixed 32-byte default output (XOF mode, empty key, empty customization).
+ * ========================================================================= */
+#include "kmacxof128.h"
+
+static void kmacxof128_ops_init  (void *c) { kmacxof128_ops_init_fn((KMACXOF128_CTX *)c); }
+static void kmacxof128_ops_update(void *c, const uint8_t *d, size_t l) { kmacxof128_update((KMACXOF128_CTX *)c, d, l); }
+static void kmacxof128_ops_final (void *c, uint8_t *out) { kmacxof128_final((KMACXOF128_CTX *)c, out, 32); }
+
+const hash_ops_t kmacxof128_ops = {
+    .name        = "kmacxof128",
+    .digest_size = 32,
+    .block_size  = 168,   /* TurboSHAKE128 / cSHAKE128 rate */
+    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
+    .init        = kmacxof128_ops_init,
+    .update      = kmacxof128_ops_update,
+    .final       = kmacxof128_ops_final,
+    .wu_per_eval = 1.5,
+    .mu_per_eval = 0.0,
+    .parallelism = 1
+};
+
+/* =========================================================================
+ * KMACXOF-256  (SP 800-185 §4.3.1 XOF variant, Job 0005)
+ * Fixed 64-byte default output.
+ * ========================================================================= */
+#include "kmacxof256.h"
+
+static void kmacxof256_ops_init  (void *c) { kmacxof256_ops_init_fn((KMACXOF256_CTX *)c); }
+static void kmacxof256_ops_update(void *c, const uint8_t *d, size_t l) { kmacxof256_update((KMACXOF256_CTX *)c, d, l); }
+static void kmacxof256_ops_final (void *c, uint8_t *out) { kmacxof256_final((KMACXOF256_CTX *)c, out, 64); }
+
+const hash_ops_t kmacxof256_ops = {
+    .name        = "kmacxof256",
+    .digest_size = 64,
+    .block_size  = 136,   /* cSHAKE256 rate */
+    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
+    .init        = kmacxof256_ops_init,
+    .update      = kmacxof256_ops_update,
+    .final       = kmacxof256_ops_final,
+    .wu_per_eval = 2.0,
+    .mu_per_eval = 0.0,
+    .parallelism = 1
+};
+
+/* =========================================================================
+ * KangarooTwelve (K12) — RFC 9285, Job 0005
+ * hash_ops_t wrapper: heap alloc in init, freed in final.
+ * ========================================================================= */
+#include "kangarootwelve.h"
+
+static void k12_ops_init  (void *c) {
+    K12_CTX *ctx = (K12_CTX *)c;
+    k12_init(ctx, 32, NULL, 0);
+}
+static void k12_ops_update(void *c, const uint8_t *d, size_t l) {
+    k12_update((K12_CTX *)c, d, l);
+}
+static void k12_ops_final (void *c, uint8_t *out) {
+    K12_CTX *ctx = (K12_CTX *)c;
+    k12_final(ctx, out);
+    k12_destroy_fields(ctx);
+}
+
+const hash_ops_t kangarootwelve_ops = {
+    .name        = "kangarootwelve",
+    .digest_size = 32,
+    .block_size  = 168,   /* TurboSHAKE128 rate */
+    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
+    .init        = k12_ops_init,
+    .update      = k12_ops_update,
+    .final       = k12_ops_final,
+    .wu_per_eval = 1.2,
+    .mu_per_eval = 0.0,
+    .parallelism = 1
+};
+
+/* =========================================================================
+ * MarsupilamiFourteen (M14) — Job 0005
+ * hash_ops_t wrapper: heap alloc in init, freed in final.
+ * ========================================================================= */
+#include "marsupilami14.h"
+
+static void m14_ops_init  (void *c) {
+    M14_CTX *ctx = (M14_CTX *)c;
+    m14_init(ctx, 64, NULL, 0);
+}
+static void m14_ops_update(void *c, const uint8_t *d, size_t l) {
+    m14_update((M14_CTX *)c, d, l);
+}
+static void m14_ops_final (void *c, uint8_t *out) {
+    M14_CTX *ctx = (M14_CTX *)c;
+    m14_final(ctx, out);
+    m14_destroy_fields(ctx);
+}
+
+const hash_ops_t marsupilami14_ops = {
+    .name        = "marsupilami14",
+    .digest_size = 64,
+    .block_size  = 136,   /* TurboSHAKE256 rate */
+    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
+    .init        = m14_ops_init,
+    .update      = m14_ops_update,
+    .final       = m14_ops_final,
+    .wu_per_eval = 1.4,
+    .mu_per_eval = 0.0,
+    .parallelism = 1
+};
+
+/* =========================================================================
+ * ParallelHash128 / ParallelHash256  (SP 800-185 §6, Job 0005)
+ *
+ * One-shot API wrapped in accumulator pattern (matches NT-hash / Argon2 style).
+ * Buffer capped at 1024 bytes for hash_ops_t use.  Full-data callers should
+ * use the one-shot parallelhash128() / parallelhash256() directly.
+ * ========================================================================= */
+#include "parallelhash128.h"
+#include "parallelhash256.h"
+
+typedef struct { uint8_t buf[1024]; size_t len; } ph128_ops_ctx_t;
+typedef struct { uint8_t buf[1024]; size_t len; } ph256_ops_ctx_t;
+
+static void ph128_ops_init  (void *c) { ph128_ops_ctx_t *p = (ph128_ops_ctx_t *)c; p->len = 0; }
+static void ph128_ops_update(void *c, const uint8_t *d, size_t l) {
+    ph128_ops_ctx_t *p = (ph128_ops_ctx_t *)c;
+    size_t room = sizeof(p->buf) - p->len;
+    if (l > room) l = room;
+    memcpy(p->buf + p->len, d, l); p->len += l;
+}
+static void ph128_ops_final (void *c, uint8_t *out) {
+    ph128_ops_ctx_t *p = (ph128_ops_ctx_t *)c;
+    parallelhash128(p->buf, p->len, PARALLELHASH128_BLOCK_B, NULL, 0, out, 32);
+    p->len = 0;
+}
+
+const hash_ops_t parallelhash128_ops = {
+    .name        = "parallelhash128",
+    .digest_size = 32,
+    .block_size  = 168,
+    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
+    .init        = ph128_ops_init,
+    .update      = ph128_ops_update,
+    .final       = ph128_ops_final,
+    .wu_per_eval = 1.5,
+    .mu_per_eval = 0.0,
+    .parallelism = 1
+};
+
+static void ph256_ops_init  (void *c) { ph256_ops_ctx_t *p = (ph256_ops_ctx_t *)c; p->len = 0; }
+static void ph256_ops_update(void *c, const uint8_t *d, size_t l) {
+    ph256_ops_ctx_t *p = (ph256_ops_ctx_t *)c;
+    size_t room = sizeof(p->buf) - p->len;
+    if (l > room) l = room;
+    memcpy(p->buf + p->len, d, l); p->len += l;
+}
+static void ph256_ops_final (void *c, uint8_t *out) {
+    ph256_ops_ctx_t *p = (ph256_ops_ctx_t *)c;
+    parallelhash256(p->buf, p->len, PARALLELHASH256_BLOCK_B, NULL, 0, out, 64);
+    p->len = 0;
+}
+
+const hash_ops_t parallelhash256_ops = {
+    .name        = "parallelhash256",
+    .digest_size = 64,
+    .block_size  = 136,
+    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
+    .init        = ph256_ops_init,
+    .update      = ph256_ops_update,
+    .final       = ph256_ops_final,
+    .wu_per_eval = 2.0,
+    .mu_per_eval = 0.0,
+    .parallelism = 1
+};
+
+/* =========================================================================
+ * TupleHash128 / TupleHash256  (SP 800-185 §5, Job 0005)
+ *
+ * Accumulator wrapper — treats the entire accumulated buffer as a single
+ * tuple entry.  Full tuple use-cases go through the tuplehash128/256 API.
+ * ========================================================================= */
+#include "tuplehash128.h"
+#include "tuplehash256.h"
+
+typedef struct { uint8_t buf[1024]; size_t len; } th128_ops_ctx_t;
+typedef struct { uint8_t buf[1024]; size_t len; } th256_ops_ctx_t;
+
+static void th128_ops_init  (void *c) { th128_ops_ctx_t *p = (th128_ops_ctx_t *)c; p->len = 0; }
+static void th128_ops_update(void *c, const uint8_t *d, size_t l) {
+    th128_ops_ctx_t *p = (th128_ops_ctx_t *)c;
+    size_t room = sizeof(p->buf) - p->len;
+    if (l > room) l = room;
+    memcpy(p->buf + p->len, d, l); p->len += l;
+}
+static void th128_ops_final (void *c, uint8_t *out) {
+    th128_ops_ctx_t *p = (th128_ops_ctx_t *)c;
+    tuplehash_entry_t entry = { p->buf, p->len };
+    tuplehash128(&entry, 1, NULL, 0, out, 32);
+    p->len = 0;
+}
+
+const hash_ops_t tuplehash128_ops = {
+    .name        = "tuplehash128",
+    .digest_size = 32,
+    .block_size  = 168,
+    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
+    .init        = th128_ops_init,
+    .update      = th128_ops_update,
+    .final       = th128_ops_final,
+    .wu_per_eval = 1.5,
+    .mu_per_eval = 0.0,
+    .parallelism = 1
+};
+
+static void th256_ops_init  (void *c) { th256_ops_ctx_t *p = (th256_ops_ctx_t *)c; p->len = 0; }
+static void th256_ops_update(void *c, const uint8_t *d, size_t l) {
+    th256_ops_ctx_t *p = (th256_ops_ctx_t *)c;
+    size_t room = sizeof(p->buf) - p->len;
+    if (l > room) l = room;
+    memcpy(p->buf + p->len, d, l); p->len += l;
+}
+static void th256_ops_final (void *c, uint8_t *out) {
+    th256_ops_ctx_t *p = (th256_ops_ctx_t *)c;
+    tuplehash_entry_t entry = { p->buf, p->len };
+    tuplehash256(&entry, 1, NULL, 0, out, 64);
+    p->len = 0;
+}
+
+const hash_ops_t tuplehash256_ops = {
+    .name        = "tuplehash256",
+    .digest_size = 64,
+    .block_size  = 136,
+    .usage_flags = HASH_USAGE_POW | HASH_USAGE_SEED,
+    .init        = th256_ops_init,
+    .update      = th256_ops_update,
+    .final       = th256_ops_final,
+    .wu_per_eval = 2.0,
+    .mu_per_eval = 0.0,
+    .parallelism = 1
+};
+
+/* =========================================================================
  * Registry table
  * ========================================================================= */
 static const hash_ops_t *s_registry[HASH_REGISTRY_MAX];
@@ -1016,6 +1257,16 @@ void hash_registry_init(void) {
     hash_register(&skein256_ops);
     hash_register(&skein512_ops);
     hash_register(&skein1024_ops);
+
+    /* --- Job 0005: KMACXOF, K12/M14, ParallelHash, TupleHash --- */
+    hash_register(&kmacxof128_ops);
+    hash_register(&kmacxof256_ops);
+    hash_register(&kangarootwelve_ops);
+    hash_register(&marsupilami14_ops);
+    hash_register(&parallelhash128_ops);
+    hash_register(&parallelhash256_ops);
+    hash_register(&tuplehash128_ops);
+    hash_register(&tuplehash256_ops);
 
     atomic_store_explicit(&s_initialised, 2, memory_order_release);
 }

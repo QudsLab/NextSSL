@@ -1,125 +1,39 @@
-#ifndef WOLF_CRYPT_CURVE448_H
-#define WOLF_CRYPT_CURVE448_H
+/* curve448.h — Curve448 raw DH surface (RFC 7748 §5, RFC 8031)
+ *
+ * "curve448" as a named surface refers to the *field and group primitive*:
+ * the 56-byte u-coordinate scalar-multiplication function on Curve448-Goldilocks,
+ * with no protocol framing.
+ *
+ * For key agreement use x448.h.
+ * For EdDSA signatures use ed448.h.
+ *
+ * This surface exists so that higher-level protocols that need raw curve
+ * operations (e.g. ECIES, HPKE) can depend on a named module rather than
+ * digging into the backend directly.
+ */
+#ifndef NEXTSSL_CURVE448_SURFACE_H
+#define NEXTSSL_CURVE448_SURFACE_H
 
-#include "wolf_shim.h"
+#include <stdint.h>
+#include <stddef.h>
 
-#ifdef HAVE_CURVE448
+#define CURVE448_POINT_SIZE  56u   /* u-coordinate, little-endian */
+#define CURVE448_SCALAR_SIZE 56u
 
-#include "fe_448.h"
+/* curve448 — RFC 7748 §5 scalar multiplication.
+ * out = scalar * u  (Montgomery ladder)
+ * Clamps the scalar per RFC 7748 before multiplying.
+ * Returns 0 on success, -1 if result is the all-zero point. */
+int curve448(uint8_t       out[CURVE448_POINT_SIZE],
+             const uint8_t scalar[CURVE448_SCALAR_SIZE],
+             const uint8_t u[CURVE448_POINT_SIZE]);
 
-#ifdef WOLFSSL_ASYNC_CRYPT
-    #include <wolfssl/wolfcrypt/async.h>
-#endif
+/* curve448_base — multiply the canonical base point (u=5) by scalar.
+ * Returns 0 on success, -1 on error. */
+int curve448_base(uint8_t       out[CURVE448_POINT_SIZE],
+                  const uint8_t scalar[CURVE448_SCALAR_SIZE]);
 
-#ifdef __cplusplus
-    extern "C" {
-#endif
+/* curve448_clamp — apply RFC 7748 §5 Curve448 scalar clamping in-place. */
+void curve448_clamp(uint8_t scalar[CURVE448_SCALAR_SIZE]);
 
-#define CURVE448_KEY_SIZE        56
-#define CURVE448_PUB_KEY_SIZE    56
-
-#ifndef WC_CURVE448KEY_TYPE_DEFINED
-    typedef struct curve448_key curve448_key;
-    #define WC_CURVE448KEY_TYPE_DEFINED
-#endif
-
-/* A CURVE448 Key */
-struct curve448_key {
-    byte p[CURVE448_PUB_KEY_SIZE];  /* public key  */
-    byte k[CURVE448_KEY_SIZE];      /* private key */
-
-#ifdef WOLFSSL_ASYNC_CRYPT
-    WC_ASYNC_DEV asyncDev;
-#endif
-
-    /* bit fields */
-    WC_BITFIELD pubSet:1;
-    WC_BITFIELD privSet:1;
-};
-
-enum {
-    EC448_LITTLE_ENDIAN = 0,
-    EC448_BIG_ENDIAN    = 1
-};
-
-WOLFSSL_API
-int wc_curve448_make_key(WC_RNG* rng, int keysize, curve448_key* key);
-
-WOLFSSL_API
-int wc_curve448_make_pub(int public_size, byte* pub, int private_size,
-                           const byte* priv);
-
-WOLFSSL_API
-int wc_curve448_shared_secret(curve448_key* private_key,
-                              curve448_key* public_key,
-                              byte* out, word32* outlen);
-
-WOLFSSL_API
-int wc_curve448_shared_secret_ex(curve448_key* private_key,
-                                 curve448_key* public_key,
-                                 byte* out, word32* outlen, int endian);
-
-WOLFSSL_API
-int wc_curve448_init(curve448_key* key);
-
-WOLFSSL_API
-void wc_curve448_free(curve448_key* key);
-
-
-/* raw key helpers */
-WOLFSSL_API
-int wc_curve448_import_private(const byte* priv, word32 privSz,
-                               curve448_key* key);
-WOLFSSL_API
-int wc_curve448_import_private_ex(const byte* priv, word32 privSz,
-                                  curve448_key* key, int endian);
-
-WOLFSSL_API
-int wc_curve448_import_private_raw(const byte* priv, word32 privSz,
-                                   const byte* pub, word32 pubSz,
-                                   curve448_key* key);
-WOLFSSL_API
-int wc_curve448_import_private_raw_ex(const byte* priv, word32 privSz,
-                                      const byte* pub, word32 pubSz,
-                                      curve448_key* key, int endian);
-WOLFSSL_API
-int wc_curve448_export_private_raw(curve448_key* key, byte* out,
-                                   word32* outLen);
-WOLFSSL_API
-int wc_curve448_export_private_raw_ex(curve448_key* key, byte* out,
-                                      word32* outLen, int endian);
-
-WOLFSSL_API
-int wc_curve448_import_public(const byte* in, word32 inLen,
-                              curve448_key* key);
-WOLFSSL_API
-int wc_curve448_import_public_ex(const byte* in, word32 inLen,
-                                 curve448_key* key, int endian);
-WOLFSSL_API
-int wc_curve448_check_public(const byte* pub, word32 pubSz, int endian);
-
-WOLFSSL_API
-int wc_curve448_export_public(curve448_key* key, byte* out, word32* outLen);
-WOLFSSL_API
-int wc_curve448_export_public_ex(curve448_key* key, byte* out,
-                                 word32* outLen, int endian);
-
-WOLFSSL_API
-int wc_curve448_export_key_raw(curve448_key* key,
-                               byte* priv, word32 *privSz,
-                               byte* pub, word32 *pubSz);
-WOLFSSL_API
-int wc_curve448_export_key_raw_ex(curve448_key* key,
-                                  byte* priv, word32 *privSz,
-                                  byte* pub, word32 *pubSz,
-                                  int endian);
-/* size helper */
-WOLFSSL_API
-int wc_curve448_size(curve448_key* key);
-
-#ifdef __cplusplus
-    }    /* extern "C" */
-#endif
-
-#endif /* HAVE_CURVE448 */
-#endif /* WOLF_CRYPT_CURVE448_H */
+#endif /* NEXTSSL_CURVE448_SURFACE_H */

@@ -65,6 +65,30 @@ hash_adapter_t *kmac128_adapter_create(void);
 hash_adapter_t *kmac256_adapter_create(void);
 
 /* -------------------------------------------------------------------------
+ * Per-algorithm typed constructors — KMACXOF (2) — Job 0005
+ * -------------------------------------------------------------------------*/
+hash_adapter_t *kmacxof128_adapter_create(void);
+hash_adapter_t *kmacxof256_adapter_create(void);
+
+/* -------------------------------------------------------------------------
+ * Per-algorithm typed constructors — K12 / M14 (2) — Job 0005
+ * -------------------------------------------------------------------------*/
+hash_adapter_t *kangarootwelve_adapter_create(void);
+hash_adapter_t *marsupilami14_adapter_create(void);
+
+/* -------------------------------------------------------------------------
+ * Per-algorithm typed constructors — ParallelHash (2) — Job 0005
+ * -------------------------------------------------------------------------*/
+hash_adapter_t *parallelhash128_adapter_create(void);
+hash_adapter_t *parallelhash256_adapter_create(void);
+
+/* -------------------------------------------------------------------------
+ * Per-algorithm typed constructors — TupleHash (2) — Job 0005
+ * -------------------------------------------------------------------------*/
+hash_adapter_t *tuplehash128_adapter_create(void);
+hash_adapter_t *tuplehash256_adapter_create(void);
+
+/* -------------------------------------------------------------------------
  * Per-algorithm typed constructors — Legacy / Weak ⚠️ (12)
  * -------------------------------------------------------------------------*/
 hash_adapter_t *has160_adapter_create(void);
