@@ -1013,7 +1013,7 @@ CREATE TABLE protocol_integration (
 | ---: | --- | ---: |
 | 1 | encoding | 21 |
 | 2 | checksum | 13 |
-| 3 | hash | 65 |
+| 3 | hash | 51 |
 | 4 | xof | 14 |
 | 5 | pw-kdf | 19 |
 | 6 | block-cipher | 43 |
@@ -1022,7 +1022,7 @@ CREATE TABLE protocol_integration (
 | 9 | aead | 38 |
 | 10 | mac | 26 |
 | 11 | kdf | 23 |
-| 12 | key-agree | 18 |
+| 12 | key-agree | 11 |
 | 13 | signature | 18 |
 | 14 | pke | 3 |
 | 15 | pqc-kem | 28 |
@@ -1031,7 +1031,7 @@ CREATE TABLE protocol_integration (
 | 18 | threshold | 36 |
 | 19 | lightweight | 11 |
 | 20 | drbg | 3 |
-| 21 | rng | 11 |
+| 21 | rng | 12 |
 | 22 | zkp | 16 |
 | 23 | protocol-prim | 25 |
 | 24 | pki-util | 40 |
@@ -1146,3 +1146,51 @@ CREATE TABLE protocol_integration (
 ---
 
 *Inventory compiled: 2026-05-09. Status reflects NIST FIPS 203/204/205 final standards (August 2024), SP 800-232 (Ascon, 2024), and OpenSSL 3.5 PQC integration (April 2025).*
+
+---
+
+## Core Algorithm vs Wrapper Classification
+
+Short answer: no, the numbered inventory is not made only of core cryptographic algorithms. It has **538 numbered algorithm/surface rows**. Of those, **303** are core cryptographic algorithms or primitive-family surfaces, **126** are composed cryptographic constructions or protocol-level systems, **46** are supporting transforms or randomness infrastructure, and **63** are wrapper/interface/utility surfaces.
+
+The term `wrapper` should be read narrowly here: PKI utilities and hardware/provider interfaces are wrappers or integration surfaces. Encodings, checksums, and RNG infrastructure are not core algorithms either, but they are better described as support surfaces rather than wrappers.
+
+| Bucket | Count | Included categories |
+| --- | ---: | --- |
+| Core cryptographic algorithms / primitive families | 303 | `hash` 51, `xof` 14, `pw-kdf` 19, `block-cipher` 43, `stream-cipher` 26, `mac` 26, `kdf` 23, `key-agree` 11, `signature` 18, `pke` 3, `pqc-kem` 28, `pqc-sig` 23, `stateful-sig` 4, `lightweight` 11, `drbg` 3 |
+| Composed crypto constructions / protocol systems | 126 | `block-mode` 11, `aead` 38, `threshold` 36, `zkp` 16, `protocol-prim` 25 |
+| Supporting transforms / infrastructure | 46 | `encoding` 21, `checksum` 13, `rng` 12 |
+| Wrapper / interface / utility surfaces | 63 | `pki-util` 40, `hw-interface` 23 |
+| **Total numbered rows** | **538** | Matches rows `1` through `538` in this file |
+
+Detailed classification by category:
+
+| cat_id | Category | Count | Classification | Reason |
+| ---: | --- | ---: | --- | --- |
+| 1 | `encoding` | 21 | Support surface | Data representation, not cryptographic security. |
+| 2 | `checksum` | 13 | Support surface | Error detection / fast hashes, not cryptographic integrity. |
+| 3 | `hash` | 51 | Core algorithm | Unkeyed digest primitives. |
+| 4 | `xof` | 14 | Core algorithm | Extendable-output hash primitives. |
+| 5 | `pw-kdf` | 19 | Core algorithm | Password hashing / memory-hard KDF algorithms. |
+| 6 | `block-cipher` | 43 | Core algorithm | Standalone symmetric cipher primitives. |
+| 7 | `stream-cipher` | 26 | Core algorithm | Standalone stream cipher primitives. |
+| 8 | `block-mode` | 11 | Composed construction | Mode wrapped around a block cipher; not standalone security by itself. |
+| 9 | `aead` | 38 | Composed construction | Authenticated encryption composition or mode. |
+| 10 | `mac` | 26 | Core algorithm | Message authentication algorithms. |
+| 11 | `kdf` | 23 | Core algorithm | Key derivation algorithms. |
+| 12 | `key-agree` | 11 | Core algorithm | Key agreement algorithms. |
+| 13 | `signature` | 18 | Core algorithm | Classical digital signature algorithms. |
+| 14 | `pke` | 3 | Core algorithm | Classical public-key encryption / key transport algorithms. |
+| 15 | `pqc-kem` | 28 | Core algorithm | Post-quantum KEM algorithms. |
+| 16 | `pqc-sig` | 23 | Core algorithm | Post-quantum signature algorithms. |
+| 17 | `stateful-sig` | 4 | Core algorithm | Stateful hash-based signature algorithms. |
+| 18 | `threshold` | 36 | Composed construction | Multi-party or threshold protocols built from primitives. |
+| 19 | `lightweight` | 11 | Core algorithm | Lightweight crypto primitives and selected variants. |
+| 20 | `drbg` | 3 | Core algorithm | Deterministic random bit generator algorithms. |
+| 21 | `rng` | 12 | Support surface | Entropy sources, OS RNGs, and randomness infrastructure around DRBGs. |
+| 22 | `zkp` | 16 | Composed construction | Proof systems / protocol families rather than simple primitive cores. |
+| 23 | `protocol-prim` | 25 | Composed construction | Protocol framework primitives such as PAKEs, ratchets, and handshakes. |
+| 24 | `pki-util` | 40 | Wrapper / utility | Certificate, ASN.1, enrollment, and signing-container surfaces. |
+| 25 | `hw-interface` | 23 | Wrapper / interface | HSM, provider, secure enclave, TEE, and API integration surfaces. |
+
+Rows in **Cryptographic Libraries / Frameworks / Toolkits**, **Algorithm -> Library Cross-Reference**, and **Protocol Integration Reference** are not counted as core algorithms. They describe implementation containers, API mappings, and protocol usage of the numbered surfaces.
