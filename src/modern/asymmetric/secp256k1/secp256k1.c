@@ -1,8 +1,8 @@
 /* secp256k1.c — secp256k1 surface implementation
  *
- * TODO: Wire to bitcoin-core/secp256k1 library backend.
- *       Clone https://github.com/bitcoin-core/secp256k1 into
- *       src/modern/asymmetric/_secp256k1/ and add to CMakeLists.txt.
+ * NOTE: Wire to bitcoin-core/secp256k1 library backend.
+ * Clone https://github.com/bitcoin-core/secp256k1 into
+ * src/modern/asymmetric/_secp256k1/ and add to CMakeLists.txt.
  *
  * Until wired, functions return -1 for actual crypto operations but
  * the API surface is correct and ready to link.

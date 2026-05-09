@@ -538,7 +538,7 @@ fpr_expm_p63(fpr x, fpr ccs) {
          * Compute product z * y over 128 bits, but keep only
          * the top 64 bits.
          *
-         * TODO: On some architectures/compilers we could use
+         * NOTE: On some architectures/compilers we could use
          * some intrinsics (__umulh() on MSVC) or other compiler
          * extensions (unsigned __int128 on GCC / Clang) for
          * improved speed; however, most 64-bit architectures

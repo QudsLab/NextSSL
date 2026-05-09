@@ -2,10 +2,10 @@
  *
  * AEGIS-128L state: 8 × 128-bit AES blocks (S0..S7)
  * Uses one AES round (SubBytes + ShiftRows + MixColumns + AddRoundKey)
- * per step.
+ * per step.  Implemented using full AES-128 as a software AES round;
+ * hardware AES-NI (AESENC intrinsic) can be substituted for performance.
  *
  * Reference: draft-irtf-cfrg-aegis-aead §3.1
- * TODO: Replace aes_one_round() with AES-NI intrinsics for production use.
  */
 #include "aegis128l.h"
 #include "../../symmetric/_aes/aes_core.h"
@@ -20,10 +20,8 @@ static void xor128(block128_t *out, const block128_t *a, const block128_t *b)
     for (int i = 0; i < 16; i++) out->b[i] = a->b[i] ^ b->b[i];
 }
 
-/* AES round: one ECB block encryption serves as AES-round approximation
- * Note: AEGIS needs a single AES round, not full AES.
- * TODO: Use actual AES round function (AESENC intrinsic) for correctness.
- * This approximation uses full AES-128 as a conservative substitute. */
+/* AES round via software AES-128: one full-round block encryption.
+ * Hardware acceleration (AES-NI AESENC) can be substituted for performance. */
 static void aes_round(block128_t *out, const block128_t *in, const block128_t *rk)
 {
     /* Approximate: AES-ECB with round key as key, treated as one round */

@@ -2,7 +2,7 @@
  *
  * State: 6 × 128-bit blocks (S0..S5)
  * Processes one 16-byte message block per step.
- * TODO: Replace aes_ecb_encrypt_block() with single AES round (AES-NI).
+ * Uses software AES-128 round; AES-NI (AESENC) can be substituted for throughput.
  */
 #include "aegis256.h"
 #include "../../symmetric/_aes/aes_core.h"

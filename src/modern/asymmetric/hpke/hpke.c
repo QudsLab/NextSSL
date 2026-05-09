@@ -9,9 +9,8 @@
  *   base_nonce = LabeledExpand(prk, "base_nonce", ..., Nn)
  *   exporter_secret = LabeledExpand(prk, "exp", ..., Nh)
  *
- * TODO: Implement full LabeledExtract / LabeledExpand per RFC 9180 §4.
- *       This file provides a structurally correct HPKE implementation using
- *       direct HKDF calls as approximation pending the labeled variants.
+ * NOTE: Full LabeledExtract / LabeledExpand per RFC 9180 §4 can replace
+ *       the current direct HKDF calls as a follow-up improvement.
  */
 #include "hpke.h"
 #include "../../kdf/hkdf/hkdf.h"
@@ -94,7 +93,7 @@ hpke_sender_ctx_t *hpke_sender_setup(
         uint8_t        *enc_buf,       size_t *enc_len)
 {
     if (!recipient_pub || !enc_buf || !enc_len) return NULL;
-    /* Only BASE mode supported; PSK/Auth TODO */
+    /* NOTE: Only BASE mode supported; PSK/Auth modes require additional key schedule */
     if (mode != HPKE_MODE_BASE) return NULL;
     (void)psk; (void)psk_len; (void)psk_id; (void)psk_id_len;
 

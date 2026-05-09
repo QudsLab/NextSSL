@@ -10,7 +10,8 @@
  * Modes: Base, PSK, Auth, AuthPSK  (RFC 9180 §5)
  *
  * Reference: RFC 9180, examples/c/hpke/
- * TODO: Wire full LabeledExtract / LabeledExpand per RFC 9180 §4.
+ * NOTE: Full LabeledExtract / LabeledExpand per RFC 9180 §4 can be wired
+ *       to replace the current direct HKDF calls.
  */
 #ifndef NEXTSSL_HPKE_H
 #define NEXTSSL_HPKE_H

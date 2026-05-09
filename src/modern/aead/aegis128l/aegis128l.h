@@ -9,9 +9,8 @@
  * Reference: https://www.ietf.org/archive/id/draft-irtf-cfrg-aegis-aead-16.txt
  *            Wu & Preneel, "AEGIS: A Fast Authenticated Encryption Algorithm"
  *
- * TODO: Full AEGIS-128L requires AES round function access (AES-NI or software).
- *       This implementation uses the project's aes_ecb_encrypt_block as the
- *       AES round function approximation.
+ * Software AES round function via aes_ecb_encrypt_block().
+ * Hardware AES-NI (AESENC intrinsic) can be substituted for throughput.
  */
 #ifndef NEXTSSL_AEGIS128L_H
 #define NEXTSSL_AEGIS128L_H

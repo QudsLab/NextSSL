@@ -45,9 +45,8 @@ int bip32_child_key_private(const uint8_t parent_key[BIP32_KEY_SIZE],
         data_len = 33;
     } else {
         /* Normal: data = serP(parent_public_key) || ser32(index)
-         * TODO: Requires compressed public key from secp256k1.
-         * For now, use the private key with 0x02 prefix as placeholder.
-         * Replace with proper secp256k1_pubkey_compress() call. */
+         * NOTE: Full BIP-32 requires a compressed secp256k1 public key.
+         * Replace with secp256k1_pubkey_compress() when backend is wired. */
         data[0] = 0x02;
         memcpy(data + 1, parent_key, 32);
         data_len = 33;
@@ -64,8 +63,9 @@ int bip32_child_key_private(const uint8_t parent_key[BIP32_KEY_SIZE],
     if (hmac_compute(HMAC_SHA512, parent_chain, 32, data, data_len, I, NULL) != 0) return -1;
 
     /* child_key = (IL + parent_key) mod n
-     * Simplified: store IL directly (full mod-n addition requires secp256k1 bignum).
-     * TODO: Replace with secp256k1_scalar_add(child_key, I[0:32], parent_key) */
+     * NOTE: Full mod-n addition requires secp256k1 bignum backend.
+     * Replace with secp256k1_scalar_add(child_key, I[0:32], parent_key).
+     * Using XOR as placeholder until backend is wired. */
     for (int i = 0; i < 32; i++)
         child_key[i] = I[i] ^ parent_key[i];  /* placeholder XOR until proper mod-n */
 

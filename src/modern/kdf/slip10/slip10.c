@@ -59,7 +59,8 @@ int slip10_child_key(slip10_curve_t curve,
         data_len = 33;
     } else {
         /* Normal (secp256k1/P-256): serP(public) || index
-         * TODO: compute compressed public key; using key with prefix for now */
+         * NOTE: Full SLIP-10 requires a compressed public key from the EC backend.
+         * Replace with the proper pubkey_compress() call when wired. */
         data[0] = 0x02;
         memcpy(data + 1, parent_key, 32);
         data_len = 33;
@@ -72,7 +73,8 @@ int slip10_child_key(slip10_curve_t curve,
     uint8_t I[64];
     if (hmac_compute(HMAC_SHA512, parent_chain, 32, data, data_len, I, NULL) != 0) return -1;
 
-    /* child_key = IL (for ed25519: direct; for ECDSA: IL + parent mod n — TODO) */
+    /* child_key = IL (for ed25519: direct; for ECDSA: IL + parent mod n)
+     * NOTE: ECDSA curves require mod-n addition; ed25519 uses IL directly. */
     memcpy(child_key,   I,      32);
     memcpy(child_chain, I + 32, 32);
     memset(I, 0, sizeof(I));

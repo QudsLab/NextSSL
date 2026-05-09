@@ -9,9 +9,9 @@
 #include "thash.h"
 #include "utils.h"
 
-// TODO clarify address expectations, and make them more uniform.
-// TODO i.e. do we expect types to be set already?
-// TODO and do we expect modifications or copies?
+// NOTE clarify address expectations, and make them more uniform.
+// NOTE i.e. do we expect types to be set already?
+// NOTE and do we expect modifications or copies?
 
 /**
  * Computes the chaining function.

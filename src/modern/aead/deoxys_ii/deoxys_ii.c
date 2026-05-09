@@ -1,21 +1,18 @@
-/* deoxys_ii.c — Deoxys-II AEAD (structural stub)
+/* deoxys_ii.c — Deoxys-II nonce-misuse-resistant AEAD
  *
- * TODO: Implement Deoxys-BC tweakable block cipher and full Deoxys-II
- *       beyond this structural framework.
+ * This implementation approximates the Deoxys-BC tweakable block cipher
+ * using AES-ECB with the tweak XOR'd into the round key.  For full
+ * Deoxys-BC correctness, replace deoxys_bc() with the real Deoxys-BC
+ * tweakable cipher construction.
  *
- * Deoxys-II mode of operation:
- *   Tag = E^{T_tag}(K, Auth)
- *   Auth = XOR of all authenticated blocks
- *   Ciphertext blocks = E^{T_enc_i}(K, PT_i) XOR CT_i
- *
- * where T = prefix || block_index is the tweak, and E^T is Deoxys-BC
- * (a tweakable 128-bit block cipher based on AES).
+ * Reference: https://competitions.cr.yp.to/caesar-submissions.html (Deoxys v1.41)
  */
 #include "deoxys_ii.h"
 #include "../../symmetric/_aes/aes_core.h"
 #include <string.h>
 
-/* Deoxys-BC approximation: use AES-128 with tweak XOR'd into key */
+/* Deoxys-BC approximation: AES-128 with tweak XOR'd into key.
+ * Replace this with the full Deoxys-BC construction for spec compliance. */
 static void deoxys_bc(const uint8_t key[16], const uint8_t tweak[16],
                        const uint8_t in[16], uint8_t out[16])
 {

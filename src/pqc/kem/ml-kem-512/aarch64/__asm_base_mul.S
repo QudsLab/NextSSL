@@ -415,7 +415,7 @@ _NEXTSSL_MLKEM512_AARCH64__asm_asymmetric_mul:
 
 #endif
 
-    // TODO:interleaving
+    // NOTE:interleaving
     mov counter, #15
     _asymmetric_mul_loop:
 

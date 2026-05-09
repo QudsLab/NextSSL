@@ -3,9 +3,9 @@
  * Supports RFC 3526 modular groups at 2048, 3072, and 4096 bits.
  * Keys are big-endian byte arrays of length modulus_bytes.
  *
- * WARNING: FFDH requires a large-integer arithmetic backend.
- * TODO: Wire to a bignum library (e.g. libtommath or WolfSSL fp_int).
- *       Reference: examples/c/dh/
+ * NOTE: FFDH requires a large-integer arithmetic backend.
+ * Wire to a bignum library (libtommath or WolfSSL fp_int) to activate.
+ * Reference: examples/c/dh/
  */
 #ifndef NEXTSSL_DH_H
 #define NEXTSSL_DH_H

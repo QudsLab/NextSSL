@@ -16,6 +16,7 @@
 
 
 #include <assert.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -64,9 +65,9 @@ hash_state_init (struct hash_state *s, const struct balloon_options *opts,
   s->has_mixed = false;
   s->opts = opts;
 
-  // TODO: Make sure that this multiplication doesn't overflow 
-  // (or use calloc or realloc)
-  s->buffer = malloc (s->n_blocks * BLOCK_SIZE);
+  /* Guard against size_t overflow before allocating */
+  if (s->n_blocks > SIZE_MAX / BLOCK_SIZE) return BALLOON_MALLOC;
+  s->buffer = calloc (s->n_blocks, BLOCK_SIZE);
 
   int error;
   if ((error = bitstream_init (&s->bstream)))

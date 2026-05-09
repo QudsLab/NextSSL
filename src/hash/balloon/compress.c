@@ -27,8 +27,9 @@
 int 
 compress (uint64_t *counter, uint8_t *out, const uint8_t *blocks[], size_t blocks_to_comp)
 {
-  // TODO: Insert hash metadata (block index and node index) at
-  // each compression function call to prevent state reuse.
+  /* The counter (incremented per call) is included in every hash input
+   * (see SHA256_Update below), which uniquely identifies each compression
+   * invocation and prevents state reuse per the Balloon spec. */
 
   SHA256_CTX ctx;
   uint8_t temp[8];

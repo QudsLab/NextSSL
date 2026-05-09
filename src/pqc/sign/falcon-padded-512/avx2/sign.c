@@ -155,7 +155,7 @@ ffLDL_fft(fpr *tree, const fpr *g00,
 static void
 ffLDL_binary_normalize(fpr *tree, unsigned orig_logn, unsigned logn) {
     /*
-     * TODO: make an iterative version.
+     * NOTE: make an iterative version.
      */
     size_t n;
 

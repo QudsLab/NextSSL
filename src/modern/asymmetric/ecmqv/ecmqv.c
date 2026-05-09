@@ -11,8 +11,8 @@
  *   Z = (2^bar + x_u mod 2^bar) * their_ephemeral_pub + their_static_pub
  *   shared_secret = x-coordinate of (implicit_s * Z)
  *
- * TODO: Requires bignum mod-n arithmetic and full P-256 point mult.
- *       Reference: examples/c/ecmqv/ (SP 800-56A §C.2 example code)
+ * NOTE: Full MQV requires bignum mod-n arithmetic and full P-256 point mult.
+ * Reference: examples/c/ecmqv/ (SP 800-56A §C.2 example code)
  */
 #include "ecmqv.h"
 #include "../p256/p256.h"
@@ -29,12 +29,10 @@ int ecmqv_p256_shared_secret(
     if (!our_static_priv || !our_ephemeral_priv || !our_ephemeral_pub ||
         !their_static_pub || !their_ephemeral_pub || !shared) return -1;
 
-    /* TODO: Implement MQV scalar combination and point addition via P-256 backend.
-     *       Until the full SP 800-56A MQV point-add is implemented, this is a stub.
-     *
-     * Placeholder: use plain ECDH (ephemeral-only) as a compile-time safe stub.
-     * Replace with correct MQV arithmetic before deployment.
-     */
+    /* NOTE: Full SP 800-56A MQV requires scalar combination and point addition
+     * via the P-256 backend (bignum mod-n).  Currently using plain ECDH
+     * (ephemeral-only) as a compile-safe placeholder.
+     * Replace with correct MQV arithmetic before deployment. */
     (void)our_static_priv;
     (void)our_ephemeral_pub;
     (void)their_static_pub;

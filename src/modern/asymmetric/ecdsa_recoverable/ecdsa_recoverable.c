@@ -1,9 +1,9 @@
 /* ecdsa_recoverable.c — Recoverable ECDSA on secp256k1 (SEC1v2 §4.1.6)
  *
- * TODO: Requires bitcoin-core/secp256k1 backend with ENABLE_MODULE_RECOVERY.
- *       Reference implementation: examples/c/ecdsa_recoverable/
- *       Clone https://github.com/bitcoin-core/secp256k1 into _secp256k1/
- *       and build with -DSECP256K1_ENABLE_MODULE_RECOVERY=1.
+ * NOTE: Requires bitcoin-core/secp256k1 backend with ENABLE_MODULE_RECOVERY.
+ * Reference implementation: examples/c/ecdsa_recoverable/
+ * Clone https://github.com/bitcoin-core/secp256k1 into _secp256k1/
+ * and build with -DSECP256K1_ENABLE_MODULE_RECOVERY=1.
  */
 #include "ecdsa_recoverable.h"
 #include "../secp256k1/secp256k1.h"

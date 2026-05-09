@@ -1,7 +1,11 @@
 /* hkdf_expand_label.c — HKDF-Expand-Label (RFC 8446 §7.1) */
 #include "hkdf_expand_label.h"
 #include "../hkdf/hkdf.h"
+#include "../../../hash/interface/hash_registry.h"
 #include <string.h>
+
+/* sha384_ops is declared in hash_registry.h */
+extern const hash_ops_t sha384_ops;
 
 /* Build the HkdfLabel encoding and call HKDF-Expand */
 static int expand_label_inner(const uint8_t *secret, size_t secret_len,
@@ -56,8 +60,7 @@ int hkdf_expand_label_sha384(const uint8_t *secret,  size_t secret_len,
                                const uint8_t *context, size_t context_len,
                                uint8_t       *out,     size_t out_len)
 {
-    /* SHA-384 hash_ops — requires a registered SHA-384 hash_ops_t pointer.
-     * TODO: Wire to sha384_hash_ops once hash_ops vtable for SHA-384 is defined. */
+    /* SHA-384 variant: use sha384_ops vtable (RFC 8446 §7.1 with SHA-384) */
     return expand_label_inner(secret, secret_len, label, label_len,
-                               context, context_len, out, out_len, NULL);
+                               context, context_len, out, out_len, &sha384_ops);
 }

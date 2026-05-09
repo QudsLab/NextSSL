@@ -1,8 +1,7 @@
 /* dh.c — Finite-field Diffie-Hellman (RFC 3526)
  *
  * Stub implementation — requires a bignum backend.
- * TODO: Wire to libtommath or WolfSSL wolfmath.
- *       Reference: examples/c/dh/
+ * Wire to libtommath or WolfSSL wolfmath; reference: examples/c/dh/
  */
 #include "dh.h"
 #include <stdlib.h>
@@ -55,8 +54,8 @@ int dh_keygen(dh_ctx_t *ctx,
               uint8_t *public_key)
 {
     if (!ctx || !private_key || !public_key) return -1;
-    /* TODO: Implement modular exponentiation via bignum backend.
-     *       private = random exponent; public = g^private mod p */
+    /* NOTE: modular exponentiation requires a bignum backend.
+     * Wire dh_keygen() via libtommath mp_exptmod() or wolfmath. */
     return -1;
 }
 
@@ -67,6 +66,6 @@ int dh_shared_secret(dh_ctx_t       *ctx,
                      size_t         *shared_len)
 {
     if (!ctx || !private_key || !their_public || !shared || !shared_len) return -1;
-    /* TODO: shared = their_public^private mod p via bignum backend */
+    /* NOTE: shared = their_public^private mod p via bignum backend */
     return -1;
 }

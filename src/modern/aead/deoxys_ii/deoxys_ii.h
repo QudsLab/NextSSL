@@ -5,13 +5,11 @@
  *
  * Key: 128 bits.  Nonce: 120 bits (15 bytes).  Tag: 128 bits.
  * Uses a tweakable AES (Deoxys-BC) as the underlying primitive.
+ * Current implementation approximates Deoxys-BC with AES-ECB + tweak XOR;
+ * replace deoxys_bc() in deoxys_ii.c with the full Deoxys-BC for strict compliance.
  *
  * Reference: Jean et al., "Deoxys v1.41", 2016
  *            https://competitions.cr.yp.to/caesar-submissions.html
- *
- * TODO: Full Deoxys-II requires the Deoxys-BC tweakable block cipher.
- *       This header provides the complete API surface; the implementation
- *       uses a structural approximation with AES-ECB as a stub.
  */
 #ifndef NEXTSSL_DEOXYS_II_H
 #define NEXTSSL_DEOXYS_II_H

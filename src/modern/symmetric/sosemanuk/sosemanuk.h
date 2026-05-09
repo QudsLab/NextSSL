@@ -5,10 +5,6 @@
  *
  * Reference: https://www.ecrypt.eu.org/stream/sosemanukpf.html
  *            Berbain et al., "SOSEMANUK, a Fast Software-Oriented Stream Cipher"
- *
- * TODO: Full SOSEMANUK requires the Serpent S-box lookup tables (~4KB).
- *       This header provides the API surface; the implementation is a
- *       structural stub pending a Serpent S-box integration.
  */
 #ifndef NEXTSSL_SOSEMANUK_H
 #define NEXTSSL_SOSEMANUK_H

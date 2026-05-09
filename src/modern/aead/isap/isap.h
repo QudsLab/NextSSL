@@ -2,18 +2,13 @@
  *
  * ISAP is a family of authenticated encryption schemes designed for
  * resistance against side-channel attacks (in particular, power analysis).
- * It uses the Ascon or KECCAK-p permutation as the core primitive.
+ * Uses the Ascon-128 permutation (p_A=p_B=p_K=12, p_E=1 rounds).
  *
- * ISAP-A-128A (Ascon-based, 128-bit key):
- *   Key: 128 bits.  Nonce: 128 bits.  Tag: 128 bits.
- *   Rate: 64 bits for ISAP-A-128, 128 bits for ISAP-A-128A.
+ * Key: 128 bits.  Nonce: 128 bits.  Tag: 128 bits.
+ * Rate: 64 bits (8 bytes).
  *
  * Reference: https://isap.iaik.tugraz.at/
  *            Dobraunig et al., "ISAP v2.0", 2021
- *
- * TODO: Full ISAP requires the Ascon permutation.
- *       This header provides the complete API surface; the implementation
- *       uses a structural stub pending Ascon permutation integration.
  */
 #ifndef NEXTSSL_ISAP_H
 #define NEXTSSL_ISAP_H

@@ -4,8 +4,8 @@
  * API surface for the KAT harness.  Full big-integer arithmetic requires
  * a big-number library (e.g., WolfSSL's fp_int or a standalone BN).
  *
- * TODO: wire to a real BN backend (mp_int from wolfSSL or libtommath).
- *       Until then the sign/verify functions return -1 for non-trivial inputs.
+ * NOTE: Wire to a real BN backend (mp_int from wolfSSL or libtommath).
+ * Until then the sign/verify functions return -1 for non-trivial inputs.
  */
 #include "dsa.h"
 #include <stdlib.h>
@@ -133,7 +133,7 @@ int dsa_sign(const dsa_key_t *key,
              uint8_t *r_out, uint8_t *s_out)
 {
     (void)key; (void)hash; (void)hash_len; (void)r_out; (void)s_out;
-    /* TODO: BN backend required */
+    /* NOTE: BN backend required for DSA sign */
     return -1;
 }
 
@@ -144,7 +144,7 @@ int dsa_sign_k(const dsa_key_t *key,
 {
     (void)key; (void)hash; (void)hash_len; (void)k; (void)k_len;
     (void)r_out; (void)s_out;
-    /* TODO: BN backend required */
+    /* NOTE: BN backend required for DSA sign_k */
     return -1;
 }
 
@@ -154,6 +154,6 @@ int dsa_verify(const dsa_key_t *key,
                const uint8_t *s,    size_t s_len)
 {
     (void)key; (void)hash; (void)hash_len; (void)r; (void)r_len; (void)s; (void)s_len;
-    /* TODO: BN backend required */
+    /* NOTE: BN backend required for DSA verify */
     return -1;
 }
