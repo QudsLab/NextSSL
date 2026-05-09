@@ -28,12 +28,12 @@
       <br>
       <font color="#5db8a6"><b>CRYPTO ARCHIVE + SAFETY-PROFILE TOOLKIT</b></font>
       <h1><font color="#f4fffd">NextSSL</font></h1>
-      <h3><font color="#cdebe6">A wide cryptographic archive with strict, inspectable defaults.</font></h3>
+      <h3><font color="#cdebe6">A wide crypto archive with safe defaults you can inspect.</font></h3>
       <p>
         <font color="#d9d4cc">
-          NextSSL is being built to sit in the top conversation for crypto libraries by combining
-          archive breadth, explicit safety profiles, portable targets, and a review-first promotion model.
-          It is ambitious by design and honest about its current under-development state.
+          NextSSL is being built as a large crypto library for research, testing, and safer defaults.
+          It tracks many algorithms, supports many platforms, and keeps risky choices away from normal users.
+          The project is still under development, so the README is clear about what is planned and what is ready.
         </font>
       </p>
       <br>
@@ -50,7 +50,7 @@
   </tr>
 </table>
 
-> **Status:** under active development. Planned surfaces, target badges, and profile names are roadmap and inventory signals, not production-readiness or audit claims.
+> **Status:** under active development. Planned algorithms, target badges, and profile names show the roadmap. They do not mean the project is production-ready or audited.
 
 ## Why NextSSL
 
@@ -58,18 +58,18 @@
   <tr>
     <td bgcolor="#181715">
       <font color="#5db8a6"><b>TOP-TIER DIRECTION</b></font><br>
-      <font color="#f4fffd"><b>Compete on breadth without weakening defaults.</b></font><br>
-      <font color="#cdebe6">Most crypto libraries optimize either production stability or research coverage. NextSSL is designed to make that separation explicit: broad catalog inside, strict profile outside.</font>
+      <font color="#f4fffd"><b>Many algorithms, but safer defaults.</b></font><br>
+      <font color="#cdebe6">NextSSL can keep many algorithms in one place without making all of them default choices. The archive can be wide, while the default profile stays careful.</font>
     </td>
     <td bgcolor="#252320">
       <font color="#5db8a6"><b>SECURITY POSTURE</b></font><br>
-      <font color="#f4fffd"><b>Trust is earned by policy, review, and test vectors.</b></font><br>
-      <font color="#cdebe6">The project treats defaults as a smaller, reviewed surface. Experimental and legacy algorithms belong in the archive until a policy intentionally selects them.</font>
+      <font color="#f4fffd"><b>Defaults should be reviewed.</b></font><br>
+      <font color="#cdebe6">Experimental and old algorithms can stay in the archive. They should not become normal defaults unless the project clearly allows them.</font>
     </td>
     <td bgcolor="#1f3430">
       <font color="#5db8a6"><b>PORTABILITY</b></font><br>
-      <font color="#f4fffd"><b>Built with cross-platform reach in mind.</b></font><br>
-      <font color="#cdebe6">The current layout tracks desktop, mobile, Linux variants, Windows toolchains, and WASM targets from the beginning.</font>
+      <font color="#f4fffd"><b>Built for many platforms.</b></font><br>
+      <font color="#cdebe6">The current layout tracks desktop, mobile, Linux, Windows, and WASM targets from the start.</font>
     </td>
   </tr>
 </table>
@@ -79,17 +79,17 @@
 <table>
   <tr>
     <td bgcolor="#181715">
-      <h3><font color="#f4fffd">Wide archive. Narrow defaults. Clear promotion path.</font></h3>
+      <h3><font color="#f4fffd">Big archive. Small safe-default set. Clear review path.</font></h3>
       <p>
         <font color="#d9d4cc">
-          NextSSL is organized around three domains: <code>experimental</code>,
-          <code>useful</code>, and <code>safest-main</code>. Algorithms can be cataloged,
-          studied, benchmarked, and tested without automatically becoming safe defaults.
+          NextSSL is organized around three areas: <code>experimental</code>,
+          <code>useful</code>, and <code>safest-main</code>. Algorithms can be listed,
+          studied, tested, and improved without becoming safe defaults by accident.
         </font>
       </p>
       <p>
         <font color="#cdebe6">
-          The guiding rule is simple: breadth belongs in the archive; trust belongs in the defaults.
+          Simple rule: keep the archive wide, and keep defaults strict.
         </font>
       </p>
     </td>
@@ -127,7 +127,7 @@ Current archive inventory: **250 planned algorithm surfaces across 8 groups**.
 | DRBG / RNG | 7 | DRBGs and randomness infrastructure |
 | Stateful HBS | 2 | LMS and XMSS |
 
-Entries marked `NEW` in [ALGO.md](ALGO.md) are planned surfaces to add or expose. They are not claims of completed implementation.
+Entries marked `NEW` in [ALGO.md](ALGO.md) are planned items. They do not mean the code is finished.
 
 ## Safety Profiles
 
@@ -135,25 +135,25 @@ Entries marked `NEW` in [ALGO.md](ALGO.md) are planned surfaces to add or expose
   <tr>
     <td bgcolor="#181715">
       <font color="#5db8a6"><b>SAFEST</b></font><br>
-      <font color="#f4fffd"><b>Conservative defaults for normal users.</b></font><br>
-      <font color="#cdebe6">The default experience should prefer reviewed, modern primitives and avoid surprising legacy choices.</font>
+      <font color="#f4fffd"><b>Safe defaults for normal users.</b></font><br>
+      <font color="#cdebe6">The default profile should use modern, reviewed choices and avoid old or risky ones.</font>
     </td>
     <td bgcolor="#252320">
       <font color="#5db8a6"><b>COMPATIBILITY</b></font><br>
-      <font color="#f4fffd"><b>Migration support with visible warnings.</b></font><br>
-      <font color="#cdebe6">Legacy use cases can be represented without pretending they are ideal defaults.</font>
+      <font color="#f4fffd"><b>Old-system support with warnings.</b></font><br>
+      <font color="#cdebe6">Older algorithms can be available for compatibility, but they should be clearly marked.</font>
     </td>
     <td bgcolor="#1f3430">
       <font color="#5db8a6"><b>RESEARCH</b></font><br>
-      <font color="#f4fffd"><b>Experimental algorithms with review hooks.</b></font><br>
-      <font color="#cdebe6">Researchers can inspect candidates, add references, and work toward promotion criteria.</font>
+      <font color="#f4fffd"><b>Experimental algorithms for study.</b></font><br>
+      <font color="#cdebe6">Researchers can inspect candidates, add references, and help move good choices forward.</font>
     </td>
   </tr>
 </table>
 
 | Profile | Purpose |
 | --- | --- |
-| `safest` | Conservative defaults for normal users |
+| `safest` | Safe defaults for normal users |
 | `compatibility` | Legacy and migration support with warnings |
 | `research` | Experimental algorithms and review hooks |
 | `archive` | Full catalog inspection |
@@ -164,18 +164,17 @@ Entries marked `NEW` in [ALGO.md](ALGO.md) are planned surfaces to add or expose
 <table>
   <tr>
     <td bgcolor="#181715">
-      <h3><font color="#f4fffd">Designed for the top tier, measured honestly.</font></h3>
+      <h3><font color="#f4fffd">Aiming high, while being honest.</font></h3>
       <p>
         <font color="#d9d4cc">
           NextSSL is not claiming to replace OpenSSL, BoringSSL, libsodium, Botan, Crypto++,
-          wolfSSL, or mbedTLS today. Those projects remain far ahead in audit history,
-          production deployment, and maturity.
+          wolfSSL, or mbedTLS today. Those projects are older, more tested, and used in real systems.
         </font>
       </p>
       <p>
         <font color="#cdebe6">
-          The ambition is different: become a standout crypto toolkit for researchers and builders
-          who need broad algorithm visibility plus strict profile-based defaults.
+          The goal is different: become a useful crypto toolkit for people who want a big algorithm list
+          plus strict defaults.
         </font>
       </p>
     </td>
@@ -200,7 +199,7 @@ Entries marked `NEW` in [ALGO.md](ALGO.md) are planned surfaces to add or expose
   </tr>
 </table>
 
-The current `bin` layout contains **29 target variants**. Build documentation is still evolving; start with [BUILD.md](BUILD.md).
+The current `bin` layout contains **29 target variants**. Build docs are still changing; start with [BUILD.md](BUILD.md).
 
 | Family | Targets |
 | --- | --- |
@@ -216,12 +215,12 @@ The current `bin` layout contains **29 target variants**. Build documentation is
 
 <table>
   <tr>
-    <td bgcolor="#181715"><a href="PLAN.md"><b>PLAN.md</b></a><br><font color="#cdebe6">Roadmap, profiles, lifecycle, safety labels, contribution model.</font></td>
+    <td bgcolor="#181715"><a href="PLAN.md"><b>PLAN.md</b></a><br><font color="#cdebe6">Roadmap, profiles, safety labels, and contribution flow.</font></td>
     <td bgcolor="#252320"><a href="ALGO.md"><b>ALGO.md</b></a><br><font color="#cdebe6">Complete current inventory and planned surfaces.</font></td>
     <td bgcolor="#1f3430"><a href="BUILD.md"><b>BUILD.md</b></a><br><font color="#cdebe6">Build notes and target guidance.</font></td>
   </tr>
   <tr>
-    <td bgcolor="#1f3430"><a href="CONTRIBUTING.md"><b>CONTRIBUTING.md</b></a><br><font color="#cdebe6">Contribution guide for adding or reviewing surfaces.</font></td>
+    <td bgcolor="#1f3430"><a href="CONTRIBUTING.md"><b>CONTRIBUTING.md</b></a><br><font color="#cdebe6">How to add and review algorithms.</font></td>
     <td bgcolor="#252320"><a href="SECURITY.md"><b>SECURITY.md</b></a><br><font color="#cdebe6">Security reporting policy.</font></td>
     <td bgcolor="#181715"><a href="LICENSE"><b>LICENSE</b></a><br><font color="#cdebe6">Apache-2.0.</font></td>
   </tr>
@@ -275,8 +274,8 @@ The current `bin` layout contains **29 target variants**. Build documentation is
 <table>
   <tr>
     <td bgcolor="#5db8a6" align="center">
-      <h2><font color="#181715">Breadth belongs in the archive. Trust belongs in the defaults.</font></h2>
-      <p><font color="#181715"><b>NextSSL is building toward top-tier crypto-library status by making research breadth and safety policy visible from the first page.</b></font></p>
+      <h2><font color="#181715">Keep the archive wide. Keep the defaults strict.</font></h2>
+      <p><font color="#181715"><b>NextSSL is building toward top-tier crypto-library status with a big algorithm catalog and clear safety profiles.</b></font></p>
     </td>
   </tr>
 </table>
