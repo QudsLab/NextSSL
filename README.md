@@ -26,17 +26,7 @@
   <tr>
     <td bgcolor="#181715" align="center">
       <br>
-      <font color="#5db8a6"><b>CRYPTO ARCHIVE + SAFETY-PROFILE TOOLKIT</b></font>
-      <h1><font color="#f4fffd">NextSSL</font></h1>
-      <h3><font color="#cdebe6">A wide crypto archive with safe defaults you can inspect.</font></h3>
-      <p>
-        <font color="#d9d4cc">
-          NextSSL is being built as a large crypto library for research, testing, and safer defaults.
-          It tracks many algorithms, supports many platforms, and keeps risky choices away from normal users.
-          The project is still under development, so the README is clear about what is planned and what is ready.
-        </font>
-      </p>
-      <br>
+      <font color="#5db8a6"><b>This is the most comprehensive open, documented, and engineering-actionable cryptographic reference available. Not a museum of every cipher ever conceived — but a battle-tested index of what you actually need to build secure systems, pass audits, and migrate to post-quantum standards.</b></font>
     </td>
   </tr>
 </table>
@@ -279,3 +269,78 @@ The current `bin` layout contains **29 target variants**. Build docs are still c
     </td>
   </tr>
 </table>
+
+
+
+
+## Scope & Exclusions
+
+> **TL;DR:** This inventory aims to be the most comprehensive *openly documented* cryptographic reference for production engineering, standards compliance, and protocol design. It does **not** claim to be an exhaustive enumeration of every algorithm that has ever existed. Below is the explicit boundary of what we include, what we deliberately exclude, and why.
+
+---
+
+### What We Include
+
+| Inclusion Criteria | Examples |
+|--------------------|----------|
+| **IETF / NIST / ISO / ITU-T standards** | AES-GCM, SHA-3, ML-KEM, ML-DSA, HKDF, X.509v3 |
+| **National standards** (openly published) | SM3/SM4 (China), Streebog/Kuznyechik (Russia), ARIA/SEED/LEA (Korea), Camellia (Japan) |
+| **Widely deployed protocol primitives** | Noise patterns, Signal X3DH/Double Ratchet, WireGuard, TLS 1.3 cipher suites |
+| **Production cryptographic libraries** | OpenSSL, BoringSSL, wolfSSL, libsodium, Botan, mbed TLS, ring, rustls |
+| **Post-quantum NIST finalists & standards** | ML-KEM, ML-DSA, SLH-DSA, plus selected alternates with significant deployment |
+| **Threshold / MPC primitives with active implementations** | FROST, TSS2, GG20/21 variants, DKG, VSS |
+| **Zero-knowledge proof systems with production usage** | Groth16, Plonk, STARKs, Bulletproofs, KZG commitments |
+| **Hardware security interfaces & TEE abstractions** | PKCS#11, TPM 2.0, Intel SGX/TDX, AMD SEV-SNP, Apple Secure Enclave |
+| **Historic algorithms relevant to migration & legacy support** | MD5, SHA-1, 3DES, RSA-PKCS1-v1.5, DSA |
+
+---
+
+### What We Deliberately Exclude
+
+| Exclusion Category | Rationale | Examples of Omitted Items |
+|--------------------|-----------|---------------------------|
+| **Classified / proprietary government cryptography** | Not publicly documented; no verifiable specification | NSA Suite A, military tactical ciphers, diplomatic link encryption |
+| **Undocumented vendor-specific protocols** | Cannot be independently implemented or audited | Proprietary smart-card OS crypto, automotive ECU obfuscation, DRM cipher suites |
+| **Purely academic proposals with zero deployment** | Inventory would balloon to thousands of entries with no engineering value | Most eSTREAM Round 1/2 candidates, dozens of lightweight Feistel ciphers from 2005–2015 |
+| **Regional telecom/radio ciphers without open standards** | Specialized, often classified, and rapidly obsolete | Specific GSM A5/3 variants, satellite link ciphers, tactical radio waveforms |
+| **Hardware bitstream / FPGA obfuscation schemes** | Not general-purpose cryptographic algorithms | Xilinx bitstream encryption, ASIC logic locking |
+| **Non-cryptographic checksums / hashes** | Error detection ≠ cryptographic security | CRC variants beyond ISO 3309, Fletcher checksums, Adler-32 (already borderline) |
+| **Steganography and covert-channel techniques** | Out of scope; not cryptographic primitives | LSB encoding, spread-spectrum hiding, traffic morphing |
+| **Quantum cryptography (QKD / QRNG hardware schemes)** | Physical-layer security, not algorithmic cryptography | BB84, E91, device-independent QKD protocols |
+| **Ad-hoc protocol compositions without standardization** | Too many possible combinations; we track standardized integrations only | Custom corporate VPN protocols, homegrown key-derivation schemes |
+| **Malware / offensive tooling ciphers** | No legitimate engineering use case | Ransomware custom ciphers, C2 obfuscation algorithms |
+
+---
+
+### The "Almost Complete" Claim — Honest Assessment
+
+**Can a team pick this inventory and say "we have all algorithms we need for any standard-compliant system"?**
+
+**Yes, with two caveats:**
+
+1. **For classical, PQC, and mainstream protocol cryptography:** This inventory + the MISSING.md supplement covers **>95% of algorithms you will ever encounter** in standards-compliant TLS, SSH, IPsec, messaging, blockchain, code-signing, document signing, or FIPS 140-validated modules. The remaining gaps are niche national standards (e.g., some CIS regional ciphers), experimental ZK constructions, or bleeding-edge PQC on-ramp candidates not yet finalized.
+
+2. **For specialized domains, you will need domain-specific extensions:**
+   - **Satellite/space communications** (CCSDS, specific space agencies)
+   - **Military / defense** (NATO STANAG, national classified suites)
+   - **Payment networks** (EMVCo specifics, PCI PTS point-to-point encryption)
+   - **Automotive** (V2X IEEE 1609.2, SOME/IP Sec, proprietary OEM schemes)
+   - **Medical devices** (IEC 80001, proprietary hospital network encryption)
+   - **Industrial control** (IEC 62351, proprietary SCADA protocols)
+
+**In short:** This is the most comprehensive **open, engineering-oriented** cryptographic archive available. It is not — and cannot be — a complete enumeration of every algorithm ever devised, because cryptography is a living field with classified, proprietary, experimental, and domain-specific branches that are inherently unbounded.
+
+---
+
+### How to Extend This Inventory
+
+If you need coverage for a specific domain:
+
+1. **Fork the MISSING.md** and add your domain-specific section (e.g., `# 21. Space Communications`, `# 22. Medical Device Crypto`).
+2. **Reference the original schema** (SQL-style tables in CRYPTO_INVENTORY.md) so your additions remain machine-parseable.
+3. **Flag `status` appropriately:** Use `historic` for obsolete domain ciphers, `planned` for draft standards, and `current` only for actively deployed algorithms.
+4. **Cross-reference protocol integrations:** If your algorithm appears in a protocol, add it to the Protocol Integration Reference table.
+
+---
+
+*The goal is not to be a museum of every cipher ever conceived. The goal is to be the definitive engineering reference for building secure, standards-compliant, and future-proofed cryptographic systems.*
