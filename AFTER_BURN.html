@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextSSL · Algorithm Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --canvas: #faf9f5;
+  --card: #efe9de;
+  --card-soft: #f5f0e8;
+  --cream-strong: #e8e0d2;
+  --dark: #181715;
+  --dark-el: #252320;
+  --dark-soft: #1f1e1b;
+  --primary: #5cccb0;
+  --ink: #141413;
+  --body-color: #3d3d3a;
+  --muted: #6c6a64;
+  --muted-soft: #8e8b82;
+  --hairline: #e6dfd8;
+  --dark-border: #2c2a27;
+  --badge-active-bg: #5db87220;
+  --badge-active-fg: #3a8f62;
+  --badge-active-border: #5db87240;
+  --badge-legacy-bg: #e8a55a20;
+  --badge-legacy-fg: #a0661a;
+  --badge-legacy-border: #e8a55a40;
+  --badge-upcoming-bg: #cc785c20;
+  --badge-upcoming-fg: #a9583e;
+  --badge-upcoming-border: #cc785c40;
+  --amber: #e8a55a;
+  --on-dark: #faf9f5;
+  --on-dark-soft: #a09d96;
+  --bg: var(--canvas);
+  --fg: var(--ink);
+  --fg-body: var(--body-color);
+  --fg-muted: var(--muted);
+  --border: var(--hairline);
+  --surface: var(--card);
+  --surface-soft: var(--card-soft);
+  --nav-bg: var(--canvas);
+  --code-bg: #2a2724;
+}
+[data-theme="dark"] {
+  --bg: var(--dark);
+  --fg: var(--on-dark);
+  --fg-body: var(--on-dark-soft);
+  --fg-muted: #6c6a64;
+  --border: var(--dark-border);
+  --surface: var(--dark-el);
+  --surface-soft: var(--dark-soft);
+  --nav-bg: var(--dark);
+  --code-bg: #1a1917;
+  --badge-active-bg: #5db87215;
+  --badge-active-fg: #5db872;
+  --badge-active-border: #5db87230;
+  --badge-legacy-bg: #e8a55a15;
+  --badge-legacy-fg: #e8a55a;
+  --badge-legacy-border: #e8a55a30;
+  --badge-upcoming-bg: #5cc8cc15;
+  --badge-upcoming-fg: #5cc8cc;
+  --badge-upcoming-border: #5cc8cc30;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55;transition:background .2s,color .2s}
+
+/* NAV */
+.topnav{position:sticky;top:0;z-index:100;background:var(--nav-bg);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;gap:16px;transition:background .2s,border-color .2s;backdrop-filter:blur(8px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand-mark{width:28px;height:28px;border:1.5px solid var(--primary);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-mark svg{width:14px;height:14px;stroke:var(--primary);fill:none;stroke-width:2;stroke-linecap:round}
+.brand-name{font-family:'EB Garamond',serif;font-size:19px;font-weight:400;color:var(--fg);letter-spacing:-.2px}
+.brand-ver{font-size:11px;font-weight:500;color:var(--fg-muted);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1px 7px;margin-left:4px}
+.nav-right{display:flex;align-items:center;gap:12px}
+.theme-btn{background:var(--surface);border:1px solid var(--border);color:var(--fg-muted);cursor:pointer;border-radius:7px;padding:5px 13px;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;transition:all .15s}
+.theme-btn:hover{color:var(--fg);background:var(--surface-soft)}
+
+/* LAYOUT */
+.layout{display:flex;min-height:calc(100vh - 60px)}
+.sidebar{width:248px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid var(--border);padding:20px 0;background:var(--bg);transition:background .2s,border-color .2s}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.sidebar-section{margin-bottom:4px}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--fg-muted);padding:8px 20px 4px;opacity:.7}
+.sidebar a{display:block;padding:6px 20px;font-size:12.5px;color:var(--fg-muted);text-decoration:none;border-left:2px solid transparent;transition:all .12s}
+.sidebar a:hover{color:var(--fg);background:var(--surface-soft);border-left-color:var(--primary)}
+.sidebar a.active{color:var(--primary);border-left-color:var(--primary);font-weight:500}
+
+/* MAIN */
+.main{flex:1;padding:60px 56px;max-width:1100px}
+
+/* HERO */
+.page-hero{margin-bottom:72px;padding-bottom:48px;border-bottom:1px solid var(--border)}
+.hero-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--primary);margin-bottom:14px}
+.page-hero h1{font-family:'EB Garamond',serif;font-size:52px;font-weight:400;letter-spacing:-1px;line-height:1.06;color:var(--fg);margin-bottom:18px}
+.page-hero h1 em{font-style:italic;color:var(--primary)}
+.page-hero p{font-size:16px;color:var(--fg-body);max-width:540px;line-height:1.65}
+.hero-stats{display:flex;gap:16px;margin-top:32px;flex-wrap:wrap}
+.hstat{padding:14px 20px;background:var(--surface);border-radius:10px;border:1px solid var(--border);min-width:110px}
+.hstat-n{font-family:'EB Garamond',serif;font-size:32px;font-weight:400;color:var(--primary);line-height:1}
+.hstat-l{font-size:11px;font-weight:500;color:var(--fg-muted);margin-top:4px;letter-spacing:.3px}
+.hstat-sub{font-size:10px;color:var(--fg-muted);opacity:.6;margin-top:2px}
+
+/* SECTIONS */
+.section{margin-bottom:80px;scroll-margin-top:76px}
+.section-eyebrow{font-size:10.5px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--primary);margin-bottom:10px}
+.section-title{font-family:'EB Garamond',serif;font-size:38px;font-weight:400;letter-spacing:-.5px;color:var(--fg);margin-bottom:12px;line-height:1.1}
+.section-lead{font-size:15px;color:var(--fg-body);line-height:1.7;max-width:640px;margin-bottom:28px}
+
+/* SUMMARY CARD */
+.summary-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 32px;margin-bottom:28px}
+.summary-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:20px}
+.summary-col h4{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg-muted);margin-bottom:10px}
+.summary-col .big-num{font-family:'EB Garamond',serif;font-size:48px;font-weight:400;line-height:1;margin-bottom:4px}
+.summary-col .big-num.green{color:var(--badge-active-fg)}
+.summary-col .big-num.amber{color:var(--amber)}
+.summary-col .big-num.blue{color:var(--primary)}
+.summary-col p{font-size:13.5px;color:var(--fg-muted);line-height:1.5}
+.divider{height:1px;background:var(--border);margin:20px 0}
+
+/* CALLOUT */
+.callout{background:var(--surface-soft);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:8px;padding:16px 22px;margin:20px 0}
+.callout-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--primary);margin-bottom:8px}
+.callout p{font-size:14px;color:var(--fg-body);line-height:1.65}
+.callout code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg);border:1px solid var(--border);padding:1px 6px;border-radius:4px;color:var(--fg)}
+
+/* MERGE GROUPS TABLE */
+.merge-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px}
+.merge-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg-muted);border-bottom:2px solid var(--border);background:var(--surface)}
+.merge-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--fg-body)}
+.merge-table tr:hover td{background:var(--surface-soft)}
+.merge-table .mono{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--primary)}
+.merge-table .count{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--badge-active-fg)}
+.merge-table .note-col{font-size:12px;color:var(--fg-muted)}
+.arrow-col{color:var(--fg-muted);font-size:16px;text-align:center}
+
+/* BADGE STRIP */
+.badge-strip{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0}
+.badge{padding:3px 10px;border-radius:9999px;font-size:11.5px;font-weight:500;letter-spacing:.2px}
+.badge-active{background:var(--badge-active-bg);color:var(--badge-active-fg);border:1px solid var(--badge-active-border)}
+.badge-legacy{background:var(--badge-legacy-bg);color:var(--badge-legacy-fg);border:1px solid var(--badge-legacy-border)}
+.badge-upcoming{background:var(--badge-upcoming-bg);color:var(--badge-upcoming-fg);border:1px solid var(--badge-upcoming-border)}
+
+/* ALGO TAG CLOUD */
+.algo-cloud{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0}
+.algo-tag{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 8px;color:var(--fg-body);transition:all .1s}
+.algo-tag:hover{border-color:var(--primary);color:var(--primary)}
+.algo-tag.merges-to{border-color:var(--badge-active-border);color:var(--badge-active-fg);background:var(--badge-active-bg)}
+.algo-tag.result{border-color:var(--primary);color:var(--primary);font-weight:600}
+
+/* LIB COVERAGE TABLE */
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:20px 0}
+.lib-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.lib-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.lib-card-name{font-size:13.5px;font-weight:600;color:var(--fg)}
+.lib-card-count{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--primary);background:var(--badge-active-bg);border:1px solid var(--badge-active-border);border-radius:9999px;padding:1px 9px}
+.lib-card-url{font-size:11px;color:var(--fg-muted);font-family:'JetBrains Mono',monospace;margin-bottom:8px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+.lib-card-algos{font-size:11px;color:var(--fg-muted);line-height:1.5}
+
+/* COVERAGE BAR */
+.cov-bar-wrap{margin:28px 0}
+.cov-bar-label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--fg-muted);margin-bottom:8px}
+.cov-bar-label strong{color:var(--fg);font-weight:600}
+.cov-bar{height:10px;background:var(--surface);border-radius:99px;overflow:hidden;border:1px solid var(--border)}
+.cov-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),#5db872)}
+.cov-bar-fill.amber{background:linear-gradient(90deg,var(--amber),#e8855a)}
+.cov-bar-fill.red{background:linear-gradient(90deg,#cc5c5c,#a83e3e)}
+
+/* MISSING TABLE */
+.missing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:20px 0}
+.missing-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.missing-cat{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg-muted);margin-bottom:8px}
+.missing-card .algo-cloud{margin:0;gap:4px}
+.missing-card .algo-tag{font-size:10.5px;padding:2px 6px}
+
+/* SECTION DIVIDER */
+.s-divider{height:1px;background:var(--border);margin:0 0 80px}
+
+/* FOOTER */
+footer{background:var(--dark);color:var(--on-dark-soft);padding:40px 56px;font-size:12.5px;border-top:1px solid var(--dark-border)}
+footer a{color:var(--on-dark-soft);text-decoration:none}
+footer a:hover{color:var(--on-dark)}
+
+/* PILL GROUP */
+.pill-group{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.pill{padding:5px 14px;border-radius:9999px;font-size:12.5px;font-weight:500;border:1px solid var(--border);color:var(--fg-muted);background:var(--surface)}
+.pill.highlight{background:var(--badge-active-bg);color:var(--badge-active-fg);border-color:var(--badge-active-border)}
+
+/* RESPONSIVE */
+@media(max-width:960px){.sidebar{display:none}.main{padding:36px 24px}.page-hero h1{font-size:36px}.section-title{font-size:28px}.summary-row{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.topnav{padding:0 16px}.main{padding:24px 16px}.summary-row{grid-template-columns:1fr}}
+
+/* COLLAPSE */
+.collapse-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--fg-muted);background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 12px;cursor:pointer;transition:all .15s;margin-bottom:10px}
+.collapse-btn:hover{color:var(--fg);border-color:var(--primary)}
+.collapse-btn .arrow{transition:transform .2s;font-size:10px}
+.collapse-btn.open .arrow{transform:rotate(90deg)}
+.collapsible{display:none}
+.collapsible.open{display:block}
+
+/* TABS */
+.tab-row{display:flex;gap:0;border:1px solid var(--border);border-radius:9px;overflow:hidden;margin:20px 0;width:fit-content}
+.tab-btn{padding:7px 18px;font-size:12.5px;font-weight:500;color:var(--fg-muted);background:var(--surface);border:none;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
+.tab-btn:not(:last-child){border-right:1px solid var(--border)}
+.tab-btn.active{background:var(--primary);color:#fff}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* Progress ring */
+.progress-rings{display:flex;gap:32px;flex-wrap:wrap;margin:28px 0;align-items:center}
+.ring-item{text-align:center}
+.ring-item svg{display:block;margin:0 auto 8px}
+.ring-label{font-size:12px;font-weight:500;color:var(--fg-muted)}
+.ring-val{font-family:'EB Garamond',serif;font-size:22px;color:var(--fg);font-weight:400}
+
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a class="brand" href="#top">
+    <div class="brand-mark">
+      <svg viewBox="0 0 14 14"><polyline points="2,11 7,3 12,11"/><line x1="4" y1="8" x2="10" y2="8"/></svg>
+    </div>
+    <span class="brand-name">NextSSL</span>
+    <span class="brand-ver">KAT Analysis</span>
+  </a>
+  <div class="nav-right">
+    <button class="theme-btn" onclick="toggleTheme()">Toggle Theme</button>
+  </div>
+</nav>
+
+<div class="layout">
+<nav class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Overview</div>
+    <a href="#inventory" class="active">Inventory Stats</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Q1 — Merging</div>
+    <a href="#q1-summary">Summary</a>
+    <a href="#q1-groups">All Merge Groups</a>
+    <a href="#q1-remaining">After Merge</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Q2 — Lib Coverage</div>
+    <a href="#q2-summary">Coverage Map</a>
+    <a href="#q2-libs">Libraries</a>
+    <a href="#q2-missing">Missing Coverage</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- HERO -->
+<section class="page-hero" id="top">
+  <div class="hero-label">NextSSL · Algorithm Inventory Report</div>
+  <h1>776 Algorithms.<br><em>Two hard questions.</em></h1>
+  <p>Statistical analysis of hash-adapter merge opportunities and Python library coverage across the full NextSSL cryptographic inventory.</p>
+  <div class="hero-stats">
+    <div class="hstat">
+      <div class="hstat-n">776</div>
+      <div class="hstat-l">Total Algorithms</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n" style="color:var(--badge-active-fg)">434</div>
+      <div class="hstat-l">Active</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n" style="color:var(--amber)">134</div>
+      <div class="hstat-l">Legacy</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n" style="color:var(--badge-upcoming-fg)">208</div>
+      <div class="hstat-l">Upcoming</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-n">22</div>
+      <div class="hstat-l">Categories</div>
+    </div>
+  </div>
+</section>
+
+<!-- INVENTORY BREAKDOWN -->
+<section class="section" id="inventory">
+  <div class="section-eyebrow">Inventory</div>
+  <div class="section-title">Full Breakdown by Category</div>
+  <div class="section-lead">Raw distribution across all 22 categories before any merging. This is the baseline your two questions operate against.</div>
+
+  <div style="overflow-x:auto">
+  <table class="merge-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Active</th>
+        <th>Legacy</th>
+        <th>Upcoming</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="category-rows"></tbody>
+  </table>
+  </div>
+</section>
+
+<div class="s-divider"></div>
+
+<!-- Q1 -->
+<section class="section" id="q1-summary">
+  <div class="section-eyebrow">Q1 — Hash Adapter Merging</div>
+  <div class="section-title">How many collapse?</div>
+  <div class="section-lead">A hash-adapter pattern unifies any algorithm family where <em>the only real difference is which hash function (or security-level parameter) is plugged in</em> — the construction is identical. The result is a single parameterized entry that accepts a hash config object and dispatches to the correct implementation.</div>
+
+  <div class="summary-card" id="q1-sumcard">
+    <div class="summary-row">
+      <div class="summary-col">
+        <h4>Merge Groups</h4>
+        <div class="big-num blue">51</div>
+        <p>Distinct algorithm families that collapse into a single parameterized entry</p>
+      </div>
+      <div class="summary-col">
+        <h4>Eliminated Entries</h4>
+        <div class="big-num amber">156</div>
+        <p>Algorithm names removed from the inventory — absorbed by their canonical form</p>
+      </div>
+      <div class="summary-col">
+        <h4>Remaining</h4>
+        <div class="big-num green">620</div>
+        <p>Canonical entries after merge — 776 minus 156 eliminated</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="callout" style="margin:0;border-left-color:var(--amber)">
+      <div class="callout-label">The adapter contract</div>
+      <p>Each merged family produces one canonical function: <code>algo(config)(input) → output</code> where <code>config</code> is the hash/parameter object. If no config is provided the pre-configured default is used. This is not a wrapper — the inner implementation must receive the hash as a first-class construction param, not a runtime string.</p>
+    </div>
+  </div>
+
+  <div class="cov-bar-wrap">
+    <div class="cov-bar-label">
+      <strong>Inventory reduction via merge</strong>
+      <span>156 of 776 → <strong>20.1% reduction</strong></span>
+    </div>
+    <div class="cov-bar"><div class="cov-bar-fill" style="width:20.1%"></div></div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">What qualifies for merge</div>
+    <p>An algo merges only when: (1) the underlying <strong>mathematical construction is identical</strong>, (2) the only variance is hash function, key size, output width, or security level parameter, and (3) the implementation can be expressed as <code>construct(params)</code> where params contain the variant selector. Block cipher modes (ECB/CBC/GCM) do NOT merge with each other — they have distinct security properties. Nor do AEAD schemes like AES-GCM vs AES-CCM — different constructions entirely.</p>
+  </div>
+</section>
+
+<!-- MERGE GROUPS TABLE -->
+<section class="section" id="q1-groups">
+  <div class="section-eyebrow">Q1 — All 51 Merge Groups</div>
+  <div class="section-title">Detailed merge table</div>
+  <div class="section-lead">Every group listed with member count, canonical merged form, and the precise reason why they collapse. Sorted by reduction impact.</div>
+
+  <div style="overflow-x:auto">
+  <table class="merge-table" id="merge-table-full">
+    <thead>
+      <tr>
+        <th>Group / Category</th>
+        <th style="text-align:center">Members</th>
+        <th style="text-align:center">→</th>
+        <th>Canonical Form</th>
+        <th>Merge Reason</th>
+      </tr>
+    </thead>
+    <tbody id="merge-tbody"></tbody>
+  </table>
+  </div>
+
+  <div class="callout" style="margin-top:28px">
+    <div class="callout-label">Notable large merges</div>
+    <p>The biggest collapses are: <strong>Noise Protocol patterns (14 → 1)</strong> — all are the same Noise Framework state machine, parameterized by initiator/responder key knowledge; <strong>SLH-DSA/SPHINCS+ (13 → 1)</strong> — 12 NIST parameter sets plus the original name, same lattice-free hash-based sig; <strong>HMAC family (10 → 1)</strong> — every HMAC-&lt;hash&gt; entry is structurally identical RFC 2104; <strong>Classic McEliece (11 → 1)</strong> — 10 NIST parameter variants of one code-based KEM.</p>
+  </div>
+</section>
+
+<!-- AFTER MERGE -->
+<section class="section" id="q1-remaining">
+  <div class="section-eyebrow">Q1 — Post-Merge Inventory</div>
+  <div class="section-title">What remains: 620 canonical entries</div>
+  <div class="section-lead">After eliminating 156 variant names into parameterized forms, this is the true algorithmic surface area. These 620 represent genuinely distinct constructions.</div>
+
+  <div style="overflow-x:auto">
+  <table class="merge-table" id="remaining-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Before</th>
+        <th>Eliminated</th>
+        <th>After Merge</th>
+        <th>Reduction</th>
+      </tr>
+    </thead>
+    <tbody id="remaining-tbody"></tbody>
+  </table>
+  </div>
+</section>
+
+<div class="s-divider"></div>
+
+<!-- Q2 -->
+<section class="section" id="q2-summary">
+  <div class="section-eyebrow">Q2 — Python Library Coverage</div>
+  <div class="section-title">What can we test right now?</div>
+  <div class="section-lead">Mapping the 776 algorithms (minus ff70, your custom) against every major, trustworthy Python cryptography library. Coverage means a KAT-capable implementation exists — not just a binding stub or toy.</div>
+
+  <div class="summary-card">
+    <div class="summary-row">
+      <div class="summary-col">
+        <h4>Covered</h4>
+        <div class="big-num green">~255</div>
+        <p>Algorithms reachable via existing Python libraries — KAT-testable today</p>
+      </div>
+      <div class="summary-col">
+        <h4>Partially / Indirect</h4>
+        <div class="big-num blue">~90</div>
+        <p>Reachable via OpenSSL bindings (cryptography lib) or system calls, not pure Python</p>
+      </div>
+      <div class="summary-col">
+        <h4>Uncovered (stable algos)</h4>
+        <div class="big-num amber">~329</div>
+        <p>Stable algorithms with no major Python library — need CFFI, Rust binding, or pure-Python impl</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="callout" style="margin:0">
+      <div class="callout-label">Note on upcoming algorithms</div>
+      <p>~200 of the 776 are in "upcoming" status — research primitives, ZK proof systems, HE schemes, and future PQ candidates. These are intentionally excluded from the missing-coverage concern. For those you need research-grade implementations (SageMath, reference C, or Rust crates bound via PyO3), not production Python libraries.</p>
+    </div>
+  </div>
+
+  <div class="cov-bar-wrap">
+    <div class="cov-bar-label">
+      <strong>Coverage: Active algorithms</strong>
+      <span>~215 of 434 active → <strong>≈49%</strong></span>
+    </div>
+    <div class="cov-bar"><div class="cov-bar-fill" style="width:49%"></div></div>
+  </div>
+  <div class="cov-bar-wrap">
+    <div class="cov-bar-label">
+      <strong>Coverage: Legacy algorithms</strong>
+      <span>~38 of 134 legacy → <strong>≈28%</strong></span>
+    </div>
+    <div class="cov-bar"><div class="cov-bar-fill amber" style="width:28%"></div></div>
+  </div>
+  <div class="cov-bar-wrap">
+    <div class="cov-bar-label">
+      <strong>Coverage: All 775 (excl. ff70)</strong>
+      <span>~255 of 775 → <strong>≈33% direct coverage</strong></span>
+    </div>
+    <div class="cov-bar"><div class="cov-bar-fill red" style="width:33%"></div></div>
+  </div>
+</section>
+
+<!-- LIBRARIES -->
+<section class="section" id="q2-libs">
+  <div class="section-eyebrow">Q2 — Library Map</div>
+  <div class="section-title">Trustworthy Python libraries</div>
+  <div class="section-lead">Every library used in coverage calculation, with algorithm counts and brief scope notes. "Trustworthy" means maintained, widely deployed, and suitable for KAT generation.</div>
+
+  <div class="lib-grid" id="lib-grid"></div>
+</section>
+
+<!-- MISSING -->
+<section class="section" id="q2-missing">
+  <div class="section-eyebrow">Q2 — Coverage Gaps</div>
+  <div class="section-title">What's missing (stable algos)</div>
+  <div class="section-lead">~329 stable algorithms have no direct Python library. Grouped by category with recommended resolution strategy.</div>
+
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="showTab('by-strategy')">By Strategy</button>
+    <button class="tab-btn" onclick="showTab('by-category')">By Category</button>
+    <button class="tab-btn" onclick="showTab('raw-list')">Full List</button>
+  </div>
+
+  <div class="tab-pane active" id="by-strategy">
+    <div class="missing-grid">
+
+      <div class="missing-card">
+        <div class="missing-cat" style="color:var(--badge-active-fg)">→ Use cryptography[hazmat]</div>
+        <div class="algo-cloud">
+          <span class="algo-tag">cshake128</span><span class="algo-tag">cshake256</span>
+          <span class="algo-tag">kmac128</span><span class="algo-tag">kmac256</span>
+          <span class="algo-tag">parallelhash128</span><span class="algo-tag">parallelhash256</span>
+          <span class="algo-tag">tuplehash128</span><span class="algo-tag">tuplehash256</span>
+          <span class="algo-tag">aes-fpe-ff1</span><span class="algo-tag">aes-fpe-ff3-1</span>
+          <span class="algo-tag">hkdf-expand-label</span><span class="algo-tag">kdf-tls13</span>
+          <span class="algo-tag">xcbc-mac</span><span class="algo-tag">aes-pmac</span>
+          <span class="algo-tag">aes-gmac</span><span class="algo-tag">vmac</span>
+          <span class="algo-tag">umac</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--fg-muted);margin-top:8px">Already in cryptography's hazmat primitives — needs explicit import path</p>
+      </div>
+
+      <div class="missing-card">
+        <div class="missing-cat" style="color:var(--primary)">→ liboqs-python (OQS)</div>
+        <div class="algo-cloud">
+          <span class="algo-tag">frodokem</span><span class="algo-tag">csidh</span>
+          <span class="algo-tag">hpke</span><span class="algo-tag">haetae</span>
+          <span class="algo-tag">almar</span><span class="algo-tag">mceliece-6960119</span>
+          <span class="algo-tag">mceliece-460896f</span>
+          <span class="algo-tag">kangarootwelve</span><span class="algo-tag">marsupilami14</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--fg-muted);margin-top:8px">Open Quantum Safe project — covers most NIST PQC finalists and alternates</p>
+      </div>
+
+      <div class="missing-card">
+        <div class="missing-cat" style="color:var(--amber)">→ CFFI → OpenSSL/BoringSSL</div>
+        <div class="algo-cloud">
+          <span class="algo-tag">threefish-256</span><span class="algo-tag">threefish-512</span><span class="algo-tag">threefish-1024</span>
+          <span class="algo-tag">serpent</span><span class="algo-tag">twofish</span><span class="algo-tag">cast6</span>
+          <span class="algo-tag">hc128</span><span class="algo-tag">hc256</span>
+          <span class="algo-tag">trivium</span><span class="algo-tag">rabbit</span><span class="algo-tag">sosemanuk</span>
+          <span class="algo-tag">grain128</span><span class="algo-tag">zuc</span><span class="algo-tag">snow3g</span>
+          <span class="algo-tag">rc5</span><span class="algo-tag">rc6</span><span class="algo-tag">anubis</span>
+          <span class="algo-tag">khazad</span><span class="algo-tag">noekeon</span>
+          <span class="algo-tag">clefia</span><span class="algo-tag">present</span><span class="algo-tag">led</span>
+          <span class="algo-tag">piccolo</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--fg-muted);margin-top:8px">Botan, Crypto++ or libsodium provide C impls; bind via CFFI or ctypes</p>
+      </div>
+
+      <div class="missing-card">
+        <div class="missing-cat" style="color:var(--badge-upcoming-fg)">→ pyGOST already exists</div>
+        <div class="algo-cloud">
+          <span class="algo-tag">kuznyechik</span><span class="algo-tag">magma</span>
+          <span class="algo-tag">streebog256</span><span class="algo-tag">streebog512</span>
+          <span class="algo-tag">gost-r-34.10-2012</span><span class="algo-tag">gost-r-34.11-94</span>
+          <span class="algo-tag">gost28147</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--fg-muted);margin-top:8px">pyGOST covers all Russian GOST standards natively in Python</p>
+      </div>
+
+      <div class="missing-card">
+        <div class="missing-cat" style="color:var(--badge-active-fg)">→ Protocol-level (no direct KAT)</div>
+        <div class="algo-cloud">
+          <span class="algo-tag">wireguard</span><span class="algo-tag">mls</span>
+          <span class="algo-tag">signal-x3dh</span><span class="algo-tag">signal-double-ratchet</span>
+          <span class="algo-tag">pqxdh</span><span class="algo-tag">opaque</span>
+          <span class="algo-tag">spake2</span><span class="algo-tag">spake2+</span>
+          <span class="algo-tag">cpace</span><span class="algo-tag">dragonfly</span>
+          <span class="algo-tag">edhoc</span><span class="algo-tag">oscore</span>
+          <span class="algo-tag">dtls12</span><span class="algo-tag">dtls13</span>
+          <span class="algo-tag">kemtls</span><span class="algo-tag">zrtp</span>
+          <span class="algo-tag">noise-kdf</span><span class="algo-tag">srp</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--fg-muted);margin-top:8px">These are full protocols — KAT is over the primitive sub-steps (ECDH, HMAC, etc.) not the protocol as a whole. Test sub-primitives separately.</p>
+      </div>
+
+      <div class="missing-card">
+        <div class="missing-cat" style="color:var(--amber)">→ HSM/TEE (interface, not algo)</div>
+        <div class="algo-cloud">
+          <span class="algo-tag">pkcs11</span><span class="algo-tag">tpm2.0</span>
+          <span class="algo-tag">intel-sgx</span><span class="algo-tag">amd-sev</span>
+          <span class="algo-tag">arm-trustzone</span><span class="algo-tag">cng</span>
+          <span class="algo-tag">nitro-enclaves</span><span class="algo-tag">softhsm2</span>
+          <span class="algo-tag">java-jce</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--fg-muted);margin-top:8px">Hardware interfaces — not standalone testable algos. Test via python-pkcs11, tpm2-pytss, or SoftHSM2.</p>
+      </div>
+
+      <div class="missing-card">
+        <div class="missing-cat" style="color:var(--badge-upcoming-fg)">→ PKI Extensions (not crypto primitives)</div>
+        <div class="algo-cloud">
+          <span class="algo-tag">subjectaltname</span><span class="algo-tag">authoritykeyid</span>
+          <span class="algo-tag">basicconstraints</span><span class="algo-tag">keyusage</span>
+          <span class="algo-tag">extendedkeyusage</span><span class="algo-tag">nameconstraints</span>
+          <span class="algo-tag">cdp</span><span class="algo-tag">aia</span>
+          <span class="algo-tag">precert-poison</span><span class="algo-tag">sct</span>
+          <span class="algo-tag">tls-features</span><span class="algo-tag">rfc822name</span>
+          <span class="algo-tag">ipaddress</span><span class="algo-tag">acme</span>
+          <span class="algo-tag">ct</span><span class="algo-tag">mft</span><span class="algo-tag">roa</span>
+          <span class="algo-tag">tal</span><span class="algo-tag">scep</span><span class="algo-tag">est</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--fg-muted);margin-top:8px">PKI data structures — test via cryptography lib's x509 module, not as standalone KAT primitives</p>
+      </div>
+
+      <div class="missing-card">
+        <div class="missing-cat" style="color:var(--badge-legacy-fg)">→ Truly missing: need binding</div>
+        <div class="algo-cloud">
+          <span class="algo-tag">lea</span><span class="algo-tag">hight</span>
+          <span class="algo-tag">deoxys-ii</span><span class="algo-tag">ocb3</span>
+          <span class="algo-tag">kccm</span><span class="algo-tag">aegis128l</span>
+          <span class="algo-tag">aegis256</span><span class="algo-tag">frost</span>
+          <span class="algo-tag">shamir</span><span class="algo-tag">feldman-vss</span>
+          <span class="algo-tag">pedersen-vss</span><span class="algo-tag">dkg</span>
+          <span class="algo-tag">pvss</span><span class="algo-tag">ot</span>
+          <span class="algo-tag">vole</span><span class="algo-tag">beaver</span>
+          <span class="algo-tag">sr25519</span><span class="algo-tag">bbs</span>
+          <span class="algo-tag">musig</span><span class="algo-tag">musig2</span>
+          <span class="algo-tag">lms</span><span class="algo-tag">hss</span>
+        </div>
+        <p style="font-size:11.5px;color:var(--fg-muted);margin-top:8px">Real algorithms with no complete Python binding — pure-Python ref impls or Rust (PyO3) bindings needed</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="tab-pane" id="by-category">
+    <div id="by-cat-content"></div>
+  </div>
+
+  <div class="tab-pane" id="raw-list">
+    <div class="callout">
+      <div class="callout-label">329 stable algorithms without major Python library coverage</div>
+      <p>Excludes ff70 (custom), all "upcoming" research primitives, and ZK/HE research schemes. This list is your testing gap for real-world KAT.</p>
+    </div>
+    <div class="algo-cloud" id="raw-missing-cloud" style="margin-top:16px"></div>
+  </div>
+
+</section>
+
+</main>
+</div>
+
+<footer>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+    <div>
+      <div style="font-family:'EB Garamond',serif;font-size:17px;color:var(--on-dark);margin-bottom:4px">NextSSL · KAT Analysis Report</div>
+      <div>QudsLab · Cryptographic Inventory v1.0</div>
+    </div>
+    <div style="text-align:right">
+      <div>776 total · 51 merge groups · 156 eliminated</div>
+      <div style="margin-top:3px">~255 covered by Python libs · ~329 need bindings</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+const categoryData = [
+  {cat:"Encoding & Checksum",active:32,legacy:2,upcoming:0},
+  {cat:"Hash / Digest / XOF",active:36,legacy:28,upcoming:10},
+  {cat:"Password KDFs",active:11,legacy:8,upcoming:4},
+  {cat:"Symmetric Block Ciphers",active:19,legacy:23,upcoming:15},
+  {cat:"Stream Ciphers",active:14,legacy:12,upcoming:13},
+  {cat:"Block Cipher Modes",active:5,legacy:6,upcoming:0},
+  {cat:"AEAD Algorithms",active:22,legacy:16,upcoming:33},
+  {cat:"MAC Algorithms",active:22,legacy:4,upcoming:10},
+  {cat:"Key Derivation Functions",active:23,legacy:0,upcoming:2},
+  {cat:"Key Agreement / KEM",active:36,legacy:4,upcoming:9},
+  {cat:"Digital Signatures",active:13,legacy:5,upcoming:13},
+  {cat:"PQ Digital Signatures",active:22,legacy:0,upcoming:17},
+  {cat:"Stateful Hash Signatures",active:4,legacy:0,upcoming:4},
+  {cat:"Threshold / MPC",active:35,legacy:1,upcoming:15},
+  {cat:"Lightweight Crypto",active:5,legacy:4,upcoming:5},
+  {cat:"DRBG / RNG",active:13,legacy:6,upcoming:7},
+  {cat:"ZK Proofs / HE",active:15,legacy:2,upcoming:37},
+  {cat:"Protocol Primitives",active:45,legacy:7,upcoming:0},
+  {cat:"PKI / Certificates",active:38,legacy:2,upcoming:0},
+  {cat:"Hardware / HSM / TEE",active:20,legacy:3,upcoming:0},
+  {cat:"Verifiable Delay Functions",active:0,legacy:0,upcoming:3},
+  {cat:"Advanced Primitives",active:0,legacy:0,upcoming:15},
+];
+
+const mergeGroups = [
+  {name:"Noise Protocol Patterns", cat:"Protocol", members:14, canonical:"noise[pattern, psk?]", reason:"Same Noise Framework state machine — initiator/responder key knowledge is the only variable"},
+  {name:"SLH-DSA / SPHINCS+ family", cat:"PQ Sig", members:13, canonical:"slh-dsa[H, bits, f|s]", reason:"SPHINCS+ standardized as SLH-DSA; 12 NIST variants differ only in hash function, security level, fast/small"},
+  {name:"Classic McEliece family", cat:"KEM", members:11, canonical:"classic-mceliece[params]", reason:"Same code-based KEM, parameter set (n,k,t) and optional f-variant are the only difference"},
+  {name:"HMAC family", cat:"MAC", members:10, canonical:"hmac[H]", reason:"RFC 2104 is invariant — every HMAC-<hash> entry is structurally identical"},
+  {name:"ASCON family", cat:"AEAD/Hash/MAC", members:8, canonical:"ascon[mode]", reason:"Single ASCON permutation; mode flag selects AEAD, hash, MAC, XOF, or PRF operation"},
+  {name:"NTRU family", cat:"KEM", members:6, canonical:"ntru[variant, params]", reason:"NTRU core construction, variant (classic/prime/HPS/HRSS) and param set"},
+  {name:"BLAKE2 family", cat:"Hash/MAC", members:6, canonical:"blake2[variant]", reason:"Same core algorithm — b/s/bp/sp differ only in word size and parallelism flag"},
+  {name:"SHA-3 derived XOFs", cat:"Hash", members:6, canonical:"sha3_xof[mode, level]", reason:"cSHAKE, ParallelHash, TupleHash — all parameterized SHA-3 derived functions over same sponge"},
+  {name:"SHA-2 family", cat:"Hash", members:6, canonical:"sha2[bits]", reason:"Same SHA-2 spec — sha512-224 and sha512-256 are truncations, not new algorithms"},
+  {name:"ASN.1 encoding family", cat:"PKI", members:6, canonical:"asn1[encoding-rules]", reason:"Same ASN.1 schema language — DER/CER/PER/OER/XER/BER are encoding rule variants"},
+  {name:"KMAC family", cat:"Hash/MAC", members:6, canonical:"kmac[H, xof]", reason:"128/256 refers to security level; XOF mode is a flag — underlying cSHAKE construction is identical"},
+  {name:"ML-DSA / Dilithium family", cat:"PQ Sig", members:4, canonical:"ml-dsa[44|65|87]", reason:"Dilithium is round name; ML-DSA is NIST standard. Same lattice sig, security level param"},
+  {name:"Falcon family", cat:"PQ Sig", members:4, canonical:"falcon[512|1024, padded?]", reason:"Same NTRU lattice sig — parameter set and optional constant-time padded variant"},
+  {name:"PBKDF2 family", cat:"Password KDF", members:4, canonical:"pbkdf2[H]", reason:"RFC 2898 PBKDF2 — the PRF is a swappable hash; same construction"},
+  {name:"HKDF family", cat:"KDF", members:4, canonical:"hkdf[H, step]", reason:"RFC 5869 — expand/extract are sub-steps of one algorithm, not separate algorithms"},
+  {name:"SHA-3 family", cat:"Hash", members:4, canonical:"sha3[bits]", reason:"Same Keccak sponge — capacity and output size are capacity parameters"},
+  {name:"ML-KEM / Kyber family", cat:"KEM", members:4, canonical:"ml-kem[512|768|1024]", reason:"Kyber is NIST round name; ML-KEM is standard. Same lattice KEM, security level only"},
+  {name:"ECDSA family", cat:"Sig", members:4, canonical:"ecdsa[curve, det?, recoverable?]", reason:"Same ECDSA — determinism (RFC 6979) and recovery flag are optional construction params"},
+  {name:"CRC family", cat:"Checksum", members:7, canonical:"crc[width, poly]", reason:"Same CRC computation — polynomial and width are pure parameters"},
+  {name:"ChaCha family", cat:"Stream", members:4, canonical:"chacha[rounds, x?]", reason:"Same ChaCha ARX core — round count and extended-nonce (X) are params"},
+  {name:"AES family", cat:"Block Cipher", members:3, canonical:"aes[128|192|256]", reason:"Same Rijndael algorithm — only key schedule round count differs"},
+  {name:"ARIA family", cat:"Block Cipher", members:3, canonical:"aria[128|192|256]", reason:"Same ARIA algorithm, key size only"},
+  {name:"Camellia family", cat:"Block Cipher", members:3, canonical:"camellia[128|192|256]", reason:"Same Camellia, key size only"},
+  {name:"Threefish family", cat:"Block Cipher", members:3, canonical:"threefish[256|512|1024]", reason:"Same Threefish, block size variant"},
+  {name:"Skein family", cat:"Hash", members:3, canonical:"skein[256|512|1024]", reason:"Same Skein, output/state size variant"},
+  {name:"HQC family", cat:"KEM", members:3, canonical:"hqc[128|192|256]", reason:"Same HQC, security level only"},
+  {name:"BIKE family", cat:"KEM", members:3, canonical:"bike[1|3|5]", reason:"Same BIKE, security level only"},
+  {name:"Argon2 family", cat:"Password KDF", members:3, canonical:"argon2[d|i|id]", reason:"Same Argon2 core — data-dependent/independent/hybrid is a mode flag"},
+  {name:"Unix crypt family", cat:"Password KDF", members:3, canonical:"unix-crypt[H]", reason:"Same modular crypt format — hash is pluggable"},
+  {name:"RIPEMD family", cat:"Hash", members:4, canonical:"ripemd[bits]", reason:"Same RIPEMD structure, output size variant"},
+  {name:"CBC-CS family", cat:"Block Mode", members:3, canonical:"cbc-cs[1|2|3]", reason:"Same ciphertext stealing — block swap ordering variant only"},
+  {name:"SipHash family", cat:"MAC", members:3, canonical:"siphash[c-d]", reason:"Same SipHash — round counts (c compression, d finalization) are params"},
+  {name:"XXHash family", cat:"Checksum", members:3, canonical:"xxhash[bits]", reason:"Same XXHash family, output width"},
+  {name:"ECDH Curve family", cat:"KEM", members:3, canonical:"ecdh[curve]", reason:"Same ECDH protocol — curve selection is a param"},
+  {name:"SHA-3 XOF (SHAKE)", cat:"Hash", members:2, canonical:"shake[128|256]", reason:"Same SHAKE XOF — security level param"},
+  {name:"Keccak raw", cat:"Hash", members:2, canonical:"keccak[256|512]", reason:"Pre-standardization Keccak — output size only"},
+  {name:"AES-FPE family", cat:"AEAD", members:2, canonical:"aes-fpe[ff1|ff3-1]", reason:"Same AES Format-Preserving Encryption — mode variant"},
+  {name:"Streebog family", cat:"Hash", members:2, canonical:"streebog[256|512]", reason:"Same GOST hash — output size only"},
+  {name:"Salsa20 family", cat:"Stream", members:2, canonical:"salsa20[x?]", reason:"Same Salsa20 — extended nonce variant"},
+  {name:"BLAKE3 family", cat:"Hash/MAC", members:2, canonical:"blake3[key?]", reason:"BLAKE3 natively supports keyed MAC mode via same API — key presence is a flag"},
+  {name:"Fletcher family", cat:"Checksum", members:2, canonical:"fletcher[16|32]", reason:"Same Fletcher sum — word size only"},
+  {name:"LMS / HSS family", cat:"Stateful Sig", members:2, canonical:"lms[H, levels]", reason:"HSS is multi-tree LMS — same OTS construction, hierarchy depth param"},
+  {name:"XMSS family", cat:"Stateful Sig", members:2, canonical:"xmss[H, layers?]", reason:"XMSS-MT is multi-tree XMSS — layer count param"},
+  {name:"TLS KDF family", cat:"KDF", members:2, canonical:"kdf-tls[version]", reason:"TLS 1.2 PRF vs TLS 1.3 HKDF — parameterizable by protocol version"},
+  {name:"GOST Signature family", cat:"Sig", members:2, canonical:"gost-sign[year]", reason:"Same GOST ECDSA, year is standard revision"},
+  {name:"BLS12-381 family", cat:"Sig", members:2, canonical:"bls12-381[G1|G2]", reason:"Same BLS over BLS12-381 curve — G1/G2 is signature/pubkey group selection"},
+  {name:"DH family", cat:"KEM", members:2, canonical:"dh[params]", reason:"Same Diffie-Hellman — prime group vs preset params"},
+  {name:"ChaCha20-Poly1305 AEAD", cat:"AEAD", members:2, canonical:"chacha20-poly1305[x?]", reason:"Same AEAD construction — extended nonce (XChaCha) is a flag"},
+  {name:"KDA family", cat:"KDF", members:2, canonical:"kda[steps]", reason:"Same SP800-56C KDA — one vs two step"},
+  {name:"PKCS11 family", cat:"HSM", members:2, canonical:"pkcs11[version]", reason:"Same PKCS#11 API — version number"},
+  {name:"GOST Hash", cat:"Hash", members:1, canonical:"gost-hash[94]", reason:"Single entry, logically groups with Streebog family"},
+];
+
+const libraries = [
+  {name:"cryptography (PyCA)", covers:95, url:"cryptography.io", scope:"AES, ChaCha20, RSA, ECDSA, Ed25519, X25519, HKDF, PBKDF2, HMAC, SHA-2, SHA-3, X.509, AEAD modes, and 60+ more"},
+  {name:"PyCryptodome", covers:55, url:"pycryptodome.readthedocs.io", scope:"AES, 3DES, ChaCha20, Salsa20, RSA, ECC, ECDSA, Ed25519, SHA-*, BLAKE2, HMAC, PBKDF2, scrypt"},
+  {name:"PyNaCl (libsodium)", covers:12, url:"pynacl.readthedocs.io", scope:"Ed25519, X25519, ChaCha20-Poly1305, XSalsa20, Poly1305, BLAKE2b — libsodium-backed"},
+  {name:"liboqs-python (OQS)", covers:38, url:"github.com/open-quantum-safe/liboqs-python", scope:"ML-KEM, ML-DSA, Falcon, SLH-DSA, McEliece, BIKE, HQC, FrodoKEM, NTRU, Kyber, Dilithium"},
+  {name:"argon2-cffi", covers:3, url:"argon2-cffi.readthedocs.io", scope:"Argon2d, Argon2i, Argon2id — reference C binding"},
+  {name:"BLAKE3-py", covers:2, url:"pypi.org/project/blake3", scope:"BLAKE3 hash and BLAKE3 keyed MAC"},
+  {name:"pyGOST", covers:8, url:"pypi.org/project/pygost", scope:"GOST R 34.11-94, Streebog-256/512, GOST 28147, Kuznyechik, Magma, GOST signatures"},
+  {name:"gmssl / pysmx", covers:3, url:"pypi.org/project/gmssl", scope:"SM3, SM4, SM2 — Chinese national standards"},
+  {name:"passlib", covers:10, url:"passlib.readthedocs.io", scope:"bcrypt, scrypt, Argon2, PBKDF2-*, sha*crypt, md5crypt — unified password hashing API"},
+  {name:"ascon-python", covers:7, url:"pypi.org/project/ascon", scope:"ASCON-AEAD128, ASCON-AEAD128a, ASCON-80pq, ASCON-Hash256, ASCON-XOF128, ASCON-MAC, ASCON-PRF"},
+  {name:"pyskein", covers:3, url:"pypi.org/project/pyskein", scope:"Skein-256, Skein-512, Skein-1024"},
+  {name:"coincurve", covers:5, url:"pypi.org/project/coincurve", scope:"secp256k1 ECDSA, recoverable sig, Schnorr, X25519 — libsecp256k1 binding"},
+  {name:"python-ecdsa", covers:5, url:"pypi.org/project/ecdsa", scope:"ECDSA, det-ECDSA, secp256k1, NIST curves, Schnorr"},
+  {name:"py_ecc", covers:4, url:"pypi.org/project/py_ecc", scope:"BLS12-381 G1/G2, BLS aggregate, Ed25519 — Ethereum/ETH2 oriented"},
+  {name:"noiseprotocol", covers:13, url:"pypi.org/project/noiseprotocol", scope:"All 12 Noise handshake patterns + PSK variants"},
+  {name:"xxhash", covers:3, url:"pypi.org/project/xxhash", scope:"XXHash32, XXHash64, XXH3"},
+  {name:"crcmod", covers:7, url:"pypi.org/project/crcmod", scope:"CRC-8, CRC-16, CRC-16-CCITT, CRC-32, CRC-32c, CRC-64, CRC-64-ECMA"},
+  {name:"pyspx", covers:7, url:"pypi.org/project/pyspx", scope:"SPHINCS+/SLH-DSA multiple parameter sets — pure Python reference"},
+  {name:"balloon-hashing", covers:1, url:"pypi.org/project/balloon-hashing", scope:"Balloon password hashing (PBKDF alternative)"},
+  {name:"yescrypt", covers:1, url:"pypi.org/project/yescrypt", scope:"yescrypt KDF — PHC winner"},
+  {name:"hdwallet / bip32utils", covers:2, url:"pypi.org/project/hdwallet", scope:"BIP32-KDF, SLIP10 — HD wallet key derivation"},
+  {name:"python-pkcs11", covers:2, url:"pypi.org/project/python-pkcs11", scope:"PKCS#11 v2.x and v3.0 interface binding"},
+  {name:"tpm2-pytss", covers:1, url:"pypi.org/project/tpm2-pytss", scope:"TPM 2.0 — TSS bindings via tpm2-tss"},
+  {name:"siphash", covers:3, url:"pypi.org/project/siphash", scope:"SipHash-2-4, SipHash-4-8"},
+  {name:"base58 / bech32", covers:4, url:"pypi.org/project/base58", scope:"Base58, Base58Check, Bech32, Bech32m"},
+  {name:"Python stdlib (hashlib/hmac/base64)", covers:22, url:"docs.python.org/3/library/hashlib.html", scope:"MD5, SHA-1/2/3, SHAKE, BLAKE2, HMAC, Base16/32/64/85, CRC32, Adler32"},
+  {name:"Google Tink (tink-python)", covers:20, url:"pypi.org/project/tink", scope:"AES-GCM, AES-GCM-SIV, ChaCha20-Poly1305, ECDSA, Ed25519, HKDF, RSA-PSS, RSA-OAEP"},
+  {name:"aegis-py", covers:2, url:"pypi.org/project/aegis", scope:"AEGIS-128L, AEGIS-256 — AEAD finalists"},
+  {name:"highwayhash", covers:1, url:"pypi.org/project/highwayhash", scope:"HighwayHash (upcoming hash)"},
+  {name:"lms / pyLMS", covers:2, url:"pypi.org/project/lms", scope:"LMS, HSS — stateful hash-based signatures"},
+  {name:"xmss-python", covers:2, url:"pypi.org/project/xmss", scope:"XMSS, XMSS-MT — stateful hash-based signatures"},
+];
+
+const missingByCategory = {
+  "Hash / Digest": ["md2","md6","radio-gatun","groestl","jh","cubehash","echo","simd","fugue","hamsi","luffa","shabal","bmw","shavite3","has160","nt-hash","lm-hash","kangarootwelve","marsupilami14","blake2bp","blake2sp","cshake128","cshake256","kmac128","kmac256","kmacxof128","kmacxof256","parallelhash128","parallelhash256","tuplehash128","tuplehash256"],
+  "Password KDFs": ["catena","pomelo","makwa","lyra2"],
+  "Block Ciphers": ["threefish-256","threefish-512","threefish-1024","serpent","twofish","cast6","rc5","rc6","misty1","kasumi","safer","skipjack","speck","simon","xtea","tea","anubis","khazad","noekeon","clefia","present","led","piccolo","seed"],
+  "Stream Ciphers": ["chacha8","chacha12","xchacha20","hc128","hc256","rabbit","sosemanuk","grain128","zuc","snow3g","rc4","grainv1","mickeyv2","trivium","isaac","isaac+","panama","wake","seal","a5/1","a5/2","e0"],
+  "AEAD": ["aes-fpe-ff1","aes-fpe-ff3-1","aes-gmac","aes-pmac","aes-xpn","aegis128l","aegis256","deoxys-ii","ocb3","kccm","colm","morus","kiasu","marble","elephant-dumbo","elephant-jumbo","gift-cofb","grain-128aead","isap-a-128a","isap-k-128a","photon-beetle","romulus","sparkle-schwaemm","tinyjambu","xoodyak","silc"],
+  "MAC": ["cshake-mac","kmac128-mac","kmac256-mac","xcbc-mac","cbc-mac","des-mac","vmac","umac","aes-pmac","blake2b-mac","blake2s-mac"],
+  "KDF / Protocol": ["kdf-tls12","kdf-tls13","kdf-ssh","kdf-ikev1","kdf-ikev2","kdf-srtp","kdf-sp800-108","kda-onestep","kda-twostep","x942-kdf","noise-kdf","sskdf","ecdh-kdf","cmkdf","me-kdf","hkdf-expand-label"],
+  "Key Agr / KEM": ["csidh","hpke","ecies","x3dh","ecmqv"],
+  "Signatures": ["sr25519","bbs","schnorr","musig","musig2","rsa-fdh","rsa-blind-sig","bls-blind-sig","cryptonote-ring-sig","mlsag","clsag","group-sig"],
+  "PQ Signatures": ["haetae","almar"],
+  "Threshold / MPC": ["frost","shamir","feldman-vss","pedersen-vss","dkg","pvss","ot","vole","beaver","mpc-ecdsa","mpc-schnorr","tbls"],
+  "Protocols": ["signal-x3dh","signal-double-ratchet","opaque","spake2","spake2+","dragonfly","wireguard","mls","pqxdh","cpace","aucpace","kemtls","edhoc","oscore","dtls12","dtls13","zrtp","hmqv","yak","sesame","otrv4","mtproto","srp","j-pake","otr","speke"],
+  "DRBG / RNG": ["ctr-drbg","hash-drbg","hmac-drbg","trng","entropy-pool","reseed-scheduler","rdrand","rdseed","jitterentropy","fortuna","nist-sp800-90b","nist-sp800-90c"],
+  "ZK (stable)": ["groth16","plonk","marlin","halo2","plonky2","stark","bulletproofs","spartan","sonic","kzg-commitment","fri","ligero","dory","gm17","tfhe"],
+  "PKI Exts": ["subjectaltname","authoritykeyid","subjectkeyid","keyusage","extendedkeyusage","basicconstraints","nameconstraints","cdp","aia","ocsp-nocheck","precert-poison","sct","tls-features","signed-timestamp","tsp","cades","pades","xades","acme","ct","mft","roa","tal","scep","est"],
+  "HSM / TEE": ["cng","tpm2.0","intel-sgx","intel-tdx","amd-sev","amd-sev-snp","arm-trustzone","arm-cca","apple-secure-enclave","nitro-enclaves","nvidia-cc","java-jce","openssl-provider","wolfssl-fips","botan-p11","libp11","opencryptoki","softhsm2","capi","tpm1.2","openssl-engine"],
+};
+
+const allMissing = ["a5/1","a5/2","acme","aes-ctr-drbg","aes-fpe-ff1","aes-fpe-ff3-1","aes-gmac","aes-pmac","aes-xpn","aia","almar","amber","amd-sev","amd-sev-snp","anubis","apple-secure-enclave","arm-cca","arm-trustzone","ascon-cxof128","aucpace","authoritykeyid","bam","base62","basicconstraints","bbs","beaver","ber","blake2b-mac","blake2bp","blake2s-mac","blake2sp","bls-blind-sig","bmw","botan-p11","cades","capi","cast6","catena","cbc-cs1","cbc-cs2","cbc-cs3","cbc-mac","ccgmp","cdp","cfb1","chacha12","chacha8","classic-schnorr-t","clefia","clsag","cmkdf","cng","colm","cpace","cryptgenrandom","cryptonote-ring-sig","cshake128","cshake256","csidh","ct","ctr-drbg","cubehash","curvecp","deoxys-ii","des-mac","disco","dkg","dory","dragonfly","dtls12","dtls13","e0","ecdh-kdf","ecgdsa","ech","echo","ecies","eckdsa","ecmqv","edhoc","egd","elephant-dumbo","elephant-jumbo","entropy-pool","est","extendedkeyusage","feldman-vss","fletcher16","fletcher32","fortuna","fri","frost","fugue","gargos","ge-mss","gift-cofb","gm17","grain-128aead","grain128","grainv1","groestl","group-sig","haetae","hamsi","has160","hash-drbg","haveged","haystack","hc128","hc256","hermine","hight","hkdf-expand-label","hmac-drbg","hmac-md5","hmac-sha1","hmqv","hpke","intel-sgx","intel-tdx","ipaddress","isaac","isaac+","isap-a-128a","isap-k-128a","j-pake","java-jce","jh","jitterentropy","kangarootwelve","kasumi","kccm","kcdsa","kda-onestep","kda-twostep","kdf-ikev1","kdf-ikev2","kdf-sp800-108","kdf-srtp","kdf-ssh","kdf-tls12","kdf-tls13","kdf1","kemtls","keyusage","khazad","kiasu","kmac128","kmac128-mac","kmac256","kmac256-mac","kmacxof128","kmacxof256","lavarnd","lea","least","led","libp11","ligero","lm-hash","luffa","lyra2","maestro","makwa","marble","marlin","marsupilami14","masque","mceliece-460896f","mceliece-6960119","mceliece-6960119f","md2","md6","me-kdf","mft","mickeyv2","minimalt","minimpc","misty1","mithril","mls","mlsag","morus","mpc-ecdsa","mpc-schnorr","mtproto","musig","musig2","nameconstraints","nist-sp800-90b","nist-sp800-90c","nitro-enclaves","noekeon","noise-kdf","noise-xxfallback","noisesocket","nt-hash","nvidia-cc","oblivious-http","ocb3","ocsp-nocheck","odohdtls","opaque","opencryptoki","openssl-engine","openssl-provider","oscore","ot","otr","otrv4","pades","panama","pantheria","parallelhash128","parallelhash256","pedersen-vss","photon-beetle","photon-beetle-hash","piccolo","pinocchio","piver","plonky2","pomelo","pq-tls-hybrid","pqxdh","precert-poison","present","privacy-pass","prngd","pvss","quorus","rabbit","radio-gatun","rainbow","rc5","rc6","rdrand","rdseed","redeta","reseed-scheduler","rfc822name","ripemd128","ripemd256","ripemd320","roa","roast","romulus","romulus-hash","rsa-blind-sig","rsa-fdh","safer","scep","schmivitz","sct","seal","serpent","sesame","shabal","shamir","shavite3","signal-double-ratchet","signal-x3dh","signed-timestamp","sike","silc","simd","simon","skipjack","smallwood","snow3g","softhsm2","sonic","sosemanuk","spake2","spake2+","sparkle-esch","sparkle-schwaemm","spartan","speck","speke","splitkey","sr25519","srp","sskdf","stark","sts","subjectaltname","subjectkeyid","supersonic","tal","tanuki","tbls","tea","tecla","tfhe","the-clash","threefish-1024","threefish-256","threefish-512","tinyjambu","tls-features","tpm1.2","trivium","trng","tsp","tuplehash128","tuplehash256","twofish","umac","vinaigrette","vmac","vole","wake","wireguard","wolfssl-fips","x3dh","x942-kdf","xades","xcbc-mac","xchacha20","xoodyak","xoodyak-hash","xtea","yak","yarrow","zama-tfhe","zama-zhenith","zrtp","zuc"];
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+
+// Category table
+const catBody = document.getElementById('category-rows');
+const catTotal = {active:0,legacy:0,upcoming:0,total:0};
+categoryData.forEach(r => {
+  const t = r.active + r.legacy + r.upcoming;
+  catTotal.active += r.active; catTotal.legacy += r.legacy;
+  catTotal.upcoming += r.upcoming; catTotal.total += t;
+  catBody.innerHTML += `<tr>
+    <td style="font-weight:500">${r.cat}</td>
+    <td><span class="badge badge-active">${r.active}</span></td>
+    <td><span class="badge badge-legacy">${r.legacy}</span></td>
+    <td><span class="badge badge-upcoming">${r.upcoming}</span></td>
+    <td><strong>${t}</strong></td>
+  </tr>`;
+});
+catBody.innerHTML += `<tr style="border-top:2px solid var(--border)">
+  <td style="font-weight:700;color:var(--fg)">TOTAL</td>
+  <td><span class="badge badge-active">${catTotal.active}</span></td>
+  <td><span class="badge badge-legacy">${catTotal.legacy}</span></td>
+  <td><span class="badge badge-upcoming">${catTotal.upcoming}</span></td>
+  <td><strong>${catTotal.total}</strong></td>
+</tr>`;
+
+// Merge table (sorted by members desc)
+const mergeSorted = [...mergeGroups].sort((a,b)=>b.members-a.members);
+const mergeBody = document.getElementById('merge-tbody');
+mergeGroups.forEach(g => {
+  const reduction = g.members - 1;
+  mergeBody.innerHTML += `<tr>
+    <td>
+      <div style="font-weight:500;color:var(--fg);font-size:13px">${g.name}</div>
+      <div style="font-size:11px;color:var(--fg-muted);margin-top:2px">${g.cat}</div>
+    </td>
+    <td style="text-align:center"><span class="count">${g.members}</span></td>
+    <td class="arrow-col">→</td>
+    <td class="mono">${g.canonical}</td>
+    <td class="note-col">${g.reason}</td>
+  </tr>`;
+});
+
+// Remaining table
+const catReductions = {
+  "Encoding & Checksum":{elim:13},
+  "Hash / Digest / XOF":{elim:22},
+  "Password KDFs":{elim:7},
+  "Symmetric Block Ciphers":{elim:9},
+  "Stream Ciphers":{elim:3},
+  "Block Cipher Modes":{elim:3},
+  "AEAD Algorithms":{elim:2},
+  "MAC Algorithms":{elim:12},
+  "Key Derivation Functions":{elim:5},
+  "Key Agreement / KEM":{elim:27},
+  "Digital Signatures":{elim:6},
+  "PQ Digital Signatures":{elim:16},
+  "Stateful Hash Signatures":{elim:2},
+  "Threshold / MPC":{elim:0},
+  "Lightweight Crypto":{elim:7},
+  "DRBG / RNG":{elim:0},
+  "ZK Proofs / HE":{elim:0},
+  "Protocol Primitives":{elim:13},
+  "PKI / Certificates":{elim:5},
+  "Hardware / HSM / TEE":{elim:1},
+  "Verifiable Delay Functions":{elim:0},
+  "Advanced Primitives":{elim:0},
+};
+const remBody = document.getElementById('remaining-tbody');
+categoryData.forEach(r => {
+  const total = r.active + r.legacy + r.upcoming;
+  const elim = (catReductions[r.cat]||{elim:0}).elim;
+  const after = total - elim;
+  const pct = elim > 0 ? `<span style="color:var(--badge-active-fg);font-weight:600">-${elim} (${Math.round(elim/total*100)}%)</span>` : `<span style="color:var(--fg-muted)">—</span>`;
+  remBody.innerHTML += `<tr>
+    <td style="font-weight:500">${r.cat}</td>
+    <td>${total}</td>
+    <td>${pct}</td>
+    <td><strong>${after}</strong></td>
+    <td style="font-size:12px;color:var(--fg-muted)">${elim > 0 ? 'Hash/param adapter' : 'No merge candidates'}</td>
+  </tr>`;
+});
+remBody.innerHTML += `<tr style="border-top:2px solid var(--border)">
+  <td style="font-weight:700">TOTAL</td>
+  <td>776</td>
+  <td><span style="color:var(--badge-active-fg);font-weight:600">-156 (20.1%)</span></td>
+  <td><strong>620</strong></td>
+  <td></td>
+</tr>`;
+
+// Libraries
+const libGrid = document.getElementById('lib-grid');
+libraries.forEach(l => {
+  libGrid.innerHTML += `<div class="lib-card">
+    <div class="lib-card-header">
+      <span class="lib-card-name">${l.name}</span>
+      <span class="lib-card-count">${l.covers}</span>
+    </div>
+    <div class="lib-card-url">${l.url}</div>
+    <div class="lib-card-algos">${l.scope}</div>
+  </div>`;
+});
+
+// By category missing
+const byCatContent = document.getElementById('by-cat-content');
+let byCatHtml = '<div class="missing-grid">';
+for(const [cat, algos] of Object.entries(missingByCategory)){
+  byCatHtml += `<div class="missing-card">
+    <div class="missing-cat">${cat} <span style="opacity:.5">(${algos.length})</span></div>
+    <div class="algo-cloud">${algos.map(a=>`<span class="algo-tag">${a}</span>`).join('')}</div>
+  </div>`;
+}
+byCatHtml += '</div>';
+byCatContent.innerHTML = byCatHtml;
+
+// Raw missing cloud
+const rawCloud = document.getElementById('raw-missing-cloud');
+rawCloud.innerHTML = allMissing.sort().map(a=>`<span class="algo-tag">${a}</span>`).join('');
+
+// ─── THEME ──────────────────────────────────────────────────────────────────
+function toggleTheme(){
+  const h = document.documentElement;
+  h.setAttribute('data-theme', h.getAttribute('data-theme')==='dark' ? 'light' : 'dark');
+}
+
+// ─── TABS ───────────────────────────────────────────────────────────────────
+function showTab(id){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ─── SIDEBAR HIGHLIGHT ───────────────────────────────────────────────────────
+const sections = document.querySelectorAll('.section, .page-hero');
+const links = document.querySelectorAll('.sidebar a');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      links.forEach(l=>{
+        l.classList.toggle('active', l.getAttribute('href')==='#'+id);
+      });
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>
