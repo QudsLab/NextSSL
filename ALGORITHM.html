@@ -550,20 +550,40 @@
             },
             {
                 id: 'kem',
-                example: `<span class="ex-row"><span class="ex-cmt">// X25519 — interactive key agreement</span></span>
-<span class="ex-row">alice_priv = <span class="ex-val">random(32 bytes)</span>;  alice_pub = X25519(alice_priv, <span class="ex-val">G</span>)</span>
-<span class="ex-row">bob_priv   = <span class="ex-val">random(32 bytes)</span>;  bob_pub   = X25519(bob_priv,   <span class="ex-val">G</span>)</span>
+                example: `<span class="ex-row"><span class="ex-cmt">// ─── X25519 (Elliptic Curve Diffie-Hellman) ─────────────────────────────</span></span>
+<span class="ex-row"><span class="ex-cmt">// Both parties use the same curve base point G (a known public constant)</span></span>
 <span class="ex-row"></span>
-<span class="ex-row"><span class="ex-cmt">// Each side computes the same shared point — never transmitted:</span></span>
-<span class="ex-row">alice_side: X25519(alice_priv, bob_pub) ─┐</span>
-<span class="ex-row">                                          ├─→ <span class="ex-val">same 32-byte secret</span></span>
-<span class="ex-row">bob_side:   X25519(bob_priv, alice_pub) ─┘</span>
+<span class="ex-row"><span class="ex-cmt">// Alice generates her key pair</span></span>
+<span class="ex-row">alice_priv = <span class="ex-val">random(32 bytes)</span></span>
+<span class="ex-row">alice_pub  = X25519(alice_priv, <span class="ex-val">G</span>)  <span class="ex-cmt">// G = Curve25519 base point (public constant)</span></span>
 <span class="ex-row"></span>
-<span class="ex-row"><span class="ex-cmt">// ML-KEM-768 — KEM model (one-shot, post-quantum)</span></span>
-<span class="ex-row">(<span class="ex-key">pk</span>, <span class="ex-key">sk</span>) = ML-KEM.KeyGen()       <span class="ex-cmt">// recipient publishes pk</span></span>
-<span class="ex-row">(ct, ss_send) = ML-KEM.Encaps(pk)    <span class="ex-cmt">// sender → ct on wire + local secret</span></span>
-<span class="ex-row">ss_recv       = ML-KEM.Decaps(sk, ct)<span class="ex-cmt">// recipient → same secret</span></span>
-<span class="ex-row">assert ss_send == ss_recv            <span class="ex-cmt">// 32-byte shared secret</span></span>`,
+<span class="ex-row"><span class="ex-cmt">// Bob generates his key pair</span></span>
+<span class="ex-row">bob_priv   = <span class="ex-val">random(32 bytes)</span></span>
+<span class="ex-row">bob_pub    = X25519(bob_priv, <span class="ex-val">G</span>)   <span class="ex-cmt">// G = same base point for everyone</span></span>
+<span class="ex-row"></span>
+<span class="ex-row"><span class="ex-cmt">// Public keys (alice_pub, bob_pub) are exchanged over the network</span></span>
+<span class="ex-row"><span class="ex-cmt">// Private keys (alice_priv, bob_priv) never leave the device</span></span>
+<span class="ex-row"></span>
+<span class="ex-row"><span class="ex-cmt">// Each party computes the shared secret independently:</span></span>
+<span class="ex-row">alice_shared = X25519(alice_priv, bob_pub) ─┐</span>
+<span class="ex-row">                                            ├─→ <span class="ex-val">identical 32-byte secret</span></span>
+<span class="ex-row">bob_shared   = X25519(bob_priv, alice_pub) ─┘</span>
+<span class="ex-row"></span>
+<span class="ex-row">assert alice_shared == bob_shared</span>
+<span class="ex-row"></span>
+<span class="ex-row"><span class="ex-cmt">// ─── ML-KEM-768 (Post-Quantum Key Encapsulation) ──────────────────────</span></span>
+<span class="ex-row"><span class="ex-cmt">// One-shot model: no interactive back-and-forth needed</span></span>
+<span class="ex-row"></span>
+<span class="ex-row"><span class="ex-cmt">// Recipient (Bob) generates long-term keys once</span></span>
+<span class="ex-row">(<span class="ex-key">pk</span>, <span class="ex-key">sk</span>) = ML-KEM.KeyGen()           <span class="ex-cmt">// pk = public key, sk = secret key</span></span>
+<span class="ex-row"></span>
+<span class="ex-row"><span class="ex-cmt">// Sender (Alice) encapsulates to Bob's public key</span></span>
+<span class="ex-row">(ct, ss_send) = ML-KEM.Encaps(<span class="ex-key">pk</span>)    <span class="ex-cmt">// ct = ciphertext sent to Bob, ss = shared secret</span></span>
+<span class="ex-row"></span>
+<span class="ex-row"><span class="ex-cmt">// Recipient decrypts ciphertext with secret key</span></span>
+<span class="ex-row">ss_recv = ML-KEM.Decaps(<span class="ex-key">sk</span>, ct)    <span class="ex-cmt">// same shared secret recovered</span></span>
+<span class="ex-row"></span>
+<span class="ex-row">assert ss_send == ss_recv            <span class="ex-cmt">// 32-byte shared secret established</span></span>`,
                 internals: `<p>Two different models for the same goal: produce a shared secret from public keys.</p>
 <p><b>Diffie-Hellman / ECDH</b> is <b>interactive and symmetric</b>: each party has a (priv, pub) pair; they exchange pubs and each computes the same value with their priv + other's pub. Math: classic DH uses modular exponentiation in a prime-order group; ECDH uses scalar multiplication on an elliptic curve. <code>X25519</code> = ECDH on Curve25519 (Montgomery form, constant-time ladder, no malleable points). <code>X448</code> = same but Curve448 (higher security level, slower).</p>
 <p><b>KEM</b> (Key Encapsulation Mechanism) is <b>one-shot and asymmetric</b>: only the recipient has a keypair. Sender runs <code>Encaps(pub) → (ciphertext, shared_secret)</code>; ships the ciphertext; recipient runs <code>Decaps(priv, ciphertext) → shared_secret</code>. Same end result, different shape — and crucially, KEMs work even when the underlying primitive is non-commutative (which is why all post-quantum schemes use KEM form, not DH form).</p>
