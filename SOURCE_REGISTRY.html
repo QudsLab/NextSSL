@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextSSL · Source Registry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --canvas: #faf9f5;
+      --card: #efe9de;
+      --card-soft: #f5f0e8;
+      --cream-strong: #e8e0d2;
+      --dark: #181715;
+      --dark-el: #252320;
+      --dark-soft: #1f1e1b;
+      --primary: #5cccb0;
+      --ink: #141413;
+      --body-color: #3d3d3a;
+      --muted: #6c6a64;
+      --muted-soft: #8e8b82;
+      --hairline: #e6dfd8;
+      --dark-border: #2c2a27;
+      --badge-active-bg: #5db87220;
+      --badge-active-fg: #3a8f62;
+      --badge-active-border: #5db87240;
+      --badge-legacy-bg: #e8a55a20;
+      --badge-legacy-fg: #a0661a;
+      --badge-legacy-border: #e8a55a40;
+      --badge-upcoming-bg: #cc785c20;
+      --badge-upcoming-fg: #a9583e;
+      --badge-upcoming-border: #cc785c40;
+      --amber: #e8a55a;
+      --on-dark: #faf9f5;
+      --on-dark-soft: #a09d96;
+      --bg: var(--canvas);
+      --fg: var(--ink);
+      --fg-body: var(--body-color);
+      --fg-muted: var(--muted);
+      --border: var(--hairline);
+      --surface: var(--card);
+      --surface-soft: var(--card-soft);
+      --nav-bg: var(--canvas);
+      --code-bg: #2a2724;
+      --c-color: #5cccb0;
+      --v-color: #e8a55a;
+    }
+
+    [data-theme="dark"] {
+      --bg: var(--dark);
+      --fg: var(--on-dark);
+      --fg-body: var(--on-dark-soft);
+      --fg-muted: #6c6a64;
+      --border: var(--dark-border);
+      --surface: var(--dark-el);
+      --surface-soft: var(--dark-soft);
+      --nav-bg: var(--dark);
+      --code-bg: #1a1917;
+      --badge-active-bg: #5db87215;
+      --badge-active-fg: #5db872;
+      --badge-active-border: #5db87230;
+      --badge-legacy-bg: #e8a55a15;
+      --badge-legacy-fg: #e8a55a;
+      --badge-legacy-border: #e8a55a30;
+      --badge-upcoming-bg: #5cc8cc15;
+      --badge-upcoming-fg: #5cc8cc;
+      --badge-upcoming-border: #5cc8cc30;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.55;
+      transition: background .2s, color .2s
+    }
+
+    /* NAV */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      gap: 16px;
+      backdrop-filter: blur(8px)
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border: 1.5px solid var(--primary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .brand-mark svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--primary);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round
+    }
+
+    .brand-name {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--fg);
+      letter-spacing: -.2px
+    }
+
+    .brand-ver {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--fg-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 7px;
+      margin-left: 4px
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .theme-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--fg-muted);
+      cursor: pointer;
+      border-radius: 7px;
+      padding: 5px 13px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      transition: all .15s
+    }
+
+    .theme-btn:hover {
+      color: var(--fg)
+    }
+
+    /* LAYOUT */
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 60px)
+    }
+
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      padding: 20px 0;
+      background: var(--bg)
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 4px
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px
+    }
+
+    .sidebar-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      padding: 8px 20px 4px;
+      opacity: .7
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 6px 20px;
+      font-size: 12.5px;
+      color: var(--fg-muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all .12s
+    }
+
+    .sidebar a:hover {
+      color: var(--fg);
+      background: var(--surface-soft);
+      border-left-color: var(--primary)
+    }
+
+    .sidebar a.active {
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 500
+    }
+
+    .main {
+      flex: 1;
+      padding: 60px 56px;
+      max-width: 1200px;
+      min-width: 0
+    }
+
+    /* HERO */
+    .page-hero {
+      margin-bottom: 72px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 14px
+    }
+
+    .page-hero h1 {
+      font-family: 'EB Garamond', serif;
+      font-size: 52px;
+      font-weight: 400;
+      letter-spacing: -1px;
+      line-height: 1.06;
+      color: var(--fg);
+      margin-bottom: 18px
+    }
+
+    .page-hero h1 em {
+      font-style: italic;
+      color: var(--primary)
+    }
+
+    .page-hero p {
+      font-size: 16px;
+      color: var(--fg-body);
+      max-width: 560px;
+      line-height: 1.65
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 16px;
+      margin-top: 32px;
+      flex-wrap: wrap
+    }
+
+    .hstat {
+      padding: 14px 20px;
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      min-width: 110px
+    }
+
+    .hstat-n {
+      font-family: 'EB Garamond', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--primary);
+      line-height: 1
+    }
+
+    .hstat-l {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--fg-muted);
+      margin-top: 4px
+    }
+
+    /* SECTIONS */
+    .section {
+      margin-bottom: 80px;
+      scroll-margin-top: 76px
+    }
+
+    .section-eyebrow {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px
+    }
+
+    .section-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 38px;
+      font-weight: 400;
+      letter-spacing: -.5px;
+      color: var(--fg);
+      margin-bottom: 12px;
+      line-height: 1.1
+    }
+
+    .section-lead {
+      font-size: 15px;
+      color: var(--fg-body);
+      line-height: 1.7;
+      max-width: 640px;
+      margin-bottom: 28px
+    }
+
+    /* SOURCE CARDS */
+    .src-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 14px;
+      margin: 20px 0
+    }
+
+    .src-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      transition: border-color .15s
+    }
+
+    .src-card:hover {
+      border-color: var(--primary)
+    }
+
+    .src-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px
+    }
+
+    .src-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 5px;
+      flex-shrink: 0
+    }
+
+    .src-id.c-id {
+      background: #5cccb015;
+      color: var(--primary);
+      border: 1px solid #5cccb030
+    }
+
+    .src-id.v-id {
+      background: #e8a55a15;
+      color: var(--amber);
+      border: 1px solid #e8a55a30
+    }
+
+    .src-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--fg)
+    }
+
+    .src-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      color: var(--fg-muted);
+      margin-bottom: 8px;
+      word-break: break-all
+    }
+
+    .src-url a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    .src-url a:hover {
+      color: var(--primary)
+    }
+
+    .src-desc {
+      font-size: 12.5px;
+      color: var(--fg-body);
+      line-height: 1.55
+    }
+
+    /* LEGEND */
+    .legend-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 16px 0 28px
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      color: var(--fg-muted)
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0
+    }
+
+    .legend-dot.c {
+      background: var(--primary);
+      opacity: .7
+    }
+
+    .legend-dot.v {
+      background: var(--amber);
+      opacity: .7
+    }
+
+    .legend-dot.both {
+      background: linear-gradient(135deg, var(--primary) 50%, var(--amber) 50%)
+    }
+
+    .legend-dot.none {
+      background: var(--border)
+    }
+
+    /* FILTERS */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+      align-items: center
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--fg-muted);
+      background: var(--surface);
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all .15s;
+      white-space: nowrap
+    }
+
+    .filter-btn:not(:last-child) {
+      border-right: 1px solid var(--border)
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: #fff
+    }
+
+    .filter-sep {
+      width: 1px;
+      background: var(--border);
+      margin: 0 4px;
+      flex-shrink: 0
+    }
+
+    /* SEARCH */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 16px
+    }
+
+    .search-wrap input {
+      width: 100%;
+      padding: 9px 36px 9px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--fg);
+      outline: none;
+      transition: border-color .15s
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--primary)
+    }
+
+    .search-wrap input::placeholder {
+      color: var(--fg-muted)
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--fg-muted);
+      font-size: 13px;
+      pointer-events: none
+    }
+
+    /* ALGO TABLE */
+    .algo-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px
+    }
+
+    .algo-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px
+    }
+
+    .algo-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--fg-muted);
+      border-bottom: 2px solid var(--border);
+      background: var(--surface);
+      white-space: nowrap
+    }
+
+    .algo-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle
+    }
+
+    .algo-table tr:last-child td {
+      border-bottom: none
+    }
+
+    .algo-table tr:hover td {
+      background: var(--surface-soft)
+    }
+
+    .algo-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--fg);
+      font-weight: 500
+    }
+
+    .algo-cat {
+      font-size: 11px;
+      color: var(--fg-muted)
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 10.5px;
+      font-weight: 500
+    }
+
+    .badge-active {
+      background: var(--badge-active-bg);
+      color: var(--badge-active-fg);
+      border: 1px solid var(--badge-active-border)
+    }
+
+    .badge-legacy {
+      background: var(--badge-legacy-bg);
+      color: var(--badge-legacy-fg);
+      border: 1px solid var(--badge-legacy-border)
+    }
+
+    .badge-upcoming {
+      background: var(--badge-upcoming-bg);
+      color: var(--badge-upcoming-fg);
+      border: 1px solid var(--badge-upcoming-border)
+    }
+
+    .src-tags {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap
+    }
+
+    .stag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: default
+    }
+
+    .stag.c-tag {
+      background: #5cccb015;
+      color: var(--primary);
+      border: 1px solid #5cccb025
+    }
+
+    .stag.v-tag {
+      background: #e8a55a15;
+      color: var(--amber);
+      border: 1px solid #e8a55a25
+    }
+
+    .none-tag {
+      font-size: 11px;
+      color: var(--fg-muted);
+      opacity: .5
+    }
+
+    /* TABLE STATS */
+    .table-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .table-count {
+      font-size: 12.5px;
+      color: var(--fg-muted)
+    }
+
+    .table-count strong {
+      color: var(--fg)
+    }
+
+    /* CALLOUT */
+    .callout {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+      border-radius: 8px;
+      padding: 16px 22px;
+      margin: 20px 0
+    }
+
+    .callout-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 8px
+    }
+
+    .callout p {
+      font-size: 13.5px;
+      color: var(--fg-body);
+      line-height: 1.65
+    }
+
+    /* COV BAR */
+    .cov-bar-wrap {
+      margin: 20px 0
+    }
+
+    .cov-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--fg-muted);
+      margin-bottom: 6px
+    }
+
+    .cov-bar-label strong {
+      color: var(--fg)
+    }
+
+    .cov-bar {
+      height: 8px;
+      background: var(--surface);
+      border-radius: 99px;
+      overflow: hidden;
+      border: 1px solid var(--border)
+    }
+
+    .cov-bar-fill {
+      height: 100%;
+      border-radius: 99px
+    }
+
+    .fill-c {
+      background: linear-gradient(90deg, var(--primary), #3ab896)
+    }
+
+    .fill-v {
+      background: linear-gradient(90deg, var(--amber), #d47f3a)
+    }
+
+    .fill-both {
+      background: linear-gradient(90deg, var(--primary), var(--amber))
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      color: var(--on-dark-soft);
+      padding: 40px 56px;
+      font-size: 12.5px;
+      border-top: 1px solid var(--dark-border)
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:960px) {
+      .sidebar {
+        display: none
+      }
+
+      .main {
+        padding: 36px 24px
+      }
+
+      .page-hero h1 {
+        font-size: 36px
+      }
+
+      .section-title {
+        font-size: 28px
+      }
+    }
+
+    @media(max-width:600px) {
+      .topnav {
+        padding: 0 16px
+      }
+
+      .main {
+        padding: 24px 16px
+      }
+
+      .src-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* STAT GRID */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 20px 0
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px
+    }
+
+    .stat-card-n {
+      font-family: 'EB Garamond', serif;
+      font-size: 36px;
+      line-height: 1;
+      margin-bottom: 4px
+    }
+
+    .stat-card-l {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--fg-muted);
+      letter-spacing: .3px
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="topnav">
+    <a class="brand" href="#top">
+      <div class="brand-mark">
+        <svg viewBox="0 0 14 14">
+          <polyline points="2,11 7,3 12,11" />
+          <line x1="4" y1="8" x2="10" y2="8" />
+        </svg>
+      </div>
+      <span class="brand-name">NextSSL</span>
+      <span class="brand-ver">Source Registry</span>
+    </a>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <nav class="sidebar">
+      <div class="sidebar-label">Overview</div>
+      <a href="#top" class="active">Stats</a>
+      <div class="sidebar-label">Table A — C Sources</div>
+      <a href="#table-a">All 18 Sources</a>
+      <div class="sidebar-label">Table B — Verification</div>
+      <a href="#table-b">All 15 Sources</a>
+      <div class="sidebar-label">Table C — Algo Map</div>
+      <a href="#table-c">776 Algorithms</a>
+      <a href="#table-c-filters">Filters &amp; Search</a>
+    </nav>
+
+    <main class="main">
+
+      <section class="page-hero" id="top">
+        <div class="hero-label">NextSSL · Algorithm Source Registry</div>
+        <h1>776 Algorithms.<br><em>Where to get them.</em></h1>
+        <p>For every algorithm in the NextSSL inventory: trustworthy C implementation sources for compilation, and
+          verification sources (NIST ACVP, Python libs) for KAT cross-checking.</p>
+        <div class="hero-stats">
+          <div class="hstat">
+            <div class="hstat-n">776</div>
+            <div class="hstat-l">Total Algorithms</div>
+          </div>
+          <div class="hstat">
+            <div class="hstat-n" style="color:var(--primary)" id="stat-c">—</div>
+            <div class="hstat-l">Have C Source</div>
+          </div>
+          <div class="hstat">
+            <div class="hstat-n" style="color:var(--amber)" id="stat-v">—</div>
+            <div class="hstat-l">Have V Source</div>
+          </div>
+          <div class="hstat">
+            <div class="hstat-n" style="color:var(--badge-active-fg)" id="stat-both">—</div>
+            <div class="hstat-l">Have Both</div>
+          </div>
+          <div class="hstat">
+            <div class="hstat-n" style="color:var(--fg-muted)" id="stat-none">—</div>
+            <div class="hstat-l">Research Only</div>
+          </div>
+        </div>
+
+        <div style="margin-top:28px">
+          <div id="cov-bars"></div>
+        </div>
+      </section>
+
+      <!-- TABLE A -->
+      <section class="section" id="table-a">
+        <div class="section-eyebrow">Table A</div>
+        <div class="section-title">C Implementation Sources</div>
+        <div class="section-lead">Trustworthy, compilable C (and where noted C++/asm) repositories. Prioritised for:
+          clean build systems, no exotic dependencies, wide platform support, and authoritative provenance. Each has a
+          unique ID used in Table C.</div>
+
+        <div class="callout">
+          <div class="callout-label">Compilation Priority</div>
+          <p>For a new algorithm, try in order: C04 (libsodium) → C01 (OpenSSL) → C06/C09 (PQClean/liboqs for PQC) → C07
+            (XKCP for Keccak family) → C03 (Botan for broad coverage) → C05 (libtomcrypt for legacy). Assembly is
+            acceptable from C07, C08, C13, C15, and C18.</p>
+        </div>
+
+        <div class="src-grid" id="c-src-grid"></div>
+      </section>
+
+      <!-- TABLE B -->
+      <section class="section" id="table-b">
+        <div class="section-eyebrow">Table B</div>
+        <div class="section-title">Verification Sources</div>
+        <div class="section-lead">NIST ACVP vectors and Python libraries used to cross-verify C implementation output.
+          Python is suitable here specifically for its verification role — not as a KAT target itself, but as the oracle
+          you run your C output against.</div>
+
+        <div class="callout">
+          <div class="callout-label">Verification Workflow</div>
+          <p>Generate KAT output from your C implementation → pipe to Python verifier → cross-check against NIST ACVP
+            (V01) or Wycheproof (V11) vectors. For PQC: always use V12 (NIST KAT) as ground truth, V06 (pyoqs) as the
+            Python oracle. For ZK: V14 + V09 (SageMath).</p>
+        </div>
+
+        <div class="src-grid" id="v-src-grid"></div>
+      </section>
+
+      <!-- TABLE C -->
+      <section class="section" id="table-c">
+        <div class="section-eyebrow">Table C</div>
+        <div class="section-title">Algorithm → Source Map</div>
+        <div class="section-lead">Every algorithm in the 776-entry inventory mapped to its Table A (C implementation)
+          and Table B (verification) source IDs. Hover over any ID tag to see the source name. Research-phase upcoming
+          algorithms with no available implementation are marked as research-only.</div>
+
+        <div class="legend-row">
+          <div class="legend-item">
+            <div class="legend-dot c"></div> C source ID (Table A)
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot v"></div> Verification source ID (Table B)
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot none"></div> Research only — no public implementation
+          </div>
+        </div>
+
+        <div id="table-c-filters">
+          <div class="filter-bar">
+            <div class="filter-group">
+              <button class="filter-btn active" onclick="setStatus('all',this)">All</button>
+              <button class="filter-btn" onclick="setStatus('active',this)">Active</button>
+              <button class="filter-btn" onclick="setStatus('legacy',this)">Legacy</button>
+              <button class="filter-btn" onclick="setStatus('upcome',this)">Upcoming</button>
+            </div>
+            <div class="filter-sep"></div>
+            <div class="filter-group">
+              <button class="filter-btn active" onclick="setCov('all',this)">All Coverage</button>
+              <button class="filter-btn" onclick="setCov('c',this)">Has C Source</button>
+              <button class="filter-btn" onclick="setCov('v',this)">Has V Source</button>
+              <button class="filter-btn" onclick="setCov('both',this)">Has Both</button>
+              <button class="filter-btn" onclick="setCov('none',this)">Research Only</button>
+            </div>
+          </div>
+          <div class="filter-bar">
+            <div style="flex:1;max-width:400px">
+              <div class="search-wrap">
+                <input type="text" id="algo-search" placeholder="Search algorithm name..." oninput="renderTable()">
+                <span class="search-icon">⌕</span>
+              </div>
+            </div>
+            <div class="filter-group" style="margin-left:auto">
+              <select id="cat-filter" onchange="renderTable()"
+                style="padding:6px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--fg-muted);font-family:'Inter',sans-serif;cursor:pointer;outline:none">
+                <option value="all">All Categories</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-meta">
+          <div class="table-count">Showing <strong id="row-count">776</strong> algorithms</div>
+        </div>
+
+        <div class="algo-table-wrap">
+          <table class="algo-table">
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th style="min-width:220px">Table A · C Sources</th>
+                <th style="min-width:180px">Table B · Verification</th>
+              </tr>
+            </thead>
+            <tbody id="algo-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="font-family:'EB Garamond',serif;font-size:17px;color:var(--on-dark);margin-bottom:4px">NextSSL ·
+          Source Registry</div>
+        <div>QudsLab · Cryptographic Inventory — 18 C sources · 15 Verification sources · 776 algorithms mapped</div>
+      </div>
+      <div style="text-align:right;font-family:'JetBrains Mono',monospace;font-size:11px">
+        <div style="color:var(--primary)">C01–C18 · V01–V15</div>
+        <div style="margin-top:4px;opacity:.6">KAT · ACVP · PQC · Legacy</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── DATA ────────────────────────────────────────────────────────────────────
+    const cSources = [
+      { "id": "C01", "name": "OpenSSL / LibreSSL", "url": "https://github.com/openssl/openssl", "desc": "Industry-standard C TLS/crypto library (FIPS module available). AES, SHA-*, RSA, ECDSA, ECDH, X.509, PBKDF2, HKDF, ChaCha20, CBC/GCM/CCM/XTS/SIV modes, and 100+ more. Assembly-optimised backends for x86/ARM." },
+      { "id": "C02", "name": "wolfSSL (wolfCrypt)", "url": "https://github.com/wolfSSL/wolfssl", "desc": "Embedded-target C library with FIPS 140-3 certification. Covers AES, SHA-*, ECC, RSA, ChaCha20-Poly1305, HMAC, KDFs, TLS 1.3. Highly portable; used in IoT/RTOS environments." },
+      { "id": "C03", "name": "Botan (C++17 / C API)", "url": "https://github.com/randombit/botan", "desc": "Modern C++17 with stable C FFI wrapper. Broadest algorithm coverage: classical + PQC (ML-KEM, ML-DSA, FrodoKEM, Classic McEliece, SPHINCS+, NTRU). Clean API, ideal for language bindings." },
+      { "id": "C04", "name": "libsodium", "url": "https://github.com/jedisct1/libsodium", "desc": "Opinionated, portable C library. Ed25519, X25519, ChaCha20-Poly1305, XSalsa20, BLAKE2, Argon2id, HMAC-SHA-512, SipHash. No legacy ciphers. Easiest to compile and link." },
+      { "id": "C05", "name": "libtomcrypt", "url": "https://github.com/libtom/libtomcrypt", "desc": "Public-domain portable C. Broad legacy coverage: DES, CAST, IDEA, RC2/5, Twofish, Blowfish, Whirlpool, Tiger, base-N encodings. Good for implementing legacy KAT vectors." },
+      { "id": "C06", "name": "PQClean", "url": "https://github.com/PQClean/PQClean", "desc": "Clean-room reference C (no external deps) for all NIST PQC finalists: ML-KEM, ML-DSA, Falcon, SPHINCS+ (SLH-DSA), FrodoKEM, Classic McEliece, HQC, BIKE, NTRU. KAT-test ready by design." },
+      { "id": "C07", "name": "XKCP (Keccak)", "url": "https://github.com/XKCP/XKCP", "desc": "Official C/asm Keccak reference by the algorithm authors. Covers SHA-3, SHAKE, cSHAKE, KMAC, TupleHash, ParallelHash, KangarooTwelve, MarsupilamiFourteen, Xoodyak, Ascon." },
+      { "id": "C08", "name": "BLAKE3 (official C)", "url": "https://github.com/BLAKE3-team/BLAKE3", "desc": "Official BLAKE3 C implementation with SSE2/SSE4.1/AVX2/AVX-512/NEON assembly backends. Also covers BLAKE3-MAC (keyed mode via same C API)." },
+      { "id": "C09", "name": "liboqs (Open Quantum Safe)", "url": "https://github.com/open-quantum-safe/liboqs", "desc": "C library aggregating all major PQC: ML-KEM, ML-DSA, Falcon, SPHINCS+, FrodoKEM, HQC, BIKE, Classic McEliece, NTRU, NTRU Prime, and stateful hash sigs (XMSS/MT, LMS/HSS). ACVP KAT vectors included." },
+      { "id": "C10", "name": "Nettle / GnuTLS", "url": "https://git.lysator.liu.se/nettle/nettle", "desc": "Nettle is a low-level C crypto lib underpinning GnuTLS. AES, Camellia, Salsa20, ChaCha20, SHA-*, SHA-3, HMAC, RSA, ECDSA, Ed25519, X25519, DH, DES, Streebog, SM3/SM4." },
+      { "id": "C11", "name": "Mbed TLS", "url": "https://github.com/Mbed-TLS/mbedtls", "desc": "Portable ANSI C99, PSA Crypto API compliant. AES, SHA-*, RSA, ECDSA, ECDH, DHE, HMAC, HKDF, PBKDF2, X.509, TLS 1.3. Targets constrained devices; clean build system." },
+      { "id": "C12", "name": "BLAKE2 reference C", "url": "https://github.com/BLAKE2/BLAKE2", "desc": "Official BLAKE2 C reference implementations: BLAKE2b, BLAKE2s, BLAKE2bp, BLAKE2sp \u2014 all four variants with known-answer test vectors from the authors." },
+      { "id": "C13", "name": "XXHash / SipHash / crcany (C)", "url": "https://github.com/Cyan4973/xxHash", "desc": "xxHash: XXH32, XXH64, XXH3, XXH128 in C with SIMD acceleration. SipHash official C at github.com/veorq/SipHash. CRC polynomials via crcany (CRC-8/16/32/64 all widths) or zlib (CRC-32/Adler-32)." },
+      { "id": "C14", "name": "Argon2 reference C", "url": "https://github.com/P-H-C/phc-winner-argon2", "desc": "Official PHC-winning Argon2 C implementation. Covers Argon2d, Argon2i, Argon2id with KAT test vectors. Builds as a standalone static lib with no external dependencies." },
+      { "id": "C15", "name": "SUPERCOP / ECRYPT stream ciphers (C/asm)", "url": "https://bench.cr.yp.to/supercop.html", "desc": "SUPERCOP (System for Unified Performance Evaluation) is the canonical C/asm reference for stream ciphers: HC-128/256, Rabbit, Sosemanuk, Grain, MICKEY, Trivium, ISAAC, Panama, WAKE, SEAL, A5/1/2, E0." },
+      { "id": "C16", "name": "noise-c / libhydrogen (C)", "url": "https://github.com/rweather/noise-c", "desc": "noise-c implements all Noise Framework patterns (NN, KN, NK, KK, NX, XX, IK, IX\u2026) in C. libhydrogen: minimal C covering Noise-based key exchange, ChaCha20, BLAKE2b, Ed25519 with zero external deps." },
+      { "id": "C17", "name": "Bouncy Castle (C# / Java \u2014 portable) / SM crypto libs", "url": "https://github.com/bcgit/bc-csharp", "desc": "For exotic algos absent from mainstream C libs: Bouncy Castle covers GOST, SM2/3/4, Tiger, Whirlpool, IDEA, CAST, RC2/5, niche KDFs, ring/group sigs. C# is directly translatable to C. SM-specific: github.com/guanzhi/GmSSL (C)." },
+      { "id": "C18", "name": "Intel IPP-Crypto / Arm CE (assembly)", "url": "https://github.com/intel/ipp-crypto", "desc": "Intel IPP-Crypto: hardware-accelerated C/asm for AES-NI, SHA-NI, RSA, ECDSA, ECDH on x86. Arm Cryptographic Extensions: AES/SHA intrinsics for ARM. Use when platform-optimised assembly is the target." },
+      { "id": "C19", "name": "libaegis (aegis-aead)", "url": "https://github.com/aegis-aead/libaegis", "desc": "Portable C implementation of the full AEGIS family: AEGIS-128L, AEGIS-128X2/X4, AEGIS-256, AEGIS-256X2/X4, with AES-NI/NEON/AVX-512 acceleration and runtime CPU detection." },
+      { "id": "C20", "name": "rweather/lwc-finalists", "url": "https://github.com/rweather/lwc-finalists", "desc": "C implementations of all 10 NIST Lightweight Cryptography finalists: ASCON, Elephant, GIFT-COFB, Grain-128AEAD, ISAP, PHOTON-Beetle, Romulus, SPARKLE, TinyJAMBU, and Xoodyak; optimised for 32-bit and 8-bit embedded targets." },
+      { "id": "C21", "name": "bitcoin/libbase58", "url": "https://github.com/bitcoin/libbase58", "desc": "Canonical C library for Bitcoin's Base58 and Base58Check encoding/decoding by Luke Dashjr, used in production by Bitcoin Core." },
+      { "id": "C22", "name": "sipa/bech32 (C++ ref)", "url": "https://github.com/sipa/bech32", "desc": "Pieter Wuille's reference C++ implementation of Bech32 and Bech32m for SegWit addresses (BIP-173 / BIP-350), including full test vectors." },
+      { "id": "C23", "name": "bancaditalia/secp256k1-frost", "url": "https://github.com/bancaditalia/secp256k1-frost", "desc": "Fork of bitcoin-core/secp256k1 (pure C) extending it with a FROST threshold Schnorr signature module for the secp256k1 curve; developed by Bank of Italy." },
+      { "id": "C24", "name": "Taraxa-project/taraxa-vdf", "url": "https://github.com/Taraxa-project/taraxa-vdf", "desc": "C/C++ implementation of both the Wesolowski and Pietrzak VDF protocols using OpenSSL and GMP for large-integer arithmetic." },
+      { "id": "C25", "name": "openfheorg/openfhe-development", "url": "https://github.com/openfheorg/openfhe-development", "desc": "Open-source C++ FHE library implementing BFV, BGV, CKKS, TFHE (DM/CGGI), and LMKCDEY schemes with bootstrapping; successor to PALISADE." },
+      { "id": "C26", "name": "bitcoin-core/secp256k1", "url": "https://github.com/bitcoin-core/secp256k1", "desc": "Optimised, production-grade C library for EC operations on secp256k1: ECDSA, Schnorr (BIP-340), ECDH, MuSig2, and ElligatorSwift; used by Bitcoin Core." },
+      { "id": "C27", "name": "openluopworld/block-ciphers", "url": "https://github.com/openluopworld/block-ciphers", "desc": "Portable C reference implementations of lightweight block ciphers including LEA, HIGHT, PRESENT, LED, PRINCE, PRIDE, SKINNY, RECTANGLE, SIMON, and SPECK." },
+      { "id": "C28", "name": "floodyberry/supercop (Deoxys-II ref)", "url": "https://github.com/floodyberry/supercop", "desc": "SUPERCOP mirror containing the original authors' reference C implementation of Deoxys-II-256-128 (and Deoxys-I) as submitted to the CAESAR competition." }
+    ];
+    const vSources = [
+      { "id": "V01", "name": "NIST ACVP / CAVS Test Vectors", "url": "https://github.com/usnistgov/ACVP", "desc": "NIST Automated Cryptographic Validation Protocol. Official JSON KAT vectors for AES, SHA-*, HMAC, DRBG, RSA, ECDSA, ECDH, KDFs (SP800-108/56C), PQC (ML-KEM, ML-DSA, SLH-DSA, LMS, HSS, XMSS). Gold standard for FIPS validation." },
+      { "id": "V02", "name": "cryptography (PyCA)", "url": "https://cryptography.io", "desc": "De-facto Python crypto library backed by OpenSSL. AES (all modes), ChaCha20, RSA, ECDSA, Ed25519, X25519, X448, SHA-*, HMAC, HKDF, PBKDF2, scrypt, X.509/CRL/OCSP, PKCS. Primary Python verification tool." },
+      { "id": "V03", "name": "PyCryptodome", "url": "https://pycryptodome.readthedocs.io", "desc": "Python library with pure-Python fallbacks. AES, 3DES, Blowfish, CAST, RC4, ChaCha20, Salsa20, SHA-*, BLAKE2, RIPEMD-160, HMAC, PBKDF2, scrypt, RSA, ECDSA, Ed25519. Good for legacy algo testing." },
+      { "id": "V04", "name": "passlib / pyca/bcrypt", "url": "https://passlib.readthedocs.io", "desc": "Python password hashing framework. Covers bcrypt, scrypt, Argon2 (via argon2-cffi), PBKDF2-SHA*, MD5-crypt, SHA256-crypt, SHA512-crypt, BSDi-crypt, and legacy formats. Verification via known-password test vectors." },
+      { "id": "V05", "name": "PyNaCl / pynacl (libsodium Python)", "url": "https://github.com/pyca/pynacl", "desc": "Python binding to libsodium. Ed25519, X25519, ChaCha20-Poly1305, XSalsa20-Poly1305, BLAKE2b, Argon2id, SipHash. Clean API; KAT vectors match libsodium's test suite." },
+      { "id": "V06", "name": "liboqs-python (pyoqs)", "url": "https://github.com/open-quantum-safe/liboqs-python", "desc": "Python bindings for liboqs. All NIST PQC: ML-KEM, ML-DSA, Falcon, SPHINCS+, FrodoKEM, HQC, BIKE, Classic McEliece, NTRU, NTRU Prime, LMS, HSS, XMSS/MT. Primary PQC verification tool." },
+      { "id": "V07", "name": "Python hashlib / hmac / secrets (stdlib)", "url": "https://docs.python.org/3/library/hashlib.html", "desc": "Python 3 standard library. hashlib covers MD5, SHA-1, SHA-2 family, SHA-3 family, BLAKE2b/s, SHAKE128/256 via OpenSSL. hmac module for HMAC. secrets for OS CSPRNG access. Zero-install baseline." },
+      { "id": "V08", "name": "py_ecc / coincurve / fastecdsa", "url": "https://github.com/ethereum/py_ecc", "desc": "Elliptic curve and pairing verification. py_ecc: BLS12-381, BN128 pairings, secp256k1 in Python. coincurve: libsecp256k1 bindings for ECDSA/Schnorr. fastecdsa: P-256/384/521. For ZK/pairing and advanced signature verification." },
+      { "id": "V09", "name": "SageMath / galois / sympy", "url": "https://www.sagemath.org", "desc": "Mathematical verification environment. SageMath: elliptic curves, lattices, finite fields, number theory \u2014 full CAS for algebraic correctness checks. galois: GF arithmetic. Used for exotic/research primitive verification." },
+      { "id": "V10", "name": "pysha3 / xxhash / crcmod / zlib (Python)", "url": "https://pypi.org/project/xxhash/", "desc": "Supplemental Python checksum/hash libs. xxhash Python: XXH32/64/XXH3. crcmod: CRC-8/16/32/64 with configurable polynomials. zlib: Adler-32, CRC-32. pysha3: raw Keccak-256/512 (pre-standard). highwayhash Python binding." },
+      { "id": "V11", "name": "Wycheproof (Google)", "url": "https://github.com/google/wycheproof", "desc": "Google's adversarial test vector suite covering edge cases and known weaknesses. JSON test vectors for AES-GCM/CCM/EAX/SIV, ChaCha20-Poly1305, RSA (OAEP/PSS/PKCS1), ECDSA, Ed25519, ECDH, X25519, HMAC, DSA, DH. Language-agnostic." },
+      { "id": "V12", "name": "NIST PQC Official KAT Vectors", "url": "https://csrc.nist.gov/projects/post-quantum-cryptography", "desc": "NIST-published Known Answer Test vectors for all PQC standards: ML-KEM (FIPS 203), ML-DSA (FIPS 204), SLH-DSA (FIPS 205), Falcon. Also Kyber/Dilithium round KATs. LMS/HSS/XMSS KATs from SP800-208. The authoritative PQC KAT source." },
+      { "id": "V13", "name": "Tink (Python) / pyseto / joserfc / Noise protocol refs", "url": "https://github.com/tink-crypto/tink-py", "desc": "Tink Python: safe high-level wrapping for AES-GCM, ChaCha20-Poly1305, HMAC, ECDSA, Ed25519, ECDH, AES-SIV, AES-GCM-SIV. pyseto: PASETO tokens. joserfc: JOSE/JWT/JWE/JWS \u2014 protocol primitive verification." },
+      { "id": "V14", "name": "py-snark / arkworks-py / py_ecc ZK / starkware-crypto", "url": "https://github.com/starkware-libs/starkware-crypto-utils", "desc": "Python ZK verification: Groth16/PLONK via snarkjs-compatible test vectors, STARK/Pedersen/Rescue via starkware-crypto-utils. py_ecc for KZG/BLS pairings. FHE: concrete-python (TFHE), OpenFHE Python bindings (BGV/CKKS/BFV)." },
+      { "id": "V15", "name": "asn1crypto / pyOpenSSL / certvalidator / cryptography X.509", "url": "https://github.com/wbond/asn1crypto", "desc": "PKI/ASN.1 Python verification stack. asn1crypto: DER/CER/BER/PER/OER/XER parsing and generation. pyOpenSSL: X.509, CRL, OCSP wrappers. certvalidator: RFC 5280 path validation. cryptography.io X.509 extensions. Covers all PKI primitives." },
+      { "id": "V16", "name": "python-base58 (keis/base58)", "url": "https://github.com/keis/base58", "desc": "Python Base58 and Base58Check library compatible with Bitcoin; useful for KAT cross-checking Base58/Base58Check encoding output." },
+      { "id": "V17", "name": "openfhe-python", "url": "https://github.com/openfheorg/openfhe-python", "desc": "Python wrapper for OpenFHE, enabling BGV, BFV, CKKS, TFHE verification from Python; primary Python oracle for FHE scheme output cross-checking." },
+      { "id": "V18", "name": "ingonyama-zk/poseidon-hash", "url": "https://github.com/ingonyama-zk/poseidon-hash", "desc": "Reference Python implementation of Poseidon and optimized Neptune (Filecoin) hash functions with parameter generation scripts and test vectors from IAIK." }
+    ];
+
+
+
+    const algoMap = [{ "algo": "base16", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C05"], "v": ["V02", "V07"] }, { "algo": "base32", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C05"], "v": ["V02", "V07"] }, { "algo": "base32hex", "cat": "Encoding & Checksum", "status": "active", "c": ["C01"], "v": ["V02"] }, { "algo": "base58", "cat": "Encoding & Checksum", "status": "active", "c": ["C05", "C17"], "v": [] }, { "algo": "base58check", "cat": "Encoding & Checksum", "status": "active", "c": ["C17"], "v": [] }, { "algo": "base62", "cat": "Encoding & Checksum", "status": "active", "c": ["C17"], "v": [] }, { "algo": "base64", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C02", "C05", "C10", "C11"], "v": ["V02", "V07"] }, { "algo": "base64url", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C02"], "v": ["V02", "V07"] }, { "algo": "base85", "cat": "Encoding & Checksum", "status": "active", "c": ["C05"], "v": ["V07"] }, { "algo": "bech32", "cat": "Encoding & Checksum", "status": "active", "c": ["C16", "C17"], "v": [] }, { "algo": "bech32m", "cat": "Encoding & Checksum", "status": "active", "c": ["C16", "C17"], "v": [] }, { "algo": "pem", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V02", "V15"] }, { "algo": "der", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "cer", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C03"], "v": ["V15"] }, { "algo": "pkcs7", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "pkcs8", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "pkcs12", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "spki", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C03"], "v": ["V02", "V15"] }, { "algo": "ff70", "cat": "Encoding & Checksum", "status": "active", "c": [], "v": [] }, { "algo": "crc8", "cat": "Encoding & Checksum", "status": "active", "c": ["C13"], "v": ["V10"] }, { "algo": "crc16", "cat": "Encoding & Checksum", "status": "active", "c": ["C13"], "v": ["V10"] }, { "algo": "crc16-ccitt", "cat": "Encoding & Checksum", "status": "active", "c": ["C13"], "v": ["V10"] }, { "algo": "crc32", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C13"], "v": ["V10"] }, { "algo": "crc32c", "cat": "Encoding & Checksum", "status": "active", "c": ["C13"], "v": ["V10"] }, { "algo": "crc64", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C03", "C05", "C13", "C17"], "v": ["V10"] }, { "algo": "crc64-ecma", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C03", "C05", "C13", "C17"], "v": ["V10"] }, { "algo": "adler32", "cat": "Encoding & Checksum", "status": "active", "c": ["C01", "C13"], "v": ["V10"] }, { "algo": "fletcher16", "cat": "Encoding & Checksum", "status": "active", "c": ["C13"], "v": ["V10"] }, { "algo": "fletcher32", "cat": "Encoding & Checksum", "status": "active", "c": ["C13"], "v": ["V10"] }, { "algo": "xxhash32", "cat": "Encoding & Checksum", "status": "active", "c": ["C13"], "v": ["V10"] }, { "algo": "xxhash64", "cat": "Encoding & Checksum", "status": "active", "c": ["C13"], "v": ["V10"] }, { "algo": "xxh3", "cat": "Encoding & Checksum", "status": "active", "c": ["C13"], "v": ["V10"] }, { "algo": "base91", "cat": "Encoding & Checksum", "status": "legacy", "c": ["C05"], "v": [] }, { "algo": "ber", "cat": "Encoding & Checksum", "status": "legacy", "c": ["C01", "C03"], "v": ["V15"] }, { "algo": "md2", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C05", "C17"], "v": [] }, { "algo": "md4", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C05", "C17"], "v": [] }, { "algo": "md5", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03", "V07"] }, { "algo": "sha0", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "sha1", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "gost-r-34.11-94", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C03", "C17"], "v": ["V02"] }, { "algo": "ripemd128", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "ripemd160", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "ripemd256", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11", "C17"], "v": ["V02", "V03"] }, { "algo": "ripemd320", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "tiger", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C03", "C05"], "v": [] }, { "algo": "whirlpool", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C03", "C05", "C17"], "v": ["V14"] }, { "algo": "has160", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C05", "C17"], "v": [] }, { "algo": "nt-hash", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C17"], "v": [] }, { "algo": "lm-hash", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C17"], "v": [] }, { "algo": "md6", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": [] }, { "algo": "radio-gatun", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": [] }, { "algo": "groestl", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": ["V10", "V15"] }, { "algo": "jh", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": ["V10"] }, { "algo": "cubehash", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": ["V10"] }, { "algo": "echo", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C16", "C17"], "v": ["V10"] }, { "algo": "simd", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": ["V10"] }, { "algo": "fugue", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": ["V10"] }, { "algo": "hamsi", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": ["V10"] }, { "algo": "luffa", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": ["V10"] }, { "algo": "shabal", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V10"] }, { "algo": "bmw", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C17"], "v": ["V10"] }, { "algo": "shavite3", "cat": "Hash / Digest / XOF", "status": "legacy", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V10"] }, { "algo": "sha224", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "sha256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C18"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "sha384", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "sha512", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C15", "C18"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "sha512-224", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C15", "C18"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "sha512-256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C15", "C18"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "sha3-224", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "sha3-256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "sha3-384", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "sha3-512", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "keccak256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C03", "C07", "C10", "C17"], "v": ["V07", "V10"] }, { "algo": "keccak512", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C03", "C07", "C10", "C17"], "v": ["V07", "V10"] }, { "algo": "shake128", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "shake256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "cshake128", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "cshake256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07"] }, { "algo": "kmac128", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C03", "C07"], "v": ["V01"] }, { "algo": "kmac256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C03", "C07"], "v": ["V01"] }, { "algo": "kmacxof128", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C03", "C07"], "v": ["V01"] }, { "algo": "kmacxof256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C03", "C07"], "v": ["V01"] }, { "algo": "parallelhash128", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C03", "C07"], "v": ["V01"] }, { "algo": "parallelhash256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C03", "C07"], "v": ["V01"] }, { "algo": "tuplehash128", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C03", "C07"], "v": ["V01"] }, { "algo": "tuplehash256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C03", "C07"], "v": ["V01"] }, { "algo": "kangarootwelve", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C07"], "v": [] }, { "algo": "marsupilami14", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C07"], "v": [] }, { "algo": "blake2b", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C11", "C12"], "v": ["V02", "V03", "V05", "V07"] }, { "algo": "blake2s", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C11", "C12"], "v": ["V02", "V03", "V05", "V07"] }, { "algo": "blake2bp", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C11", "C12"], "v": ["V02", "V03", "V05", "V07"] }, { "algo": "blake2sp", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C11", "C12"], "v": ["V02", "V03", "V05", "V07"] }, { "algo": "blake3", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C08"], "v": [] }, { "algo": "skein256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C03"], "v": [] }, { "algo": "skein512", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C03"], "v": [] }, { "algo": "skein1024", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C03"], "v": [] }, { "algo": "sm3", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C02", "C03", "C10", "C17", "C18"], "v": ["V02"] }, { "algo": "streebog256", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C03", "C10", "C17"], "v": [] }, { "algo": "streebog512", "cat": "Hash / Digest / XOF", "status": "active", "c": ["C01", "C03", "C10", "C17"], "v": [] }, { "algo": "poseidon", "cat": "Hash / Digest / XOF", "status": "upcome", "c": [], "v": ["V09", "V14"] }, { "algo": "pedersen-hash", "cat": "Hash / Digest / XOF", "status": "upcome", "c": ["C01"], "v": ["V02", "V08", "V14", "V15"] }, { "algo": "mimc", "cat": "Hash / Digest / XOF", "status": "upcome", "c": [], "v": ["V09", "V14"] }, { "algo": "rescue", "cat": "Hash / Digest / XOF", "status": "upcome", "c": [], "v": ["V09", "V14"] }, { "algo": "griffin", "cat": "Hash / Digest / XOF", "status": "upcome", "c": [], "v": ["V09", "V14"] }, { "algo": "reinforced-concrete", "cat": "Hash / Digest / XOF", "status": "upcome", "c": [], "v": ["V09", "V14"] }, { "algo": "haraka", "cat": "Hash / Digest / XOF", "status": "upcome", "c": [], "v": ["V09", "V14"] }, { "algo": "lsh", "cat": "Hash / Digest / XOF", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "highwayhash", "cat": "Hash / Digest / XOF", "status": "upcome", "c": [], "v": ["V10"] }, { "algo": "mgf1", "cat": "Hash / Digest / XOF", "status": "upcome", "c": [], "v": ["V09", "V10"] }, { "algo": "pbkdf2", "cat": "Password KDFs", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V01", "V02", "V03", "V04"] }, { "algo": "pbkdf2-hmac-sha256", "cat": "Password KDFs", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V04", "V07", "V11", "V13"] }, { "algo": "pbkdf2-hmac-sha512", "cat": "Password KDFs", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C10", "C11", "C15"], "v": ["V01", "V02", "V03", "V04", "V07", "V11", "V13"] }, { "algo": "bcrypt", "cat": "Password KDFs", "status": "active", "c": ["C01", "C02", "C03"], "v": ["V04"] }, { "algo": "scrypt", "cat": "Password KDFs", "status": "active", "c": ["C01", "C02", "C03", "C04"], "v": ["V02", "V03", "V04"] }, { "algo": "argon2d", "cat": "Password KDFs", "status": "active", "c": ["C01", "C02", "C03", "C04", "C14"], "v": ["V04", "V05"] }, { "algo": "argon2i", "cat": "Password KDFs", "status": "active", "c": ["C01", "C02", "C03", "C04", "C14"], "v": ["V04", "V05"] }, { "algo": "argon2id", "cat": "Password KDFs", "status": "active", "c": ["C01", "C02", "C03", "C04", "C14"], "v": ["V04", "V05"] }, { "algo": "yescrypt", "cat": "Password KDFs", "status": "active", "c": ["C01", "C02", "C03", "C04"], "v": ["V02", "V03", "V04"] }, { "algo": "lyra2", "cat": "Password KDFs", "status": "active", "c": ["C01"], "v": ["V04"] }, { "algo": "balloon", "cat": "Password KDFs", "status": "active", "c": ["C01"], "v": ["V04"] }, { "algo": "pbkdf2-hmac-sha1", "cat": "Password KDFs", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V04", "V07", "V11", "V13"] }, { "algo": "catena", "cat": "Password KDFs", "status": "legacy", "c": ["C17"], "v": ["V04"] }, { "algo": "pomelo", "cat": "Password KDFs", "status": "legacy", "c": ["C17"], "v": ["V04"] }, { "algo": "makwa", "cat": "Password KDFs", "status": "legacy", "c": ["C17"], "v": ["V04"] }, { "algo": "bsdicrypt", "cat": "Password KDFs", "status": "legacy", "c": ["C01", "C17"], "v": ["V04"] }, { "algo": "md5crypt", "cat": "Password KDFs", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11", "C17"], "v": ["V02", "V03", "V04", "V07"] }, { "algo": "sha256crypt", "cat": "Password KDFs", "status": "legacy", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V04", "V07"] }, { "algo": "sha512crypt", "cat": "Password KDFs", "status": "legacy", "c": ["C01", "C02", "C03", "C10", "C11", "C15", "C17"], "v": ["V01", "V02", "V03", "V04", "V07"] }, { "algo": "pbkdf1", "cat": "Password KDFs", "status": "upcome", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "pkcs12-kdf", "cat": "Password KDFs", "status": "upcome", "c": ["C01", "C02", "C03", "C11"], "v": ["V01", "V02", "V15"] }, { "algo": "evp-bytestokey", "cat": "Password KDFs", "status": "upcome", "c": [], "v": ["V15"] }, { "algo": "kdf2", "cat": "Password KDFs", "status": "upcome", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "aes-128", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11", "C18"], "v": ["V01", "V02", "V03"] }, { "algo": "aes-192", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11", "C18"], "v": ["V01", "V02", "V03"] }, { "algo": "aes-256", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11", "C18"], "v": ["V01", "V02", "V03"] }, { "algo": "aria-128", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C03"], "v": [] }, { "algo": "aria-192", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C03"], "v": [] }, { "algo": "aria-256", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C03"], "v": [] }, { "algo": "camellia-128", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02"] }, { "algo": "camellia-192", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02"] }, { "algo": "camellia-256", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02"] }, { "algo": "seed", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C03", "C05"], "v": [] }, { "algo": "sm4", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C10", "C17", "C18"], "v": ["V02"] }, { "algo": "kuznyechik", "cat": "Symmetric Block Ciphers", "status": "active", "c": ["C01", "C03", "C16"], "v": [] }, { "algo": "present", "cat": "Symmetric Block Ciphers", "status": "active", "c": [], "v": ["V09"] }, { "algo": "led", "cat": "Symmetric Block Ciphers", "status": "active", "c": [], "v": [] }, { "algo": "piccolo", "cat": "Symmetric Block Ciphers", "status": "active", "c": [], "v": [] }, { "algo": "clefia", "cat": "Symmetric Block Ciphers", "status": "active", "c": [], "v": [] }, { "algo": "threefish-256", "cat": "Symmetric Block Ciphers", "status": "active", "c": [], "v": [] }, { "algo": "threefish-512", "cat": "Symmetric Block Ciphers", "status": "active", "c": [], "v": [] }, { "algo": "threefish-1024", "cat": "Symmetric Block Ciphers", "status": "active", "c": [], "v": [] }, { "algo": "magma", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C17"], "v": [] }, { "algo": "3des", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "des", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "blowfish", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "twofish", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C03", "C05", "C10"], "v": ["V03"] }, { "algo": "serpent", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C03", "C10"], "v": [] }, { "algo": "cast5", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C03", "C05", "C10", "C17"], "v": ["V02", "V03"] }, { "algo": "cast6", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C03", "C17"], "v": [] }, { "algo": "idea", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C17"], "v": ["V03"] }, { "algo": "rc2", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C03", "C05", "C10", "C17"], "v": ["V02", "V03"] }, { "algo": "rc5", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C03", "C05", "C17"], "v": [] }, { "algo": "rc6", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C03", "C05", "C17"], "v": [] }, { "algo": "misty1", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C03", "C05", "C17"], "v": [] }, { "algo": "kasumi", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C03", "C05", "C17"], "v": [] }, { "algo": "safer", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C05", "C17"], "v": [] }, { "algo": "skipjack", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C05", "C17"], "v": [] }, { "algo": "speck", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C17"], "v": [] }, { "algo": "simon", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C17"], "v": [] }, { "algo": "xtea", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C03", "C05"], "v": [] }, { "algo": "tea", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C05"], "v": [] }, { "algo": "gost28147", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C01", "C03", "C05", "C17"], "v": ["V02"] }, { "algo": "anubis", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C05", "C17"], "v": [] }, { "algo": "khazad", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C05", "C17"], "v": [] }, { "algo": "noekeon", "cat": "Symmetric Block Ciphers", "status": "legacy", "c": ["C03", "C05", "C17"], "v": [] }, { "algo": "kalyna", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "belt", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "shacal", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03"] }, { "algo": "shacal-2", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03"] }, { "algo": "feal", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "safer+", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C05", "C17"], "v": [] }, { "algo": "prince", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "pride", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "twine", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "katan", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "ktantan", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "gift", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "skinny", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "lblock", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "rectangle", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": ["V15"] }, { "algo": "mmb", "cat": "Symmetric Block Ciphers", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "chacha20", "cat": "Stream Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11", "C18"], "v": ["V02", "V03", "V05"] }, { "algo": "xchacha20", "cat": "Stream Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11"], "v": ["V02", "V03", "V05", "V11"] }, { "algo": "salsa20", "cat": "Stream Ciphers", "status": "active", "c": ["C03", "C04", "C10", "C15"], "v": ["V03", "V05"] }, { "algo": "xsalsa20", "cat": "Stream Ciphers", "status": "active", "c": ["C03", "C04", "C10", "C15"], "v": ["V03", "V05"] }, { "algo": "chacha8", "cat": "Stream Ciphers", "status": "active", "c": ["C15"], "v": [] }, { "algo": "chacha12", "cat": "Stream Ciphers", "status": "active", "c": ["C15"], "v": [] }, { "algo": "hc128", "cat": "Stream Ciphers", "status": "active", "c": ["C15"], "v": [] }, { "algo": "hc256", "cat": "Stream Ciphers", "status": "active", "c": ["C15"], "v": [] }, { "algo": "rabbit", "cat": "Stream Ciphers", "status": "active", "c": ["C02", "C15"], "v": [] }, { "algo": "sosemanuk", "cat": "Stream Ciphers", "status": "active", "c": ["C02", "C15"], "v": [] }, { "algo": "grain128", "cat": "Stream Ciphers", "status": "active", "c": ["C02", "C15"], "v": [] }, { "algo": "zuc", "cat": "Stream Ciphers", "status": "active", "c": ["C01", "C02"], "v": [] }, { "algo": "snow3g", "cat": "Stream Ciphers", "status": "active", "c": ["C01", "C02"], "v": [] }, { "algo": "aes-ctr-drbg", "cat": "Stream Ciphers", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V11", "V13", "V15"] }, { "algo": "rc4", "cat": "Stream Ciphers", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C11", "C15"], "v": ["V02", "V03"] }, { "algo": "grainv1", "cat": "Stream Ciphers", "status": "legacy", "c": ["C02", "C15"], "v": [] }, { "algo": "mickeyv2", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "trivium", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "isaac", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "isaac+", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "panama", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "wake", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "seal", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "a5/1", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "a5/2", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "e0", "cat": "Stream Ciphers", "status": "legacy", "c": ["C15"], "v": [] }, { "algo": "salsa20/8", "cat": "Stream Ciphers", "status": "upcome", "c": ["C03", "C04", "C10", "C15"], "v": ["V03", "V05"] }, { "algo": "salsa20/12", "cat": "Stream Ciphers", "status": "upcome", "c": ["C03", "C04", "C10", "C15"], "v": ["V03", "V05"] }, { "algo": "spritz", "cat": "Stream Ciphers", "status": "upcome", "c": ["C15"], "v": [] }, { "algo": "vmpc", "cat": "Stream Ciphers", "status": "upcome", "c": ["C15"], "v": [] }, { "algo": "cryptmt", "cat": "Stream Ciphers", "status": "upcome", "c": [], "v": [] }, { "algo": "dragon", "cat": "Stream Ciphers", "status": "upcome", "c": [], "v": [] }, { "algo": "edon80", "cat": "Stream Ciphers", "status": "upcome", "c": ["C15"], "v": [] }, { "algo": "f-fcsr", "cat": "Stream Ciphers", "status": "upcome", "c": ["C01", "C03"], "v": ["V02", "V15"] }, { "algo": "hermes8", "cat": "Stream Ciphers", "status": "upcome", "c": [], "v": [] }, { "algo": "lex", "cat": "Stream Ciphers", "status": "upcome", "c": [], "v": [] }, { "algo": "nls", "cat": "Stream Ciphers", "status": "upcome", "c": [], "v": [] }, { "algo": "pomaranch", "cat": "Stream Ciphers", "status": "upcome", "c": [], "v": [] }, { "algo": "a5/3", "cat": "Stream Ciphers", "status": "upcome", "c": ["C15"], "v": [] }, { "algo": "ecb", "cat": "Block Cipher Modes", "status": "legacy", "c": ["C01", "C03", "C05"], "v": ["V03"] }, { "algo": "cbc", "cat": "Block Cipher Modes", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "cfb", "cat": "Block Cipher Modes", "status": "legacy", "c": ["C01", "C03", "C05"], "v": ["V02", "V03"] }, { "algo": "cfb1", "cat": "Block Cipher Modes", "status": "legacy", "c": ["C01", "C03", "C05"], "v": ["V02", "V03"] }, { "algo": "cfb8", "cat": "Block Cipher Modes", "status": "legacy", "c": ["C01", "C03", "C05"], "v": ["V02", "V03"] }, { "algo": "ofb", "cat": "Block Cipher Modes", "status": "legacy", "c": ["C01", "C03", "C05"], "v": ["V02", "V03"] }, { "algo": "ctr", "cat": "Block Cipher Modes", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03", "V15"] }, { "algo": "xts", "cat": "Block Cipher Modes", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V01", "V02"] }, { "algo": "cbc-cs1", "cat": "Block Cipher Modes", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "cbc-cs2", "cat": "Block Cipher Modes", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "cbc-cs3", "cat": "Block Cipher Modes", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "aes-gcm", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C10", "C11", "C18"], "v": ["V01", "V02", "V03", "V05", "V11", "V13"] }, { "algo": "aes-ccm", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11", "C18"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "aes-gcm-siv", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V05", "V11", "V13"] }, { "algo": "aes-siv", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V11", "V13"] }, { "algo": "aes-ocb", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "aes-eax", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "aes-kw", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V11", "V13"] }, { "algo": "aes-kwp", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V11", "V13"] }, { "algo": "aes-gmac", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "aes-xpn", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "aes-fpe-ff1", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V08"] }, { "algo": "aes-fpe-ff3-1", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V08"] }, { "algo": "chacha20-poly1305", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11", "C18"], "v": ["V02", "V03", "V05", "V09", "V11", "V13"] }, { "algo": "xchacha20-poly1305", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11"], "v": ["V02", "V03", "V05", "V09", "V11", "V13"] }, { "algo": "aegis128l", "cat": "AEAD Algorithms", "status": "active", "c": [], "v": [] }, { "algo": "aegis256", "cat": "AEAD Algorithms", "status": "active", "c": [], "v": [] }, { "algo": "deoxys-ii", "cat": "AEAD Algorithms", "status": "active", "c": [], "v": [] }, { "algo": "ocb3", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C03"], "v": ["V03"] }, { "algo": "kccm", "cat": "AEAD Algorithms", "status": "active", "c": ["C01", "C02", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "ascon-aead128", "cat": "AEAD Algorithms", "status": "active", "c": ["C07"], "v": [] }, { "algo": "ascon-aead128a", "cat": "AEAD Algorithms", "status": "active", "c": ["C07"], "v": [] }, { "algo": "ascon-80pq", "cat": "AEAD Algorithms", "status": "active", "c": ["C07"], "v": [] }, { "algo": "morus", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "kiasu", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "marble", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "elephant-dumbo", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "elephant-jumbo", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "gift-cofb", "cat": "AEAD Algorithms", "status": "legacy", "c": ["C01", "C03", "C05", "C17"], "v": ["V02", "V03"] }, { "algo": "grain-128aead", "cat": "AEAD Algorithms", "status": "legacy", "c": ["C02", "C15"], "v": [] }, { "algo": "isap-a-128a", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "isap-k-128a", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "photon-beetle", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "romulus", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "sparkle-schwaemm", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "tinyjambu", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "xoodyak", "cat": "AEAD Algorithms", "status": "legacy", "c": ["C16"], "v": [] }, { "algo": "colm", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "silc", "cat": "AEAD Algorithms", "status": "legacy", "c": [], "v": [] }, { "algo": "aez", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "otr-aead", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "cloc", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "jambu", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "icepole", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "ketje", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "keyak", "cat": "AEAD Algorithms", "status": "upcome", "c": ["C16"], "v": [] }, { "algo": "norx", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "acorn", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "aegis-128", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "rocca", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "rocca-s", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "tiaoxin", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "paeq", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "poet", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "drygascon", "cat": "AEAD Algorithms", "status": "upcome", "c": ["C07"], "v": [] }, { "algo": "subterranean", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "sundae", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "spook", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "pyjamask", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "comet", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "estate", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": ["V15"] }, { "algo": "lotus", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "locus", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "spix", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "orbita", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "saeb", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "mixfeed", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "elmd", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "hs1-siv", "cat": "AEAD Algorithms", "status": "upcome", "c": ["C01"], "v": ["V03"] }, { "algo": "iscream", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "scream", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "wage", "cat": "AEAD Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "hmac", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V07", "V11", "V13"] }, { "algo": "hmac-sha256", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V07", "V11", "V13"] }, { "algo": "hmac-sha512", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C10", "C11", "C15"], "v": ["V01", "V02", "V03", "V07", "V11", "V13"] }, { "algo": "hmac-sha3-256", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07", "V11", "V13"] }, { "algo": "hmac-blake2b", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C10", "C11", "C12"], "v": ["V01", "V02", "V03", "V05", "V07", "V11", "V13"] }, { "algo": "hmac-blake2s", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C10", "C11", "C12"], "v": ["V01", "V02", "V03", "V05", "V07", "V11", "V13"] }, { "algo": "aes-cmac", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "aes-pmac", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "vmac", "cat": "MAC Algorithms", "status": "active", "c": ["C03"], "v": [] }, { "algo": "umac", "cat": "MAC Algorithms", "status": "active", "c": ["C03"], "v": [] }, { "algo": "poly1305", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11", "C18"], "v": ["V02", "V03", "V05", "V09"] }, { "algo": "siphash", "cat": "MAC Algorithms", "status": "active", "c": ["C03", "C04", "C10", "C13"], "v": ["V05"] }, { "algo": "siphash-2-4", "cat": "MAC Algorithms", "status": "active", "c": ["C03", "C04", "C10", "C13"], "v": ["V05"] }, { "algo": "siphash-4-8", "cat": "MAC Algorithms", "status": "active", "c": ["C03", "C04", "C10", "C13"], "v": ["V05"] }, { "algo": "kmac128-mac", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C03", "C07"], "v": ["V01"] }, { "algo": "kmac256-mac", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C03", "C07"], "v": ["V01"] }, { "algo": "blake2b-mac", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C11", "C12"], "v": ["V02", "V03", "V05", "V07"] }, { "algo": "blake2s-mac", "cat": "MAC Algorithms", "status": "active", "c": ["C01", "C02", "C03", "C04", "C05", "C11", "C12"], "v": ["V02", "V03", "V05", "V07"] }, { "algo": "blake3-mac", "cat": "MAC Algorithms", "status": "active", "c": ["C08"], "v": [] }, { "algo": "ascon-mac", "cat": "MAC Algorithms", "status": "active", "c": ["C07"], "v": [] }, { "algo": "ascon-prf", "cat": "MAC Algorithms", "status": "active", "c": ["C07"], "v": [] }, { "algo": "ghash", "cat": "MAC Algorithms", "status": "active", "c": [], "v": [] }, { "algo": "xcbc-mac", "cat": "MAC Algorithms", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "cbc-mac", "cat": "MAC Algorithms", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V02", "V03"] }, { "algo": "des-mac", "cat": "MAC Algorithms", "status": "legacy", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "kdf1", "cat": "MAC Algorithms", "status": "legacy", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "hmac-sha3-384", "cat": "MAC Algorithms", "status": "upcome", "c": ["C01", "C02", "C03", "C05", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07", "V11", "V13"] }, { "algo": "hmac-sha3-512", "cat": "MAC Algorithms", "status": "upcome", "c": ["C01", "C02", "C03", "C05", "C07", "C10", "C11"], "v": ["V01", "V02", "V03", "V07", "V11", "V13"] }, { "algo": "hmac-md5", "cat": "MAC Algorithms", "status": "upcome", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V07", "V11", "V13"] }, { "algo": "hmac-sha1", "cat": "MAC Algorithms", "status": "upcome", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V07", "V11", "V13"] }, { "algo": "aes-cmac-prf-128", "cat": "MAC Algorithms", "status": "upcome", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "lightmac", "cat": "MAC Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "chaskey", "cat": "MAC Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "emac", "cat": "MAC Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "tmac", "cat": "MAC Algorithms", "status": "upcome", "c": [], "v": [] }, { "algo": "omac", "cat": "MAC Algorithms", "status": "upcome", "c": ["C05"], "v": [] }, { "algo": "hkdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11"], "v": ["V01", "V02", "V05", "V13"] }, { "algo": "hkdf-expand", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11"], "v": ["V01", "V02", "V05", "V13"] }, { "algo": "hkdf-extract", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11"], "v": ["V01", "V02", "V05", "V13", "V15"] }, { "algo": "hkdf-expand-label", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11"], "v": ["V01", "V02", "V05", "V09", "V13"] }, { "algo": "kdf-tls12", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C03", "C11"], "v": ["V01", "V02"] }, { "algo": "kdf-tls13", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C03", "C11"], "v": ["V01", "V02"] }, { "algo": "kdf-ssh", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C03"], "v": ["V01", "V02"] }, { "algo": "kdf-ikev1", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C03"], "v": ["V01", "V02"] }, { "algo": "kdf-ikev2", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C03"], "v": ["V01", "V02"] }, { "algo": "kdf-srtp", "cat": "Key Derivation Functions", "status": "active", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "kdf-sp800-108", "cat": "Key Derivation Functions", "status": "active", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "kda-onestep", "cat": "Key Derivation Functions", "status": "active", "c": [], "v": ["V01", "V15"] }, { "algo": "kda-twostep", "cat": "Key Derivation Functions", "status": "active", "c": [], "v": ["V01"] }, { "algo": "concat-kdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "x942-kdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "x963-kdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "noise-kdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C16"], "v": ["V01", "V02", "V13"] }, { "algo": "bip32-kdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "slip10", "cat": "Key Derivation Functions", "status": "active", "c": [], "v": [] }, { "algo": "sskdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "ecdh-kdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V01", "V02", "V03", "V08", "V11", "V13"] }, { "algo": "cmkdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "me-kdf", "cat": "Key Derivation Functions", "status": "active", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "evp-bytestokey", "cat": "Key Derivation Functions", "status": "upcome", "c": [], "v": ["V15"] }, { "algo": "kdf2", "cat": "Key Derivation Functions", "status": "upcome", "c": ["C01"], "v": ["V01", "V02"] }, { "algo": "dh", "cat": "Key Agreement / KEM", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "dhp", "cat": "Key Agreement / KEM", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "ecdh", "cat": "Key Agreement / KEM", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C18"], "v": ["V01", "V02", "V03", "V08", "V11", "V13"] }, { "algo": "x25519", "cat": "Key Agreement / KEM", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11"], "v": ["V01", "V02", "V03", "V05", "V11", "V13"] }, { "algo": "x448", "cat": "Key Agreement / KEM", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V01", "V02", "V11"] }, { "algo": "x3dh", "cat": "Key Agreement / KEM", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11", "C16"], "v": ["V01", "V02", "V03", "V05", "V11", "V13"] }, { "algo": "hpke", "cat": "Key Agreement / KEM", "status": "active", "c": [], "v": [] }, { "algo": "ecies", "cat": "Key Agreement / KEM", "status": "active", "c": [], "v": [] }, { "algo": "rsa-oaep", "cat": "Key Agreement / KEM", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C18"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "csidh", "cat": "Key Agreement / KEM", "status": "active", "c": ["C01", "C02", "C03", "C09", "C10", "C11", "C15"], "v": ["V01", "V02", "V03", "V09", "V11"] }, { "algo": "frodokem", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "kyber", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V12", "V15"] }, { "algo": "ml-kem-512", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "ml-kem-768", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "ml-kem-1024", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "ntru", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V09", "V12"] }, { "algo": "ntruprime", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V09", "V12"] }, { "algo": "sntrup761", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V09", "V12"] }, { "algo": "classic-mceliece", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-348864", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-348864f", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-460896", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-460896f", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-6688128", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-6688128f", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-6960119", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-6960119f", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-8192128", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "mceliece-8192128f", "cat": "Key Agreement / KEM", "status": "active", "c": ["C06", "C09"], "v": ["V06", "V12"] }, { "algo": "bike-1", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V12"] }, { "algo": "bike-3", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V12"] }, { "algo": "bike-5", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V12"] }, { "algo": "hqc-128", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V12"] }, { "algo": "hqc-192", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V12"] }, { "algo": "hqc-256", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V12"] }, { "algo": "ntruhps2048677", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V09", "V12"] }, { "algo": "ntruhps4096821", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V09", "V12"] }, { "algo": "ntruhrss701", "cat": "Key Agreement / KEM", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V09", "V12"] }, { "algo": "ecmqv", "cat": "Key Agreement / KEM", "status": "legacy", "c": ["C17"], "v": [] }, { "algo": "rsa-pkcs1v15-enc", "cat": "Key Agreement / KEM", "status": "legacy", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V01", "V02", "V03", "V11", "V15"] }, { "algo": "elgamal", "cat": "Key Agreement / KEM", "status": "legacy", "c": ["C03", "C17"], "v": [] }, { "algo": "sike", "cat": "Key Agreement / KEM", "status": "legacy", "c": [], "v": ["V09"] }, { "algo": "saber", "cat": "Key Agreement / KEM", "status": "upcome", "c": ["C15"], "v": ["V09", "V15"] }, { "algo": "newhope", "cat": "Key Agreement / KEM", "status": "upcome", "c": ["C15"], "v": [] }, { "algo": "round5", "cat": "Key Agreement / KEM", "status": "upcome", "c": [], "v": [] }, { "algo": "lac", "cat": "Key Agreement / KEM", "status": "upcome", "c": [], "v": [] }, { "algo": "ledacrypt", "cat": "Key Agreement / KEM", "status": "upcome", "c": [], "v": [] }, { "algo": "nts-kem", "cat": "Key Agreement / KEM", "status": "upcome", "c": [], "v": [] }, { "algo": "rollo", "cat": "Key Agreement / KEM", "status": "upcome", "c": [], "v": [] }, { "algo": "rqc", "cat": "Key Agreement / KEM", "status": "upcome", "c": [], "v": [] }, { "algo": "ntru+", "cat": "Key Agreement / KEM", "status": "upcome", "c": ["C03", "C06", "C09"], "v": ["V06", "V09", "V12"] }, { "algo": "rsa-pkcs1v15-sign", "cat": "Digital Signatures", "status": "legacy", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V01", "V02", "V03", "V11", "V15"] }, { "algo": "dsa", "cat": "Digital Signatures", "status": "legacy", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "gost-r-34.10-2001", "cat": "Digital Signatures", "status": "legacy", "c": ["C01", "C03", "C17"], "v": ["V02"] }, { "algo": "rainbow", "cat": "Digital Signatures", "status": "legacy", "c": ["C17"], "v": [] }, { "algo": "ge-mss", "cat": "Digital Signatures", "status": "legacy", "c": ["C17"], "v": [] }, { "algo": "rsa-pss", "cat": "Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C18"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "ecdsa", "cat": "Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C17", "C18"], "v": ["V01", "V02", "V03", "V08", "V11", "V13"] }, { "algo": "det-ecdsa", "cat": "Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C17", "C18"], "v": ["V01", "V02", "V03", "V08", "V11", "V13"] }, { "algo": "ecdsa-recoverable", "cat": "Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V08", "V11", "V13"] }, { "algo": "ed25519", "cat": "Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11"], "v": ["V01", "V02", "V03", "V05", "V08", "V11", "V13"] }, { "algo": "ed448", "cat": "Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V01", "V02", "V08", "V11"] }, { "algo": "sr25519", "cat": "Digital Signatures", "status": "active", "c": ["C03", "C17"], "v": ["V08"] }, { "algo": "sm2-sign", "cat": "Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C17"], "v": ["V02"] }, { "algo": "gost-r-34.10-2012", "cat": "Digital Signatures", "status": "active", "c": ["C01", "C03", "C17"], "v": ["V02"] }, { "algo": "schnorr", "cat": "Digital Signatures", "status": "active", "c": ["C03", "C17"], "v": ["V08"] }, { "algo": "bbs", "cat": "Digital Signatures", "status": "active", "c": ["C03", "C17"], "v": ["V08"] }, { "algo": "bls12-381-g1", "cat": "Digital Signatures", "status": "active", "c": ["C03", "C17"], "v": ["V08"] }, { "algo": "bls12-381-g2", "cat": "Digital Signatures", "status": "active", "c": ["C03", "C17"], "v": ["V08"] }, { "algo": "ecdsa-secp256k1", "cat": "Digital Signatures", "status": "upcome", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V08", "V11", "V13"] }, { "algo": "rsa-fdh", "cat": "Digital Signatures", "status": "upcome", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "kcdsa", "cat": "Digital Signatures", "status": "upcome", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "ecgdsa", "cat": "Digital Signatures", "status": "upcome", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "eckdsa", "cat": "Digital Signatures", "status": "upcome", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "musig", "cat": "Digital Signatures", "status": "upcome", "c": ["C17"], "v": ["V08"] }, { "algo": "musig2", "cat": "Digital Signatures", "status": "upcome", "c": ["C17"], "v": ["V08"] }, { "algo": "bls-aggregate", "cat": "Digital Signatures", "status": "upcome", "c": ["C03", "C17"], "v": ["V08"] }, { "algo": "rsa-blind-sig", "cat": "Digital Signatures", "status": "upcome", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "bls-blind-sig", "cat": "Digital Signatures", "status": "upcome", "c": ["C03", "C17"], "v": ["V08"] }, { "algo": "cryptonote-ring-sig", "cat": "Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "mlsag", "cat": "Digital Signatures", "status": "upcome", "c": ["C16"], "v": ["V13"] }, { "algo": "clsag", "cat": "Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "group-sig", "cat": "Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "dilithium", "cat": "PQ Digital Signatures", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V06", "V12"] }, { "algo": "ml-dsa-44", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "ml-dsa-65", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "ml-dsa-87", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "falcon-512", "cat": "PQ Digital Signatures", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "falcon-1024", "cat": "PQ Digital Signatures", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "falcon-padded-512", "cat": "PQ Digital Signatures", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "falcon-padded-1024", "cat": "PQ Digital Signatures", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "sphincs+", "cat": "PQ Digital Signatures", "status": "active", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "slh-dsa-sha2-128f", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-sha2-128s", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-sha2-192f", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-sha2-192s", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-sha2-256f", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-sha2-256s", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-shake-128f", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C07", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-shake-128s", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C07", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-shake-192f", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C07", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-shake-192s", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C07", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-shake-256f", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C07", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "slh-dsa-shake-256s", "cat": "PQ Digital Signatures", "status": "active", "c": ["C01", "C02", "C03", "C06", "C07", "C09", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V06", "V11", "V12"] }, { "algo": "haetae", "cat": "PQ Digital Signatures", "status": "active", "c": ["C03", "C09"], "v": ["V06", "V12"] }, { "algo": "almar", "cat": "PQ Digital Signatures", "status": "active", "c": ["C03", "C09"], "v": ["V06", "V12"] }, { "algo": "picnic", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "uov", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "mayo", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "prov", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "sqisign", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "hawk", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "hufu", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "sdith", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "less", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "meds", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "cross", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "wave", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "gravity-sphincs", "cat": "PQ Digital Signatures", "status": "upcome", "c": ["C03", "C06", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "wots+", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "fors", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "hors", "cat": "PQ Digital Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "lms", "cat": "Stateful Hash Signatures", "status": "active", "c": ["C03", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "hss", "cat": "Stateful Hash Signatures", "status": "active", "c": ["C03", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "xmss", "cat": "Stateful Hash Signatures", "status": "active", "c": ["C03", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "xmssmt", "cat": "Stateful Hash Signatures", "status": "active", "c": ["C03", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "gmss", "cat": "Stateful Hash Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "xmss-t", "cat": "Stateful Hash Signatures", "status": "upcome", "c": ["C03", "C09"], "v": ["V01", "V06", "V12"] }, { "algo": "bpqs", "cat": "Stateful Hash Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "wots", "cat": "Stateful Hash Signatures", "status": "upcome", "c": [], "v": [] }, { "algo": "frost", "cat": "Threshold / MPC", "status": "active", "c": ["C17"], "v": ["V08"] }, { "algo": "tbls", "cat": "Threshold / MPC", "status": "active", "c": ["C03"], "v": [] }, { "algo": "gargos", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "tecla", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "the-clash", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "classic-schnorr-t", "cat": "Threshold / MPC", "status": "active", "c": ["C03", "C17"], "v": ["V08"] }, { "algo": "bam", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "ccgmp", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "haystack", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "mithril", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "quorus", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "redeta", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "splitkey", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "minimpc", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "maestro", "cat": "Threshold / MPC", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V15"] }, { "algo": "amber", "cat": "Threshold / MPC", "status": "active", "c": [], "v": ["V15"] }, { "algo": "hermine", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "least", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "tanuki", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "vinaigrette", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "pantheria", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "zama-tfhe", "cat": "Threshold / MPC", "status": "active", "c": [], "v": ["V14"] }, { "algo": "zama-zhenith", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "piver", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "schmivitz", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "smallwood", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "shamir", "cat": "Threshold / MPC", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V01", "V02", "V03"] }, { "algo": "feldman-vss", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "pedersen-vss", "cat": "Threshold / MPC", "status": "active", "c": ["C01"], "v": ["V02", "V08", "V15"] }, { "algo": "dkg", "cat": "Threshold / MPC", "status": "active", "c": ["C17"], "v": [] }, { "algo": "pvss", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "ot", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "vole", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "beaver", "cat": "Threshold / MPC", "status": "active", "c": [], "v": [] }, { "algo": "mpc-ecdsa", "cat": "Threshold / MPC", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C17"], "v": ["V01", "V02", "V03", "V08", "V11", "V13"] }, { "algo": "mpc-schnorr", "cat": "Threshold / MPC", "status": "active", "c": ["C03", "C17"], "v": ["V08"] }, { "algo": "roast", "cat": "Threshold / MPC", "status": "legacy", "c": [], "v": ["V15"] }, { "algo": "gg18", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": ["V08"] }, { "algo": "gg20", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": ["V08"] }, { "algo": "gg21", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": [] }, { "algo": "cmp", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": [] }, { "algo": "lindell17", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": [] }, { "algo": "doerner-shelat", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": ["V15"] }, { "algo": "spdz", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": [] }, { "algo": "mascot", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": [] }, { "algo": "bmr", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": [] }, { "algo": "gmw", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": [] }, { "algo": "proactive-ss", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": ["V15"] }, { "algo": "async-dkg", "cat": "Threshold / MPC", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "robust-dkg", "cat": "Threshold / MPC", "status": "upcome", "c": ["C17"], "v": [] }, { "algo": "ring-sig-generic", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": [] }, { "algo": "linkable-ring-sig", "cat": "Threshold / MPC", "status": "upcome", "c": [], "v": [] }, { "algo": "ascon-hash256", "cat": "Lightweight Crypto", "status": "active", "c": ["C07"], "v": [] }, { "algo": "ascon-xof128", "cat": "Lightweight Crypto", "status": "active", "c": ["C07"], "v": [] }, { "algo": "ascon-cxof128", "cat": "Lightweight Crypto", "status": "active", "c": ["C07"], "v": [] }, { "algo": "lea", "cat": "Lightweight Crypto", "status": "active", "c": [], "v": [] }, { "algo": "hight", "cat": "Lightweight Crypto", "status": "active", "c": [], "v": [] }, { "algo": "photon-beetle-hash", "cat": "Lightweight Crypto", "status": "legacy", "c": [], "v": [] }, { "algo": "romulus-hash", "cat": "Lightweight Crypto", "status": "legacy", "c": [], "v": [] }, { "algo": "sparkle-esch", "cat": "Lightweight Crypto", "status": "legacy", "c": [], "v": [] }, { "algo": "xoodyak-hash", "cat": "Lightweight Crypto", "status": "legacy", "c": ["C16"], "v": [] }, { "algo": "mibs", "cat": "Lightweight Crypto", "status": "upcome", "c": [], "v": [] }, { "algo": "klein", "cat": "Lightweight Crypto", "status": "upcome", "c": [], "v": [] }, { "algo": "puffin", "cat": "Lightweight Crypto", "status": "upcome", "c": [], "v": [] }, { "algo": "spongent", "cat": "Lightweight Crypto", "status": "upcome", "c": [], "v": [] }, { "algo": "quark", "cat": "Lightweight Crypto", "status": "upcome", "c": [], "v": [] }, { "algo": "ctr-drbg", "cat": "DRBG / RNG", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V15"] }, { "algo": "hash-drbg", "cat": "DRBG / RNG", "status": "active", "c": ["C01", "C02", "C03"], "v": ["V01"] }, { "algo": "hmac-drbg", "cat": "DRBG / RNG", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V07", "V11", "V13"] }, { "algo": "csprng-system", "cat": "DRBG / RNG", "status": "active", "c": ["C11"], "v": ["V07"] }, { "algo": "trng", "cat": "DRBG / RNG", "status": "active", "c": [], "v": [] }, { "algo": "entropy-pool", "cat": "DRBG / RNG", "status": "active", "c": [], "v": [] }, { "algo": "reseed-scheduler", "cat": "DRBG / RNG", "status": "active", "c": ["C01", "C03", "C05"], "v": [] }, { "algo": "rdrand", "cat": "DRBG / RNG", "status": "active", "c": ["C01", "C18"], "v": [] }, { "algo": "rdseed", "cat": "DRBG / RNG", "status": "active", "c": ["C01", "C03", "C05", "C18"], "v": [] }, { "algo": "jitterentropy", "cat": "DRBG / RNG", "status": "active", "c": [], "v": [] }, { "algo": "fortuna", "cat": "DRBG / RNG", "status": "active", "c": ["C01", "C03", "C05"], "v": [] }, { "algo": "nist-sp800-90b", "cat": "DRBG / RNG", "status": "active", "c": [], "v": [] }, { "algo": "nist-sp800-90c", "cat": "DRBG / RNG", "status": "active", "c": [], "v": [] }, { "algo": "haveged", "cat": "DRBG / RNG", "status": "legacy", "c": [], "v": [] }, { "algo": "yarrow", "cat": "DRBG / RNG", "status": "legacy", "c": ["C05"], "v": [] }, { "algo": "cryptgenrandom", "cat": "DRBG / RNG", "status": "legacy", "c": [], "v": [] }, { "algo": "egd", "cat": "DRBG / RNG", "status": "legacy", "c": [], "v": [] }, { "algo": "prngd", "cat": "DRBG / RNG", "status": "legacy", "c": [], "v": [] }, { "algo": "lavarnd", "cat": "DRBG / RNG", "status": "legacy", "c": [], "v": [] }, { "algo": "chacha20-drbg", "cat": "DRBG / RNG", "status": "upcome", "c": ["C01", "C02", "C03", "C04", "C10", "C11"], "v": ["V01", "V02", "V03", "V05"] }, { "algo": "getrandom", "cat": "DRBG / RNG", "status": "upcome", "c": [], "v": [] }, { "algo": "getentropy", "cat": "DRBG / RNG", "status": "upcome", "c": [], "v": [] }, { "algo": "bcryptgenrandom", "cat": "DRBG / RNG", "status": "upcome", "c": ["C01", "C02", "C03"], "v": ["V04"] }, { "algo": "nist-randomness-beacon", "cat": "DRBG / RNG", "status": "upcome", "c": [], "v": [] }, { "algo": "qrng", "cat": "DRBG / RNG", "status": "upcome", "c": [], "v": [] }, { "algo": "blockchain-vrf", "cat": "DRBG / RNG", "status": "upcome", "c": [], "v": [] }, { "algo": "groth16", "cat": "ZK Proofs / HE", "status": "active", "c": ["C03"], "v": ["V08", "V14"] }, { "algo": "plonk", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V08", "V14"] }, { "algo": "marlin", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V14"] }, { "algo": "halo2", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V14"] }, { "algo": "plonky2", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V08", "V14"] }, { "algo": "stark", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V08", "V14"] }, { "algo": "bulletproofs", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V14"] }, { "algo": "spartan", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V14"] }, { "algo": "sonic", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V14"] }, { "algo": "kzg-commitment", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V08", "V14"] }, { "algo": "fri", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V08", "V14"] }, { "algo": "ligero", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V14"] }, { "algo": "dory", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V14"] }, { "algo": "gm17", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V14"] }, { "algo": "tfhe", "cat": "ZK Proofs / HE", "status": "active", "c": [], "v": ["V14"] }, { "algo": "pinocchio", "cat": "ZK Proofs / HE", "status": "legacy", "c": [], "v": ["V14"] }, { "algo": "supersonic", "cat": "ZK Proofs / HE", "status": "legacy", "c": [], "v": ["V14", "V15"] }, { "algo": "bgv", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "ckks", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "bfv", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "gsw", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "dm-cggi", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "nova", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "supernova", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14", "V15"] }, { "algo": "hypernova", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14", "V15"] }, { "algo": "protostar", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "shplonk", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V08", "V14"] }, { "algo": "ipa", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "brakedown", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "orion", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "stir", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "whir", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "basefold", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "gemini", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "latticefold", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V09", "V14"] }, { "algo": "jolt", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "sp1", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "lasso", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "cairo", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "risc-zero", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "ggpr", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "bctv14", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14", "V15"] }, { "algo": "pghr13", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "hyrax", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "libra", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "virgo", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "fractal", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14", "V15"] }, { "algo": "aurora", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": ["V14"] }, { "algo": "zkinterface", "cat": "ZK Proofs / HE", "status": "upcome", "c": [], "v": [] }, { "algo": "noise-nn", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-kn", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-nk", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-kk", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-nx", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-xn", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-xk", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-kx", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-in", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-ik", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-ix", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-xx", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "noise-ikpsk2", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "signal-x3dh", "cat": "Protocol Primitives", "status": "active", "c": ["C01", "C02", "C03", "C04", "C10", "C11", "C16"], "v": ["V01", "V02", "V03", "V05", "V11", "V13"] }, { "algo": "signal-double-ratchet", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "opaque", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "spake2", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "spake2+", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "dragonfly", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "otrv4", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "mtproto", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "wireguard", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "mls", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "pqxdh", "cat": "Protocol Primitives", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C16"], "v": ["V01", "V02", "V03", "V11", "V13"] }, { "algo": "cpace", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "aucpace", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "kemtls", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "pq-tls-hybrid", "cat": "Protocol Primitives", "status": "active", "c": [], "v": [] }, { "algo": "ech", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "odohdtls", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "oblivious-http", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "privacy-pass", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "masque", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "edhoc", "cat": "Protocol Primitives", "status": "active", "c": ["C01", "C02", "C03", "C10", "C11", "C16"], "v": ["V01", "V02", "V03", "V11"] }, { "algo": "oscore", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "dtls12", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "dtls13", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "noise-xxfallback", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": ["V13"] }, { "algo": "disco", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "noisesocket", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "zrtp", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "hmqv", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "yak", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "sesame", "cat": "Protocol Primitives", "status": "active", "c": ["C16"], "v": [] }, { "algo": "srp", "cat": "Protocol Primitives", "status": "legacy", "c": [], "v": [] }, { "algo": "j-pake", "cat": "Protocol Primitives", "status": "legacy", "c": [], "v": [] }, { "algo": "otr", "cat": "Protocol Primitives", "status": "legacy", "c": [], "v": [] }, { "algo": "speke", "cat": "Protocol Primitives", "status": "legacy", "c": [], "v": [] }, { "algo": "curvecp", "cat": "Protocol Primitives", "status": "legacy", "c": [], "v": [] }, { "algo": "minimalt", "cat": "Protocol Primitives", "status": "legacy", "c": [], "v": [] }, { "algo": "sts", "cat": "Protocol Primitives", "status": "legacy", "c": [], "v": [] }, { "algo": "x509v3", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "crl", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "ocsp", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "ocsp-stapling", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "csr", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C03"], "v": ["V02", "V15"] }, { "algo": "cms", "cat": "PKI / Certificates", "status": "active", "c": ["C01"], "v": ["V15"] }, { "algo": "scep", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "est", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "acme", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "ct", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "mft", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "roa", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "tal", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "rfc822name", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "ipaddress", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V14"] }, { "algo": "subjectaltname", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "authoritykeyid", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "subjectkeyid", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "keyusage", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "extendedkeyusage", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "basicconstraints", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "nameconstraints", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "cdp", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "aia", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "ocsp-nocheck", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "precert-poison", "cat": "PKI / Certificates", "status": "active", "c": ["C01"], "v": ["V09", "V15"] }, { "algo": "sct", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "tls-features", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "signed-timestamp", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "tsp", "cat": "PKI / Certificates", "status": "active", "c": [], "v": ["V15"] }, { "algo": "cades", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V15"] }, { "algo": "pades", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V15"] }, { "algo": "xades", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C02", "C03", "C05", "C10", "C11"], "v": ["V01", "V02", "V03", "V15"] }, { "algo": "asn1-der", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C03"], "v": ["V02", "V15"] }, { "algo": "asn1-cer", "cat": "PKI / Certificates", "status": "active", "c": ["C01", "C03"], "v": ["V15"] }, { "algo": "asn1-per", "cat": "PKI / Certificates", "status": "active", "c": ["C03"], "v": ["V15"] }, { "algo": "asn1-oer", "cat": "PKI / Certificates", "status": "active", "c": ["C03"], "v": ["V15"] }, { "algo": "asn1-xer", "cat": "PKI / Certificates", "status": "active", "c": ["C03"], "v": ["V15"] }, { "algo": "x509v1", "cat": "PKI / Certificates", "status": "legacy", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "asn1-ber", "cat": "PKI / Certificates", "status": "legacy", "c": ["C03"], "v": ["V15"] }, { "algo": "pkcs11", "cat": "Hardware / HSM / TEE", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "pkcs11-3.0", "cat": "Hardware / HSM / TEE", "status": "active", "c": ["C01", "C02", "C03", "C11"], "v": ["V02", "V15"] }, { "algo": "cng", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "tpm2.0", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "intel-sgx", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "intel-tdx", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "amd-sev", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "amd-sev-snp", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "arm-trustzone", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "arm-cca", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "apple-secure-enclave", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "nitro-enclaves", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "nvidia-cc", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "java-jce", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "openssl-provider", "cat": "Hardware / HSM / TEE", "status": "active", "c": ["C01"], "v": ["V02", "V15"] }, { "algo": "wolfssl-fips", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "botan-p11", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "libp11", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "opencryptoki", "cat": "Hardware / HSM / TEE", "status": "active", "c": [], "v": [] }, { "algo": "softhsm2", "cat": "Hardware / HSM / TEE", "status": "active", "c": ["C01", "C02", "C03", "C17"], "v": ["V02"] }, { "algo": "capi", "cat": "Hardware / HSM / TEE", "status": "legacy", "c": [], "v": [] }, { "algo": "tpm1.2", "cat": "Hardware / HSM / TEE", "status": "legacy", "c": [], "v": [] }, { "algo": "openssl-engine", "cat": "Hardware / HSM / TEE", "status": "legacy", "c": [], "v": [] }, { "algo": "wesolowski-vdf", "cat": "Verifiable Delay Functions", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "pietrzak-vdf", "cat": "Verifiable Delay Functions", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "sloth-vdf", "cat": "Verifiable Delay Functions", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "ibe", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "abe", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "pre", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "functional-encryption", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09", "V15"] }, { "algo": "witness-encryption", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": [] }, { "algo": "chameleon-hash", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "rsa-accumulator", "cat": "Advanced Primitives", "status": "upcome", "c": ["C01", "C02", "C03", "C10", "C11"], "v": ["V01", "V02", "V03", "V09", "V11"] }, { "algo": "bilinear-accumulator", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "vector-commitment", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09", "V15"] }, { "algo": "psi", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "secure-aggregation", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": [] }, { "algo": "oram", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "differential-privacy", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": [] }, { "algo": "blakley-ss", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09"] }, { "algo": "brickell-ss", "cat": "Advanced Primitives", "status": "upcome", "c": [], "v": ["V09"] }];
+
+
+    // ─── TOOLTIP MAP ─────────────────────────────────────────────────────────────
+    const cNameMap = {};
+    cSources.forEach(s => cNameMap[s.id] = s.name);
+    const vNameMap = {};
+    vSources.forEach(s => vNameMap[s.id] = s.name);
+
+    // ─── BUILD SOURCE GRIDS ───────────────────────────────────────────────────────
+    function buildSrcGrid(sources, containerId, cls) {
+      const el = document.getElementById(containerId);
+      sources.forEach(s => {
+        el.innerHTML += `<div class="src-card">
+      <div class="src-card-header">
+        <span class="src-id ${cls}">${s.id}</span>
+        <span class="src-name">${s.name}</span>
+      </div>
+      <div class="src-url"><a href="${s.url}" target="_blank" rel="noopener">${s.url.replace('https://', '')}</a></div>
+      <div class="src-desc">${s.desc}</div>
+    </div>`;
+      });
+    }
+    buildSrcGrid(cSources, 'c-src-grid', 'c-id');
+    buildSrcGrid(vSources, 'v-src-grid', 'v-id');
+
+    // ─── STATS ───────────────────────────────────────────────────────────────────
+    const statC = algoMap.filter(m => m.c.length > 0).length;
+    const statV = algoMap.filter(m => m.v.length > 0).length;
+    const statBoth = algoMap.filter(m => m.c.length > 0 && m.v.length > 0).length;
+    const statNone = algoMap.filter(m => m.c.length === 0 && m.v.length === 0).length;
+
+    document.getElementById('stat-c').textContent = statC;
+    document.getElementById('stat-v').textContent = statV;
+    document.getElementById('stat-both').textContent = statBoth;
+    document.getElementById('stat-none').textContent = statNone;
+
+    function covBar(label, val, total, cls, sub) {
+      const pct = (val / total * 100).toFixed(1);
+      return `<div class="cov-bar-wrap">
+    <div class="cov-bar-label"><span>${label} — <strong>${val}</strong> / ${total}</span><span>${pct}%${sub ? ' · ' + sub : ''}</span></div>
+    <div class="cov-bar"><div class="cov-bar-fill ${cls}" style="width:${pct}%"></div></div>
+  </div>`;
+    }
+    document.getElementById('cov-bars').innerHTML =
+      covBar('Has C implementation source (Table A)', statC, 776, 'fill-c') +
+      covBar('Has verification source (Table B)', statV, 776, 'fill-v') +
+      covBar('Has both C + verification sources', statBoth, 776, 'fill-both', 'production-ready') +
+      covBar('Research only — no public implementation yet', statNone, 776, '', '');
+
+    // ─── CATEGORY FILTER POPULATE ─────────────────────────────────────────────────
+    const cats = [...new Set(algoMap.map(m => m.cat))].sort();
+    const catSel = document.getElementById('cat-filter');
+    cats.forEach(c => { catSel.innerHTML += `<option value="${c}">${c}</option>`; });
+
+    // ─── TABLE STATE ─────────────────────────────────────────────────────────────
+    let statusFilter = 'all';
+    let covFilter = 'all';
+
+    function setStatus(s, btn) {
+      statusFilter = s;
+      document.querySelectorAll('.filter-group').item(0).querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTable();
+    }
+    function setCov(s, btn) {
+      covFilter = s;
+      document.querySelectorAll('.filter-group').item(1).querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderTable();
+    }
+
+    function statusLabel(s) {
+      if (s === 'active') return '<span class="badge badge-active">active</span>';
+      if (s === 'legacy') return '<span class="badge badge-legacy">legacy</span>';
+      return '<span class="badge badge-upcoming">upcoming</span>';
+    }
+
+    function tagList(ids, cls, nameMap) {
+      if (!ids.length) return '<span class="none-tag">—</span>';
+      return '<div class="src-tags">' + ids.map(id =>
+        `<span class="stag ${cls}" title="${nameMap[id] || ''}">${id}</span>`
+      ).join('') + '</div>';
+    }
+
+    function renderTable() {
+      const q = document.getElementById('algo-search').value.toLowerCase().trim();
+      const catVal = document.getElementById('cat-filter').value;
+
+      const filtered = algoMap.filter(m => {
+        if (statusFilter !== 'all' && m.status !== statusFilter) return false;
+        if (covFilter === 'c' && m.c.length === 0) return false;
+        if (covFilter === 'v' && m.v.length === 0) return false;
+        if (covFilter === 'both' && (m.c.length === 0 || m.v.length === 0)) return false;
+        if (covFilter === 'none' && (m.c.length > 0 || m.v.length > 0)) return false;
+        if (catVal !== 'all' && m.cat !== catVal) return false;
+        if (q && !m.algo.includes(q) && !m.cat.toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      document.getElementById('row-count').textContent = filtered.length;
+      const tbody = document.getElementById('algo-tbody');
+      tbody.innerHTML = filtered.map(m => `<tr>
+    <td class="algo-name">${m.algo}</td>
+    <td class="algo-cat">${m.cat}</td>
+    <td>${statusLabel(m.status)}</td>
+    <td>${tagList(m.c, 'c-tag', cNameMap)}</td>
+    <td>${tagList(m.v, 'v-tag', vNameMap)}</td>
+  </tr>`).join('');
+    }
+
+    renderTable();
+
+    // ─── THEME ───────────────────────────────────────────────────────────────────
+    function toggleTheme() {
+      const h = document.documentElement;
+      h.setAttribute('data-theme', h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    }
+
+    // ─── SIDEBAR HIGHLIGHT ────────────────────────────────────────────────────────
+    const sections = document.querySelectorAll('.section, .page-hero');
+    const links = document.querySelectorAll('.sidebar a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = e.target.id;
+          links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+
+</html>
