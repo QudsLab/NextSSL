@@ -9,3 +9,12 @@
 /zoo
 CODE_OF_CONDUCT.md
 CODE_OF_CONDUCT.md
+
+# Rust
+/target
+/fuzz/target
+/fuzz/corpus
+/fuzz/artifacts
+
+# Raw downloaded sources; collection/MANIFEST.csv and ORIGIN.md files record them.
+collection/**/upstream/
