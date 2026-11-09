@@ -1,0 +1,15 @@
+id        = "base85"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 1924"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "base85", version = "=2.0.0", license = "MPL-2.0-no-copyleft-exception" }
+# RFC 1924 Base85 (not Ascii85). Strict: decode re-encodes and compares.
+
+[kat]
+files = ["kat/vectors.json"]

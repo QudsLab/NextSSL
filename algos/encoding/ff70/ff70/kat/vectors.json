@@ -1,0 +1,182 @@
+{
+ "algorithm": "ff70",
+ "source": "c-original-* : literal Python transcription of base_n_encode / ff70_encode from collection/encoding/ff70/ff70/upstream/ff70.c, BLAKE3 from the official `blake3` package, inputs free of the C defects (a non-zero byte present, base >= 16, canonical exclude, no ']' in header/meta). fixed-design-* : outputs of the fixed design for inputs the C original gets wrong (empty, all-zero). The compiled C original was NOT run (Docker daemon down, no C compiler on host).",
+ "vectors": [
+  {
+   "id": "c-original-0",
+   "params": {
+    "header": "",
+    "exclude": "",
+    "meta": ""
+   },
+   "data_hex": "01",
+   "text": "[](){1|S1vKv}[]"
+  },
+  {
+   "id": "c-original-1",
+   "params": {
+    "header": "",
+    "exclude": "",
+    "meta": ""
+   },
+   "data_hex": "68656c6c6f",
+   "text": "[](){4aK:IpK|2zG7L4}[]"
+  },
+  {
+   "id": "c-original-2",
+   "params": {
+    "header": "Key",
+    "exclude": "",
+    "meta": "t:123456"
+   },
+   "data_hex": "68656c6c6f20776f726c64",
+   "text": "[Key](){2j3J7kgl1UNmr:c|2lnZ6O}[t:123456]"
+  },
+  {
+   "id": "c-original-3",
+   "params": {
+    "header": "FF1:Key",
+    "exclude": "&@",
+    "meta": ""
+   },
+   "data_hex": "0000616263",
+   "text": "[FF1:Key](-&@){00leNr|1VlSOh}[]"
+  },
+  {
+   "id": "c-original-4",
+   "params": {
+    "header": "",
+    "exclude": "#$%&:;",
+    "meta": "m"
+   },
+   "data_hex": "ffffffffffffffffffffffffffffffffffffffff",
+   "text": "[](-#$%&:;){o632qT5GYLNlsAjNwKOFftkDECf|2XjeWY}[m]"
+  },
+  {
+   "id": "c-original-5",
+   "params": {
+    "header": "Blob",
+    "exclude": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    "meta": "x"
+   },
+   "data_hex": "0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021222324252627",
+   "text": "[Blob](-ABCDEFGHIJKLMNOPQRSTUVWXYZ){14h3mpidnz:6m$:;7#0wmgcofhksuyovm:#%q9@l%@@52mb9t5#o1dgxo|7fwf&9}[x]"
+  },
+  {
+   "id": "c-original-6",
+   "params": {
+    "header": "Sig",
+    "exclude": "",
+    "meta": "t:1"
+   },
+   "data_hex": "3c96ebe645a4364f6ed2c278cc25a38dc0e4312f10fbb190440d87e63dff2144",
+   "text": "[Sig](){b6pN7hW#CkmCeLi#bD#7DyZBpP3;tst3Tk5LGS#T9I|zUJrU}[t:1]"
+  },
+  {
+   "id": "c-original-7",
+   "params": {
+    "header": "Hash",
+    "exclude": "$&@",
+    "meta": ""
+   },
+   "data_hex": "b775291ec9159e4bb63e644e2596c9364dffdc8b4d338bb62e5d3b28ed1d1f6f803e841bda4120ef932560cea24884b112be18361308d679a4d77ff12528c5ad",
+   "text": "[Hash](-$&@){dT51SlXd;YlDbYL89sS8ENLM4x8SSK16fPFpIXDNGxRystz5%PfpdmrigTwOP53PhX%Lvb1RIhdMNH3NrYBch|1bKMcj}[]"
+  },
+  {
+   "id": "c-original-8",
+   "params": {
+    "header": "Big",
+    "exclude": "0O",
+    "meta": "len:255"
+   },
+   "data_hex": "850f6f60421ef1e50d41c2ffd0b674998348b9ef51e29e7c94e912ba46e246aa7aabc7312a904cee115f1e062c65273421fbecdf8b960cdfe3b69635a00f9b10f3f5527c51327aa8d7447542986755cdf9c1eaa33c6142a612c4d20cb2d3988cc77666fc16e4a6dd3d578cb1f5c4668d2ca679948574cbf298c954cef21ec61f603a787775071a6436043bf8d9472bf1610d317d7e60481f947e19217af87f5d7680b767eed9031b186977d75209c9531672a55d6b89e415e35e6db2ecace98ea7e75c7384be35cae81ab89a881db9ef3a5881c5615c31aad2f5eb97a6f8d9b90a355961a976cb1d60da9b4fc836948bdb5cb2da62f55a923c97602dc5685a",
+   "text": "[Big](-0O){2TRhKyJQxv%plCzdTM5bzoXPuDr4IQroXkT3lI:Px;68@4:94H;IkaZ8DcV3isUssp8a:eyay@;YzAWnEVnHQAsrf4sAKpIIteV31PbZok@L;sv3jlUWuVTt8uRjlSZBrDwAYcdc#hrZtLCjJHFlwDj9gSCRLAvz64D@WkFhUm1zeX58xNchhT1SfNEt6Ylw$p6wSoQbNiUV6xTkMJCFUvL2&oD$3qXCPVNZy#rEI6w@3Un6FpINA8@Z:2;9e$Y1c16XHt5rN6f%UhT38V@tTgpF8zPl2fwh:6C#RQaZEfbzYMrtf7A29aIsYd4eAJqy6%WLo4CZZRpXjRSid|:JLvB}[len:255]"
+  },
+  {
+   "id": "c-original-9",
+   "params": {
+    "header": "Z",
+    "exclude": "",
+    "meta": ""
+   },
+   "data_hex": "0098e9907b0f61a501b63c6233a6f92e",
+   "text": "[Z](){09aN4lQFemDwqA7VgK7pJ|1Q9AMq}[]"
+  },
+  {
+   "id": "fixed-design-0",
+   "params": {
+    "header": "",
+    "exclude": "",
+    "meta": ""
+   },
+   "data_hex": "",
+   "text": "[](){|1YEgoU}[]"
+  },
+  {
+   "id": "fixed-design-1",
+   "params": {
+    "header": "E",
+    "exclude": "&",
+    "meta": "empty"
+   },
+   "data_hex": "",
+   "text": "[E](-&){|21pAfZ}[empty]"
+  },
+  {
+   "id": "fixed-design-2",
+   "params": {
+    "header": "",
+    "exclude": "",
+    "meta": ""
+   },
+   "data_hex": "00",
+   "text": "[](){0|xw$cO}[]"
+  },
+  {
+   "id": "fixed-design-3",
+   "params": {
+    "header": "Z",
+    "exclude": "#@",
+    "meta": "zeros"
+   },
+   "data_hex": "0000000000",
+   "text": "[Z](-#@){00000|2Bmg1a}[zeros]"
+  },
+  {
+   "id": "fixed-design-4",
+   "params": {
+    "header": "",
+    "exclude": "",
+    "meta": ""
+   },
+   "data_hex": "0001",
+   "text": "[](){01|1mp4N2}[]"
+  }
+ ],
+ "invalid": [
+  {
+   "text": ""
+  },
+  {
+   "text": "[](){|}[]"
+  },
+  {
+   "text": "garbage"
+  },
+  {
+   "text": "[](){0|0000}[]x"
+  },
+  {
+   "text": "[](){0|0000}"
+  },
+  {
+   "text": "[](){0||0000}[]"
+  },
+  {
+   "text": "[](-){0|0000}[]"
+  },
+  {
+   "text": "[](){0|0000}[m"
+  }
+ ]
+}

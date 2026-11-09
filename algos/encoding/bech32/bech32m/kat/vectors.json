@@ -1,0 +1,606 @@
+{
+ "algorithm": "bech32m",
+ "source": "BIP-350 test vectors (valid/invalid string lists, downloaded from github.com/bitcoin/bips) converted to bytes with a reference implementation written from the BIP text; plus reference-implementation round trips",
+ "vectors": [
+  {
+   "id": "bip-1",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "",
+   "text": "a1lqfn3a"
+  },
+  {
+   "id": "bip-2",
+   "params": {
+    "hrp": "an83characterlonghumanreadablepartthatcontainsthetheexcludedcharactersbioandnumber1"
+   },
+   "data_hex": "",
+   "text": "an83characterlonghumanreadablepartthatcontainsthetheexcludedcharactersbioandnumber11sg7hg6"
+  },
+  {
+   "id": "bip-3",
+   "params": {
+    "hrp": "abcdef"
+   },
+   "data_hex": "ffbbcdeb38bdab49ca307b9ac5a928398a418820",
+   "text": "abcdef1l7aum6echk45nj3s0wdvt2fg8x9yrzpqzd3ryx"
+  },
+  {
+   "id": "bip-5",
+   "params": {
+    "hrp": "split"
+   },
+   "data_hex": "c5f38b70305f519bf66d85fb6cf03058f3dde463ecd7918f2dc743918f2d",
+   "text": "split1checkupstagehandshakeupstreamerranterredcaperredlc445v"
+  },
+  {
+   "id": "bip-6",
+   "params": {
+    "hrp": "?"
+   },
+   "data_hex": "",
+   "text": "?1v759aa"
+  },
+  {
+   "id": "ref-0",
+   "params": {
+    "hrp": "1"
+   },
+   "data_hex": "f1cd8edd9735579c6595fad8bb1ab943",
+   "text": "1178xcahvhx4tecev4ltvtkx4egvutk682"
+  },
+  {
+   "id": "ref-1",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "0edd18e542",
+   "text": "bc1pmw33e2zzhyj7j"
+  },
+  {
+   "id": "ref-2",
+   "params": {
+    "hrp": "tb"
+   },
+   "data_hex": "fa56167ba9b5620e253d9ee5a3aebd3a",
+   "text": "tb1lftpv7afk43quffanmj68t4a8gs9chwq"
+  },
+  {
+   "id": "ref-3",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "3d3e1a6b19700619d56b5f3ff5f531e283e7fa4d",
+   "text": "xxxxxxxxxxxxxxxxxxxx185lp56cewqrpn4tttulltaf3u2p707jd2p36f9"
+  },
+  {
+   "id": "ref-4",
+   "params": {
+    "hrp": "tb"
+   },
+   "data_hex": "",
+   "text": "tb1dclvmr"
+  },
+  {
+   "id": "ref-5",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "973dd7",
+   "text": "bc1ju7aw0pa5s7"
+  },
+  {
+   "id": "ref-6",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "b9e1e752dce992d46669bfcc8f2103c6",
+   "text": "xxxxxxxxxxxxxxxxxxxx1h8s7w5kuaxfdgenfhlxg7ggrcclwakld"
+  },
+  {
+   "id": "ref-7",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "",
+   "text": "xxxxxxxxxxxxxxxxxxxx1040ur3"
+  },
+  {
+   "id": "ref-8",
+   "params": {
+    "hrp": "tb"
+   },
+   "data_hex": "67",
+   "text": "tb1vuzn34lw"
+  },
+  {
+   "id": "ref-9",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "23704148f1cf9746aa63ae75f5ad05a4e5bd36b548cd6958061dfecd7aafbd61",
+   "text": "abc-def1ydcyzj83e7t5d2nr4e6lttg95njm6d44frxkjkqxrhlv6740h4ss2y2486"
+  },
+  {
+   "id": "ref-10",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "09f4",
+   "text": "xxxxxxxxxxxxxxxxxxxx1p86q43p7wc"
+  },
+  {
+   "id": "ref-11",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "af85c7ea92",
+   "text": "abc-def147zu065j5feul3"
+  },
+  {
+   "id": "ref-12",
+   "params": {
+    "hrp": "nextssl"
+   },
+   "data_hex": "3e7a773c6431298fe92a0653936b0f0e327385384fbad231739f5c544f825a65",
+   "text": "nextssl18ea8w0ryxy5cl6f2qefex6c0pce88pfcf7adyvtnnaw9gnuztfjsxspy0u"
+  },
+  {
+   "id": "ref-13",
+   "params": {
+    "hrp": "nextssl"
+   },
+   "data_hex": "4c9e",
+   "text": "nextssl1fj0qxgzr23"
+  },
+  {
+   "id": "ref-14",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "f99c27",
+   "text": "a1lxwzwfmu9vz"
+  },
+  {
+   "id": "ref-15",
+   "params": {
+    "hrp": "tb"
+   },
+   "data_hex": "b07775bd7a75579e8f8606abb3c5c9326a8a34d4",
+   "text": "tb1kpmht0t6w4tearuxq64m83wfxf4g5dx5vs4xel"
+  },
+  {
+   "id": "ref-16",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "611e37d1797b1c59",
+   "text": "a1vy0r05te0vw9jjuytuj"
+  },
+  {
+   "id": "ref-17",
+   "params": {
+    "hrp": "nextssl"
+   },
+   "data_hex": "28736e2e4b1550cb",
+   "text": "nextssl19pekutjtz4gvkjhw3p6"
+  },
+  {
+   "id": "ref-18",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "f1cde0bc9b3381d1575ec423e6bc839a",
+   "text": "abc-def178x7p0ymxwqaz467cs37d0yrng5ankgu"
+  },
+  {
+   "id": "ref-19",
+   "params": {
+    "hrp": "tb"
+   },
+   "data_hex": "c48e717ee665434b",
+   "text": "tb1cj88zlhxv4p5k4k9ffv"
+  },
+  {
+   "id": "ref-20",
+   "params": {
+    "hrp": "1"
+   },
+   "data_hex": "",
+   "text": "11w9nvlh"
+  },
+  {
+   "id": "ref-21",
+   "params": {
+    "hrp": "1"
+   },
+   "data_hex": "cec6d0dad17fa5e01597d915e550f5fa2758eb40fcdac0d43150a395db2dd5cf",
+   "text": "11emrdpkk307j7q9vhmy272584lgn4366qlndvp4p32z3etked6h8sleh3er"
+  },
+  {
+   "id": "ref-22",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "116dde0bcfd57d4985740714c8ff97e8f37804a9",
+   "text": "abc-def1z9kauz706475npt5qu2v3luharehsp9fp73u8z"
+  },
+  {
+   "id": "ref-23",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "edf4df19384fec308cd5330d449ac8d4",
+   "text": "bc1ah6d7xfcflkrprx4xvx5fxkg6s7e0ff3"
+  },
+  {
+   "id": "ref-24",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "f0e52cff90",
+   "text": "a17rjjeluss3vwfg"
+  },
+  {
+   "id": "ref-25",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "18",
+   "text": "xxxxxxxxxxxxxxxxxxxx1rqrcvvng"
+  },
+  {
+   "id": "ref-26",
+   "params": {
+    "hrp": "1"
+   },
+   "data_hex": "c30e",
+   "text": "11cv8qrs0suc"
+  },
+  {
+   "id": "ref-27",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "283c464d0d2e3fc1c4c87eb587a5388d97ac3073",
+   "text": "a19q7yvngd9clur3xg066c0ffc3kt6cvrn77x9un"
+  },
+  {
+   "id": "ref-28",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "",
+   "text": "a1lqfn3a"
+  },
+  {
+   "id": "ref-29",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "0c97",
+   "text": "a1pjts96ewu4"
+  },
+  {
+   "id": "ref-30",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "70b9101311fa1d5fa3f4602da6f338670f4c9770b2e1e0e2b9a9d883e2a4b6bc",
+   "text": "a1wzu3qyc3lgw4lgl5vqk6duecvu85e9mskts7pc4e48vg8c4yk67qzlct6n"
+  },
+  {
+   "id": "ref-31",
+   "params": {
+    "hrp": "tb"
+   },
+   "data_hex": "158a1c1918d3aa4e4edba7bbb4afdfd5c650b9ec7ce3db3515d599636a03e083",
+   "text": "tb1zk9pcxgc6w4yunkm57amft7l6hr9pw0v0n3akdg46kvkx6sruzps7rjc9j"
+  },
+  {
+   "id": "ref-32",
+   "params": {
+    "hrp": "nextssl"
+   },
+   "data_hex": "99eb7195fa7eb5e8",
+   "text": "nextssl1n84hr9060667sp4fes7"
+  },
+  {
+   "id": "ref-33",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "21245f8b85",
+   "text": "bc1yyj9lzu9twkg6p"
+  },
+  {
+   "id": "ref-34",
+   "params": {
+    "hrp": "nextssl"
+   },
+   "data_hex": "",
+   "text": "nextssl1hjglp0"
+  },
+  {
+   "id": "ref-35",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "100d5a",
+   "text": "a1zqx453n6kwd"
+  },
+  {
+   "id": "ref-36",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "9604ca4c7e07a7106bd778ba41e443e92b21dbfc7daa32ae03e88957aa40995a",
+   "text": "a1jczv5nr7q7n3q67h0zayrezray4jrklu0k4r9tsrazy402jqn9dq774eed"
+  },
+  {
+   "id": "ref-37",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "b43f13",
+   "text": "a1ksl3x3g2exq"
+  },
+  {
+   "id": "ref-38",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "32157f",
+   "text": "abc-def1xg2h7s6xcsx"
+  },
+  {
+   "id": "ref-39",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "582f514cfc7159e25695e6db8193a9458f16f041151ad7b0166f68878a13aee9",
+   "text": "bc1tqh4zn8uw9v7y454umdcryafgk83duzpz5dd0vqkda5g0zsn4m5sfhd7wv"
+  }
+ ],
+ "invalid": [
+  {
+   "text": "11llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllludsr8",
+   "params": {
+    "hrp": "1"
+   },
+   "why": "valid bech32 string whose 5-bit data is not a canonical byte string"
+  },
+  {
+   "text": " 1xj0phk",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "1g6xzxy",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "1vctc34",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "an84characterslonghumanreadablepartthatcontainsthetheexcludedcharactersbioandnumber11d6pts4",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "qyrz8wqd2c9m",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "1qyrz8wqd2c9m",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "y1b0jsk6g",
+   "params": {
+    "hrp": "y"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "lt1igcx5c0",
+   "params": {
+    "hrp": "lt"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "in1muywd",
+   "params": {
+    "hrp": "in"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "mm1crxm3i",
+   "params": {
+    "hrp": "mm"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "au1s5cgom",
+   "params": {
+    "hrp": "au"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "M1VUXWEZ",
+   "params": {
+    "hrp": "M"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "16plkw9",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "1p2gdwpf",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "a12uel5l",
+   "params": {
+    "hrp": "A"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "a12uel5l",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "an83characterlonghumanreadablepartthatcontainsthenumber1andtheexcludedcharactersbio1tt5tgs",
+   "params": {
+    "hrp": "an83characterlonghumanreadablepartthatcontainsthenumber1andtheexcludedcharactersbio"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "abcdef1qpzry9x8gf2tvdw0s3jn54khce6mua7lmqqqxw",
+   "params": {
+    "hrp": "abcdef"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "11qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqc8247j",
+   "params": {
+    "hrp": "1"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "split1checkupstagehandshakeupstreamerranterredcaperred2y9e3w",
+   "params": {
+    "hrp": "split"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "?1ezyfcl",
+   "params": {
+    "hrp": "?"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": " 1nwldj5",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "1axkwrx",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "1eym55h",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "an84characterslonghumanreadablepartthatcontainsthenumber1andtheexcludedcharactersbio1569pvx",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "pzry9x0s0muk",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "1pzry9x0s0muk",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "x1b4n0q5v",
+   "params": {
+    "hrp": "x"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "li1dgmt3",
+   "params": {
+    "hrp": "li"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "de1lg7wtÿ",
+   "params": {
+    "hrp": "de"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "a1g7sgd8",
+   "params": {
+    "hrp": "A"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "10a06t8",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "1qzzfhee",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+id        = "bech32m"
+kind      = "encoding"
+category  = "encoding"
+family    = "bech32"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["BIP-350"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "bech32", version = "=0.12.0", license = "MIT" }
+# Bytes <-> text with a REQUIRED `hrp` string parameter (no default). Whole string limited to
+# 90 characters; strict canonical decoding. Segwit addresses (witness-version symbol) are not
+# modelled here.
+
+[params.hrp]
+type       = "str"
+min        = 1
+max        = 83
+required   = true
+test_value = "nextssl"
+
+[kat]
+files = ["kat/vectors.json"]

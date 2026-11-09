@@ -1,0 +1,3 @@
+# KAT provenance: bech32
+
+- vectors.json: BIP-173 valid/invalid string lists (downloaded from https://github.com/bitcoin/bips, bip-0173.mediawiki sha256 `b19eab06b264bbd15ad7f7d640fa34de8f4a8809fba8a6ecc3e165545b27a543`, bip-0350.mediawiki sha256 `63634b06aa8bae88b31929674736e74964c4598684269ac2b0b140c43a7a0dec`), converted to bytes by an independent reference implementation written from the BIP text (D:/Dev/kat_work/infra/bech32_kat.py), plus reference round trips. BIP strings whose 5-bit data is not a canonical byte string are listed under `invalid` (decoding to bytes must fail). Segwit address vectors are not used (witness-version symbol is out of scope).

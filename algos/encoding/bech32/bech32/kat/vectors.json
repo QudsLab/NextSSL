@@ -1,0 +1,607 @@
+{
+ "algorithm": "bech32",
+ "source": "BIP-173 test vectors (valid/invalid string lists, downloaded from github.com/bitcoin/bips) converted to bytes with a reference implementation written from the BIP text; plus reference-implementation round trips",
+ "vectors": [
+  {
+   "id": "bip-1",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "",
+   "text": "a12uel5l"
+  },
+  {
+   "id": "bip-2",
+   "params": {
+    "hrp": "an83characterlonghumanreadablepartthatcontainsthenumber1andtheexcludedcharactersbio"
+   },
+   "data_hex": "",
+   "text": "an83characterlonghumanreadablepartthatcontainsthenumber1andtheexcludedcharactersbio1tt5tgs"
+  },
+  {
+   "id": "bip-3",
+   "params": {
+    "hrp": "abcdef"
+   },
+   "data_hex": "00443214c74254b635cf84653a56d7c675be77df",
+   "text": "abcdef1qpzry9x8gf2tvdw0s3jn54khce6mua7lmqqqxw"
+  },
+  {
+   "id": "bip-4",
+   "params": {
+    "hrp": "1"
+   },
+   "data_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "text": "11qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqc8247j"
+  },
+  {
+   "id": "bip-5",
+   "params": {
+    "hrp": "split"
+   },
+   "data_hex": "c5f38b70305f519bf66d85fb6cf03058f3dde463ecd7918f2dc743918f2d",
+   "text": "split1checkupstagehandshakeupstreamerranterredcaperred2y9e3w"
+  },
+  {
+   "id": "bip-6",
+   "params": {
+    "hrp": "?"
+   },
+   "data_hex": "",
+   "text": "?1ezyfcl"
+  },
+  {
+   "id": "ref-0",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "e9ffdb6dd43fbe11",
+   "text": "abc-def1a8lakmw587lpz5gewdz"
+  },
+  {
+   "id": "ref-1",
+   "params": {
+    "hrp": "nextssl"
+   },
+   "data_hex": "",
+   "text": "nextssl1zwcnyd"
+  },
+  {
+   "id": "ref-2",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "9a4b",
+   "text": "xxxxxxxxxxxxxxxxxxxx1nf9sfaeef3"
+  },
+  {
+   "id": "ref-3",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "41",
+   "text": "bc1gyufle22"
+  },
+  {
+   "id": "ref-4",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "",
+   "text": "bc1gmk9yu"
+  },
+  {
+   "id": "ref-5",
+   "params": {
+    "hrp": "nextssl"
+   },
+   "data_hex": "16cca9968237f1eeae1c348e602bc3024a76cdb7",
+   "text": "nextssl1zmx2n95zxlc7atsuxj8xq27rqf98dndhey06g9"
+  },
+  {
+   "id": "ref-6",
+   "params": {
+    "hrp": "tb"
+   },
+   "data_hex": "61",
+   "text": "tb1vyu6dd3z"
+  },
+  {
+   "id": "ref-7",
+   "params": {
+    "hrp": "1"
+   },
+   "data_hex": "06044c47abd7147a2035fe04759d166de0f0e89f9e948c3bdb63086dc47ba7dc",
+   "text": "11qczyc3at6u285gp4lcz8t8gkdhs0p6yln62gcw7mvvyxm3rm5lwqckl3hg"
+  },
+  {
+   "id": "ref-8",
+   "params": {
+    "hrp": "nextssl"
+   },
+   "data_hex": "cbce1e75236ac1cf",
+   "text": "nextssl1e08puafrdtqu7pcg99c"
+  },
+  {
+   "id": "ref-9",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "b62034aaeada66c9",
+   "text": "a1kcsrf2h2mfnvj0qlj07"
+  },
+  {
+   "id": "ref-10",
+   "params": {
+    "hrp": "1"
+   },
+   "data_hex": "a2d9951793",
+   "text": "115tve29ung8ndfc"
+  },
+  {
+   "id": "ref-11",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "4d6a4ff6d110c168796c231a664fb52969bcad9b1a179679935ea00675709dc8",
+   "text": "bc1f44ylak3zrqks7tvyvdxvna4995metvmrgtev7vnt6sqvatsnhyqgafrmz"
+  },
+  {
+   "id": "ref-12",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "646337e29829753baab6b0fd56bb90c8",
+   "text": "xxxxxxxxxxxxxxxxxxxx1v33n0c5c996nh24kkr74dwuseqt6325f"
+  },
+  {
+   "id": "ref-13",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "75137414b02ba4c3eb0101e7011c710e",
+   "text": "abc-def1w5fhg99s9wjv86cpq8nsz8r3pcs679l4"
+  },
+  {
+   "id": "ref-14",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "",
+   "text": "xxxxxxxxxxxxxxxxxxxx16flsxn"
+  },
+  {
+   "id": "ref-15",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "837c96cee0609af0df48721e0690c083",
+   "text": "abc-def1sd7fdnhqvzd0ph6gwg0qdyxqsv2w3lcc"
+  },
+  {
+   "id": "ref-16",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "fd798476e5e5771841a45eeaa028b6e9",
+   "text": "xxxxxxxxxxxxxxxxxxxx1l4ucgah9u4m3ssdytm42q29kayqh4z2f"
+  },
+  {
+   "id": "ref-17",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "a8bfe50cbc966154004b7415cc33e935",
+   "text": "abc-def14zl72r9ujes4gqztws2ucvlfx52cr2w8"
+  },
+  {
+   "id": "ref-18",
+   "params": {
+    "hrp": "tb"
+   },
+   "data_hex": "994a87",
+   "text": "tb1n99gwkvx9kt"
+  },
+  {
+   "id": "ref-19",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "b2ce12bcefdbba2d724920b6f925a237",
+   "text": "a1kt8p9080mwaz6ujfyzm0jfdzxu2mfskn"
+  },
+  {
+   "id": "ref-20",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "8484",
+   "text": "abc-def1sjzqypcukr"
+  },
+  {
+   "id": "ref-21",
+   "params": {
+    "hrp": "nextssl"
+   },
+   "data_hex": "31",
+   "text": "nextssl1xyqd5sgf"
+  },
+  {
+   "id": "ref-22",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "32282c45eb511e2e21b244ddbaef9f933d8e5d5b",
+   "text": "xxxxxxxxxxxxxxxxxxxx1xg5zc30t2y0zugdjgnwm4muljv7cuh2mwwen4w"
+  },
+  {
+   "id": "ref-23",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "70abb85d3e754a3dd160c93b928efbfa",
+   "text": "a1wz4mshf7w49rm5tqeyae9rhmlgm7pmkj"
+  },
+  {
+   "id": "ref-24",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "db5a48d9c1fab4ac",
+   "text": "a1mddy3kwpl262c965d25"
+  },
+  {
+   "id": "ref-25",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "111736",
+   "text": "bc1zytnvldnczy"
+  },
+  {
+   "id": "ref-26",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "b84e",
+   "text": "xxxxxxxxxxxxxxxxxxxx1hp8qyxlncv"
+  },
+  {
+   "id": "ref-27",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "9ccf5e22a4edd79102cf6666777d46fb20b46377f20b293d8a9dd9b33eaa4a89",
+   "text": "bc1nn84ug4yahtezqk0ven8wl2xlvstgcmh7g9jj0v2nhvmx042f2ys3p2qyz"
+  },
+  {
+   "id": "ref-28",
+   "params": {
+    "hrp": "1"
+   },
+   "data_hex": "e8d6bc",
+   "text": "11arttceld09q"
+  },
+  {
+   "id": "ref-29",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "95f9a16c3489c78c2532630dcaabb3a5",
+   "text": "abc-def1jhu6zmp538rccffjvvxu42an55t6hle3"
+  },
+  {
+   "id": "ref-30",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "",
+   "text": "bc1gmk9yu"
+  },
+  {
+   "id": "ref-31",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "d67c23f3233e51139c6886c67c733f3081728aa1",
+   "text": "abc-def16e7z8uer8eg388rgsmr8cuelxzqh9z4pel0qy5"
+  },
+  {
+   "id": "ref-32",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "950759a27aae7938f8b67a24cba4103e24270d7bbc88a6b8a5f4015258ade9cc",
+   "text": "abc-def1j5r4ngn64eun379k0gjvhfqs8cjzwrtmhjy2dw997sq4yk9da8xqxqtx2t"
+  },
+  {
+   "id": "ref-33",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "",
+   "text": "xxxxxxxxxxxxxxxxxxxx16flsxn"
+  },
+  {
+   "id": "ref-34",
+   "params": {
+    "hrp": "bc"
+   },
+   "data_hex": "641c00497400d5506a0e90ab3e6dbc44a34ca86f",
+   "text": "bc1vswqqjt5qr24q6swjz4numdugj35e2r07rse62"
+  },
+  {
+   "id": "ref-35",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "9e8358f0e8",
+   "text": "a1n6p43u8g7hcws9"
+  },
+  {
+   "id": "ref-36",
+   "params": {
+    "hrp": "xxxxxxxxxxxxxxxxxxxx"
+   },
+   "data_hex": "a91802b1b20f326f9dd535b7182df140f3240472",
+   "text": "xxxxxxxxxxxxxxxxxxxx14yvq9vdjpuexl8w4xkm3st03grejgprj7pa59e"
+  },
+  {
+   "id": "ref-37",
+   "params": {
+    "hrp": "1"
+   },
+   "data_hex": "63e40f",
+   "text": "11v0jq7fg3e0t"
+  },
+  {
+   "id": "ref-38",
+   "params": {
+    "hrp": "abc-def"
+   },
+   "data_hex": "7777ed46d00ea48e1f96257aac27df1d1d83d3de6188a35eb753b6e01386403f",
+   "text": "abc-def1wam763ksp6jgu8uky4a2cf7lr5wc8577vxy2xh4h2wmwqyuxgqlsdgum43"
+  },
+  {
+   "id": "ref-39",
+   "params": {
+    "hrp": "a"
+   },
+   "data_hex": "ca2a03df16e13a86",
+   "text": "a1eg4q8hckuyagvn497rt"
+  }
+ ],
+ "invalid": [
+  {
+   "text": " 1nwldj5",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "1axkwrx",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "1eym55h",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "an84characterslonghumanreadablepartthatcontainsthenumber1andtheexcludedcharactersbio1569pvx",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "pzry9x0s0muk",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "1pzry9x0s0muk",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "x1b4n0q5v",
+   "params": {
+    "hrp": "x"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "li1dgmt3",
+   "params": {
+    "hrp": "li"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "de1lg7wtÿ",
+   "params": {
+    "hrp": "de"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "A1G7SGD8",
+   "params": {
+    "hrp": "A"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "10a06t8",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "1qzzfhee",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "BIP invalid list"
+  },
+  {
+   "text": "a1lqfn3a",
+   "params": {
+    "hrp": "A"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "a1lqfn3a",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "an83characterlonghumanreadablepartthatcontainsthetheexcludedcharactersbioandnumber11sg7hg6",
+   "params": {
+    "hrp": "an83characterlonghumanreadablepartthatcontainsthetheexcludedcharactersbioandnumber1"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "abcdef1l7aum6echk45nj3s0wdvt2fg8x9yrzpqzd3ryx",
+   "params": {
+    "hrp": "abcdef"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "11llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllludsr8",
+   "params": {
+    "hrp": "1"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "split1checkupstagehandshakeupstreamerranterredcaperredlc445v",
+   "params": {
+    "hrp": "split"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "?1v759aa",
+   "params": {
+    "hrp": "?"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": " 1xj0phk",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "1g6xzxy",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "1vctc34",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "an84characterslonghumanreadablepartthatcontainsthetheexcludedcharactersbioandnumber11d6pts4",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "qyrz8wqd2c9m",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "1qyrz8wqd2c9m",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "y1b0jsk6g",
+   "params": {
+    "hrp": "y"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "lt1igcx5c0",
+   "params": {
+    "hrp": "lt"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "in1muywd",
+   "params": {
+    "hrp": "in"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "mm1crxm3i",
+   "params": {
+    "hrp": "mm"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "au1s5cgom",
+   "params": {
+    "hrp": "au"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "m1vuxwez",
+   "params": {
+    "hrp": "M"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "16plkw9",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  },
+  {
+   "text": "1p2gdwpf",
+   "params": {
+    "hrp": "a"
+   },
+   "why": "valid for the other checksum variant"
+  }
+ ]
+}

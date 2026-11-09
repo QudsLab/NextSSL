@@ -1,0 +1,15 @@
+id        = "base58check"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["Bitcoin Base58Check"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "bs58", version = "=0.5.1", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/vectors.json"]
+

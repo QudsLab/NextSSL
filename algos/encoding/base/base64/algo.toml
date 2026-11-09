@@ -1,0 +1,13 @@
+id        = "base64"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = ["base64-std"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 4648"]
+fips      = false
+upstream  = { crate = "base64", version = "=0.23.1", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/rfc4648.json"]

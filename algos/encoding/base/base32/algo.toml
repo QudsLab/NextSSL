@@ -1,0 +1,15 @@
+id        = "base32"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 4648 section 6"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "data-encoding", version = "=2.11.1", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/vectors.json"]
+

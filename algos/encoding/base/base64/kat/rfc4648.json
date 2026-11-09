@@ -1,0 +1,19 @@
+{
+  "algorithm": "base64",
+  "source": "RFC 4648 section 10 test vectors",
+  "vectors": [
+    {"id": "empty", "data_hex": "", "text": ""},
+    {"id": "f", "data_hex": "66", "text": "Zg=="},
+    {"id": "fo", "data_hex": "666f", "text": "Zm8="},
+    {"id": "foo", "data_hex": "666f6f", "text": "Zm9v"},
+    {"id": "foob", "data_hex": "666f6f62", "text": "Zm9vYg=="},
+    {"id": "fooba", "data_hex": "666f6f6261", "text": "Zm9vYmE="},
+    {"id": "foobar", "data_hex": "666f6f626172", "text": "Zm9vYmFy"}
+  ],
+  "invalid": [
+    {"id": "missing-padding", "text": "Zg"},
+    {"id": "bad-char", "text": "Zm9*"},
+    {"id": "non-canonical-trailing-bits", "text": "Zh=="},
+    {"id": "whitespace", "text": "Zm9v\n"}
+  ]
+}

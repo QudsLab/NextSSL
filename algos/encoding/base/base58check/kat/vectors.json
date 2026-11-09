@@ -1,0 +1,219 @@
+{
+ "algorithm": "base58check",
+ "source": "Bitcoin Core src/test/data/key_io_valid.json @ v27.0 (base58 address and WIF strings); expected payloads decoded by an independent Python Base58Check implementation, which also verified the double-SHA-256 checksums",
+ "vectors": [
+  {
+   "id": "bitcoin-v27-key_io_valid-0",
+   "data_hex": "00a31c06bd463e3923bc1aadbde48b16976c080717",
+   "text": "1FsSia9rv4NeEwvJ2GvXrX7LyxYspbN2mo"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-1",
+   "data_hex": "05373b819a068f32b7a6b38b6b38729647cfde01c2",
+   "text": "36j4NfKv6Akva9amjWrLG6MuSQym1GuEmm"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-2",
+   "data_hex": "6fce28b26c57472737f5c3561a1761185bd8589a43",
+   "text": "mzK2FFDEhxqHcmrJw1ysqFkVyhUULo45hZ"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-3",
+   "data_hex": "c4ce0bba75891ff9ec60148d4bd4a09ee2dc5c9331",
+   "text": "2NC2hEhe28ULKAJkW5MjZ3jtTMJdvXmByvK"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-4",
+   "data_hex": "6fb4110ba93ac54afc14da3bdd19614774a2d55d29",
+   "text": "mww4LvqtTMKvmeQvizPz2EQv26xTneWrbg"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-5",
+   "data_hex": "c45e5a35ab44b3efaea5129ba22b88ba3e29766145",
+   "text": "2N1r7aC69VHeE7yQJPDLi9T1PYq4wnwvjuT"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-6",
+   "data_hex": "6ffdeca3b08e38af53d7c4c60e3ad208ce50664410",
+   "text": "n4fajahJrAuKbN7uNsKjLjQkz9Qn5ewJXQ"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-7",
+   "data_hex": "c436e9f191e0b75036a77f65e2eaa4752443233fbe",
+   "text": "2MxFajLApXpYk4VodBSZSt7rw8y4ryABkfA"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-8",
+   "data_hex": "808f8943bf956de595665c38ffff23827e17c10cdc1c27a028caae6c9810626198",
+   "text": "5JuW2AMDYu4xVwRG9DZW18VbzQrGcd5RCgb99sS6ehJsNQXu5b9"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-9",
+   "data_hex": "80ff778740f88ddcf102aeb81daee289c044c4a4571c4b6f287400f4b8e0b843f801",
+   "text": "L5nJeqKmpHp4P7F8ZYyjwc5a7P4d8EabuGAzfGJk7yC1BJyzNaEd"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-10",
+   "data_hex": "ef80c32d81e91bdea04cd7a3819b32275fc3298af4c7ec87eb0099527d041ced5c",
+   "text": "92ZdE5HoLafywnTBbzPxbvRmp75pSfzvdU3XaZGh1cToipgdHVh"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-11",
+   "data_hex": "efe0fcd4ce4e3d0e3de091f21415bb7cd011fac288c42020a879f28c2a4387df9b01",
+   "text": "cV83kKisF3RQSvXbUCm9ox3kaz5JjEUBWcx8tNydfGJcyeUxuH47"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-12",
+   "data_hex": "ef6cf636ed8ac1bab033b64f66feaba65f70e684731e3f39105605968d3a963801",
+   "text": "92QuSnywrhsV7WPZChTgSQA23uSmj9MCEEno1eRBDG9sg8M29cX"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-13",
+   "data_hex": "ef12b5a10f3a11e708dc5412833c47ab7c368a21b9efe19293793ec879ce68301801",
+   "text": "cND53Dhp8eCZqG2ghe8YhSCGesXZ8fE5PGD1khrqNvEi4RBoXhEK"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-14",
+   "data_hex": "ef18a86e5a6c6977ddba0daca7fba5190f67ba56ccdc1b3f31308972236c2e4776",
+   "text": "91mn1wYKEB1zyof1VFm8tMtocZx1oBrKKRCu9GCpgZvPmBLEJjp"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-15",
+   "data_hex": "ef3fdfec1371cedcdb8c190ca6ff8ad603f817edc0d93c2a687c7b36dd66e70f2a01",
+   "text": "cPisAUdLvqqAr6MYtXnrWvgvyUAwuNyuTvZkDGw6miPhZdaiSDNH"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-32",
+   "data_hex": "00a19331b7b2627e663e25a7b001e4c0dcc5e21bc7",
+   "text": "1FjL87pn8ky6Vbavd1ZHeChRXtoxwRGCRd"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-33",
+   "data_hex": "056c382dcdf5b284760c8e3fead91f7422cd76aa87",
+   "text": "3BZECeAH8gSKkjrTx8PwMrNQBLG18yHpvf"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-34",
+   "data_hex": "6ffc8f9851f3c1e4719cd0b8e4816dd4e88c72e528",
+   "text": "n4YNbYuFdPwFrxSP8sjHFbAhUbLMUiY9jE"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-35",
+   "data_hex": "c4bedc797342c03fd7a346c4c7857ca03d467013b6",
+   "text": "2NAeQVZayzVFAtgeC3iYJsjpjWDmsDph71A"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-36",
+   "data_hex": "6f493c455551e48a1423263b62b127b436106a6854",
+   "text": "mnCBpkNMJEJLehgdEkzSo2eioniyJMxLpZ"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-37",
+   "data_hex": "c48a776a0f34d56b63e7c595f2b205dbe1c393617a",
+   "text": "2N5sNHomeNJDZv67AcFx9ES7FBZY4jx9KDA"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-38",
+   "data_hex": "6f01f15a4cc063dae4f4d56b89bfbc8bcc9ae5387c",
+   "text": "mfhE6jAUwjUDNZhaX1PAsDTKfneQF2Nshc"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-39",
+   "data_hex": "c438456f7c076356abadcc67b92ad777eb20fb9f88",
+   "text": "2MxNm1VHyVU4RuP3u1c1v5aQLk2dQjwy1Qk"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-40",
+   "data_hex": "8006e8649790a90615a46d22dd762e0c42615336745356c2e16147c0f3d46b40d5",
+   "text": "5HsL2nZuEebU5nM3RxNVQD9GcAnvNMahqQskf4fkqHe54zwd14e"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-41",
+   "data_hex": "80147804bf8a0dfff35939a611c7f5a60ac107f33f33d6059f273d2079ab1d90f201",
+   "text": "KwuVvu6hsuEMHrfFWJQV64tRrWX3QzqHH18JuAHYqYV6dqBvNKxd"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-42",
+   "data_hex": "ef3777b341c45e2a9b9bf6bfb71dc7d129f64f1b9406ed4f93ade8f56065f1b732",
+   "text": "921M1RNxghFcsVGqAJksQVbSgx36Yz4u6vebfz1wDujNvgNt93B"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-43",
+   "data_hex": "ef1397b0d4a03e1ab2c54dd9af99ce1ecbfb90c80a58886da95e1181a55703d96b01",
+   "text": "cNEnbfF2fcxmmCLWqMAaq6fxJvVkwMbyU3kCbpQznz4Z1j6TZDGb"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-44",
+   "data_hex": "efd27d1b6ef55ca2e4d475b5276f2dbb85f7a6459dceeb89c67b776fd3bb974452",
+   "text": "93BcpCMKPmFCuY8bqS4k3HFrhJ1Afxi4uSsEeJFvX86GYW7PC7W"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-45",
+   "data_hex": "efda3ed4ef1647e1733ec076919cab6156077ed9532e7c365acc425747e198b3e101",
+   "text": "cUtwbyxoL1owPxUafgH2meEpydeywjhnTYv2mJaFHHchz39AaEgy"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-46",
+   "data_hex": "ef468e0284f230153db8687d8ec23db079a5b67d72ca04174b3867b13e4ea9945e",
+   "text": "927zPWny2SiNaUmHF5NnGQXQWDwbByfFzXGgu88j91ZoutSosvE"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-47",
+   "data_hex": "ef798d87586cffbe8c545ab374454e403b1eb831501ebe89f3c3b02f3137bd7b4601",
+   "text": "cRez45VGSp5EXNqm89K3NJJPSKKapJg5Kbw3atxr2337x2gtgYed"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-64",
+   "data_hex": "00a614da54daacdb8861f451a0b7e3c27cdf8a099e",
+   "text": "1G9A9j6W8TLuh6dEeVwWeyibK1Uc5MfVFV"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-65",
+   "data_hex": "05113ca1afeb49ff3abf176ffa19c2a2b4df19712a",
+   "text": "33GA3ZXbw5o5HeUrBEaqkWXFYYZmdxGRRP"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-66",
+   "data_hex": "6fb14ce7070b53cb0e4b5b5f6e253e876990aeca2e",
+   "text": "mwgS2HRbjyfYxFnR1nF9VKLvmdgMfFBmGq"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-67",
+   "data_hex": "c42b2c149cde619eae3d7fe995243b76a3417541aa",
+   "text": "2MwBVrJQ76BdaGD76CTmou8cZzQYLpe4NqU"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-68",
+   "data_hex": "6f02e6cd77e649ad8b281271f158fc964ca3f66cb0",
+   "text": "mfnJ8tEkqKNFE5YaHTXFxyHk2mnDK2fvDh"
+  },
+  {
+   "id": "bitcoin-v27-key_io_valid-69",
+   "data_hex": "c44074d84d32ff62da7b1b3c61925b934bfeb34b05",
+   "text": "2My83D67ir7K8PPzeT6mE2oth3ZwNTVRS9F"
+  }
+ ],
+ "invalid": [
+  {
+   "text": "1FsSia9rv4NeEwvJ2GvXrX7LyxYspbN2m2"
+  },
+  {
+   "text": "FsSia9rv4NeEwvJ2GvXrX7LyxYspbN2mo"
+  },
+  {
+   "text": ""
+  },
+  {
+   "text": "1"
+  },
+  {
+   "text": "11111"
+  },
+  {
+   "text": "0abc"
+  },
+  {
+   "text": "1FsSia9rv4NeEwvJ2GvXrX7LyxYspbN2mo!"
+  }
+ ]
+}

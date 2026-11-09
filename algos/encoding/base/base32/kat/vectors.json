@@ -1,0 +1,67 @@
+{
+ "algorithm": "base32",
+ "source": "RFC 4648 section 10 test vectors (BASE32)",
+ "vectors": [
+  {
+   "id": "rfc4648-s10-0",
+   "data_hex": "",
+   "text": ""
+  },
+  {
+   "id": "rfc4648-s10-1",
+   "data_hex": "66",
+   "text": "MY======"
+  },
+  {
+   "id": "rfc4648-s10-2",
+   "data_hex": "666f",
+   "text": "MZXQ===="
+  },
+  {
+   "id": "rfc4648-s10-3",
+   "data_hex": "666f6f",
+   "text": "MZXW6==="
+  },
+  {
+   "id": "rfc4648-s10-4",
+   "data_hex": "666f6f62",
+   "text": "MZXW6YQ="
+  },
+  {
+   "id": "rfc4648-s10-5",
+   "data_hex": "666f6f6261",
+   "text": "MZXW6YTB"
+  },
+  {
+   "id": "rfc4648-s10-6",
+   "data_hex": "666f6f626172",
+   "text": "MZXW6YTBOI======"
+  }
+ ],
+ "invalid": [
+  {
+   "text": "MZ======"
+  },
+  {
+   "text": "my======"
+  },
+  {
+   "text": "MY====="
+  },
+  {
+   "text": "MY"
+  },
+  {
+   "text": "M"
+  },
+  {
+   "text": "MZXW6===MZXW6==="
+  },
+  {
+   "text": "MY======\n"
+  },
+  {
+   "text": "MZXW6YT"
+  }
+ ]
+}

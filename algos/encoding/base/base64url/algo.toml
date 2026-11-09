@@ -1,0 +1,15 @@
+id        = "base64url"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = ["base64-url"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 4648 section 5"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "base64", version = "=0.23.1", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/vectors.json"]
+

@@ -1,0 +1,17 @@
+id        = "base91"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["basE91 (Joachim Henke)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "base91", version = "=0.1.0", license = "MIT OR Apache-2.0" }
+# UNVERIFIED: no official vectors; third-party crate (dnsl48), not the author's code. Only KAT is an independent Python port.
+# Decoder made strict in the adapter (alphabet + canonical re-encode).
+
+[kat]
+files = ["kat/vectors.json"]
+

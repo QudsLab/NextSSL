@@ -1,0 +1,61 @@
+{
+ "algorithm": "base16",
+ "source": "RFC 4648 section 10 test vectors (BASE16)",
+ "vectors": [
+  {
+   "id": "rfc4648-s10-0",
+   "data_hex": "",
+   "text": ""
+  },
+  {
+   "id": "rfc4648-s10-1",
+   "data_hex": "66",
+   "text": "66"
+  },
+  {
+   "id": "rfc4648-s10-2",
+   "data_hex": "666f",
+   "text": "666F"
+  },
+  {
+   "id": "rfc4648-s10-3",
+   "data_hex": "666f6f",
+   "text": "666F6F"
+  },
+  {
+   "id": "rfc4648-s10-4",
+   "data_hex": "666f6f62",
+   "text": "666F6F62"
+  },
+  {
+   "id": "rfc4648-s10-5",
+   "data_hex": "666f6f6261",
+   "text": "666F6F6261"
+  },
+  {
+   "id": "rfc4648-s10-6",
+   "data_hex": "666f6f626172",
+   "text": "666F6F626172"
+  }
+ ],
+ "invalid": [
+  {
+   "text": "666f"
+  },
+  {
+   "text": "666"
+  },
+  {
+   "text": "66zz"
+  },
+  {
+   "text": "66 6F"
+  },
+  {
+   "text": "6"
+  },
+  {
+   "text": "66\n"
+  }
+ ]
+}
