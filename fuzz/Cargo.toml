@@ -1,0 +1,35 @@
+[package]
+name = "nextssl-fuzz"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+nextssl = { path = "../crates/nextssl" }
+nextssl-root = { path = "../crates/nextssl-root" }
+nextssl-core = { path = "../crates/nextssl-core" }
+
+# Not part of the main workspace (needs nightly to run).
+[workspace]
+
+[[bin]]
+name = "decode_base64"
+path = "fuzz_targets/decode_base64.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "blake2b"
+path = "fuzz_targets/blake2b.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "fuzz_envelope_decode"
+path = "fuzz_targets/fuzz_envelope_decode.rs"
+test = false
+doc = false
