@@ -1,0 +1,22 @@
+id        = "tinyjambu"
+kind      = "aead"
+category  = "aead"
+family    = "tinyjambu"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = ["TinyJAMBU round-2 version (NIST LWC)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "internal-tinyjambu.c", "internal-tinyjambu.h", "internal-util.h", "tinyjambu.c", "tinyjambu.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# This is the ROUND-2 (v1) TinyJAMBU; the designers changed it in v2 (finalist) after a forgery attack, so tier broken. Param `variant` = key size in bits (128 default, 192, 256). Tag 8 bytes. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+# Family member: TinyJAMBU round-2, 128-bit key (siblings tinyjambu-192, tinyjambu-256). Sibling ids carry the other sizes because the generic tests need fixed metadata sizes per id. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/tinyjambu.json"]
+
+[sizes]
+key = 16
+nonce = 12
+tag = 8

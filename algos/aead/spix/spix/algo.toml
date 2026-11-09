@@ -1,0 +1,21 @@
+id        = "spix"
+kind      = "aead"
+category  = "aead"
+family    = "spix"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["SPIX (NIST LWC round 2)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "internal-sliscp-light.c", "internal-sliscp-light.h", "internal-util.h", "spix.c", "spix.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/spix.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16

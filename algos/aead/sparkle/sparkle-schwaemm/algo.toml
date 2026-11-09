@@ -1,0 +1,21 @@
+id        = "sparkle-schwaemm"
+kind      = "aead"
+category  = "aead"
+family    = "sparkle"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["Schwaemm256-128 (SPARKLE v1.2, NIST LWC finalist)"]
+fips      = false
+copyleft  = true
+upstream  = { repo = "https://github.com/cryptolu/sparkle", commit = "fa1a4e48675496627a8d036061ca7e1fcec2f197", license = "GPL-3.0", files = ["api.h", "crypto_aead.h", "schwaemm.c", "schwaemm.h", "sparkle.c", "sparkle.h", "LICENSE"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# GPL-3.0: only with the `copyleft` feature. Only the default instance Schwaemm256-128 (SCHWAEMM_INST 256128, 32-byte nonce) is built; the other three sizes need separate builds. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/sparkle-schwaemm.json"]
+
+[sizes]
+key = 16
+nonce = 32
+tag = 16

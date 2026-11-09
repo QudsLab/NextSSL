@@ -1,0 +1,21 @@
+id        = "sundae-128"
+kind      = "aead"
+category  = "aead"
+family    = "sundae"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["SUNDAE-GIFT (NIST LWC round 2)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "internal-gift128-config.h", "internal-gift128.c", "internal-gift128.h", "internal-util.h", "sundae-gift.c", "sundae-gift.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Family member: SUNDAE-GIFT-128, 16-byte nonce. Sibling ids carry the other sizes because the generic tests need fixed metadata sizes per id. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/sundae-128.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16

@@ -1,0 +1,638 @@
+{
+ "algorithm": "sundae-0",
+ "source": "NIST LWC submission package known-answer files (see kat/README.md)",
+ "vectors": [
+  {
+   "id": "0-count-1",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "",
+   "pt_hex": "",
+   "ct_hex": "de50f41fbefef36d5f3702fefeace6be"
+  },
+  {
+   "id": "0-count-2",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00",
+   "pt_hex": "",
+   "ct_hex": "0e34ccbe4ebc5e306b3cedcfb44c7e7d"
+  },
+  {
+   "id": "0-count-3",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "0001",
+   "pt_hex": "",
+   "ct_hex": "78c2ddb90a06030b7d2ac16a3cf149de"
+  },
+  {
+   "id": "0-count-4",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102",
+   "pt_hex": "",
+   "ct_hex": "feac49b484e3d4776d0db295464fc4f0"
+  },
+  {
+   "id": "0-count-5",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00010203",
+   "pt_hex": "",
+   "ct_hex": "d1fa5341e557d41af43adb47ed656129"
+  },
+  {
+   "id": "0-count-6",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "0001020304",
+   "pt_hex": "",
+   "ct_hex": "0aa6b811ccefe188f918a96db67dad51"
+  },
+  {
+   "id": "0-count-7",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405",
+   "pt_hex": "",
+   "ct_hex": "9653181de18fc20b7347085e95913f7f"
+  },
+  {
+   "id": "0-count-8",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00010203040506",
+   "pt_hex": "",
+   "ct_hex": "fc3fcd530e809ea6b81d5b794a4e9ce0"
+  },
+  {
+   "id": "0-count-9",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "0001020304050607",
+   "pt_hex": "",
+   "ct_hex": "4b2e4ba1bfd51ba959303a5f6126f756"
+  },
+  {
+   "id": "0-count-10",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708",
+   "pt_hex": "",
+   "ct_hex": "220a33659087d28a8e8dae3404fe16e4"
+  },
+  {
+   "id": "0-count-11",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "",
+   "ct_hex": "13802bb7c2ebb9145b89a61af28c4f5a"
+  },
+  {
+   "id": "0-count-12",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a",
+   "pt_hex": "",
+   "ct_hex": "3aff9c1fd8da0ab59bb051b65bf55c15"
+  },
+  {
+   "id": "0-count-13",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b",
+   "pt_hex": "",
+   "ct_hex": "0f6cfa66129a021902bf35f04b6c1bc6"
+  },
+  {
+   "id": "0-count-14",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c",
+   "pt_hex": "",
+   "ct_hex": "71762ddfe55489674183f9761f82a376"
+  },
+  {
+   "id": "0-count-15",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d",
+   "pt_hex": "",
+   "ct_hex": "5fdeb7f886f5a1efd34539df6ea7853a"
+  },
+  {
+   "id": "0-count-16",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e",
+   "pt_hex": "",
+   "ct_hex": "e80109cbcd8aa85b8979f0ffb8414993"
+  },
+  {
+   "id": "0-count-17",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f",
+   "pt_hex": "",
+   "ct_hex": "ac6f099e9ce19111c4f4578ea6861748"
+  },
+  {
+   "id": "0-count-18",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10",
+   "pt_hex": "",
+   "ct_hex": "498856ca68b1e28f4a7f33049d57312f"
+  },
+  {
+   "id": "0-count-19",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "pt_hex": "",
+   "ct_hex": "afa7fd9d16d7edd6bf51b9c1ad5f89f0"
+  },
+  {
+   "id": "0-count-20",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "pt_hex": "",
+   "ct_hex": "da30899dcd78d23166aedc66d6d9ad25"
+  },
+  {
+   "id": "0-count-21",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "pt_hex": "",
+   "ct_hex": "63cdd0ff67b767cd4f123ff73b1491cd"
+  },
+  {
+   "id": "0-count-22",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "pt_hex": "",
+   "ct_hex": "8b84dbbdb31a04eea1b8b786e04620bc"
+  },
+  {
+   "id": "0-count-23",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "",
+   "ct_hex": "b8bbaf6baf4c05567c5c565234f3c6d8"
+  },
+  {
+   "id": "0-count-24",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "pt_hex": "",
+   "ct_hex": "17e733b8410c1fecbe7210eca1d63987"
+  },
+  {
+   "id": "0-count-25",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "",
+   "ct_hex": "d886006cc0a280b28333c2159e7508c0"
+  },
+  {
+   "id": "0-count-26",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "pt_hex": "",
+   "ct_hex": "e6bd47e11283cd6ce344fa6684f3116a"
+  },
+  {
+   "id": "0-count-27",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "pt_hex": "",
+   "ct_hex": "8644bd43547733b091c7f11c73876310"
+  },
+  {
+   "id": "0-count-28",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a",
+   "pt_hex": "",
+   "ct_hex": "087c48adf6d0b87e2d4205cdeff1544c"
+  },
+  {
+   "id": "0-count-29",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "pt_hex": "",
+   "ct_hex": "8a03fad614d7512e680d3b93dee3bdcd"
+  },
+  {
+   "id": "0-count-30",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "pt_hex": "",
+   "ct_hex": "97aafde8e838cba42548a5a7afda9b17"
+  },
+  {
+   "id": "0-count-31",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "",
+   "ct_hex": "e031393a03f35bdc2b00558417ec0745"
+  },
+  {
+   "id": "0-count-32",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "pt_hex": "",
+   "ct_hex": "aaed113c91bfb7766b984d96fcc37c22"
+  },
+  {
+   "id": "0-count-33",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "",
+   "ct_hex": "74d62374f61400afc751ce62caff86e1"
+  },
+  {
+   "id": "0-count-34",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "",
+   "pt_hex": "00",
+   "ct_hex": "3ca1f6c5b51b4e87880039f409d7270dc9"
+  },
+  {
+   "id": "0-count-35",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00",
+   "pt_hex": "00",
+   "ct_hex": "bc6f5fc1a8d428b5f42810a18c1149b0d5"
+  },
+  {
+   "id": "0-count-36",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "0001",
+   "pt_hex": "00",
+   "ct_hex": "667f1c3d513de2237a6ce8e45b355bf01d"
+  },
+  {
+   "id": "0-count-37",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102",
+   "pt_hex": "00",
+   "ct_hex": "eefd74ce47beb1e3d23a3b0835098cb674"
+  },
+  {
+   "id": "0-count-38",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00010203",
+   "pt_hex": "00",
+   "ct_hex": "eb47da5d3dcc8e1de0c1bd627facb5f9a4"
+  },
+  {
+   "id": "0-count-39",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "0001020304",
+   "pt_hex": "00",
+   "ct_hex": "850a5c051cb7fdeb98ee2060221749fe9e"
+  },
+  {
+   "id": "0-count-40",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405",
+   "pt_hex": "00",
+   "ct_hex": "cb7331b61959659fcfd171a493ceb410a2"
+  },
+  {
+   "id": "0-count-64",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "00",
+   "ct_hex": "6ebc505ba9fa9f6bd268bd6e5d8d8934a0"
+  },
+  {
+   "id": "0-count-65",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "pt_hex": "00",
+   "ct_hex": "988777e0c60daeb3941431c3e87fd9a160"
+  },
+  {
+   "id": "0-count-66",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "00",
+   "ct_hex": "e5c3fc7382dccca20fbef356d886993075"
+  },
+  {
+   "id": "0-count-75",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "0001020304050607",
+   "pt_hex": "0001",
+   "ct_hex": "b8074331417766c83c5d9d9e7327a09abbeb"
+  },
+  {
+   "id": "0-count-100",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "",
+   "pt_hex": "000102",
+   "ct_hex": "cdbbcad20d5237a010b199bf93fd3ea0abdb26"
+  },
+  {
+   "id": "0-count-112",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b",
+   "pt_hex": "000102",
+   "ct_hex": "10bfd186013955df2ab32ddf1d3bbd8bd196c4"
+  },
+  {
+   "id": "0-count-128",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "pt_hex": "000102",
+   "ct_hex": "24184fa6047eaed4795f8b7c608cd8c5fa4e04"
+  },
+  {
+   "id": "0-count-129",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "pt_hex": "000102",
+   "ct_hex": "ef8865c8c9a4386d29eb5f4d5c58f2d9a30b5f"
+  },
+  {
+   "id": "0-count-130",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "000102",
+   "ct_hex": "4842c1618f86183e6a9bba9cec0af45a4b00eb"
+  },
+  {
+   "id": "0-count-149",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f",
+   "pt_hex": "00010203",
+   "ct_hex": "106fd45d3953f34fe649cd7fde3b93146484ef61"
+  },
+  {
+   "id": "0-count-186",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "pt_hex": "0001020304",
+   "ct_hex": "7e0cd2d9d3e447e4e0cdf2e51b1073b37da703a027"
+  },
+  {
+   "id": "0-count-223",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "000102030405",
+   "ct_hex": "bd441d741c6b1bc331ca4dfdc9c1d86e728154d9a1d6"
+  },
+  {
+   "id": "0-count-256",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "00010203040506",
+   "ct_hex": "d7a7680c502c333bd098606d7b6107e3515016f75911bf"
+  },
+  {
+   "id": "0-count-257",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "pt_hex": "00010203040506",
+   "ct_hex": "b8ae7d28c3d75d7368bf4a6967f02735d52475fd45b6f5"
+  },
+  {
+   "id": "0-count-260",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "pt_hex": "00010203040506",
+   "ct_hex": "cd9c0894c35c88de7e8ecc60676e850dfcdac1f2cf3d96"
+  },
+  {
+   "id": "0-count-297",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "0001020304050607",
+   "ct_hex": "23644cdf0c5791a8e405eb8b9bb9e3e771373ac3335fb93b"
+  },
+  {
+   "id": "0-count-334",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102",
+   "pt_hex": "00010203040506070809",
+   "ct_hex": "c034cc9ac6ce8ff7a5d1fab749a05bf3c0d2f02dca3873ece23d"
+  },
+  {
+   "id": "0-count-371",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00010203040506",
+   "pt_hex": "000102030405060708090a",
+   "ct_hex": "21a2d58cdb0c1828b69350a2b9c9d82d42234c9b51a9956c477ac5"
+  },
+  {
+   "id": "0-count-408",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a",
+   "pt_hex": "000102030405060708090a0b",
+   "ct_hex": "d4ecadcbf86844bd3073fa68b00e98ac95991382540efd0bbf5b9182"
+  },
+  {
+   "id": "0-count-445",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e",
+   "pt_hex": "000102030405060708090a0b0c",
+   "ct_hex": "8e7754f5aa0d0e37825233e1be8dfa666d9ae7907703142af2bc2f753d"
+  },
+  {
+   "id": "0-count-482",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "pt_hex": "000102030405060708090a0b0c0d",
+   "ct_hex": "17171cb4313884fc246668197fcdae33fcc03b274739452e7cfc9a33247b"
+  },
+  {
+   "id": "0-count-500",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00010203",
+   "pt_hex": "000102030405060708090a0b0c0d0e",
+   "ct_hex": "c32ad7098272cace273511780d16697691b305cfcfdadbf66a3a60e1555515"
+  },
+  {
+   "id": "0-count-519",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "pt_hex": "000102030405060708090a0b0c0d0e",
+   "ct_hex": "43c6a5a5e690c7748114b053ec0d1946736ee8b77a9756206fb14476ee214b"
+  },
+  {
+   "id": "0-count-556",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f",
+   "ct_hex": "9e7feed2af6ffd8dfd89dbc1fafa367f4ff5bacc2d8bbfe069b2ee2c63298d4b"
+  },
+  {
+   "id": "0-count-593",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10",
+   "ct_hex": "0c2db33555289f1d87ca273bb0164b2296e53489c8345e3f37f08624c8e4168cc0"
+  },
+  {
+   "id": "0-count-630",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "0001",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "ct_hex": "cb166f9523025eaad382e1e5d394e594e47999dfb2f303d31dfc8ba45164c00cff77ae"
+  },
+  {
+   "id": "0-count-667",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "ct_hex": "6dd2b912683878a4fe1da61bea280b76d3867f2fe77b3f2c7550cd44d912878acb594245"
+  },
+  {
+   "id": "0-count-704",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "ct_hex": "1be3b13e65d6574212072d61170e9acc2f06b72456f1f4f40e2426b9962f0468b826da9ff9"
+  },
+  {
+   "id": "0-count-741",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "ct_hex": "e63bc357fb1a16bd20681fdccb58b610ef2bfa806d5e6378bc7a356bb707b7828bc0a8c3a115"
+  },
+  {
+   "id": "0-count-778",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "ct_hex": "deb6b417cc4c0bde79f13156b71510ea02abf84df9bb84d627c1311011487e942129db0dc8ce7c"
+  },
+  {
+   "id": "0-count-815",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "ct_hex": "f2b97a27e349771d057a8fa7954803991e7c2ac6405fec313daaa0e8d634ed074ba2a4a68a94da39"
+  },
+  {
+   "id": "0-count-852",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "ct_hex": "189caef940469164744cd7a011061cc00dbc4bc26efb8b44aa04df68bfc176b2f62938f8cc6ff2c46c"
+  },
+  {
+   "id": "0-count-889",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "ct_hex": "8f2e210e58be0fd432ab4a2d978111e920338a02d8f228c10d44382047642537e428f268d5b9c27691dd"
+  },
+  {
+   "id": "0-count-926",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "00",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "ct_hex": "679b40f40a6995ed18fb8e1073902aabc5c7405a2a3ceccf54d8d7f0ce105d5d34533bca750254d431b94d4e"
+  },
+  {
+   "id": "0-count-963",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "0001020304",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "ct_hex": "03dc00f1022824a8f8f6b2000b9a2a652c394e7bc7af51cbbb3f4b9c72ea3e486311c264e202ec1ac51cc92c97"
+  },
+  {
+   "id": "0-count-1000",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "ct_hex": "8afb8138773f7a85460e08d64978cb0ac8e1607e636f1113dd8a51283f90605f091a51cb6dd025174d11a612720b"
+  },
+  {
+   "id": "0-count-1037",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "ct_hex": "825c2bb34ee31deddec454491b55c242b2bd7f1f73d07661acffb425ca8a7761af7159771daf056fe018b908bf8322"
+  },
+  {
+   "id": "0-count-1074",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "ct_hex": "1166730d62a3025f516cc203db29c8cd08d709d1063ad1388d7298a4532b2a3aef7b7904917324983af2c963e70ab4ef"
+  },
+  {
+   "id": "0-count-1089",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "ct_hex": "5b5fb6b01a6fdcea1e58d20e2ae84281955c379bad97be025250769fd1da0493876acc85b9940c36b05db652faec8a33"
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+id        = "spook-su"
+kind      = "aead"
+category  = "aead"
+family    = "spook"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["Spook (NIST LWC round 2)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "internal-spook.c", "internal-spook.h", "internal-util.h", "spook.c", "spook.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Param `variant`: su512 (default) or su384, 16-byte key. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[params.variant]
+type    = "enum"
+values  = ["su512", "su384"]
+default = "su512"
+
+[kat]
+files = ["kat/spook-su.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16
