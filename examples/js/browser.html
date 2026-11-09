@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>NextSSL in the browser (WebAssembly)</title>
+<pre id="out">loading...</pre>
+<script type="module">
+  // Serve the repository root with any static server, then open /examples/js/browser.html.
+  import { NextSSL } from "./nextssl_demo.mjs";
+  const out = document.getElementById("out");
+  const hex = (b) => Array.from(b, (x) => x.toString(16).padStart(2, "0")).join("");
+  try {
+    const url = new URL("../../target/docker-out/wasm/nextssl_ffi.wasm", import.meta.url);
+    const ns = await NextSSL.load(await (await fetch(url)).arrayBuffer());
+    const lines = [`library ${ns.version()}, ${ns.algorithms().length} algorithms`];
+    lines.push("sha256(abc) = " + hex(ns.call("hash_with", "ttb", ["sha256", null, new TextEncoder().encode("abc")])[0]));
+    const [pk, sk] = ns.call("kem_keygen", "tt", ["ml-kem-768", null], 2);
+    const [ct, ss] = ns.call("kem_encaps", "ttb", ["ml-kem-768", null, pk], 2);
+    const ss2 = ns.call("kem_decaps", "ttbb", ["ml-kem-768", null, sk, ct])[0];
+    lines.push("ml-kem-768 secrets equal = " + (hex(ss) === hex(ss2)));
+    out.textContent = lines.join("\n");
+  } catch (e) {
+    out.textContent = "FAILED: " + e;
+  }
+</script>

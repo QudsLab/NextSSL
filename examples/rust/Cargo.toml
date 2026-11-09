@@ -1,0 +1,22 @@
+[package]
+name = "nextssl-rust-example"
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.82"
+publish = false
+description = "Direct use of the NextSSL crates by algorithm name (no C ABI)."
+
+[features]
+# Every registered algorithm (copyleft and heavy ones): 386 instead of 367.
+everything = ["nextssl-registry/copyleft", "nextssl-registry/all-heavy"]
+
+[dependencies]
+nextssl-core = { path = "../../crates/nextssl-core" }
+nextssl-registry = { path = "../../crates/nextssl-registry" }
+# The safe and root convenience APIs (used for the hash one-liner); the demo itself uses
+# the registry directly so one code path serves both tier policies.
+nextssl = { path = "../../crates/nextssl" }
+nextssl-root = { path = "../../crates/nextssl-root" }
+
+# Own workspace and lockfile: the examples are not part of the library workspace.
+[workspace]
