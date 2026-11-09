@@ -1,0 +1,300 @@
+source,source_url,evidence_tier,rows_supported
+NIST PQC process (rounds 1-4),https://csrc.nist.gov/projects/post-quantum-cryptography,B,34
+CAESAR competition submissions / portfolio,https://competitions.cr.yp.to/caesar-submissions.html,B,29
+CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,B,28
+NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,A,25
+eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,B,23
+Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,C,23
+NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,A,22
+NIST SHA-3 competition (round 2/final) / other hash competitions,https://csrc.nist.gov/projects/hash-functions/sha-3-project,B,21
+Noise Protocol Framework spec / Noise Pipes,https://noiseprotocol.org/noise.html,B,17
+"Original designs; RFC 2144 (CAST5), 2268 (RC2), 2040 (RC5/RC6), 3713 (Camellia)",https://en.wikipedia.org/wiki/Block_cipher,C,17
+3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,B,17
+Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,C,16
+"Original design papers / telecom standards (3GPP, Bluetooth, GSM)",https://en.wikipedia.org/wiki/Stream_cipher,C,16
+Non-cryptographic hash functions (project repos),https://github.com/rurban/smhasher,B,16
+Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,C,16
+eSTREAM project (portfolio / phase 3),https://www.ecrypt.eu.org/stream/,B,15
+NIST Lightweight Crypto: finalists,https://csrc.nist.gov/projects/lightweight-cryptography,B,15
+NIST Lightweight Crypto: round 2 / CAESAR candidates,https://csrc.nist.gov/projects/lightweight-cryptography,B,14
+Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,C,14
+NIST Additional Signatures Round 2 (14 candidates),https://csrc.nist.gov/Projects/pqc-dig-sig/round-2-additional-signatures,A,14
+ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,B,14
+NIST SP 800-185,https://csrc.nist.gov/pubs/sp/800/185/final,B,12
+NIST FIPS 205 (final Aug 2024),https://csrc.nist.gov/pubs/fips/205/final,A,12
+NIST Lightweight Crypto round 2 candidates,https://csrc.nist.gov/projects/lightweight-cryptography,B,12
+NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,B,12
+Various RFCs / BIPs,https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki,B,11
+RFC 5280 (X.509v3 extensions),https://www.rfc-editor.org/rfc/rfc5280,B,11
+NIST onramp Round 1 (40 candidates),https://csrc.nist.gov/Projects/pqc-dig-sig/round-1-additional-signatures,B,11
+NESSIE project portfolio/candidates,https://www.cosic.esat.kuleuven.be/nessie/,B,10
+RFC 1950 (Adler) / RFC 3720 (CRC32C) / CRC catalogue,https://reveng.sourceforge.io/crc-catalogue/,B,10
+"ePrint papers (HyperPlonk, Binius, Circle STARK, Plookup 2020/315, cq 2022/1763, Caulk 2022/621, CycleFold 2023/1192)",https://eprint.iacr.org/,B,9
+ITU-T X.690 / X.691 / X.696 / X.693,https://www.itu.int/rec/T-REC-X.690,B,9
+"NIST onramp Round 1 slides (Moody, PKI Consortium 2023)",https://pkic.org/events/2023/pqc-conference-amsterdam-nl/pkic-pqcc_dustin-moody_nist_nist-standardization-of-additional-signature-schemes.pdf,A,9
+Blockchain protocol specs,https://zips.z.cash/protocol/protocol.pdf,B,9
+"Russian GOST standards / RFC 7801, 8891, 6986",https://www.rfc-editor.org/rfc/rfc7801,B,8
+Password Hashing Competition / RFC 9106,https://www.rfc-editor.org/rfc/rfc9106,B,8
+NIST FIPS 198-1 / RFC 2104,https://www.rfc-editor.org/rfc/rfc2104,B,8
+National standards / original papers,https://www.rfc-editor.org/rfc/rfc8998,C,8
+NIST SP 800-38A,https://csrc.nist.gov/pubs/sp/800/38/a/final,B,7
+NIST FIPS 180-4,https://csrc.nist.gov/pubs/fips/180-4/upd1/final,B,7
+RFC 9497 / RFC 9474 / RFC 9380 / RFC 9496,https://www.rfc-editor.org/rfc/rfc9497,B,7
+D.J. Bernstein Salsa20/ChaCha family; RFC 8439,https://cr.yp.to/chacha.html,B,7
+NESSIE project candidates,https://www.cosic.esat.kuleuven.be/nessie/,B,7
+Non-cryptographic PRNGs (Matsumoto-Nishimura 1998; Vigna; O'Neill),https://prng.di.unimi.it/,B,6
+Design papers / reverse-engineering literature,https://en.wikipedia.org/wiki/Crypto-1,C,6
+"Korean standards (KISA / TTA KS X 1213) / RFC 5794, 4269",https://www.rfc-editor.org/rfc/rfc5794,B,6
+Historical hash designs,https://en.wikipedia.org/wiki/List_of_hash_functions,C,6
+NIST FIPS 186-5 / RFC 8032 / RFC 8017,https://csrc.nist.gov/pubs/fips/186-5/final,B,6
+NIST FIPS 202,https://csrc.nist.gov/pubs/fips/202/final,B,6
+"NIST SP 800-56A / ANSI X9.42, X9.63",https://csrc.nist.gov/pubs/sp/800/56/a/r3/final,B,6
+NIST FIPS 206 FN-DSA (draft as of mid-2026),https://csrc.nist.gov/projects/post-quantum-cryptography,A,6
+Hash-based signature building blocks (papers; SPHINCS+/XMSS specs),https://csrc.nist.gov/pubs/sp/800/208/final,C,6
+Check-digit algorithms (ISO 7064 / Luhn US 2950048),https://www.iso.org/standard/31531.html,B,5
+Signal specifications,https://signal.org/docs/,B,5
+"NIST SP 800-208 / RFC 8554, 8391",https://csrc.nist.gov/pubs/sp/800/208/final,B,5
+RFC 4648,https://www.rfc-editor.org/rfc/rfc4648,B,5
+Keyed modes of BLAKE2/BLAKE3 (RFC 7693 / BLAKE3 spec),https://www.rfc-editor.org/rfc/rfc7693,B,5
+NIST SP 800-232 (Ascon-Based Lightweight Crypto),https://csrc.nist.gov/pubs/sp/800/232/final,B,4
+NIST SP 800-132 / RFC 8018,https://www.rfc-editor.org/rfc/rfc8018,B,4
+RIPEMD (Dobbertin/Bosselaers/Preneel) / ISO/IEC 10118-3,https://homes.esat.kuleuven.be/~bosselae/ripemd160.html,B,4
+"National standards (DSTU 4145, GOST R 34.10-94, SM9)",https://www.rfc-editor.org/rfc/rfc8998,C,4
+RFC 7693 / BLAKE2 spec,https://www.blake2.net/,B,4
+KpqC competition round 2,https://www.kpqc.or.kr/,B,4
+RFC 6962 / 9162,https://www.rfc-editor.org/rfc/rfc6962,B,4
+NIST SP 800-56C Rev.2,https://csrc.nist.gov/pubs/sp/800/56/c/r2/final,B,4
+Ascon v1.2 family (CAESAR/LWC submission; not in SP 800-232),https://csrc.nist.gov/projects/lightweight-cryptography,B,4
+xxHash spec,https://github.com/Cyan4973/xxHash,B,3
+IETF CFRG BLS signatures draft / BLS12-381 curve,https://datatracker.ietf.org/doc/draft-irtf-cfrg-bls-signature/,B,3
+RFC 8446 (TLS 1.3),https://www.rfc-editor.org/rfc/rfc8446,B,3
+ETSI EN 319 122/142/132,https://www.etsi.org/,B,3
+ISO/IEC 18033-2 (KDF1/KDF2),https://www.cryptrec.go.jp/en/,B,3
+RFC 5280,https://www.rfc-editor.org/rfc/rfc5280,B,3
+"Chinese national standards (GB/T 32905/32907/32918, GM/T) / RFC 8998",https://www.rfc-editor.org/rfc/rfc8998,B,3
+NIST FIPS 197,https://csrc.nist.gov/pubs/fips/197/final,B,3
+IANA TLS Supported Groups registry,https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml,B,3
+IEEE 1619.2 / original papers,https://standards.ieee.org/ieee/1619.2/,C,3
+RFC 5869,https://www.rfc-editor.org/rfc/rfc5869,B,3
+CryptoNote / Monero Research Lab (MRL-0005),https://github.com/monero-project/research-lab,B,3
+NIST FIPS 203 (final Aug 2024),https://csrc.nist.gov/pubs/fips/203/final,A,3
+"Wesolowski (ePrint 2018/623), Pietrzak (ePrint 2018/627), Lenstra-Wesolowski 2015 (Sloth)",https://eprint.iacr.org/2018/623,B,3
+NIST selected HQC (Mar 2025); draft standard pending,https://csrc.nist.gov/projects/post-quantum-cryptography,A,3
+NIST SP 800-90A Rev.1,https://csrc.nist.gov/pubs/sp/800/90/a/r1/final,B,3
+NIST SP 800-38D,https://csrc.nist.gov/pubs/sp/800/38/d/final,B,3
+NIST FIPS 204 (final Aug 2024),https://csrc.nist.gov/pubs/fips/204/final,A,3
+NIST MPTC console (S5/S6 categories),https://csrc.nist.gov/Projects/threshold-cryptography/console,A,3
+NIST SHA-3 competition (final round),https://csrc.nist.gov/projects/hash-functions/sha-3-project,B,3
+NIST SP 800-38B / RFC 4493,https://csrc.nist.gov/pubs/sp/800/38/b/upd1/final,B,3
+NIST SP 800-38A Addendum (ciphertext stealing),https://csrc.nist.gov/pubs/sp/800/38/a/add/final,B,3
+NIST Additional Signatures Round 1 (40 candidates),https://csrc.nist.gov/Projects/pqc-dig-sig/round-1-additional-signatures,A,3
+RFC 1071 / RFC 4880 / POSIX,https://www.rfc-editor.org/rfc/rfc1071,B,3
+Aumasson & Bernstein 2012 (SipHash),https://eprint.iacr.org/2012/351,B,3
+KpqC final winner (Jan 2025),https://www.kpqc.or.kr/,A,3
+RFC 8032,https://www.rfc-editor.org/rfc/rfc8032,B,3
+ANSI X9.31 / FIPS 186-2 Appx 3,https://csrc.nist.gov/pubs/fips/186-2/final,B,2
+schnorrkel (Polkadot) / BIP-340,https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki,B,2
+IEEE 802.11 / Wi-Fi Alliance,https://standards.ieee.org/ieee/802.11/7028/,B,2
+RFC 5652,https://www.rfc-editor.org/rfc/rfc5652,B,2
+RFC 4226 / 6238,https://www.rfc-editor.org/rfc/rfc6238,B,2
+RFC 4301-4303 / 7296 (IPsec/IKEv2),https://www.rfc-editor.org/rfc/rfc7296,B,2
+Drepper SHA-crypt spec,https://www.akkadia.org/drepper/SHA-crypt.txt,B,2
+Rivest-Shamir-Wagner 1996 / Ethereum MinRoot,https://people.csail.mit.edu/rivest/pubs/RSW96.pdf,B,2
+ISO/IEC 9797-1 / FIPS 113,https://www.cryptrec.go.jp/en/,B,2
+SEC 2 / Ethereum yellow paper (parameter set / variant of ECDSA),https://www.secg.org/sec2-v2.pdf,B,2
+IETF CFRG KangarooTwelve draft (TurboSHAKE),https://datatracker.ietf.org/doc/draft-irtf-cfrg-kangarootwelve/,B,2
+OTR specification,https://github.com/otrv4/otrv4,B,2
+OASIS PKCS#11 v3.0,https://docs.oasis-open.org/pkcs11/pkcs11-spec/v3.0/,B,2
+KEMTLS (CCS 2020) / IETF TLS hybrid drafts,https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml,B,2
+KangarooTwelve (Keccak team) / IETF CFRG draft,https://keccak.team/kangarootwelve.html,B,2
+Intel SDM (DRNG),https://www.intel.com/content/www/us/en/developer/articles/guide/intel-digital-random-number-generator-drng-software-implementation-guide.html,B,2
+Microsoft CryptoAPI / CNG,https://learn.microsoft.com/en-us/windows/win32/api/bcrypt/nf-bcrypt-bcryptgenrandom,B,2
+Microsoft CNG / CryptoAPI docs,https://learn.microsoft.com/en-us/windows/win32/seccng/cng-portal,B,2
+"Lasso/Jolt (ePrint 2023/1216, 2023/1217)",https://eprint.iacr.org/2023/1217,B,2
+Matrix spec (Olm/Megolm),https://gitlab.matrix.org/matrix-org/olm/-/blob/master/docs/olm.md,B,2
+Microsoft NTLM/LAN Manager (legacy),https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/,B,2
+Linux kernel crypto / paper (Crowley-Biggers 2018),https://eprint.iacr.org/2018/720,B,2
+PKCS #5 / PKCS #12 (RFC 8018 / 7292),https://www.rfc-editor.org/rfc/rfc7292,B,2
+Pinocchio (ePrint 2013/279),https://eprint.iacr.org/2013/279,B,2
+MuSig2 (ePrint 2020/1261) / BIP-327,https://eprint.iacr.org/2020/1261,B,2
+Linux man-pages getrandom(2) / POSIX getentropy,https://man7.org/linux/man-pages/man2/getrandom.2.html,B,2
+RFC 4418 (UMAC) / VMAC draft,https://www.rfc-editor.org/rfc/rfc4418,B,2
+RFC 7518 (JWA) / RFC 9053 (COSE),https://www.rfc-editor.org/rfc/rfc7518,B,2
+RFC 8439 / draft-irtf-cfrg-xchacha,https://www.rfc-editor.org/rfc/rfc8439,B,2
+RFC 7748,https://www.rfc-editor.org/rfc/rfc7748,B,2
+NIST SP 800-56B / RFC 8017,https://csrc.nist.gov/pubs/sp/800/56/b/r2/final,B,2
+NSA Simon & Speck (ePrint 2013/404); ISO/IEC 29167-22,https://eprint.iacr.org/2013/404,B,2
+OpenSSL EVP_BytesToKey (legacy),https://docs.openssl.org/master/man3/EVP_BytesToKey/,B,2
+"NIST SP 800-38F / RFC 3394, 5649",https://csrc.nist.gov/pubs/sp/800/38/f/final,B,2
+NIST SP 800-38G,https://csrc.nist.gov/pubs/sp/800/38/g/r1/final,B,2
+Ukrainian DSTU 7624 / Belarus STB 34.101.31 / Chinese standards,https://eprint.iacr.org/2015/650,C,2
+"TFHE (CGGI, ASIACRYPT 2016/JoC 2020); FHEW (DM, EUROCRYPT 2015)",https://eprint.iacr.org/2018/421,B,2
+StarkWare Cairo / zkInterface,https://github.com/starkware-libs/cairo,B,2
+TCG TPM Library Spec,https://trustedcomputinggroup.org/resource/tpm-library-specification/,B,2
+Unix crypt(3) variants (FreeBSD / Passlib docs),https://passlib.readthedocs.io/en/stable/lib/passlib.hash.html,B,2
+Signal XEdDSA/VXEdDSA spec,https://signal.org/docs/specifications/xeddsa/,B,2
+Bitcoin wiki / draft-msporny-base58,https://datatracker.ietf.org/doc/draft-msporny-base58/,B,2
+BLAKE2 spec,https://www.blake2.net/,B,2
+Aurora (ePrint 2018/828),https://eprint.iacr.org/2018/828,B,1
+BCTV14 (ePrint 2013/507),https://eprint.iacr.org/2013/507,B,1
+BFV (ePrint 2012/144),https://eprint.iacr.org/2012/144,B,1
+"BGV (ITCS 2012, ePrint 2011/277)",https://eprint.iacr.org/2011/277,B,1
+BIP-173,https://github.com/bitcoin/bips/blob/master/bip-0173.mediawiki,B,1
+BIP-32,https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki,B,1
+BIP-340,https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki,B,1
+BIP-350,https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki,B,1
+BLAKE3 spec,https://github.com/BLAKE3-team/BLAKE3-specs,B,1
+BSI TR-03111 (ECGDSA),https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/Technische-Richtlinien/TR-nach-Thema-sortiert/tr03111/tr-03111.html,C,1
+BaseFold (ePrint 2023/1705),https://eprint.iacr.org/2023/1705,B,1
+Belarus STB 34.101.31 (BelT),https://apmi.bsu.by/,C,1
+Belarus STB 34.101.31 (BelT),https://apmi.bsu.by/assets/files/std/belt-spec371.pdf,C,1
+Bellare-Rogaway 1996 / RFC 9474 (blind variant),https://www.rfc-editor.org/rfc/rfc9474,B,1
+Bellare-Rogaway-Wagner 2004 / ISO,https://en.wikipedia.org/wiki/Block_cipher,C,1
+"Boneh, Corrigan-Gibbs, Schechter 2016 (ePrint 2016/027)",https://eprint.iacr.org/2016/027,B,1
+Brakedown (ePrint 2021/1043),https://eprint.iacr.org/2021/1043,B,1
+Bulletproofs (ePrint 2017/1066),https://eprint.iacr.org/2017/1066,B,1
+CFRG CPace (draft-irtf-cfrg-cpace),https://datatracker.ietf.org/doc/draft-irtf-cfrg-cpace/,B,1
+CKKS (ePrint 2016/421),https://eprint.iacr.org/2016/421,B,1
+CRYSTALS-Dilithium (-> ML-DSA),https://csrc.nist.gov/projects/post-quantum-cryptography,B,1
+CRYSTALS-Kyber (NIST PQC round 3 -> ML-KEM),https://csrc.nist.gov/projects/post-quantum-cryptography,B,1
+Castryck et al. ASIACRYPT 2018 (ePrint 2018/383),https://eprint.iacr.org/2018/383,B,1
+SHPLONK (ePrint 2020/081),https://eprint.iacr.org/2020/081,B,1
+SLIP-0010,https://github.com/satoshilabs/slips/blob/master/slip-0010.md,B,1
+SPHINCS+ (-> SLH-DSA),https://csrc.nist.gov/projects/post-quantum-cryptography,B,1
+STARK (ePrint 2018/046),https://eprint.iacr.org/2018/046,B,1
+STIR (ePrint 2024/390),https://eprint.iacr.org/2024/390,B,1
+Sonic (ePrint 2019/099),https://eprint.iacr.org/2019/099,B,1
+Sony CLEFIA / ISO/IEC 29192-2,https://www.sony.net/Products/cryptography/clefia/,B,1
+Spartan (ePrint 2019/550),https://eprint.iacr.org/2019/550,B,1
+Succinct SP1 zkVM,https://github.com/succinctlabs/sp1,B,1
+SuperNova (ePrint 2022/1758),https://eprint.iacr.org/2022/1758,B,1
+Supersonic (ePrint 2019/1229),https://eprint.iacr.org/2019/1229,B,1
+TTAS.KO-12.0011/R1,https://en.wikipedia.org/wiki/List_of_hash_functions,C,1
+Telegram MTProto docs,https://core.telegram.org/mtproto,B,1
+Ukrainian DSTU 7564:2014 (Kupyna),https://eprint.iacr.org/2015/885,B,1
+Ukrainian DSTU 7624:2014,https://eprint.iacr.org/2015/650,B,1
+WHIR (ePrint 2024/1586),https://eprint.iacr.org/2024/1586,B,1
+WireGuard whitepaper,https://www.wireguard.com/papers/wireguard.pdf,B,1
+X-Wing KEM (IETF CFRG draft),https://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/,B,1
+Zcash Halo2 book,https://zcash.github.io/halo2/,B,1
+Zcash protocol spec / Pedersen 1991,https://zips.z.cash/protocol/protocol.pdf,B,1
+age spec,https://age-encryption.org/v1,B,1
+"NIST FIPS 180 (1993), withdrawn",https://csrc.nist.gov/pubs/fips/180/final,B,1
+"NIST MPTC console (""CGGMP"", Fireblocks-3MI)",https://csrc.nist.gov/Projects/threshold-cryptography/console,A,1
+"NIST MPTC console (""Classic Schnorr"", Fireblocks-3MI)",https://csrc.nist.gov/Projects/threshold-cryptography/console,A,1
+"NIST MPTC console (Zama: ""TFHE, ZHEnith and Nexus"")",https://csrc.nist.gov/Projects/threshold-cryptography/console,A,1
+NIST MPTC console (Zama: ZHEnith),https://csrc.nist.gov/Projects/threshold-cryptography/console,A,1
+NIST SP 800-108r1,https://csrc.nist.gov/pubs/sp/800/108/r1/upd1/final,B,1
+NIST SP 800-38 / IEEE 1619; BitLocker docs,https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/,C,1
+NIST SP 800-38C / RFC 3610,https://csrc.nist.gov/pubs/sp/800/38/c/upd1/final,B,1
+NIST SP 800-38E / IEEE 1619,https://csrc.nist.gov/pubs/sp/800/38/e/final,B,1
+NIST SP 800-67 Rev.2 (deprecated/withdrawn for new use),https://csrc.nist.gov/pubs/sp/800/67/r2/final,B,1
+NIST SP 800-90A (CTR_DRBG),https://csrc.nist.gov/pubs/sp/800/90/a/r1/final,B,1
+NIST SP 800-90A Rev.0 (Dual_EC removed in Rev.1),https://csrc.nist.gov/pubs/sp/800/90/a/final,B,1
+NIST SP 800-90B,https://csrc.nist.gov/pubs/sp/800/90/b/final,B,1
+NIST SP 800-90C,https://csrc.nist.gov/pubs/sp/800/90/c/4pd,B,1
+NIST onramp R1 + KpqC final winner (Jan 2025),https://www.kpqc.or.kr/,A,1
+Nova (ePrint 2021/370),https://eprint.iacr.org/2021/370,B,1
+OpenBSD arc4random / libc,https://man.openbsd.org/arc4random,B,1
+OpenSSH release notes (sntrup761x25519-sha512),https://www.openssh.com/specs.html,B,1
+Jitterentropy (S. Mueller) / BSI AIS 31,https://www.chronox.de/jent/,B,1
+KS X 3262 (LSH),https://en.wikipedia.org/wiki/List_of_hash_functions,C,1
+KpqC competition (round 1/2),https://www.kpqc.or.kr/,A,1
+LatticeFold (ePrint 2024/257),https://eprint.iacr.org/2024/257,B,1
+Libra (ePrint 2019/317),https://eprint.iacr.org/2019/317,B,1
+Linux kernel RNG (ChaCha20-based) / OpenBSD arc4random,https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/char/random.c,B,1
+Marlin (ePrint 2019/1047),https://eprint.iacr.org/2019/1047,B,1
+MiMC (ePrint 2016/492),https://eprint.iacr.org/2016/492,B,1
+NESSIE / ISO/IEC 10118-3,https://www.cosic.esat.kuleuven.be/nessie/,B,1
+NIST Additional Signatures Round 1 (40 candidates),https://csrc.nist.gov/Projects/pqc-dig-sig/round-1-additional-signatures,B,1
+Orion (ePrint 2022/1010),https://eprint.iacr.org/2022/1010,B,1
+PLONK (ePrint 2019/953),https://eprint.iacr.org/2019/953,B,1
+PRESENT (CHES 2007) / ISO/IEC 29192-2,https://en.wikipedia.org/wiki/Block_cipher,B,1
+Poly1305-AES (Bernstein 2005),https://cr.yp.to/mac.html,B,1
+Polygon Zero Plonky2,https://github.com/0xPolygonZero/plonky2,B,1
+Poseidon (ePrint 2019/458),https://eprint.iacr.org/2019/458,B,1
+ProtoStar (ePrint 2023/620),https://eprint.iacr.org/2023/620,B,1
+Provos & Mazieres 1999 (USENIX),https://www.usenix.org/legacy/events/usenix99/provos.html,B,1
+RFC 1319,https://www.rfc-editor.org/rfc/rfc1319,B,1
+RFC 1320,https://www.rfc-editor.org/rfc/rfc1320,B,1
+RFC 1321,https://www.rfc-editor.org/rfc/rfc1321,B,1
+RFC 2409,https://www.rfc-editor.org/rfc/rfc2409,B,1
+RFC 2945 / 5054,https://www.rfc-editor.org/rfc/rfc5054,B,1
+RFC 2986 (PKCS#10),https://www.rfc-editor.org/rfc/rfc2986,B,1
+RFC 3161,https://www.rfc-editor.org/rfc/rfc3161,B,1
+RFC 3566 / 4434,https://www.rfc-editor.org/rfc/rfc3566,B,1
+RFC 3610 / IEEE 802.15.4 (CCM*),https://www.rfc-editor.org/rfc/rfc3610,C,1
+RFC 3711,https://www.rfc-editor.org/rfc/rfc3711,B,1
+RFC 4120 / 3961 / 8009 (Kerberos),https://www.rfc-editor.org/rfc/rfc4120,B,1
+RFC 4251-4254 (SSH),https://www.rfc-editor.org/rfc/rfc4253,B,1
+RFC 4253,https://www.rfc-editor.org/rfc/rfc4253,B,1
+RFC 5246 / 7627,https://www.rfc-editor.org/rfc/rfc5246,B,1
+RFC 5280 §4.1.2.7,https://www.rfc-editor.org/rfc/rfc5280,B,1
+RFC 5297,https://www.rfc-editor.org/rfc/rfc5297,B,1
+RFC 5958,https://www.rfc-editor.org/rfc/rfc5958,B,1
+RFC 6066 / 6961,https://www.rfc-editor.org/rfc/rfc6066,B,1
+RFC 6189,https://www.rfc-editor.org/rfc/rfc6189,B,1
+RFC 6347,https://www.rfc-editor.org/rfc/rfc6347,B,1
+RFC 6482,https://www.rfc-editor.org/rfc/rfc6482,B,1
+RFC 6960,https://www.rfc-editor.org/rfc/rfc6960,B,1
+RFC 6960 §4.2.2.2.1,https://www.rfc-editor.org/rfc/rfc6960,B,1
+RFC 6979,https://www.rfc-editor.org/rfc/rfc6979,B,1
+RFC 7030,https://www.rfc-editor.org/rfc/rfc7030,B,1
+RFC 7292,https://www.rfc-editor.org/rfc/rfc7292,B,1
+RFC 7296,https://www.rfc-editor.org/rfc/rfc7296,B,1
+RFC 7468,https://www.rfc-editor.org/rfc/rfc7468,B,1
+RFC 7633,https://www.rfc-editor.org/rfc/rfc7633,B,1
+RFC 7664 / WPA3-SAE (IEEE 802.11),https://www.rfc-editor.org/rfc/rfc7664,B,1
+RFC 7677 (SCRAM-SHA-256),https://www.rfc-editor.org/rfc/rfc7677,B,1
+RFC 7914,https://www.rfc-editor.org/rfc/rfc7914,B,1
+RFC 8017 App. B.2.1,https://www.rfc-editor.org/rfc/rfc8017,B,1
+RFC 8236,https://www.rfc-editor.org/rfc/rfc8236,B,1
+RFC 8439 / Bernstein 2005,https://www.rfc-editor.org/rfc/rfc8439,B,1
+CurveCP (Bernstein),https://curvecp.org/,B,1
+DNSSEC (RFC 4033-4035) / IANA DNS algorithm numbers,https://www.iana.org/assignments/dns-sec-alg-numbers,B,1
+Dory (ePrint 2020/1274),https://eprint.iacr.org/2020/1274,B,1
+Fractal (ePrint 2019/1076),https://eprint.iacr.org/2019/1076,B,1
+GGPR (ePrint 2012/215),https://eprint.iacr.org/2012/215,B,1
+GSW (ePrint 2013/340),https://eprint.iacr.org/2013/340,B,1
+Gemini (ePrint 2022/420),https://eprint.iacr.org/2022/420,B,1
+Google HighwayHash,https://github.com/google/highwayhash,B,1
+Griffin (ePrint 2022/403),https://eprint.iacr.org/2022/403,B,1
+Groth 2016 (ePrint 2016/260),https://eprint.iacr.org/2016/260,B,1
+Groth-Maller (ePrint 2017/540),https://eprint.iacr.org/2017/540,B,1
+HAVEGE (Seznec & Sendrier),https://github.com/jirka-h/haveged,B,1
+Haraka v2 (ToSC 2017),https://eprint.iacr.org/2016/098,B,1
+HyperNova (ePrint 2023/573),https://eprint.iacr.org/2023/573,B,1
+Hyrax (ePrint 2017/1132),https://eprint.iacr.org/2017/1132,B,1
+IEEE 802.1AE,https://standards.ieee.org/ieee/802.1AE/5026/,B,1
+IEEE 802.1AEbw (GCM-AES-XPN),https://standards.ieee.org/ieee/802.1AEbw/5260/,B,1
+IETF CFRG BBS signatures draft,https://datatracker.ietf.org/doc/draft-irtf-cfrg-bbs-signatures/,B,1
+RFC 8452,https://www.rfc-editor.org/rfc/rfc8452,B,1
+RFC 8555,https://www.rfc-editor.org/rfc/rfc8555,B,1
+RFC 8613,https://www.rfc-editor.org/rfc/rfc8613,B,1
+RFC 8630,https://www.rfc-editor.org/rfc/rfc8630,B,1
+RFC 8894,https://www.rfc-editor.org/rfc/rfc8894,B,1
+RFC 9058 / GOST,https://www.rfc-editor.org/rfc/rfc9058,B,1
+RFC 9147,https://www.rfc-editor.org/rfc/rfc9147,B,1
+RFC 9180,https://www.rfc-editor.org/rfc/rfc9180,B,1
+RFC 9286,https://www.rfc-editor.org/rfc/rfc9286,B,1
+RFC 9298 / 9484,https://www.rfc-editor.org/rfc/rfc9298,B,1
+RFC 9381 (ECVRF),https://www.rfc-editor.org/rfc/rfc9381,B,1
+RFC 9382,https://www.rfc-editor.org/rfc/rfc9382,B,1
+RFC 9383,https://www.rfc-editor.org/rfc/rfc9383,B,1
+RFC 9420,https://www.rfc-editor.org/rfc/rfc9420,B,1
+RFC 9458,https://www.rfc-editor.org/rfc/rfc9458,B,1
+RFC 9474,https://www.rfc-editor.org/rfc/rfc9474,B,1
+RFC 9528,https://www.rfc-editor.org/rfc/rfc9528,B,1
+RFC 9576/9577/9578,https://www.rfc-editor.org/rfc/rfc9578,B,1
+RFC 9580 (OpenPGP),https://www.rfc-editor.org/rfc/rfc9580,B,1
+RFC 9591 (FROST),https://www.rfc-editor.org/rfc/rfc9591,B,1
+RFC 9807 (OPAQUE) ,https://www.rfc-editor.org/rfc/rfc9807,C,1
+RFC 9849 (TLS ECH) ,https://www.rfc-editor.org/rfc/rfc9849,C,1
+RISC Zero zkVM,https://github.com/risc0/risc0,B,1
+Reinforced Concrete (ePrint 2021/1038),https://eprint.iacr.org/2021/1038,B,1
+Rescue (ePrint 2020/1143),https://eprint.iacr.org/2020/1143,B,1
+SEC 1 / ISO 18033-2 / IEEE 1363a,https://www.cryptrec.go.jp/en/,B,1
+Anderson & Biham 1996,https://www.cs.technion.ac.il/~biham/Reports/Tiger/,B,1
+"Ames et al., CCS 2017 (ePrint 2022/1608)",https://eprint.iacr.org/2022/1608,B,1
+Adobe / RFC 1924 variants,https://www.rfc-editor.org/rfc/rfc1924,B,1
+3GPP TS 33.501 / ETSI SAGE (GCM-SST),https://www.3gpp.org/,C,1

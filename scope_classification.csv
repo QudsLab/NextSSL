@@ -1,0 +1,777 @@
+num,algorithm,category,type,decision,reason
+1,base16,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+2,base32,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+3,base32hex,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+4,base58,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+5,base58check,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+6,base62,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+7,base64,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+8,base64url,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+9,base85,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+10,bech32,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+11,bech32m,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+12,pem,Encoding & Checksum,standard,KEEP,ASN.1 or PEM encoding format
+13,der,Encoding & Checksum,standard,KEEP,ASN.1 or PEM encoding format
+14,cer,Encoding & Checksum,standard,KEEP,ASN.1 or PEM encoding format
+15,pkcs7,Encoding & Checksum,standard,KEEP,"opus: container encoding, like pkcs8"
+16,pkcs8,Encoding & Checksum,standard,KEEP,ASN.1 or PEM encoding format
+17,pkcs12,Encoding & Checksum,standard,KEEP,"opus: container encoding, like pkcs8"
+18,spki,Encoding & Checksum,standard,KEEP,ASN.1 or PEM encoding format
+19,ff70,Encoding & Checksum,algorithm,KEEP,"rev: unverified name, keep pending check"
+20,crc8,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+21,crc16,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+22,crc16-ccitt,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+23,crc32,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+24,crc32c,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+25,crc64,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+26,crc64-ecma,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+27,adler32,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+28,fletcher16,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+29,fletcher32,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+30,xxhash32,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+31,xxhash64,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+32,xxh3,Encoding & Checksum,algorithm,KEEP,Checksum function on bytes
+33,base91,Encoding & Checksum,algorithm,KEEP,Binary-to-text encoding on bytes
+34,ber,Encoding & Checksum,algorithm,KEEP,ASN.1 or PEM encoding format
+35,md2,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+36,md4,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+37,md5,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+38,sha0,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+39,sha1,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+40,gost-r-34.11-94,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+41,ripemd128,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+42,ripemd160,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+43,ripemd256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+44,ripemd320,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+45,tiger,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+46,whirlpool,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+47,has160,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+48,nt-hash,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+49,lm-hash,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+50,md6,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+51,radio-gatun,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+52,groestl,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+53,jh,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+54,cubehash,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+55,echo,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+56,simd,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+57,fugue,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+58,hamsi,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+59,luffa,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+60,shabal,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+61,bmw,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+62,shavite3,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+63,sha224,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+64,sha256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+65,sha384,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+66,sha512,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+67,sha512-224,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+68,sha512-256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+69,sha3-224,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+70,sha3-256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+71,sha3-384,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+72,sha3-512,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+73,keccak256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+74,keccak512,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+75,shake128,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+76,shake256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+77,cshake128,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+78,cshake256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+79,kmac128,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+80,kmac256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+81,kmacxof128,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+82,kmacxof256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+83,parallelhash128,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+84,parallelhash256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+85,tuplehash128,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+86,tuplehash256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+87,kangarootwelve,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+88,marsupilami14,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+89,blake2b,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+90,blake2s,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+91,blake2bp,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+92,blake2sp,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+93,blake3,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+94,skein256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+95,skein512,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+96,skein1024,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+97,sm3,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+98,streebog256,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+99,streebog512,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+100,poseidon,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+101,pedersen-hash,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+102,mimc,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+103,rescue,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+104,griffin,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+105,reinforced-concrete,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+106,haraka,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+107,lsh,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+108,highwayhash,Hash / Digest / XOF,algorithm,KEEP,Hash or XOF function on byte input
+109,mgf1,Hash / Digest / XOF,algorithm,KEEP,Mask generation function built on hashing
+110,pbkdf2,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+111,pbkdf2-hmac-sha256,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+112,pbkdf2-hmac-sha512,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+113,bcrypt,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+114,scrypt,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+115,argon2d,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+116,argon2i,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+117,argon2id,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+118,yescrypt,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+119,lyra2,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+120,balloon,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+121,pbkdf2-hmac-sha1,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+122,catena,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+123,pomelo,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+124,makwa,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+125,bsdicrypt,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+126,md5crypt,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+127,sha256crypt,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+128,sha512crypt,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+129,pbkdf1,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+130,pkcs12-kdf,Password KDFs,algorithm,KEEP,Password hashing or memory-hard KDF
+131,evp-bytestokey,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+132,kdf2,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+133,aes-128,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+134,aes-192,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+135,aes-256,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+136,aria-128,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+137,aria-192,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+138,aria-256,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+139,camellia-128,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+140,camellia-192,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+141,camellia-256,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+142,seed,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+143,sm4,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+144,kuznyechik,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+145,present,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+146,led,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+147,piccolo,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+148,clefia,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+149,threefish-256,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+150,threefish-512,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+151,threefish-1024,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+152,magma,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+153,3des,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+154,des,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+155,blowfish,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+156,twofish,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+157,serpent,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+158,cast5,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+159,cast6,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+160,idea,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+161,rc2,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+162,rc5,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+163,rc6,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+164,misty1,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+165,kasumi,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+166,safer,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+167,skipjack,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+168,speck,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+169,simon,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+170,xtea,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+171,tea,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+172,gost28147,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+173,anubis,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+174,khazad,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+175,noekeon,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+176,kalyna,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+177,belt,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+178,shacal,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+179,shacal-2,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+180,feal,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+181,safer+,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+182,prince,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+183,pride,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+184,twine,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+185,katan,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+186,ktantan,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+187,gift,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+188,skinny,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+189,lblock,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+190,rectangle,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+191,mmb,Symmetric Block Ciphers,algorithm,KEEP,Block cipher primitive
+192,chacha20,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+193,xchacha20,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+194,salsa20,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+195,xsalsa20,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+196,chacha8,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+197,chacha12,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+198,hc128,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+199,hc256,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+200,rabbit,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+201,sosemanuk,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+202,grain128,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+203,zuc,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+204,snow3g,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+205,aes-ctr-drbg,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+206,rc4,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+207,grainv1,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+208,mickeyv2,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+209,trivium,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+210,isaac,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+211,isaac+,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+212,panama,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+213,wake,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+214,seal,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+215,a5/1,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+216,a5/2,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+217,e0,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+218,salsa20/8,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+219,salsa20/12,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+220,spritz,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+221,vmpc,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+222,cryptmt,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+223,dragon,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+224,edon80,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+225,f-fcsr,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+226,hermes8,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+227,lex,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+228,nls,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+229,pomaranch,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+230,a5/3,Stream Ciphers,algorithm,KEEP,Stream cipher or keystream generator
+231,ecb,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+232,cbc,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+233,cfb,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+234,cfb1,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+235,cfb8,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+236,ofb,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+237,ctr,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+238,xts,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+239,cbc-cs1,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+240,cbc-cs2,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+241,cbc-cs3,Block Cipher Modes,mode,KEEP,Block cipher mode of operation
+242,aes-gcm,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+243,aes-ccm,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+244,aes-gcm-siv,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+245,aes-siv,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+246,aes-ocb,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+247,aes-eax,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+248,aes-kw,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+249,aes-kwp,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+250,aes-gmac,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+251,aes-xpn,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+252,aes-fpe-ff1,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+253,aes-fpe-ff3-1,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+254,chacha20-poly1305,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+255,xchacha20-poly1305,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+256,aegis128l,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+257,aegis256,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+258,deoxys-ii,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+259,ocb3,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+260,kccm,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+261,ascon-aead128,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+262,ascon-aead128a,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+263,ascon-80pq,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+264,morus,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+265,kiasu,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+266,marble,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+267,elephant-dumbo,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+268,elephant-jumbo,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+269,gift-cofb,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+270,grain-128aead,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+271,isap-a-128a,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+272,isap-k-128a,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+273,photon-beetle,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+274,romulus,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+275,sparkle-schwaemm,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+276,tinyjambu,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+277,xoodyak,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+278,colm,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+279,silc,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+280,aez,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+281,otr-aead,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+282,cloc,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+283,jambu,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+284,icepole,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+285,ketje,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+286,keyak,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+287,norx,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+288,acorn,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+289,aegis-128,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+290,rocca,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+291,rocca-s,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+292,tiaoxin,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+293,paeq,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+294,poet,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+295,drygascon,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+296,subterranean,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+297,sundae,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+298,spook,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+299,pyjamask,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+300,comet,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+301,estate,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+302,lotus,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+303,locus,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+304,spix,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+305,orbita,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+306,saeb,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+307,mixfeed,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+308,elmd,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+309,hs1-siv,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+310,iscream,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+311,scream,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+312,wage,AEAD Algorithms,algorithm,KEEP,AEAD or authenticated encryption scheme
+313,hmac,MAC Algorithms,algorithm,KEEP,Message authentication code
+314,hmac-sha256,MAC Algorithms,algorithm,KEEP,Message authentication code
+315,hmac-sha512,MAC Algorithms,algorithm,KEEP,Message authentication code
+316,hmac-sha3-256,MAC Algorithms,algorithm,KEEP,Message authentication code
+317,hmac-blake2b,MAC Algorithms,algorithm,KEEP,Message authentication code
+318,hmac-blake2s,MAC Algorithms,algorithm,KEEP,Message authentication code
+319,aes-cmac,MAC Algorithms,algorithm,KEEP,Message authentication code
+320,aes-pmac,MAC Algorithms,algorithm,KEEP,Message authentication code
+321,vmac,MAC Algorithms,algorithm,KEEP,Message authentication code
+322,umac,MAC Algorithms,algorithm,KEEP,Message authentication code
+323,poly1305,MAC Algorithms,algorithm,KEEP,Message authentication code
+324,siphash,MAC Algorithms,algorithm,KEEP,Message authentication code
+325,siphash-2-4,MAC Algorithms,algorithm,KEEP,Message authentication code
+326,siphash-4-8,MAC Algorithms,algorithm,KEEP,Message authentication code
+327,kmac128-mac,MAC Algorithms,algorithm,KEEP,Message authentication code
+328,kmac256-mac,MAC Algorithms,algorithm,KEEP,Message authentication code
+329,blake2b-mac,MAC Algorithms,algorithm,KEEP,Message authentication code
+330,blake2s-mac,MAC Algorithms,algorithm,KEEP,Message authentication code
+331,blake3-mac,MAC Algorithms,algorithm,KEEP,Message authentication code
+332,ascon-mac,MAC Algorithms,algorithm,KEEP,Message authentication code
+333,ascon-prf,MAC Algorithms,algorithm,KEEP,Message authentication code
+334,ghash,MAC Algorithms,algorithm,KEEP,Message authentication code
+335,xcbc-mac,MAC Algorithms,algorithm,KEEP,Message authentication code
+336,cbc-mac,MAC Algorithms,algorithm,KEEP,Message authentication code
+337,des-mac,MAC Algorithms,algorithm,KEEP,Message authentication code
+338,kdf1,MAC Algorithms,algorithm,KEEP,Message authentication code
+339,hmac-sha3-384,MAC Algorithms,algorithm,KEEP,Message authentication code
+340,hmac-sha3-512,MAC Algorithms,algorithm,KEEP,Message authentication code
+341,hmac-md5,MAC Algorithms,algorithm,KEEP,Message authentication code
+342,hmac-sha1,MAC Algorithms,algorithm,KEEP,Message authentication code
+343,aes-cmac-prf-128,MAC Algorithms,algorithm,KEEP,Message authentication code
+344,lightmac,MAC Algorithms,algorithm,KEEP,Message authentication code
+345,chaskey,MAC Algorithms,algorithm,KEEP,Message authentication code
+346,emac,MAC Algorithms,algorithm,KEEP,Message authentication code
+347,tmac,MAC Algorithms,algorithm,KEEP,Message authentication code
+348,omac,MAC Algorithms,algorithm,KEEP,Message authentication code
+349,hkdf,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+350,hkdf-expand,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+351,hkdf-extract,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+352,hkdf-expand-label,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+353,kdf-tls12,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+354,kdf-tls13,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+355,kdf-ssh,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+356,kdf-ikev1,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+357,kdf-ikev2,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+358,kdf-srtp,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+359,kdf-sp800-108,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+360,kda-onestep,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+361,kda-twostep,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+362,concat-kdf,Key Derivation Functions,construction,KEEP,Key derivation function on bytes
+363,x942-kdf,Key Derivation Functions,construction,KEEP,Key derivation function on bytes
+364,x963-kdf,Key Derivation Functions,construction,KEEP,Key derivation function on bytes
+365,noise-kdf,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+366,bip32-kdf,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+367,slip10,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+368,sskdf,Key Derivation Functions,construction,KEEP,Key derivation function on bytes
+369,ecdh-kdf,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+370,cmkdf,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+371,me-kdf,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+372,evp-bytestokey,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+373,kdf2,Key Derivation Functions,algorithm,KEEP,Key derivation function on bytes
+374,dh,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+375,dhp,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+376,ecdh,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+377,x25519,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+378,x448,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+379,x3dh,Key Agreement / KEM,algorithm,KEEP-PROTOCOL,rev: Signal key agreement protocol
+380,hpke,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+381,ecies,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+382,rsa-oaep,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+383,csidh,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+384,frodokem,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+385,kyber,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+386,ml-kem-512,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+387,ml-kem-768,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+388,ml-kem-1024,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+389,ntru,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+390,ntruprime,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+391,sntrup761,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+392,classic-mceliece,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+393,mceliece-348864,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+394,mceliece-348864f,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+395,mceliece-460896,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+396,mceliece-460896f,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+397,mceliece-6688128,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+398,mceliece-6688128f,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+399,mceliece-6960119,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+400,mceliece-6960119f,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+401,mceliece-8192128,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+402,mceliece-8192128f,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+403,bike-1,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+404,bike-3,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+405,bike-5,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+406,hqc-128,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+407,hqc-192,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+408,hqc-256,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+409,ntruhps2048677,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+410,ntruhps4096821,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+411,ntruhrss701,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+412,ecmqv,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+413,rsa-pkcs1v15-enc,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+414,elgamal,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+415,sike,Key Agreement / KEM,algorithm,KEEP,"Key encapsulation (broken, retained for completeness)"
+416,saber,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+417,newhope,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+418,round5,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+419,lac,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+420,ledacrypt,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+421,nts-kem,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+422,rollo,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+423,rqc,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+424,ntru+,Key Agreement / KEM,algorithm,KEEP,Key agreement or KEM scheme
+425,rsa-pkcs1v15-sign,Digital Signatures,algorithm,KEEP,Digital signature scheme
+426,dsa,Digital Signatures,algorithm,KEEP,Digital signature scheme
+427,gost-r-34.10-2001,Digital Signatures,algorithm,KEEP,Digital signature scheme
+428,rainbow,Digital Signatures,algorithm,KEEP,Digital signature scheme
+429,ge-mss,Digital Signatures,algorithm,KEEP,Digital signature scheme
+430,rsa-pss,Digital Signatures,algorithm,KEEP,Digital signature scheme
+431,ecdsa,Digital Signatures,algorithm,KEEP,Digital signature scheme
+432,det-ecdsa,Digital Signatures,algorithm,KEEP,Digital signature scheme
+433,ecdsa-recoverable,Digital Signatures,algorithm,KEEP,Digital signature scheme
+434,ed25519,Digital Signatures,algorithm,KEEP,Digital signature scheme
+435,ed448,Digital Signatures,algorithm,KEEP,Digital signature scheme
+436,sr25519,Digital Signatures,algorithm,KEEP,Digital signature scheme
+437,sm2-sign,Digital Signatures,algorithm,KEEP,Digital signature scheme
+438,gost-r-34.10-2012,Digital Signatures,algorithm,KEEP,Digital signature scheme
+439,schnorr,Digital Signatures,algorithm,KEEP,Digital signature scheme
+440,bbs,Digital Signatures,algorithm,KEEP,Digital signature scheme
+441,bls12-381-g1,Digital Signatures,algorithm,KEEP,Digital signature scheme
+442,bls12-381-g2,Digital Signatures,algorithm,KEEP,Digital signature scheme
+443,ecdsa-secp256k1,Digital Signatures,algorithm,KEEP,Digital signature scheme
+444,rsa-fdh,Digital Signatures,algorithm,KEEP,Digital signature scheme
+445,kcdsa,Digital Signatures,algorithm,KEEP,Digital signature scheme
+446,ecgdsa,Digital Signatures,algorithm,KEEP,Digital signature scheme
+447,eckdsa,Digital Signatures,algorithm,KEEP,Digital signature scheme
+448,musig,Digital Signatures,algorithm,KEEP,Digital signature scheme
+449,musig2,Digital Signatures,algorithm,KEEP,Digital signature scheme
+450,bls-aggregate,Digital Signatures,algorithm,KEEP,Digital signature scheme
+451,rsa-blind-sig,Digital Signatures,algorithm,KEEP,Digital signature scheme
+452,bls-blind-sig,Digital Signatures,algorithm,KEEP,Digital signature scheme
+453,cryptonote-ring-sig,Digital Signatures,algorithm,KEEP,Digital signature scheme
+454,mlsag,Digital Signatures,algorithm,KEEP,Digital signature scheme
+455,clsag,Digital Signatures,algorithm,KEEP,Digital signature scheme
+456,group-sig,Digital Signatures,algorithm,KEEP,Digital signature scheme
+457,dilithium,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+458,ml-dsa-44,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+459,ml-dsa-65,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+460,ml-dsa-87,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+461,falcon-512,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+462,falcon-1024,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+463,falcon-padded-512,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+464,falcon-padded-1024,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+465,sphincs+,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+466,slh-dsa-sha2-128f,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+467,slh-dsa-sha2-128s,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+468,slh-dsa-sha2-192f,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+469,slh-dsa-sha2-192s,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+470,slh-dsa-sha2-256f,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+471,slh-dsa-sha2-256s,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+472,slh-dsa-shake-128f,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+473,slh-dsa-shake-128s,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+474,slh-dsa-shake-192f,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+475,slh-dsa-shake-192s,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+476,slh-dsa-shake-256f,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+477,slh-dsa-shake-256s,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+478,haetae,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+479,almar,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+480,picnic,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+481,uov,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+482,mayo,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+483,prov,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+484,sqisign,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+485,hawk,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+486,hufu,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+487,sdith,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+488,less,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+489,meds,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+490,cross,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+491,wave,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+492,gravity-sphincs,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+493,wots+,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+494,fors,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+495,hors,PQ Digital Signatures,algorithm,KEEP,Post-quantum signature scheme
+496,lms,Stateful Hash Signatures,algorithm,KEEP,Stateful hash-based signature scheme
+497,hss,Stateful Hash Signatures,algorithm,KEEP,Stateful hash-based signature scheme
+498,xmss,Stateful Hash Signatures,algorithm,KEEP,Stateful hash-based signature scheme
+499,xmssmt,Stateful Hash Signatures,algorithm,KEEP,Stateful hash-based signature scheme
+500,gmss,Stateful Hash Signatures,algorithm,KEEP,Stateful hash-based signature scheme
+501,xmss-t,Stateful Hash Signatures,algorithm,KEEP,Stateful hash-based signature scheme
+502,bpqs,Stateful Hash Signatures,algorithm,KEEP,Stateful hash-based signature scheme
+503,wots,Stateful Hash Signatures,algorithm,KEEP,Stateful hash-based signature scheme
+504,frost,Threshold / MPC,algorithm,KEEP,Threshold signing scheme
+505,tbls,Threshold / MPC,algorithm,KEEP,Threshold signing scheme
+506,gargos,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+507,tecla,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+508,the-clash,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+509,classic-schnorr-t,Threshold / MPC,algorithm,KEEP,Threshold signing scheme
+510,bam,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+511,ccgmp,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+512,haystack,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+513,mithril,Threshold / MPC,construction,KEEP,rev: threshold multi-signature
+514,quorus,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+515,redeta,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+516,splitkey,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+517,minimpc,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+518,maestro,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+519,amber,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+520,hermine,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+521,least,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+522,tanuki,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+523,vinaigrette,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+524,pantheria,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+525,zama-tfhe,Threshold / MPC,construction,KEEP,Homomorphic encryption scheme
+526,zama-zhenith,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+527,piver,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+528,schmivitz,Threshold / MPC,construction,KEEP,"verify-exists: obscure name, check source first"
+529,smallwood,Threshold / MPC,construction,KEEP,Zero-knowledge proof system
+530,shamir,Threshold / MPC,construction,KEEP,Secret sharing scheme
+531,feldman-vss,Threshold / MPC,construction,KEEP,Verifiable secret sharing scheme
+532,pedersen-vss,Threshold / MPC,construction,KEEP,Verifiable secret sharing scheme
+533,dkg,Threshold / MPC,construction,KEEP,Distributed key generation scheme
+534,pvss,Threshold / MPC,construction,KEEP,Publicly verifiable secret sharing
+535,ot,Threshold / MPC,construction,KEEP,Oblivious transfer primitive
+536,vole,Threshold / MPC,construction,KEEP,rev: MPC correlation primitive
+537,beaver,Threshold / MPC,construction,KEEP,rev: MPC correlation primitive
+538,mpc-ecdsa,Threshold / MPC,construction,KEEP,Threshold signing protocol
+539,mpc-schnorr,Threshold / MPC,construction,KEEP,Threshold signing protocol
+540,roast,Threshold / MPC,construction,KEEP,Threshold signing protocol
+541,gg18,Threshold / MPC,construction,KEEP,Threshold signing protocol
+542,gg20,Threshold / MPC,construction,KEEP,Threshold signing protocol
+543,gg21,Threshold / MPC,construction,KEEP,Threshold signing protocol
+544,cmp,Threshold / MPC,construction,KEEP,Threshold signing protocol
+545,lindell17,Threshold / MPC,construction,KEEP,Two-party threshold signing protocol
+546,doerner-shelat,Threshold / MPC,construction,KEEP-PROTOCOL,rev: cryptographic protocol
+547,spdz,Threshold / MPC,construction,KEEP-PROTOCOL,rev: cryptographic protocol
+548,mascot,Threshold / MPC,construction,KEEP-PROTOCOL,rev: cryptographic protocol
+549,bmr,Threshold / MPC,construction,KEEP-PROTOCOL,rev: cryptographic protocol
+550,gmw,Threshold / MPC,construction,KEEP-PROTOCOL,rev: cryptographic protocol
+551,proactive-ss,Threshold / MPC,construction,KEEP,Proactive secret sharing scheme
+552,async-dkg,Threshold / MPC,construction,KEEP,Distributed key generation scheme
+553,robust-dkg,Threshold / MPC,construction,KEEP,Distributed key generation scheme
+554,ring-sig-generic,Threshold / MPC,construction,KEEP,Ring signature scheme
+555,linkable-ring-sig,Threshold / MPC,construction,KEEP,Ring signature scheme
+556,ascon-hash256,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+557,ascon-xof128,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+558,ascon-cxof128,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+559,lea,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+560,hight,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+561,photon-beetle-hash,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+562,romulus-hash,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+563,sparkle-esch,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+564,xoodyak-hash,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+565,mibs,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+566,klein,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+567,puffin,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+568,spongent,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+569,quark,Lightweight Crypto,algorithm,KEEP,Lightweight cryptographic primitive
+570,ctr-drbg,DRBG / RNG,algorithm,KEEP,Deterministic random bit generator algorithm
+571,hash-drbg,DRBG / RNG,algorithm,KEEP,Deterministic random bit generator algorithm
+572,hmac-drbg,DRBG / RNG,algorithm,KEEP,Deterministic random bit generator algorithm
+573,csprng-system,DRBG / RNG,interface,KEEP-PLATFORM,"rev: OS RNG API, crypto-critical"
+574,trng,DRBG / RNG,interface,KEEP-PLATFORM,rev: hardware entropy source
+575,entropy-pool,DRBG / RNG,interface,KEEP-PLATFORM,rev: entropy collection/reseeding infrastructure
+576,reseed-scheduler,DRBG / RNG,interface,KEEP-PLATFORM,rev: entropy collection/reseeding infrastructure
+577,rdrand,DRBG / RNG,interface,KEEP-PLATFORM,rev: hardware entropy source
+578,rdseed,DRBG / RNG,interface,KEEP-PLATFORM,rev: hardware entropy source
+579,jitterentropy,DRBG / RNG,algorithm,KEEP,Entropy source algorithm
+580,fortuna,DRBG / RNG,algorithm,KEEP,Deterministic random bit generator algorithm
+581,nist-sp800-90b,DRBG / RNG,standard,KEEP,opus: entropy health-test algorithms
+582,nist-sp800-90c,DRBG / RNG,standard,KEEP,"rev: RBG construction standard, crypto"
+583,haveged,DRBG / RNG,algorithm,KEEP,Entropy source algorithm
+584,yarrow,DRBG / RNG,algorithm,KEEP,Deterministic random bit generator algorithm
+585,cryptgenrandom,DRBG / RNG,interface,KEEP-PLATFORM,"rev: OS RNG API, crypto-critical"
+586,egd,DRBG / RNG,interface,KEEP-PLATFORM,rev: entropy collection/reseeding infrastructure
+587,prngd,DRBG / RNG,interface,KEEP-PLATFORM,rev: entropy collection/reseeding infrastructure
+588,lavarnd,DRBG / RNG,interface,KEEP-PLATFORM,rev: entropy collection/reseeding infrastructure
+589,chacha20-drbg,DRBG / RNG,algorithm,KEEP,Deterministic random bit generator algorithm
+590,getrandom,DRBG / RNG,interface,KEEP-PLATFORM,"rev: OS RNG API, crypto-critical"
+591,getentropy,DRBG / RNG,interface,KEEP-PLATFORM,"rev: OS RNG API, crypto-critical"
+592,bcryptgenrandom,DRBG / RNG,interface,KEEP-PLATFORM,"rev: OS RNG API, crypto-critical"
+593,nist-randomness-beacon,DRBG / RNG,interface,KEEP-PLATFORM,rev: external public randomness source
+594,qrng,DRBG / RNG,interface,KEEP-PLATFORM,rev: hardware entropy source
+595,blockchain-vrf,DRBG / RNG,interface,KEEP,Verifiable random function
+596,groth16,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+597,plonk,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+598,marlin,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+599,halo2,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+600,plonky2,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+601,stark,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+602,bulletproofs,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+603,spartan,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+604,sonic,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+605,kzg-commitment,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+606,fri,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+607,ligero,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+608,dory,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+609,gm17,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+610,tfhe,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+611,pinocchio,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+612,supersonic,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+613,bgv,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+614,ckks,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+615,bfv,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+616,gsw,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+617,dm-cggi,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+618,nova,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+619,supernova,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+620,hypernova,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+621,protostar,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+622,shplonk,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+623,ipa,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+624,brakedown,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+625,orion,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+626,stir,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+627,whir,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+628,basefold,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+629,gemini,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+630,latticefold,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+631,jolt,ZK Proofs / HE,construction,KEEP,rev: zkVM with own proof system
+632,sp1,ZK Proofs / HE,construction,KEEP,rev: zkVM with own proof system
+633,lasso,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+634,cairo,ZK Proofs / HE,construction,DROP,"rev: language/VM toolchain, no own primitive"
+635,risc-zero,ZK Proofs / HE,construction,KEEP,rev: zkVM with own proof system
+636,ggpr,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+637,bctv14,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+638,pghr13,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+639,hyrax,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+640,libra,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+641,virgo,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+642,fractal,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+643,aurora,ZK Proofs / HE,construction,KEEP,ZK proof system or homomorphic scheme
+644,zkinterface,ZK Proofs / HE,construction,DROP,"rev: circuit exchange tooling, not crypto"
+645,noise-nn,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+646,noise-kn,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+647,noise-nk,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+648,noise-kk,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+649,noise-nx,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+650,noise-xn,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+651,noise-xk,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+652,noise-kx,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+653,noise-in,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+654,noise-ik,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+655,noise-ix,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+656,noise-xx,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+657,noise-ikpsk2,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+658,signal-x3dh,Protocol Primitives,protocol,KEEP,opus: key agreement construction
+659,signal-double-ratchet,Protocol Primitives,protocol,KEEP,opus: ratchet KDF construction
+660,opaque,Protocol Primitives,algorithm,KEEP,Password-authenticated key exchange built on OPRF
+661,spake2,Protocol Primitives,algorithm,KEEP,Key exchange or PAKE algorithm
+662,spake2+,Protocol Primitives,algorithm,KEEP,Key exchange or PAKE algorithm
+663,dragonfly,Protocol Primitives,algorithm,KEEP,Password-authenticated key exchange (SAE)
+664,otrv4,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+665,mtproto,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+666,wireguard,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+667,mls,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+668,pqxdh,Protocol Primitives,algorithm,KEEP,opus: PQ key agreement construction
+669,cpace,Protocol Primitives,algorithm,KEEP,Key exchange or PAKE algorithm
+670,aucpace,Protocol Primitives,algorithm,KEEP,Key exchange or PAKE algorithm
+671,kemtls,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+672,pq-tls-hybrid,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+673,ech,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+674,odohdtls,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+675,oblivious-http,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+676,privacy-pass,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+677,masque,Protocol Primitives,algorithm,DROP,"rev: HTTP proxying plumbing, not crypto"
+678,edhoc,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+679,oscore,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+680,dtls12,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+681,dtls13,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+682,noise-xxfallback,Protocol Primitives,protocol,KEEP-PROTOCOL,rev: cryptographic protocol
+683,disco,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+684,noisesocket,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+685,zrtp,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+686,hmqv,Protocol Primitives,algorithm,KEEP,Authenticated key agreement
+687,yak,Protocol Primitives,algorithm,KEEP,rev: authenticated key exchange
+688,sesame,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+689,srp,Protocol Primitives,algorithm,KEEP,Key exchange or PAKE algorithm
+690,j-pake,Protocol Primitives,algorithm,KEEP,Key exchange or PAKE algorithm
+691,otr,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+692,speke,Protocol Primitives,algorithm,KEEP,Key exchange or PAKE algorithm
+693,curvecp,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+694,minimalt,Protocol Primitives,algorithm,KEEP-PROTOCOL,rev: cryptographic protocol
+695,sts,Protocol Primitives,algorithm,KEEP,Station-to-station key agreement
+696,x509v3,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+697,crl,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+698,ocsp,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+699,ocsp-stapling,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+700,csr,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+701,cms,PKI / Certificates,standard,KEEP,"opus: container encoding, like pkcs8"
+702,scep,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+703,est,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+704,acme,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+705,ct,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+706,mft,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+707,roa,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+708,tal,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+709,rfc822name,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+710,ipaddress,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+711,subjectaltname,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+712,authoritykeyid,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+713,subjectkeyid,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+714,keyusage,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+715,extendedkeyusage,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+716,basicconstraints,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+717,nameconstraints,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+718,cdp,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+719,aia,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+720,ocsp-nocheck,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+721,precert-poison,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+722,sct,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+723,tls-features,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+724,signed-timestamp,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+725,tsp,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+726,cades,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+727,pades,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+728,xades,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+729,asn1-der,PKI / Certificates,standard,KEEP,ASN.1 encoding format
+730,asn1-cer,PKI / Certificates,standard,KEEP,ASN.1 encoding format
+731,asn1-per,PKI / Certificates,standard,KEEP,ASN.1 encoding format
+732,asn1-oer,PKI / Certificates,standard,KEEP,ASN.1 encoding format
+733,asn1-xer,PKI / Certificates,standard,KEEP,ASN.1 encoding format
+734,x509v1,PKI / Certificates,standard,KEEP-PROTOCOL,rev: PKI structure carrying crypto
+735,asn1-ber,PKI / Certificates,standard,KEEP,ASN.1 encoding format
+736,pkcs11,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+737,pkcs11-3.0,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+738,cng,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+739,tpm2.0,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+740,intel-sgx,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+741,intel-tdx,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+742,amd-sev,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+743,amd-sev-snp,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+744,arm-trustzone,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+745,arm-cca,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+746,apple-secure-enclave,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+747,nitro-enclaves,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+748,nvidia-cc,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+749,java-jce,Hardware / HSM / TEE,interface,DROP,rev: other product plugin API
+750,openssl-provider,Hardware / HSM / TEE,interface,DROP,rev: other product plugin API
+751,wolfssl-fips,Hardware / HSM / TEE,interface,DROP,rev: wrapper of another library
+752,botan-p11,Hardware / HSM / TEE,interface,DROP,rev: wrapper of another library
+753,libp11,Hardware / HSM / TEE,interface,DROP,rev: wrapper of another library
+754,opencryptoki,Hardware / HSM / TEE,interface,KEEP-PLATFORM,"opus: PKCS#11 token, used as test target"
+755,softhsm2,Hardware / HSM / TEE,interface,KEEP-PLATFORM,"opus: PKCS#11 token, used as test target"
+756,capi,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+757,tpm1.2,Hardware / HSM / TEE,interface,KEEP-PLATFORM,rev: HW/OS crypto interface
+758,openssl-engine,Hardware / HSM / TEE,interface,DROP,rev: other product plugin API
+759,wesolowski-vdf,Verifiable Delay Functions,algorithm,KEEP,Verifiable delay function
+760,pietrzak-vdf,Verifiable Delay Functions,algorithm,KEEP,Verifiable delay function
+761,sloth-vdf,Verifiable Delay Functions,algorithm,KEEP,Verifiable delay function
+762,ibe,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+763,abe,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+764,pre,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+765,functional-encryption,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+766,witness-encryption,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+767,chameleon-hash,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+768,rsa-accumulator,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+769,bilinear-accumulator,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+770,vector-commitment,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+771,psi,Advanced Primitives,construction,KEEP-PROTOCOL,rev: cryptographic protocol
+772,secure-aggregation,Advanced Primitives,construction,KEEP-PROTOCOL,rev: cryptographic protocol
+773,oram,Advanced Primitives,construction,KEEP,Advanced cryptographic primitive
+774,differential-privacy,Advanced Primitives,construction,DROP,"rev: statistical privacy, not cryptographic"
+775,blakley-ss,Advanced Primitives,construction,KEEP,Secret sharing scheme
+776,brickell-ss,Advanced Primitives,construction,KEEP,Secret sharing scheme
