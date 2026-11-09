@@ -1,0 +1,20 @@
+id        = "serpent-192"
+kind      = "blockcipher"
+category  = "block"
+family    = "serpent"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["AES finalist (Serpent)", "NESSIE"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "serpent", version = "=0.6.0", license = "MIT OR Apache-2.0" }
+# The crate `Serpent` type accepts 16/24/32-byte keys; the NESSIE vectors use the final Serpent byte order that
+# the crate implements.
+
+[kat]
+files = ["kat/nessie.json"]
+
+[sizes]
+key = 24
+block = 16

@@ -1,0 +1,20 @@
+id        = "rc5"
+kind      = "blockcipher"
+category  = "block"
+family    = "rc"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["RFC 2040", "RC5 (Rivest 1994)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rc5", version = "=0.1.0", license = "MIT OR Apache-2.0" }
+# RC5-32/12/16 only: 32-bit words, 12 rounds, 16-byte key (the configuration of the RFC 2040 vectors). Other
+# word/round/key settings are not exposed.
+
+[kat]
+files = ["kat/rfc2040.json"]
+
+[sizes]
+key = 16
+block = 8

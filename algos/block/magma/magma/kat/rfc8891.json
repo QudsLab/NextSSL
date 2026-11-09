@@ -1,0 +1,12 @@
+{
+ "algorithm": "magma",
+ "source": "RFC 8891 Appendix A.3-A.5 (GOST R 34.12-2015 Magma); plaintext from A.4, ciphertext b from A.5",
+ "vectors": [
+  {
+   "id": "rfc8891-A",
+   "key_hex": "ffeeddccbbaa99887766554433221100f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "4ee901e5c2d8ca3d"
+  }
+ ]
+}

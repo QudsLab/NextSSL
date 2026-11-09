@@ -1,0 +1,20 @@
+id        = "magma"
+kind      = "blockcipher"
+category  = "block"
+family    = "magma"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["GOST R 34.12-2015", "RFC 8891"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "magma", version = "=0.10.0", license = "MIT OR Apache-2.0" }
+cipher    = "magma::Magma"
+# Magma uses the TC26 S-boxes (the crate type `Magma`); the legacy GOST 28147-89 S-box sets are not exposed.
+
+[kat]
+files = ["kat/rfc8891.json"]
+
+[sizes]
+key = 32
+block = 8

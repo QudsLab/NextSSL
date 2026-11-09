@@ -1,0 +1,12 @@
+{
+ "algorithm": "kuznyechik",
+ "source": "RFC 7801 section 5.4/5.5 (GOST R 34.12-2015 Kuznyechik test encryption)",
+ "vectors": [
+  {
+   "id": "rfc7801-5.5",
+   "key_hex": "8899aabbccddeeff0011223344556677fedcba98765432100123456789abcdef",
+   "pt_hex": "1122334455667700ffeeddccbbaa9988",
+   "ct_hex": "7f679d90bebc24305a468d42b9d4edcd"
+  }
+ ]
+}

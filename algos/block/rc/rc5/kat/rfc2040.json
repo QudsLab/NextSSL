@@ -1,0 +1,12 @@
+{
+ "algorithm": "rc5",
+ "source": "RFC 2040 section 9.3 RC5_CBC results with R = 12 and a 16-byte key; one block, so plaintext = P xor IV is the raw ECB block",
+ "vectors": [
+  {
+   "id": "rfc2040-r12-0",
+   "key_hex": "01020304050607081020304050607080",
+   "pt_hex": "1122334455667788",
+   "ct_hex": "294ddb46b3278d60"
+  }
+ ]
+}

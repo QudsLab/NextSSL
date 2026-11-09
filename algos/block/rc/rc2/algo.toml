@@ -1,0 +1,26 @@
+id        = "rc2"
+kind      = "blockcipher"
+category  = "block"
+family    = "rc"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = ["RFC 2268"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rc2", version = "=0.9.0", license = "MIT OR Apache-2.0" }
+# RC2 is broken in practice (small effective key sizes, related-key attacks); legacy interoperability (PKCS#12,
+# S/MIME) only. Param `effective_bits`: 0 = 8 x key length.
+
+[params.effective_bits]
+type = "u64"
+min = 0
+max = 1024
+default = 0
+
+[kat]
+files = ["kat/rfc2268.json"]
+
+[sizes]
+key = { min = 1, max = 128 }
+block = 8
