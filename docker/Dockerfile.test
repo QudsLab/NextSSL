@@ -1,0 +1,27 @@
+FROM rust:1
+ARG WASMTIME_VERSION=50.0.1
+ARG WASMTIME_SHA256=685466455dd42a14774a86c36c8f2e45cbb9bd6d92a850139315df60a75498a5
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        clang lld llvm build-essential pkg-config curl ca-certificates xz-utils \
+        wasi-libc libclang-rt-dev-wasm32 \
+    && rm -rf /var/lib/apt/lists/*
+# wasmtime runs the wasm32-wasip1 KAT tests (pinned release, checksum verified).
+RUN curl -fsSL -o /tmp/wt.tar.xz \
+        "https://github.com/bytecodealliance/wasmtime/releases/download/v${WASMTIME_VERSION}/wasmtime-v${WASMTIME_VERSION}-x86_64-linux.tar.xz" \
+    && echo "${WASMTIME_SHA256}  /tmp/wt.tar.xz" | sha256sum -c - \
+    && tar -xJf /tmp/wt.tar.xz -C /tmp \
+    && install -m 0755 "/tmp/wasmtime-v${WASMTIME_VERSION}-x86_64-linux/wasmtime" /usr/local/bin/wasmtime \
+    && rm -rf /tmp/wt.tar.xz "/tmp/wasmtime-v${WASMTIME_VERSION}-x86_64-linux"
+# rust-toolchain.toml selects `stable`, a different rustup toolchain than the image's pinned
+# default, so install components and wasm targets on `stable` itself.
+RUN rustup toolchain install stable --profile minimal -c rustfmt -c clippy \
+        -t wasm32-unknown-unknown -t wasm32-wasip1 \
+    && rustup toolchain install nightly --profile minimal -c rust-src -c miri -c rustfmt \
+    && cargo install cargo-fuzz --locked
+WORKDIR /src
+COPY . .
+# Windows checkouts may have CRLF; bash needs LF.
+RUN sed -i 's/\r$//' docker/test.sh
+ENV CARGO_TARGET_DIR=/tmp/target
+CMD ["bash", "docker/test.sh"]
