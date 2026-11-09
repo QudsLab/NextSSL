@@ -1,0 +1,18 @@
+id        = "crc32c"
+kind      = "checksum"
+category  = "checksum"
+family    = "crc"
+aliases   = ["crc32-castagnoli", "crc-32/iscsi"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 3720", "CRC catalogue CRC-32/ISCSI"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "crc", version = "=3.4.0", license = "MIT OR Apache-2.0" }
+# Catalogue name CRC-32/ISCSI; pinned variant (see ids).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+out = 4

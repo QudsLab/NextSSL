@@ -1,0 +1,18 @@
+id        = "crc16"
+kind      = "checksum"
+category  = "checksum"
+family    = "crc"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["CRC catalogue CRC-16/ARC"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "crc", version = "=3.4.0", license = "MIT OR Apache-2.0" }
+# Catalogue name CRC-16/ARC; pinned variant (see ids).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+out = 2

@@ -1,0 +1,19 @@
+id        = "xxh3"
+kind      = "checksum"
+category  = "checksum"
+family    = "xxhash"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["xxHash (Yann Collet), NON-cryptographic"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/Cyan4973/xxHash", commit = "2ec67caeb18ec15ae60c0853174331089acddfc0", license = "BSD-2-Clause", files = ["xxhash.c", "xxhash.h", "LICENSE"] }
+# Non-cryptographic checksum (root API only). Seed fixed to 0, output big-endian canonical form.
+# Upstream is built with -DXXH_NAMESPACE=nextssl__xxh3__ (upstream feature) and XXH_NO_STREAM; no source edits. Library licence is BSD-2-Clause (xxhsum CLI is GPL-2.0 and is not used).
+
+[kat]
+files = ["kat/xxh3.json"]
+
+[sizes]
+out = 8

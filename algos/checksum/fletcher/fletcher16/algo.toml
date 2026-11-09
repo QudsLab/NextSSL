@@ -1,0 +1,18 @@
+id        = "fletcher16"
+kind      = "checksum"
+category  = "checksum"
+family    = "fletcher"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["Fletcher 1982"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "fletcher", version = "=1.0.0", license = "MIT" }
+# Non-cryptographic; third-party small crate (MIT).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+out = 2

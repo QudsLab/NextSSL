@@ -1,0 +1,18 @@
+id        = "adler32"
+kind      = "checksum"
+category  = "checksum"
+family    = "adler"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 1950"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "adler", version = "=1.0.2", license = "0BSD OR MIT OR Apache-2.0" }
+# Adler-32 is weak for short inputs; non-cryptographic.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+out = 4

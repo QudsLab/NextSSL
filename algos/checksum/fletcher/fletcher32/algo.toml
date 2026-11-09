@@ -1,0 +1,18 @@
+id        = "fletcher32"
+kind      = "checksum"
+category  = "checksum"
+family    = "fletcher"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["Fletcher 1982"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "fletcher", version = "=1.0.0", license = "MIT" }
+# Odd-length input refused (no silent zero padding).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+out = 4

@@ -1,0 +1,18 @@
+id        = "crc32"
+kind      = "checksum"
+category  = "checksum"
+family    = "crc"
+aliases   = ["crc32-iso-hdlc"]
+tier      = "standard"
+status    = "active"
+standards = ["ISO 3309", "ITU-T V.42", "CRC catalogue CRC-32/ISO-HDLC"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "crc", version = "=3.4.0", license = "MIT OR Apache-2.0" }
+# Catalogue name CRC-32/ISO-HDLC; pinned variant (see ids).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+out = 4

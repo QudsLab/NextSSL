@@ -1,0 +1,31 @@
+{
+ "algorithm": "xxhash64",
+ "source": "xxHash cli/xsum_sanity_check.c 2ec67caeb18e (seed 0 entries); inputs from XSUM_fillTestBuffer",
+ "vectors": [
+  {
+   "id": "sanity-len0",
+   "data_hex": "",
+   "out_hex": "ef46db3751d8e999"
+  },
+  {
+   "id": "sanity-len1",
+   "data_hex": "00",
+   "out_hex": "e934a84adb052768"
+  },
+  {
+   "id": "sanity-len4",
+   "data_hex": "0052929b",
+   "out_hex": "9136a0dca57457ee"
+  },
+  {
+   "id": "sanity-len14",
+   "data_hex": "0052929bb732a3242d00af950eec",
+   "out_hex": "8282dcc4994e35c8"
+  },
+  {
+   "id": "sanity-len222",
+   "data_hex": "0052929bb732a3242d00af950eecb893e3dfef93aad6cd2a538b5c3f545a6fd559c0fffc8f85b9331dab74f7b6059327b07084b3677c9f76480072ed7b9817e8dd485e0c0ccbd0653fadb28f11b06ce88db0f186086159566c8e4e781363bdab9d327309ea712fd97a9d55f0ca8ad0e95e1a36b36b0fca51ef8ba2c462ed0096f33449eb0fd13b92a1a963dbaaed3dcff10942cdf9b321a2ebf2c8f4e42f48d14b10f4c2efecf84ab53874c3a4a6620ebffd633741e386981aeb4cba56036687ed004559c18544b6c368f941a9eaf987e09f12d0d51454485d444051e338",
+   "out_hex": "b641ae8cb691c174"
+  }
+ ]
+}

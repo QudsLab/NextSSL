@@ -1,0 +1,18 @@
+id        = "crc64-ecma"
+kind      = "checksum"
+category  = "checksum"
+family    = "crc"
+aliases   = ["crc64-ecma-182"]
+tier      = "standard"
+status    = "active"
+standards = ["ECMA-182", "CRC catalogue CRC-64/ECMA-182"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "crc", version = "=3.4.0", license = "MIT OR Apache-2.0" }
+# Catalogue name CRC-64/ECMA-182; pinned variant (see ids).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+out = 8

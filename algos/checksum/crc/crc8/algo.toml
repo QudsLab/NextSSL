@@ -1,0 +1,18 @@
+id        = "crc8"
+kind      = "checksum"
+category  = "checksum"
+family    = "crc"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["CRC catalogue CRC-8/SMBUS"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "crc", version = "=3.4.0", license = "MIT OR Apache-2.0" }
+# Catalogue name CRC-8/SMBUS; pinned variant (see ids).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+out = 1
