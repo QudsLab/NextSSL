@@ -1,0 +1,22 @@
+[package]
+name = "nextssl-algo-schnorr-bip340"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+zeroize.workspace = true
+k256 = { version = "=0.14.0", default-features = false, features = ["schnorr", "alloc"] }
+
+[dev-dependencies]
+nextssl-core = { workspace = true, features = ["testing"] }
+serde_json.workspace = true
+
+[lints]
+workspace = true

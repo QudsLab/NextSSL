@@ -1,0 +1,22 @@
+id        = "schnorr-bip340"
+kind      = "sign"
+category  = "sign"
+family    = "schnorr"
+aliases   = ["bip340", "schnorr"]
+tier      = "standard"
+status    = "active"
+standards = ["BIP 340"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "k256", version = "=0.14.0", license = "Apache-2.0 OR MIT" }
+# RustCrypto k256 schnorr module. BIP 340 has no IANA COSE algorithm id, so the safe envelope cannot carry it: use nextssl_root_*. Public key is the 32-byte x-only key; the secret key is the raw scalar d.
+
+[kat]
+files = ["kat/bip340-test-vectors.json"]
+
+[sizes]
+pk   = 32
+sk   = 32
+sig  = 64
+seed = 32
+ctx  = 0

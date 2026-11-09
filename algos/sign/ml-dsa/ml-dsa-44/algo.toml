@@ -1,0 +1,32 @@
+id        = "ml-dsa-44"
+kind      = "sign"
+category  = "sign"
+family    = "ml-dsa"
+aliases   = ["mldsa44"]
+tier      = "safe"
+status    = "active"
+standards = ["FIPS 204"]
+cose_alg  = -48  # IANA COSE ML-DSA-44 (RFC 9964)
+oid       = "2.16.840.1.101.3.4.3.17"
+fips      = true
+copyleft  = false
+upstream  = { crate = "ml-dsa", version = "=0.1.2", license = "Apache-2.0 OR MIT" }
+
+# FIPS 204 default is hedged signing; deterministic = 1 selects the deterministic variant.
+[params.deterministic]
+type     = "u32"
+min      = 0
+max      = 1
+default  = 0
+required = false
+
+[kat]
+files = ["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"]
+
+# sk is the 32-byte seed xi (the upstream decoder for the expanded 2560-byte sk can panic on hostile input).
+[sizes]
+pk   = 1312
+sk   = 32
+sig  = 2420
+seed = 32
+ctx  = { min = 0, max = 255 }
