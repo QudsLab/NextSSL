@@ -6365,52 +6365,6 @@
       "dir": "aead/fountain/fountain"
     },
     {
-      "id": "fugue",
-      "kind": "hash",
-      "category": "hash",
-      "family": "fugue",
-      "aliases": [],
-      "tier": "research",
-      "status": "active",
-      "standards": [
-        "Fugue (SHA-3 round 2/3 candidate), sphlib implementation"
-      ],
-      "fips": false,
-      "copyleft": false,
-      "sizes": {
-        "out": {
-          "min": 28,
-          "max": 64
-        }
-      },
-      "upstream": {
-        "repo": "https://github.com/pornin/sphlib",
-        "commit": "15b6b8d8f3e4a43c58ba102d712fa6b8a3317035",
-        "license": "MIT",
-        "files": [
-          "c/fugue.c",
-          "c/sph_fugue.h",
-          "c/sph_types.h",
-          "LICENSE"
-        ]
-      },
-      "params": {
-        "out_len": {
-          "type": "u64",
-          "min": 28,
-          "max": 64,
-          "required": false,
-          "default": 32
-        }
-      },
-      "kat": {
-        "files": [
-          "kat/fugue.json"
-        ]
-      },
-      "dir": "hash/fugue/fugue"
-    },
-    {
       "id": "ghash",
       "kind": "mac",
       "category": "mac",
@@ -6644,53 +6598,6 @@
         ]
       },
       "dir": "hash/groestl/groestl"
-    },
-    {
-      "id": "hamsi",
-      "kind": "hash",
-      "category": "hash",
-      "family": "hamsi",
-      "aliases": [],
-      "tier": "research",
-      "status": "active",
-      "standards": [
-        "Hamsi (SHA-3 round 2 candidate), sphlib implementation"
-      ],
-      "fips": false,
-      "copyleft": false,
-      "sizes": {
-        "out": {
-          "min": 28,
-          "max": 64
-        }
-      },
-      "upstream": {
-        "repo": "https://github.com/pornin/sphlib",
-        "commit": "15b6b8d8f3e4a43c58ba102d712fa6b8a3317035",
-        "license": "MIT",
-        "files": [
-          "c/hamsi.c",
-          "c/hamsi_helper.c",
-          "c/sph_hamsi.h",
-          "c/sph_types.h",
-          "LICENSE"
-        ]
-      },
-      "params": {
-        "out_len": {
-          "type": "u64",
-          "min": 28,
-          "max": 64,
-          "required": false,
-          "default": 32
-        }
-      },
-      "kat": {
-        "files": [
-          "kat/hamsi.json"
-        ]
-      },
-      "dir": "hash/hamsi/hamsi"
     },
     {
       "id": "has160",
@@ -7705,40 +7612,6 @@
       "dir": "kem/hqc/hqc-256"
     },
     {
-      "id": "hs1-siv",
-      "kind": "aead",
-      "category": "aead",
-      "family": "hs1-siv",
-      "aliases": [],
-      "tier": "unverified",
-      "status": "active",
-      "standards": [],
-      "fips": false,
-      "copyleft": false,
-      "sizes": {
-        "key": 16,
-        "nonce": 12,
-        "tag": 16
-      },
-      "upstream": {
-        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
-        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
-        "license": "CC0-1.0",
-        "files": [
-          "hs1sivv1/api.h",
-          "hs1sivv1/encrypt.c",
-          "LICENSE"
-        ]
-      },
-      "params": {},
-      "kat": {
-        "files": [
-          "kat/kat.json"
-        ]
-      },
-      "dir": "aead/hs1-siv/hs1-siv"
-    },
-    {
       "id": "hss-sha256-h5-h5-w4",
       "kind": "statefulsign",
       "category": "sign",
@@ -8097,45 +7970,6 @@
       "dir": "hash/jh/jh"
     },
     {
-      "id": "joltik",
-      "kind": "aead",
-      "category": "aead",
-      "family": "joltik",
-      "aliases": [],
-      "tier": "unverified",
-      "status": "active",
-      "standards": [],
-      "fips": false,
-      "copyleft": true,
-      "sizes": {
-        "key": 8,
-        "nonce": 4,
-        "tag": 8
-      },
-      "upstream": {
-        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
-        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
-        "license": "LicenseRef-GPL-unspecified",
-        "files": [
-          "joltikeq6464v1/api.h",
-          "joltikeq6464v1/crypto_aead.h",
-          "joltikeq6464v1/encrypt.c",
-          "joltikeq6464v1/joltik.c",
-          "joltikeq6464v1/joltik.h",
-          "joltikeq6464v1/tweakableBC.c",
-          "joltikeq6464v1/tweakableBC.h",
-          "LICENSE"
-        ]
-      },
-      "params": {},
-      "kat": {
-        "files": [
-          "kat/kat.json"
-        ]
-      },
-      "dir": "aead/joltik/joltik"
-    },
-    {
       "id": "kalyna",
       "kind": "blockcipher",
       "category": "block",
@@ -8406,52 +8240,6 @@
         ]
       },
       "dir": "block/kasumi/kasumi"
-    },
-    {
-      "id": "kaz-sign",
-      "kind": "sign",
-      "category": "sign",
-      "family": "kaz-sign",
-      "aliases": [],
-      "tier": "unverified",
-      "status": "active",
-      "standards": [],
-      "fips": false,
-      "copyleft": true,
-      "sizes": {
-        "pk": 59,
-        "sk": 77,
-        "sig": {
-          "min": 1,
-          "max": 32
-        },
-        "seed": 0,
-        "ctx": 0
-      },
-      "upstream": {
-        "url": "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/KAZ-SIGN.zip",
-        "sha256": "4e96e6189ae90ebd765390f10f80fc27a473edfb7b0aebeef518708e7acddfd3",
-        "license": "LicenseRef-Public-Domain AND LicenseRef-GPL-unspecified AND LicenseRef-LGPL-unspecified",
-        "files": [
-          "KAZ-SIGN/Reference_Implementation/kaz458/api.h",
-          "KAZ-SIGN/Reference_Implementation/kaz458/gmp.h",
-          "KAZ-SIGN/Reference_Implementation/kaz458/kaz_api.c",
-          "KAZ-SIGN/Reference_Implementation/kaz458/kaz_api.h",
-          "KAZ-SIGN/Reference_Implementation/kaz458/rng.h",
-          "KAZ-SIGN/Reference_Implementation/kaz458/rotate-bits.h",
-          "KAZ-SIGN/Reference_Implementation/kaz458/sha256.c",
-          "KAZ-SIGN/Reference_Implementation/kaz458/sha256.h",
-          "KAZ-SIGN/Reference_Implementation/kaz458/sign.c",
-          "LICENSE"
-        ]
-      },
-      "params": {},
-      "kat": {
-        "files": [
-          "kat/kat.json"
-        ]
-      },
-      "dir": "sign/kaz-sign/kaz-sign"
     },
     {
       "id": "keccak256",
@@ -13483,99 +13271,6 @@
       "dir": "threshold/shamir/shamir"
     },
     {
-      "id": "shavite3",
-      "kind": "hash",
-      "category": "hash",
-      "family": "shavite3",
-      "aliases": [],
-      "tier": "research",
-      "status": "active",
-      "standards": [
-        "SHAvite-3 (SHA-3 round 2 candidate), sphlib implementation"
-      ],
-      "fips": false,
-      "copyleft": false,
-      "sizes": {
-        "out": {
-          "min": 28,
-          "max": 64
-        }
-      },
-      "upstream": {
-        "repo": "https://github.com/pornin/sphlib",
-        "commit": "15b6b8d8f3e4a43c58ba102d712fa6b8a3317035",
-        "license": "MIT",
-        "files": [
-          "c/shavite.c",
-          "c/sph_shavite.h",
-          "c/sph_types.h",
-          "c/aes_helper.c",
-          "LICENSE"
-        ]
-      },
-      "params": {
-        "out_len": {
-          "type": "u64",
-          "min": 28,
-          "max": 64,
-          "required": false,
-          "default": 32
-        }
-      },
-      "kat": {
-        "files": [
-          "kat/shavite3.json"
-        ]
-      },
-      "dir": "hash/shavite3/shavite3"
-    },
-    {
-      "id": "simd",
-      "kind": "hash",
-      "category": "hash",
-      "family": "simd",
-      "aliases": [],
-      "tier": "research",
-      "status": "active",
-      "standards": [
-        "SIMD (SHA-3 round 2 candidate), sphlib implementation"
-      ],
-      "fips": false,
-      "copyleft": false,
-      "sizes": {
-        "out": {
-          "min": 28,
-          "max": 64
-        }
-      },
-      "upstream": {
-        "repo": "https://github.com/pornin/sphlib",
-        "commit": "15b6b8d8f3e4a43c58ba102d712fa6b8a3317035",
-        "license": "MIT",
-        "files": [
-          "c/simd.c",
-          "c/sph_simd.h",
-          "c/sph_types.h",
-          "LICENSE"
-        ]
-      },
-      "params": {
-        "out_len": {
-          "type": "u64",
-          "min": 28,
-          "max": 64,
-          "required": false,
-          "default": 32
-        }
-      },
-      "kat": {
-        "files": [
-          "kat/simd.json"
-        ]
-      },
-      "dir": "hash/simd/simd"
-    },
-    {
       "id": "siphash-2-4",
       "kind": "mac",
       "category": "mac",
@@ -15337,44 +15032,6 @@
         ]
       },
       "dir": "block/threefish/threefish-512"
-    },
-    {
-      "id": "tiaoxin",
-      "kind": "aead",
-      "category": "aead",
-      "family": "tiaoxin",
-      "aliases": [],
-      "tier": "unverified",
-      "status": "active",
-      "standards": [],
-      "fips": false,
-      "copyleft": true,
-      "sizes": {
-        "key": 16,
-        "nonce": 16,
-        "tag": 16
-      },
-      "upstream": {
-        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
-        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
-        "license": "LicenseRef-GPL-unspecified AND NOASSERTION",
-        "files": [
-          "tiaoxinv1/aes_round.c",
-          "tiaoxinv1/aes_round.h",
-          "tiaoxinv1/api.h",
-          "tiaoxinv1/encrypt.c",
-          "tiaoxinv1/tiaoxin-reference.c",
-          "tiaoxinv1/tiaoxin-reference.h",
-          "LICENSE"
-        ]
-      },
-      "params": {},
-      "kat": {
-        "files": [
-          "kat/kat.json"
-        ]
-      },
-      "dir": "aead/tiaoxin/tiaoxin"
     },
     {
       "id": "tiger",

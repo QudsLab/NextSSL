@@ -170,14 +170,12 @@ nextssl-algo-fletcher32 = { path = "../../algos/checksum/fletcher/fletcher32" }
 nextssl-algo-fn-dsa-1024 = { path = "../../algos/sign/fn-dsa/fn-dsa-1024" }
 nextssl-algo-fn-dsa-512 = { path = "../../algos/sign/fn-dsa/fn-dsa-512" }
 nextssl-algo-fountain = { path = "../../algos/aead/fountain/fountain" }
-nextssl-algo-fugue = { path = "../../algos/hash/fugue/fugue" }
 nextssl-algo-ghash = { path = "../../algos/mac/ghash/ghash" }
 nextssl-algo-gift-cofb = { path = "../../algos/aead/gift-cofb/gift-cofb" }
 nextssl-algo-gimli = { path = "../../algos/aead/gimli/gimli" }
 nextssl-algo-gost-r-34-11-94 = { path = "../../algos/hash/gost-r-34-11-94/gost-r-34-11-94" }
 nextssl-algo-grain-128aead = { path = "../../algos/aead/grain/grain-128aead" }
 nextssl-algo-groestl = { path = "../../algos/hash/groestl/groestl" }
-nextssl-algo-hamsi = { path = "../../algos/hash/hamsi/hamsi" }
 nextssl-algo-has160 = { path = "../../algos/hash/has160/has160" }
 nextssl-algo-hc256 = { path = "../../algos/stream/hc/hc256" }
 nextssl-algo-hitag2 = { path = "../../algos/stream/hitag2/hitag2" }
@@ -200,7 +198,6 @@ nextssl-algo-hpke-x25519-sha256-chacha20poly1305 = { path = "../../algos/pke/hpk
 nextssl-algo-hqc-128 = { path = "../../algos/kem/hqc/hqc-128" }
 nextssl-algo-hqc-192 = { path = "../../algos/kem/hqc/hqc-192" }
 nextssl-algo-hqc-256 = { path = "../../algos/kem/hqc/hqc-256" }
-nextssl-algo-hs1-siv = { path = "../../algos/aead/hs1-siv/hs1-siv" }
 nextssl-algo-hss-sha256-h5-h5-w4 = { path = "../../algos/sign/hss/hss-sha256-h5-h5-w4", optional = true }
 nextssl-algo-hyena-v1 = { path = "../../algos/aead/hyena/hyena-v1" }
 nextssl-algo-hyena-v2 = { path = "../../algos/aead/hyena/hyena-v2" }
@@ -210,7 +207,6 @@ nextssl-algo-isap-a-128a = { path = "../../algos/aead/isap/isap-a-128a" }
 nextssl-algo-isap-k-128a = { path = "../../algos/aead/isap/isap-k-128a" }
 nextssl-algo-iscream = { path = "../../algos/aead/iscream/iscream" }
 nextssl-algo-jh = { path = "../../algos/hash/jh/jh" }
-nextssl-algo-joltik = { path = "../../algos/aead/joltik/joltik", optional = true }
 nextssl-algo-kalyna = { path = "../../algos/block/kalyna/kalyna" }
 nextssl-algo-kalyna-128-256 = { path = "../../algos/block/kalyna/kalyna-128-256" }
 nextssl-algo-kalyna-256-256 = { path = "../../algos/block/kalyna/kalyna-256-256" }
@@ -218,7 +214,6 @@ nextssl-algo-kalyna-256-512 = { path = "../../algos/block/kalyna/kalyna-256-512"
 nextssl-algo-kalyna-512-512 = { path = "../../algos/block/kalyna/kalyna-512-512" }
 nextssl-algo-kangarootwelve = { path = "../../algos/xof/k12/kangarootwelve" }
 nextssl-algo-kasumi = { path = "../../algos/block/kasumi/kasumi" }
-nextssl-algo-kaz-sign = { path = "../../algos/sign/kaz-sign/kaz-sign", optional = true }
 nextssl-algo-keccak256 = { path = "../../algos/hash/sha3/keccak256" }
 nextssl-algo-keccak512 = { path = "../../algos/hash/sha3/keccak512" }
 nextssl-algo-khazad = { path = "../../algos/block/khazad/khazad" }
@@ -332,8 +327,6 @@ nextssl-algo-shabal = { path = "../../algos/hash/shabal/shabal" }
 nextssl-algo-shake128 = { path = "../../algos/xof/shake/shake128" }
 nextssl-algo-shake256 = { path = "../../algos/xof/sha3/shake256" }
 nextssl-algo-shamir = { path = "../../algos/threshold/shamir/shamir" }
-nextssl-algo-shavite3 = { path = "../../algos/hash/shavite3/shavite3" }
-nextssl-algo-simd = { path = "../../algos/hash/simd/simd" }
 nextssl-algo-siphash-2-4 = { path = "../../algos/mac/siphash/siphash-2-4" }
 nextssl-algo-siphash-4-8 = { path = "../../algos/mac/siphash/siphash-4-8" }
 nextssl-algo-skein1024 = { path = "../../algos/hash/skein/skein1024" }
@@ -376,7 +369,6 @@ nextssl-algo-tea = { path = "../../algos/block/tea/tea" }
 nextssl-algo-threefish-1024 = { path = "../../algos/block/threefish/threefish-1024" }
 nextssl-algo-threefish-256 = { path = "../../algos/block/threefish/threefish-256" }
 nextssl-algo-threefish-512 = { path = "../../algos/block/threefish/threefish-512" }
-nextssl-algo-tiaoxin = { path = "../../algos/aead/tiaoxin/tiaoxin", optional = true }
 nextssl-algo-tiger = { path = "../../algos/hash/tiger/tiger" }
 nextssl-algo-tinyjambu = { path = "../../algos/aead/tinyjambu/tinyjambu" }
 nextssl-algo-tinyjambu-192 = { path = "../../algos/aead/tinyjambu/tinyjambu-192" }
@@ -409,7 +401,7 @@ nextssl-algo-zuc-256 = { path = "../../algos/stream/zuc/zuc-256" }
 [features]
 default = []
 # BEGIN GENERATED FEATURES (cargo xtask gen)
-copyleft = ["dep:nextssl-algo-deoxys-ii", "dep:nextssl-algo-joltik", "dep:nextssl-algo-kaz-sign", "dep:nextssl-algo-kiasu", "dep:nextssl-algo-pride", "dep:nextssl-algo-sparkle-esch", "dep:nextssl-algo-sparkle-schwaemm", "dep:nextssl-algo-tiaoxin"]
+copyleft = ["dep:nextssl-algo-deoxys-ii", "dep:nextssl-algo-kiasu", "dep:nextssl-algo-pride", "dep:nextssl-algo-sparkle-esch", "dep:nextssl-algo-sparkle-schwaemm"]
 bulletproofs = ["dep:nextssl-algo-bulletproofs-range"]
 hbs-lms = ["dep:nextssl-algo-hss-sha256-h5-h5-w4", "dep:nextssl-algo-lms-sha256-h10-w4", "dep:nextssl-algo-lms-sha256-h5-w4"]
 hpke = ["dep:nextssl-algo-hpke-p256-sha256-aes128gcm", "dep:nextssl-algo-hpke-x25519-sha256-aes128gcm", "dep:nextssl-algo-hpke-x25519-sha256-chacha20poly1305"]

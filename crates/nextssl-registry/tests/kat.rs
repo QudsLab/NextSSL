@@ -84,7 +84,15 @@ fn every_kat_file_exists_and_is_json() {
 fn hash_and_encoding_kats_replay_through_the_registry() {
     let root = algos_dir();
     let mut total = 0;
+    // Triage aid: KAT_SKIP=id1,id2 leaves those algorithms out; KAT_TRACE=1 prints each id.
+    let skip = std::env::var("KAT_SKIP").unwrap_or_default();
     for a in all().iter().filter(|a| is_hash_or_encoding(a)) {
+        if skip.split(',').any(|s| s == a.id) {
+            continue;
+        }
+        if std::env::var_os("KAT_TRACE").is_some() {
+            println!("smoke {}", a.id);
+        }
         // Miri cannot execute foreign (C/C++) functions; `AlgoInfo::c_backed` is generated from
         // algo.toml `[upstream]`. Those are covered by the native, ASan/UBSan and wasm runs.
         #[cfg(miri)]
@@ -492,7 +500,11 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
             // (RSA PKCS#1 v1.5): a synthetic plaintext that is never the original
             match p.decrypt(&sk, &flip(ct.clone()), &label) {
                 Err(e) => assert_eq!(e, Error::AuthenticationFailed, "{ctx}: flipped ct"),
-                Ok(got) => assert_ne!(&got[..], &pt[..], "{ctx}: flipped ct decrypted to the original"),
+                Ok(got) => assert_ne!(
+                    &got[..],
+                    &pt[..],
+                    "{ctx}: flipped ct decrypted to the original"
+                ),
             }
             if s.ctx.map(|c| c.max()).unwrap_or(0) > 0 {
                 let other = vec![0x4Du8; label.len().max(1)];
@@ -507,7 +519,10 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
                     "{ctx}: label must not be ignored"
                 );
             }
-            assert!(p.decrypt(&sk, &[0u8; 3], &label).is_err(), "{ctx}: short ct");
+            assert!(
+                p.decrypt(&sk, &[0u8; 3], &label).is_err(),
+                "{ctx}: short ct"
+            );
             let max_pt = s.out.unwrap().max();
             if max_pt < (1 << 20) {
                 assert!(
@@ -520,7 +535,10 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
         Instance::Pake(k) => {
             let pw = vec![0x70u8; pick(s.key, 13)];
             let (da, db) = run_pake(&**k, &pw, &pw);
-            let (da, db) = (da.expect("initiator finished"), db.expect("responder finished"));
+            let (da, db) = (
+                da.expect("initiator finished"),
+                db.expect("responder finished"),
+            );
             assert_eq!(da, db, "{ctx}: same password, same secret");
             assert!(s.ss.unwrap().contains(da.len()), "{ctx}: secret length");
             // a different password never yields equal secrets
@@ -541,7 +559,8 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
                 "{ctx}: junk message finished the exchange"
             );
             assert!(
-                k.start(PakeRole::Initiator, &[], b"ctx", &mut rng()).is_err()
+                k.start(PakeRole::Initiator, &[], b"ctx", &mut rng())
+                    .is_err()
                     || s.key.unwrap().min() == 0,
                 "{ctx}: empty password"
             );
@@ -561,7 +580,11 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
                 Ok(())
             };
             let sig = g.sign(&mut key, b"message", &mut keep).unwrap();
-            assert_eq!(stored, key.as_bytes(), "{ctx}: persisted state is the new state");
+            assert_eq!(
+                stored,
+                key.as_bytes(),
+                "{ctx}: persisted state is the new state"
+            );
             assert_eq!(g.remaining(&key).unwrap(), before - 1, "{ctx}");
             assert!(s.sig.unwrap().contains(sig.len()), "{ctx}");
             assert!(g.verify(&pk, b"message", &sig).unwrap(), "{ctx}");
@@ -596,7 +619,10 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
             assert_eq!(shares.len(), n, "{ctx}");
             assert_eq!(&t.combine(&shares[..th]).unwrap()[..], &secret[..], "{ctx}");
             for (tt, nn) in [(0, n), (n + 1, n), (1, t.max_parties() + 1)] {
-                assert!(t.split(&secret, tt, nn, &mut rng()).is_err(), "{ctx}: {tt}/{nn}");
+                assert!(
+                    t.split(&secret, tt, nn, &mut rng()).is_err(),
+                    "{ctx}: {tt}/{nn}"
+                );
             }
             if th > 1 {
                 // too few shares: an error, never the secret
@@ -609,7 +635,10 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
             let dup = [shares[0].as_bytes().to_vec(), shares[0].as_bytes().to_vec()];
             let dup: Vec<nextssl_core::Share> = dup
                 .iter()
-                .map(|b| nextssl_core::Share::from_bytes(b, nextssl_core::Len::range(0, 1 << 20)).unwrap())
+                .map(|b| {
+                    nextssl_core::Share::from_bytes(b, nextssl_core::Len::range(0, 1 << 20))
+                        .unwrap()
+                })
                 .collect();
             assert_ne!(
                 t.combine(&dup).ok().map(|v| v.to_vec()),
@@ -621,11 +650,21 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
             let t = 8u64.min(v.max_t());
             let (out, proof) = v.eval(b"challenge", t).unwrap();
             assert!(v.verify(b"challenge", t, &out, &proof).unwrap(), "{ctx}");
-            assert!(!v.verify(b"challengE", t, &out, &proof).unwrap_or(false), "{ctx}");
-            assert!(!v.verify(b"challenge", t, &out, &flip(proof)).unwrap_or(false), "{ctx}");
+            assert!(
+                !v.verify(b"challengE", t, &out, &proof).unwrap_or(false),
+                "{ctx}"
+            );
+            assert!(
+                !v.verify(b"challenge", t, &out, &flip(proof))
+                    .unwrap_or(false),
+                "{ctx}"
+            );
             assert!(v.eval(b"challenge", 0).is_err(), "{ctx}: t = 0");
             if v.max_t() < u64::MAX {
-                assert!(v.eval(b"challenge", v.max_t() + 1).is_err(), "{ctx}: t over cap");
+                assert!(
+                    v.eval(b"challenge", v.max_t() + 1).is_err(),
+                    "{ctx}: t over cap"
+                );
                 assert!(
                     v.verify(b"challenge", v.max_t() + 1, &out, &[]).is_err(),
                     "{ctx}: verify t over cap"
@@ -639,7 +678,14 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
             let c3 = h.encrypt(&keys.public, &[3], &mut rng()).unwrap();
             assert_eq!(&h.decrypt(&keys.secret, &c2).unwrap()[..], &[2], "{ctx}");
             let all_ops = [
-                HeOp::Add, HeOp::Sub, HeOp::Mul, HeOp::Neg, HeOp::And, HeOp::Or, HeOp::Xor, HeOp::Not,
+                HeOp::Add,
+                HeOp::Sub,
+                HeOp::Mul,
+                HeOp::Neg,
+                HeOp::And,
+                HeOp::Or,
+                HeOp::Xor,
+                HeOp::Not,
             ];
             for op in all_ops {
                 if !h.ops().contains(&op) {
@@ -653,7 +699,10 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
             if h.ops().contains(&HeOp::Add) {
                 let sum = h.eval(HeOp::Add, &[&c2, &c3], &keys.eval).unwrap();
                 assert_eq!(&h.decrypt(&keys.secret, &sum).unwrap()[..], &[5], "{ctx}");
-                assert!(h.eval(HeOp::Add, &[&c2], &keys.eval).is_err(), "{ctx}: operand count");
+                assert!(
+                    h.eval(HeOp::Add, &[&c2], &keys.eval).is_err(),
+                    "{ctx}: operand count"
+                );
             }
         }
     }
@@ -667,10 +716,15 @@ fn run_pake(
     pw_b: &[u8],
 ) -> (Option<SharedSecret>, Option<SharedSecret>) {
     use std::collections::VecDeque;
-    let (sa, ma) = k.start(PakeRole::Initiator, pw_a, b"ctx", &mut rng()).unwrap();
-    let (sb, mb) = k.start(PakeRole::Responder, pw_b, b"ctx", &mut rng()).unwrap();
+    let (sa, ma) = k
+        .start(PakeRole::Initiator, pw_a, b"ctx", &mut rng())
+        .unwrap();
+    let (sb, mb) = k
+        .start(PakeRole::Responder, pw_b, b"ctx", &mut rng())
+        .unwrap();
     let (mut sa, mut sb) = (Some(sa), Some(sb));
-    let (mut qa, mut qb): (VecDeque<Vec<u8>>, VecDeque<Vec<u8>>) = (VecDeque::new(), VecDeque::new());
+    let (mut qa, mut qb): (VecDeque<Vec<u8>>, VecDeque<Vec<u8>>) =
+        (VecDeque::new(), VecDeque::new());
     if !ma.is_empty() {
         qb.push_back(ma);
     }
@@ -726,12 +780,13 @@ fn run_pake(
 /// Stack for the per-algorithm worker. Classic McEliece keeps multi-hundred-KB arrays on the
 /// stack (need roughly 1-2 MiB, mceliece6960119/8192128 the most); the registry shim does not
 /// rely on this size, the test just uses a generous one.
+#[cfg_attr(target_family = "wasm", allow(dead_code))]
 const WORKER_STACK: usize = 64 << 20;
 /// A real hang fails after this long instead of running forever.
 const PER_ALGO_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(300);
 
 fn check_one(a: &'static AlgoInfo) {
-        // Miri cannot execute foreign (C/C++) functions; `AlgoInfo::c_backed` is generated from
+    // Miri cannot execute foreign (C/C++) functions; `AlgoInfo::c_backed` is generated from
     // algo.toml `[upstream]`. Those are covered by the native, ASan/UBSan and wasm runs.
     #[cfg(miri)]
     if a.c_backed {
@@ -773,32 +828,64 @@ fn check_one(a: &'static AlgoInfo) {
     }
 }
 
+/// Runs `f` on a big-stack worker thread so a hang can be reported by a receive timeout.
+/// WebAssembly has no threads: there `f` runs inline on the (large-stack) main thread.
+#[cfg(not(target_family = "wasm"))]
+fn spawn_worker(
+    name: String,
+    f: impl FnOnce() + Send + 'static,
+) -> Option<std::thread::JoinHandle<()>> {
+    Some(
+        std::thread::Builder::new()
+            .name(name)
+            .stack_size(WORKER_STACK)
+            .spawn(f)
+            .expect("spawn"),
+    )
+}
+
+#[cfg(target_family = "wasm")]
+fn spawn_worker(
+    _name: String,
+    f: impl FnOnce() + Send + 'static,
+) -> Option<std::thread::JoinHandle<()>> {
+    f();
+    None
+}
+
+fn join_worker(h: Option<std::thread::JoinHandle<()>>) {
+    if let Some(h) = h {
+        let _ = h.join();
+    }
+}
+
 #[test]
 fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
     let mut kinds = BTreeSet::new();
     let mut failures: Vec<String> = Vec::new();
+    // Triage aid: KAT_SKIP=id1,id2 leaves those algorithms out of this smoke loop (unset = none).
+    let skip = std::env::var("KAT_SKIP").unwrap_or_default();
     for a in all() {
+        if skip.split(',').any(|s| s == a.id) {
+            continue;
+        }
         if std::env::var_os("KAT_TRACE").is_some() {
             println!("smoke {}", a.id);
         }
         let (tx, rx) = std::sync::mpsc::channel();
-        let h = std::thread::Builder::new()
-            .name(a.id.to_string())
-            .stack_size(WORKER_STACK)
-            .spawn(move || {
-                let r = std::panic::catch_unwind(|| check_one(a));
-                let _ = tx.send(r.map_err(|e| {
-                    e.downcast_ref::<String>()
-                        .cloned()
-                        .or_else(|| e.downcast_ref::<&str>().map(|s| s.to_string()))
-                        .unwrap_or_else(|| "panic".into())
-                }));
-            })
-            .expect("spawn");
+        let h = spawn_worker(a.id.to_string(), move || {
+            let r = std::panic::catch_unwind(|| check_one(a));
+            let _ = tx.send(r.map_err(|e| {
+                e.downcast_ref::<String>()
+                    .cloned()
+                    .or_else(|| e.downcast_ref::<&str>().map(|s| s.to_string()))
+                    .unwrap_or_else(|| "panic".into())
+            }));
+        });
         match rx.recv_timeout(PER_ALGO_TIMEOUT) {
             Ok(Ok(())) => {
                 kinds.insert(a.kind.as_str());
-                let _ = h.join();
+                join_worker(h);
             }
             Ok(Err(m)) => failures.push(format!("{}: {m}", a.id)),
             Err(_) => failures.push(format!("{}: HANG (> {:?})", a.id, PER_ALGO_TIMEOUT)),
@@ -807,7 +894,11 @@ fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
     for f in &failures {
         println!("SMOKE FAIL {f}");
     }
-    assert!(failures.is_empty(), "{} algorithms failed: {failures:?}", failures.len());
+    assert!(
+        failures.is_empty(),
+        "{} algorithms failed: {failures:?}",
+        failures.len()
+    );
     // Every kind that has a registered algorithm was instantiated; print for the test log.
     println!("kinds exercised: {kinds:?}");
     assert!(kinds.len() >= 10, "too few kinds registered: {kinds:?}");
@@ -824,16 +915,25 @@ fn replay_registry_vector(inst: &Instance, v: &J) -> Result<(), String> {
             .map(unhex)
             .ok_or_else(|| format!("missing {k}"))
     };
-    let skey = |b: &[u8]| SymmetricKey::from_bytes(b, nextssl_core::Len::fixed(b.len())).map_err(|e| e.to_string());
+    let skey = |b: &[u8]| {
+        SymmetricKey::from_bytes(b, nextssl_core::Len::fixed(b.len())).map_err(|e| e.to_string())
+    };
     match inst {
         Instance::Aead(c) => {
             let (key, nonce, aad) = (skey(&hex("key_hex")?)?, hex("nonce_hex")?, hex("aad_hex")?);
             let (pt, ct) = (hex("pt_hex")?, hex("ct_hex")?);
-            let got = c.seal(&key, &nonce, &aad, &pt).map_err(|e| format!("seal: {e}"))?;
+            let got = c
+                .seal(&key, &nonce, &aad, &pt)
+                .map_err(|e| format!("seal: {e}"))?;
             if got != ct {
-                return Err(format!("seal mismatch: got {}", got.iter().map(|b| format!("{b:02x}")).collect::<String>()));
+                return Err(format!(
+                    "seal mismatch: got {}",
+                    got.iter().map(|b| format!("{b:02x}")).collect::<String>()
+                ));
             }
-            let back = c.open(&key, &nonce, &aad, &ct).map_err(|e| format!("open: {e}"))?;
+            let back = c
+                .open(&key, &nonce, &aad, &ct)
+                .map_err(|e| format!("open: {e}"))?;
             if back[..] != pt[..] {
                 return Err("open returned a different plaintext".into());
             }
@@ -842,29 +942,45 @@ fn replay_registry_vector(inst: &Instance, v: &J) -> Result<(), String> {
         Instance::BlockCipher(b) => {
             let (key, pt, ct) = (skey(&hex("key_hex")?)?, hex("pt_hex")?, hex("ct_hex")?);
             let mut blk = pt.clone();
-            b.encrypt_block(&key, &mut blk).map_err(|e| format!("encrypt: {e}"))?;
+            b.encrypt_block(&key, &mut blk)
+                .map_err(|e| format!("encrypt: {e}"))?;
             if blk != ct {
-                return Err(format!("encrypt mismatch: got {}", blk.iter().map(|b| format!("{b:02x}")).collect::<String>()));
+                return Err(format!(
+                    "encrypt mismatch: got {}",
+                    blk.iter().map(|b| format!("{b:02x}")).collect::<String>()
+                ));
             }
-            b.decrypt_block(&key, &mut blk).map_err(|e| format!("decrypt: {e}"))?;
+            b.decrypt_block(&key, &mut blk)
+                .map_err(|e| format!("decrypt: {e}"))?;
             if blk != pt {
                 return Err("decrypt did not return the plaintext".into());
             }
             Ok(())
         }
         Instance::StreamCipher(c) => {
-            let (key, nonce, data, out) = (skey(&hex("key_hex")?)?, hex("nonce_hex")?, hex("data_hex")?, hex("out_hex")?);
+            let (key, nonce, data, out) = (
+                skey(&hex("key_hex")?)?,
+                hex("nonce_hex")?,
+                hex("data_hex")?,
+                hex("out_hex")?,
+            );
             let mut buf = data.clone();
-            c.apply_keystream(&key, &nonce, &mut buf).map_err(|e| e.to_string())?;
+            c.apply_keystream(&key, &nonce, &mut buf)
+                .map_err(|e| e.to_string())?;
             if buf != out {
-                return Err(format!("keystream mismatch: got {}", buf.iter().map(|b| format!("{b:02x}")).collect::<String>()));
+                return Err(format!(
+                    "keystream mismatch: got {}",
+                    buf.iter().map(|b| format!("{b:02x}")).collect::<String>()
+                ));
             }
             Ok(())
         }
         Instance::Sign(g) => {
             let (pk, msg, sig) = (hex("pk_hex")?, hex("msg_hex")?, hex("sig_hex")?);
-            let pk = PublicKey::from_vec(pk.clone(), nextssl_core::Len::fixed(pk.len())).map_err(|e| e.to_string())?;
-            let sig = Signature::from_vec(sig.clone(), nextssl_core::Len::fixed(sig.len())).map_err(|e| e.to_string())?;
+            let pk = PublicKey::from_vec(pk.clone(), nextssl_core::Len::fixed(pk.len()))
+                .map_err(|e| e.to_string())?;
+            let sig = Signature::from_vec(sig.clone(), nextssl_core::Len::fixed(sig.len()))
+                .map_err(|e| e.to_string())?;
             match g.verify(&pk, &msg, b"", &sig) {
                 Ok(true) => Ok(()),
                 Ok(false) => Err("verify returned false for a published signature".into()),
@@ -896,28 +1012,30 @@ fn published_kats_replay_through_the_registry() {
             let vectors = doc["vectors"].as_array().expect("vectors").clone();
             let (id, file) = (a.id, f.to_string());
             let (tx, rx) = std::sync::mpsc::channel();
-            let h = std::thread::Builder::new()
-                .name(format!("kat-{id}"))
-                .stack_size(WORKER_STACK)
-                .spawn(move || {
-                    let mut out: Vec<String> = Vec::new();
-                    let a = all().iter().find(|x| x.id == id).unwrap();
-                    for v in &vectors {
-                        let name = v["id"].as_str().unwrap_or("?").to_string();
-                        let params = if v.get("params").is_some() { params_of(v) } else { a.smoke_params() };
-                        let r = match instantiate_in(all(), Policy::Any, a.id, &params) {
-                            Ok(inst) => std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| replay_registry_vector(&inst, v)))
-                                .unwrap_or_else(|_| Err("panic".into())),
-                            Err(e) => Err(format!("instantiate: {e}")),
-                        };
-                        match r {
-                            Ok(()) => out.push(format!("ok {name}")),
-                            Err(m) => out.push(format!("KAT FAIL {} / {} / {name}: {m}", a.id, file)),
-                        }
+            let h = spawn_worker(format!("kat-{id}"), move || {
+                let mut out: Vec<String> = Vec::new();
+                let a = all().iter().find(|x| x.id == id).unwrap();
+                for v in &vectors {
+                    let name = v["id"].as_str().unwrap_or("?").to_string();
+                    let params = if v.get("params").is_some() {
+                        params_of(v)
+                    } else {
+                        a.smoke_params()
+                    };
+                    let r = match instantiate_in(all(), Policy::Any, a.id, &params) {
+                        Ok(inst) => std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                            replay_registry_vector(&inst, v)
+                        }))
+                        .unwrap_or_else(|_| Err("panic".into())),
+                        Err(e) => Err(format!("instantiate: {e}")),
+                    };
+                    match r {
+                        Ok(()) => out.push(format!("ok {name}")),
+                        Err(m) => out.push(format!("KAT FAIL {} / {} / {name}: {m}", a.id, file)),
                     }
-                    let _ = tx.send(out);
-                })
-                .expect("spawn");
+                }
+                let _ = tx.send(out);
+            });
             match rx.recv_timeout(PER_ALGO_TIMEOUT) {
                 Ok(lines) => {
                     for l in lines {
@@ -930,15 +1048,22 @@ fn published_kats_replay_through_the_registry() {
                             ran += 1;
                         }
                     }
-                    let _ = h.join();
+                    join_worker(h);
                 }
                 Err(_) => failures.push(format!("KAT FAIL {} / {f}: HANG", a.id)),
             }
         }
     }
-    println!("published KATs: {files} files, {ran} vectors replayed, {} failed", failures.len());
+    println!(
+        "published KATs: {files} files, {ran} vectors replayed, {} failed",
+        failures.len()
+    );
     assert!(files >= 20, "suspiciously few published KAT files: {files}");
-    assert!(failures.is_empty(), "{} published KAT vectors failed", failures.len());
+    assert!(
+        failures.is_empty(),
+        "{} published KAT vectors failed",
+        failures.len()
+    );
 }
 
 #[test]

@@ -133,8 +133,8 @@ pub fn verify(alg: &str, pk: &PublicKey, envelope: &[u8], aad: &[u8]) -> Result<
 use nextssl_core::{Ciphertext, SharedSecret, MAX_INPUT_LEN};
 use nextssl_registry::{
     new_aead_in, new_blockcipher_in, new_blockmode_in, new_checksum_in, new_kdf_in, new_kem_in,
-    new_kex_in, new_mac_in, new_pke_in, new_pwhash_in, new_sign_in,
-    new_streamcipher_in, new_threshold_in, new_vdf_in, new_xof_in, new_zk_in,
+    new_kex_in, new_mac_in, new_pke_in, new_pwhash_in, new_sign_in, new_streamcipher_in,
+    new_threshold_in, new_vdf_in, new_xof_in, new_zk_in,
 };
 
 fn check_input(data: &[u8]) -> Result<()> {
@@ -671,10 +671,7 @@ pub fn threshold_combine_with(
     new_threshold_in(reg(), Policy::Any, alg, params)?.combine(shares)
 }
 
-pub fn threshold_combine(
-    alg: &str,
-    shares: &[nextssl_core::Share],
-) -> Result<Zeroizing<Vec<u8>>> {
+pub fn threshold_combine(alg: &str, shares: &[nextssl_core::Share]) -> Result<Zeroizing<Vec<u8>>> {
     threshold_combine_with(alg, &Params::new(), shares)
 }
 

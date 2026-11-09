@@ -340,15 +340,6 @@ dependencies = [
 
 [[package]]
 name = "block-padding"
-version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a8894febbff9f758034a5b8e12d87918f56dfc64a8e1fe757d65e29041538d93"
-dependencies = [
- "generic-array",
-]
-
-[[package]]
-name = "block-padding"
 version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "710f1dd022ef4e93f8a438b4ba958de7f64308434fa6a87104481645cc30068b"
@@ -1180,7 +1171,6 @@ version = "0.3.1"
 dependencies = [
  "getrandom 0.2.17",
  "libm",
- "serde",
  "zeroize",
 ]
 
@@ -1290,8 +1280,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ff2abc00be7fca6ebc474524697ae276ad847ad0a6b3faa4bcb027e9a4614ad0"
 dependencies = [
  "cfg-if",
+ "js-sys",
  "libc",
  "wasi",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -1623,7 +1615,6 @@ version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "879f10e63c20629ecabbb64a8010319738c66a5cd0c29b02d63d272b03751d01"
 dependencies = [
- "block-padding 0.3.3",
  "generic-array",
 ]
 
@@ -1633,7 +1624,7 @@ version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3a580c13f0ffc335ef42dd3f6b1a41b726051c5e1656d9a3aa6fddb3c5dfbbf9"
 dependencies = [
- "block-padding 0.4.2",
+ "block-padding",
  "hybrid-array 0.4.15",
 ]
 
@@ -3530,16 +3521,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "nextssl-algo-fugue"
-version = "0.0.1"
-dependencies = [
- "cc",
- "nextssl-core",
- "serde_json",
- "zeroize",
-]
-
-[[package]]
 name = "nextssl-algo-ghash"
 version = "0.0.1"
 dependencies = [
@@ -3592,16 +3573,6 @@ version = "0.0.1"
 dependencies = [
  "groestl",
  "nextssl-core",
-]
-
-[[package]]
-name = "nextssl-algo-hamsi"
-version = "0.0.1"
-dependencies = [
- "cc",
- "nextssl-core",
- "serde_json",
- "zeroize",
 ]
 
 [[package]]
@@ -3828,16 +3799,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "nextssl-algo-hs1-siv"
-version = "0.0.1"
-dependencies = [
- "cc",
- "nextssl-core",
- "object",
- "zeroize",
-]
-
-[[package]]
 name = "nextssl-algo-hss-sha256-h5-h5-w4"
 version = "0.0.1"
 dependencies = [
@@ -3923,16 +3884,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "nextssl-algo-joltik"
-version = "0.0.1"
-dependencies = [
- "cc",
- "nextssl-core",
- "object",
- "zeroize",
-]
-
-[[package]]
 name = "nextssl-algo-kalyna"
 version = "0.0.1"
 dependencies = [
@@ -3993,16 +3944,6 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-kasumi"
-version = "0.0.1"
-dependencies = [
- "cc",
- "nextssl-core",
- "object",
- "zeroize",
-]
-
-[[package]]
-name = "nextssl-algo-kaz-sign"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -5071,26 +5012,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "nextssl-algo-shavite3"
-version = "0.0.1"
-dependencies = [
- "cc",
- "nextssl-core",
- "serde_json",
- "zeroize",
-]
-
-[[package]]
-name = "nextssl-algo-simd"
-version = "0.0.1"
-dependencies = [
- "cc",
- "nextssl-core",
- "serde_json",
- "zeroize",
-]
-
-[[package]]
 name = "nextssl-algo-siphash-2-4"
 version = "0.0.1"
 dependencies = [
@@ -5503,16 +5424,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "nextssl-algo-tiaoxin"
-version = "0.0.1"
-dependencies = [
- "cc",
- "nextssl-core",
- "object",
- "zeroize",
-]
-
-[[package]]
 name = "nextssl-algo-tiger"
 version = "0.0.1"
 dependencies = [
@@ -5822,6 +5733,7 @@ version = "0.0.1"
 dependencies = [
  "nextssl",
  "nextssl-core",
+ "nextssl-registry",
  "nextssl-root",
 ]
 
@@ -5989,14 +5901,12 @@ dependencies = [
  "nextssl-algo-fn-dsa-1024",
  "nextssl-algo-fn-dsa-512",
  "nextssl-algo-fountain",
- "nextssl-algo-fugue",
  "nextssl-algo-ghash",
  "nextssl-algo-gift-cofb",
  "nextssl-algo-gimli",
  "nextssl-algo-gost-r-34-11-94",
  "nextssl-algo-grain-128aead",
  "nextssl-algo-groestl",
- "nextssl-algo-hamsi",
  "nextssl-algo-has160",
  "nextssl-algo-hc256",
  "nextssl-algo-hitag2",
@@ -6019,7 +5929,6 @@ dependencies = [
  "nextssl-algo-hqc-128",
  "nextssl-algo-hqc-192",
  "nextssl-algo-hqc-256",
- "nextssl-algo-hs1-siv",
  "nextssl-algo-hss-sha256-h5-h5-w4",
  "nextssl-algo-hyena-v1",
  "nextssl-algo-hyena-v2",
@@ -6029,7 +5938,6 @@ dependencies = [
  "nextssl-algo-isap-k-128a",
  "nextssl-algo-iscream",
  "nextssl-algo-jh",
- "nextssl-algo-joltik",
  "nextssl-algo-kalyna",
  "nextssl-algo-kalyna-128-256",
  "nextssl-algo-kalyna-256-256",
@@ -6037,7 +5945,6 @@ dependencies = [
  "nextssl-algo-kalyna-512-512",
  "nextssl-algo-kangarootwelve",
  "nextssl-algo-kasumi",
- "nextssl-algo-kaz-sign",
  "nextssl-algo-keccak256",
  "nextssl-algo-keccak512",
  "nextssl-algo-khazad",
@@ -6151,8 +6058,6 @@ dependencies = [
  "nextssl-algo-shake128",
  "nextssl-algo-shake256",
  "nextssl-algo-shamir",
- "nextssl-algo-shavite3",
- "nextssl-algo-simd",
  "nextssl-algo-siphash-2-4",
  "nextssl-algo-siphash-4-8",
  "nextssl-algo-skein1024",
@@ -6195,7 +6100,6 @@ dependencies = [
  "nextssl-algo-threefish-1024",
  "nextssl-algo-threefish-256",
  "nextssl-algo-threefish-512",
- "nextssl-algo-tiaoxin",
  "nextssl-algo-tiger",
  "nextssl-algo-tinyjambu",
  "nextssl-algo-tinyjambu-192",
@@ -6242,6 +6146,8 @@ dependencies = [
 name = "nextssl-wasm"
 version = "0.0.1"
 dependencies = [
+ "getrandom 0.2.17",
+ "getrandom 0.4.3",
  "nextssl",
  "wasm-bindgen",
 ]
@@ -6302,9 +6208,9 @@ checksum = "a3c00a0c9600379bd32f8972de90676a7672cba3bf4886986bc05902afc1e093"
 
 [[package]]
 name = "object"
-version = "0.36.7"
+version = "0.37.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "62948e14d923ea95ea2c7c86c71013138b66525b86bdc08d2dcc262bdb497b87"
+checksum = "ff76201f031d8863c38aa7f905eca4f53abbfa15f609db4277d44cd8938f33fe"
 dependencies = [
  "memchr",
  "wasmparser",
@@ -7531,9 +7437,9 @@ dependencies = [
 
 [[package]]
 name = "wasmparser"
-version = "0.222.1"
+version = "0.236.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fa210fd1788e6b37a1d1930f3389c48e1d6ebd1a013d34fa4b7f9e3e3bf03146"
+checksum = "a9b1e81f3eb254cf7404a82cee6926a4a3ccc5aad80cc3d43608a070c67aa1d7"
 dependencies = [
  "bitflags",
 ]
@@ -7674,7 +7580,6 @@ version = "1.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e13084392c5e4bc371903e2935a5eaeed24905a7511356b883835e18a78f6879"
 dependencies = [
- "serde",
  "zeroize_derive",
 ]
 

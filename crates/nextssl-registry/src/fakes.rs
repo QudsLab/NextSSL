@@ -772,7 +772,10 @@ impl Pake for FPake {
         context: &[u8],
         _rng: &mut dyn EntropySource,
     ) -> Result<(Box<dyn PakeState>, Vec<u8>)> {
-        self.sizes().key.unwrap().check("password", password.len())?;
+        self.sizes()
+            .key
+            .unwrap()
+            .check("password", password.len())?;
         let ss = Self::secret(password, context);
         let h = fold(password) | 1; // odd: expected by the responder
         match role {
@@ -879,7 +882,7 @@ impl He for FHe {
             return Err(Error::InvalidInput("lengths"));
         }
         Ok(Zeroizing::new(vec![
-            ct[0].wrapping_sub(secret.as_bytes()[0]),
+            ct[0].wrapping_sub(secret.as_bytes()[0])
         ]))
     }
     fn eval(&self, op: HeOp, cts: &[&[u8]], _evk: &PublicKey) -> Result<Vec<u8>> {
@@ -1384,17 +1387,30 @@ fn pke_pake_threshold_vdf_he_contracts() {
     let (pk, sk) = p.keygen(&mut rng).unwrap();
     let ct = p.encrypt(&pk, b"hello", b"lbl", &mut rng).unwrap();
     assert_eq!(&p.decrypt(&sk, &ct, b"lbl").unwrap()[..], b"hello");
-    assert_eq!(p.decrypt(&sk, &ct, b"other"), Err(Error::AuthenticationFailed));
+    assert_eq!(
+        p.decrypt(&sk, &ct, b"other"),
+        Err(Error::AuthenticationFailed)
+    );
     assert!(p.encrypt(&pk, &[0; 33], b"", &mut rng).is_err());
     // Pake: both parties finish with the same secret; a wrong message ends the exchange
     let k = new_pake_in(&t, Policy::Any, "fake-pake", &Params::new()).unwrap();
-    let (a, m1) = k.start(PakeRole::Initiator, b"pw", b"ctx", &mut rng).unwrap();
-    let (b, m0) = k.start(PakeRole::Responder, b"pw", b"ctx", &mut rng).unwrap();
+    let (a, m1) = k
+        .start(PakeRole::Initiator, b"pw", b"ctx", &mut rng)
+        .unwrap();
+    let (b, m0) = k
+        .start(PakeRole::Responder, b"pw", b"ctx", &mut rng)
+        .unwrap();
     assert!(m0.is_empty());
-    let PakeStep::Done(sb, Some(m2)) = b.step(&m1).unwrap() else { panic!("responder") };
-    let PakeStep::Done(sa, None) = a.step(&m2).unwrap() else { panic!("initiator") };
+    let PakeStep::Done(sb, Some(m2)) = b.step(&m1).unwrap() else {
+        panic!("responder")
+    };
+    let PakeStep::Done(sa, None) = a.step(&m2).unwrap() else {
+        panic!("initiator")
+    };
     assert_eq!(sa, sb);
-    let (a2, _) = k.start(PakeRole::Initiator, b"pw", b"ctx", &mut rng).unwrap();
+    let (a2, _) = k
+        .start(PakeRole::Initiator, b"pw", b"ctx", &mut rng)
+        .unwrap();
     assert!(matches!(a2.step(b"junk"), Err(Error::ProtocolAborted(_))));
     assert!(k.start(PakeRole::Initiator, b"", b"", &mut rng).is_err());
     // Threshold: 1 <= t <= n <= max enforced, party ids validated

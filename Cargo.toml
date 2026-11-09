@@ -1,7 +1,8 @@
 [workspace]
 resolver = "2"
 members = ["crates/*", "xtask", "algos/*/*/*"]
-exclude = ["fuzz", "legacy"]
+# Vendored Rust upstreams are path dependencies only (not members): clippy/test see just our glue.
+exclude = ["fuzz", "legacy", "algos/sign/eddsa/ed448ph/upstream", "algos/sign/fn-dsa/fn-dsa-512/upstream", "algos/stream/zuc/zuc-256/upstream", "algos/xof/turboshake/turboshake128/upstream"]
 
 [workspace.package]
 version = "0.0.1"
