@@ -1,0 +1,19 @@
+id        = "sparkle-esch"
+kind      = "hash"
+category  = "hash"
+family    = "sparkle"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["Esch256 (SPARKLE v1.2, NIST LWC finalist)"]
+fips      = false
+copyleft  = true
+upstream  = { repo = "https://github.com/cryptolu/sparkle", commit = "fa1a4e48675496627a8d036061ca7e1fcec2f197", license = "GPL-3.0", files = ["api.h", "crypto_hash.h", "esch.c", "esch.h", "sparkle.c", "sparkle.h", "LICENSE"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# GPL-3.0: only with the `copyleft` feature. Esch256 only (default ESCH_DIGEST_LEN); Esch384 needs a separate build. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/sparkle-esch.json"]
+
+[sizes]
+out = 32

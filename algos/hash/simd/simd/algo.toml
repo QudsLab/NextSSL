@@ -1,0 +1,25 @@
+id        = "simd"
+kind      = "hash"
+category  = "hash"
+family    = "simd"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["SIMD (SHA-3 round 2 candidate), sphlib implementation"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/pornin/sphlib", commit = "15b6b8d8f3e4a43c58ba102d712fa6b8a3317035", license = "MIT", files = ["c/simd.c", "c/sph_simd.h", "c/sph_types.h", "LICENSE"] }
+# Tier research: SHA-3 competition candidate that was not selected; not standardized. Owner may reclassify.
+# Verbatim sphlib files (MIT, Projet RNRT SAPHIR); symbols prefixed by -D defines in build.rs, shim.c is NextSSL glue.
+
+[params.out_len]
+type    = "u64"
+min     = 28
+max     = 64
+default = 32
+
+[kat]
+files = ["kat/simd.json"]
+
+[sizes]
+out = { min = 28, max = 64 }

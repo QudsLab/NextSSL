@@ -1,0 +1,20 @@
+id        = "sha3-384"
+kind      = "hash"
+category  = "hash"
+family    = "sha3"
+aliases   = ["sha3_384"]
+tier      = "safe"
+status    = "active"
+standards = ["FIPS 202"]
+oid       = "2.16.840.1.101.3.4.2.9"
+fips      = true
+copyleft  = false
+upstream  = { crate = "sha3", version = "=0.12.0", license = "MIT OR Apache-2.0" }
+digest    = "sha3::Sha3_384"
+slot_version = "=0.11.0"
+
+[kat]
+files = ["kat/sha3-384.json"]
+
+[sizes]
+out = 48

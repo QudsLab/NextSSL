@@ -1,0 +1,26 @@
+id        = "shabal"
+kind      = "hash"
+category  = "hash"
+family    = "shabal"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["Shabal (SHA-3 round 2 candidate), sphlib implementation"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/pornin/sphlib", commit = "15b6b8d8f3e4a43c58ba102d712fa6b8a3317035", license = "MIT", files = ["c/shabal.c", "c/sph_shabal.h", "c/sph_types.h", "LICENSE"] }
+# Tier research: SHA-3 competition candidate that was not selected; not standardized. Owner may reclassify.
+# Verbatim sphlib files (MIT, Projet RNRT SAPHIR); symbols prefixed by -D defines in build.rs, shim.c is NextSSL glue.
+# sphlib also has Shabal-192, not exposed: the NIST KAT set in test_shabal.c has no 192-bit digests to verify it.
+
+[params.out_len]
+type    = "u64"
+min     = 28
+max     = 64
+default = 32
+
+[kat]
+files = ["kat/shabal.json"]
+
+[sizes]
+out = { min = 28, max = 64 }

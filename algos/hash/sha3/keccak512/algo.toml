@@ -1,0 +1,19 @@
+id        = "keccak512"
+kind      = "hash"
+category  = "hash"
+family    = "sha3"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["Keccak submission v3 (pre-FIPS 202 padding 0x01)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "sha3", version = "=0.12.0", license = "MIT OR Apache-2.0" }
+digest    = "sha3::Keccak512"
+slot_version = "=0.11.0"
+
+[kat]
+files = ["kat/keccak512.json"]
+
+[sizes]
+out = 64

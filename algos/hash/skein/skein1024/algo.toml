@@ -1,0 +1,17 @@
+id        = "skein1024"
+kind      = "hash"
+category  = "hash"
+family    = "skein"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["Skein v1.3 (Skein-1024-1024)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "skein", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/skein1024.json"]
+
+[sizes]
+out = 128

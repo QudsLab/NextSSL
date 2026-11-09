@@ -1,0 +1,19 @@
+id        = "streebog256"
+kind      = "hash"
+category  = "hash"
+family    = "streebog"
+aliases   = ["gost-r-34-11-2012-256"]
+tier      = "standard"
+status    = "active"
+standards = ["GOST R 34.11-2012", "RFC 6986"]
+oid       = "1.2.643.7.1.1.2.2"
+fips      = false
+copyleft  = false
+upstream  = { crate = "streebog", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+digest    = "streebog::Streebog256"
+
+[kat]
+files = ["kat/streebog256.json"]
+
+[sizes]
+out = 32

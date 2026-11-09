@@ -1,0 +1,19 @@
+id        = "sm3"
+kind      = "hash"
+category  = "hash"
+family    = "sm3"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["GB/T 32905-2016", "GM/T 0004-2012", "ISO/IEC 10118-3:2018"]
+oid       = "1.2.156.10197.1.401"
+fips      = false
+copyleft  = false
+upstream  = { crate = "sm3", version = "=0.5.0", license = "MIT OR Apache-2.0" }
+digest    = "sm3::Sm3"
+
+[kat]
+files = ["kat/sm3.json"]
+
+[sizes]
+out = 32
