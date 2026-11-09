@@ -1,0 +1,24 @@
+id        = "ascon-cxof128"
+kind      = "xof"
+category  = "xof"
+family    = "ascon"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-232 (Ascon-CXOF128)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/ascon/ascon-c", commit = "446347f21b209f3921c65ece70027c366cbe1693", license = "CC0-1.0", files = ["hash.c", "api.h", "ascon.h", "constants.h", "permutations.h", "printstate.h", "round.h", "word.h", "crypto_cxof.h", "crypto_hash.h", "LICENSE"] }
+# Ascon-CXOF128 as in NIST SP 800-232 (ascon-c ref). Customization string param `custom` limited to 256 bytes (2048 bits) by glue. The KAT file has 64-byte outputs only; shorter outputs are checked as prefixes. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[params.custom]
+type     = "bytes"
+min      = 0
+max      = 256
+required = false
+
+[kat]
+files = ["kat/ascon-cxof128.json"]
+
+[sizes]
+

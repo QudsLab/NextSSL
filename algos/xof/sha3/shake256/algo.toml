@@ -1,0 +1,16 @@
+id        = "shake256"
+kind      = "xof"
+category  = "xof"
+family    = "sha3"
+aliases   = ["shake-256"]
+tier      = "standard"
+status    = "active"
+standards = ["FIPS 202"]
+cose_alg  = -45
+oid       = "2.16.840.1.101.3.4.2.12"
+fips      = true
+copyleft  = false
+upstream  = { crate = "sha3", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/cavp-shake256.json"]

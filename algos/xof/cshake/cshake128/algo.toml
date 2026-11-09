@@ -1,0 +1,20 @@
+id        = "cshake128"
+kind      = "xof"
+category  = "xof"
+family    = "cshake"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-185"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "cshake", version = "=0.2.1", license = "MIT OR Apache-2.0" }
+
+[params.custom]
+type     = "bytes"
+min      = 0
+max      = 65536
+required = false
+
+[kat]
+files = ["kat/cshake128.json"]

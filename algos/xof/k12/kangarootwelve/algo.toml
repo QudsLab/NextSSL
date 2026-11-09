@@ -1,0 +1,20 @@
+id        = "kangarootwelve"
+kind      = "xof"
+category  = "xof"
+family    = "k12"
+aliases   = ["k12"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 9861"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "tiny-keccak", version = "=2.0.2", license = "CC0-1.0" }
+
+[params.custom]
+type     = "bytes"
+min      = 0
+max      = 65536
+required = false
+
+[kat]
+files = ["kat/kangarootwelve.json"]
