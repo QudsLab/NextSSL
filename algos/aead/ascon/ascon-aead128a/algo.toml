@@ -1,0 +1,21 @@
+id        = "ascon-aead128a"
+kind      = "aead"
+category  = "aead"
+family    = "ascon"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["Ascon v1.2 (NIST LWC finalist), Ascon-128a"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "ascon128.c", "ascon128.h", "internal-ascon.c", "internal-ascon.h", "internal-util.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# This is the v1.2 Ascon-128a (IV 0x80800c0800000000). The ascon-c commit named in the row only contains the SP 800-232 Ascon-AEAD128 (id ascon-aead128), a different algorithm. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/ascon-aead128a.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16

@@ -1,0 +1,22 @@
+id        = "xchacha20-poly1305"
+kind      = "aead"
+category  = "aead"
+family    = "chacha"
+aliases   = ["xchacha20poly1305"]
+tier      = "safe"
+cose_alg  = -65800  # private use (< -65536): XChaCha20-Poly1305 has no IANA COSE id
+status    = "active"
+standards = ["draft-irtf-cfrg-xchacha-03"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "chacha20poly1305", version = "=0.11.0", license = "Apache-2.0 OR MIT" }
+
+[kat]
+files = ["kat/draft-xchacha.json"]
+# Wycheproof (C2SP/wycheproof, commit in kat/WYCHEPROOF_COMMIT.txt) is run by the crate's own test:
+# kat/wycheproof_xchacha20_poly1305_test.json
+
+[sizes]
+key   = 32
+nonce = 24
+tag   = 16

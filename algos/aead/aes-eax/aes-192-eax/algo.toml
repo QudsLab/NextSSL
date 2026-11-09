@@ -1,0 +1,21 @@
+id        = "aes-192-eax"
+kind      = "aead"
+category  = "aead"
+family    = "aes-eax"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["EAX (Bellare, Rogaway, Wagner 2004)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "eax", version = "=0.6.1", license = "Apache-2.0 OR MIT" }
+# EAX with a fixed 16-byte nonce and a 16-byte tag (the crate AEAD interface; EAX itself allows other nonce
+# lengths, not offered here). Also depends on RustCrypto aes 0.9.4.
+
+[kat]
+files = ["kat/wycheproof.json"]
+
+[sizes]
+key = 24
+nonce = 16
+tag = 16

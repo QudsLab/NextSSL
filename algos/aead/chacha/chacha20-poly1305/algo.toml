@@ -1,0 +1,21 @@
+id        = "chacha20-poly1305"
+kind      = "aead"
+category  = "aead"
+family    = "chacha"
+aliases   = ["chacha20-poly1305-ietf"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 8439"]
+cose_alg  = 24
+fips      = false
+copyleft  = false
+upstream  = { crate = "chacha20poly1305", version = "=0.11.0", license = "Apache-2.0 OR MIT" }
+# IETF ChaCha20-Poly1305 (96-bit nonce). Never repeat a nonce under one key.
+
+[kat]
+files = ["kat/wycheproof.json"]
+
+[sizes]
+key = 32
+nonce = 12
+tag = 16

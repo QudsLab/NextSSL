@@ -1,0 +1,23 @@
+id        = "aes-192-gcm"
+kind      = "aead"
+category  = "aead"
+family    = "aes-gcm"
+aliases   = ["aes192-gcm", "aes-192-gcm-96"]
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-38D"]
+cose_alg  = 2
+oid       = "2.16.840.1.101.3.4.1.26"
+fips      = true
+copyleft  = false
+upstream  = { crate = "aes-gcm", version = "=0.11.1", license = "Apache-2.0 OR MIT" }
+# 96-bit nonce, 128-bit tag. The caller owns nonce uniqueness: never repeat a nonce under one key (use aes-gcm-
+# siv if that cannot be guaranteed).
+
+[kat]
+files = ["kat/acvp-gcm.json", "kat/wycheproof.json"]
+
+[sizes]
+key = 24
+nonce = 12
+tag = 16

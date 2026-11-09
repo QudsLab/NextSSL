@@ -1,0 +1,22 @@
+[package]
+name = "nextssl-algo-aes-siv-cmac-256"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+aes-siv = { version = "=0.8.0", default-features = false, features = ["alloc"] }
+aes = { version = "=0.9.4", default-features = false, features = ["zeroize"] }
+cmac = { version = "=0.8.0", default-features = false }
+
+[dev-dependencies]
+serde_json.workspace = true
+
+[lints]
+workspace = true

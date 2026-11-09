@@ -1,0 +1,23 @@
+id        = "aes-256-gcm"
+kind      = "aead"
+category  = "aead"
+family    = "aes-gcm"
+aliases   = ["aes256-gcm", "aes-256-gcm-96"]
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-38D"]
+cose_alg  = 3
+oid       = "2.16.840.1.101.3.4.1.46"
+fips      = true
+copyleft  = false
+upstream  = { crate = "aes-gcm", version = "=0.11.1", license = "Apache-2.0 OR MIT" }
+
+[kat]
+files = ["kat/sp800-38d.json"]
+# Wycheproof (C2SP/wycheproof, commit in kat/WYCHEPROOF_COMMIT.txt) is run by the crate's own test:
+# kat/wycheproof_aes_gcm_test.json
+
+[sizes]
+key   = 32
+nonce = 12
+tag   = 16

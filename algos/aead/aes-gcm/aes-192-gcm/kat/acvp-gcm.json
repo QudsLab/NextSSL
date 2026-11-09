@@ -1,0 +1,5 @@
+{
+ "algorithm": "aes-192-gcm",
+ "source": "NIST ACVP-Server ACVP-AES-GCM-1.0 internalProjection.json: encrypt groups, key 192, 96-bit IV, 128-bit tag",
+ "vectors": []
+}

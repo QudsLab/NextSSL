@@ -1,0 +1,20 @@
+id        = "ascon-aead128"
+kind      = "aead"
+category  = "aead"
+family    = "ascon"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-232 (Ascon-AEAD128)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/ascon/ascon-c", commit = "446347f21b209f3921c65ece70027c366cbe1693", license = "CC0-1.0", files = ["aead.c", "api.h", "ascon.h", "constants.h", "permutations.h", "printstate.h", "round.h", "word.h", "crypto_aead.h", "LICENSE"] }
+# Ascon-AEAD128 as in NIST SP 800-232 (ascon-c ref). Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/ascon-aead128.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16

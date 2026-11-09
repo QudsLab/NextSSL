@@ -1,0 +1,22 @@
+id        = "aegis128l"
+kind      = "aead"
+category  = "aead"
+family    = "aegis"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["draft-irtf-cfrg-aegis-aead"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "aegis", version = "=0.9.20", license = "MIT" }
+# Aegis128L with a 128-bit tag. Built with the crate `pure-rust` feature (no C backend; the crate itself uses
+# unsafe SIMD intrinsics internally, outside our glue).
+# Row 289 (aegis-128, the original AEGIS-128 of the CAESAR submission) is not in this crate and is blocked.
+
+[kat]
+files = ["kat/draft-aegis.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16

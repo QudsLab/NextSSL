@@ -1,0 +1,23 @@
+id        = "aes-128-ccm"
+kind      = "aead"
+category  = "aead"
+family    = "aes-ccm"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-38C", "RFC 3610"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "ccm", version = "=0.6.1", license = "Apache-2.0 OR MIT" }
+# CCM with a 12-byte nonce and a 16-byte tag. Other nonce lengths (7..13) and tag lengths (4..16) are NOT
+# offered: the Aead sizes are fixed per algorithm id. Message length must stay below 2^24 bytes with a 12-byte
+# nonce (the crate returns an error above that).
+# Also depends on RustCrypto aes 0.9.4.
+
+[kat]
+files = ["kat/wycheproof.json"]
+
+[sizes]
+key = 16
+nonce = 12
+tag = 16

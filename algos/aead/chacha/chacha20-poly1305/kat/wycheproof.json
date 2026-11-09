@@ -1,0 +1,988 @@
+{
+ "algorithm": "chacha20-poly1305",
+ "source": "Wycheproof chacha20_poly1305_test.json (key 256, IV 96, tag 128; includes the RFC 8439 vectors)",
+ "vectors": [
+  {
+   "id": "wp-1",
+   "key_hex": "808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9f",
+   "nonce_hex": "070000004041424344454647",
+   "aad_hex": "50515253c0c1c2c3c4c5c6c7",
+   "pt_hex": "4c616469657320616e642047656e746c656d656e206f662074686520636c617373206f66202739393a204966204920636f756c64206f6666657220796f75206f6e6c79206f6e652074697020666f7220746865206675747572652c2073756e73637265656e20776f756c642062652069742e",
+   "ct_hex": "d31a8d34648e60db7b86afbc53ef7ec2a4aded51296e08fea9e2b5a736ee62d63dbea45e8ca9671282fafb69da92728b1a71de0a9e060b2905d6a5b67ecd3b3692ddbd7f2d778b8c9803aee328091b58fab324e4fad675945585808b4831d7bc3ff4def08e4b7a9de576d26586cec64b61161ae10b594f09e26a7e902ecbd0600691"
+  },
+  {
+   "id": "wp-2",
+   "key_hex": "80ba3192c803ce965ea371d5ff073cf0f43b6a2ab576b208426e11409c09b9b0",
+   "nonce_hex": "4da5bf8dfd5852c1ea12379d",
+   "aad_hex": "",
+   "pt_hex": "",
+   "ct_hex": "76acb342cf3166a5b63c0c0ea1383c8d"
+  },
+  {
+   "id": "wp-3",
+   "key_hex": "7a4cd759172e02eb204db2c3f5c746227df584fc1345196391dbb9577a250742",
+   "nonce_hex": "a92ef0ac991dd516a3c6f689",
+   "aad_hex": "bd506764f2d2c410",
+   "pt_hex": "",
+   "ct_hex": "906fa6284b52f87b7359cbaa7563c709"
+  },
+  {
+   "id": "wp-4",
+   "key_hex": "cc56b680552eb75008f5484b4cb803fa5063ebd6eab91f6ab6aef4916a766273",
+   "nonce_hex": "99e23ec48985bccdeeab60f1",
+   "aad_hex": "",
+   "pt_hex": "2a",
+   "ct_hex": "3acac27dec0968801e9f6eded69d807522"
+  },
+  {
+   "id": "wp-5",
+   "key_hex": "46f0254965f769d52bdb4a70b443199f8ef207520d1220c55e4b70f0fda620ee",
+   "nonce_hex": "ab0dca716ee051d2782f4403",
+   "aad_hex": "91ca6c592cbcca53",
+   "pt_hex": "51",
+   "ct_hex": "c4168310ca45b1f7c66cad4e99e43f72b9"
+  },
+  {
+   "id": "wp-6",
+   "key_hex": "2f7f7e4f592bb389194989743507bf3ee9cbde1786b6695fe6c025fd9ba4c100",
+   "nonce_hex": "461af122e9f2e0347e03f2db",
+   "aad_hex": "",
+   "pt_hex": "5c60",
+   "ct_hex": "4d1391e8b61efb39c122195453077b22e5e2"
+  },
+  {
+   "id": "wp-7",
+   "key_hex": "c8833dce5ea9f248aa2030eacfe72bffe69a620caf793344e5718fe0d7ab1a58",
+   "nonce_hex": "61546ba5f1720590b6040ac6",
+   "aad_hex": "88364fc8060518bf",
+   "pt_hex": "ddf2",
+   "ct_hex": "b60dead0fd4697ec2e5558237719d02437a2"
+  },
+  {
+   "id": "wp-8",
+   "key_hex": "bd8ed7fb0d607522f04d0b12d42c92570bccc5ba2486953d70ba2e8193f6225a",
+   "nonce_hex": "d2ab0abb50a8e9fba25429e1",
+   "aad_hex": "",
+   "pt_hex": "201221",
+   "ct_hex": "3cf470a27a69c9d7ee84586f11388c6884e63a"
+  },
+  {
+   "id": "wp-9",
+   "key_hex": "1c8b59b17a5ceced31bde97d4cefd9aaaa63362e096e863ec1c89580bca79b7a",
+   "nonce_hex": "94f32a6dff588f2b5a2ead45",
+   "aad_hex": "6c8cf2ab3820b695",
+   "pt_hex": "453f95",
+   "ct_hex": "610925a8a7883eb7e40bc40e2e5922ae95ddc3"
+  },
+  {
+   "id": "wp-10",
+   "key_hex": "e4912cb75a1174345f1a457366f18885fe8460b06478e04be2f7fb4ec9c113e5",
+   "nonce_hex": "7aa5ad8bf5254762171ec869",
+   "aad_hex": "",
+   "pt_hex": "9e4c1d03",
+   "ct_hex": "fe6849aa99ad07871b25c27defc31a541bd5c418"
+  },
+  {
+   "id": "wp-11",
+   "key_hex": "e05777ef3d989ace7d2abfba452bfded54801dbd5c66e91c0c2ef00479d85572",
+   "nonce_hex": "b7f526e3fd71cf5720961aec",
+   "aad_hex": "15d93a96d0e6c5a9",
+   "pt_hex": "17bfda03",
+   "ct_hex": "f4710e51b957c6a37b6a4c94996c002186d63b2b"
+  },
+  {
+   "id": "wp-12",
+   "key_hex": "1a4c4f39abe890e62345c947bcf7de7c2e33bd5ceeda0a0abf0e7ef935ddf3ee",
+   "nonce_hex": "9447bf85d5b97d8aee0f8e51",
+   "aad_hex": "",
+   "pt_hex": "c15a593bd0",
+   "ct_hex": "f711647ff122b12dc38cb79629f84cdbdc2425c09d"
+  },
+  {
+   "id": "wp-13",
+   "key_hex": "800e9a24791700c9609736695ba2a8b99b2d57f1c3bfb61ed49db1c6c5219583",
+   "nonce_hex": "3dbe876bd880ec8ea2017043",
+   "aad_hex": "96224835610b782b",
+   "pt_hex": "a7bfd041e3",
+   "ct_hex": "d171f046ead179b1b9c4184378df009019dbb8c249"
+  },
+  {
+   "id": "wp-14",
+   "key_hex": "208c2c376c9430433db20e1a6b7ba817f8ffbfa6827f26759ccede42e591d3ec",
+   "nonce_hex": "27fb58ec6a21e84696cb8830",
+   "aad_hex": "",
+   "pt_hex": "af104b5ccd0e",
+   "ct_hex": "9351b1b1b082560785509f60f26b681933d9cdbfd29f"
+  },
+  {
+   "id": "wp-15",
+   "key_hex": "2eb168e53b07ab04355ea792fe11a6be2ce9c39cfe15a997076b1e38c17ad620",
+   "nonce_hex": "b5965470c383fd29fe7eaee7",
+   "aad_hex": "6d52feb2509f7fbf",
+   "pt_hex": "6fdf2927e169",
+   "ct_hex": "41abff7b71cc9b5174297c03cf8902d1f706fd008902"
+  },
+  {
+   "id": "wp-16",
+   "key_hex": "55568158d3a6483f1f7021eab69b703f614251cadc1af5d34a374fdbfc5adac7",
+   "nonce_hex": "3c4e654d663fa4596dc55bb7",
+   "aad_hex": "",
+   "pt_hex": "ab85e9c1571731",
+   "ct_hex": "5dfe3440dbb3c3ed7a434e2602d394281e0afa9fb7aa42"
+  },
+  {
+   "id": "wp-17",
+   "key_hex": "e3c09e7fab1aefb516da6a33022a1dd4eb272c80d540c5da52a730f34d840d7f",
+   "nonce_hex": "58389375c69ee398de948396",
+   "aad_hex": "84e46be8c0919053",
+   "pt_hex": "4ee5cda20d4290",
+   "ct_hex": "4bd47212941ce3185f1408ee7fbf18f5abad6e2253a1ba"
+  },
+  {
+   "id": "wp-18",
+   "key_hex": "51e4bf2bad92b7aff1a4bc05550ba81df4b96fabf41c12c7b00e60e48db7e152",
+   "nonce_hex": "4f07afedfdc3b6c2361823d3",
+   "aad_hex": "",
+   "pt_hex": "be3308f72a2c6aed",
+   "ct_hex": "8e9439a56eeec817fbe8a6ed8fabb1937539dd6c00e90021"
+  },
+  {
+   "id": "wp-19",
+   "key_hex": "1131c1418577a054de7a4ac551950f1a053f9ae46e5b75fe4abd5608d7cddadd",
+   "nonce_hex": "b4ea666ee119563366484a78",
+   "aad_hex": "66c0ae70076cb14d",
+   "pt_hex": "a4c9c2801b71f7df",
+   "ct_hex": "b9b910433af052b04530f51aeee024e0a445a6328fa67a18"
+  },
+  {
+   "id": "wp-20",
+   "key_hex": "e1094967f86d893cdfe2e2e6d5c7ee4dfef67da3c9c5d64e6ad7c1577dcb38c5",
+   "nonce_hex": "8092fc245b3326cddbd1424c",
+   "aad_hex": "",
+   "pt_hex": "c37aa791ddd6accf91",
+   "ct_hex": "d9d897a9c1c5bb9f01085a430373058f1a12a0d589fd5be68b"
+  },
+  {
+   "id": "wp-21",
+   "key_hex": "236f9baee4f9da15beeca40ff4af7c760f254a64bc3a3d7f4fad557e61b68586",
+   "nonce_hex": "f1ca81338629587acf9372bf",
+   "aad_hex": "8c32f47a386152ec",
+   "pt_hex": "d7f26d5252e1765f5b",
+   "ct_hex": "8fdb429d47761cbf8e8ef647ed334fdebbc2bef80be02884e0"
+  },
+  {
+   "id": "wp-22",
+   "key_hex": "4de207a3b70c51e5f23048eed5a5da9bb65e917a69aa93e7c8b4a815cd9724de",
+   "nonce_hex": "4c15a71dc6791a8c005ad502",
+   "aad_hex": "",
+   "pt_hex": "f2c54b6b5e490da18659",
+   "ct_hex": "700d35adf5100a22a1de102d992ffaff599b5bddddeb2dfb399b"
+  },
+  {
+   "id": "wp-23",
+   "key_hex": "6d667fd79e5fb725f50343dccc4863227c75ee3f7a578476e3e9f32598d81559",
+   "nonce_hex": "6220527aba88e27f766658b2",
+   "aad_hex": "e1e27ccddb3cb407",
+   "pt_hex": "0c8c5a252681f2b5b4c0",
+   "ct_hex": "04aad66c60e0bf8ebba9c15f69a4d2aef97d7748756ff49d894b"
+  },
+  {
+   "id": "wp-24",
+   "key_hex": "8f4bd94ef73e75d1e068c30b37ead576c5344e093ece1330e9101c82f793cf05",
+   "nonce_hex": "ec1e2967f0f6979e5f5b07fb",
+   "aad_hex": "",
+   "pt_hex": "b89812b34d9bced4a0ba07",
+   "ct_hex": "1c3d53baaa36eaa1d8ec4d4d94ebf960f12433bec43aa86d7e6e6d"
+  },
+  {
+   "id": "wp-25",
+   "key_hex": "2aa3bc7033351cac51364cdaf6ffac2c20f64046e1550a7b1c65f41800599019",
+   "nonce_hex": "28cce57a5db2cd206321e340",
+   "aad_hex": "a9bc350eaf2e6e3d",
+   "pt_hex": "83016823123484b56095b0",
+   "ct_hex": "1c8578f8e75203d0336a525910f7a9d5e4df05d7248bd7a8d65e63"
+  },
+  {
+   "id": "wp-26",
+   "key_hex": "99b62bd5afbe3fb015bde93f0abf483957a1c3eb3ca59cb50b39f7f8a9cc51be",
+   "nonce_hex": "9a59fce26df0005e07538656",
+   "aad_hex": "",
+   "pt_hex": "42baae5978feaf5c368d14e0",
+   "ct_hex": "ff7dc203b26c467a6b50db33578c0f2758c2e14e36d4fc106dcb29b4"
+  },
+  {
+   "id": "wp-27",
+   "key_hex": "85f35b6282cff440bc1020c8136ff27031110fa63ec16f1e825118b006b91257",
+   "nonce_hex": "58dbd4ad2c4ad35dd906e9ce",
+   "aad_hex": "a506e1a5c69093f9",
+   "pt_hex": "fdc85b94a4b2a6b759b1a0da",
+   "ct_hex": "9f8816de0994e938d9e53f95d086fc6c9d8fa915fd8423a7cf05072f"
+  },
+  {
+   "id": "wp-28",
+   "key_hex": "faf4bfe8019a891c74901b17f4f48cee5cd065d55fdea60118aaf6c4319a0ea5",
+   "nonce_hex": "b776c3fddba7c81362ce6e1b",
+   "aad_hex": "",
+   "pt_hex": "8dadff8d60c8e88f604f274833",
+   "ct_hex": "e6b33a74a4ac443bd93f9c1b940c115172bdb02bbad3130fff22790d60"
+  },
+  {
+   "id": "wp-29",
+   "key_hex": "841020d1606edcfc536abfb1a638a7b958e21efc10c386ac45a18493450afd5f",
+   "nonce_hex": "6d62f159731b140eb18ce074",
+   "aad_hex": "5a8e1c7aa39810d5",
+   "pt_hex": "d6af138f701b801e60c85ffd5c",
+   "ct_hex": "b0a7500aca45bb15f01ece43890160e83adbec7f6a2ee2ff0215f9ef00"
+  },
+  {
+   "id": "wp-30",
+   "key_hex": "470f9ce3d2250bd60cbbefdb2e6a1178c012299b5590639c7797b6024fa703d8",
+   "nonce_hex": "a9ea4d619fe405d04cba7d7a",
+   "aad_hex": "",
+   "pt_hex": "6ca67dd023fba6507b9f9a1f667e",
+   "ct_hex": "d3017e0bb1705b380b34cc3334505708e72ca2bd354f487f82f67fbc3acb"
+  },
+  {
+   "id": "wp-31",
+   "key_hex": "e4b97e91e4c8e85eb7ce0a7f30bf8a0abf4468251e4c6386c0e7aacb8e879aa8",
+   "nonce_hex": "0e23c942a0c9fb526586eead",
+   "aad_hex": "eaaaeab26957f9a1",
+   "pt_hex": "b84b3f74cd23064bb426fe2ced2b",
+   "ct_hex": "52e9672b416d84d97033796072d0e83839dc1fd9b8b9d1444c40e488d493"
+  },
+  {
+   "id": "wp-32",
+   "key_hex": "67119627bd988eda906219e08c0d0d779a07d208ce8a4fe0709af755eeec6dcb",
+   "nonce_hex": "68ab7fdbf61901dad461d23c",
+   "aad_hex": "",
+   "pt_hex": "51f8c1f731ea14acdb210a6d973e07",
+   "ct_hex": "0b29638e1fbdd6df53970be22100422a9134087d67a46e79178d0a93f5e1d2"
+  },
+  {
+   "id": "wp-33",
+   "key_hex": "e6f1118d41e4b43fb58221b7ed79673834e0d8ac5c4fa60bbc8bc4893a58894d",
+   "nonce_hex": "d95b3243afaef714c5035b6a",
+   "aad_hex": "6453a53384632212",
+   "pt_hex": "97469da667d6110f9cbda1d1a20673",
+   "ct_hex": "32db66c4a3819d81557455e5980fedfeae30dec94e6ad3a9eea06a0d703917"
+  },
+  {
+   "id": "wp-34",
+   "key_hex": "59d4eafb4de0cfc7d3db99a8f54b15d7b39f0acc8da69763b019c1699f87674a",
+   "nonce_hex": "2fcb1b38a99e71b84740ad9b",
+   "aad_hex": "",
+   "pt_hex": "549b365af913f3b081131ccb6b825588",
+   "ct_hex": "e9110e9f56ab3ca483500ceabab67a13836ccabf15a6a22a51c1071cfa68fa0c"
+  },
+  {
+   "id": "wp-35",
+   "key_hex": "b907a45075513fe8a8019edee3f2591487b2a030b03c6e1d771c862571d2ea1e",
+   "nonce_hex": "118a6964c2d3e380071f5266",
+   "aad_hex": "034585621af8d7ff",
+   "pt_hex": "55a465644f5b650928cbee7c063214d6",
+   "ct_hex": "e4b113cb775945f3d3a8ae9ec141c00c7c43f16ce096d0dc27c95849dc383b7d"
+  },
+  {
+   "id": "wp-36",
+   "key_hex": "3b2458d8176e1621c0cc24c0c0e24c1e80d72f7ee9149a4b166176629616d011",
+   "nonce_hex": "45aaa3e5d16d2d42dc03445d",
+   "aad_hex": "",
+   "pt_hex": "3ff1514b1c503915918f0c0c31094a6e1f",
+   "ct_hex": "02cc3acb5ee1fcdd12a03bb857976474d3d83b7463a2c3800fe958c28eaa290813"
+  },
+  {
+   "id": "wp-37",
+   "key_hex": "f60c6a1b625725f76c7037b48fe3577fa7f7b87b1bd5a982176d182306ffb870",
+   "nonce_hex": "f0384fb876121410633d993d",
+   "aad_hex": "9aaf299eeea78f79",
+   "pt_hex": "63858ca3e2ce69887b578a3c167b421c9c",
+   "ct_hex": "35766488d2bc7c2b8d17cbbb9abfad9e6d1f391e657b2738dda08448cba2811ceb"
+  },
+  {
+   "id": "wp-38",
+   "key_hex": "37ceb574ccb0b701dd11369388ca27101732339f49d8d908ace4b23af0b7ce89",
+   "nonce_hex": "37270b368f6b1e3e2ca51744",
+   "aad_hex": "",
+   "pt_hex": "f26991537257378151f4776aad28ae8bd16b",
+   "ct_hex": "b621d76a8dacff00b3f840cdf26c894cc5d1e0a21716ed94c0382fa9b0903d15bb68"
+  },
+  {
+   "id": "wp-39",
+   "key_hex": "68888361919bc10622f45df168e5f6a03bd8e884c0611bea2f34c1882ed9832b",
+   "nonce_hex": "bfd6ff40f2df8ca7845980cc",
+   "aad_hex": "b8373438ddb2d6c3",
+   "pt_hex": "ff97f2eefb3401ac31fc8dc1590d1a92cbc1",
+   "ct_hex": "e0a745186c1a7b147f74faff2a715df5c19d917baf703e355d4d950e6c05fe8f349f"
+  },
+  {
+   "id": "wp-40",
+   "key_hex": "1b35b856b5a86d3403d28fc2103a631d42deca5175cdb0669a5e5d90b2caafc5",
+   "nonce_hex": "2343de88be6c7196d33b8694",
+   "aad_hex": "",
+   "pt_hex": "21ef185c3ae9a96fa5eb473878f4d0b242781d",
+   "ct_hex": "d6e0ed54fccef30bd605d72da3320e249a9cb5c68bc6724ec803c43984ce42f6bd09ff"
+  },
+  {
+   "id": "wp-41",
+   "key_hex": "d6484e3973f6be8c83ed3208d5be5cfa06fda72fbfdc5b19d09be3f4e4eba29d",
+   "nonce_hex": "1af1d90e877e11a496efa3df",
+   "aad_hex": "cc4efd8364fb114a",
+   "pt_hex": "7335ab04b03e706109ec3ee835db9a246ea0ad",
+   "ct_hex": "29e54d608237c3c3609dba16e6edf43842d72fd3365fdcd506aaaa5368661e80e9d99b"
+  },
+  {
+   "id": "wp-42",
+   "key_hex": "422add37849d6e4c3dfd8020dc6a07e8a249788f3d6a83b9cb4d802362c97542",
+   "nonce_hex": "1e7e67be948de7352ffdb727",
+   "aad_hex": "",
+   "pt_hex": "d7f5e611dd3a2750fb843fc1b6b93087310dc87d",
+   "ct_hex": "7fe606652d858f595ec2e706754fa3d933fcc83478d59235aa5d03a4c32590e590c04d22"
+  },
+  {
+   "id": "wp-43",
+   "key_hex": "cdccfe3f46d782ef47df4e72f0c02d9c7f774def970d23486f11a57f54247f17",
+   "nonce_hex": "376187894605a8d45e30de51",
+   "aad_hex": "956846a209e087ed",
+   "pt_hex": "e28e0e9f9d22463ac0e42639b530f42102fded75",
+   "ct_hex": "14f707c446988a4903775ec7acec6da114d43112987d4b147c490d43d376a198cab383f0"
+  },
+  {
+   "id": "wp-44",
+   "key_hex": "e79dfc6d2fc465b8439e1c5baccb5d8ef2853899fc19753b397e6c25b35e977e",
+   "nonce_hex": "f9d6320d7ce51d8ed0677d3a",
+   "aad_hex": "",
+   "pt_hex": "4f543e7938d1b878dacaeec81dce4899974816813b",
+   "ct_hex": "1003f13ea1329cbb187316f64c3ff3a87cf5b96661d2323ad625094bec84790d7958d5583f"
+  },
+  {
+   "id": "wp-45",
+   "key_hex": "1d7b8f1d96a1424923aef8a984869d4a777a110990ba465627acf80396c7f376",
+   "nonce_hex": "50ba1962cdc32a5a2d36e640",
+   "aad_hex": "093053e20261daab",
+   "pt_hex": "5d3efd5767f3c12efd08af9a44e028ae68c9eff843",
+   "ct_hex": "2d48b0834e9ffe3046103ef7a214f02e8e4d33360ed533ad089be229ea606ec0f3fa22eb33"
+  },
+  {
+   "id": "wp-46",
+   "key_hex": "dd433e28cfbcb5de4ab36a02bf38686d83208771a0e63dcd08b4df1a07ac47a1",
+   "nonce_hex": "c9cc0a1afc38ec6c30c38c68",
+   "aad_hex": "",
+   "pt_hex": "8a3e17aba9606dd49e3b1a4d9e5e42f1742373632489",
+   "ct_hex": "e9917ff3e64bbe1783579375e75ea823976b35539949074a890669b25105434c75beed3248db"
+  },
+  {
+   "id": "wp-47",
+   "key_hex": "a60924101b42ac24154a88de42142b2334cf599176caf4d1226f712dd9172930",
+   "nonce_hex": "8ba77644b08d65d5e9f31942",
+   "aad_hex": "b2a4e12a19a61c75",
+   "pt_hex": "c949957e66439deee4b2ac1d4a6c98a6c527b90f52ab",
+   "ct_hex": "db4c700513818972b0dc0e531b1c281ca03e40c60dea63f4478bba2af469a7a4dc3b4f141360"
+  },
+  {
+   "id": "wp-48",
+   "key_hex": "1aa42027836965b1e6086fa137f9cf7f1ff48676696829bd281ff81c8ea0a4a9",
+   "nonce_hex": "4b3dca84ecc407f424f281a9",
+   "aad_hex": "",
+   "pt_hex": "37252a3eb5c8960f0567e503a9035783b3d0a19a4b9a47",
+   "ct_hex": "b5f14617491fc923b683e2cc9562d043dd5986b97dbdbd972ce54713c05c4bb4d088c0a30cacd3"
+  },
+  {
+   "id": "wp-49",
+   "key_hex": "5d40db0cc18ef2e42815d3b6245a466a0b30a0f93e318ac10edde3bf8ad98160",
+   "nonce_hex": "acad618039b317470d21621b",
+   "aad_hex": "413036411af75745",
+   "pt_hex": "959dde1ef3129b27702c558849e466f2baca1a45bdf4b2",
+   "ct_hex": "b7ca3879f95140bf6a97b3212218b7bf864a51e5bb0b3efe558fb570145470ea693eb76eb73171"
+  },
+  {
+   "id": "wp-50",
+   "key_hex": "0212a8de5007ed87b33f1a7090b6114f9e08cefd9607f2c276bdcfdbc5ce9cd7",
+   "nonce_hex": "e6b1adf2fd58a8762c65f31b",
+   "aad_hex": "",
+   "pt_hex": "10f1ecf9c60584665d9ae5efe279e7f7377eea6916d2b111",
+   "ct_hex": "42f26c56cb4be21d9d8d0c80fc99dde00d75f38074bfe76454aa7e13d48fff7d7557039457040a3a"
+  },
+  {
+   "id": "wp-51",
+   "key_hex": "c5bc09565646e7edda954f1f739223dada20b95c44ab033d0fae4b0283d18be3",
+   "nonce_hex": "6b282ebecc541bcd7834ed55",
+   "aad_hex": "3e8bc5ade182ff08",
+   "pt_hex": "9222f9018e54fd6de1200806a9ee8e4cc904d29f25cba193",
+   "ct_hex": "123032437b4bfd6920e8f7e7e0087ae4889ebe7a0ad0e9003cf68f179550da63d3b96c2d55411865"
+  },
+  {
+   "id": "wp-52",
+   "key_hex": "9460b3c44ed86e70f3bda66385e1ca10b0c1677ef4f1360532830d17535f996f",
+   "nonce_hex": "abfaf42e0dba884efcf07823",
+   "aad_hex": "",
+   "pt_hex": "5c5cce881b93fb7a1b7939af1ffc5f84d3280ada778cca0953",
+   "ct_hex": "1d218c9f1f9f02f248a6f976a7557057f37d9393d9f213c1f3bc88344c6fdc898feed394fb28511316"
+  },
+  {
+   "id": "wp-53",
+   "key_hex": "c111d6d5d78a071b15ab37cc8c3819199387ab7c1933aa97b1489f6584ba8e2a",
+   "nonce_hex": "85f18ad8ff72cafee2452ab8",
+   "aad_hex": "84cdff939391c022",
+   "pt_hex": "6989c646a10b7c76f4d9f7d574da40e152013cf0dd78f5aa8a",
+   "ct_hex": "9715d344e8d3f3a3eaa98a9cea57c0cd717c6ef5076027c9ec3056ff5ee0aa8636bb639984edb5236b"
+  },
+  {
+   "id": "wp-54",
+   "key_hex": "8a1b1e699a0c4a3e610b10902daedab1bf1ea0d505c47d7842cbcee0d3b1b6e6",
+   "nonce_hex": "a6f9a8d335fa84c3b27dcd2a",
+   "aad_hex": "",
+   "pt_hex": "ee6a15fc183108f0877e7f2b8a9615f4b3fc36e1c83440f66aad",
+   "ct_hex": "9089bbdb8bcfd124e227bf75c4bfe1cba2004a274fc31aa32358fd2e21c64a019621c68594826cd7b1cd"
+  },
+  {
+   "id": "wp-55",
+   "key_hex": "74b384e6e013ec4172ed7a28a10fb9bb79b4be2a24f6999e3d3caa28e64a8656",
+   "nonce_hex": "ebc19fc9ecb2339908ea3836",
+   "aad_hex": "85073f2edc13d3a1",
+   "pt_hex": "3aa9f7372f056e5a0729752d9a37132d6dd07c56792e1c7582a9",
+   "ct_hex": "796ffb70ab43e7fa79f95583e384524727bb3e47fc45b969f714c3322b4445de5f3c9f18dcc847cc94c3"
+  },
+  {
+   "id": "wp-56",
+   "key_hex": "77d824795d2029f0eb0e0baab5cfeb32f7e93474913a7f95c737a667a3c33314",
+   "nonce_hex": "f3307430f492d2b8a72d3a81",
+   "aad_hex": "",
+   "pt_hex": "0c4179a497d8fdd72796fb725692b805d63b7c718359cf10518aee",
+   "ct_hex": "49c81d17d67d7ba9954f497d0b0ddc21f3f839c9d2cc198d30bc2c50009899e5b2a9726c8f3556cadfbe84"
+  },
+  {
+   "id": "wp-57",
+   "key_hex": "bec5eac68f893951cbd7d1ecd3ee6611130dd9c3f80cddf95111d07d5edd76d1",
+   "nonce_hex": "342ada4f0c115124b222df80",
+   "aad_hex": "73365f6d80edb1d8",
+   "pt_hex": "481433d8b1cd38af4a750e13a64b7a4e8507682b3517595938a20e",
+   "ct_hex": "4c129fc13cbdd9d3fe81ac755bf4fbea2fdd7e0aca0505a6ee96379cede1d30a03db5d55265d3648bc40d4"
+  },
+  {
+   "id": "wp-58",
+   "key_hex": "a59c1e13064df8f2b8df77a492b0ca2eae921b52a84b305a3a9a51408a9ecb69",
+   "nonce_hex": "9544d41ece0c92ef01cfac2d",
+   "aad_hex": "",
+   "pt_hex": "1c35b898821ba55c2617c25df9e6df2a8002b384902186cd69dfd20e",
+   "ct_hex": "a6fa8f57ddc81d6099f667dd62402b6a5d5b7d05a329298029113169bb24e38b31dbbc3e575b9e3ee076af2a"
+  },
+  {
+   "id": "wp-59",
+   "key_hex": "084b5d7365f1a8fec6365939ed741e6ea5893e0318d82ab47500a97d77aaa041",
+   "nonce_hex": "829f005e980f0a6e2f983eaa",
+   "aad_hex": "770f6e6e89a3fe8e",
+   "pt_hex": "7510016efadc385a71ed689ceb590c8ea9cc1e81b793338bddf5f10c",
+   "ct_hex": "fd42cb5cf894f879e3cf751662aaa58a2288cc53548802becaf42359188329438afe1cd7225d0478aa90c773"
+  },
+  {
+   "id": "wp-60",
+   "key_hex": "5a7f850a1d9aafa77d59ae1b731965e8aaec6352280fc76a7b5e23ef3610cfe4",
+   "nonce_hex": "4946a0d6adea93b82d4332e5",
+   "aad_hex": "",
+   "pt_hex": "3c161d791f624fb0388e808f0f69ed790dbe4cbd089ebac46627bcf01d",
+   "ct_hex": "402302b56140c4dcc39774732c55883de124ce4bf0a0261cfa1569e2cfe830bfe933a96786cff2dd72b82c4bd5"
+  },
+  {
+   "id": "wp-61",
+   "key_hex": "e6d5a4246f6f05618b59c8f9ec3ac8068cc0d3f351c571aa52b09cb251f9c2f6",
+   "nonce_hex": "2f90a65e9e48725de6ffc727",
+   "aad_hex": "f2415377ad283fd8",
+   "pt_hex": "964fc9e0e8355947aa1c2caadd7b3dbef82a1024e623606fac436ef573",
+   "ct_hex": "d052932bad6e6c4f835f02019e52d7ff807dc2a5aac2040883c79dd3d5655f93396b4d755dc4475721665fed91"
+  },
+  {
+   "id": "wp-62",
+   "key_hex": "09e822123adbb1ed89b79a58619c64853992f8371d46338712f6c91ab11a68bb",
+   "nonce_hex": "a797205a6cacdd7e47a4789d",
+   "aad_hex": "",
+   "pt_hex": "80b71bbe833629841bd3aeaeb9db6123e51d367b436fe9d2d3454b62cfad",
+   "ct_hex": "83f5c77396cabd28dfcc002cba0756d4ea5455e0261d847d5708aac21e8d705a05820a21f381d244d40e58d2f16b"
+  },
+  {
+   "id": "wp-63",
+   "key_hex": "625735fe7f8fc81b0c1edc3d08a78b41268f87a3c68488b674222630c1d587a5",
+   "nonce_hex": "9d8cdf289dddd09afdc1b02f",
+   "aad_hex": "200a9c95946ff05c",
+   "pt_hex": "67ae1882d0b1c1b2485bec98115ecf53b9b438deb1d0400531705038873a",
+   "ct_hex": "209b7539385c8b19ecd0fd8b5011b2996e316f1942064e68edfa363acbcdfa2f454b9fa2608f780f7c6f9b780fe1"
+  },
+  {
+   "id": "wp-64",
+   "key_hex": "2eb51c469aa8eb9e6c54a8349bae50a20f0e382711bba1152c424f03b6671d71",
+   "nonce_hex": "04a9be03508a5f31371a6fd2",
+   "aad_hex": "",
+   "pt_hex": "b053999286a2824f42cc8c203ab24e2c97a685adcc2ad32662558e55a5c729",
+   "ct_hex": "45c7d6b53acad4abb68876a6e96a48fb59524d2c92c9d8a189c9fd2db91746566d3ca10e311b695f3eae1551652493"
+  },
+  {
+   "id": "wp-65",
+   "key_hex": "7f5b74c07ed1b40fd14358fe2ff2a740c116c7706510e6a437f19ea49911cec4",
+   "nonce_hex": "470a339ecb3219b8b81a1f8b",
+   "aad_hex": "374618a06ea98a48",
+   "pt_hex": "f45206abc25552b2abc9ab7fa243035fedaaddc3b2293956f1ea6e7156e7eb",
+   "ct_hex": "46a80c4187024720084627580080dde5a3f4a11093a7076ed6f3d326bc7b70534d4aa2835a52e72d14df0e4f47f25f"
+  },
+  {
+   "id": "wp-66",
+   "key_hex": "e1731d5854e1b70cb3ffe8b786a2b3ebf0994370954757b9dc8c7bc5354634a3",
+   "nonce_hex": "72cfd90ef3026ca22b7e6e6a",
+   "aad_hex": "",
+   "pt_hex": "b9c554cbc36ac18ae897df7beecac1dbeb4eafa156bb60ce2e5d48f05715e678",
+   "ct_hex": "ea29afa49d36e8760f5fe19723b9811ed5d519934a440f5081ac430b953b0e21222541af46b86533c6b68d2ff108a7ea"
+  },
+  {
+   "id": "wp-67",
+   "key_hex": "27d860631b0485a410702fea61bc873f3442260caded4abde25b786a2d97f145",
+   "nonce_hex": "262880d475f3dac5340dd1b8",
+   "aad_hex": "2333e5ce0f93b059",
+   "pt_hex": "6b2604996cd30c14a13a5257ed6cffd3bc5e29d6b97eb1799eb335e281ea451e",
+   "ct_hex": "6dad637897544d8bf6be9507ed4d1bb2e954bc427e5de729daf50762846ff2f47b997d93c982189d7095dc794c746232"
+  },
+  {
+   "id": "wp-68",
+   "key_hex": "5155dee9aade1cc61ee7e3f92660f7590f5e5ba82f1b59b850e3fa453d2fa6b3",
+   "nonce_hex": "c26c4b3bfdb97ee6b0f63ca1",
+   "aad_hex": "",
+   "pt_hex": "2734e08eff8f5c4f84fa0c207f49c7fd78af1ad5123ff81f83f500edf4eda09edf",
+   "ct_hex": "f5982b601c7a18fc72a65b218c44974dc564d8314cbe6f87fcf6c6cfbe618b34b1c43632f55760b5d1ed37556a94d049b5"
+  },
+  {
+   "id": "wp-69",
+   "key_hex": "573f08ebbe0cce4ac9618e8c3b224bea0a32f055c6996838a32f527ca3c3b695",
+   "nonce_hex": "ad8050dc6d122dce3e5639ed",
+   "aad_hex": "e99698241c599b5f",
+   "pt_hex": "668d5e3f95fe030daf432a5fc5837af3a79c81e94b28d8204c5ee262ab3c9908a7",
+   "ct_hex": "eaf6810e6ec1cb7a2918856257d1aa3d51a827879146c6337ecf535e9c89b149c5a2950c2f394a3466c345f796323c1aa7"
+  },
+  {
+   "id": "wp-70",
+   "key_hex": "cf0d40a4644e5f51815165d5301b22631f4544c49a1878e3a0a5e8e1aae0f264",
+   "nonce_hex": "e74a515e7e2102b90bef55d2",
+   "aad_hex": "",
+   "pt_hex": "973d0c753826bae466cf9abb3493152e9de7819e2bd0c71171346b4d2cebf8041aa3cedc0dfd7b467e26228bc86c9a",
+   "ct_hex": "fba78ae4f9d808a62e3da40be2cb7700c3613d9eb2c529c652e76a432c658d27095f0eb8f940c324981ea935e507f98f046956db3a512908bd7afc8f2ab0a9"
+  }
+ ],
+ "invalid": [
+  {
+   "id": "wp-146",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f5409bb729039d0814ac514054323f44"
+  },
+  {
+   "id": "wp-147",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f6409bb729039d0814ac514054323f44"
+  },
+  {
+   "id": "wp-148",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "74409bb729039d0814ac514054323f44"
+  },
+  {
+   "id": "wp-149",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4419bb729039d0814ac514054323f44"
+  },
+  {
+   "id": "wp-150",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409b3729039d0814ac514054323f44"
+  },
+  {
+   "id": "wp-151",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb728039d0814ac514054323f44"
+  },
+  {
+   "id": "wp-152",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb72b039d0814ac514054323f44"
+  },
+  {
+   "id": "wp-153",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d8814ac514054323f44"
+  },
+  {
+   "id": "wp-154",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d0815ac514054323f44"
+  },
+  {
+   "id": "wp-155",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d08148c514054323f44"
+  },
+  {
+   "id": "wp-156",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d0814ac504054323f44"
+  },
+  {
+   "id": "wp-157",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d0814ac514055323f44"
+  },
+  {
+   "id": "wp-158",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d0814ac514056323f44"
+  },
+  {
+   "id": "wp-159",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d0814ac514054323f45"
+  },
+  {
+   "id": "wp-160",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d0814ac514054323f46"
+  },
+  {
+   "id": "wp-161",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d0814ac514054323f04"
+  },
+  {
+   "id": "wp-162",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d0814ac514054323fc4"
+  },
+  {
+   "id": "wp-163",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "f4409bb729039d8814ac514054323fc4"
+  },
+  {
+   "id": "wp-164",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "00000000000000000000000000000000"
+  },
+  {
+   "id": "wp-165",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "ffffffffffffffffffffffffffffffff"
+  },
+  {
+   "id": "wp-166",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a28914007a6119dd3f109bba21ce9a7d6"
+  },
+  {
+   "id": "wp-167",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a2b914007a6119dd3f109bba21ce9a7d6"
+  },
+  {
+   "id": "wp-168",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995aa9914007a6119dd3f109bba21ce9a7d6"
+  },
+  {
+   "id": "wp-169",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29904007a6119dd3f109bba21ce9a7d6"
+  },
+  {
+   "id": "wp-170",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914087a6119dd3f109bba21ce9a7d6"
+  },
+  {
+   "id": "wp-171",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a7119dd3f109bba21ce9a7d6"
+  },
+  {
+   "id": "wp-172",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a4119dd3f109bba21ce9a7d6"
+  },
+  {
+   "id": "wp-173",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119d53f109bba21ce9a7d6"
+  },
+  {
+   "id": "wp-174",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119dd3f009bba21ce9a7d6"
+  },
+  {
+   "id": "wp-175",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119dd3f129bba21ce9a7d6"
+  },
+  {
+   "id": "wp-176",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119dd3f109baa21ce9a7d6"
+  },
+  {
+   "id": "wp-177",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119dd3f109bba21de9a7d6"
+  },
+  {
+   "id": "wp-178",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119dd3f109bba21ee9a7d6"
+  },
+  {
+   "id": "wp-179",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119dd3f109bba21ce9a7d7"
+  },
+  {
+   "id": "wp-180",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119dd3f109bba21ce9a7d4"
+  },
+  {
+   "id": "wp-181",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119dd3f109bba21ce9a796"
+  },
+  {
+   "id": "wp-182",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119dd3f109bba21ce9a756"
+  },
+  {
+   "id": "wp-183",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a29914007a6119d53f109bba21ce9a756"
+  },
+  {
+   "id": "wp-184",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995a00000000000000000000000000000000"
+  },
+  {
+   "id": "wp-185",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995affffffffffffffffffffffffffffffff"
+  },
+  {
+   "id": "wp-186",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e967405a16e8b44eba92aa47f5cea52b7a"
+  },
+  {
+   "id": "wp-187",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e964405a16e8b44eba92aa47f5cea52b7a"
+  },
+  {
+   "id": "wp-188",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e9e6405a16e8b44eba92aa47f5cea52b7a"
+  },
+  {
+   "id": "wp-189",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966415a16e8b44eba92aa47f5cea52b7a"
+  },
+  {
+   "id": "wp-190",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a96e8b44eba92aa47f5cea52b7a"
+  },
+  {
+   "id": "wp-191",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e9b44eba92aa47f5cea52b7a"
+  },
+  {
+   "id": "wp-192",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16eab44eba92aa47f5cea52b7a"
+  },
+  {
+   "id": "wp-193",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44e3a92aa47f5cea52b7a"
+  },
+  {
+   "id": "wp-194",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44eba93aa47f5cea52b7a"
+  },
+  {
+   "id": "wp-195",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44eba928a47f5cea52b7a"
+  },
+  {
+   "id": "wp-196",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44eba92aa46f5cea52b7a"
+  },
+  {
+   "id": "wp-197",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44eba92aa47f5cfa52b7a"
+  },
+  {
+   "id": "wp-198",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44eba92aa47f5cca52b7a"
+  },
+  {
+   "id": "wp-199",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44eba92aa47f5cea52b7b"
+  },
+  {
+   "id": "wp-200",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44eba92aa47f5cea52b78"
+  },
+  {
+   "id": "wp-201",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44eba92aa47f5cea52b3a"
+  },
+  {
+   "id": "wp-202",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44eba92aa47f5cea52bfa"
+  },
+  {
+   "id": "wp-203",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e966405a16e8b44e3a92aa47f5cea52bfa"
+  },
+  {
+   "id": "wp-204",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e900000000000000000000000000000000"
+  },
+  {
+   "id": "wp-205",
+   "key_hex": "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "ct_hex": "d03bcb3ca52d48d1d203b1e7b1a5995af1a0466a61bb386a2e12d189a2c4ea15e9ffffffffffffffffffffffffffffffff"
+  }
+ ]
+}

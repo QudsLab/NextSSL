@@ -1,0 +1,21 @@
+id        = "aes-256-gcm-siv"
+kind      = "aead"
+category  = "aead"
+family    = "aes-gcm-siv"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 8452"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "aes-gcm-siv", version = "=0.12.1", license = "MIT OR Apache-2.0" }
+# Nonce-misuse-resistant AEAD (RFC 8452): a repeated nonce leaks only whether two messages are equal. 96-bit
+# nonce, 128-bit tag. The crate has no 192-bit key variant.
+
+[kat]
+files = ["kat/acvp-gcm-siv.json", "kat/wycheproof.json"]
+
+[sizes]
+key = 32
+nonce = 12
+tag = 16

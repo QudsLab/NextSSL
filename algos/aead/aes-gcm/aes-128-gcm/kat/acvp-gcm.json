@@ -1,0 +1,126 @@
+{
+ "algorithm": "aes-128-gcm",
+ "source": "NIST ACVP-Server ACVP-AES-GCM-1.0 internalProjection.json: encrypt groups, key 128, 96-bit IV, 128-bit tag",
+ "vectors": [
+  {
+   "id": "acvp-1",
+   "key_hex": "4b2cbe2158f5d6a28cc798df4f99f777",
+   "nonce_hex": "3851baf79831605b75086e79",
+   "aad_hex": "4607f76f4fda85dafdc8ce085e0ce5",
+   "pt_hex": "",
+   "ct_hex": "9e557d92647c1510d4101ebeed0c52dd"
+  },
+  {
+   "id": "acvp-2",
+   "key_hex": "32e106f67a99f89788d168beb6596400",
+   "nonce_hex": "491f4b2df6d0288db54716b6",
+   "aad_hex": "65fc70a3cc2e0f14b3c56216881f8c",
+   "pt_hex": "",
+   "ct_hex": "6a7bbcdb4834109b6aa067b5358d94f3"
+  },
+  {
+   "id": "acvp-3",
+   "key_hex": "15bf034ee6dc3da6296ee138b90fc0ce",
+   "nonce_hex": "de8cb48ee0f1cb57f4e9ffb5",
+   "aad_hex": "edde20197c7ded0b293b061f349840",
+   "pt_hex": "",
+   "ct_hex": "72445e31c5df05dfa2ccba54ae385dfd"
+  },
+  {
+   "id": "acvp-4",
+   "key_hex": "a1baf46b4b1e8c169ea89892697c1cb4",
+   "nonce_hex": "b857c80f75cc7336114def84",
+   "aad_hex": "6a4687585852ae3438d97cc703ee17",
+   "pt_hex": "",
+   "ct_hex": "4f8508cb9c385c72935defd397beb317"
+  },
+  {
+   "id": "acvp-5",
+   "key_hex": "0e5eb84c7e64825c7569712dfeb2f156",
+   "nonce_hex": "f88ad682c50fd2efbf5dffa2",
+   "aad_hex": "2bc528ceb661427363c3d7c41a474b",
+   "pt_hex": "",
+   "ct_hex": "374a8920101702d1ccde488a3ed7bd74"
+  },
+  {
+   "id": "acvp-6",
+   "key_hex": "bf5c3a9c65d72512f752a09c9b5aba59",
+   "nonce_hex": "0b8ae56978b462a5c0f8486c",
+   "aad_hex": "9d43a96f28e0753def6e6e07fd8442",
+   "pt_hex": "",
+   "ct_hex": "350db3900067e56f16c77c835dac544c"
+  },
+  {
+   "id": "acvp-7",
+   "key_hex": "28dccd63b305bb169bb7e85fe55591df",
+   "nonce_hex": "407f6c53ccf5dda6f868b22c",
+   "aad_hex": "8f8edfa6e95b755976955ed3483cd2",
+   "pt_hex": "",
+   "ct_hex": "f150351cd6c3d09ed6f65ccdd9016329"
+  },
+  {
+   "id": "acvp-8",
+   "key_hex": "3ad410f60cf85c923f2d9ce336e6a185",
+   "nonce_hex": "fe37880dc4531ad581c4e24d",
+   "aad_hex": "900865d0db20458368f9a191775a58",
+   "pt_hex": "",
+   "ct_hex": "7f6917fc8c4437e897ded97f56baf97e"
+  },
+  {
+   "id": "acvp-9",
+   "key_hex": "1d650e5ad0b45a2a519de40203c271cf",
+   "nonce_hex": "3fe45ff564b983251816574d",
+   "aad_hex": "bf4d54fb100225db37d80aa5883b92",
+   "pt_hex": "",
+   "ct_hex": "7c0487b32951712b1c8b5a383d1d2c7d"
+  },
+  {
+   "id": "acvp-10",
+   "key_hex": "7b7473ca6e44320019a0dd324b77b5ad",
+   "nonce_hex": "0f25c4d8969d268c89cf89dc",
+   "aad_hex": "ee74a91456154ea7df2702e8069099",
+   "pt_hex": "",
+   "ct_hex": "3eb7851f7c2c22fe454487dc6f3df568"
+  },
+  {
+   "id": "acvp-11",
+   "key_hex": "368ef87f3ba49549334d756f7127c264",
+   "nonce_hex": "be20e127cbeeb126ba5705a8",
+   "aad_hex": "0ee044d4503197d12d2773bad595dd",
+   "pt_hex": "",
+   "ct_hex": "d4fab95e8d69aea9fbd8f5828d3bd431"
+  },
+  {
+   "id": "acvp-12",
+   "key_hex": "ac8b6af21571f41b413dd940cc0ce10e",
+   "nonce_hex": "f0eabb2b51eda331a8f69401",
+   "aad_hex": "cab5e1f3a6e9f334a1e3a0a480e430",
+   "pt_hex": "",
+   "ct_hex": "142ec77e700ea07afedca19968237921"
+  },
+  {
+   "id": "acvp-13",
+   "key_hex": "95f171b040edec74200716786a4c9883",
+   "nonce_hex": "8a099fb344b8d82105cde359",
+   "aad_hex": "81febc3a769a3ec54cc2b2af464eb5",
+   "pt_hex": "",
+   "ct_hex": "25a704866524edf070813b81d076bc0a"
+  },
+  {
+   "id": "acvp-14",
+   "key_hex": "d933ffcccf7f179277f2b409f089f497",
+   "nonce_hex": "2b8e42bf97178ef7a6e4f745",
+   "aad_hex": "37e2149b37a2199f6def54b283a4c8",
+   "pt_hex": "",
+   "ct_hex": "17fff7d09a61124c5d7b41ec93a030cf"
+  },
+  {
+   "id": "acvp-15",
+   "key_hex": "29214e6abf1a50cbc3ea399138ed22fa",
+   "nonce_hex": "f451a8fd6b66e538e72e655b",
+   "aad_hex": "ab966dc5a64f1fa1588acc1cf4062c",
+   "pt_hex": "",
+   "ct_hex": "935a4d11f33268110bb7ec6ed1da7440"
+  }
+ ]
+}
