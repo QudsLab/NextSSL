@@ -1,0 +1,56 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo xtask gen --check
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      - run: cargo test --workspace
+
+  # The slow layers run inside the same Docker image the owner uses locally
+  # (docker/Dockerfile.test); docker/test.sh selects the layer from the env flag.
+  layers:
+    name: ${{ matrix.layer }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - layer: symbols
+            env: NEXTSSL_SYMBOLS=1
+          - layer: miri
+            env: NEXTSSL_MIRI=1
+          - layer: fuzz-smoke
+            env: NEXTSSL_FUZZ_SECS=30
+          - layer: asan
+            env: NEXTSSL_ASAN=1
+          - layer: wasm
+            env: NEXTSSL_WASM=1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Build test image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile.test
+          tags: nextssl-test
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Run ${{ matrix.layer }}
+        run: docker run --rm -e NEXTSSL_SKIP_BASE=1 -e ${{ matrix.env }} nextssl-test
