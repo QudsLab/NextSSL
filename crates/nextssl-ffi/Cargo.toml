@@ -1,0 +1,26 @@
+[package]
+name = "nextssl-ffi"
+description = "NextSSL C ABI (the only crate allowed unsafe)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[features]
+copyleft = ["nextssl/copyleft", "nextssl-root/copyleft"]
+
+[dependencies]
+nextssl-core.workspace = true
+nextssl.workspace = true
+nextssl-root.workspace = true
+
+[lints.rust]
+unsafe_code = "deny"
+unsafe_op_in_unsafe_fn = "deny"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
