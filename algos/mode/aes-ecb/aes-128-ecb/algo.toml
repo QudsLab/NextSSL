@@ -1,0 +1,28 @@
+id        = "aes-128-ecb"
+kind      = "blockmode"
+category  = "mode"
+family    = "aes-ecb"
+aliases   = ["aes128-ecb"]
+tier      = "legacy"
+status    = "active"
+standards = ["NIST SP 800-38A"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "ecb", version = "=0.2.1", license = "MIT OR Apache-2.0" }
+# ECB leaks equal-block patterns and has no integrity: do not use for data. Present for interoperability and
+# test use.
+# Param `padding`: `none` (default; data must be a multiple of 16 bytes, otherwise an error) or `pkcs7`. Also
+# depends on RustCrypto aes 0.9.4.
+
+[params.padding]
+type = "enum"
+values = ["none", "pkcs7"]
+default = "none"
+
+[kat]
+files = ["kat/acvp-ecb.json"]
+
+[sizes]
+key = 16
+nonce = 0
+block = 16

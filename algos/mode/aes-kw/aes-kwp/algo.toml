@@ -1,0 +1,21 @@
+id        = "aes-kwp"
+kind      = "blockmode"
+category  = "mode"
+family    = "aes-kw"
+aliases   = ["aes-key-wrap-pad", "kwp"]
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-38F", "RFC 5649"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "aes-kw", version = "=0.3.1", license = "MIT OR Apache-2.0" }
+# AES Key Wrap with Padding (RFC 5649): encrypt = wrap, decrypt = unwrap. No nonce (size 0). A failed integrity
+# check is `AuthenticationFailed` and no key bytes are released. Key data of any length >= 1 byte.
+
+[kat]
+files = ["kat/acvp-kwp.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+nonce = 0
+block = 16

@@ -1,0 +1,21 @@
+[package]
+name = "nextssl-algo-aes-256-cfb8"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+cfb8 = { version = "=0.9.1", default-features = false, features = ["alloc", "block-padding", "zeroize"] }
+aes = { version = "=0.9.4", default-features = false, features = ["zeroize"] }
+
+[dev-dependencies]
+serde_json.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,28 @@
+id        = "aes-192-cbc"
+kind      = "blockmode"
+category  = "mode"
+family    = "aes-cbc"
+aliases   = ["aes192-cbc"]
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-38A"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "cbc", version = "=0.2.1", license = "MIT OR Apache-2.0" }
+# CBC gives confidentiality only (no integrity). Decryption with padding = pkcs7 reports bad padding as an
+# error: never expose that distinction on a network (padding oracle); prefer an AEAD.
+# Param `padding`: `none` (default; data must be a multiple of 16 bytes, otherwise an error) or `pkcs7`. Also
+# depends on RustCrypto aes 0.9.4.
+
+[params.padding]
+type = "enum"
+values = ["none", "pkcs7"]
+default = "none"
+
+[kat]
+files = ["kat/acvp-cbc.json"]
+
+[sizes]
+key = 24
+nonce = 16
+block = 16

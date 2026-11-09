@@ -1,0 +1,22 @@
+id        = "aes-256-xts"
+kind      = "blockmode"
+category  = "mode"
+family    = "aes-xts"
+aliases   = ["aes256-xts"]
+tier      = "standard"
+status    = "active"
+standards = ["IEEE 1619-2018", "NIST SP 800-38E"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "xts-mode", version = "=0.6.0", license = "MIT" }
+# XTS for disk/sector encryption: key = key1 || key2 (64 bytes), nonce = the 16-byte tweak (sector number), data
+# length >= 16 bytes with ciphertext stealing. The two key halves must differ; equal halves are refused. Not
+# authenticated. Also depends on RustCrypto aes 0.9.4.
+
+[kat]
+files = ["kat/acvp-xts.json"]
+
+[sizes]
+key = 64
+nonce = 16
+block = 16

@@ -1,0 +1,29 @@
+id        = "aes-fpe-ff1"
+kind      = "blockmode"
+category  = "mode"
+family    = "aes-fpe"
+aliases   = ["ff1"]
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-38G"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "fpe", version = "=0.7.0", license = "MIT OR Apache-2.0" }
+# Format-preserving encryption FF1 with AES. Data is one byte per digit, each byte < radix (param `radix`,
+# 2..=256, default 10). nonce = the FF1 tweak, 0..=1024 bytes. FF1 requires radix^length >= 1,000,000; shorter
+# strings are an error. NIST SP 800-38G rev.1 draft restricts FF1 to radix^length >= 10^6.
+# Row 253 (FF3-1) is not imported: fpe 0.7.0 implements only FF1.
+
+[params.radix]
+type = "u64"
+min = 2
+max = 256
+default = 10
+
+[kat]
+files = ["kat/acvp-ff1.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+nonce = { min = 0, max = 1024 }
+block = 16

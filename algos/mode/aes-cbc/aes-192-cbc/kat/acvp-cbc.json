@@ -1,0 +1,426 @@
+{
+ "algorithm": "aes-192-cbc",
+ "source": "NIST ACVP-Server ACVP-AES-CBC-1.0 internalProjection.json: encrypt AFT groups, key length 192, block-multiple payloads, every n-th test",
+ "vectors": [
+  {
+   "id": "acvp-cbc-285",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "1b077a6af4b7f98229de786d7516b639",
+   "ct_hex": "275cfc0413d8ccb70513c3859b1d0f72"
+  },
+  {
+   "id": "acvp-cbc-291",
+   "key_hex": "e9f065d7c13573587f7875357dfbb16c53489f6a4bd0f7cd",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "0956259c9cd5cfd0181cca53380cde06"
+  },
+  {
+   "id": "acvp-cbc-297",
+   "key_hex": "e08c15411774ec4a908b64eadc6ac4199c7cd453f3aaef53",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "77da2021935b840b7f5dcc39132da9e5"
+  },
+  {
+   "id": "acvp-cbc-303",
+   "key_hex": "c88f5b00a4ef9a6840e2acaf33f00a3bdc4e25895303fa72",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "a67cf333b314d411d3c0ae6e1cfcd8f5"
+  },
+  {
+   "id": "acvp-cbc-309",
+   "key_hex": "b3ad5cea1dddc214ca969ac35f37dae1a9a9d1528f89bb35",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "3cf5e1d21a17956d1dffad6a7c41c659"
+  },
+  {
+   "id": "acvp-cbc-315",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "80000000000000000000000000000000",
+   "ct_hex": "6cd02513e8d4dc986b4afe087a60bd0c"
+  },
+  {
+   "id": "acvp-cbc-321",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "f0000000000000000000000000000000",
+   "ct_hex": "2a560364ce529efc21788779568d5555"
+  },
+  {
+   "id": "acvp-cbc-327",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffc00000000000000000000000000000",
+   "ct_hex": "030d7e5b64f380a7e4ea5387b5cd7f49"
+  },
+  {
+   "id": "acvp-cbc-333",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffff0000000000000000000000000000",
+   "ct_hex": "e98f4ba4f073df4baa116d011dc24a28"
+  },
+  {
+   "id": "acvp-cbc-339",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffc00000000000000000000000000",
+   "ct_hex": "1c3a94f1c052c55c2d8359aff2163b4f"
+  },
+  {
+   "id": "acvp-cbc-345",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffff0000000000000000000000000",
+   "ct_hex": "440e0d733255cda92fb46e842fe58054"
+  },
+  {
+   "id": "acvp-cbc-351",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffffffffc00000000000000000000000",
+   "ct_hex": "d2695e59c20361d82652d7d58b6f11b2"
+  },
+  {
+   "id": "acvp-cbc-357",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffffffffff0000000000000000000000",
+   "ct_hex": "c94337c37c4e790ab45780bd9c3674a0"
+  },
+  {
+   "id": "acvp-cbc-363",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffffffffc00000000000000000000",
+   "ct_hex": "36ff1ec9ccfbc349e5d356d063693ad6"
+  },
+  {
+   "id": "acvp-cbc-369",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffffffffff0000000000000000000",
+   "ct_hex": "113365a9ffbe3b0ca61e98507554168b"
+  },
+  {
+   "id": "acvp-cbc-375",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffffffffffffffc00000000000000000",
+   "ct_hex": "7d350fa6057080f1086a56b17ec240db"
+  },
+  {
+   "id": "acvp-cbc-381",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffffffffffffffff0000000000000000",
+   "ct_hex": "93baaffb35fbe739c17c6ac22eecf18f"
+  },
+  {
+   "id": "acvp-cbc-387",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffffffffffffffc00000000000000",
+   "ct_hex": "6a9d965e6274143f25afdcfc88ffd77c"
+  },
+  {
+   "id": "acvp-cbc-393",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffffffffffffffff0000000000000",
+   "ct_hex": "a99ebb030260826f981ad3e64490aa4f"
+  },
+  {
+   "id": "acvp-cbc-399",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffffffffffffffffffffc00000000000",
+   "ct_hex": "b2099795e88cc158fd75ea133d7e7fbe"
+  },
+  {
+   "id": "acvp-cbc-405",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffffffffffffffffffffff0000000000",
+   "ct_hex": "71dbf37e87a2e34d15b20e8f10e48924"
+  },
+  {
+   "id": "acvp-cbc-411",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffffffffffffffffffffc00000000",
+   "ct_hex": "3713da0c0219b63454035613b5a403dd"
+  },
+  {
+   "id": "acvp-cbc-417",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffffffffffffffffffffff0000000",
+   "ct_hex": "cf3579a9ba38c8e43653173e14f3a4c6"
+  },
+  {
+   "id": "acvp-cbc-423",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffffffffffffffffffffffffffc00000",
+   "ct_hex": "82647f1332fe570a9d4d92b2ee771d3b"
+  },
+  {
+   "id": "acvp-cbc-429",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "ffffffffffffffffffffffffffff0000",
+   "ct_hex": "4019250f6eefb2ac5ccbcae044e75c7e"
+  },
+  {
+   "id": "acvp-cbc-435",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffffffffffffffffffffffffffc00",
+   "ct_hex": "59bbb353cf1dd867a6e33737af655e99"
+  },
+  {
+   "id": "acvp-cbc-441",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "fffffffffffffffffffffffffffffff0",
+   "ct_hex": "2aabb999f43693175af65c6c612c46fb"
+  },
+  {
+   "id": "acvp-cbc-447",
+   "key_hex": "ffff80000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "26706be06967884e847d137128ce47b3"
+  },
+  {
+   "id": "acvp-cbc-453",
+   "key_hex": "fffffe000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "fb4035074a5d4260c90cbd6da6c3fceb"
+  },
+  {
+   "id": "acvp-cbc-459",
+   "key_hex": "fffffff80000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "1b41f83b38ce5032c6cd7af98cf62061"
+  },
+  {
+   "id": "acvp-cbc-466",
+   "key_hex": "fffffffff000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "0cf4ff4f49c8a0ca060c443499e29313"
+  },
+  {
+   "id": "acvp-cbc-472",
+   "key_hex": "ffffffffffc0000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "223736e8b8f89ca1e37b6deab40facf1"
+  },
+  {
+   "id": "acvp-cbc-478",
+   "key_hex": "ffffffffffff000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "c79a637beb1c0304f14014c037e736dd"
+  },
+  {
+   "id": "acvp-cbc-484",
+   "key_hex": "fffffffffffffc0000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "27b8070270810f9d023f9dd7ff3b4aa2"
+  },
+  {
+   "id": "acvp-cbc-490",
+   "key_hex": "fffffffffffffff000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "758f4467a5d8f1e7307dc30b34e404f4"
+  },
+  {
+   "id": "acvp-cbc-496",
+   "key_hex": "ffffffffffffffffc0000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "effbac1644deb0c784275fe56e19ead3"
+  },
+  {
+   "id": "acvp-cbc-502",
+   "key_hex": "ffffffffffffffffff000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "c0541329ecb6159ab23b7fc5e6a21bca"
+  },
+  {
+   "id": "acvp-cbc-508",
+   "key_hex": "fffffffffffffffffffc0000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "8dfd999be5d0cfa35732c0ddc88ff5a5"
+  },
+  {
+   "id": "acvp-cbc-514",
+   "key_hex": "fffffffffffffffffffff000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "cbfe61810fd5467ccdacb75800f3ac07"
+  },
+  {
+   "id": "acvp-cbc-520",
+   "key_hex": "ffffffffffffffffffffffc0000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "7026026eedd91adc6d831cdf9894bdc6"
+  },
+  {
+   "id": "acvp-cbc-526",
+   "key_hex": "ffffffffffffffffffffffff000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "03aa9058490eda306001a8a9f48d0ca7"
+  },
+  {
+   "id": "acvp-cbc-532",
+   "key_hex": "fffffffffffffffffffffffffc0000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "90bd086f237cc4fd99f4d76bde6b4826"
+  },
+  {
+   "id": "acvp-cbc-538",
+   "key_hex": "fffffffffffffffffffffffffff000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "d2f11805046743bd74f57188d9188df7"
+  },
+  {
+   "id": "acvp-cbc-544",
+   "key_hex": "fffc00000000000000000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "a5dc46c37261194124ecaebd680408ec"
+  },
+  {
+   "id": "acvp-cbc-550",
+   "key_hex": "fffffffffffffffffffffffffffe00000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "fd5548bcf3f42565f7efa94562528d46"
+  },
+  {
+   "id": "acvp-cbc-556",
+   "key_hex": "ffffffffffffffffffffffffffffc0000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "78f933a2081ac1db84f69d10f4523fe0"
+  },
+  {
+   "id": "acvp-cbc-562",
+   "key_hex": "ffffffffffffffffffffffffffffff000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "a80fd5020dfe65f5f16293ec92c6fd89"
+  },
+  {
+   "id": "acvp-cbc-568",
+   "key_hex": "fffffffffffffffffffffffffffffffc0000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "c4637e4a5e6377f9cc5a8638045de029"
+  },
+  {
+   "id": "acvp-cbc-574",
+   "key_hex": "fffffffffffffffffffffffffffffffff000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "bb2852c891c5947d2ed44032c421b85f"
+  },
+  {
+   "id": "acvp-cbc-580",
+   "key_hex": "ffffffffffffffffffffffffffffffffffc0000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "9b47ef567ac28dfe488492f157e2b2e0"
+  },
+  {
+   "id": "acvp-cbc-586",
+   "key_hex": "ffffffffffffffffffffffffffffffffffff000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "d436649f600b449ee276530f0cd83c11"
+  },
+  {
+   "id": "acvp-cbc-592",
+   "key_hex": "fffffffffffffffffffffffffffffffffffffc0000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "02ea0c98dca10b38c21b3b14e8d1b71f"
+  },
+  {
+   "id": "acvp-cbc-598",
+   "key_hex": "fffffffffffffffffffffffffffffffffffffff000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "45119b68cb3f8399ee60066b5611a4d7"
+  },
+  {
+   "id": "acvp-cbc-604",
+   "key_hex": "ffffffffffffffffffffffffffffffffffffffffc0000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "138e06fba466fa70854d8c2e524cffb2"
+  },
+  {
+   "id": "acvp-cbc-610",
+   "key_hex": "ffffffffffffffffffffffffffffffffffffffffff000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "7b017bb02ec87b2b94c96e40a26fc71a"
+  },
+  {
+   "id": "acvp-cbc-616",
+   "key_hex": "fffffffffffffffffffffffffffffffffffffffffffc0000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "dddececd5354f04d530d76ed884246eb"
+  },
+  {
+   "id": "acvp-cbc-622",
+   "key_hex": "fffffffffffffffffffffffffffffffffffffffffffff000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "c1faba2d46e259cf480d7c38e4572a58"
+  },
+  {
+   "id": "acvp-cbc-628",
+   "key_hex": "ffffffffffffffffffffffffffffffffffffffffffffffc0",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "0547dd32d3b29ab6a4caeb606c5b6f78"
+  },
+  {
+   "id": "acvp-cbc-634",
+   "key_hex": "ffffffffffffffffffffffffffffffffffffffffffffffff",
+   "nonce_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "dd8a493514231cbf56eccee4c40889fb"
+  },
+  {
+   "id": "acvp-cbc-2094",
+   "key_hex": "9dc018c98ce0ef0680c4abe032d7a661b0199f8a12767fab",
+   "nonce_hex": "76c01be4b1f7851983458ea4ab285efc",
+   "pt_hex": "f8b9586e2fc852b458b1c1c0236f40164a2d5b31a37ed3dcb4be6dfedcb6ae5f813c38ccf73934dbf64e5e06b35a1f1d177b41c0d501e731864fa863a34802b7b7751b438d57928bee30338baf592c5c221147df6e66d59d80c52489c5220c29",
+   "ct_hex": "6dee359315a67399ba01dd76de7b66ad70edff0363d04af33086461f9ea1977821e32e672375b6705c10787dd9ba9f1e880943713580ddc134d897ebedd32dbc939c8a661c02d7420ef389ade83d8cda44a42f0f81cc17360653df34c47def0d"
+  }
+ ]
+}
