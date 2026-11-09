@@ -1,0 +1,17 @@
+id        = "blake2bp"
+kind      = "hash"
+category  = "hash"
+family    = "blake2"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["BLAKE2 paper (BLAKE2bp, 4-way)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "blake2b_simd", version = "=1.0.5", license = "MIT" }
+
+[kat]
+files = ["kat/blake2bp.json"]
+
+[sizes]
+out = 64

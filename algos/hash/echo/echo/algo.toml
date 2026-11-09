@@ -1,0 +1,25 @@
+id        = "echo"
+kind      = "hash"
+category  = "hash"
+family    = "echo"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["ECHO (SHA-3 round 2 candidate), sphlib implementation"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/pornin/sphlib", commit = "15b6b8d8f3e4a43c58ba102d712fa6b8a3317035", license = "MIT", files = ["c/echo.c", "c/sph_echo.h", "c/sph_types.h", "c/aes_helper.c", "LICENSE"] }
+# Tier research: SHA-3 competition candidate that was not selected; not standardized. Owner may reclassify.
+# Verbatim sphlib files (MIT, Projet RNRT SAPHIR); symbols prefixed by -D defines in build.rs, shim.c is NextSSL glue.
+
+[params.out_len]
+type    = "u64"
+min     = 28
+max     = 64
+default = 32
+
+[kat]
+files = ["kat/echo.json"]
+
+[sizes]
+out = { min = 28, max = 64 }

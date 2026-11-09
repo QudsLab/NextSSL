@@ -1,0 +1,18 @@
+id        = "ascon-hash256"
+kind      = "hash"
+category  = "hash"
+family    = "ascon"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-232 (Ascon-Hash256)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/ascon/ascon-c", commit = "446347f21b209f3921c65ece70027c366cbe1693", license = "CC0-1.0", files = ["hash.c", "api.h", "ascon.h", "constants.h", "permutations.h", "printstate.h", "round.h", "word.h", "crypto_hash.h", "LICENSE"] }
+# Ascon-Hash256 as in NIST SP 800-232 (ascon-c ref). Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/ascon-hash256.json"]
+
+[sizes]
+out = 32

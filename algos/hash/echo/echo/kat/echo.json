@@ -1,0 +1,774 @@
+{
+ "algorithm": "echo",
+ "source": "sphlib https://github.com/pornin/sphlib @ 15b6b8d8f3e4: c/test_echo.c digest tables nist_vec* (NIST SHA-3 competition KAT digests, indexed by message bit length) with messages from c/utest.c nist_data. Byte-aligned lengths [0, 1, 2, 3, 7, 8, 9, 15, 16, 17, 31, 32, 33, 63, 64, 65, 111, 112, 113, 127, 128, 129, 200, 255] of each variant.",
+ "vectors": [
+  {
+   "id": "nist-224-len0",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "",
+   "out_hex": "17da087595166f733fff7cdb0bca6438f303d0e00c48b5e7a3075905"
+  },
+  {
+   "id": "nist-224-len1",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "cc",
+   "out_hex": "34d81c434b63c8fbcf023b6417af87d906942ebd7b56c1d7b08baddc"
+  },
+  {
+   "id": "nist-224-len2",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "41fb",
+   "out_hex": "63f315e0cc161aa98749d9783866ec2c2bf70cd033431e97eb8c6963"
+  },
+  {
+   "id": "nist-224-len3",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "1f877c",
+   "out_hex": "ed7a2952cbc3068c58ff4c870ab850afa0a499fe64fb2e943655ab88"
+  },
+  {
+   "id": "nist-224-len7",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "119713cc83eeef",
+   "out_hex": "e952c88c5b80c44cd60e45acafc4e118f8be45900b5b4e5ab6f4dec9"
+  },
+  {
+   "id": "nist-224-len8",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "4a4f202484512526",
+   "out_hex": "4bf079d0c16ae30e50718648d51ad2555ebb8de85dd9e95c208d4fe1"
+  },
+  {
+   "id": "nist-224-len9",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "1f66ab4185ed9b6375",
+   "out_hex": "e0db938f5da99f15f01e12058f47b5e0d0deeb3cf2c294dcf2d4cb67"
+  },
+  {
+   "id": "nist-224-len15",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "fa22874bcc068879e8ef11a69f0722",
+   "out_hex": "cdea3f0b9a6e6b4dc1463bd034da527f487d85bebe2be003868e0262"
+  },
+  {
+   "id": "nist-224-len16",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "52a608ab21ccdd8a4457a57ede782176",
+   "out_hex": "3fe94695d66d210b63c91148a96fb37da75a36d1e65e4eb743d5f8e3"
+  },
+  {
+   "id": "nist-224-len17",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "82e192e4043ddcd12ecf52969d0f807eed",
+   "out_hex": "a9c4c76789fa34d15beff34a30aafc1d732d362ac368d1b7431ef27c"
+  },
+  {
+   "id": "nist-224-len31",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "84fb51b517df6c5accb5d022f8f28da09b10232d42320ffc32dbecc3835b29",
+   "out_hex": "3e217abbd13d4efa1ea2d1bc5a0510430b0ff4b2f2624f31c5f322f6"
+  },
+  {
+   "id": "nist-224-len32",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "9f2fcc7c90de090d6b87cd7e9718c1ea6cb21118fc2d5de9f97e5db6ac1e9c10",
+   "out_hex": "6d36008b8178c85c79c4e501b95f654b01123a4aad6951d13a420fd6"
+  },
+  {
+   "id": "nist-224-len33",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "de8f1b3faa4b7040ed4563c3b8e598253178e87e4d0df75e4ff2f2dedd5a0be046",
+   "out_hex": "49506ce768794d91eea89f4fc407e33244f64a80b6462a1d722b0ab2"
+  },
+  {
+   "id": "nist-224-len63",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "f57c64006d9ea761892e145c99df1b24640883da79d9ed5262859dcda8c3c32e05b03d984f1ab4a230242ab6b78d368dc5aaa1e6d3498d53371e84b0c1d4ba",
+   "out_hex": "ddeca087b44b107aba83ba0d92632e061dcd76d0c01928b6cd954e5a"
+  },
+  {
+   "id": "nist-224-len64",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "e926ae8b0af6e53176dbffcc2a6b88c6bd765f939d3d178a9bde9ef3aa131c61e31c1e42cdfaf4b4dcde579a37e150efbef5555b4c1cb40439d835a724e2fae7",
+   "out_hex": "9469acfade22153a470374ed35fcd576898da8d084311d42f381b735"
+  },
+  {
+   "id": "nist-224-len65",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "16e8b3d8f988e9bb04de9c96f2627811c973ce4a5296b4772ca3eefeb80a652bdf21f50df79f32db23f9f73d393b2d57d9a0297f7a2f2e79cfda39fa393df1ac00",
+   "out_hex": "3a88fafef6c5a205d209aa55f82b8dc50c0c477ee1257d8535f80a83"
+  },
+  {
+   "id": "nist-224-len111",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "f690a132ab46b28edfa6479283d6444e371c6459108afd9c35dbd235e0b6b6ff4c4ea58e7554bd002460433b2164ca51e868f7947d7d7a0d792e4abf0be5f450853cc40d85485b2b8857ea31b5ea6e4ccfa2f3a7ef3380066d7d8979fdac618aad3d7e886dea4f005ae4ad05e5065f",
+   "out_hex": "a2f5583da6af32f003cb1117ca8a01d5d767ec905e14dd0cb3884a74"
+  },
+  {
+   "id": "nist-224-len112",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "58d6a99bc6458824b256916770a8417040721cccfd4b79eacd8b65a3767ce5ba7e74104c985ac56b8cc9aebd16febd4cda5adb130b0ff2329cc8d611eb14dac268a2f9e633c99de33997fea41c52a7c5e1317d5b5daed35eba7d5a60e45d1fa7eaabc35f5c2b0a0f2379231953322c4e",
+   "out_hex": "a8b9bc38e09a0be5633a571882905544e3cc7dddd1eb834628110221"
+  },
+  {
+   "id": "nist-224-len113",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "befab574396d7f8b6705e2d5b58b2c1c820bb24e3f4bae3e8fbcd36dbf734ee14e5d6ab972aedd3540235466e825850ee4c512ea9795abfd33f330d9fd7f79e62bbb63a6ea85de15beaeea6f8d204a28956059e2632d11861dfb0e65bc07ac8a159388d5c3277e227286f65ff5e5b5aec1",
+   "out_hex": "d0a9a1d038d48860bbd46df4d8b733c3d26b8208a181bc00ae1428e0"
+  },
+  {
+   "id": "nist-224-len127",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "a62fc595b4096e6336e53fcdfc8d1cc175d71dac9d750a6133d23199eaac288207944cea6b16d27631915b4619f743da2e30a0c00bbdb1bbb35ab852ef3b9aec6b0a8dcc6e9e1abaa3ad62ac0a6c5de765de2c3711b769e3fde44a74016fff82ac46fa8f1797d3b2a726b696e3dea5530439acee3a45c2a51bc32dd055650b",
+   "out_hex": "cfee0744b04a514de1fe8747edf4c1ce1c6cf9333a76941a7befec1b"
+  },
+  {
+   "id": "nist-224-len128",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "2b6db7ced8665ebe9deb080295218426bdaa7c6da9add2088932cdffbaa1c14129bccdd70f369efb149285858d2b1d155d14de2fdb680a8b027284055182a0cae275234cc9c92863c1b4ab66f304cf0621cd54565f5bff461d3b461bd40df28198e3732501b4860eadd503d26d6e69338f4e0456e9e9baf3d827ae685fb1d817",
+   "out_hex": "da9e9e064f307c70ded9c7d3e3439eba127842ceef2834f4fff43836"
+  },
+  {
+   "id": "nist-224-len129",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "10db509b2cdcaba6c062ae33be48116a29eb18e390e1bbada5ca0a2718afbcd23431440106594893043cc7f2625281bf7de2655880966a23705f0c5155c2f5cca9f2c2142e96d0a2e763b70686cd421b5db812daced0c6d65035fde558e94f26b3e6dde5bd13980cc80292b723013bd033284584bff27657871b0cf07a849f4ae2",
+   "out_hex": "44149e059717f8f84b2935554bb3de9fe15a00489f82cb51a057428a"
+  },
+  {
+   "id": "nist-224-len200",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "8c3798e51bc68482d7337d3abb75dc9ffe860714a9ad73551e120059860dde24ab87327222b64cf774415a70f724cdf270de3fe47dda07b61c9ef2a3551f45a5584860248fabde676e1cd75f6355aa3eaeabe3b51dc813d9fb2eaa4f0f1d9f834d7cad9c7c695ae84b329385bc0bef895b9f1edf44a03d4b410cc23a79a6b62e4f346a5e8dd851c2857995ddbf5b2d717aeb847310e1f6a46ac3d26a7f9b44985af656d2b7c9406e8a9e8f47dcb4ef6b83caacf9aefb6118bfcff7e44bef6937ebddc89186839b77",
+   "out_hex": "eb6f00b18c15dbfc615e161b3d437dc1b9285348ba6df8a2aa1c62b1"
+  },
+  {
+   "id": "nist-224-len255",
+   "params": {
+    "out_len": 28
+   },
+   "msg_hex": "3a3a819c48efde2ad914fbf00e18ab6bc4f14513ab27d0c178a188b61431e7f5623cb66b23346775d386b50e982c493adbbfc54b9a3cd383382336a1a0b2150a15358f336d03ae18f666c7573d55c4fd181c29e6ccfde63ea35f0adf5885cfc0a3d84a2b2e4dd24496db789e663170cef74798aa1bbcd4574ea0bba40489d764b2f83aadc66b148b4a0cd95246c127d5871c4f11418690a5ddf01246a0c80a43c70088b6183639dcfda4125bd113a8f49ee23ed306faac576c3fb0c1e256671d817fc2534a52f5b439f72e424de376f4c565cca82307dd9ef76da5b7c4eb7e085172e328807c02d011ffbf33785378d79dc266f6a5be6bb0e4a92eceebaeb1",
+   "out_hex": "01ad62ea368d29cfa58723f8eb62bdf1affc8fd9ce366627663a3b54"
+  },
+  {
+   "id": "nist-256-len0",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "",
+   "out_hex": "4496cd09d425999aefa75189ee7fd3c97362aa9e4ca898328002d20a4b519788"
+  },
+  {
+   "id": "nist-256-len1",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "cc",
+   "out_hex": "01c382b5b9d7d10ec36c98785c27eaccfb2f772a7e58b6b97bf62212b8584ae5"
+  },
+  {
+   "id": "nist-256-len2",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "41fb",
+   "out_hex": "83fcaa405da0c6aad4f690fc4d294d502227b60b9a90a1613adb7cd241d23997"
+  },
+  {
+   "id": "nist-256-len3",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "1f877c",
+   "out_hex": "e8ca26c44e8efba4f0392b9691853baaf79c6ffe567e6232520a053310d10888"
+  },
+  {
+   "id": "nist-256-len7",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "119713cc83eeef",
+   "out_hex": "b00d5f494821463ca1e4168fe6c21b0e665c138cb9e5c1374e9cecf2e944d25e"
+  },
+  {
+   "id": "nist-256-len8",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "4a4f202484512526",
+   "out_hex": "6b93a635adb230cf34dc57e326be59bad2a2cfa071232d5b1d39d28f3897c5a1"
+  },
+  {
+   "id": "nist-256-len9",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "1f66ab4185ed9b6375",
+   "out_hex": "2433b6e0529ac04ed031eaecde3b0fea71f427a2da1958a83637d1a3837b1854"
+  },
+  {
+   "id": "nist-256-len15",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "fa22874bcc068879e8ef11a69f0722",
+   "out_hex": "3510cf8fe63c887c865cc6714920c1cc28af2279a6a3388171584979a0270636"
+  },
+  {
+   "id": "nist-256-len16",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "52a608ab21ccdd8a4457a57ede782176",
+   "out_hex": "a544f92120c482e0a364563de6cc94cdfb9e179a5b8d00fbe749700c121a6733"
+  },
+  {
+   "id": "nist-256-len17",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "82e192e4043ddcd12ecf52969d0f807eed",
+   "out_hex": "21d15fc64780170bccb77288f4e0f568a2d2ce70606843b6664f6c8d49da2c39"
+  },
+  {
+   "id": "nist-256-len31",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "84fb51b517df6c5accb5d022f8f28da09b10232d42320ffc32dbecc3835b29",
+   "out_hex": "0035d51267195c1af760be2e11a060760e34d7bbe527850cb8f1eb07a92e9a6a"
+  },
+  {
+   "id": "nist-256-len32",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "9f2fcc7c90de090d6b87cd7e9718c1ea6cb21118fc2d5de9f97e5db6ac1e9c10",
+   "out_hex": "d972b69fbde639a4035ce4ab3985692f4da4bb7d66997c6f5b9ddafab64fcfe8"
+  },
+  {
+   "id": "nist-256-len33",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "de8f1b3faa4b7040ed4563c3b8e598253178e87e4d0df75e4ff2f2dedd5a0be046",
+   "out_hex": "1a69246875d8248774c96725e080cff5958d7c7e3cbe5cf425c4c17d3d70f631"
+  },
+  {
+   "id": "nist-256-len63",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "f57c64006d9ea761892e145c99df1b24640883da79d9ed5262859dcda8c3c32e05b03d984f1ab4a230242ab6b78d368dc5aaa1e6d3498d53371e84b0c1d4ba",
+   "out_hex": "2c38ab2d34cfa545667044610eabc8079d856e1c90f58ef627b0c8356ffacfd2"
+  },
+  {
+   "id": "nist-256-len64",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "e926ae8b0af6e53176dbffcc2a6b88c6bd765f939d3d178a9bde9ef3aa131c61e31c1e42cdfaf4b4dcde579a37e150efbef5555b4c1cb40439d835a724e2fae7",
+   "out_hex": "653a4a61b6ab33fe5eef3e3d8c8b78982b09097f685f63011c1372be5c4afa59"
+  },
+  {
+   "id": "nist-256-len65",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "16e8b3d8f988e9bb04de9c96f2627811c973ce4a5296b4772ca3eefeb80a652bdf21f50df79f32db23f9f73d393b2d57d9a0297f7a2f2e79cfda39fa393df1ac00",
+   "out_hex": "46d7a19772fe775bb919be8e8eafdc45badced36030d4631e63f01b91a1e4906"
+  },
+  {
+   "id": "nist-256-len111",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "f690a132ab46b28edfa6479283d6444e371c6459108afd9c35dbd235e0b6b6ff4c4ea58e7554bd002460433b2164ca51e868f7947d7d7a0d792e4abf0be5f450853cc40d85485b2b8857ea31b5ea6e4ccfa2f3a7ef3380066d7d8979fdac618aad3d7e886dea4f005ae4ad05e5065f",
+   "out_hex": "ff37cbfff75415b1822b050f82eecb858ac2d353e5aa4c0ab37cc9dc6e1a3c92"
+  },
+  {
+   "id": "nist-256-len112",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "58d6a99bc6458824b256916770a8417040721cccfd4b79eacd8b65a3767ce5ba7e74104c985ac56b8cc9aebd16febd4cda5adb130b0ff2329cc8d611eb14dac268a2f9e633c99de33997fea41c52a7c5e1317d5b5daed35eba7d5a60e45d1fa7eaabc35f5c2b0a0f2379231953322c4e",
+   "out_hex": "16d4cfa9dc9d03afccfc74b3087cfa8d512e5d16f5aadbd25452e03aca836a09"
+  },
+  {
+   "id": "nist-256-len113",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "befab574396d7f8b6705e2d5b58b2c1c820bb24e3f4bae3e8fbcd36dbf734ee14e5d6ab972aedd3540235466e825850ee4c512ea9795abfd33f330d9fd7f79e62bbb63a6ea85de15beaeea6f8d204a28956059e2632d11861dfb0e65bc07ac8a159388d5c3277e227286f65ff5e5b5aec1",
+   "out_hex": "c52108c295c74adeb53603a17287d57d4d1d6f7dd1103aade2ad043041f9d626"
+  },
+  {
+   "id": "nist-256-len127",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "a62fc595b4096e6336e53fcdfc8d1cc175d71dac9d750a6133d23199eaac288207944cea6b16d27631915b4619f743da2e30a0c00bbdb1bbb35ab852ef3b9aec6b0a8dcc6e9e1abaa3ad62ac0a6c5de765de2c3711b769e3fde44a74016fff82ac46fa8f1797d3b2a726b696e3dea5530439acee3a45c2a51bc32dd055650b",
+   "out_hex": "7b5f539f18293e7976a3c3ca1ddc8719ee98c077f3ba47e761079b1caa274302"
+  },
+  {
+   "id": "nist-256-len128",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "2b6db7ced8665ebe9deb080295218426bdaa7c6da9add2088932cdffbaa1c14129bccdd70f369efb149285858d2b1d155d14de2fdb680a8b027284055182a0cae275234cc9c92863c1b4ab66f304cf0621cd54565f5bff461d3b461bd40df28198e3732501b4860eadd503d26d6e69338f4e0456e9e9baf3d827ae685fb1d817",
+   "out_hex": "8cceb620fd5e295299d8ff8d3b96ce2df5815e1a03495a20e2cb4a0a1c1654c9"
+  },
+  {
+   "id": "nist-256-len129",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "10db509b2cdcaba6c062ae33be48116a29eb18e390e1bbada5ca0a2718afbcd23431440106594893043cc7f2625281bf7de2655880966a23705f0c5155c2f5cca9f2c2142e96d0a2e763b70686cd421b5db812daced0c6d65035fde558e94f26b3e6dde5bd13980cc80292b723013bd033284584bff27657871b0cf07a849f4ae2",
+   "out_hex": "113d7f05fc4a5e344ac83fd5d4807583410ebae8b0d8ae282686a6a39c559482"
+  },
+  {
+   "id": "nist-256-len200",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "8c3798e51bc68482d7337d3abb75dc9ffe860714a9ad73551e120059860dde24ab87327222b64cf774415a70f724cdf270de3fe47dda07b61c9ef2a3551f45a5584860248fabde676e1cd75f6355aa3eaeabe3b51dc813d9fb2eaa4f0f1d9f834d7cad9c7c695ae84b329385bc0bef895b9f1edf44a03d4b410cc23a79a6b62e4f346a5e8dd851c2857995ddbf5b2d717aeb847310e1f6a46ac3d26a7f9b44985af656d2b7c9406e8a9e8f47dcb4ef6b83caacf9aefb6118bfcff7e44bef6937ebddc89186839b77",
+   "out_hex": "0d732b5454085223049d1c9554e630842fa02cba6c6ed3154a3bd5b28418cc3f"
+  },
+  {
+   "id": "nist-256-len255",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "3a3a819c48efde2ad914fbf00e18ab6bc4f14513ab27d0c178a188b61431e7f5623cb66b23346775d386b50e982c493adbbfc54b9a3cd383382336a1a0b2150a15358f336d03ae18f666c7573d55c4fd181c29e6ccfde63ea35f0adf5885cfc0a3d84a2b2e4dd24496db789e663170cef74798aa1bbcd4574ea0bba40489d764b2f83aadc66b148b4a0cd95246c127d5871c4f11418690a5ddf01246a0c80a43c70088b6183639dcfda4125bd113a8f49ee23ed306faac576c3fb0c1e256671d817fc2534a52f5b439f72e424de376f4c565cca82307dd9ef76da5b7c4eb7e085172e328807c02d011ffbf33785378d79dc266f6a5be6bb0e4a92eceebaeb1",
+   "out_hex": "716f607321b3673e0f5da3c4ca66be9a0cb3b7d6373dd30fac0a37a608687d16"
+  },
+  {
+   "id": "nist-384-len0",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "",
+   "out_hex": "134040763f840559b84b7a1ae5d6d64fc3659821a789cc64a7f1444c09ee7f81a54d72beee8273bae5ef18ec43aa5f34"
+  },
+  {
+   "id": "nist-384-len1",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "cc",
+   "out_hex": "90875a2649cab90018ff8aecd334482c92b15d76b378574eeaacd3b7598020db11e2c7480614eea8793de3daf2093f73"
+  },
+  {
+   "id": "nist-384-len2",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "41fb",
+   "out_hex": "ad5618d59063a3e997b8a7309d8d198e41efeeea9ae42423f3de2d2cd6135d991a86cd787d943c5fd4d89e03abc67ef6"
+  },
+  {
+   "id": "nist-384-len3",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "1f877c",
+   "out_hex": "91f2a4a29cfee555751c388afb63317842e3ef02d7b02fb35acf3f1cc18366bd37f2b0aef1f329cf9658e03ccd8fb6c6"
+  },
+  {
+   "id": "nist-384-len7",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "119713cc83eeef",
+   "out_hex": "76bd2314bc25c02903d0f4ce7116dcb0926fd9539b51dd284a0ef1789965e72f9192d86cc32a9e885b9fe9efe86cafab"
+  },
+  {
+   "id": "nist-384-len8",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "4a4f202484512526",
+   "out_hex": "d31eb4bdf60a6e6e3bc9c0d3f1a788d3599e6d232655de81100fddce04eb1d4aa424712759c6e58c6c320a0012314229"
+  },
+  {
+   "id": "nist-384-len9",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "1f66ab4185ed9b6375",
+   "out_hex": "64385964498082ebd7120d5159a9d80cff939a95473fa036ad5e0fca4870eb65723d4ecfdda97790545b346b20a10de7"
+  },
+  {
+   "id": "nist-384-len15",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "fa22874bcc068879e8ef11a69f0722",
+   "out_hex": "cf6a995f355281a334733c48586b25d8f8a4f798499d30fbd02e2e127a6cb63083639db60dcde65ced50ec110514c09c"
+  },
+  {
+   "id": "nist-384-len16",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "52a608ab21ccdd8a4457a57ede782176",
+   "out_hex": "d8d6e68ae40d2749786e7f5c65191f68b62a10708bc2cbe591dc577cfb807452bf1ef087b1946850d297aa35ce669b67"
+  },
+  {
+   "id": "nist-384-len17",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "82e192e4043ddcd12ecf52969d0f807eed",
+   "out_hex": "abe3b43fae80a8f90bc557d854d9cfc005b4f30b3806f67ca8d7cdf24af7c498c9a2e1b56d333375bb13dfba63b3d547"
+  },
+  {
+   "id": "nist-384-len31",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "84fb51b517df6c5accb5d022f8f28da09b10232d42320ffc32dbecc3835b29",
+   "out_hex": "bb8caa5730036b2c87e7eb28126e7841baef92b9a52a96b54cd095020d8742a3d665c60ba0ead42fda7b2cf47d4bebac"
+  },
+  {
+   "id": "nist-384-len32",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "9f2fcc7c90de090d6b87cd7e9718c1ea6cb21118fc2d5de9f97e5db6ac1e9c10",
+   "out_hex": "8c985c68deb2e29ad4760da39779bfcce29a5c59fb082d16158c33dc290e0f11fa240cc6fb32ed1673a23012ca19fbac"
+  },
+  {
+   "id": "nist-384-len33",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "de8f1b3faa4b7040ed4563c3b8e598253178e87e4d0df75e4ff2f2dedd5a0be046",
+   "out_hex": "48d8908c86b4b4d296d13f861eea86690b0ca1fa403924a59efd8120be72c83d95c517cc99b1a4bc67a63dbdf8883be8"
+  },
+  {
+   "id": "nist-384-len63",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "f57c64006d9ea761892e145c99df1b24640883da79d9ed5262859dcda8c3c32e05b03d984f1ab4a230242ab6b78d368dc5aaa1e6d3498d53371e84b0c1d4ba",
+   "out_hex": "7d65575f8ae0f300b7d060a7971011e6adfdaaacf7b8aebc1e7fb5dee34251c621062109b8c74e28bec56749a9adea22"
+  },
+  {
+   "id": "nist-384-len64",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "e926ae8b0af6e53176dbffcc2a6b88c6bd765f939d3d178a9bde9ef3aa131c61e31c1e42cdfaf4b4dcde579a37e150efbef5555b4c1cb40439d835a724e2fae7",
+   "out_hex": "e9866471683e04ad10b937d34c68b201b75cf3d9bfb691ec007677e29182c1f833d167264f185b32840efccec1f59340"
+  },
+  {
+   "id": "nist-384-len65",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "16e8b3d8f988e9bb04de9c96f2627811c973ce4a5296b4772ca3eefeb80a652bdf21f50df79f32db23f9f73d393b2d57d9a0297f7a2f2e79cfda39fa393df1ac00",
+   "out_hex": "1afebc5e87b28c66f03f2c54da62f55b2c019b99657f8c8029fdaeeed1f52b0cf894a21c4ee70fe85ce0c7a480bfacb9"
+  },
+  {
+   "id": "nist-384-len111",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "f690a132ab46b28edfa6479283d6444e371c6459108afd9c35dbd235e0b6b6ff4c4ea58e7554bd002460433b2164ca51e868f7947d7d7a0d792e4abf0be5f450853cc40d85485b2b8857ea31b5ea6e4ccfa2f3a7ef3380066d7d8979fdac618aad3d7e886dea4f005ae4ad05e5065f",
+   "out_hex": "e3f939c89315a10de480f5786a64c485d8a5b120caa3a565896077ece6e44fe70be0bdf1edb9347c36a05ec4aaf06575"
+  },
+  {
+   "id": "nist-384-len112",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "58d6a99bc6458824b256916770a8417040721cccfd4b79eacd8b65a3767ce5ba7e74104c985ac56b8cc9aebd16febd4cda5adb130b0ff2329cc8d611eb14dac268a2f9e633c99de33997fea41c52a7c5e1317d5b5daed35eba7d5a60e45d1fa7eaabc35f5c2b0a0f2379231953322c4e",
+   "out_hex": "cde657a9a6ceeb982b70c4b7b43b5d89737997571b6f6606d83fb2b4bb647cbb3773169bc4f3ef9d57ad686d356d2ade"
+  },
+  {
+   "id": "nist-384-len113",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "befab574396d7f8b6705e2d5b58b2c1c820bb24e3f4bae3e8fbcd36dbf734ee14e5d6ab972aedd3540235466e825850ee4c512ea9795abfd33f330d9fd7f79e62bbb63a6ea85de15beaeea6f8d204a28956059e2632d11861dfb0e65bc07ac8a159388d5c3277e227286f65ff5e5b5aec1",
+   "out_hex": "af17ec32fd8247eb12cbcaf9766a15307d533971f0ce587b1512ef6bc40e79535f04dc0aaa3afedf36f38ce297a71417"
+  },
+  {
+   "id": "nist-384-len127",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "a62fc595b4096e6336e53fcdfc8d1cc175d71dac9d750a6133d23199eaac288207944cea6b16d27631915b4619f743da2e30a0c00bbdb1bbb35ab852ef3b9aec6b0a8dcc6e9e1abaa3ad62ac0a6c5de765de2c3711b769e3fde44a74016fff82ac46fa8f1797d3b2a726b696e3dea5530439acee3a45c2a51bc32dd055650b",
+   "out_hex": "711c846108c933ecac0d91c2801f600148ffa591c67dafdf5c0b4d31d482d0c16b79a5bc6fcab8345aaf37748fcfca78"
+  },
+  {
+   "id": "nist-384-len128",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "2b6db7ced8665ebe9deb080295218426bdaa7c6da9add2088932cdffbaa1c14129bccdd70f369efb149285858d2b1d155d14de2fdb680a8b027284055182a0cae275234cc9c92863c1b4ab66f304cf0621cd54565f5bff461d3b461bd40df28198e3732501b4860eadd503d26d6e69338f4e0456e9e9baf3d827ae685fb1d817",
+   "out_hex": "1c5ab536e0f0eba20d31e98f582d78922cb31132c897d0269fbdf93d1ef10dc178ac80001ac4d2d2db970061d95b0e56"
+  },
+  {
+   "id": "nist-384-len129",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "10db509b2cdcaba6c062ae33be48116a29eb18e390e1bbada5ca0a2718afbcd23431440106594893043cc7f2625281bf7de2655880966a23705f0c5155c2f5cca9f2c2142e96d0a2e763b70686cd421b5db812daced0c6d65035fde558e94f26b3e6dde5bd13980cc80292b723013bd033284584bff27657871b0cf07a849f4ae2",
+   "out_hex": "99c71825ea87cc233a21b6ae0f6080ef5e359763f76fe554cf5fb4b55856874934d6530ec6ca71c6259f4e2fa5fc60a1"
+  },
+  {
+   "id": "nist-384-len200",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "8c3798e51bc68482d7337d3abb75dc9ffe860714a9ad73551e120059860dde24ab87327222b64cf774415a70f724cdf270de3fe47dda07b61c9ef2a3551f45a5584860248fabde676e1cd75f6355aa3eaeabe3b51dc813d9fb2eaa4f0f1d9f834d7cad9c7c695ae84b329385bc0bef895b9f1edf44a03d4b410cc23a79a6b62e4f346a5e8dd851c2857995ddbf5b2d717aeb847310e1f6a46ac3d26a7f9b44985af656d2b7c9406e8a9e8f47dcb4ef6b83caacf9aefb6118bfcff7e44bef6937ebddc89186839b77",
+   "out_hex": "a36ac58c51b71b768a61d9b37e9ab7fc8a033114e326936ac9229c880882ab1ce089219aa9549c9396986f9e3d13a787"
+  },
+  {
+   "id": "nist-384-len255",
+   "params": {
+    "out_len": 48
+   },
+   "msg_hex": "3a3a819c48efde2ad914fbf00e18ab6bc4f14513ab27d0c178a188b61431e7f5623cb66b23346775d386b50e982c493adbbfc54b9a3cd383382336a1a0b2150a15358f336d03ae18f666c7573d55c4fd181c29e6ccfde63ea35f0adf5885cfc0a3d84a2b2e4dd24496db789e663170cef74798aa1bbcd4574ea0bba40489d764b2f83aadc66b148b4a0cd95246c127d5871c4f11418690a5ddf01246a0c80a43c70088b6183639dcfda4125bd113a8f49ee23ed306faac576c3fb0c1e256671d817fc2534a52f5b439f72e424de376f4c565cca82307dd9ef76da5b7c4eb7e085172e328807c02d011ffbf33785378d79dc266f6a5be6bb0e4a92eceebaeb1",
+   "out_hex": "c2178ed359c8a8fc2e7d8a9830cb9c206b9c930c9e93c456210a6b27ad2b03ea8e68952a40e9506cd119c6d72b69417e"
+  },
+  {
+   "id": "nist-512-len0",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "",
+   "out_hex": "158f58cc79d300a9aa292515049275d051a28ab931726d0ec44bdd9faef4a702c36db9e7922fff077402236465833c5cc76af4efc352b4b44c7fa15aa0ef234e"
+  },
+  {
+   "id": "nist-512-len1",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "cc",
+   "out_hex": "dfce37ca6f32ba4c3a72e77bca20e511a39b31a6075815f083db2ecfd5c32cfd6a4e0dd9bd51921199758edd2fe8ed0fa31e06aa821c7030653d15408e8728dd"
+  },
+  {
+   "id": "nist-512-len2",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "41fb",
+   "out_hex": "ed784a0fad759baa6504c30c46ace26a24cc982f1df81d3833eb7fa0b9d82afe4bc33a211bdec1e4b29ce0a30fc9e2d71b947b2ec1b23d4787ad3578836b8481"
+  },
+  {
+   "id": "nist-512-len3",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "1f877c",
+   "out_hex": "98f61fcd1e1305994c9af873b9aec05d27aa301c5a7974c9c63a3c71758b92e5510da8e652ca7a27fce4f7d8c74183467ccb1addeb1f8c6de87584ca31bb7367"
+  },
+  {
+   "id": "nist-512-len7",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "119713cc83eeef",
+   "out_hex": "8840870eb0bbe1e96bd0a57da3dd443099612f3d6f3131b645fdbf332a26356389cc98e61e40a5371f772507c404f957d00ffb8a6f42e9ad8e169007d7a3a9b8"
+  },
+  {
+   "id": "nist-512-len8",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "4a4f202484512526",
+   "out_hex": "042d9632db0a23fc10292cfeae5cb7d9317cd4f536eb16eaa25909fccdfc86048076a13a5c0e22798998840b4745ee1fbf174c07c189536ae109abe253a4c2ee"
+  },
+  {
+   "id": "nist-512-len9",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "1f66ab4185ed9b6375",
+   "out_hex": "25b4d2fb4366f5592e057cbae28d8bb66b98c1ddd43ebe0a3b02338cbc862e7d0ffae8bdeeb466c9a01f103cc9e9f7e015ab168861dfb694867e952cd1cdce10"
+  },
+  {
+   "id": "nist-512-len15",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "fa22874bcc068879e8ef11a69f0722",
+   "out_hex": "23b984499b113e2343bb70bc20f7b308fa5c254895860d5c15e0e99cf02667ace22e1ea6cdca3716db6193238d3c5bc43f9b20e41561a3a328f0ab64e6203515"
+  },
+  {
+   "id": "nist-512-len16",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "52a608ab21ccdd8a4457a57ede782176",
+   "out_hex": "ea47150919586419aba6e67e4146fdf7ac285a53e98f9e1e2e949ad5907c2b73e9f36a5de3687987a85edcaec32af117cb4fd9650e358cc60a43eaaffc017528"
+  },
+  {
+   "id": "nist-512-len17",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "82e192e4043ddcd12ecf52969d0f807eed",
+   "out_hex": "e5d3a0c77470a1f280e429d94707e755da985c8bab92585f97ae1a132a0e45f32f6aed6ae2f12fd497bd4240c1a22ecc3d6c70cc6dc9990ad8eb092a75ad8b98"
+  },
+  {
+   "id": "nist-512-len31",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "84fb51b517df6c5accb5d022f8f28da09b10232d42320ffc32dbecc3835b29",
+   "out_hex": "34309bf83b6182d719f6c9d4f580602907af22b116dca33a02d537b5cc5e5da757bc70dfe9db325e1843bdf3888a45053f01f739b9804cf9ddf6927fa09a084a"
+  },
+  {
+   "id": "nist-512-len32",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "9f2fcc7c90de090d6b87cd7e9718c1ea6cb21118fc2d5de9f97e5db6ac1e9c10",
+   "out_hex": "a5f8a3305dc2e84529db679a9cd7602ba08a9d805bd5cf8d2b1917912a86b59346cbea61c50acc2ac25b10861d6d65b446e6d814d90cdef8ce1e4a35c470251e"
+  },
+  {
+   "id": "nist-512-len33",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "de8f1b3faa4b7040ed4563c3b8e598253178e87e4d0df75e4ff2f2dedd5a0be046",
+   "out_hex": "d2e87cc6abd77450db883ea0993a45af767012cb5df7ab2724c85900dee78bc3eb3dde16d6a7226d629f4da9b0bec2baa2037c0ec77c8e5f36d80ed2ff0a6a23"
+  },
+  {
+   "id": "nist-512-len63",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "f57c64006d9ea761892e145c99df1b24640883da79d9ed5262859dcda8c3c32e05b03d984f1ab4a230242ab6b78d368dc5aaa1e6d3498d53371e84b0c1d4ba",
+   "out_hex": "d72261198469dc5f80b61afcb1b157b632177dcb3fc59ba32bf34c45110487514d65989350541f4fc3082cf95346230893cb5c30bc04ea3eddc6e43a02b5e5ae"
+  },
+  {
+   "id": "nist-512-len64",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "e926ae8b0af6e53176dbffcc2a6b88c6bd765f939d3d178a9bde9ef3aa131c61e31c1e42cdfaf4b4dcde579a37e150efbef5555b4c1cb40439d835a724e2fae7",
+   "out_hex": "ec6e7384fa2c16f125a736f57c936d07044a0ac2ebb3ef4adc2775168f94f7a837dc5125aad549f02af856c19198f0e70f329cade4c319b6ec91c5fc82b6eeb9"
+  },
+  {
+   "id": "nist-512-len65",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "16e8b3d8f988e9bb04de9c96f2627811c973ce4a5296b4772ca3eefeb80a652bdf21f50df79f32db23f9f73d393b2d57d9a0297f7a2f2e79cfda39fa393df1ac00",
+   "out_hex": "53006cb314670b633bca36ecb8d041691f9e97a9599f3a802ccb09ca79fdce4ba89c7e76c818f127d1a3a09c0c0eb9efb4fbed1eb3a3c87e0ed142032f6568da"
+  },
+  {
+   "id": "nist-512-len111",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "f690a132ab46b28edfa6479283d6444e371c6459108afd9c35dbd235e0b6b6ff4c4ea58e7554bd002460433b2164ca51e868f7947d7d7a0d792e4abf0be5f450853cc40d85485b2b8857ea31b5ea6e4ccfa2f3a7ef3380066d7d8979fdac618aad3d7e886dea4f005ae4ad05e5065f",
+   "out_hex": "256cc5f13594e89894da97b0297e325c5b3209e92a5a61c28892aa533419a25170d7a0944eaab95821af8facea15d54f859aaedf614b43d47b2aaedecc2e1d3e"
+  },
+  {
+   "id": "nist-512-len112",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "58d6a99bc6458824b256916770a8417040721cccfd4b79eacd8b65a3767ce5ba7e74104c985ac56b8cc9aebd16febd4cda5adb130b0ff2329cc8d611eb14dac268a2f9e633c99de33997fea41c52a7c5e1317d5b5daed35eba7d5a60e45d1fa7eaabc35f5c2b0a0f2379231953322c4e",
+   "out_hex": "6ecfd9dcb3fb7695e8b6fbfd7cc47d34ac35f08ebc3faf47ca9f643564cfd22ddad3c5164eb29a8bc2a4d3996dff4e5cd8aace62cddcc5fd2d2516110f599db6"
+  },
+  {
+   "id": "nist-512-len113",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "befab574396d7f8b6705e2d5b58b2c1c820bb24e3f4bae3e8fbcd36dbf734ee14e5d6ab972aedd3540235466e825850ee4c512ea9795abfd33f330d9fd7f79e62bbb63a6ea85de15beaeea6f8d204a28956059e2632d11861dfb0e65bc07ac8a159388d5c3277e227286f65ff5e5b5aec1",
+   "out_hex": "e29e514297c63f9583e55788d2deb7570c32d2274d381c2b38f55de62fc4aefe584265d3c67ddf7084cdfff10651aa38b5f3399813e483fa1e6213fc02db5fbb"
+  },
+  {
+   "id": "nist-512-len127",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "a62fc595b4096e6336e53fcdfc8d1cc175d71dac9d750a6133d23199eaac288207944cea6b16d27631915b4619f743da2e30a0c00bbdb1bbb35ab852ef3b9aec6b0a8dcc6e9e1abaa3ad62ac0a6c5de765de2c3711b769e3fde44a74016fff82ac46fa8f1797d3b2a726b696e3dea5530439acee3a45c2a51bc32dd055650b",
+   "out_hex": "564eff0f0249ef30e7e9fc2ddab6543b39c5bccd7464c626694c9e16822950e2519f4fceb77e645b701d7e9a7d94962ac41214f706a4f9be9c65b2ca9cb41633"
+  },
+  {
+   "id": "nist-512-len128",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "2b6db7ced8665ebe9deb080295218426bdaa7c6da9add2088932cdffbaa1c14129bccdd70f369efb149285858d2b1d155d14de2fdb680a8b027284055182a0cae275234cc9c92863c1b4ab66f304cf0621cd54565f5bff461d3b461bd40df28198e3732501b4860eadd503d26d6e69338f4e0456e9e9baf3d827ae685fb1d817",
+   "out_hex": "f286dbf18d8320b44098e99be7b974ebdf0da2c7b6e580bce54f6a27e2a114de140e4f49802d79008ec5f405f58f17077f24d5da007a24db96c72dce2343991e"
+  },
+  {
+   "id": "nist-512-len129",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "10db509b2cdcaba6c062ae33be48116a29eb18e390e1bbada5ca0a2718afbcd23431440106594893043cc7f2625281bf7de2655880966a23705f0c5155c2f5cca9f2c2142e96d0a2e763b70686cd421b5db812daced0c6d65035fde558e94f26b3e6dde5bd13980cc80292b723013bd033284584bff27657871b0cf07a849f4ae2",
+   "out_hex": "cc6e4c03e096bda1160a33c343e536fdfc2b6ddb76b4be868ed6eae2341060382ef881b7304d22bca90ab20ccecbf82f04f1df4938f15b1d162c5ff8f5c2177f"
+  },
+  {
+   "id": "nist-512-len200",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "8c3798e51bc68482d7337d3abb75dc9ffe860714a9ad73551e120059860dde24ab87327222b64cf774415a70f724cdf270de3fe47dda07b61c9ef2a3551f45a5584860248fabde676e1cd75f6355aa3eaeabe3b51dc813d9fb2eaa4f0f1d9f834d7cad9c7c695ae84b329385bc0bef895b9f1edf44a03d4b410cc23a79a6b62e4f346a5e8dd851c2857995ddbf5b2d717aeb847310e1f6a46ac3d26a7f9b44985af656d2b7c9406e8a9e8f47dcb4ef6b83caacf9aefb6118bfcff7e44bef6937ebddc89186839b77",
+   "out_hex": "9aacb0f6e446b42b881af55b5452839ebeed356a76fde6778495cb1f20f6037054bfd250c001ef911433e4ef600e292cb9f57bbae08d21cf4b021260ffff6ae1"
+  },
+  {
+   "id": "nist-512-len255",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "3a3a819c48efde2ad914fbf00e18ab6bc4f14513ab27d0c178a188b61431e7f5623cb66b23346775d386b50e982c493adbbfc54b9a3cd383382336a1a0b2150a15358f336d03ae18f666c7573d55c4fd181c29e6ccfde63ea35f0adf5885cfc0a3d84a2b2e4dd24496db789e663170cef74798aa1bbcd4574ea0bba40489d764b2f83aadc66b148b4a0cd95246c127d5871c4f11418690a5ddf01246a0c80a43c70088b6183639dcfda4125bd113a8f49ee23ed306faac576c3fb0c1e256671d817fc2534a52f5b439f72e424de376f4c565cca82307dd9ef76da5b7c4eb7e085172e328807c02d011ffbf33785378d79dc266f6a5be6bb0e4a92eceebaeb1",
+   "out_hex": "9bfee65eb915bb72e8c3b213399c4f6b3f26466ddf7df39773a0e08ed2066419d4c68f8480f7d79522a244f9a1c73b1f1ed2ef8ad8bb73167b2be438810f65fd"
+  }
+ ]
+}

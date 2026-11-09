@@ -1,0 +1,17 @@
+id        = "blake3"
+kind      = "hash"
+category  = "hash"
+family    = "blake3"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["BLAKE3 specification"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "blake3", version = "=1.8.7", license = "CC0-1.0 OR Apache-2.0 OR Apache-2.0 WITH LLVM-exception" }
+
+[kat]
+files = ["kat/blake3.json"]
+
+[sizes]
+out = 32

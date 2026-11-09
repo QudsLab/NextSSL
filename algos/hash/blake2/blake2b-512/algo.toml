@@ -1,0 +1,24 @@
+id        = "blake2b-512"
+kind      = "hash"
+category  = "hash"
+family    = "blake2"
+aliases   = ["blake2b"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 7693"]
+cose_alg  = -65700
+oid       = "1.3.6.1.4.1.1722.12.2.1.16"
+fips      = false
+upstream  = { repo = "https://github.com/BLAKE2/BLAKE2", commit = "ed1974ea83433eba7b2d95c5dcd9ac33cb847913", license = "CC0-1.0 OR OpenSSL OR Apache-2.0", files = ["ref/blake2b-ref.c", "ref/blake2.h", "ref/blake2-impl.h", "COPYING"] }
+
+[params.key]
+type     = "bytes"
+min      = 0
+max      = 64
+required = false
+
+[kat]
+files = ["kat/blake2b-kat.json", "kat/blake2b-unkeyed.json"]
+
+[sizes]
+out = 64
