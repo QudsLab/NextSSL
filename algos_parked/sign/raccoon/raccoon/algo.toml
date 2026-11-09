@@ -1,0 +1,24 @@
+id        = "raccoon"
+kind      = "sign"
+category  = "sign"
+family    = "raccoon"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/raccoon-submission.zip", sha256 = "5987c78c646d73d895ed4aac8c452336a9b8cb8d3e145fbbbde313802cb877df", license = "MIT", files = ["Raccoon/Reference_Implementation/Raccoon-128-1/api.h", "Raccoon/Reference_Implementation/Raccoon-128-1/ct_util.c", "Raccoon/Reference_Implementation/Raccoon-128-1/ct_util.h", "Raccoon/Reference_Implementation/Raccoon-128-1/keccakf1600.c", "Raccoon/Reference_Implementation/Raccoon-128-1/keccakf1600.h", "Raccoon/Reference_Implementation/Raccoon-128-1/mask_random.c", "Raccoon/Reference_Implementation/Raccoon-128-1/mask_random.h", "Raccoon/Reference_Implementation/Raccoon-128-1/mont32.h", "Raccoon/Reference_Implementation/Raccoon-128-1/mont64.h", "Raccoon/Reference_Implementation/Raccoon-128-1/nist_random.h", "Raccoon/Reference_Implementation/Raccoon-128-1/ntt32.c", "Raccoon/Reference_Implementation/Raccoon-128-1/ntt64.c", "Raccoon/Reference_Implementation/Raccoon-128-1/param_list.h", "Raccoon/Reference_Implementation/Raccoon-128-1/param_select.h", "Raccoon/Reference_Implementation/Raccoon-128-1/plat_local.h", "Raccoon/Reference_Implementation/Raccoon-128-1/polyr.c", "Raccoon/Reference_Implementation/Raccoon-128-1/polyr.h", "Raccoon/Reference_Implementation/Raccoon-128-1/racc_api.c", "Raccoon/Reference_Implementation/Raccoon-128-1/racc_core.c", "Raccoon/Reference_Implementation/Raccoon-128-1/racc_core.h", "Raccoon/Reference_Implementation/Raccoon-128-1/racc_param.h", "Raccoon/Reference_Implementation/Raccoon-128-1/racc_serial.c", "Raccoon/Reference_Implementation/Raccoon-128-1/racc_serial.h", "Raccoon/Reference_Implementation/Raccoon-128-1/rng.h", "Raccoon/Reference_Implementation/Raccoon-128-1/sha3_t.c", "Raccoon/Reference_Implementation/Raccoon-128-1/sha3_t.h", "Raccoon/Reference_Implementation/Raccoon-128-1/xof_sample.c", "Raccoon/Reference_Implementation/Raccoon-128-1/xof_sample.h", "LICENSE"] }
+
+# Variant wired: Raccoon/Reference_Implementation/Raccoon-128-1 (sign). Other variants not wired: Raccoon/Reference_Implementation/Raccoon-128-2, Raccoon/Reference_Implementation/Raccoon-128-4, Raccoon/Reference_Implementation/Raccoon-128-8, Raccoon/Reference_Implementation/Raccoon-192-1, Raccoon/Reference_Implementation/Raccoon-192-2, Raccoon/Reference_Implementation/Raccoon-192-4, Raccoon/Reference_Implementation/Raccoon-192-8, Raccoon/Reference_Implementation/Raccoon-256-1 ....
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 2256
+sk = 14800
+sig = { min = 1, max = 11524 }
+seed = 0
+ctx = 0

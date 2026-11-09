@@ -1,0 +1,25 @@
+id        = "newhope"
+kind      = "kem"
+category  = "kem"
+family    = "newhope"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "LicenseRef-Public-Domain", files = ["newhope512cca/api.h", "newhope512cca/apiorig.h", "newhope512cca/cpapke.c", "newhope512cca/cpapke.h", "newhope512cca/fips202.c", "newhope512cca/fips202.h", "newhope512cca/kem.c", "newhope512cca/ntt.c", "newhope512cca/ntt.h", "newhope512cca/params.h", "newhope512cca/poly.c", "newhope512cca/poly.h", "newhope512cca/precomp.c", "newhope512cca/reduce.c", "newhope512cca/reduce.h", "newhope512cca/verify.c", "newhope512cca/verify.h", "LICENSE"] }
+
+# Variant wired: newhope512cca (kem). Other variants not wired: newhope1024cca.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 928
+sk = 1888
+ct = 1120
+ss = 32
+seed = 0
+coins = 0

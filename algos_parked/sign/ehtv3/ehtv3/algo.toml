@@ -1,0 +1,24 @@
+id        = "ehtv3"
+kind      = "sign"
+category  = "sign"
+family    = "ehtv3"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/EHTv3v4-Submission.zip", sha256 = "aeef797fa88bef1f196d4bdc5b9ea591b1a1ba7a4c630c39bc4291f9a822062e", license = "NOASSERTION", files = ["EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/api.h", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/eht_keygen.c", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/eht_keygen.h", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/eht_siggen.c", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/eht_siggen.h", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/eht_sigver.c", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/eht_sigver.h", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/general_functions.c", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/general_functions.h", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/general_functions_with_tables.c", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/general_functions_with_tables.h", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/keccak.c", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/keccak.h", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/parameters.c", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/parameters.h", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/rng.h", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/sign.c", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/tables.c", "EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1/tables.h", "LICENSE"] }
+
+# Variant wired: EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l1 (sign). Other variants not wired: EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l3, EHTv3v4/Reference_Implementation/crypto_sign/ehtv3l5, EHTv3v4/Reference_Implementation/crypto_sign/ehtv4l1, EHTv3v4/Reference_Implementation/crypto_sign/ehtv4l5, EHTv3v4/Optimized_Implementation/crypto_sign/ehtv3l1, EHTv3v4/Optimized_Implementation/crypto_sign/ehtv3l3, EHTv3v4/Optimized_Implementation/crypto_sign/ehtv3l5, EHTv3v4/Optimized_Implementation/crypto_sign/ehtv4l1 ....
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 83490
+sk = 368
+sig = { min = 1, max = 169 }
+seed = 0
+ctx = 0

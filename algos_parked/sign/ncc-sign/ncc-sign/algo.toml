@@ -1,0 +1,24 @@
+id        = "ncc-sign"
+kind      = "sign"
+category  = "sign"
+family    = "ncc-sign"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "MIT", files = ["nccsign1/aes.c", "nccsign1/aes.h", "nccsign1/api.h", "nccsign1/config.h", "nccsign1/fips202.c", "nccsign1/fips202.h", "nccsign1/packing.c", "nccsign1/packing.h", "nccsign1/params.h", "nccsign1/poly.c", "nccsign1/poly.h", "nccsign1/reduce.c", "nccsign1/reduce.h", "nccsign1/rounding.c", "nccsign1/rounding.h", "nccsign1/sign.c", "nccsign1/sign.h", "nccsign1/symmetric-aes.c", "nccsign1/symmetric-shake.c", "nccsign1/symmetric.h", "LICENSE"] }
+
+# Variant wired: nccsign1 (sign). Other variants not wired: nccsign3, nccsign5, nccsign1aes, nccsign3aes, nccsign5aes.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1760
+sk = 2688
+sig = { min = 1, max = 3056 }
+seed = 0
+ctx = 0

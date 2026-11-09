@@ -1,0 +1,25 @@
+id        = "smaug"
+kind      = "kem"
+category  = "kem"
+family    = "smaug"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["smaugt1/api.h", "smaugt1/cbd.c", "smaugt1/cbd.h", "smaugt1/ciphertext.c", "smaugt1/ciphertext.h", "smaugt1/dg.c", "smaugt1/dg.h", "smaugt1/fips202.c", "smaugt1/fips202.h", "smaugt1/hash.c", "smaugt1/hash.h", "smaugt1/hwt.c", "smaugt1/hwt.h", "smaugt1/indcpa.c", "smaugt1/indcpa.h", "smaugt1/io.c", "smaugt1/io.h", "smaugt1/kem.c", "smaugt1/kem.h", "smaugt1/key.c", "smaugt1/key.h", "smaugt1/pack.c", "smaugt1/pack.h", "smaugt1/parameters.h", "smaugt1/poly.c", "smaugt1/poly.h", "smaugt1/toomcook.c", "smaugt1/toomcook.h", "smaugt1/verify.c", "smaugt1/verify.h", "LICENSE"] }
+
+# Variant wired: smaugt1 (kem). Other variants not wired: smaugt3, smaugt5, smaugt1v5, smaugt3v5, smaugt5v5.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 672
+sk = 1504
+ct = 672
+ss = 32
+seed = 0
+coins = 0

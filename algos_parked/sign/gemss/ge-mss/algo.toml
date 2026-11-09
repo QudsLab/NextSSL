@@ -1,0 +1,24 @@
+id        = "ge-mss"
+kind      = "sign"
+category  = "sign"
+family    = "gemss"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["gemss128/KAT_int.h", "gemss128/add.h", "gemss128/api.h", "gemss128/arch.h", "gemss128/bit.c", "gemss128/bit.h", "gemss128/config_HFE.h", "gemss128/config_gf2n.h", "gemss128/convMQS_gf2.c", "gemss128/convMQS_gf2.h", "gemss128/evalMQnocst_gf2.c", "gemss128/evalMQnocst_gf2.h", "gemss128/evaluateMQS.hpp", "gemss128/init.h", "gemss128/printgf2x.c", "gemss128/printgf2x.h", "gemss128/sign.c", "gemss128/signHFE.hpp", "gemss128/sign_keypairHFE.hpp", "gemss128/sign_openHFE.c", "gemss128/sign_openHFE.h", "gemss128/types_HFE.h", "LICENSE"] }
+
+# Variant wired: gemss128 (sign). Other variants not wired: gemss192, gemss256, gemss128v2, gemss192v2, gemss256v2.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 377832
+sk = 10536
+sig = { min = 1, max = 33 }
+seed = 0
+ctx = 0
