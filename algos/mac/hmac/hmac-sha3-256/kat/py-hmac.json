@@ -1,0 +1,54 @@
+{
+ "algorithm": "hmac-sha3-256",
+ "source": "Python 3 hmac + hashlib sha3 (independent implementation); the NIST/Wycheproof vectors are in the Wycheproof file",
+ "vectors": [
+  {
+   "id": "py-hmac-0",
+   "key_hex": "0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b",
+   "data_hex": "4869205468657265",
+   "tag_hex": "ba85192310dffa96e2a3a40e69774351140bb7185e1202cdcc917589f95e16bb"
+  },
+  {
+   "id": "py-hmac-1",
+   "key_hex": "4a656665",
+   "data_hex": "7768617420646f2079612077616e7420666f72206e6f7468696e673f",
+   "tag_hex": "c7d4072e788877ae3596bbb0da73b887c9171f93095b294ae857fbe2645e1ba5"
+  },
+  {
+   "id": "py-hmac-2",
+   "key_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "data_hex": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+   "tag_hex": "84ec79124a27107865cedd8bd82da9965e5ed8c37b0ac98005a7f39ed58a4207"
+  },
+  {
+   "id": "py-hmac-3",
+   "key_hex": "0102030405060708090a0b0c0d0e0f10111213141516171819",
+   "data_hex": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+   "tag_hex": "57366a45e2305321a4bc5aa5fe2ef8a921f6af8273d7fe7be6cfedb3f0aea6d7"
+  },
+  {
+   "id": "py-hmac-4",
+   "key_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "data_hex": "54657374205573696e67204c6172676572205468616e20426c6f636b2d53697a65204b6579202d2048617368204b6579204669727374",
+   "tag_hex": "ed73a374b96c005235f948032f09674a58c0ce555cfc1f223b02356560312c3b"
+  },
+  {
+   "id": "py-hmac-5",
+   "key_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "data_hex": "787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878",
+   "tag_hex": "07b3e6928a6373555885a83096c6ef91f853e3209b9b805a627f8d9695304f53"
+  },
+  {
+   "id": "py-hmac-6",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "data_hex": "",
+   "tag_hex": "50ab1606034383fe4b3b4bc0a341a82e40ac85e455cdfeed4cac902a7b8ccfc1"
+  },
+  {
+   "id": "py-hmac-7",
+   "key_hex": "01",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+   "tag_hex": "64fd471cc8f084909a25826e7bdc8e4d2cc4b47d812d2de2fae1ecd082c9179f"
+  }
+ ]
+}

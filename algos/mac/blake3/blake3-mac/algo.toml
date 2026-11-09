@@ -1,0 +1,19 @@
+id        = "blake3-mac"
+kind      = "mac"
+category  = "mac"
+family    = "blake3"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["BLAKE3 specification"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "blake3", version = "=1.8.7", license = "CC0-1.0 OR Apache-2.0" }
+# blake3 built with feature `pure` (no C/asm); upstream-internal unsafe SIMD intrinsics remain.
+
+[kat]
+files = ["kat/blake3-keyed.json"]
+
+[sizes]
+key = 32
+tag = 32

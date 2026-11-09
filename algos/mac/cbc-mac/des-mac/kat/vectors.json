@@ -1,0 +1,150 @@
+{
+ "algorithm": "des-mac",
+ "source": "pycryptodome DES in CBC mode with a zero IV; the MAC is the last ciphertext block (independent implementation)",
+ "vectors": [
+  {
+   "id": "py-0",
+   "key_hex": "6827a0d3f9be7ea0",
+   "data_hex": "19ec323518e511f7abc16c1d623597ae1a5b6ed496caa31f9292cd07e534cc43",
+   "tag_hex": "327bf4788acfd902"
+  },
+  {
+   "id": "py-1",
+   "key_hex": "9ed8154ad63cfccb",
+   "data_hex": "94f4d922dc37bf85",
+   "tag_hex": "d8f0207d848c9a76"
+  },
+  {
+   "id": "py-2",
+   "key_hex": "2813d172ddd3af35",
+   "data_hex": "3de257a2ae3f6bdfdb050ee5c3c3e2702f92b11c0970ed50",
+   "tag_hex": "ece940723c0c001c"
+  },
+  {
+   "id": "py-3",
+   "key_hex": "f46675282b362768",
+   "data_hex": "fdb4adab25d81b7e",
+   "tag_hex": "7969926182fa77fc"
+  },
+  {
+   "id": "py-4",
+   "key_hex": "26f6ee66b14a5fc8",
+   "data_hex": "58f6a825fd740560ad134d20c05b5a71532f3901b593b963af66453ab5f81ace6ec8ecd570d7b103f98a6b7a0afccc68c6616e9e6d7d209368b3380960fa0d0671acd40539c15b017b7a2e5929ae39e8",
+   "tag_hex": "c0a3882181f621e1"
+  },
+  {
+   "id": "py-5",
+   "key_hex": "0f7d3716db666c59",
+   "data_hex": "7c147a248832a642ae0479123400a8b51acfb6a1ba82104db17710211c0aae426e2c67d3c7e0c00265e498f8648e9fb2900d8ce5431b1fffc1b7161d9d84e67e5902627278ccf69f55c85454fc1d791f",
+   "tag_hex": "fe5e884751eae3ad"
+  },
+  {
+   "id": "py-6",
+   "key_hex": "e504dbbf650514af",
+   "data_hex": "6d02113b8fd45b233b229bc4ebcd5164655b602c8f0d0a05",
+   "tag_hex": "8baaa4e49629569f"
+  },
+  {
+   "id": "py-7",
+   "key_hex": "c6777e3b1b0a4040",
+   "data_hex": "ffe3a8e29b923b74993d39893b25b247693ef59598606db1",
+   "tag_hex": "21812485fc84fa95"
+  },
+  {
+   "id": "py-8",
+   "key_hex": "50fc7b4e9d0d2ee4",
+   "data_hex": "17483bceef064b3e",
+   "tag_hex": "8cf9e4adfaa21570"
+  },
+  {
+   "id": "py-9",
+   "key_hex": "017e8521e16cb54c",
+   "data_hex": "51a74621f475591419c8d39dfce7d72a",
+   "tag_hex": "7c505de282ca74e9"
+  },
+  {
+   "id": "py-10",
+   "key_hex": "f6b2ea1ac048e782",
+   "data_hex": "bcaa8348dfd7bbb7",
+   "tag_hex": "87150ae592440d97"
+  },
+  {
+   "id": "py-11",
+   "key_hex": "f8dd605665ca95b6",
+   "data_hex": "f21c5845b7ddcc26",
+   "tag_hex": "a5f20507166d1558"
+  },
+  {
+   "id": "py-12",
+   "key_hex": "be903e2c7a02aea3",
+   "data_hex": "2ef25eae0edd4db58d7b12e03783d5935e514540d9182abc",
+   "tag_hex": "942891b34da08d64"
+  },
+  {
+   "id": "py-13",
+   "key_hex": "06bdd18dc9b0a9d8",
+   "data_hex": "62cbdcaefe52010e6199ffa4b176ddcb4f8df2724b538bec853add8163d5fcc7",
+   "tag_hex": "4d251f8adb0e50b6"
+  },
+  {
+   "id": "py-14",
+   "key_hex": "1f891c24ac073085",
+   "data_hex": "9e892b261deb79166b1e8d0d0e3f0eb06df0211c326174c77038a0c93c7cf7dc0b4b9e4a4b658cffdc10ef8a58f634665233b5b00014555b7917084f5b3099219bf2d3063f2e65315828536bf8ee2372",
+   "tag_hex": "bf8a89626b798117"
+  },
+  {
+   "id": "py-15",
+   "key_hex": "a15f7c3c9ac12592",
+   "data_hex": "f606a91da5616a54e8a5a4d44c7946d73951db60ec81b6b0d6e09b0a809a0394",
+   "tag_hex": "6b7b4386ff2be603"
+  },
+  {
+   "id": "py-16",
+   "key_hex": "f82042f5e439b557",
+   "data_hex": "f85a738d3f1868c03c43c5a35c31ad27",
+   "tag_hex": "1bb456649f8eaa4e"
+  },
+  {
+   "id": "py-17",
+   "key_hex": "9a23aa77ac64a980",
+   "data_hex": "62f36dcbcda0fc98407cdf82923ff193ab1548faac6307eeefb0730d039b3bfe",
+   "tag_hex": "238cd471d28e74c1"
+  },
+  {
+   "id": "py-18",
+   "key_hex": "68153db76554dee0",
+   "data_hex": "95933ae47128917cb1b184ef4241349c3c7694b0209d89ad05b6d89a542709ee",
+   "tag_hex": "9232df51c2b188e3"
+  },
+  {
+   "id": "py-19",
+   "key_hex": "01ce3e32cd3e2d71",
+   "data_hex": "9f8f9d19bb2880df",
+   "tag_hex": "5c968f736b70c5d6"
+  },
+  {
+   "id": "py-20",
+   "key_hex": "dc92e4ff8a6df19a",
+   "data_hex": "52e0dc2c0edefa82d32157d165b381dbbf3f0501c619a613f9b223ea5cd990fecef1854a00049680153a8914b9e7f576d5018ceafb8f181ef00d101d26e965655ac33147ca3ccff7069edf8753510d79",
+   "tag_hex": "6e10ff88bc88eecd"
+  },
+  {
+   "id": "py-21",
+   "key_hex": "8a959bb1e68911d0",
+   "data_hex": "fa1c0c1655b42d23",
+   "tag_hex": "f0d74e0416b62c66"
+  },
+  {
+   "id": "py-22",
+   "key_hex": "b00ba6ac737499ac",
+   "data_hex": "fd4146b2c6ecf6c56f5e6d598ea782c64b3b364ff4dad60887868774160f2967",
+   "tag_hex": "d08c2684d1d423a0"
+  },
+  {
+   "id": "py-23",
+   "key_hex": "ce711824dece57a5",
+   "data_hex": "ab0f65f61ed4ac96",
+   "tag_hex": "33438ab2002522d6"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+id        = "ghash"
+kind      = "mac"
+category  = "mac"
+family    = "ghash"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["NIST SP 800-38D (GHASH)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "ghash", version = "=0.6.0", license = "Apache-2.0 OR MIT" }
+# One-time universal hash (key must authenticate a single message), not a standalone MAC:
+# tier research, reachable through root only. Whole 16-byte blocks only, all-zero key refused.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+key = 16
+tag = 16
+block = 16

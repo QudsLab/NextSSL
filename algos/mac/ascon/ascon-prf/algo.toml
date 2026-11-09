@@ -1,0 +1,27 @@
+id        = "ascon-prf"
+kind      = "mac"
+category  = "mac"
+family    = "ascon"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["Ascon-PRF (ascon-c v1.3 reference C)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/ascon/ascon-c", commit = "446347f21b209f3921c65ece70027c366cbe1693", license = "CC0-1.0", files = ["crypto_auth/asconprfv13/ref/prf.c", "crypto_auth/asconprfv13/ref/api.h", "crypto_auth/asconprfv13/ref/ascon.h", "crypto_auth/asconprfv13/ref/constants.h", "crypto_auth/asconprfv13/ref/permutations.h", "crypto_auth/asconprfv13/ref/round.h", "crypto_auth/asconprfv13/ref/word.h", "crypto_auth/asconprfv13/ref/printstate.h", "tests/crypto_auth.h", "LICENSE"] }
+# Ascon-PRF v1.3 (ascon-c crypto_auth/asconprfv13, ref): key 16, output 1..=64 bytes (upstream limit, CRYPTO_BYTES 64).
+# Designers' KAT covers 64-byte outputs; shorter outputs are prefixes of the same squeeze stream (checked in glue tests).
+# Known gap (rule 9): upstream keeps the permutation state on the stack and does not wipe it.
+
+[params.out_len]
+type    = "u64"
+min     = 1
+max     = 64
+default = 16
+
+[kat]
+files = ["kat/ascon-prf.json"]
+
+[sizes]
+key = 16
+tag = { min = 1, max = 64 }

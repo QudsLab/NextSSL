@@ -1,0 +1,21 @@
+id        = "hmac-md5"
+kind      = "mac"
+category  = "mac"
+family    = "hmac"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["RFC 2104", "RFC 2202"]
+oid       = "1.3.6.1.5.5.8.1.1"
+fips      = false
+copyleft  = false
+upstream  = { crate = "hmac", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# No Wycheproof file exists for HMAC-MD5; RFC 2202 is the only published vector set.
+# Also depends on RustCrypto `md-5` =0.11.0 (MIT OR Apache-2.0).
+
+[kat]
+files = ["kat/rfc2202.json"]
+
+[sizes]
+key = { min = 1, max = 268435456 }
+tag = { min = 16, max = 16 }

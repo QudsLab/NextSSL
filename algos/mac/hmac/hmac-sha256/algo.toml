@@ -1,0 +1,24 @@
+id        = "hmac-sha256"
+kind      = "mac"
+category  = "mac"
+family    = "hmac"
+aliases   = ["hmac-sha-256"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 2104", "FIPS 198-1", "RFC 4231"]
+cose_alg  = 5
+oid       = "1.2.840.113549.2.9"
+fips      = true
+copyleft  = false
+upstream  = { crate = "hmac", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `sha2` =0.11.1 (MIT OR Apache-2.0) for SHA-256.
+
+[kat]
+files = ["kat/rfc4231.json"]
+# Wycheproof (C2SP/wycheproof, commit in kat/WYCHEPROOF_COMMIT.txt) is run by the crate's own test:
+# kat/wycheproof_hmac_sha256_test.json
+
+# Key: 1..=2^28 bytes (empty key rejected). Tag: 16..=32 bytes (truncation below 128 bits is refused).
+[sizes]
+key = { min = 1, max = 268435456 }
+tag = { min = 16, max = 32 }

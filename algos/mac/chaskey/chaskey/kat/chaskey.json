@@ -1,0 +1,454 @@
+{
+ "algorithm": "chaskey",
+ "source": "chaskey12.c vectors[64][8] (author)",
+ "vectors": [
+  {
+   "id": "chaskey12-len0",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "",
+   "tag_hex": "dd3e1849d6824555"
+  },
+  {
+   "id": "chaskey12-len1",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "00",
+   "tag_hex": "ed1da89ec93179ca"
+  },
+  {
+   "id": "chaskey12-len2",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "0001",
+   "tag_hex": "98fe20a343cd666f"
+  },
+  {
+   "id": "chaskey12-len3",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102",
+   "tag_hex": "f6f418acdd7d9fa1"
+  },
+  {
+   "id": "chaskey12-len4",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "00010203",
+   "tag_hex": "4cf04960099949f3"
+  },
+  {
+   "id": "chaskey12-len5",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "0001020304",
+   "tag_hex": "75c83252653d3b57"
+  },
+  {
+   "id": "chaskey12-len6",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405",
+   "tag_hex": "964b0461fbe92273"
+  },
+  {
+   "id": "chaskey12-len7",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "00010203040506",
+   "tag_hex": "141fa08bbf399636"
+  },
+  {
+   "id": "chaskey12-len8",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "0001020304050607",
+   "tag_hex": "412d98ed936d4ab2"
+  },
+  {
+   "id": "chaskey12-len9",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708",
+   "tag_hex": "fb0d98bc70e305f9"
+  },
+  {
+   "id": "chaskey12-len10",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "00010203040506070809",
+   "tag_hex": "36f88e1fda86c8ab"
+  },
+  {
+   "id": "chaskey12-len11",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a",
+   "tag_hex": "4d1a1815868a5aa8"
+  },
+  {
+   "id": "chaskey12-len12",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b",
+   "tag_hex": "7a7912c1999eae81"
+  },
+  {
+   "id": "chaskey12-len13",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c",
+   "tag_hex": "9ca11137b4a34601"
+  },
+  {
+   "id": "chaskey12-len14",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d",
+   "tag_hex": "7905142f3be77e67"
+  },
+  {
+   "id": "chaskey12-len15",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e",
+   "tag_hex": "6a3ee3d35c043397"
+  },
+  {
+   "id": "chaskey12-len16",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f",
+   "tag_hex": "d13970d7be9b2350"
+  },
+  {
+   "id": "chaskey12-len17",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f10",
+   "tag_hex": "32acd914bfda3bc8"
+  },
+  {
+   "id": "chaskey12-len18",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "tag_hex": "8a58d816cb7a1483"
+  },
+  {
+   "id": "chaskey12-len19",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "tag_hex": "03f4d66638efad8d"
+  },
+  {
+   "id": "chaskey12-len20",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "tag_hex": "f9932237ff05e831"
+  },
+  {
+   "id": "chaskey12-len21",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "tag_hex": "f5fedb134862b471"
+  },
+  {
+   "id": "chaskey12-len22",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "tag_hex": "8bb55486f38d57ea"
+  },
+  {
+   "id": "chaskey12-len23",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "tag_hex": "8a3acb94b5ad591c"
+  },
+  {
+   "id": "chaskey12-len24",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "tag_hex": "7ce3708723f7495f"
+  },
+  {
+   "id": "chaskey12-len25",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "tag_hex": "f42f3d2f405710c2"
+  },
+  {
+   "id": "chaskey12-len26",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "tag_hex": "b3933a167e5636ac"
+  },
+  {
+   "id": "chaskey12-len27",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a",
+   "tag_hex": "899a7945423a5e1b"
+  },
+  {
+   "id": "chaskey12-len28",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "tag_hex": "65e12df5a695fac8"
+  },
+  {
+   "id": "chaskey12-len29",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "tag_hex": "b82449d8c8a06ae9"
+  },
+  {
+   "id": "chaskey12-len30",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "tag_hex": "a850dfbadefa4229"
+  },
+  {
+   "id": "chaskey12-len31",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "tag_hex": "fd42c39d08ab71a0"
+  },
+  {
+   "id": "chaskey12-len32",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "tag_hex": "b465c2412610bf84"
+  },
+  {
+   "id": "chaskey12-len33",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20",
+   "tag_hex": "89c4a9ddb53e6991"
+  },
+  {
+   "id": "chaskey12-len34",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021",
+   "tag_hex": "5a9af91eb095d331"
+  },
+  {
+   "id": "chaskey12-len35",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122",
+   "tag_hex": "8e54914c151e46b0"
+  },
+  {
+   "id": "chaskey12-len36",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20212223",
+   "tag_hex": "fab8ab0b5beaaec6"
+  },
+  {
+   "id": "chaskey12-len37",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021222324",
+   "tag_hex": "60ad906acd06c823"
+  },
+  {
+   "id": "chaskey12-len38",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425",
+   "tag_hex": "6b1e6bc2426dad17"
+  },
+  {
+   "id": "chaskey12-len39",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20212223242526",
+   "tag_hex": "90328fd259889a8f"
+  },
+  {
+   "id": "chaskey12-len40",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021222324252627",
+   "tag_hex": "f0f7815ee6f3d516"
+  },
+  {
+   "id": "chaskey12-len41",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728",
+   "tag_hex": "97e7e2cebea826b8"
+  },
+  {
+   "id": "chaskey12-len42",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20212223242526272829",
+   "tag_hex": "b0fa1845f72a76d6"
+  },
+  {
+   "id": "chaskey12-len43",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a",
+   "tag_hex": "a468bdfcdf0aa9c7"
+  },
+  {
+   "id": "chaskey12-len44",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b",
+   "tag_hex": "da84e11338387da7"
+  },
+  {
+   "id": "chaskey12-len45",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c",
+   "tag_hex": "b30d5ead8e39f2bc"
+  },
+  {
+   "id": "chaskey12-len46",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d",
+   "tag_hex": "178a43d2a008503e"
+  },
+  {
+   "id": "chaskey12-len47",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e",
+   "tag_hex": "6dfaa705a8a06c70"
+  },
+  {
+   "id": "chaskey12-len48",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f",
+   "tag_hex": "aa047f07c5ae8db4"
+  },
+  {
+   "id": "chaskey12-len49",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f30",
+   "tag_hex": "305bbb420c5d5ecc"
+  },
+  {
+   "id": "chaskey12-len50",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f3031",
+   "tag_hex": "0832803159750f49"
+  },
+  {
+   "id": "chaskey12-len51",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132",
+   "tag_hex": "9080254fb79bab1a"
+  },
+  {
+   "id": "chaskey12-len52",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f30313233",
+   "tag_hex": "61c285ca245774a4"
+  },
+  {
+   "id": "chaskey12-len53",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f3031323334",
+   "tag_hex": "2aae035cfb61f97a"
+  },
+  {
+   "id": "chaskey12-len54",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435",
+   "tag_hex": "f5289075c9ab39e5"
+  },
+  {
+   "id": "chaskey12-len55",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f30313233343536",
+   "tag_hex": "e65c423732dae795"
+  },
+  {
+   "id": "chaskey12-len56",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f3031323334353637",
+   "tag_hex": "4b22cf0d9da8de3d"
+  },
+  {
+   "id": "chaskey12-len57",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738",
+   "tag_hex": "2626ea2fa1f9abcf"
+  },
+  {
+   "id": "chaskey12-len58",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f30313233343536373839",
+   "tag_hex": "d1e17e6ec4a88da6"
+  },
+  {
+   "id": "chaskey12-len59",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a",
+   "tag_hex": "1657442827ff640a"
+  },
+  {
+   "id": "chaskey12-len60",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b",
+   "tag_hex": "fd155a40df15f630"
+  },
+  {
+   "id": "chaskey12-len61",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c",
+   "tag_hex": "ffeb596f299f58b2"
+  },
+  {
+   "id": "chaskey12-len62",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d",
+   "tag_hex": "be4ee4ed3975df87"
+  },
+  {
+   "id": "chaskey12-len63",
+   "out_len": 8,
+   "key_hex": "00112233445566778899aabbccddeeff",
+   "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e",
+   "tag_hex": "fc7f9df7991b87bc"
+  }
+ ]
+}

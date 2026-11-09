@@ -1,0 +1,20 @@
+id        = "ascon-mac"
+kind      = "mac"
+category  = "mac"
+family    = "ascon"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["Ascon-MAC (ascon-c v1.3 reference C)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/ascon/ascon-c", commit = "446347f21b209f3921c65ece70027c366cbe1693", license = "CC0-1.0", files = ["crypto_auth/asconmacv13/ref/prf.c", "crypto_auth/asconmacv13/ref/api.h", "crypto_auth/asconmacv13/ref/ascon.h", "crypto_auth/asconmacv13/ref/constants.h", "crypto_auth/asconmacv13/ref/permutations.h", "crypto_auth/asconmacv13/ref/round.h", "crypto_auth/asconmacv13/ref/word.h", "crypto_auth/asconmacv13/ref/printstate.h", "tests/crypto_auth.h", "LICENSE"] }
+# Ascon-MAC v1.3 (ascon-c crypto_auth/asconmacv13, ref implementation): key 16, tag 16 bytes.
+# Known gap (rule 9): upstream keeps the permutation state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/ascon-mac.json"]
+
+[sizes]
+key = 16
+tag = 16

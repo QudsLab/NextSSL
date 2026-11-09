@@ -1,0 +1,27 @@
+id        = "siphash-2-4"
+kind      = "mac"
+category  = "mac"
+family    = "siphash"
+aliases   = ["siphash"]
+tier      = "standard"
+status    = "active"
+standards = ["SipHash (Aumasson, Bernstein), reference C"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/veorq/SipHash", commit = "32d067603b93b47828700880649198e0bfbbcffa", license = "CC0-1.0", files = ["siphash.c", "siphash.h", "LICENSE"] }
+# SipHash-2-4 (default parameter set). Row 324 `siphash` is registered as an alias of this id (same algorithm).
+# Keyed PRF for hash-table / short-input MAC use; 64-bit tags are not collision resistant. Key 16 bytes.
+# Known gap (rule 9): upstream siphash.c keeps key-derived state on the stack and does not wipe it.
+
+[params.out_len]
+type    = "u64"
+min     = 8
+max     = 16
+default = 8
+
+[kat]
+files = ["kat/siphash-2-4.json"]
+
+[sizes]
+key = 16
+tag = { min = 8, max = 16 }

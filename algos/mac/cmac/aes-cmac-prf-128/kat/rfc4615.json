@@ -1,0 +1,24 @@
+{
+ "algorithm": "aes-cmac-prf-128",
+ "source": "RFC 4615 section 4 test vectors (key lengths 18, 16, 10)",
+ "vectors": [
+  {
+   "id": "rfc4615-tc1",
+   "key_hex": "000102030405060708090a0b0c0d0e0fedcb",
+   "data_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "tag_hex": "84a348a4a45d235babfffc0d2b4da09a"
+  },
+  {
+   "id": "rfc4615-tc2",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "data_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "tag_hex": "980ae87b5f4c9c5214f5b6a8455e4c2d"
+  },
+  {
+   "id": "rfc4615-tc3",
+   "key_hex": "00010203040506070809",
+   "data_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "tag_hex": "290d9e112edb09ee141fcf64c0b72f3d"
+  }
+ ]
+}

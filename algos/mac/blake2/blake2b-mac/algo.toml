@@ -1,0 +1,18 @@
+id        = "blake2b-mac"
+kind      = "mac"
+category  = "mac"
+family    = "blake2"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 7693"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "blake2", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/blake2-kat.json"]
+
+[sizes]
+key = { min = 1, max = 64 }
+tag = 64

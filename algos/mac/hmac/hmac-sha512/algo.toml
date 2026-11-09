@@ -1,0 +1,22 @@
+id        = "hmac-sha512"
+kind      = "mac"
+category  = "mac"
+family    = "hmac"
+aliases   = []
+tier      = "safe"
+status    = "active"
+standards = ["RFC 2104", "FIPS 198-1", "RFC 4231"]
+cose_alg  = 7
+oid       = "1.2.840.113549.2.11"
+fips      = true
+copyleft  = false
+upstream  = { crate = "hmac", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `sha2` =0.11.1 (MIT OR Apache-2.0).
+
+[kat]
+files = ["kat/rfc4231.json", "kat/wycheproof_hmac_sha512_test.json"]
+# Wycheproof (C2SP/wycheproof @ d17cc89fa5c8f4f4d378b5385ebf75da5d0926c9, testvectors_v1/hmac_sha512_test.json) copied verbatim.
+
+[sizes]
+key = { min = 1, max = 268435456 }
+tag = { min = 16, max = 64 }

@@ -1,0 +1,188 @@
+{
+ "algorithm": "aes-gmac",
+ "source": "NIST ACVP-Server ACVP-AES-GMAC-1.0 internalProjection.json: 96-bit IV; data_hex = iv || aad; tags of 32 bits are compared as a prefix of our 128-bit tag; invalid = decrypt tests with testPassed=false; only AES-128 groups exist in this file",
+ "vectors": [
+  {
+   "id": "acvp-16-k128",
+   "key_hex": "e3f49ace9713b2ec43b5aa9d0e0cf119",
+   "data_hex": "ce5ad159921fcb89fb95bf7a",
+   "tag_hex": "ddf76017"
+  },
+  {
+   "id": "acvp-17-k128",
+   "key_hex": "535bd1730bf3201f1518fb44548a4956",
+   "data_hex": "c1d9ff4de97333b1052f354f",
+   "tag_hex": "d1d8b284"
+  },
+  {
+   "id": "acvp-18-k128",
+   "key_hex": "e6a1fb2281dca0788de25630e5787434",
+   "data_hex": "236a8675180dff0df90a838b",
+   "tag_hex": "a8090835"
+  },
+  {
+   "id": "acvp-19-k128",
+   "key_hex": "e16ff2b9f7ae0cae30da0ef1c3a871ee",
+   "data_hex": "35aeeedcd4bab0f00c74dc2b",
+   "tag_hex": "dc769209"
+  },
+  {
+   "id": "acvp-20-k128",
+   "key_hex": "05b72822e9ae78d84f204f8e0ea097a2",
+   "data_hex": "ed41c911605ef500de7df1b7",
+   "tag_hex": "167e2519"
+  },
+  {
+   "id": "acvp-21-k128",
+   "key_hex": "d55ed789100d22e91946a5a7b74be235",
+   "data_hex": "7a1c43e73803e6216f7deba0",
+   "tag_hex": "b5ed74b9"
+  },
+  {
+   "id": "acvp-22-k128",
+   "key_hex": "fd264b0830383d40b8cd24a300ead612",
+   "data_hex": "3eb615d661989857d1fc1b8c",
+   "tag_hex": "d6fbdb6f"
+  },
+  {
+   "id": "acvp-23-k128",
+   "key_hex": "9f8c07c932db646786b601bf3edaebb7",
+   "data_hex": "7c04b9b022cb4cf27b2a4d9e",
+   "tag_hex": "5de58816"
+  },
+  {
+   "id": "acvp-24-k128",
+   "key_hex": "b3e3ce1f270be6de85490649ed7fced3",
+   "data_hex": "89c76f02c86d00d2a390ff3f",
+   "tag_hex": "9b1ad8d5"
+  },
+  {
+   "id": "acvp-25-k128",
+   "key_hex": "3a6782ef0b1dd4a41114dc0480e8a63a",
+   "data_hex": "febcc5ca894793e7869c64a3",
+   "tag_hex": "f9347256"
+  },
+  {
+   "id": "acvp-26-k128",
+   "key_hex": "d8ad1bf5039303ad9ace9302009c4a5e",
+   "data_hex": "b234c43a6981ef7efd9d83f4",
+   "tag_hex": "4b73e64d"
+  },
+  {
+   "id": "acvp-27-k128",
+   "key_hex": "9abff355850e1504ad80104a8449b3e5",
+   "data_hex": "3ddfbaf44e6b31f92fc6a410",
+   "tag_hex": "24851653"
+  },
+  {
+   "id": "acvp-28-k128",
+   "key_hex": "da47c63d1f00a4b81f4cc7f7dc04f684",
+   "data_hex": "28d5767cd10237e9331f8539",
+   "tag_hex": "25974248"
+  },
+  {
+   "id": "acvp-29-k128",
+   "key_hex": "76c9147e24869ac974536c24abcdeefc",
+   "data_hex": "f03e85b3234dd09d37b7951a",
+   "tag_hex": "fa7c5fbc"
+  },
+  {
+   "id": "acvp-30-k128",
+   "key_hex": "170bc69bb551ce777dec19273f51b831",
+   "data_hex": "f0328cb607e5337205049077",
+   "tag_hex": "41630d83"
+  },
+  {
+   "id": "acvp-46-k128",
+   "key_hex": "347026f63ec77c409cfafc2a99d21369",
+   "data_hex": "4c488f70b33239da24b0df7f",
+   "tag_hex": "d61806586fad3e6c64f120bd86d15b9d"
+  },
+  {
+   "id": "acvp-47-k128",
+   "key_hex": "809b4edef227a40fcbd9abffb786b572",
+   "data_hex": "e7e75745979208965d0781e8",
+   "tag_hex": "7a4c292e5d023cd0b9c0ea6a3a57115b"
+  },
+  {
+   "id": "acvp-48-k128",
+   "key_hex": "d114f4cea596b385c7f4b7c95d13a192",
+   "data_hex": "6a6f56bb61642d1e7805e471",
+   "tag_hex": "49944d67a6fa54def2db5dafba7f559f"
+  },
+  {
+   "id": "acvp-50-k128",
+   "key_hex": "b7eb1ac41212697d51c5f33afd068eb7",
+   "data_hex": "3c645d8bb4cbb1fa37fdad85",
+   "tag_hex": "b0e986d3a7653079f902d7100e6d57c2"
+  },
+  {
+   "id": "acvp-51-k128",
+   "key_hex": "f959e084d361260fe598d09b81003717",
+   "data_hex": "6f53a251f1dac14d4d98c35d",
+   "tag_hex": "b5dbfb5e0f2d170a3c424bec2e4972fb"
+  },
+  {
+   "id": "acvp-54-k128",
+   "key_hex": "21c7718d29ceee3502b0735aaa40264f",
+   "data_hex": "55ebb97a2c8e86a08bafb1ff",
+   "tag_hex": "2497f63bc23617e4c7a54df734f66da8"
+  },
+  {
+   "id": "acvp-56-k128",
+   "key_hex": "5b73d02abebc6e9eca283c2b6f346e27",
+   "data_hex": "6010d1c4a635f31157a66fe5",
+   "tag_hex": "751807e003dafe550954103cb0eb4e11"
+  },
+  {
+   "id": "acvp-57-k128",
+   "key_hex": "5e28ad3c4a32dbb90bc2cc07b51ad4ad",
+   "data_hex": "23330d0573c1857cbb1f4d1b",
+   "tag_hex": "89c5061ea225cbbd10edd9fad6c61448"
+  },
+  {
+   "id": "acvp-58-k128",
+   "key_hex": "692aa407de7f4c2bf1a0815794fe47c9",
+   "data_hex": "12f76c11a9e7b988bccffc58",
+   "tag_hex": "7eccf1c74bb5e13b105c12a4df4e6ed7"
+  },
+  {
+   "id": "acvp-59-k128",
+   "key_hex": "7a84a756f160b2ac199b43c2a45f2784",
+   "data_hex": "d2e6ae02cdab80cf174c367c",
+   "tag_hex": "1d046098fb3eafcb9bec49e072260a3f"
+  },
+  {
+   "id": "acvp-60-k128",
+   "key_hex": "bda5ce75d239ee5606ec2673c694a639",
+   "data_hex": "df1cddcde00b9d283a3b81c5",
+   "tag_hex": "faf7ac5eb6302674732aeb0b8bfd37a4"
+  }
+ ],
+ "invalid": [
+  {
+   "id": "acvp-49-k128",
+   "key_hex": "841189c64897cca598228a61a6e86583",
+   "data_hex": "0034dfeaadee7fd50d5f3b11",
+   "tag_hex": "f8a6a21327ec2db39a4c43a0ac3458a8"
+  },
+  {
+   "id": "acvp-52-k128",
+   "key_hex": "a372f9b1bfb1d0e5d042fbe69b894ad3",
+   "data_hex": "a709acf05263abccf016f872",
+   "tag_hex": "b2d354963ff324824a5a3d16203fb65f"
+  },
+  {
+   "id": "acvp-53-k128",
+   "key_hex": "5ceee1ae13e14a94fa1ab1706353ed13",
+   "data_hex": "dbfeb31f965726af6af80457",
+   "tag_hex": "b5f5ee0d1ea425962ad8438bb5f89387"
+  },
+  {
+   "id": "acvp-55-k128",
+   "key_hex": "5582bb3b7604c52395f05e11b4b31104",
+   "data_hex": "0d5de9c445269b6373fc4d22",
+   "tag_hex": "3fda889e674a394b80cde5b448ddc2e5"
+  }
+ ]
+}

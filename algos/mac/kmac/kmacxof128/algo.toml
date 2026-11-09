@@ -1,0 +1,25 @@
+id        = "kmacxof128"
+kind      = "mac"
+category  = "mac"
+family    = "kmac"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-185"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "tiny-keccak", version = "=2.0.2", license = "CC0-1.0" }
+# tiny-keccak keeps its sponge state without zeroize-on-drop (known upstream gap).
+
+[params.custom]
+type     = "bytes"
+min      = 0
+max      = 65536
+required = false
+
+[kat]
+files = ["kat/nist-sp800-185-samples.json"]
+
+[sizes]
+key = { min = 1, max = 268435456 }
+tag = { min = 16, max = 1024 }

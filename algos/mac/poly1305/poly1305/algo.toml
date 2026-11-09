@@ -1,0 +1,20 @@
+id        = "poly1305"
+kind      = "mac"
+category  = "mac"
+family    = "poly1305"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 8439"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "poly1305", version = "=0.9.1", license = "MIT OR Apache-2.0" }
+# One-time authenticator: a key must never be reused for two messages (hazmat).
+# No standalone Wycheproof file exists for Poly1305; the chacha20_poly1305 file covers it only via the AEAD.
+
+[kat]
+files = ["kat/rfc8439.json"]
+
+[sizes]
+key = 32
+tag = 16

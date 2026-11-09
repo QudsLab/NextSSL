@@ -1,0 +1,20 @@
+id        = "aes-cmac-prf-128"
+kind      = "mac"
+category  = "mac"
+family    = "cmac"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 4615"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "cmac", version = "=0.8.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `aes` =0.9.4 (MIT OR Apache-2.0).
+# Glue contains one RFC 4615 key-adaptation call (CMAC over the zero key); everything else is the cmac crate.
+
+[kat]
+files = ["kat/rfc4615.json"]
+
+[sizes]
+key = { min = 1, max = 268435456 }
+tag = 16

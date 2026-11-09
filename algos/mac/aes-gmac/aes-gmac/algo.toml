@@ -1,0 +1,22 @@
+id        = "aes-gmac"
+kind      = "mac"
+category  = "mac"
+family    = "aes-gmac"
+aliases   = ["gmac", "aes-gmac-96"]
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-38D (GMAC)"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "aes-gcm", version = "=0.11.1", license = "Apache-2.0 OR MIT" }
+# Message layout: data = 12-byte IV || associated data (the Mac trait has no nonce argument). 16-byte tag. Keys
+# 16, 24 or 32 bytes (sizes().block = 12 records the IV prefix). Never reuse an IV under one key. Also depends
+# on RustCrypto aes 0.9.4.
+
+[kat]
+files = ["kat/acvp-gmac.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+tag = 16
+block = 12

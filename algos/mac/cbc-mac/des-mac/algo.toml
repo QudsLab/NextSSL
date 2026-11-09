@@ -1,0 +1,22 @@
+id        = "des-mac"
+kind      = "mac"
+category  = "mac"
+family    = "cbc-mac"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = ["FIPS 113 (withdrawn)", "ANSI X9.9"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "cbc-mac", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+# DES-MAC: CBC-MAC over DES (des =0.9.0). Broken: 56-bit key.
+# Raw CBC-MAC is secure only for one fixed message length per key. Whole blocks only (no
+# silent zero padding), empty message refused.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+key = 8
+tag = 8
+block = 8

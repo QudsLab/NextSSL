@@ -1,0 +1,28 @@
+id        = "chaskey"
+kind      = "mac"
+category  = "mac"
+family    = "chaskey"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["Chaskey-12 (ISO/IEC 29192-6), reference C"]
+fips      = false
+copyleft  = false
+upstream  = { url = "https://mouha.be/wp-content/uploads/chaskey12.c", sha256 = "a5833a78d08b4c035e4c567a2e8124b8585df7508df893b4ec02c935d8e25f00", license = "CC0-1.0", files = ["chaskey12.c", "LICENSE"] }
+# Row said C++ hutorny/chaskey (third-party, 8-round); replaced by the author's reference file chaskey12.c, which is the 12-round ISO/IEC 29192-6 variant (the original 8-round Chaskey is NOT included).
+# Upstream pin: the file has no VCS commit; it is pinned with `url` + `sha256` (xtask validates 64 hex digits).
+# Assumes little-endian and does unaligned word reads (UB in C): shim.c passes an aligned copy of the message and refuses big-endian targets at compile time.
+# Known gap (rule 9): upstream keeps its state on the stack and does not wipe it.
+
+[params.out_len]
+type    = "u64"
+min     = 1
+max     = 16
+default = 16
+
+[kat]
+files = ["kat/chaskey.json"]
+
+[sizes]
+key = 16
+tag = { min = 1, max = 16 }

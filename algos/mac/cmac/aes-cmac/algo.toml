@@ -1,0 +1,21 @@
+id        = "aes-cmac"
+kind      = "mac"
+category  = "mac"
+family    = "cmac"
+aliases   = ["omac"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 4493", "NIST SP 800-38B"]
+oid       = "2.16.840.1.101.3.4.1.2"
+fips      = true
+copyleft  = false
+upstream  = { crate = "cmac", version = "=0.8.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `aes` =0.9.4 (MIT OR Apache-2.0).
+# Row 348 (omac) is OMAC1 = CMAC: registered as the alias `omac`.
+
+[kat]
+files = ["kat/rfc4493.json", "kat/wycheproof_aes_cmac_test.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+tag = 16

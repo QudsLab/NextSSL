@@ -1,0 +1,246 @@
+{
+ "algorithm": "cbc-mac",
+ "source": "pycryptodome AES in CBC mode with a zero IV; the MAC is the last ciphertext block (independent implementation)",
+ "vectors": [
+  {
+   "id": "py-0",
+   "key_hex": "63dbbe1a0b15088bbc0d24e0f139a17c",
+   "data_hex": "5d81d2605a367841214737208e291fe7277a5c0a4d65ba287c0648014ffd04f1",
+   "tag_hex": "b871314b0fbbf67677dff8134db60296"
+  },
+  {
+   "id": "py-1",
+   "key_hex": "0b18e1dc3116051879dad0b75ae13eb690ae186a7b5fa997",
+   "data_hex": "356bf72b0be30ae896145b9910328acf",
+   "tag_hex": "93f0c04fb9bcf7f8e1d99082946c307c"
+  },
+  {
+   "id": "py-2",
+   "key_hex": "60bf2b52c5054ee168de01436157f15a24c098526010018361802ff18945361e",
+   "data_hex": "9f473c4747de4f9f3f4181543d51724ed001f4c7cd4ff1c8e291d8c4c07571e2",
+   "tag_hex": "d8401d47de055de2cc944e413bac008b"
+  },
+  {
+   "id": "py-3",
+   "key_hex": "9568eafef2526c5d6ae473e06c7126b8",
+   "data_hex": "c7483157db3337e9a9fbfc81e70c880e8cb0687fa627caf7d8a86801a88c4fae6d1c3d6785266c7b9b8b3b7997565a0ade7a70f7d43898d87571d5a13bb71d6a",
+   "tag_hex": "b3b6ff8ce2a25714773fee2f527ab09b"
+  },
+  {
+   "id": "py-4",
+   "key_hex": "2c0e654b8ee519b3cf5d5ebea369434b5d11443d4f06c946",
+   "data_hex": "82270e78fcbe37031e760e45eba72857",
+   "tag_hex": "cd1f65710a0873523922d575e66c1d57"
+  },
+  {
+   "id": "py-5",
+   "key_hex": "9fb5af51612b1cb5b0c7d0551e495440061966d86bc26e872af476ee210fa81d",
+   "data_hex": "59185d8f6a10c1e49a8f5eac09e2bdee0caac5a3d88702d35695d2ee819db7d0d0bfe08aa8184879281128f99b75eb89fe242869ddb05db7d8353d936478a23653bb8bd07223c950c645d1e4766c3b49587b9c17fa1952a9be7f6b7aef7e3fd7e086917a9377d69aefbd7a9fc910261fe32c461044af7394b684e41ac48da444967e186ef63e4cb1ca3130e0b26566f7e83d398d4be8071abd7d962193d5c275",
+   "tag_hex": "86d077b8ca36b3bc0f08a24931cf463f"
+  },
+  {
+   "id": "py-6",
+   "key_hex": "802fdb5b6ebd5a1c382dc2517f3fdeb7",
+   "data_hex": "3fdc69fd6354ac3ae4d7ac57ccd53a773a7496322bf8196b0fa5f9b6241fb8fc01d354c0ccee2d382ef4b5665c569060",
+   "tag_hex": "4913f107aaa7d2a2179e53c8d9b37a44"
+  },
+  {
+   "id": "py-7",
+   "key_hex": "ececf2000735a8c84fff27e46c408927052128403461833e",
+   "data_hex": "b6c522718edcf8099fe02a9f414b8adcac2ffd8f17c2c20adb7f739f2bf8498d60840f6c6d976368b8b299f0b59d91b8",
+   "tag_hex": "d5bbc4d9731733fb4e3a6174cdc100a2"
+  },
+  {
+   "id": "py-8",
+   "key_hex": "6fce0a8b149bd3abf5955abc52d64e7dbc17d40106330072216c3fa4568bbea3",
+   "data_hex": "970883f39a2c9b50aaec76f6e77893d1a7780c806fafef7f1b339c591184efa4da8566497601dcc595b2774c6178f70a",
+   "tag_hex": "7921bf26639cb8ec7b56ab02f21e5975"
+  },
+  {
+   "id": "py-9",
+   "key_hex": "15ff50b613ef576c70b0eba90c5b0296",
+   "data_hex": "c8c9e712d8a5b3ffadd036fedd42201c",
+   "tag_hex": "d51cd9580d5234f1ac6391eee4b487ec"
+  },
+  {
+   "id": "py-10",
+   "key_hex": "6448b39dd98daf61ffc45b266e4de00141d63cb8be3d2d82",
+   "data_hex": "9f30b7dd15b74336b623c6075ac4f86be94493be8fa89f732b3b1f53f9600c49",
+   "tag_hex": "dcd8555a86803f7165f6d1b982b233b3"
+  },
+  {
+   "id": "py-11",
+   "key_hex": "127621305e6066ec1744d8d65163a724a22c11ea74f5157c0be459dede714218",
+   "data_hex": "f62eab76fc0923486f5d1a84c7244818ce0edaac3d6dfd6bfa4cc302fbabb99d",
+   "tag_hex": "6e007aa1bd877e2f4ff42099ff18acd4"
+  },
+  {
+   "id": "py-12",
+   "key_hex": "a40e8956cfcf020d5519d57f80ec3755",
+   "data_hex": "34228beb69d167a335d807c77778ea30bdba576ec75a364891a37709d01e969a",
+   "tag_hex": "4f60e2a86481c2712d37eb5cf34505b0"
+  },
+  {
+   "id": "py-13",
+   "key_hex": "4570f53aa2a706aef598f583147ffe27ad3ad80d21995d06",
+   "data_hex": "442dc125a5fcdf5412de1dab5751a1c6f414c01b22b232223766e620b7c929a4fd8e3d18db1e183b39b9c9f548c8f39e48d1d41135eb7d839ed5b6548fbbe0c28b633bb304d2aea2f6c3253522a82026996a548cb7c96818537528bd25bb05918871a0f7ea3a484be2778fe1fe7f813aafbc5df5f3b438a5db91414a216185a9dd2f3ba295baa3f2bf69afe1488cc9d53d4be32de9a6738f2173c3cfd1536721",
+   "tag_hex": "3e7d165592c6c6895d264b6be99f2fb8"
+  },
+  {
+   "id": "py-14",
+   "key_hex": "db5d4ac38c863e4dcd91083b35618c0db273309e03ef47eb03e24e9bf9b37cc8",
+   "data_hex": "de435eb37f46de11389e2124f13b849c",
+   "tag_hex": "d4de220a2e7ba15cc4b066be65155830"
+  },
+  {
+   "id": "py-15",
+   "key_hex": "d99ca40d65a093f3da326ec53a474a96",
+   "data_hex": "384cca8bce4fb1c78637a8f41e2939c0552fc8c017ddb11c8696d9e463f65210",
+   "tag_hex": "cdc81f3288576d8b7a26a64aa5fdd183"
+  },
+  {
+   "id": "py-16",
+   "key_hex": "5a5d806b3b556b71ed5316c9bbb7749aebcc69f727b5f61d",
+   "data_hex": "b8eb2127b896ea28494257b6b011d4b4",
+   "tag_hex": "66ed4ecae4c565111965668007230427"
+  },
+  {
+   "id": "py-17",
+   "key_hex": "570a7b5f76c3660d683ec5bc5af4d8b7824c6211b9a28210dff801dd84a2eb9b",
+   "data_hex": "9a1d5223a6df9fc1dcbef159bdfb6238",
+   "tag_hex": "0cc77a0974b2d764ac7dedc67ec04897"
+  },
+  {
+   "id": "py-18",
+   "key_hex": "7c9a15025629e3b275a5755c4adbda73",
+   "data_hex": "7a98588ae7b0bb14893133197e08367306bf688b2ec2eac3fe93ade9d500caa76a6ca5df9cc78bf7b9dd6d21ba3f88142300dbc892c87861c7d14765a4683d60",
+   "tag_hex": "ac36fd8208662baa5e2121c28d248f76"
+  },
+  {
+   "id": "py-19",
+   "key_hex": "c43251486461e63e053d8c50b7f1a49d9b8e43619b7e995a",
+   "data_hex": "3345db463ed8f1c8e3f7a5a4637702eaa016aec1456d56657d50ab105493f13ee8a4d212c8b79aef782e66253a86351e",
+   "tag_hex": "03fcd00116abf4fafa2ef8ef1c3cffde"
+  },
+  {
+   "id": "py-20",
+   "key_hex": "8c501ab747ecce79fb38187ef736f96d5d34f45752e6c39d3526d61cee85b0a9",
+   "data_hex": "ebb2ffcedcd184a39a5ebab79a8767c6",
+   "tag_hex": "9f42b275f848fd277546f489b4269b77"
+  },
+  {
+   "id": "py-21",
+   "key_hex": "5e0ce3a9fef02c40014b4eb1e8e24b0c",
+   "data_hex": "019cdf23608a259fcba7eb26509511107e92d65583da6f060ef09062d25a0425420f89f6d490f16e7f195603c15a89ccdf2570bbd6f70bae6e66de2261d3f98f",
+   "tag_hex": "89dff6ad41c5d0b9e1da3a52a884db42"
+  },
+  {
+   "id": "py-22",
+   "key_hex": "5606a3be9670283194e82c43d807403a11d4978afbb62aee",
+   "data_hex": "67d20162b893431f91fc1ca8976a408e016e4de6d27e07fbd67afe45ab74754dece245a510c3dcae13e99fb1a143319cdc254f7976ae98c53cdcb6fcc2b456ebe141c72b5a75985291aeca9b40a0eb6bf57f6ecc78e4f0d2b373edb5a87c015f03caad189778a991b836d97262b7bcb944982abba2a7404d9a419e5c47703999dd93a48d7c5c5ddd8e0f501e2454e920ce81b9e51b8ec081d0e2fd89f80821c6",
+   "tag_hex": "88ca60159925a69281b0dcf0326d13f5"
+  },
+  {
+   "id": "py-23",
+   "key_hex": "9efa9d4fbe607b9cca17ed9f9ba167490533023ce704241f2616f8e15c79cd0a",
+   "data_hex": "3781892aebbf4ba0864673a7fcdc346ad010b03079a55d08e2eadda7a9f8bd62059f81d62c01ce3e77870d01f798d274303d093a53d249c5dda6f5906faf0bba07a1231b33eb861279dcf3d8d5263a49f3e84dc67b0b3a62f05198b4b548fba58e77da6bc1df0599682ce79de8124970ab2a7cd99d3dfc57c87ce9464562c679fdb41bad066ffdf281f4784e3cef43b3c565a4337edeef2756e599c5c4c4ce71",
+   "tag_hex": "0386df50d947c5f62bb1f953216d147a"
+  },
+  {
+   "id": "py-24",
+   "key_hex": "c5e13f9fb6435a803c585f14ce2a51f5",
+   "data_hex": "7fd41b54ab72c1060cb7511e14f93f7c26b7e99b8336fbf76c1aab11118350347b9b39812d69149ea25f0137d071e49310fc75ef906a944d6ec27cd056673774162af72684f0392c32db5454cf5a1db1a836ea1e87660c603d45f0cdab7afc8d5c2b0658f91f05350a036bf6e3024b744d4858a7c9f5c32f2ece560aa12837f6e31d6dab5e49fc6506f1e1fd26b5ec1b59605773b09b3b0fd93701a4915b5ca4",
+   "tag_hex": "d3bc3c498e07684d7a511fad3ba98bc5"
+  },
+  {
+   "id": "py-25",
+   "key_hex": "303fe664d03de7a2ccf3d619eeb6c79f1746ea3e8571f6d4",
+   "data_hex": "e975e592086ea7764bd6ae81af7b9450",
+   "tag_hex": "4b5d4870d7dbd491cb4f390e9c4cc1d8"
+  },
+  {
+   "id": "py-26",
+   "key_hex": "53d8b61f4db4fcb21e0abcaa24facea419f3f0fcb07078cdc55112a7e4dc3769",
+   "data_hex": "19d445021d94b090ff4187248e0f3a78",
+   "tag_hex": "00c4153b8bd4f94e07347b5fcc7656c5"
+  },
+  {
+   "id": "py-27",
+   "key_hex": "31012946cdfc4ca5d4147837c15edb1c",
+   "data_hex": "0652a125490488359f64c71f1d90c8db",
+   "tag_hex": "e3d4ef8e13e46c4fcfd2cbb84f390f31"
+  },
+  {
+   "id": "py-28",
+   "key_hex": "bd5223d74a16a68365219971d23e1a14ca9968d39e9bd47a",
+   "data_hex": "a7994009e5d1f7fd7d9338daffc3f94877f40b37720055dcf03d4157a70e53f8c47b756e36823f1c72dac253ce55f243f7f5584b0371f8c638bdd7158b6682eeddf591d5e075b18ee566f06965001834844a2098eddc624323ef3e19cb864d30d5e982fffeff7d800ccbf33ebfa4e42334cc41152d93f4c75f8aa343b2b84594d195eb7e1f428f85385d853ca3a26b0f2543dd0d91159d10a0bf98145af47292",
+   "tag_hex": "21ee054c10a9a6d3840a2dc5fae7c206"
+  },
+  {
+   "id": "py-29",
+   "key_hex": "6b7988d99b9a562a3207e34b0ea76f4cf7cccd69b6d183b02f3824f9e452bbf0",
+   "data_hex": "6c9089beeaa20dba8c6e21e248e1368a8e7a4a90a159c55e2da83f47959dd4910eca8e78bc3b8acd9d6cc9f3e2f40e5fcf9d7c49acbf417be182ee357e9edc13",
+   "tag_hex": "353122bf4479f76f54dacc49a6aeceb2"
+  },
+  {
+   "id": "py-30",
+   "key_hex": "332254421a51ba2662e59e017e2e1ad3",
+   "data_hex": "5cd7cffb05d90263a9c38ede4b2dd3af",
+   "tag_hex": "99961c8a67aeb8b01bbf7fb52a1251b3"
+  },
+  {
+   "id": "py-31",
+   "key_hex": "9369d96926e7b0e5b8ed43241ab503b733665ace5c29b2c4",
+   "data_hex": "23052f91619ac45a338220dc9794de83",
+   "tag_hex": "caf16f1ec9cd69af452e2fe93a09d284"
+  },
+  {
+   "id": "py-32",
+   "key_hex": "c426b9136b4a6804ea9fbe5ad2dc18d63e887426e4d6f7a1734690532397a607",
+   "data_hex": "d51d7dac274efe5ff3ae01b46dcd0292",
+   "tag_hex": "76445512c1bbecbb6c0e9be769f9f5ec"
+  },
+  {
+   "id": "py-33",
+   "key_hex": "92753c2bc8aa736f43449bcd4aa99ef7",
+   "data_hex": "83e65b8aef0a05318a6d58ad5d06326bd43f9e4a5ce991114384107ecb409ab5f9979de9923b41dc94511fcd756988f8",
+   "tag_hex": "33cfa5cbcc0a230029892249d4a3a591"
+  },
+  {
+   "id": "py-34",
+   "key_hex": "3d8caaa2d8bb055b1268f7c91210150c7e360aaab489a670",
+   "data_hex": "f396026012ac9e4ace87eb8596afedbab75049f31f25a892a68c0c3e787dea43a44f7adf5ea01ec7b290adcfd4be167f",
+   "tag_hex": "91893001313e9f9f9c43cf07e7e56e31"
+  },
+  {
+   "id": "py-35",
+   "key_hex": "3026a00b8c612554feb37f93c4492735783159ef418fdb59af255eef2bedf682",
+   "data_hex": "ebab5bf589d082d89d858dc156dd9bd8",
+   "tag_hex": "585a4a231077ddf6606375648cf40400"
+  },
+  {
+   "id": "py-36",
+   "key_hex": "f38b7d538af51e7df53993feaebb1a3a",
+   "data_hex": "1f62750f8ab149e1cb6ae4c41c2b0db21840e6e2c43d70b96082f2a8711f27983205f4834f22e04794a6ba411f9192696f78f9256d227a63e86e80775833fd7e",
+   "tag_hex": "1a37965f6d0af84b18b4bf950c8719aa"
+  },
+  {
+   "id": "py-37",
+   "key_hex": "e3e08c61e2cda88d7dd4be56ad209e8f17ef3026fa4f584a",
+   "data_hex": "dd799c35c15747e06348f422be748ec5",
+   "tag_hex": "b5819af7f91391e8b58ee452deb2dbc6"
+  },
+  {
+   "id": "py-38",
+   "key_hex": "684358d3edfe65bab3c1048254159cfe34c12b2ebb46bfc3ccc0e0313ebdf338",
+   "data_hex": "1d637ae3bb9ee1e29c50aa6d6b8001f4",
+   "tag_hex": "2ddc11dc0c7e6153b46d8dc000a7a02c"
+  },
+  {
+   "id": "py-39",
+   "key_hex": "e2636217ce4490eb30574f8b5bc811ac",
+   "data_hex": "1abced10d128cedc44d7ddaf4a9436b6a0a0b12044a164058d2c2eb3263ed537e4d618284c7c522dac7f8b866d6aad1647cd67cf973c387f74acc52f8ba8c91fe73a91cc1aa9c4df426111cf9a7871a4c1f96912f5ff1cc1538cdba728485ebd5833763cd46a75eee0a71e0913763e5854dc12db4cca36828bb59a7455059811695d3dd9ee73b6d50f8edf5e0bd5b45be19c83ad6b8bd0f10f9397f783ca25ec",
+   "tag_hex": "44e222dcf06dc78d57357b5457351052"
+  }
+ ]
+}

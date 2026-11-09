@@ -1,0 +1,21 @@
+id        = "hmac-sha3-384"
+kind      = "mac"
+category  = "mac"
+family    = "hmac"
+aliases   = []
+tier      = "safe"
+status    = "active"
+standards = ["RFC 2104", "FIPS 198-1", "NIST SP 800-224 (HMAC-SHA3)"]
+oid       = "2.16.840.1.101.3.4.2.15"
+fips      = true
+copyleft  = false
+upstream  = { crate = "hmac", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `sha3` =0.11.0 (MIT OR Apache-2.0).
+
+[kat]
+files = ["kat/py-hmac.json", "kat/wycheproof_hmac_sha3_384_test.json"]
+# Wycheproof (C2SP/wycheproof @ d17cc89fa5c8f4f4d378b5385ebf75da5d0926c9, testvectors_v1/hmac_sha3_384_test.json) copied verbatim.
+
+[sizes]
+key = { min = 1, max = 268435456 }
+tag = { min = 16, max = 48 }

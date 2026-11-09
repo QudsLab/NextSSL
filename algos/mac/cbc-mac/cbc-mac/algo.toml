@@ -1,0 +1,22 @@
+id        = "cbc-mac"
+kind      = "mac"
+category  = "mac"
+family    = "cbc-mac"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["ISO/IEC 9797-1 (algorithm 1)", "NIST SP 800-38A (CBC)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "cbc-mac", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+# CBC-MAC over AES (key length selects AES-128/192/256), also depends on aes =0.9.4.
+# Raw CBC-MAC is secure only for one fixed message length per key. Whole blocks only (no
+# silent zero padding), empty message refused.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+tag = 16
+block = 16

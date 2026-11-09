@@ -1,0 +1,20 @@
+id        = "aes-pmac"
+kind      = "mac"
+category  = "mac"
+family    = "pmac"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["Rogaway PMAC1 (2002)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "pmac", version = "=0.8.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `aes` =0.9.4 (MIT OR Apache-2.0).
+# Not a NIST/IETF standard; kept out of the safe API (research tier).
+
+[kat]
+files = ["kat/rogaway-pmac.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+tag = 16

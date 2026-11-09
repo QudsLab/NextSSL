@@ -1,0 +1,22 @@
+id        = "hmac-sha1"
+kind      = "mac"
+category  = "mac"
+family    = "hmac"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["RFC 2104", "RFC 2202", "FIPS 198-1"]
+oid       = "1.2.840.113549.2.7"
+fips      = true
+copyleft  = false
+upstream  = { crate = "hmac", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# HMAC-SHA-1 is not broken by SHA-1 collisions, but is kept out of the safe API (legacy tier).
+# Also depends on RustCrypto `sha1` =0.11.0 (MIT OR Apache-2.0).
+
+[kat]
+files = ["kat/rfc2202.json", "kat/wycheproof_hmac_sha1_test.json"]
+# Wycheproof (C2SP/wycheproof @ d17cc89fa5c8f4f4d378b5385ebf75da5d0926c9, testvectors_v1/hmac_sha1_test.json) copied verbatim.
+
+[sizes]
+key = { min = 1, max = 268435456 }
+tag = { min = 16, max = 20 }
