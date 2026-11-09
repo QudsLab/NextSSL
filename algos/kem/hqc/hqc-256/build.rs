@@ -5,7 +5,22 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/common/fips202.c", "upstream/crypto_kem/hqc-256/clean/code.c", "upstream/crypto_kem/hqc-256/clean/fft.c", "upstream/crypto_kem/hqc-256/clean/gf.c", "upstream/crypto_kem/hqc-256/clean/gf2x.c", "upstream/crypto_kem/hqc-256/clean/hqc.c", "upstream/crypto_kem/hqc-256/clean/kem.c", "upstream/crypto_kem/hqc-256/clean/parsing.c", "upstream/crypto_kem/hqc-256/clean/reed_muller.c", "upstream/crypto_kem/hqc-256/clean/reed_solomon.c", "upstream/crypto_kem/hqc-256/clean/shake_ds.c", "upstream/crypto_kem/hqc-256/clean/shake_prng.c", "upstream/crypto_kem/hqc-256/clean/vector.c", "shim.c"];
+const SOURCES: &[&str] = &[
+    "upstream/common/fips202.c",
+    "upstream/crypto_kem/hqc-256/clean/code.c",
+    "upstream/crypto_kem/hqc-256/clean/fft.c",
+    "upstream/crypto_kem/hqc-256/clean/gf.c",
+    "upstream/crypto_kem/hqc-256/clean/gf2x.c",
+    "upstream/crypto_kem/hqc-256/clean/hqc.c",
+    "upstream/crypto_kem/hqc-256/clean/kem.c",
+    "upstream/crypto_kem/hqc-256/clean/parsing.c",
+    "upstream/crypto_kem/hqc-256/clean/reed_muller.c",
+    "upstream/crypto_kem/hqc-256/clean/reed_solomon.c",
+    "upstream/crypto_kem/hqc-256/clean/shake_ds.c",
+    "upstream/crypto_kem/hqc-256/clean/shake_prng.c",
+    "upstream/crypto_kem/hqc-256/clean/vector.c",
+    "shim.c",
+];
 const INCLUDES: &[&str] = &["upstream/common", "upstream/crypto_kem/hqc-256/clean"];
 const PREFIX: &str = "nextssl__hqc_256__";
 
@@ -40,7 +55,10 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
             if s.is_undefined() || !s.is_global() {
                 continue;
             }
-            if !matches!(s.kind(), SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown) {
+            if !matches!(
+                s.kind(),
+                SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown
+            ) {
                 continue;
             }
             let Ok(mut n) = s.name() else { continue };
@@ -76,7 +94,7 @@ fn main() {
     drop(f);
     let mut b = base();
     if b.get_compiler().is_like_msvc() {
-        b.flag(&format!("/FI{}", hdr.display()));
+        b.flag(format!("/FI{}", hdr.display()));
     } else {
         b.flag("-include").flag(hdr.to_str().unwrap());
     }

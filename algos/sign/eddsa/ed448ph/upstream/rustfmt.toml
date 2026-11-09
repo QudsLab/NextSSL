@@ -1,0 +1,2 @@
+# NextSSL tooling file (not upstream code): upstream is vendored verbatim, so rustfmt must not rewrite it.
+disable_all_formatting = true

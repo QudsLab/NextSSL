@@ -23,9 +23,21 @@ mod ffi {
         #[link_name = "nextssl__cross_rsdp_128_small__PQCLEAN_CROSSRSDP128SMALL_CLEAN_crypto_sign_keypair"]
         pub fn keypair(pk: *mut u8, sk: *mut u8) -> c_int;
         #[link_name = "nextssl__cross_rsdp_128_small__PQCLEAN_CROSSRSDP128SMALL_CLEAN_crypto_sign_signature"]
-        pub fn sign(sig: *mut u8, siglen: *mut usize, m: *const u8, mlen: usize, sk: *const u8) -> c_int;
+        pub fn sign(
+            sig: *mut u8,
+            siglen: *mut usize,
+            m: *const u8,
+            mlen: usize,
+            sk: *const u8,
+        ) -> c_int;
         #[link_name = "nextssl__cross_rsdp_128_small__PQCLEAN_CROSSRSDP128SMALL_CLEAN_crypto_sign_verify"]
-        pub fn verify(sig: *const u8, siglen: usize, m: *const u8, mlen: usize, pk: *const u8) -> c_int;
+        pub fn verify(
+            sig: *const u8,
+            siglen: usize,
+            m: *const u8,
+            mlen: usize,
+            pk: *const u8,
+        ) -> c_int;
         #[link_name = "nextssl__cross_rsdp_128_small__rng_set"]
         pub fn rng_set(f: Option<FillFn>, ctx: *mut c_void);
         #[link_name = "nextssl__cross_rsdp_128_small__rng_failed"]
@@ -74,7 +86,12 @@ fn with_rng<T>(rng: &mut dyn EntropySource, f: impl FnOnce() -> T) -> Result<T> 
 }
 
 fn len_err(what: &'static str, got: usize, min: usize, max: usize) -> Error {
-    Error::InvalidLength { what, got, min, max }
+    Error::InvalidLength {
+        what,
+        got,
+        min,
+        max,
+    }
 }
 
 struct S;
@@ -100,7 +117,9 @@ impl Sign for S {
         let mut sk = Zeroizing::new(vec![0u8; SK]);
         // SAFETY: pk/sk are valid for PK/SK bytes, the exact sizes of the upstream API.
         #[allow(unsafe_code)]
-        let rc = with_rng(rng, || unsafe { ffi::keypair(pk.as_mut_ptr(), sk.as_mut_ptr()) })?;
+        let rc = with_rng(rng, || unsafe {
+            ffi::keypair(pk.as_mut_ptr(), sk.as_mut_ptr())
+        })?;
         if rc != 0 {
             return Err(Error::Backend("keypair failed"));
         }
@@ -136,7 +155,7 @@ impl Sign for S {
                 sk.as_bytes().as_ptr(),
             )
         })?;
-        if rc != 0 || siglen < SIG_MIN || siglen > SIG_MAX {
+        if rc != 0 || !(SIG_MIN..=SIG_MAX).contains(&siglen) {
             return Err(Error::Backend("signing failed"));
         }
         sig.truncate(siglen);
@@ -188,6 +207,9 @@ mod tests {
         assert!(!g.verify(&pk, b"messagE", b"", &sig).unwrap());
         assert!(g.sign(&sk, b"m", b"ctx", &mut rng).is_err());
         let too_long = Signature::from_vec(vec![0; SIG_MAX + 1], Len::fixed(SIG_MAX + 1)).unwrap();
-        assert!(matches!(g.verify(&pk, b"m", b"", &too_long), Err(Error::InvalidLength { .. })));
+        assert!(matches!(
+            g.verify(&pk, b"m", b"", &too_long),
+            Err(Error::InvalidLength { .. })
+        ));
     }
 }

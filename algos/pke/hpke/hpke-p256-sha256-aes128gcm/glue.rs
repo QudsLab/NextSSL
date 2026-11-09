@@ -4,7 +4,9 @@
 //! `Error::AuthenticationFailed`.
 
 use hpke::{Deserializable, Kem as _, OpModeR, OpModeS, Serializable};
-use nextssl_core::{EntropySource, Error, Len, Params, Pke, PrivateKey, PublicKey, Result, Sizes, Zeroizing};
+use nextssl_core::{
+    EntropySource, Error, Len, Params, Pke, PrivateKey, PublicKey, Result, Sizes, Zeroizing,
+};
 
 type A = hpke::aead::AesGcm128;
 type K = hpke::kdf::HkdfSha256;
@@ -84,11 +86,18 @@ impl Pke for Alg {
         ))
     }
 
-    fn encrypt(&self, pk: &PublicKey, pt: &[u8], label: &[u8], rng: &mut dyn EntropySource) -> Result<Vec<u8>> {
+    fn encrypt(
+        &self,
+        pk: &PublicKey,
+        pt: &[u8],
+        label: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>> {
         Len::fixed(PK).check("pk", pk.len())?;
         nextssl_core::check_len("plaintext", pt.len(), 0, MAX_PT)?;
         nextssl_core::check_len("label", label.len(), 0, MAX_INFO)?;
-        let pk = <M as hpke::Kem>::PublicKey::from_bytes(pk.as_bytes()).map_err(|_| Error::InvalidInput("malformed HPKE public key"))?;
+        let pk = <M as hpke::Kem>::PublicKey::from_bytes(pk.as_bytes())
+            .map_err(|_| Error::InvalidInput("malformed HPKE public key"))?;
         let (enc, body) = with_rng(rng, |r| {
             hpke::single_shot_seal_with_rng::<A, K, M>(&OpModeS::Base, &pk, label, pt, &[], r)
         })?
@@ -102,9 +111,11 @@ impl Pke for Alg {
         Len::fixed(SK).check("sk", sk.len())?;
         nextssl_core::check_len("ciphertext", ct.len(), ENC + TAG, ENC + TAG + MAX_PT)?;
         nextssl_core::check_len("label", label.len(), 0, MAX_INFO)?;
-        let sk = <M as hpke::Kem>::PrivateKey::from_bytes(sk.as_bytes()).map_err(|_| Error::InvalidInput("malformed HPKE private key"))?;
+        let sk = <M as hpke::Kem>::PrivateKey::from_bytes(sk.as_bytes())
+            .map_err(|_| Error::InvalidInput("malformed HPKE private key"))?;
         let (enc_b, body) = ct.split_at(ENC);
-        let enc = <M as hpke::Kem>::EncappedKey::from_bytes(enc_b).map_err(|_| Error::AuthenticationFailed)?;
+        let enc = <M as hpke::Kem>::EncappedKey::from_bytes(enc_b)
+            .map_err(|_| Error::AuthenticationFailed)?;
         hpke::single_shot_open::<A, K, M>(&OpModeR::Base, &sk, &enc, label, body, &[])
             .map(Zeroizing::new)
             .map_err(|_| Error::AuthenticationFailed)

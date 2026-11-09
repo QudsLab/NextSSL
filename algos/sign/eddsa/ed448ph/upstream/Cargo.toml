@@ -59,3 +59,12 @@ zz32 = []
 zz64 = []
 blake2s = []
 
+
+# NextSSL: vendored source is verbatim; style lints are not ours to fix, so clippy leaves it alone.
+[lints.clippy]
+all = "allow"
+
+# NextSSL: upstream unit tests need dev-dependencies that were dropped; the KATs are ours and run through glue.
+[lib]
+test = false
+doctest = false

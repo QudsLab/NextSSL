@@ -16,7 +16,12 @@ mod ffi {
     use core::ffi::{c_int, c_uchar};
     extern "C" {
         #[link_name = "nextssl__hitag2__shim_apply"]
-        pub fn apply(key: *const c_uchar, nonce: *const c_uchar, data: *mut c_uchar, len: usize) -> c_int;
+        pub fn apply(
+            key: *const c_uchar,
+            nonce: *const c_uchar,
+            data: *mut c_uchar,
+            len: usize,
+        ) -> c_int;
     }
 }
 
@@ -40,7 +45,14 @@ impl StreamCipher for Cipher {
         // SAFETY: key has exactly KEY_LEN and nonce exactly NONCE_LEN readable bytes (checked above); data is a
         // valid slice written for data.len() bytes; the callee keeps no pointer and wipes its state.
         #[allow(unsafe_code)]
-        let rc = unsafe { ffi::apply(key.as_bytes().as_ptr(), nonce.as_ptr(), data.as_mut_ptr(), data.len()) };
+        let rc = unsafe {
+            ffi::apply(
+                key.as_bytes().as_ptr(),
+                nonce.as_ptr(),
+                data.as_mut_ptr(),
+                data.len(),
+            )
+        };
         if rc != 0 {
             return Err(Error::Backend("hitag2 failed"));
         }
@@ -58,7 +70,9 @@ mod tests {
     use super::*;
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).expect("hex")).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).expect("hex"))
+            .collect()
     }
 
     fn key(bytes: &[u8]) -> SymmetricKey {
@@ -68,8 +82,11 @@ mod tests {
     #[test]
     fn kat_files() {
         let c = new(&Params::new()).unwrap();
-        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("kat").join("kat.json");
-        let doc: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("kat")
+            .join("kat.json");
+        let doc: serde_json::Value =
+            serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
         let mut n = 0;
         for v in doc["vectors"].as_array().unwrap() {
             let k = key(&unhex(v["key_hex"].as_str().unwrap()));

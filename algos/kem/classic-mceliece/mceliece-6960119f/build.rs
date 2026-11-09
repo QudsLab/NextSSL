@@ -5,8 +5,34 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/common/aes.c", "upstream/common/fips202.c", "upstream/crypto_kem/mceliece6960119f/clean/aes256ctr.c", "upstream/crypto_kem/mceliece6960119f/clean/benes.c", "upstream/crypto_kem/mceliece6960119f/clean/bm.c", "upstream/crypto_kem/mceliece6960119f/clean/controlbits.c", "upstream/crypto_kem/mceliece6960119f/clean/crypto_int16.c", "upstream/crypto_kem/mceliece6960119f/clean/crypto_int32.c", "upstream/crypto_kem/mceliece6960119f/clean/crypto_uint16.c", "upstream/crypto_kem/mceliece6960119f/clean/crypto_uint32.c", "upstream/crypto_kem/mceliece6960119f/clean/crypto_uint64.c", "upstream/crypto_kem/mceliece6960119f/clean/decrypt.c", "upstream/crypto_kem/mceliece6960119f/clean/encrypt.c", "upstream/crypto_kem/mceliece6960119f/clean/gf.c", "upstream/crypto_kem/mceliece6960119f/clean/operations.c", "upstream/crypto_kem/mceliece6960119f/clean/pk_gen.c", "upstream/crypto_kem/mceliece6960119f/clean/root.c", "upstream/crypto_kem/mceliece6960119f/clean/sk_gen.c", "upstream/crypto_kem/mceliece6960119f/clean/synd.c", "upstream/crypto_kem/mceliece6960119f/clean/transpose.c", "upstream/crypto_kem/mceliece6960119f/clean/util.c", "shim.c"];
-const INCLUDES: &[&str] = &["upstream/common", "upstream/crypto_kem/mceliece6960119f/clean"];
+const SOURCES: &[&str] = &[
+    "upstream/common/aes.c",
+    "upstream/common/fips202.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/aes256ctr.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/benes.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/bm.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/controlbits.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/crypto_int16.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/crypto_int32.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/crypto_uint16.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/crypto_uint32.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/crypto_uint64.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/decrypt.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/encrypt.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/gf.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/operations.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/pk_gen.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/root.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/sk_gen.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/synd.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/transpose.c",
+    "upstream/crypto_kem/mceliece6960119f/clean/util.c",
+    "shim.c",
+];
+const INCLUDES: &[&str] = &[
+    "upstream/common",
+    "upstream/crypto_kem/mceliece6960119f/clean",
+];
 const PREFIX: &str = "nextssl__mceliece_6960119f__";
 
 fn base() -> cc::Build {
@@ -40,7 +66,10 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
             if s.is_undefined() || !s.is_global() {
                 continue;
             }
-            if !matches!(s.kind(), SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown) {
+            if !matches!(
+                s.kind(),
+                SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown
+            ) {
                 continue;
             }
             let Ok(mut n) = s.name() else { continue };
@@ -76,7 +105,7 @@ fn main() {
     drop(f);
     let mut b = base();
     if b.get_compiler().is_like_msvc() {
-        b.flag(&format!("/FI{}", hdr.display()));
+        b.flag(format!("/FI{}", hdr.display()));
     } else {
         b.flag("-include").flag(hdr.to_str().unwrap());
     }

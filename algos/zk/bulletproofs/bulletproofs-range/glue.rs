@@ -64,7 +64,9 @@ const MAX_PROOF: usize = 4096;
 fn bits_of(setup: &[u8]) -> Result<usize> {
     match setup {
         [n] if matches!(*n, 8 | 16 | 32 | 64) => Ok(*n as usize),
-        _ => Err(Error::InvalidInput("bulletproofs setup must be one byte in {8, 16, 32, 64}")),
+        _ => Err(Error::InvalidInput(
+            "bulletproofs setup must be one byte in {8, 16, 32, 64}",
+        )),
     }
 }
 
@@ -78,7 +80,13 @@ impl Zk for Alg {
         }
     }
 
-    fn prove(&self, setup: &[u8], statement: &[u8], witness: &[u8], rng: &mut dyn EntropySource) -> Result<Vec<u8>> {
+    fn prove(
+        &self,
+        setup: &[u8],
+        statement: &[u8],
+        witness: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>> {
         let n = bits_of(setup)?;
         nextssl_core::check_len("statement", statement.len(), 32, 32)?;
         nextssl_core::check_len("witness", witness.len(), 40, 40)?;
@@ -91,14 +99,19 @@ impl Zk for Alg {
         }
         let mut sb = Zeroizing::new([0u8; 32]);
         sb.copy_from_slice(&w[8..]);
-        let blinding = Option::<Scalar>::from(Scalar::from_canonical_bytes(*sb)).ok_or(Error::InvalidInput("blinding is not a canonical scalar"))?;
+        let blinding = Option::<Scalar>::from(Scalar::from_canonical_bytes(*sb))
+            .ok_or(Error::InvalidInput("blinding is not a canonical scalar"))?;
         let pc = PedersenGens::default();
         let bp = BulletproofGens::new(n, 1);
         let mut t = Transcript::new(LABEL);
-        let (proof, commit) = with_rng(rng, |r| RangeProof::prove_single_with_rng(&bp, &pc, &mut t, v, &blinding, n, r))?
-            .map_err(|_| Error::Backend("bulletproofs prove failed"))?;
+        let (proof, commit) = with_rng(rng, |r| {
+            RangeProof::prove_single_with_rng(&bp, &pc, &mut t, v, &blinding, n, r)
+        })?
+        .map_err(|_| Error::Backend("bulletproofs prove failed"))?;
         if commit.as_bytes() != statement {
-            return Err(Error::InvalidInput("statement is not the commitment of the witness"));
+            return Err(Error::InvalidInput(
+                "statement is not the commitment of the witness",
+            ));
         }
         Ok(proof.to_bytes())
     }
@@ -109,11 +122,14 @@ impl Zk for Alg {
         nextssl_core::check_len("proof", proof.len(), 7 * 32, MAX_PROOF)?;
         let mut v = [0u8; 32];
         v.copy_from_slice(statement);
-        let proof = RangeProof::from_bytes(proof).map_err(|_| Error::InvalidInput("malformed range proof"))?;
+        let proof = RangeProof::from_bytes(proof)
+            .map_err(|_| Error::InvalidInput("malformed range proof"))?;
         let pc = PedersenGens::default();
         let bp = BulletproofGens::new(n, 1);
         let mut t = Transcript::new(LABEL);
-        Ok(proof.verify_single(&bp, &pc, &mut t, &CompressedRistretto(v), n).is_ok())
+        Ok(proof
+            .verify_single(&bp, &pc, &mut t, &CompressedRistretto(v), n)
+            .is_ok())
     }
 }
 

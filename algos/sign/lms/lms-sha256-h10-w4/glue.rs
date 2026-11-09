@@ -5,8 +5,14 @@
 //! Keygen is deterministic from a 32-byte seed. An exhausted key is `Error::KeyExhausted` and `persist` is not called. The crate marks
 //! a used-up key by overwriting its parameter bytes (its counter wraps to zero), so `remaining` reads the crate's lifetime, not the counter.
 
-use hbs_lms::{keygen, sign, verify, HssParameter, LmotsAlgorithm, LmsAlgorithm, Seed, Sha256_256, SigningKey, VerifyingKey};
-use nextssl_core::{Error, Len, Params, PublicKey, Result, Seed as NSeed, Signature, Sizes, StatefulKey, StatefulSign, Zeroizing};
+use hbs_lms::{
+    keygen, sign, verify, HssParameter, LmotsAlgorithm, LmsAlgorithm, Seed, Sha256_256, SigningKey,
+    VerifyingKey,
+};
+use nextssl_core::{
+    Error, Len, Params, PublicKey, Result, Seed as NSeed, Signature, Sizes, StatefulKey,
+    StatefulSign, Zeroizing,
+};
 
 type H = Sha256_256;
 
@@ -22,16 +28,26 @@ const PARAMS_OFF: usize = 8;
 const PARAMS_LEN: usize = 8;
 
 fn parameters() -> Vec<HssParameter<H>> {
-    vec![HssParameter::new(LmotsAlgorithm::LmotsW4, LmsAlgorithm::LmsH10)]
+    vec![HssParameter::new(
+        LmotsAlgorithm::LmotsW4,
+        LmsAlgorithm::LmsH10,
+    )]
 }
 
 /// One-time keys still available: the crate's own lifetime, 0 for a key it has marked exhausted.
 fn left(key: &StatefulKey) -> Result<u64> {
     SK.check("sk", key.len())?;
-    let sk = SigningKey::<H>::from_bytes(key.as_bytes()).map_err(|_| Error::InvalidInput("malformed LMS key state"))?;
+    let sk = SigningKey::<H>::from_bytes(key.as_bytes())
+        .map_err(|_| Error::InvalidInput("malformed LMS key state"))?;
     match sk.get_lifetime() {
         Ok(n) => Ok(n),
-        Err(_) if key.as_bytes()[PARAMS_OFF..PARAMS_OFF + PARAMS_LEN].iter().all(|b| *b == 0xFF) => Ok(0),
+        Err(_)
+            if key.as_bytes()[PARAMS_OFF..PARAMS_OFF + PARAMS_LEN]
+                .iter()
+                .all(|b| *b == 0xFF) =>
+        {
+            Ok(0)
+        }
         Err(_) => Err(Error::InvalidInput("malformed LMS key state")),
     }
 }
@@ -61,14 +77,20 @@ impl StatefulSign for Alg {
         Len::fixed(SEED).check("seed", seed.len())?;
         let mut s = Seed::<H>::default();
         s.as_mut_slice().copy_from_slice(seed.as_bytes());
-        let (sk, vk) = keygen::<H>(&parameters(), &s, None).map_err(|_| Error::Backend("LMS keygen failed"))?;
+        let (sk, vk) = keygen::<H>(&parameters(), &s, None)
+            .map_err(|_| Error::Backend("LMS keygen failed"))?;
         Ok((
             PublicKey::from_bytes(vk.as_slice(), Len::fixed(PK))?,
             StatefulKey::from_bytes(sk.as_slice(), SK)?,
         ))
     }
 
-    fn sign(&self, key: &mut StatefulKey, msg: &[u8], persist: &mut dyn FnMut(&[u8]) -> Result<()>) -> Result<Signature> {
+    fn sign(
+        &self,
+        key: &mut StatefulKey,
+        msg: &[u8],
+        persist: &mut dyn FnMut(&[u8]) -> Result<()>,
+    ) -> Result<Signature> {
         if self.remaining(key)? == 0 {
             return Err(Error::KeyExhausted);
         }
@@ -101,7 +123,8 @@ impl StatefulSign for Alg {
     fn verify(&self, pk: &PublicKey, msg: &[u8], sig: &Signature) -> Result<bool> {
         Len::fixed(PK).check("pk", pk.len())?;
         SIG.check("sig", sig.len())?;
-        VerifyingKey::<H>::from_bytes(pk.as_bytes()).map_err(|_| Error::InvalidInput("malformed LMS public key"))?;
+        VerifyingKey::<H>::from_bytes(pk.as_bytes())
+            .map_err(|_| Error::InvalidInput("malformed LMS public key"))?;
         Ok(verify::<H>(msg, sig.as_bytes(), pk.as_bytes()).is_ok())
     }
 }

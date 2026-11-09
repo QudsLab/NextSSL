@@ -134,12 +134,14 @@ mod tests {
         assert_ne!(b, orig);
         k.decrypt_block(&mut b).unwrap();
         assert_eq!(b, orig);
-        assert!(k.encrypt_block(&mut vec![0u8; BLOCK_LEN + 1]).is_err());
+        assert!(k.encrypt_block(&mut [0u8; BLOCK_LEN + 1]).is_err());
         assert!(c.keyed(&key(min.wrapping_sub(1))).is_err());
     }
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).expect("hex")).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).expect("hex"))
+            .collect()
     }
 
     #[test]
@@ -147,10 +149,17 @@ mod tests {
         let c = new(&Params::new()).unwrap();
         let mut n = 0;
         for file in ["kat.json", "published.json"] {
-            let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("kat").join(file);
-            let doc: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+            let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+                .join("kat")
+                .join(file);
+            let doc: serde_json::Value =
+                serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
             for v in doc["vectors"].as_array().unwrap() {
-                let k = SymmetricKey::from_bytes(&unhex(v["key_hex"].as_str().unwrap()), Len::range(0, usize::MAX)).unwrap();
+                let k = SymmetricKey::from_bytes(
+                    &unhex(v["key_hex"].as_str().unwrap()),
+                    Len::range(0, usize::MAX),
+                )
+                .unwrap();
                 let keyed = c.keyed(&k).unwrap();
                 let pt = unhex(v["pt_hex"].as_str().unwrap());
                 let ct = unhex(v["ct_hex"].as_str().unwrap());

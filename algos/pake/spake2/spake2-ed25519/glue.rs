@@ -3,7 +3,10 @@
 //! empty) and finish after one `step`. The identities are `A:` + context and `B:` + context. The 32-byte key is not
 //! key-confirmed: a wrong password gives different keys, not an error. SPAKE2 has no confirmation step in this crate.
 
-use nextssl_core::{EntropySource, Error, Len, Pake, PakeRole, PakeState, PakeStep, Params, Result, SharedSecret, Sizes, Zeroizing};
+use nextssl_core::{
+    EntropySource, Error, Len, Pake, PakeRole, PakeState, PakeStep, Params, Result, SharedSecret,
+    Sizes, Zeroizing,
+};
 use rand_core::{CryptoRng, RngCore};
 use spake2::{Ed25519Group, Identity, Password, Spake2};
 
@@ -63,8 +66,15 @@ struct St(Spake2<Ed25519Group>);
 impl PakeState for St {
     fn step(self: Box<Self>, msg: &[u8]) -> Result<PakeStep> {
         Len::fixed(MSG).check("message", msg.len())?;
-        let key = Zeroizing::new(self.0.finish(msg).map_err(|_| Error::ProtocolAborted("spake2 message rejected"))?);
-        Ok(PakeStep::Done(SharedSecret::from_bytes(&key, Len::fixed(SS))?, None))
+        let key = Zeroizing::new(
+            self.0
+                .finish(msg)
+                .map_err(|_| Error::ProtocolAborted("spake2 message rejected"))?,
+        );
+        Ok(PakeStep::Done(
+            SharedSecret::from_bytes(&key, Len::fixed(SS))?,
+            None,
+        ))
     }
 }
 
@@ -79,7 +89,13 @@ impl Pake for Alg {
         }
     }
 
-    fn start(&self, role: PakeRole, password: &[u8], context: &[u8], rng: &mut dyn EntropySource) -> Result<(Box<dyn PakeState>, Vec<u8>)> {
+    fn start(
+        &self,
+        role: PakeRole,
+        password: &[u8],
+        context: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<(Box<dyn PakeState>, Vec<u8>)> {
         nextssl_core::check_len("password", password.len(), 1, PW_MAX)?;
         nextssl_core::check_len("context", context.len(), 0, CTX_MAX)?;
         let pw = Password::new(password);

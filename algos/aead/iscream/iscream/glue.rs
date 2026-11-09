@@ -143,8 +143,17 @@ mod tests {
         assert_eq!(&a.open(&k, &n, b"aad", &ct).unwrap()[..], b"hello world");
         let mut bad = ct.clone();
         bad[0] ^= 1;
-        assert_eq!(a.open(&k, &n, b"aad", &bad).unwrap_err(), Error::AuthenticationFailed);
-        assert!(matches!(a.seal(&key(KEY + 1), &n, b"", b"x"), Err(Error::InvalidLength { .. })));
-        assert!(matches!(a.seal(&k, &vec![3u8; NONCE + 1], b"", b"x"), Err(Error::InvalidLength { .. })));
+        assert_eq!(
+            a.open(&k, &n, b"aad", &bad).unwrap_err(),
+            Error::AuthenticationFailed
+        );
+        assert!(matches!(
+            a.seal(&key(KEY + 1), &n, b"", b"x"),
+            Err(Error::InvalidLength { .. })
+        ));
+        assert!(matches!(
+            a.seal(&k, &[3u8; NONCE + 1], b"", b"x"),
+            Err(Error::InvalidLength { .. })
+        ));
     }
 }

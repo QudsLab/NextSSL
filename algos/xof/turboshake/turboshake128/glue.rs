@@ -11,10 +11,12 @@ impl Xof for Impl {
     fn squeeze(&self, data: &[u8], out: &mut [u8]) -> Result<()> {
         Len::range(1, usize::MAX).check("out", out.len())?;
         let mut t = TurboShake128::default();
-        t.absorb(data).map_err(|_| Error::Backend("turboshake absorb"))?;
+        t.absorb(data)
+            .map_err(|_| Error::Backend("turboshake absorb"))?;
         t.finalize::<{ TurboShake128::DEFAULT_DOMAIN_SEPARATOR }>()
             .map_err(|_| Error::Backend("turboshake finalize"))?;
-        t.squeeze(out).map_err(|_| Error::Backend("turboshake squeeze"))
+        t.squeeze(out)
+            .map_err(|_| Error::Backend("turboshake squeeze"))
     }
 }
 

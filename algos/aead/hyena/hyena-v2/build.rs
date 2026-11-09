@@ -7,7 +7,11 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/aead-common.c", "upstream/hyena.c", "upstream/internal-gift128.c"];
+const SOURCES: &[&str] = &[
+    "upstream/aead-common.c",
+    "upstream/hyena.c",
+    "upstream/internal-gift128.c",
+];
 const CPP_SOURCES: &[&str] = &[];
 const INCLUDES: &[&str] = &["upstream/."];
 const DEFINES: &[(&str, &str)] = &[];
@@ -50,7 +54,10 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
             if s.is_undefined() || !s.is_global() {
                 continue;
             }
-            if !matches!(s.kind(), SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown) {
+            if !matches!(
+                s.kind(),
+                SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown
+            ) {
                 continue;
             }
             let Ok(mut n) = s.name() else { continue };
@@ -58,7 +65,10 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
                 n = n.strip_prefix('_').unwrap_or(n);
             }
             // Itanium-mangled free function `_Z<len><name>...`: rename the plain identifier.
-            if let Some(r) = n.strip_prefix("_Z").filter(|r| r.as_bytes().first().is_some_and(|c| c.is_ascii_digit())) {
+            if let Some(r) = n
+                .strip_prefix("_Z")
+                .filter(|r| r.as_bytes().first().is_some_and(|c| c.is_ascii_digit()))
+            {
                 let digits: String = r.chars().take_while(|c| c.is_ascii_digit()).collect();
                 let len: usize = digits.parse().unwrap_or(0);
                 let rest = &r[digits.len()..];
@@ -89,7 +99,15 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 
 fn main() {
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
-    let sets = [(false, SOURCES.is_empty(), "probe", "nextssl_hyena_v2"), (true, CPP_SOURCES.is_empty(), "probe_cpp", "nextssl_hyena_v2_cpp")];
+    let sets = [
+        (false, SOURCES.is_empty(), "probe", "nextssl_hyena_v2"),
+        (
+            true,
+            CPP_SOURCES.is_empty(),
+            "probe_cpp",
+            "nextssl_hyena_v2_cpp",
+        ),
+    ];
     let mut objs = Vec::new();
     for (cpp, empty, dir, _) in sets {
         if empty {
@@ -113,7 +131,7 @@ fn main() {
         }
         let mut b = base(cpp);
         if b.get_compiler().is_like_msvc() {
-            b.flag(&format!("/FI{}", hdr.display()));
+            b.flag(format!("/FI{}", hdr.display()));
         } else {
             b.flag("-include").flag(hdr.to_str().unwrap());
         }

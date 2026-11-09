@@ -5,14 +5,19 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/stribob192r1/encrypt.c", "upstream/stribob192r1/sbob_pi64.c", "upstream/stribob192r1/sbob_tab64.c", "upstream/stribob192r1/stribob.c"];
+const SOURCES: &[&str] = &[
+    "upstream/stribob192r1/encrypt.c",
+    "upstream/stribob192r1/sbob_pi64.c",
+    "upstream/stribob192r1/sbob_tab64.c",
+    "upstream/stribob192r1/stribob.c",
+];
 const INCLUDES: &[&str] = &["upstream/stribob192r1"];
 const PREFIX: &str = "nextssl__stribob__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
     b.warnings(false).opt_level(2);
-    
+
     // Force-included preamble: scheme macros upstream's own build passes on the command line, plus (MSVC only) a no-op
     // `__attribute__` (GNU annotations carry no semantics for the portable C; cl.exe cannot take a function-like macro with /D).
     let mut pre = String::from("");
@@ -24,7 +29,7 @@ fn base() -> cc::Build {
         let h = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_pre.h");
         std::fs::write(&h, pre).unwrap();
         if msvc {
-            b.flag(&format!("/FI{}", h.display()));
+            b.flag(format!("/FI{}", h.display()));
         } else {
             b.flag("-include").flag(h.to_str().unwrap());
         }
@@ -57,7 +62,10 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
             if s.is_undefined() || !s.is_global() {
                 continue;
             }
-            if !matches!(s.kind(), SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown) {
+            if !matches!(
+                s.kind(),
+                SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown
+            ) {
                 continue;
             }
             let Ok(mut n) = s.name() else { continue };
@@ -93,7 +101,7 @@ fn main() {
     drop(f);
     let mut b = base();
     if b.get_compiler().is_like_msvc() {
-        b.flag(&format!("/FI{}", hdr.display()));
+        b.flag(format!("/FI{}", hdr.display()));
     } else {
         b.flag("-include").flag(hdr.to_str().unwrap());
     }

@@ -422,7 +422,7 @@ mod tests {
         assert!(other.decode(good.as_bytes()).is_err());
         assert_eq!(parse(good.as_bytes()).unwrap().header, "K");
         // payload cap
-        assert!(e.encode(&vec![1u8; MAX_PAYLOAD + 1]).is_err());
+        assert!(e.encode(&[1u8; MAX_PAYLOAD + 1]).is_err());
         assert!(e.encode(&vec![1u8; MAX_PAYLOAD]).is_ok());
     }
 }

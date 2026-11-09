@@ -26,9 +26,21 @@ mod ffi {
         #[link_name = "nextssl__dme_sign__crypto_sign_keypair"]
         pub fn keypair(pk: *mut u8, sk: *mut u8) -> c_int;
         #[link_name = "nextssl__dme_sign__crypto_sign"]
-        pub fn sign(sm: *mut u8, smlen: *mut core::ffi::c_ulonglong, m: *const u8, mlen: core::ffi::c_ulonglong, sk: *const u8) -> c_int;
+        pub fn sign(
+            sm: *mut u8,
+            smlen: *mut core::ffi::c_ulonglong,
+            m: *const u8,
+            mlen: core::ffi::c_ulonglong,
+            sk: *const u8,
+        ) -> c_int;
         #[link_name = "nextssl__dme_sign__crypto_sign_open"]
-        pub fn open(m: *mut u8, mlen: *mut core::ffi::c_ulonglong, sm: *const u8, smlen: core::ffi::c_ulonglong, pk: *const u8) -> c_int;
+        pub fn open(
+            m: *mut u8,
+            mlen: *mut core::ffi::c_ulonglong,
+            sm: *const u8,
+            smlen: core::ffi::c_ulonglong,
+            pk: *const u8,
+        ) -> c_int;
         #[link_name = "nextssl__dme_sign__rng_set"]
         pub fn rng_set(f: Option<FillFn>, ctx: *mut c_void);
         #[link_name = "nextssl__dme_sign__rng_failed"]
@@ -77,7 +89,12 @@ fn with_rng<T>(rng: &mut dyn EntropySource, f: impl FnOnce() -> T) -> Result<T> 
 }
 
 fn len_err(what: &'static str, got: usize, min: usize, max: usize) -> Error {
-    Error::InvalidLength { what, got, min, max }
+    Error::InvalidLength {
+        what,
+        got,
+        min,
+        max,
+    }
 }
 
 struct S;
@@ -103,7 +120,9 @@ impl Sign for S {
         let mut sk = Zeroizing::new(vec![0u8; SK]);
         // SAFETY: pk/sk are valid for PK/SK bytes, the exact sizes of the upstream API.
         #[allow(unsafe_code)]
-        let rc = with_rng(rng, || unsafe { ffi::keypair(pk.as_mut_ptr(), sk.as_mut_ptr()) })?;
+        let rc = with_rng(rng, || unsafe {
+            ffi::keypair(pk.as_mut_ptr(), sk.as_mut_ptr())
+        })?;
         if rc != 0 {
             return Err(Error::Backend("keypair failed"));
         }
@@ -144,8 +163,10 @@ impl Sign for S {
             return Err(Error::Backend("signing failed"));
         }
         let siglen = smlen - msg.len();
-        if siglen < SIG_MIN || siglen > SIG_MAX {
-            return Err(Error::Backend("signing failed: unexpected signature length"));
+        if !(SIG_MIN..=SIG_MAX).contains(&siglen) {
+            return Err(Error::Backend(
+                "signing failed: unexpected signature length",
+            ));
         }
         // Layout is fixed per scheme (MSG_FIRST). Anything else is an error, never guessed.
         if MSG_FIRST {
@@ -208,13 +229,25 @@ mod tests {
     #[test]
     fn roundtrip_and_rejects() {
         let g = new(&Params::new()).unwrap();
-        let mut rng = FixedEntropy::new(&[0x5Au8; 8192]);
+        let mut rng = FixedEntropy::new(
+            &(0..8192u64)
+                .map(|i| {
+                    let x = (i + 1).wrapping_mul(0x9E37_79B9_7F4A_7C15);
+                    let x = (x ^ (x >> 30)).wrapping_mul(0xBF58_476D_1CE4_E5B9);
+                    let x = (x ^ (x >> 27)).wrapping_mul(0x94D0_49BB_1331_11EB);
+                    (x ^ (x >> 31)) as u8
+                })
+                .collect::<Vec<u8>>(),
+        );
         let (pk, sk) = g.keygen(&mut rng).unwrap();
         let sig = g.sign(&sk, b"message", b"", &mut rng).unwrap();
         assert!(g.verify(&pk, b"message", b"", &sig).unwrap());
         assert!(!g.verify(&pk, b"messagE", b"", &sig).unwrap());
         assert!(g.sign(&sk, b"m", b"ctx", &mut rng).is_err());
         let too_long = Signature::from_vec(vec![0; SIG_MAX + 1], Len::fixed(SIG_MAX + 1)).unwrap();
-        assert!(matches!(g.verify(&pk, b"m", b"", &too_long), Err(Error::InvalidLength { .. })));
+        assert!(matches!(
+            g.verify(&pk, b"m", b"", &too_long),
+            Err(Error::InvalidLength { .. })
+        ));
     }
 }

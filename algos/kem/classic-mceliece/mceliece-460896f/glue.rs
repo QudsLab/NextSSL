@@ -75,7 +75,12 @@ fn with_rng<T>(rng: &mut dyn EntropySource, f: impl FnOnce() -> T) -> Result<T> 
 }
 
 fn len_err(what: &'static str, got: usize, min: usize, max: usize) -> Error {
-    Error::InvalidLength { what, got, min, max }
+    Error::InvalidLength {
+        what,
+        got,
+        min,
+        max,
+    }
 }
 
 struct K;
@@ -102,7 +107,9 @@ impl Kem for K {
         let mut sk = Zeroizing::new(vec![0u8; SK]);
         // SAFETY: pk/sk are valid for PK/SK bytes, the exact sizes of the upstream API.
         #[allow(unsafe_code)]
-        let rc = with_rng(rng, || unsafe { ffi::keypair(pk.as_mut_ptr(), sk.as_mut_ptr()) })?;
+        let rc = with_rng(rng, || unsafe {
+            ffi::keypair(pk.as_mut_ptr(), sk.as_mut_ptr())
+        })?;
         if rc != 0 {
             return Err(Error::Backend("keypair failed"));
         }
@@ -112,7 +119,11 @@ impl Kem for K {
         ))
     }
 
-    fn encaps_from_coins(&self, _pk: &PublicKey, _coins: &Seed) -> Result<(Ciphertext, SharedSecret)> {
+    fn encaps_from_coins(
+        &self,
+        _pk: &PublicKey,
+        _coins: &Seed,
+    ) -> Result<(Ciphertext, SharedSecret)> {
         Err(Error::Unsupported)
     }
 
@@ -150,7 +161,13 @@ impl Kem for K {
         let mut ss = Zeroizing::new(vec![0u8; SS]);
         // SAFETY: ss/ct/sk are valid for SS/CT/SK bytes (lengths checked above).
         #[allow(unsafe_code)]
-        let _rc = unsafe { ffi::dec(ss.as_mut_ptr(), ct.as_bytes().as_ptr(), sk.as_bytes().as_ptr()) };
+        let _rc = unsafe {
+            ffi::dec(
+                ss.as_mut_ptr(),
+                ct.as_bytes().as_ptr(),
+                sk.as_bytes().as_ptr(),
+            )
+        };
         SharedSecret::from_bytes(&ss, Len::fixed(SS))
     }
 }
@@ -168,12 +185,24 @@ mod tests {
     #[test]
     fn roundtrip_and_lengths() {
         let k = new(&Params::new()).unwrap();
-        let mut rng = FixedEntropy::new(&[0x5Au8; 8192]);
+        let mut rng = FixedEntropy::new(
+            &(0..8192u64)
+                .map(|i| {
+                    let x = (i + 1).wrapping_mul(0x9E37_79B9_7F4A_7C15);
+                    let x = (x ^ (x >> 30)).wrapping_mul(0xBF58_476D_1CE4_E5B9);
+                    let x = (x ^ (x >> 27)).wrapping_mul(0x94D0_49BB_1331_11EB);
+                    (x ^ (x >> 31)) as u8
+                })
+                .collect::<Vec<u8>>(),
+        );
         let (pk, sk) = k.keygen(&mut rng).unwrap();
         let (ct, ss) = k.encaps(&pk, &mut rng).unwrap();
         assert_eq!(k.decaps(&sk, &ct).unwrap(), ss);
         let short = Ciphertext::from_vec(vec![0; CT - 1], Len::fixed(CT - 1)).unwrap();
-        assert!(matches!(k.decaps(&sk, &short), Err(Error::InvalidLength { .. })));
+        assert!(matches!(
+            k.decaps(&sk, &short),
+            Err(Error::InvalidLength { .. })
+        ));
         let mut dry = FixedEntropy::new(&[0u8; 1]);
         assert!(k.keygen(&mut dry).is_err());
     }

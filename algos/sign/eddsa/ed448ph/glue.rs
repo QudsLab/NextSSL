@@ -8,8 +8,8 @@
 use crrl::ed448::{PrivateKey, PublicKey};
 use crrl::sha3::SHAKE256;
 use nextssl_core::{
-    EntropySource, Error, Len, Params, PrivateKey as NxPrivateKey, PublicKey as NxPublicKey, Result, Seed, Sign,
-    Signature as NxSignature, Sizes,
+    EntropySource, Error, Len, Params, PrivateKey as NxPrivateKey, PublicKey as NxPublicKey,
+    Result, Seed, Sign, Signature as NxSignature, Sizes,
 };
 
 const PK: usize = 57;
@@ -58,10 +58,17 @@ impl Sign for Ed448Ph {
         ))
     }
 
-    fn sign(&self, sk: &NxPrivateKey, msg: &[u8], ctx: &[u8], _rng: &mut dyn EntropySource) -> Result<NxSignature> {
+    fn sign(
+        &self,
+        sk: &NxPrivateKey,
+        msg: &[u8],
+        ctx: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<NxSignature> {
         check_ctx(ctx)?;
         check("sk", sk.as_bytes().len(), SK)?;
-        let key = PrivateKey::decode(sk.as_bytes()).ok_or(Error::InvalidInput("ed448ph secret key"))?;
+        let key =
+            PrivateKey::decode(sk.as_bytes()).ok_or(Error::InvalidInput("ed448ph secret key"))?;
         let sig = key.sign_ph(ctx, &prehash(msg));
         NxSignature::from_bytes(&sig, Len::fixed(SIG))
     }
@@ -70,8 +77,9 @@ impl Sign for Ed448Ph {
         check_ctx(ctx)?;
         check("pk", pk.as_bytes().len(), PK)?;
         check("sig", sig.as_bytes().len(), SIG)?;
-        let key = PublicKey::decode(pk.as_bytes())
-            .ok_or(Error::InvalidInput("ed448ph public key is not a valid point"))?;
+        let key = PublicKey::decode(pk.as_bytes()).ok_or(Error::InvalidInput(
+            "ed448ph public key is not a valid point",
+        ))?;
         Ok(key.verify_ph(sig.as_bytes(), ctx, &prehash(msg)))
     }
 }

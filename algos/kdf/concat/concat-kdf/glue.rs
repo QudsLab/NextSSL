@@ -143,9 +143,7 @@ mod tests {
             kdf.derive(&key(&[]), b"", b"", &mut out).is_err(),
             "empty secret"
         );
-        assert!(kdf
-            .derive(&z, b"", &vec![0u8; INFO_MAX + 1], &mut out)
-            .is_err());
+        assert!(kdf.derive(&z, b"", &[0u8; INFO_MAX + 1], &mut out).is_err());
         let bad = new(&Params::new().with("hash", Value::Str("md5".into())));
         assert!(bad.is_err());
     }

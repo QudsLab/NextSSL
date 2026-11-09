@@ -7,8 +7,8 @@
 
 use falcon::safe_api::{DomainSeparation, FalconError, FnDsaKeyPair, FnDsaSignature};
 use nextssl_core::{
-    EntropySource, Error, Len, Params, PrivateKey, PublicKey, Result, Seed, Sign, Signature as NxSignature, Sizes,
-    Zeroizing,
+    EntropySource, Error, Len, Params, PrivateKey, PublicKey, Result, Seed, Sign,
+    Signature as NxSignature, Sizes, Zeroizing,
 };
 
 const LOGN: u32 = 10;
@@ -60,22 +60,36 @@ impl Sign for FnDsa {
         ))
     }
 
-    fn sign(&self, sk: &PrivateKey, msg: &[u8], ctx: &[u8], rng: &mut dyn EntropySource) -> Result<NxSignature> {
+    fn sign(
+        &self,
+        sk: &PrivateKey,
+        msg: &[u8],
+        ctx: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<NxSignature> {
         check_ctx(ctx)?;
         check("sk", sk.as_bytes().len(), SK)?;
         if sk.as_bytes()[0] != (0x50 | LOGN as u8) {
-            return Err(Error::InvalidInput("fn-dsa secret key header does not match this parameter set"));
+            return Err(Error::InvalidInput(
+                "fn-dsa secret key header does not match this parameter set",
+            ));
         }
-        let kp = FnDsaKeyPair::from_private_key(sk.as_bytes()).map_err(|_| Error::InvalidInput("fn-dsa secret key"))?;
+        let kp = FnDsaKeyPair::from_private_key(sk.as_bytes())
+            .map_err(|_| Error::InvalidInput("fn-dsa secret key"))?;
         if kp.logn() != LOGN {
-            return Err(Error::InvalidInput("fn-dsa secret key is for another parameter set"));
+            return Err(Error::InvalidInput(
+                "fn-dsa secret key is for another parameter set",
+            ));
         }
         let mut seed = Zeroizing::new([0u8; SEED]);
-        rng.fill(&mut seed[..]).map_err(|_| Error::EntropyFailure("entropy source failed"))?;
+        rng.fill(&mut seed[..])
+            .map_err(|_| Error::EntropyFailure("entropy source failed"))?;
         let sig = kp
             .sign_deterministic(msg, &seed[..], &domain(ctx))
             .map_err(|e| match e {
-                FalconError::FaultDetected => Error::Backend("fn-dsa: self-check of the signature failed"),
+                FalconError::FaultDetected => {
+                    Error::Backend("fn-dsa: self-check of the signature failed")
+                }
                 _ => Error::Backend("fn-dsa signing failed"),
             })?;
         NxSignature::from_bytes(sig.to_bytes(), Len::fixed(SIG))
@@ -86,12 +100,17 @@ impl Sign for FnDsa {
         check("pk", pk.as_bytes().len(), PK)?;
         check("sig", sig.as_bytes().len(), SIG)?;
         if pk.as_bytes()[0] != LOGN as u8 {
-            return Err(Error::InvalidInput("fn-dsa public key header does not match this parameter set"));
+            return Err(Error::InvalidInput(
+                "fn-dsa public key header does not match this parameter set",
+            ));
         }
         if sig.as_bytes()[0] != (0x50 | LOGN as u8) {
-            return Err(Error::InvalidInput("fn-dsa signature is not the constant-time encoding of this parameter set"));
+            return Err(Error::InvalidInput(
+                "fn-dsa signature is not the constant-time encoding of this parameter set",
+            ));
         }
-        FnDsaSignature::from_bytes(sig.as_bytes().to_vec()).map_err(|_| Error::InvalidInput("fn-dsa signature encoding"))?;
+        FnDsaSignature::from_bytes(sig.as_bytes().to_vec())
+            .map_err(|_| Error::InvalidInput("fn-dsa signature encoding"))?;
         match FnDsaSignature::verify(sig.as_bytes(), pk.as_bytes(), msg, &domain(ctx)) {
             Ok(()) => Ok(true),
             Err(FalconError::BadSignature) => Ok(false),

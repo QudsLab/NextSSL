@@ -19,3 +19,7 @@ dev = []
 
 [dependencies]
 
+
+# NextSSL: vendored source is verbatim; style lints are not ours to fix, so clippy leaves it alone.
+[lints.clippy]
+all = "allow"

@@ -134,7 +134,7 @@ mod tests {
         assert_ne!(b, orig);
         k.decrypt_block(&mut b).unwrap();
         assert_eq!(b, orig);
-        assert!(k.encrypt_block(&mut vec![0u8; BLOCK_LEN + 1]).is_err());
+        assert!(k.encrypt_block(&mut [0u8; BLOCK_LEN + 1]).is_err());
         assert!(c.keyed(&key(min.wrapping_sub(1))).is_err());
     }
 }

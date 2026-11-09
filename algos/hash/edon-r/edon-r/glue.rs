@@ -23,11 +23,22 @@ impl Hash for H {
 
     fn digest(&self, data: &[u8], out: &mut [u8]) -> Result<()> {
         if out.len() != OUT_LEN {
-            return Err(Error::InvalidLength { what: "out", got: out.len(), min: OUT_LEN, max: OUT_LEN });
+            return Err(Error::InvalidLength {
+                what: "out",
+                got: out.len(),
+                min: OUT_LEN,
+                max: OUT_LEN,
+            });
         }
         // SAFETY: out is valid for OUT_LEN bytes (checked above); data for data.len() bytes.
         #[allow(unsafe_code)]
-        let rc = unsafe { ffi::hash(out.as_mut_ptr(), data.as_ptr(), data.len() as core::ffi::c_ulonglong) };
+        let rc = unsafe {
+            ffi::hash(
+                out.as_mut_ptr(),
+                data.as_ptr(),
+                data.len() as core::ffi::c_ulonglong,
+            )
+        };
         if rc != 0 {
             return Err(Error::Backend("hash failed"));
         }
@@ -55,6 +66,6 @@ mod tests {
         let mut c = vec![0u8; OUT_LEN];
         h.digest(b"abd", &mut c).unwrap();
         assert_ne!(a, c);
-        assert!(h.digest(b"abc", &mut vec![0u8; OUT_LEN + 1]).is_err());
+        assert!(h.digest(b"abc", &mut [0u8; OUT_LEN + 1]).is_err());
     }
 }

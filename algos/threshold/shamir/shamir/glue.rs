@@ -65,13 +65,22 @@ impl Threshold for Alg {
         MAX_N
     }
 
-    fn split(&self, secret: &[u8], t: usize, n: usize, rng: &mut dyn EntropySource) -> Result<Vec<Share>> {
+    fn split(
+        &self,
+        secret: &[u8],
+        t: usize,
+        n: usize,
+        rng: &mut dyn EntropySource,
+    ) -> Result<Vec<Share>> {
         nextssl_core::check_threshold(t, n, MAX_N)?;
         nextssl_core::check_len("secret", secret.len(), 1, SECRET_MAX)?;
         let dealer = Sharks(t as u8);
-        let shares: Vec<UpShare> = with_rng(rng, |r| dealer.dealer_rng(secret, r).take(n).collect())?;
+        let shares: Vec<UpShare> =
+            with_rng(rng, |r| dealer.dealer_rng(secret, r).take(n).collect())?;
         if shares.len() != n {
-            return Err(Error::Backend("sharks produced fewer shares than requested"));
+            return Err(Error::Backend(
+                "sharks produced fewer shares than requested",
+            ));
         }
         shares
             .iter()
@@ -94,7 +103,10 @@ impl Threshold for Alg {
             if s.len() != len || s.as_bytes()[0] as usize != t {
                 return Err(Error::InvalidInput("shares differ in threshold or length"));
             }
-            up.push(UpShare::try_from(&s.as_bytes()[1..]).map_err(|_| Error::InvalidInput("malformed share"))?);
+            up.push(
+                UpShare::try_from(&s.as_bytes()[1..])
+                    .map_err(|_| Error::InvalidInput("malformed share"))?,
+            );
         }
         if t == 0 {
             return Err(Error::InvalidInput("share records threshold 0"));

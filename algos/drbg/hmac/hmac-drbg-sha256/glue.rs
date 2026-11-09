@@ -160,7 +160,7 @@ mod tests {
             Err(Error::InvalidLength { .. })
         ));
         assert!(matches!(
-            d.generate(&[], &mut vec![0u8; MAX_GENERATE_BYTES + 1]),
+            d.generate(&[], &mut [0u8; MAX_GENERATE_BYTES + 1]),
             Err(Error::InvalidLength { .. })
         ));
         assert!(matches!(

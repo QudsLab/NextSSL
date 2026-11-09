@@ -4,7 +4,10 @@
 //! 1 client A; 2 server `salt_len(1) || salt || B`; 3 client M1; 4 server M2. Both sides get the crate's premaster-derived key
 //! (variable length, at most 256 bytes). Proofs are checked in constant time by the crate; a failure ends the exchange.
 
-use nextssl_core::{EntropySource, Error, Len, Pake, PakeRole, PakeState, PakeStep, Params, Result, SharedSecret, Sizes, Zeroizing};
+use nextssl_core::{
+    EntropySource, Error, Len, Pake, PakeRole, PakeState, PakeStep, Params, Result, SharedSecret,
+    Sizes, Zeroizing,
+};
 use sha2::Sha256;
 use srp::client::{SrpClient, SrpClientVerifier};
 use srp::groups::G_2048;
@@ -62,7 +65,9 @@ impl PakeState for ClientWaitB {
 
 impl PakeState for ClientWaitM2 {
     fn step(self: Box<Self>, msg: &[u8]) -> Result<PakeStep> {
-        self.ver.verify_server(msg).or_else(abort("srp: server proof rejected"))?;
+        self.ver
+            .verify_server(msg)
+            .or_else(abort("srp: server proof rejected"))?;
         let ss = SharedSecret::from_bytes(self.ver.key(), Len::range(1, KEY_MAX))?;
         Ok(PakeStep::Done(ss, None))
     }
@@ -85,7 +90,9 @@ impl PakeState for ServerWaitA {
 
 impl PakeState for ServerWaitM1 {
     fn step(self: Box<Self>, msg: &[u8]) -> Result<PakeStep> {
-        self.ver.verify_client(msg).or_else(abort("srp: client proof rejected"))?;
+        self.ver
+            .verify_client(msg)
+            .or_else(abort("srp: client proof rejected"))?;
         let ss = SharedSecret::from_bytes(self.ver.key(), Len::range(1, KEY_MAX))?;
         Ok(PakeStep::Done(ss, Some(self.ver.proof().to_vec())))
     }
@@ -102,20 +109,36 @@ impl Pake for Alg {
         }
     }
 
-    fn start(&self, role: PakeRole, password: &[u8], context: &[u8], rng: &mut dyn EntropySource) -> Result<(Box<dyn PakeState>, Vec<u8>)> {
+    fn start(
+        &self,
+        role: PakeRole,
+        password: &[u8],
+        context: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<(Box<dyn PakeState>, Vec<u8>)> {
         nextssl_core::check_len("password", password.len(), 1, PW_MAX)?;
         nextssl_core::check_len("context", context.len(), 1, CTX_MAX)?;
         let a_or_b = draw(rng, 32)?;
         match role {
             PakeRole::Initiator => {
                 let a_pub = SrpClient::<Sha256>::new(&G_2048).compute_public_ephemeral(&a_or_b);
-                let st = ClientWaitB { a: a_or_b, user: context.to_vec(), pw: Zeroizing::new(password.to_vec()) };
+                let st = ClientWaitB {
+                    a: a_or_b,
+                    user: context.to_vec(),
+                    pw: Zeroizing::new(password.to_vec()),
+                };
                 Ok((Box::new(st), a_pub))
             }
             PakeRole::Responder => {
                 let salt = draw(rng, SALT)?;
-                let v = Zeroizing::new(SrpClient::<Sha256>::new(&G_2048).compute_verifier(context, password, &salt));
-                let st = ServerWaitA { b: a_or_b, v, salt: salt.to_vec() };
+                let v = Zeroizing::new(
+                    SrpClient::<Sha256>::new(&G_2048).compute_verifier(context, password, &salt),
+                );
+                let st = ServerWaitA {
+                    b: a_or_b,
+                    v,
+                    salt: salt.to_vec(),
+                };
                 Ok((Box::new(st), Vec::new()))
             }
         }

@@ -6,11 +6,14 @@
 //! The crate is built without `getrandom`, so `decrypt` does no blinding with hidden OS entropy; the modular exponentiation is the
 //! crate's constant-time crypto-bigint one (RUSTSEC-2023-0071 hardening, still tracked upstream as work in progress).
 
-use nextssl_core::{EntropySource, Error, Len, Params, Pke, PrivateKey, PublicKey, Result, Sizes, Zeroizing};
-use rsa::pkcs1::{DecodeRsaPrivateKey, DecodeRsaPublicKey, EncodeRsaPrivateKey, EncodeRsaPublicKey};
+use nextssl_core::{
+    EntropySource, Error, Len, Params, Pke, PrivateKey, PublicKey, Result, Sizes, Zeroizing,
+};
+use rsa::pkcs1::{
+    DecodeRsaPrivateKey, DecodeRsaPublicKey, EncodeRsaPrivateKey, EncodeRsaPublicKey,
+};
 use rsa::traits::PublicKeyParts;
 use rsa::{Pkcs1v15Encrypt, PrivateKey as RsaPrivateKey, PublicKey as RsaPublicKey};
-
 
 /// Bridges nextssl's `EntropySource` to rand_core 0.10's fallible traits: a failing source surfaces as an error
 /// (never as zeros), and `with_rng` reports it as `Error::EntropyFailure`.
@@ -85,16 +88,19 @@ fn check_key(key: &impl PublicKeyParts) -> Result<()> {
 
 fn pub_key(bytes: &[u8]) -> Result<RsaPublicKey> {
     Len::range(PK_MIN, PK_MAX).check("pk", bytes.len())?;
-    let k = RsaPublicKey::from_pkcs1_der(bytes).map_err(|_| Error::InvalidInput("malformed RSA public key"))?;
+    let k = RsaPublicKey::from_pkcs1_der(bytes)
+        .map_err(|_| Error::InvalidInput("malformed RSA public key"))?;
     check_key(&k)?;
     Ok(k)
 }
 
 fn priv_key(bytes: &[u8]) -> Result<RsaPrivateKey> {
     Len::range(SK_MIN, SK_MAX).check("sk", bytes.len())?;
-    let k = RsaPrivateKey::from_pkcs1_der(bytes).map_err(|_| Error::InvalidInput("malformed RSA private key"))?;
+    let k = RsaPrivateKey::from_pkcs1_der(bytes)
+        .map_err(|_| Error::InvalidInput("malformed RSA private key"))?;
     check_key(&k)?;
-    k.validate().map_err(|_| Error::InvalidInput("inconsistent RSA private key"))?;
+    k.validate()
+        .map_err(|_| Error::InvalidInput("inconsistent RSA private key"))?;
     Ok(k)
 }
 
@@ -115,20 +121,32 @@ impl Pke for Alg {
     fn keygen(&self, rng: &mut dyn EntropySource) -> Result<(PublicKey, PrivateKey)> {
         let k = with_rng(rng, |r| RsaPrivateKey::new(r, BITS))?
             .map_err(|_| Error::Backend("RSA key generation failed"))?;
-        let sk_der = k.to_pkcs1_der().map_err(|_| Error::Backend("RSA private key encoding"))?;
-        let pk_der = k.to_public_key().to_pkcs1_der().map_err(|_| Error::Backend("RSA public key encoding"))?;
+        let sk_der = k
+            .to_pkcs1_der()
+            .map_err(|_| Error::Backend("RSA private key encoding"))?;
+        let pk_der = k
+            .to_public_key()
+            .to_pkcs1_der()
+            .map_err(|_| Error::Backend("RSA public key encoding"))?;
         Ok((
             PublicKey::from_bytes(pk_der.as_bytes(), Len::range(PK_MIN, PK_MAX))?,
             PrivateKey::from_bytes(sk_der.as_bytes(), Len::range(SK_MIN, SK_MAX))?,
         ))
     }
 
-    fn encrypt(&self, pk: &PublicKey, pt: &[u8], label: &[u8], rng: &mut dyn EntropySource) -> Result<Vec<u8>> {
+    fn encrypt(
+        &self,
+        pk: &PublicKey,
+        pt: &[u8],
+        label: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>> {
         nextssl_core::check_len("plaintext", pt.len(), 0, MAX_PT)?;
         nextssl_core::check_len("label", label.len(), 0, MAX_LABEL)?;
         let key = pub_key(pk.as_bytes())?;
         let pad = Pkcs1v15Encrypt;
-        with_rng(rng, |r| key.encrypt(r, pad, pt))?.map_err(|_| Error::Backend("RSA encrypt failed"))
+        with_rng(rng, |r| key.encrypt(r, pad, pt))?
+            .map_err(|_| Error::Backend("RSA encrypt failed"))
     }
 
     fn decrypt(&self, sk: &PrivateKey, ct: &[u8], label: &[u8]) -> Result<Zeroizing<Vec<u8>>> {
