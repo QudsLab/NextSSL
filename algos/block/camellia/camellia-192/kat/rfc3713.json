@@ -1,0 +1,12 @@
+{
+ "algorithm": "camellia-192",
+ "source": "RFC 3713 Appendix A",
+ "vectors": [
+  {
+   "id": "rfc3713-A-192",
+   "key_hex": "0123456789abcdeffedcba98765432100011223344556677",
+   "pt_hex": "0123456789abcdeffedcba9876543210",
+   "ct_hex": "b4993401b3e996f84ee5cee7d79b09b9"
+  }
+ ]
+}

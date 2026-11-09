@@ -1,0 +1,18 @@
+{
+ "algorithm": "belt",
+ "source": "STB 34.101.31 tables A.1 and A.4 as coded in the author library bee2 (src/crypto/belt/belt_block.c H table, test/crypto/belt_test.c expected values)",
+ "vectors": [
+  {
+   "id": "stb34.101.31-A.1",
+   "key_hex": "e9dee72c8f0c0fa62ddb49f46f73964706075316ed247a3739cba38303a98bf6",
+   "pt_hex": "b194bac80a08f53b366d008e584a5de4",
+   "ct_hex": "69cca1c93557c9e3d66bc3e0fa88fa6e"
+  },
+  {
+   "id": "stb34.101.31-A.4",
+   "key_hex": "92bd9b1ce5d141015445fbc95e4d0ef2682080aa227d642f2687f93490405511",
+   "pt_hex": "0dc5300600cab840b38448e5e993f421",
+   "ct_hex": "e12bdc1ae28257ec703fccf095ee8df1"
+  }
+ ]
+}

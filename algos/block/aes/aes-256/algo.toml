@@ -1,0 +1,19 @@
+id        = "aes-256"
+kind      = "blockcipher"
+category  = "block"
+family    = "aes"
+aliases   = ["aes256"]
+tier      = "standard"
+status    = "active"
+standards = ["FIPS 197"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "aes", version = "=0.9.4", license = "MIT OR Apache-2.0" }
+cipher    = "aes::Aes256"
+
+[kat]
+files = ["kat/fips197.json"]
+
+[sizes]
+key   = 32
+block = 16

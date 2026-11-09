@@ -1,0 +1,19 @@
+id        = "aria-192"
+kind      = "blockcipher"
+category  = "block"
+family    = "aria"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 5794", "KS X 1213-1"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "aria", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+cipher    = "aria::Aria192"
+
+[kat]
+files = ["kat/cryptopp-aria.json", "kat/rfc5794.json"]
+
+[sizes]
+key = 24
+block = 16

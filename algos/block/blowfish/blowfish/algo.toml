@@ -1,0 +1,20 @@
+id        = "blowfish"
+kind      = "blockcipher"
+category  = "block"
+family    = "blowfish"
+aliases   = ["blowfish-ecb"]
+tier      = "legacy"
+status    = "active"
+standards = ["Schneier 1993"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "blowfish", version = "=0.10.0", license = "MIT OR Apache-2.0" }
+# 64-bit block cipher, keys 4..56 bytes. Big-endian (standard) byte order, type `Blowfish`. Not a password hash:
+# for that see bcrypt.
+
+[kat]
+files = ["kat/young-vectors.json"]
+
+[sizes]
+key = { min = 4, max = 56 }
+block = 8

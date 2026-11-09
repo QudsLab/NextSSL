@@ -1,0 +1,12 @@
+{
+ "algorithm": "aria-256",
+ "source": "RFC 5794 Appendix A",
+ "vectors": [
+  {
+   "id": "rfc5794-A3",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "00112233445566778899aabbccddeeff",
+   "ct_hex": "f92bd7c79fb72e2f2b8f80c1972d24fc"
+  }
+ ]
+}

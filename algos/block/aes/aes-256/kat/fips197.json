@@ -1,0 +1,36 @@
+{
+ "algorithm": "aes-256",
+ "source": "FIPS 197 Appendix C.3 and SP 800-38A F.1.5 (ECB-AES256 single blocks); cross-checked with Python cryptography",
+ "vectors": [
+  {
+   "id": "fips197-C.3",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "00112233445566778899aabbccddeeff",
+   "ct_hex": "8ea2b7ca516745bfeafc49904b496089"
+  },
+  {
+   "id": "sp800-38a-F.1.5-block1",
+   "key_hex": "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4",
+   "pt_hex": "6bc1bee22e409f96e93d7e117393172a",
+   "ct_hex": "f3eed1bdb5d2a03c064b5a7e3db181f8"
+  },
+  {
+   "id": "sp800-38a-F.1.5-block2",
+   "key_hex": "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4",
+   "pt_hex": "ae2d8a571e03ac9c9eb76fac45af8e51",
+   "ct_hex": "591ccb10d410ed26dc5ba74a31362870"
+  },
+  {
+   "id": "sp800-38a-F.1.5-block3",
+   "key_hex": "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4",
+   "pt_hex": "30c81c46a35ce411e5fbc1191a0a52ef",
+   "ct_hex": "b6ed21b99ca6f4f9f153e7b1beafed1d"
+  },
+  {
+   "id": "sp800-38a-F.1.5-block4",
+   "key_hex": "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4",
+   "pt_hex": "f69f2445df4f9b17ad2b417be66c3710",
+   "ct_hex": "23304b7a39f9f3ff067d8d8f9e24ecc7"
+  }
+ ]
+}

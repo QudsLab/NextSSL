@@ -1,0 +1,20 @@
+id        = "aes-192"
+kind      = "blockcipher"
+category  = "block"
+family    = "aes"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["FIPS 197"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "aes", version = "=0.9.4", license = "MIT OR Apache-2.0" }
+cipher    = "aes::Aes192"
+# Raw AES block permutation. Same RustCrypto `aes` 0.9.4 crate as the existing aes-256.
+
+[kat]
+files = ["kat/cavp-ecb.json"]
+
+[sizes]
+key = 24
+block = 16

@@ -1,0 +1,20 @@
+[package]
+name = "nextssl-algo-camellia-256"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+camellia = { version = "=0.2.1", default-features = false, features = ["zeroize"] }
+
+[dev-dependencies]
+serde_json.workspace = true
+
+[lints]
+workspace = true

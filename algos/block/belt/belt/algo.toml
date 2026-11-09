@@ -1,0 +1,20 @@
+id        = "belt"
+kind      = "blockcipher"
+category  = "block"
+family    = "belt"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["STB 34.101.31-2020 (belt-block)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "belt-block", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+cipher    = "belt_block::BeltBlock"
+# RustCrypto belt-block 0.2.0, type `BeltBlock` (STB 34.101.31 belt-block, 256-bit key, 128-bit block).
+
+[kat]
+files = ["kat/stb34.101.31.json"]
+
+[sizes]
+key = 32
+block = 16

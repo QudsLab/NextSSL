@@ -1,0 +1,19 @@
+id        = "camellia-128"
+kind      = "blockcipher"
+category  = "block"
+family    = "camellia"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 3713", "ISO/IEC 18033-3", "NESSIE"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "camellia", version = "=0.2.1", license = "MIT OR Apache-2.0" }
+cipher    = "camellia::Camellia128"
+
+[kat]
+files = ["kat/cryptopp-camellia.json", "kat/rfc3713.json"]
+
+[sizes]
+key = 16
+block = 16

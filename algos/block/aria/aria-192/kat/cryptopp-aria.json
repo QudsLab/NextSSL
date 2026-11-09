@@ -1,0 +1,72 @@
+{
+ "algorithm": "aria-192",
+ "source": "Crypto++ TestVectors/aria.txt (ARIA/ECB; ARIA Test Vectors PDF 05.05.2004 and RFC 5794)",
+ "vectors": [
+  {
+   "id": "cryptopp-2-b0",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "11111111aaaaaaaa11111111bbbbbbbb",
+   "ct_hex": "8d1470625f59ebacb0e55b534b3e462b"
+  },
+  {
+   "id": "cryptopp-2-b1",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "11111111cccccccc11111111dddddddd",
+   "ct_hex": "5f23d33bff78f46c3c15911f4a21809a"
+  },
+  {
+   "id": "cryptopp-2-b2",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "22222222aaaaaaaa22222222bbbbbbbb",
+   "ct_hex": "accad80b4bda915aa9dae6bcebe06a6c"
+  },
+  {
+   "id": "cryptopp-2-b3",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "22222222cccccccc22222222dddddddd",
+   "ct_hex": "83f77fd5391acfe61de2f646b5d447ed"
+  },
+  {
+   "id": "cryptopp-2-b4",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "33333333aaaaaaaa33333333bbbbbbbb",
+   "ct_hex": "bfd5bb49b12fbb9145b227895a757b2a"
+  },
+  {
+   "id": "cryptopp-2-b5",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "33333333cccccccc33333333dddddddd",
+   "ct_hex": "f1f7188734863d7b8b6ede5a5b2f06a0"
+  },
+  {
+   "id": "cryptopp-2-b6",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "44444444aaaaaaaa44444444bbbbbbbb",
+   "ct_hex": "a233c8523d2db778fb31b0e311f32700"
+  },
+  {
+   "id": "cryptopp-2-b7",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "44444444cccccccc44444444dddddddd",
+   "ct_hex": "152f33861e9d040c83b5eb40cd88ea49"
+  },
+  {
+   "id": "cryptopp-2-b8",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "55555555aaaaaaaa55555555bbbbbbbb",
+   "ct_hex": "975709dc629365a189f78a3ec40345fc"
+  },
+  {
+   "id": "cryptopp-2-b9",
+   "key_hex": "00112233445566778899aabbccddeeff0011223344556677",
+   "pt_hex": "55555555cccccccc55555555dddddddd",
+   "ct_hex": "6a5a307a8f9a4413091e007eca5645a0"
+  },
+  {
+   "id": "cryptopp-3",
+   "key_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "00112233445566778899aabbccddeeff",
+   "ct_hex": "26449c1805dbe7aa25a468ce263a9e79"
+  }
+ ]
+}

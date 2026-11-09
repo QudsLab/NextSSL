@@ -1,0 +1,336 @@
+{
+ "algorithm": "blowfish",
+ "source": "Eric Young's Blowfish test vectors (schneier.com vectors-2.txt): ECB table and set_key (variable key length) list; key lengths 1-3 bytes in that list are below the crate minimum of 4 and are not used",
+ "vectors": [
+  {
+   "id": "young-ecb-0",
+   "key_hex": "0000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4ef997456198dd78"
+  },
+  {
+   "id": "young-ecb-1",
+   "key_hex": "ffffffffffffffff",
+   "pt_hex": "ffffffffffffffff",
+   "ct_hex": "51866fd5b85ecb8a"
+  },
+  {
+   "id": "young-ecb-2",
+   "key_hex": "3000000000000000",
+   "pt_hex": "1000000000000001",
+   "ct_hex": "7d856f9a613063f2"
+  },
+  {
+   "id": "young-ecb-3",
+   "key_hex": "1111111111111111",
+   "pt_hex": "1111111111111111",
+   "ct_hex": "2466dd878b963c9d"
+  },
+  {
+   "id": "young-ecb-4",
+   "key_hex": "0123456789abcdef",
+   "pt_hex": "1111111111111111",
+   "ct_hex": "61f9c3802281b096"
+  },
+  {
+   "id": "young-ecb-5",
+   "key_hex": "1111111111111111",
+   "pt_hex": "0123456789abcdef",
+   "ct_hex": "7d0cc630afda1ec7"
+  },
+  {
+   "id": "young-ecb-6",
+   "key_hex": "0000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4ef997456198dd78"
+  },
+  {
+   "id": "young-ecb-7",
+   "key_hex": "fedcba9876543210",
+   "pt_hex": "0123456789abcdef",
+   "ct_hex": "0aceab0fc6a0a28d"
+  },
+  {
+   "id": "young-ecb-8",
+   "key_hex": "7ca110454a1a6e57",
+   "pt_hex": "01a1d6d039776742",
+   "ct_hex": "59c68245eb05282b"
+  },
+  {
+   "id": "young-ecb-9",
+   "key_hex": "0131d9619dc1376e",
+   "pt_hex": "5cd54ca83def57da",
+   "ct_hex": "b1b8cc0b250f09a0"
+  },
+  {
+   "id": "young-ecb-10",
+   "key_hex": "07a1133e4a0b2686",
+   "pt_hex": "0248d43806f67172",
+   "ct_hex": "1730e5778bea1da4"
+  },
+  {
+   "id": "young-ecb-11",
+   "key_hex": "3849674c2602319e",
+   "pt_hex": "51454b582ddf440a",
+   "ct_hex": "a25e7856cf2651eb"
+  },
+  {
+   "id": "young-ecb-12",
+   "key_hex": "04b915ba43feb5b6",
+   "pt_hex": "42fd443059577fa2",
+   "ct_hex": "353882b109ce8f1a"
+  },
+  {
+   "id": "young-ecb-13",
+   "key_hex": "0113b970fd34f2ce",
+   "pt_hex": "059b5e0851cf143a",
+   "ct_hex": "48f4d0884c379918"
+  },
+  {
+   "id": "young-ecb-14",
+   "key_hex": "0170f175468fb5e6",
+   "pt_hex": "0756d8e0774761d2",
+   "ct_hex": "432193b78951fc98"
+  },
+  {
+   "id": "young-ecb-15",
+   "key_hex": "43297fad38e373fe",
+   "pt_hex": "762514b829bf486a",
+   "ct_hex": "13f04154d69d1ae5"
+  },
+  {
+   "id": "young-ecb-16",
+   "key_hex": "07a7137045da2a16",
+   "pt_hex": "3bdd119049372802",
+   "ct_hex": "2eedda93ffd39c79"
+  },
+  {
+   "id": "young-ecb-17",
+   "key_hex": "04689104c2fd3b2f",
+   "pt_hex": "26955f6835af609a",
+   "ct_hex": "d887e0393c2da6e3"
+  },
+  {
+   "id": "young-ecb-18",
+   "key_hex": "37d06bb516cb7546",
+   "pt_hex": "164d5e404f275232",
+   "ct_hex": "5f99d04f5b163969"
+  },
+  {
+   "id": "young-ecb-19",
+   "key_hex": "1f08260d1ac2465e",
+   "pt_hex": "6b056e18759f5cca",
+   "ct_hex": "4a057a3b24d3977b"
+  },
+  {
+   "id": "young-ecb-20",
+   "key_hex": "584023641aba6176",
+   "pt_hex": "004bd6ef09176062",
+   "ct_hex": "452031c1e4fada8e"
+  },
+  {
+   "id": "young-ecb-21",
+   "key_hex": "025816164629b007",
+   "pt_hex": "480d39006ee762f2",
+   "ct_hex": "7555ae39f59b87bd"
+  },
+  {
+   "id": "young-ecb-22",
+   "key_hex": "49793ebc79b3258f",
+   "pt_hex": "437540c8698f3cfa",
+   "ct_hex": "53c55f9cb49fc019"
+  },
+  {
+   "id": "young-ecb-23",
+   "key_hex": "4fb05e1515ab73a7",
+   "pt_hex": "072d43a077075292",
+   "ct_hex": "7a8e7bfa937e89a3"
+  },
+  {
+   "id": "young-ecb-24",
+   "key_hex": "49e95d6d4ca229bf",
+   "pt_hex": "02fe55778117f12a",
+   "ct_hex": "cf9c5d7a4986adb5"
+  },
+  {
+   "id": "young-ecb-25",
+   "key_hex": "018310dc409b26d6",
+   "pt_hex": "1d9d5c5018f728c2",
+   "ct_hex": "d1abb290658bc778"
+  },
+  {
+   "id": "young-ecb-26",
+   "key_hex": "1c587f1c13924fef",
+   "pt_hex": "305532286d6f295a",
+   "ct_hex": "55cb3774d13ef201"
+  },
+  {
+   "id": "young-ecb-27",
+   "key_hex": "0101010101010101",
+   "pt_hex": "0123456789abcdef",
+   "ct_hex": "fa34ec4847b268b2"
+  },
+  {
+   "id": "young-ecb-28",
+   "key_hex": "1f1f1f1f0e0e0e0e",
+   "pt_hex": "0123456789abcdef",
+   "ct_hex": "a790795108ea3cae"
+  },
+  {
+   "id": "young-ecb-29",
+   "key_hex": "e0fee0fef1fef1fe",
+   "pt_hex": "0123456789abcdef",
+   "ct_hex": "c39e072d9fac631d"
+  },
+  {
+   "id": "young-ecb-30",
+   "key_hex": "0000000000000000",
+   "pt_hex": "ffffffffffffffff",
+   "ct_hex": "014933e0cdaff6e4"
+  },
+  {
+   "id": "young-ecb-31",
+   "key_hex": "ffffffffffffffff",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "f21e9a77b71c49bc"
+  },
+  {
+   "id": "young-ecb-32",
+   "key_hex": "0123456789abcdef",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "245946885754369a"
+  },
+  {
+   "id": "young-ecb-33",
+   "key_hex": "fedcba9876543210",
+   "pt_hex": "ffffffffffffffff",
+   "ct_hex": "6b5c5a9c5d9e0a5a"
+  },
+  {
+   "id": "young-setkey-4",
+   "key_hex": "f0e1d2c3",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "be1e639408640f05"
+  },
+  {
+   "id": "young-setkey-5",
+   "key_hex": "f0e1d2c3b4",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "b39e44481bdb1e6e"
+  },
+  {
+   "id": "young-setkey-6",
+   "key_hex": "f0e1d2c3b4a5",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "9457aa83b1928c0d"
+  },
+  {
+   "id": "young-setkey-7",
+   "key_hex": "f0e1d2c3b4a596",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "8bb77032f960629d"
+  },
+  {
+   "id": "young-setkey-8",
+   "key_hex": "f0e1d2c3b4a59687",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "e87a244e2cc85e82"
+  },
+  {
+   "id": "young-setkey-9",
+   "key_hex": "f0e1d2c3b4a5968778",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "15750e7a4f4ec577"
+  },
+  {
+   "id": "young-setkey-10",
+   "key_hex": "f0e1d2c3b4a596877869",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "122ba70b3ab64ae0"
+  },
+  {
+   "id": "young-setkey-11",
+   "key_hex": "f0e1d2c3b4a5968778695a",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "3a833c9affc537f6"
+  },
+  {
+   "id": "young-setkey-12",
+   "key_hex": "f0e1d2c3b4a5968778695a4b",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "9409da87a90f6bf2"
+  },
+  {
+   "id": "young-setkey-13",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "884f80625060b8b4"
+  },
+  {
+   "id": "young-setkey-14",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "1f85031c19e11968"
+  },
+  {
+   "id": "young-setkey-15",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "79d9373a714ca34f"
+  },
+  {
+   "id": "young-setkey-16",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e0f",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "93142887ee3be15c"
+  },
+  {
+   "id": "young-setkey-17",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e0f00",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "03429e838ce2d14b"
+  },
+  {
+   "id": "young-setkey-18",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e0f0011",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "a4299e27469ff67b"
+  },
+  {
+   "id": "young-setkey-19",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e0f001122",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "afd5aed1c1bc96a8"
+  },
+  {
+   "id": "young-setkey-20",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e0f00112233",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "10851c0e3858da9f"
+  },
+  {
+   "id": "young-setkey-21",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e0f0011223344",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "e6f51ed79b9db21f"
+  },
+  {
+   "id": "young-setkey-22",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e0f001122334455",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "64a6e14afd36b46f"
+  },
+  {
+   "id": "young-setkey-23",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e0f00112233445566",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "80c7d7d45a5479ad"
+  },
+  {
+   "id": "young-setkey-24",
+   "key_hex": "f0e1d2c3b4a5968778695a4b3c2d1e0f0011223344556677",
+   "pt_hex": "fedcba9876543210",
+   "ct_hex": "05044b62fa52d080"
+  }
+ ]
+}
