@@ -1,0 +1,20 @@
+[package]
+name = "nextssl-core"
+description = "NextSSL core: errors, params, tiers and algorithm traits"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[features]
+# Deterministic entropy source for KAT runners (FixedEntropy). Never part of a release build.
+testing = []
+
+[dependencies]
+subtle.workspace = true
+zeroize.workspace = true
+base64ct.workspace = true
+
+[lints]
+workspace = true
