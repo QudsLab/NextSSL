@@ -1,0 +1,19 @@
+id        = "zuc"
+kind      = "streamcipher"
+category  = "stream"
+family    = "zuc"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["3GPP TS 35.221 (ZUC-128 keystream)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "zuc", version = "=0.4.1", license = "MIT" }
+# Raw ZUC-128 keystream XOR (key 16, IV 16). Not the 3GPP EEA3 framing (bearer/count/direction).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+key   = 16
+nonce = 16

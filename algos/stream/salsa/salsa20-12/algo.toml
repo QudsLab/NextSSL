@@ -1,0 +1,21 @@
+id        = "salsa20-12"
+kind      = "streamcipher"
+category  = "stream"
+family    = "salsa"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["eSTREAM Salsa20/12"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "salsa20", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+# Salsa20 with 12 rounds, 256-bit key, 64-bit nonce, 64-bit block counter starting at 0 (not a parameter).
+# Reduced-round variants are verified against the eSTREAM reduced-round vector files (Salsa20/8 and /12); the
+# crate types Salsa8 / Salsa12 are the exact round counts.
+
+[kat]
+files = ["kat/estream.json"]
+
+[sizes]
+key = 32
+nonce = 8

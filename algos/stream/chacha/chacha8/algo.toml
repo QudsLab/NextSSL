@@ -1,0 +1,29 @@
+id        = "chacha8"
+kind      = "streamcipher"
+category  = "stream"
+family    = "chacha"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["ChaCha (Bernstein 2008)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "chacha20", version = "=0.10.2", license = "MIT OR Apache-2.0" }
+# ChaCha8 with the IETF layout: 96-bit nonce, 32-bit block counter starting at param `initial_counter` (default
+# 0). Same code path as chacha20 with 8 rounds (crate type ChaCha8, the exact variant).
+# Row said crate rand_chacha (an RNG); the RustCrypto chacha20 crate exposes the cipher with the same rounds.
+# The Strombergson/DJB vectors use a 64-bit nonce and 64-bit counter; with counter 0 and a 32-bit zero prefix
+# the keystream is identical to the IETF layout.
+
+[params.initial_counter]
+type = "u32"
+min = 0
+max = 4294967295
+default = 0
+
+[kat]
+files = ["kat/strombergson.json"]
+
+[sizes]
+key = 32
+nonce = 12

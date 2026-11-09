@@ -1,0 +1,104 @@
+{
+ "algorithm": "rabbit",
+ "source": "Rabbit with IV setup (Crypto++ TestVectors/rabbit.txt, \"RabbitWithIV\": Rabbit test vectors and rabbit.c reference implementation; every 12th reference vector kept)",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "key_hex": "00000000000000000000000000000000",
+   "nonce_hex": "0000000000000000",
+   "data_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+   "out_hex": "edb70567375dcd7cd89554f85e27a7c68d4adc7032298f7bd4eff504aca6295f"
+  },
+  {
+   "id": "cryptopp-1",
+   "key_hex": "00000000000000000000000000000000",
+   "nonce_hex": "597e26c175f573c3",
+   "data_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+   "out_hex": "6d7d012292ccdce0e2120058b94ecd1f2e6f93edff99247b012521d1104e5fa7"
+  },
+  {
+   "id": "cryptopp-2",
+   "key_hex": "00000000000000000000000000000000",
+   "nonce_hex": "2717f4d21a56eba6",
+   "data_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+   "out_hex": "4d1051a123afb670bf8d8505c8d85a44035bc3acc667aeae5b2cf44779f2c896"
+  },
+  {
+   "id": "cryptopp-3",
+   "key_hex": "2923be84e16cd6ae529049f1f1bbe9eb",
+   "nonce_hex": "b3a6db3c870c3e99",
+   "data_hex": "24",
+   "out_hex": "66"
+  },
+  {
+   "id": "cryptopp-15",
+   "key_hex": "b44765382a4689a982797a7678c263b1",
+   "nonce_hex": "26dfda296d3e62e0",
+   "data_hex": "961234bf39a63f895ef16d0ee3",
+   "out_hex": "20a9a8f3c4dfb965cf5a879c4a"
+  },
+  {
+   "id": "cryptopp-27",
+   "key_hex": "affabfb094741d75e5dc105846daf25b",
+   "nonce_hex": "81a07f5ccb1d36e9",
+   "data_hex": "49740255d2ac1a0bf7a92623405ba333b9358868ade12ad5b2",
+   "out_hex": "35e5df4b2b593ea3279c11f40f585b4ac305535efc09d687b3"
+  },
+  {
+   "id": "cryptopp-39",
+   "key_hex": "80bc3ec20be2b9ceb7b111b3766469a3",
+   "nonce_hex": "08cd15281cebe95a",
+   "data_hex": "b8bfb755da5c13ea603e599525dcf2af6d80d2e5835745e9a0c4ec670ffa023b8fcae4e1f9",
+   "out_hex": "0f55c0f715b859fe482c4fe88223006f069ed87435c98c9f03817df16d38aaec17e86ee781"
+  },
+  {
+   "id": "cryptopp-51",
+   "key_hex": "98070754f13af2415f943ba3c8f19d55",
+   "nonce_hex": "6632c16ecb3562ce",
+   "data_hex": "2305aff7ba4df01fbe136d8345a28bfd91c839d993428ae5af75a3c7bf5fd8935acc129d56cd748c8b663eb0da87f1966f",
+   "out_hex": "e9b1cf08e12317557a8f9b71c358c1863af0d7f47a31a4420ee30e2faf6213ba6c749817e03007f1aca87853ce63173482"
+  },
+  {
+   "id": "cryptopp-63",
+   "key_hex": "c369975b18f7840ed0997fba2d997728",
+   "nonce_hex": "2a19dc935e5ea6a3",
+   "data_hex": "226f989ff6dfc6de21e7557e98b88259210ee535b809f73b3239d3ab20f739cdf6fcd82b6d2ccdfd25b367e58f532ddc0afc226c4c9e4721043b623abd",
+   "out_hex": "3ac314227a3d3b299d70dd5f0b8777ebcdb7629dc094b025c2949624d14f6c6a845ed609f3829cb1acb50be8eb53876ecbb0c540ff805f9bdc3214781c"
+  },
+  {
+   "id": "cryptopp-75",
+   "key_hex": "02eda6418b0779a605e54167b14ff4b5",
+   "nonce_hex": "d21181d26badb46c",
+   "data_hex": "4b4d5a2947fba583c714d2d684fa08b78f0a848896cef34963731fb1a57dce7ef3b9e7090e73d71d66ea3309e0019ff4d737ee7161d98b54d37717c387945390dca141c67f2d8681e9",
+   "out_hex": "9c8c36190da49a5dea5a5bb26fa1945ac6e60c5381a8c4d24f59de84bc7dbe539a2b2e2afcf55ee4b7e96433b673bb56e8ef8db39aa4a45fc121fbd3112dd7a8cf17942d5e9701cb29"
+  },
+  {
+   "id": "cryptopp-87",
+   "key_hex": "05b733b631e6c7d6860a3831ac351a9c",
+   "nonce_hex": "730c52ff72d9d308",
+   "data_hex": "eedbab21fde143a0ea17e23edc1f74cbb3638a2033aaa15464eaa733385dbbeb6fd73509b857e6a419dca1d8907af977fbac4dfa35ec02be8281106d2d99c0b96f97b45193ae270d58af766c971fdf41258d89a9fb",
+   "out_hex": "7d10109077bd90d09e6a1f867d418d84794c77d079a3a1424d1d3902b319a092ab47a8431abad65696c74a6099332fde3ec6a5ebfe5f883fc2d60d4de358e8c5f500a19271b2cf7e12904bb5260917d692803af14a"
+  },
+  {
+   "id": "cryptopp-99",
+   "key_hex": "2cf1d1d83d4a62910e2a10e054fde3c0",
+   "nonce_hex": "f1b1659b76244f60",
+   "data_hex": "e6d861d5bdee922f305269e0b733abb0c9b6360fe6eb2da9db00553c42b4bfa6480fa843b3509d752328e384972515a934710f6542bc0b1778770ace7943765c9ea905acf60be0558bda056ee70ae9a5d7c3628b6f5ac5324e7f4bfa24b8baa871",
+   "out_hex": "eb6ce7c68b00739d15a06572dcc4c3c7df8d613542ed3a6a232bdf74f74acb7968d7e8d5e5b68d95904a56782525a553904b0ee9e30ea5e512e9b64ee56d7a189e3c76a4c0620d255214ef0707d31c8cc406cfc9f67e86852e757f42b8a6336309"
+  },
+  {
+   "id": "cryptopp-111",
+   "key_hex": "2af918ca7a44c45c3cd8be8b974a17b3",
+   "nonce_hex": "c8fc7a607ceeb4be",
+   "data_hex": "7dd7735191754ee6a02106ca14a60c3985534319964f06e91a2d6df47cc0ccca5d317df07e4ee0d7e1259f0b2bd237ad4d95b4236328bb0edc4fce7cdcb0cc60dee5b73f9ed0ba2b362e6bf5876f4d9fdac69910c77c3e0b578926626565bb674a1caaa4b9a1e6cce764f1f1ef",
+   "out_hex": "34c6ec26dc07ea3b619e52f6a64fb6597424f3346f11d8b284b37d405eb03efc3565ec61c51ca7f278132a7a7b68ffa93443d44866fdaf572ff7a5ec2b98ee25a197fd5a5e2fc157015de182eda0b584149da292fff7b246074e8ed3aab5e86020bcb68a0624c602bfe0ce0162"
+  },
+  {
+   "id": "cryptopp-123",
+   "key_hex": "2ece59a663f2e3635ac581815412243e",
+   "nonce_hex": "6c1c4e23d5d876da",
+   "data_hex": "6459ae3f4e8c83b9322525cb5ad9c8e63ece49824950156de0c54762a1e310dde8205c2e986ab2cc18195ced9b22c953a58d2f69cb29748eba7e4fb17a03ab1ef4914c97b218b4a7e7914833af33af5297ea7b5f60050b4c002eaf38eaa00e448f94c5a325fc51f1a7742fc61d76418a1dcd748b924ca04cbc",
+   "out_hex": "fab2ccef05920cf681ca56704525d2c9598f28026426c14f91a407f745646bb0ed0ec3b3f2f3d6bf13d31dc0f3283179b86388275124202614bc8daf76538ec6b4d0853768996859162ea8da19d826136b6131067762088b158347401fba78a1ca95cf3ea44ca1a788a1f4303a8be807a987a7a3d8448fe576"
+  }
+ ]
+}

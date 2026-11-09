@@ -1,0 +1,19 @@
+id        = "rabbit"
+kind      = "streamcipher"
+category  = "stream"
+family    = "rabbit"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 4503", "eSTREAM portfolio (software profile 1)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rabbit", version = "=0.5.0", license = "MIT OR Apache-2.0" }
+# Rabbit with the 64-bit IV setup (crate type `Rabbit`); the IV-less variant (`RabbitKeyOnly`) is not exposed.
+
+[kat]
+files = ["kat/cryptopp-rabbit.json"]
+
+[sizes]
+key = 16
+nonce = 8

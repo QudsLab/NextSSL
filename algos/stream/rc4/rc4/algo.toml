@@ -1,0 +1,20 @@
+id        = "rc4"
+kind      = "streamcipher"
+category  = "stream"
+family    = "rc4"
+aliases   = ["arc4", "arcfour"]
+tier      = "broken"
+status    = "active"
+standards = ["RFC 6229", "ARC4"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rc4", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+# RC4 is broken (keystream biases, RFC 7465 forbids it in TLS). Legacy interoperability only. Keys 1..256 bytes;
+# no nonce (nonce size 0, so a non-empty nonce is an error). The first keystream bytes are NOT discarded.
+
+[kat]
+files = ["kat/rfc6229.json"]
+
+[sizes]
+key = { min = 1, max = 256 }
+nonce = 0

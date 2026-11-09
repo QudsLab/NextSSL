@@ -1,0 +1,20 @@
+{
+ "algorithm": "aes-256-ctr",
+ "source": "NOT an official vector: generated with Python cryptography (OpenSSL) using the SP 800-38A F.5.5 key/plaintext, to cross-check 128-bit counter wrap-around (0xff..ff -> 0) and carry across bytes",
+ "vectors": [
+  {
+   "id": "xcheck-wrap-ff*16",
+   "key_hex": "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4",
+   "nonce_hex": "ffffffffffffffffffffffffffffffff",
+   "data_hex": "6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e5130c81c46a35ce411e5fbc1191a0a52ef",
+   "out_hex": "50fd97c3e61abb4873fb78df1e8e77e64b457cd68accda4a89fa236c06bf2605a1dd021ba826fb0a252c6dc9b434030b"
+  },
+  {
+   "id": "xcheck-carry-15zero-fe",
+   "key_hex": "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4",
+   "nonce_hex": "000000000000000000000000000000fe",
+   "data_hex": "6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e5130c81c46a35ce411e5fbc1191a0a52ef",
+   "out_hex": "2df207190cd0405703650cd3a180f35d8082808874dc55e66124d30cc1055c7c3385e9c4af5d2cee9500aaf3cea11b19"
+  }
+ ]
+}

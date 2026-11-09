@@ -1,0 +1,20 @@
+id        = "xchacha20"
+kind      = "streamcipher"
+category  = "stream"
+family    = "chacha"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["draft-irtf-cfrg-xchacha"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "chacha20", version = "=0.10.2", license = "MIT OR Apache-2.0" }
+# XChaCha20, 192-bit nonce, 32-bit block counter starting at 0. The draft vector uses initial counter 1, so the
+# KAT skips the first 64 keystream bytes (offset 64).
+
+[kat]
+files = ["kat/draft-xchacha.json"]
+
+[sizes]
+key = 32
+nonce = 24

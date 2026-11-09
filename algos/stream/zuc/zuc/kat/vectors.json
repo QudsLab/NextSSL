@@ -1,0 +1,5 @@
+{
+  "algorithm": "zuc",
+  "note": "No published KAT vectors collected yet. Tier stays `unverified`. Untested: wired in batch 3 under owner order (no cargo check/test).",
+  "vectors": []
+}

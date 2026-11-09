@@ -1,0 +1,20 @@
+id        = "xsalsa20"
+kind      = "streamcipher"
+category  = "stream"
+family    = "salsa"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["NaCl crypto_stream_xsalsa20"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "salsa20", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+# XSalsa20 (192-bit nonce), 20 rounds. Vectors are produced by the NaCl reference implementation, independent of
+# the crate.
+
+[kat]
+files = ["kat/nacl.json"]
+
+[sizes]
+key = 32
+nonce = 24

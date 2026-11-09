@@ -1,0 +1,19 @@
+id        = "hc256"
+kind      = "streamcipher"
+category  = "stream"
+family    = "hc"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { crate = "hc-256", version = "=0.6.0", license = "MIT OR Apache-2.0" }
+# HC-256 (key 32, IV 32). No standard; designers' spec only.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+key   = 32
+nonce = 32

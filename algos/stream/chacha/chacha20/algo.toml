@@ -1,0 +1,26 @@
+id        = "chacha20"
+kind      = "streamcipher"
+category  = "stream"
+family    = "chacha"
+aliases   = ["chacha20-ietf"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 8439"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "chacha20", version = "=0.10.2", license = "MIT OR Apache-2.0" }
+
+# IETF variant: 96-bit nonce, 32-bit block counter (64-byte blocks).
+[params.initial_counter]
+type     = "u32"
+min      = 0
+max      = 4294967295
+default  = 0
+required = false
+
+[kat]
+files = ["kat/rfc8439.json"]
+
+[sizes]
+key   = 32
+nonce = 12

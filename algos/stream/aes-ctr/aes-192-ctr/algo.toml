@@ -1,0 +1,20 @@
+id        = "aes-192-ctr"
+kind      = "streamcipher"
+category  = "stream"
+family    = "aes-ctr"
+aliases   = ["aes192-ctr"]
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-38A"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "ctr", version = "=0.10.1", license = "MIT OR Apache-2.0" }
+# nonce is the full 16-byte initial counter block of NIST SP 800-38A; the block is incremented as a 128-bit big-
+# endian integer. Also depends on RustCrypto aes 0.9.4. Same construction as aes-256-ctr.
+
+[kat]
+files = ["kat/acvp-ctr.json"]
+
+[sizes]
+key = 24
+nonce = 16
