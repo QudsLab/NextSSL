@@ -1,0 +1,6 @@
+{
+  "algorithm": "os-entropy",
+  "source": "behavioural checks (no KAT exists for an OS RNG)",
+  "fill_lens_ok": [0, 1, 4096],
+  "distinct_pair_len": 32
+}

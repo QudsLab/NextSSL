@@ -1,0 +1,15 @@
+id        = "os-entropy"
+kind      = "rng"
+category  = "rng"
+family    = "os"
+aliases   = ["os-rng", "getrandom"]
+tier      = "safe"
+status    = "active"
+standards = []
+fips      = false
+# scope_classification: KEEP-PLATFORM (OS RNG interface)
+upstream  = { crate = "getrandom", version = "=0.4.3", license = "MIT OR Apache-2.0" }
+
+[kat]
+# An OS RNG has no known-answer vectors; this file lists the behavioural checks the test runs.
+files = ["kat/os-entropy-behaviour.json"]
