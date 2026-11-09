@@ -1,0 +1,30 @@
+id        = "ecdsa-p521"
+kind      = "sign"
+category  = "sign"
+family    = "ecdsa"
+aliases   = ["ecdsa-secp521r1"]
+tier      = "standard"
+status    = "active"
+standards = ["FIPS 186-5", "RFC 6979", "SEC 1", "RFC 9864"]
+cose_alg  = -52  # IANA COSE fully-specified id for NIST P-521 with SHA-512 (RFC 9864)
+oid       = "1.2.840.10045.4.3.4"
+fips      = true
+copyleft  = false
+upstream  = { crate = "p521", version = "=0.14.0", license = "Apache-2.0 OR MIT" }
+# RustCrypto p521 + ecdsa 0.17.0. Hash fixed to SHA-512 (COSE fully-specified id); other curve/hash pairings are not offered. Hedged RFC 6979 nonce by default, deterministic via param. Signature is fixed-width r||s. Private key is the raw scalar d (no seed form is defined by the standard). 
+[params.deterministic]
+type     = "u32"
+min      = 0
+max      = 1
+default  = 0
+required = false
+
+[kat]
+files = ["kat/acvp-ecdsa.json", "kat/wycheproof-ecdsa_secp521r1_sha512_p1363_test.json"]
+
+[sizes]
+pk   = 133
+sk   = 66
+sig  = 132
+seed = 66
+ctx  = 0

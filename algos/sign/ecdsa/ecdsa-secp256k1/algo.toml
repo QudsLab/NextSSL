@@ -1,0 +1,30 @@
+id        = "ecdsa-secp256k1"
+kind      = "sign"
+category  = "sign"
+family    = "ecdsa"
+aliases   = ["es256k"]
+tier      = "standard"
+status    = "active"
+standards = ["SEC 2", "RFC 6979", "RFC 8812"]
+cose_alg  = -47  # IANA COSE fully-specified id for secp256k1 with SHA-256 (RFC 9864)
+oid       = "1.2.840.10045.4.3.2"
+fips      = false
+copyleft  = false
+upstream  = { crate = "k256", version = "=0.14.0", license = "Apache-2.0 OR MIT" }
+# RustCrypto k256 + ecdsa 0.17.0. Hash fixed to SHA-256 (COSE fully-specified id); other curve/hash pairings are not offered. Hedged RFC 6979 nonce by default, deterministic via param. Signature is fixed-width r||s. Private key is the raw scalar d (no seed form is defined by the standard). No NIST ACVP vectors exist for secp256k1: verification is checked against Wycheproof, signing by verifying with the Wycheproof-validated verifier (the shared RFC 6979 signing code is KAT-checked on the NIST curves).
+[params.deterministic]
+type     = "u32"
+min      = 0
+max      = 1
+default  = 0
+required = false
+
+[kat]
+files = ["kat/wycheproof-ecdsa_secp256k1_sha256_p1363_test.json"]
+
+[sizes]
+pk   = 65
+sk   = 32
+sig  = 64
+seed = 32
+ctx  = 0
