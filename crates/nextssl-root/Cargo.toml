@@ -1,0 +1,29 @@
+[package]
+name = "nextssl-root"
+description = "NextSSL root API: every algorithm, any tier, explicit parameters"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[features]
+# Off by default: exposes GPL/LGPL algorithms (REBUILD_PLAN.md section 11).
+copyleft = ["nextssl-registry/copyleft", "nextssl/copyleft"]
+# Every digest and cipher type selectable in compositions (bigger binary). See nextssl-compose.
+compose-all = ["nextssl-compose/compose-all", "nextssl/compose-all"]
+
+[dependencies]
+nextssl-core.workspace = true
+nextssl-registry.workspace = true
+nextssl-compose.workspace = true
+# FF70 frame parser (returns header / exclude / meta, which the generic `decode` does not).
+nextssl-algo-ff70 = { path = "../../algos/encoding/ff70/ff70" }
+# Envelope engine; root calls it with Policy::Any.
+nextssl.workspace = true
+
+[dev-dependencies]
+nextssl-core = { workspace = true, features = ["testing"] }
+
+[lints]
+workspace = true
