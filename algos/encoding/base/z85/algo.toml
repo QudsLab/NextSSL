@@ -1,0 +1,15 @@
+id        = "z85"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["ZeroMQ RFC 32/Z85 (crate adds a '#' marker so lengths need not be multiples of 4)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "z85", version = "=3.0.7", license = "MIT OR Apache-2.0" }
+# z85 Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[kat]
+files = ["kat/vectors.json"]

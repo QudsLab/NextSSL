@@ -1,0 +1,22 @@
+id        = "skinny-aead-m5"
+kind      = "aead"
+category  = "aead"
+family    = "skinny-aead"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["skinny-aead.c", "skinny-hash.c", "internal-skinny128.c", "aead-common.c", "aead-common.h", "internal-skinny128.h", "internal-skinnyutil.h", "internal-util.h", "skinny-aead.h", "skinny-hash.h", "COPYING", "LICENSE"] }
+
+# Entry point wired: skinny-aead.c (skinny_aead_m5_encrypt/skinny_aead_m5_decrypt). Other variants not wired: other variants of the family are separate ids.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 12
+tag = 16

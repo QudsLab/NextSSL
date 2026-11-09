@@ -1,0 +1,18 @@
+id        = "cityhash"
+kind      = "checksum"
+category  = "checksum"
+family    = "cityhash"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["CityHash64 (Google), NON-cryptographic"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "cityhasher", version = "=0.1.0", license = "MIT OR Apache-2.0" }
+# CityHash64, unseeded. Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[kat]
+files = ["kat/cityhash.json"]
+
+[sizes]
+out = 8

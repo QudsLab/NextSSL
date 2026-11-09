@@ -1,0 +1,15 @@
+id        = "ascii85"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Adobe PostScript Language Reference, ASCII base-85"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "ascii85", version = "=0.2.1", license = "MIT OR Apache-2.0" }
+# ascii85 Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[kat]
+files = ["kat/vectors.json"]

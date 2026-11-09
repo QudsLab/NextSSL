@@ -1,0 +1,18 @@
+id        = "fnv-1"
+kind      = "checksum"
+category  = "checksum"
+family    = "fnv"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["FNV-1 64-bit (Fowler, Noll, Vo; draft-eastlake-fnv), NON-cryptographic"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "yafnv", version = "=3.0.0", license = "MIT OR Apache-2.0" }
+# FNV-1, 64-bit variant. Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[kat]
+files = ["kat/fnv-1.json"]
+
+[sizes]
+out = 8

@@ -1,0 +1,20 @@
+id        = "spookyhash"
+kind      = "checksum"
+category  = "checksum"
+family    = "spookyhash"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/jibsen/spooky", commit = "470a5925fb1e6c342c228cba1ebb52e67a86c75b", license = "CC0-1.0", files = ["spooky.c", "spooky.h", "COPYING", "LICENSE"] }
+
+# Entry point wired: spooky.c (spooky_hash128 with both seeds 0 (h1||h2 big-endian); upstream assumes little-endian for its reads). Other variants not wired: spooky_hash64, spooky_hash32, streaming spooky_init/update/final.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 16

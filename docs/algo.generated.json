@@ -2134,6 +2134,32 @@
       "dir": "block/aria/aria-256"
     },
     {
+      "id": "ascii85",
+      "kind": "encoding",
+      "category": "encoding",
+      "family": "base",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "Adobe PostScript Language Reference, ASCII base-85"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "upstream": {
+        "crate": "ascii85",
+        "version": "=0.2.1",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "encoding/base/ascii85"
+    },
+    {
       "id": "ascon-aead128",
       "kind": "aead",
       "category": "aead",
@@ -2528,6 +2554,32 @@
         ]
       },
       "dir": "encoding/base/base32hex"
+    },
+    {
+      "id": "base45",
+      "kind": "encoding",
+      "category": "encoding",
+      "family": "base",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 9285"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "upstream": {
+        "crate": "base45",
+        "version": "=3.2.0",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "encoding/base/base45"
     },
     {
       "id": "base58",
@@ -3649,6 +3701,134 @@
         ]
       },
       "dir": "mac/chaskey/chaskey"
+    },
+    {
+      "id": "cityhash",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "cityhash",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "CityHash64 (Google), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 8
+      },
+      "upstream": {
+        "crate": "cityhasher",
+        "version": "=0.1.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/cityhash.json"
+        ]
+      },
+      "dir": "checksum/cityhash/cityhash"
+    },
+    {
+      "id": "clefia-128",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "clefia",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "block": 16
+      },
+      "upstream": {
+        "url": "https://www.sony.co.jp/en/Products/cryptography/clefia/download/clefia_ref.c",
+        "sha256": "302bb99bb12418fccbf41614ec2d1249fbd6703f9119ee0104cf6b3ae1e6a3bf",
+        "license": "NOASSERTION",
+        "files": [
+          "CRYPTREC_CLEFIA_submission/ref/clefia_ref.c",
+          "CRYPTREC_CLEFIA_submission/ref/clefia_ref.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "block/clefia/clefia-128"
+    },
+    {
+      "id": "clefia-192",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "clefia",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 24,
+        "block": 16
+      },
+      "upstream": {
+        "url": "https://www.sony.co.jp/en/Products/cryptography/clefia/download/clefia_ref.c",
+        "sha256": "302bb99bb12418fccbf41614ec2d1249fbd6703f9119ee0104cf6b3ae1e6a3bf",
+        "license": "NOASSERTION",
+        "files": [
+          "CRYPTREC_CLEFIA_submission/ref/clefia_ref.c",
+          "CRYPTREC_CLEFIA_submission/ref/clefia_ref.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "block/clefia/clefia-192"
+    },
+    {
+      "id": "clefia-256",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "clefia",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 32,
+        "block": 16
+      },
+      "upstream": {
+        "url": "https://www.sony.co.jp/en/Products/cryptography/clefia/download/clefia_ref.c",
+        "sha256": "302bb99bb12418fccbf41614ec2d1249fbd6703f9119ee0104cf6b3ae1e6a3bf",
+        "license": "NOASSERTION",
+        "files": [
+          "CRYPTREC_CLEFIA_submission/ref/clefia_ref.c",
+          "CRYPTREC_CLEFIA_submission/ref/clefia_ref.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "block/clefia/clefia-256"
     },
     {
       "id": "cloc",
@@ -5231,6 +5411,45 @@
       "dir": "sign/dme-sign/dme-sign"
     },
     {
+      "id": "dragon",
+      "kind": "streamcipher",
+      "category": "stream",
+      "family": "dragon",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 32,
+        "nonce": 32
+      },
+      "upstream": {
+        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
+        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
+        "license": "CC0-1.0",
+        "files": [
+          "dragon/submissions/dragon/e/ecrypt-sync.h",
+          "dragon/submissions/dragon/e/dragon.c",
+          "dragon/submissions/dragon/e/dragon-sboxes.c",
+          "estream-convert-api.h",
+          "estream-functions.h",
+          "ecrypt-machine.h",
+          "ecrypt-portable.h",
+          "ecrypt-config.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "stream/dragon/dragon"
+    },
+    {
       "id": "drygascon",
       "kind": "aead",
       "category": "aead",
@@ -6329,6 +6548,322 @@
         ]
       },
       "dir": "sign/fn-dsa/fn-dsa-512"
+    },
+    {
+      "id": "fnv-1",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "fnv",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "FNV-1 64-bit (Fowler, Noll, Vo; draft-eastlake-fnv), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 8
+      },
+      "upstream": {
+        "crate": "yafnv",
+        "version": "=3.0.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/fnv-1.json"
+        ]
+      },
+      "dir": "checksum/fnv/fnv-1"
+    },
+    {
+      "id": "fnv-1a",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "fnv",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "FNV-1a 64-bit (Fowler, Noll, Vo; draft-eastlake-fnv), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 8
+      },
+      "upstream": {
+        "crate": "yafnv",
+        "version": "=3.0.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/fnv-1a.json"
+        ]
+      },
+      "dir": "checksum/fnv/fnv-1a"
+    },
+    {
+      "id": "forkae-paef-128-192",
+      "kind": "aead",
+      "category": "aead",
+      "family": "forkae",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 6,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "forkae.c",
+          "internal-forkskinny.c",
+          "aead-common.c",
+          "aead-common.h",
+          "forkae.h",
+          "internal-forkae-paef.h",
+          "internal-forkae-saef.h",
+          "internal-forkskinny.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/forkae/forkae-paef-128-192"
+    },
+    {
+      "id": "forkae-paef-128-256",
+      "kind": "aead",
+      "category": "aead",
+      "family": "forkae",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 14,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "forkae.c",
+          "internal-forkskinny.c",
+          "aead-common.c",
+          "aead-common.h",
+          "forkae.h",
+          "internal-forkae-paef.h",
+          "internal-forkae-saef.h",
+          "internal-forkskinny.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/forkae/forkae-paef-128-256"
+    },
+    {
+      "id": "forkae-paef-128-288",
+      "kind": "aead",
+      "category": "aead",
+      "family": "forkae",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 13,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "forkae.c",
+          "internal-forkskinny.c",
+          "aead-common.c",
+          "aead-common.h",
+          "forkae.h",
+          "internal-forkae-paef.h",
+          "internal-forkae-saef.h",
+          "internal-forkskinny.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/forkae/forkae-paef-128-288"
+    },
+    {
+      "id": "forkae-paef-64-192",
+      "kind": "aead",
+      "category": "aead",
+      "family": "forkae",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 6,
+        "tag": 8
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "forkae.c",
+          "internal-forkskinny.c",
+          "aead-common.c",
+          "aead-common.h",
+          "forkae.h",
+          "internal-forkae-paef.h",
+          "internal-forkae-saef.h",
+          "internal-forkskinny.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/forkae/forkae-paef-64-192"
+    },
+    {
+      "id": "forkae-saef-128-192",
+      "kind": "aead",
+      "category": "aead",
+      "family": "forkae",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 7,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "forkae.c",
+          "internal-forkskinny.c",
+          "aead-common.c",
+          "aead-common.h",
+          "forkae.h",
+          "internal-forkae-paef.h",
+          "internal-forkae-saef.h",
+          "internal-forkskinny.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/forkae/forkae-saef-128-192"
+    },
+    {
+      "id": "forkae-saef-128-256",
+      "kind": "aead",
+      "category": "aead",
+      "family": "forkae",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 15,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "forkae.c",
+          "internal-forkskinny.c",
+          "aead-common.c",
+          "aead-common.h",
+          "forkae.h",
+          "internal-forkae-paef.h",
+          "internal-forkae-saef.h",
+          "internal-forkskinny.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/forkae/forkae-saef-128-256"
     },
     {
       "id": "fountain",
@@ -7732,6 +8267,72 @@
       "dir": "aead/hyena/hyena-v2"
     },
     {
+      "id": "ice",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "ice",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 8,
+        "block": 8
+      },
+      "upstream": {
+        "url": "https://darkside.com.au/ice/ice.c",
+        "sha256": "ecd05c5f778895aec9ff3433a5117382492417a938b988c7c053333664ceacf1",
+        "license": "LicenseRef-Public-Domain",
+        "files": [
+          "ice.c",
+          "ice.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "block/ice/ice"
+    },
+    {
+      "id": "ice-2",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "ice",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "block": 8
+      },
+      "upstream": {
+        "url": "https://darkside.com.au/ice/ice.c",
+        "sha256": "ecd05c5f778895aec9ff3433a5117382492417a938b988c7c053333664ceacf1",
+        "license": "LicenseRef-Public-Domain",
+        "files": [
+          "ice.c",
+          "ice.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "block/ice/ice-2"
+    },
+    {
       "id": "idea",
       "kind": "blockcipher",
       "category": "block",
@@ -7796,6 +8397,35 @@
         ]
       },
       "dir": "aead/ifeed/ifeed"
+    },
+    {
+      "id": "internet-checksum",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "internet-checksum",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 1071 Internet checksum, NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 2
+      },
+      "upstream": {
+        "crate": "internet-checksum",
+        "version": "=0.2.1",
+        "license": "BSD-3-Clause"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/internet-checksum.json"
+        ]
+      },
+      "dir": "checksum/internet-checksum/internet-checksum"
     },
     {
       "id": "isap-a-128a",
@@ -8304,6 +8934,109 @@
       "dir": "hash/sha3/keccak512"
     },
     {
+      "id": "ketje",
+      "kind": "aead",
+      "category": "aead",
+      "family": "ketje",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 12,
+        "nonce": 10,
+        "tag": 12
+      },
+      "upstream": {
+        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
+        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
+        "license": "NOASSERTION",
+        "files": [
+          "brg_endian.h",
+          "ketjejrv1/KeccakF-200-interface.h",
+          "ketjejrv1/KeccakF-200-reference.c",
+          "ketjejrv1/KeccakF-200-reference.h",
+          "ketjejrv1/KeccakF-interface.h",
+          "ketjejrv1/KeccakP-200-interface.h",
+          "ketjejrv1/KeccakP-200-reference.c",
+          "ketjejrv1/KeccakP-200-reference.h",
+          "ketjejrv1/KeccakP-interface.h",
+          "ketjejrv1/Ket.c",
+          "ketjejrv1/Ket.h",
+          "ketjejrv1/Ketje.c",
+          "ketjejrv1/Ketje.h",
+          "ketjejrv1/api.h",
+          "ketjejrv1/displayIntermediateValues.c",
+          "ketjejrv1/displayIntermediateValues.h",
+          "ketjejrv1/encrypt.c",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/ketje/ketje"
+    },
+    {
+      "id": "keyak",
+      "kind": "aead",
+      "category": "aead",
+      "family": "keyak",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 16,
+        "tag": 16
+      },
+      "upstream": {
+        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
+        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
+        "license": "NOASSERTION",
+        "files": [
+          "KeccakDuplex.c",
+          "KeccakDuplex.h",
+          "KeccakF-1600-interface.h",
+          "KeccakF-1600-reference.c",
+          "KeccakF-1600-reference.h",
+          "KeccakF-interface.h",
+          "KeccakP-1600-12-interface.h",
+          "KeccakP-1600-12-reference.c",
+          "KeccakP-1600-12-reference.h",
+          "KeccakParallelDuplex.c",
+          "KeccakParallelDuplex.h",
+          "Keyak.c",
+          "Keyak.h",
+          "NumberOfParallelInstances.h",
+          "ParallelKeccakFs.h",
+          "SerialFallback.c",
+          "api.h",
+          "brg_endian.h",
+          "displayIntermediateValues.c",
+          "displayIntermediateValues.h",
+          "encrypt.c",
+          "testParallelPaSM.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/keyak/keyak"
+    },
+    {
       "id": "khazad",
       "kind": "blockcipher",
       "category": "block",
@@ -8568,6 +9301,366 @@
       "dir": "mac/kmac/kmacxof256"
     },
     {
+      "id": "knot-aead-128-256",
+      "kind": "aead",
+      "category": "aead",
+      "family": "knot",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 16,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "knot-aead.c",
+          "knot-hash.c",
+          "internal-knot.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-knot.h",
+          "internal-util.h",
+          "knot.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/knot/knot-aead-128-256"
+    },
+    {
+      "id": "knot-aead-128-384",
+      "kind": "aead",
+      "category": "aead",
+      "family": "knot",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 16,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "knot-aead.c",
+          "knot-hash.c",
+          "internal-knot.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-knot.h",
+          "internal-util.h",
+          "knot.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/knot/knot-aead-128-384"
+    },
+    {
+      "id": "knot-aead-192-384",
+      "kind": "aead",
+      "category": "aead",
+      "family": "knot",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 24,
+        "nonce": 24,
+        "tag": 24
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "knot-aead.c",
+          "knot-hash.c",
+          "internal-knot.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-knot.h",
+          "internal-util.h",
+          "knot.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/knot/knot-aead-192-384"
+    },
+    {
+      "id": "knot-aead-256-512",
+      "kind": "aead",
+      "category": "aead",
+      "family": "knot",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 32,
+        "nonce": 32,
+        "tag": 32
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "knot-aead.c",
+          "knot-hash.c",
+          "internal-knot.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-knot.h",
+          "internal-util.h",
+          "knot.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/knot/knot-aead-256-512"
+    },
+    {
+      "id": "knot-hash-256-256",
+      "kind": "hash",
+      "category": "hash",
+      "family": "knot",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 32
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "knot-aead.c",
+          "knot-hash.c",
+          "internal-knot.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-knot.h",
+          "internal-util.h",
+          "knot.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "hash/knot/knot-hash-256-256"
+    },
+    {
+      "id": "knot-hash-256-384",
+      "kind": "hash",
+      "category": "hash",
+      "family": "knot",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 32
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "knot-aead.c",
+          "knot-hash.c",
+          "internal-knot.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-knot.h",
+          "internal-util.h",
+          "knot.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "hash/knot/knot-hash-256-384"
+    },
+    {
+      "id": "knot-hash-384-384",
+      "kind": "hash",
+      "category": "hash",
+      "family": "knot",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 48
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "knot-aead.c",
+          "knot-hash.c",
+          "internal-knot.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-knot.h",
+          "internal-util.h",
+          "knot.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "hash/knot/knot-hash-384-384"
+    },
+    {
+      "id": "knot-hash-512-512",
+      "kind": "hash",
+      "category": "hash",
+      "family": "knot",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 64
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "knot-aead.c",
+          "knot-hash.c",
+          "internal-knot.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-knot.h",
+          "internal-util.h",
+          "knot.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "hash/knot/knot-hash-512-512"
+    },
+    {
+      "id": "kupyna",
+      "kind": "hash",
+      "category": "hash",
+      "family": "kupyna",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "DSTU 7564:2014 (Kupyna)"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": {
+          "min": 28,
+          "max": 64
+        }
+      },
+      "upstream": {
+        "crate": "kupyna",
+        "version": "=0.1.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {
+        "out_len": {
+          "type": "u64",
+          "min": 28,
+          "max": 64,
+          "required": false,
+          "default": 32
+        }
+      },
+      "kat": {
+        "files": [
+          "kat/kupyna.json"
+        ]
+      },
+      "dir": "hash/kupyna/kupyna"
+    },
+    {
       "id": "kuznyechik",
       "kind": "blockcipher",
       "category": "block",
@@ -8598,6 +9691,44 @@
         ]
       },
       "dir": "block/kuznyechik/kuznyechik"
+    },
+    {
+      "id": "lex",
+      "kind": "streamcipher",
+      "category": "stream",
+      "family": "lex",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 16
+      },
+      "upstream": {
+        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
+        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
+        "license": "LicenseRef-Public-Domain",
+        "files": [
+          "v2/ref/e/ecrypt-sync.h",
+          "v2/ref/e/lex.c",
+          "estream-convert-api.h",
+          "estream-functions.h",
+          "ecrypt-machine.h",
+          "ecrypt-portable.h",
+          "ecrypt-config.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "stream/lex/lex"
     },
     {
       "id": "lm-hash",
@@ -9932,6 +11063,35 @@
       "dir": "hash/md6/md6"
     },
     {
+      "id": "metrohash",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "metrohash",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "MetroHash64 (J. Andrew Rogers), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 8
+      },
+      "upstream": {
+        "crate": "metrohash",
+        "version": "=1.0.7",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/metrohash.json"
+        ]
+      },
+      "dir": "checksum/metrohash/metrohash"
+    },
+    {
       "id": "ml-dsa-44",
       "kind": "sign",
       "category": "sign",
@@ -10228,6 +11388,35 @@
         ]
       },
       "dir": "aead/morus/morus"
+    },
+    {
+      "id": "murmurhash3",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "murmurhash",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "MurmurHash3 x86_32 (Austin Appleby), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 4
+      },
+      "upstream": {
+        "crate": "simplehash",
+        "version": "=0.1.3",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/murmurhash3.json"
+        ]
+      },
+      "dir": "checksum/murmurhash/murmurhash3"
     },
     {
       "id": "noekeon",
@@ -11492,6 +12681,35 @@
       "dir": "stream/rabbit/rabbit"
     },
     {
+      "id": "rapidhash",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "rapidhash",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "rapidhash V3 (Nicolas De Carli, Wang Yi), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 8
+      },
+      "upstream": {
+        "crate": "rapidhash",
+        "version": "=4.5.1",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/rapidhash.json"
+        ]
+      },
+      "dir": "checksum/rapidhash/rapidhash"
+    },
+    {
       "id": "raviyoyla",
       "kind": "aead",
       "category": "aead",
@@ -12644,6 +13862,40 @@
       "dir": "block/serpent/serpent-256"
     },
     {
+      "id": "sha-1dc",
+      "kind": "hash",
+      "category": "hash",
+      "family": "sha1",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 20
+      },
+      "upstream": {
+        "repo": "https://github.com/cr-marcstevens/sha1collisiondetection",
+        "commit": "a06f1adbe5522f3c939cd6a3f13d5ec7f4c1a988",
+        "license": "MIT",
+        "files": [
+          "lib/sha1.c",
+          "lib/sha1.h",
+          "lib/ubc_check.c",
+          "lib/ubc_check.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "hash/sha1/sha-1dc"
+    },
+    {
       "id": "sha0",
       "kind": "hash",
       "category": "hash",
@@ -13271,6 +14523,45 @@
       "dir": "threshold/shamir/shamir"
     },
     {
+      "id": "silc",
+      "kind": "aead",
+      "category": "aead",
+      "family": "silc",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 10,
+        "nonce": 6,
+        "tag": 4
+      },
+      "upstream": {
+        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
+        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
+        "license": "NOASSERTION",
+        "files": [
+          "api.h",
+          "encrypt.c",
+          "led.c",
+          "led.h",
+          "silc.c",
+          "silc.h",
+          "utils.c",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/silc/silc"
+    },
+    {
       "id": "siphash-2-4",
       "kind": "mac",
       "category": "mac",
@@ -13450,6 +14741,346 @@
         ]
       },
       "dir": "hash/skein/skein512"
+    },
+    {
+      "id": "skinny-aead-m1",
+      "kind": "aead",
+      "category": "aead",
+      "family": "skinny-aead",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 16,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "skinny-aead.c",
+          "skinny-hash.c",
+          "internal-skinny128.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-skinny128.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "skinny-aead.h",
+          "skinny-hash.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/skinny-aead/skinny-aead-m1"
+    },
+    {
+      "id": "skinny-aead-m2",
+      "kind": "aead",
+      "category": "aead",
+      "family": "skinny-aead",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 12,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "skinny-aead.c",
+          "skinny-hash.c",
+          "internal-skinny128.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-skinny128.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "skinny-aead.h",
+          "skinny-hash.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/skinny-aead/skinny-aead-m2"
+    },
+    {
+      "id": "skinny-aead-m3",
+      "kind": "aead",
+      "category": "aead",
+      "family": "skinny-aead",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 16,
+        "tag": 8
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "skinny-aead.c",
+          "skinny-hash.c",
+          "internal-skinny128.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-skinny128.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "skinny-aead.h",
+          "skinny-hash.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/skinny-aead/skinny-aead-m3"
+    },
+    {
+      "id": "skinny-aead-m4",
+      "kind": "aead",
+      "category": "aead",
+      "family": "skinny-aead",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 12,
+        "tag": 8
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "skinny-aead.c",
+          "skinny-hash.c",
+          "internal-skinny128.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-skinny128.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "skinny-aead.h",
+          "skinny-hash.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/skinny-aead/skinny-aead-m4"
+    },
+    {
+      "id": "skinny-aead-m5",
+      "kind": "aead",
+      "category": "aead",
+      "family": "skinny-aead",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 12,
+        "tag": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "skinny-aead.c",
+          "skinny-hash.c",
+          "internal-skinny128.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-skinny128.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "skinny-aead.h",
+          "skinny-hash.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/skinny-aead/skinny-aead-m5"
+    },
+    {
+      "id": "skinny-aead-m6",
+      "kind": "aead",
+      "category": "aead",
+      "family": "skinny-aead",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 12,
+        "tag": 8
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "skinny-aead.c",
+          "skinny-hash.c",
+          "internal-skinny128.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-skinny128.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "skinny-aead.h",
+          "skinny-hash.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "aead/skinny-aead/skinny-aead-m6"
+    },
+    {
+      "id": "skinny-tk2-hash",
+      "kind": "hash",
+      "category": "hash",
+      "family": "skinny-aead",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 32
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "skinny-aead.c",
+          "skinny-hash.c",
+          "internal-skinny128.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-skinny128.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "skinny-aead.h",
+          "skinny-hash.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "hash/skinny-aead/skinny-tk2-hash"
+    },
+    {
+      "id": "skinny-tk3-hash",
+      "kind": "hash",
+      "category": "hash",
+      "family": "skinny-aead",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 32
+      },
+      "upstream": {
+        "repo": "https://github.com/rweather/lightweight-crypto",
+        "commit": "fa4ec9a021b9233263de77e7dd971de8c9761495",
+        "license": "MIT",
+        "files": [
+          "skinny-aead.c",
+          "skinny-hash.c",
+          "internal-skinny128.c",
+          "aead-common.c",
+          "aead-common.h",
+          "internal-skinny128.h",
+          "internal-skinnyutil.h",
+          "internal-util.h",
+          "skinny-aead.h",
+          "skinny-hash.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "hash/skinny-aead/skinny-tk3-hash"
     },
     {
       "id": "skipjack",
@@ -14189,6 +15820,94 @@
       "dir": "block/sm4/sm4"
     },
     {
+      "id": "snow-2-0",
+      "kind": "streamcipher",
+      "category": "stream",
+      "family": "snow",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 16
+      },
+      "upstream": {
+        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
+        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
+        "license": "CC0-1.0",
+        "files": [
+          "snow20/benchmarks/snow-2.0/e/ecrypt-sync.h",
+          "snow20/benchmarks/snow-2.0/e/snow-2.0.c",
+          "snow20/benchmarks/snow-2.0/e/snow2_fast.c",
+          "snow20/benchmarks/snow-2.0/e/snow2tab.h",
+          "estream-convert-api.h",
+          "estream-functions.h",
+          "ecrypt-machine.h",
+          "ecrypt-portable.h",
+          "ecrypt-config.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "stream/snow/snow-2-0"
+    },
+    {
+      "id": "sober-128",
+      "kind": "streamcipher",
+      "category": "stream",
+      "family": "sober",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "nonce": 4
+      },
+      "upstream": {
+        "repo": "https://github.com/libtom/libtomcrypt",
+        "commit": "6c6d5104de66f3ca0dfd7b68540ef86869982b07",
+        "license": "LicenseRef-Public-Domain",
+        "files": [
+          "sober128_stream.c",
+          "sober128tab.c",
+          "src/headers/tomcrypt.h",
+          "src/headers/tomcrypt_argchk.h",
+          "src/headers/tomcrypt_cfg.h",
+          "src/headers/tomcrypt_cipher.h",
+          "src/headers/tomcrypt_custom.h",
+          "src/headers/tomcrypt_hash.h",
+          "src/headers/tomcrypt_mac.h",
+          "src/headers/tomcrypt_macros.h",
+          "src/headers/tomcrypt_math.h",
+          "src/headers/tomcrypt_misc.h",
+          "src/headers/tomcrypt_pk.h",
+          "src/headers/tomcrypt_pkcs.h",
+          "src/headers/tomcrypt_private.h",
+          "src/headers/tomcrypt_prng.h",
+          "src/misc/zeromem.c",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "stream/sober/sober-128"
+    },
+    {
       "id": "spake2-ed25519",
       "kind": "pake",
       "category": "pake",
@@ -14521,6 +16240,39 @@
         ]
       },
       "dir": "aead/spook/spook-su"
+    },
+    {
+      "id": "spookyhash",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "spookyhash",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/jibsen/spooky",
+        "commit": "470a5925fb1e6c342c228cba1ebb52e67a86c75b",
+        "license": "CC0-1.0",
+        "files": [
+          "spooky.c",
+          "spooky.h",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "checksum/spookyhash/spookyhash"
     },
     {
       "id": "srp-6a-2048-sha256",
@@ -14923,6 +16675,39 @@
       "dir": "block/tea/tea"
     },
     {
+      "id": "thin-ice",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "ice",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 8,
+        "block": 8
+      },
+      "upstream": {
+        "url": "https://darkside.com.au/ice/ice.c",
+        "sha256": "ecd05c5f778895aec9ff3433a5117382492417a938b988c7c053333664ceacf1",
+        "license": "LicenseRef-Public-Domain",
+        "files": [
+          "ice.c",
+          "ice.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "block/ice/thin-ice"
+    },
+    {
       "id": "threefish-1024",
       "kind": "blockcipher",
       "category": "block",
@@ -15190,6 +16975,44 @@
       "dir": "aead/tinyjambu/tinyjambu-256"
     },
     {
+      "id": "trivium",
+      "kind": "streamcipher",
+      "category": "stream",
+      "family": "trivium",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 10,
+        "nonce": 10
+      },
+      "upstream": {
+        "url": "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz",
+        "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
+        "license": "NOASSERTION",
+        "files": [
+          "trivium/submissions/trivium/e/ecrypt-sync.h",
+          "trivium/submissions/trivium/e/trivium.c",
+          "estream-convert-api.h",
+          "estream-functions.h",
+          "ecrypt-machine.h",
+          "ecrypt-portable.h",
+          "ecrypt-config.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "stream/trivium/trivium"
+    },
+    {
       "id": "turboshake128",
       "kind": "xof",
       "category": "xof",
@@ -15446,6 +17269,35 @@
         ]
       },
       "dir": "hash/whirlpool/whirlpool"
+    },
+    {
+      "id": "wyhash",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "wyhash",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "wyhash final3 (Wang Yi), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 8
+      },
+      "upstream": {
+        "crate": "wyhash",
+        "version": "=0.6.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/wyhash.json"
+        ]
+      },
+      "dir": "checksum/wyhash/wyhash"
     },
     {
       "id": "x25519",
@@ -15744,6 +17596,42 @@
       "dir": "block/xtea/xtea"
     },
     {
+      "id": "xxh128",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "xxhash",
+      "aliases": [
+        "xxh3-128"
+      ],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "xxHash (Yann Collet), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 16
+      },
+      "upstream": {
+        "repo": "https://github.com/Cyan4973/xxHash",
+        "commit": "2ec67caeb18ec15ae60c0853174331089acddfc0",
+        "license": "BSD-2-Clause",
+        "files": [
+          "xxhash.c",
+          "xxhash.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/xxh128.json"
+        ]
+      },
+      "dir": "checksum/xxhash/xxh128"
+    },
+    {
       "id": "xxh3",
       "kind": "checksum",
       "category": "checksum",
@@ -15964,6 +17852,58 @@
         ]
       },
       "dir": "pwhash/yescrypt/yescrypt"
+    },
+    {
+      "id": "z-base-32",
+      "kind": "encoding",
+      "category": "encoding",
+      "family": "base",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "z-base-32 (Zooko O'Whielacronx)"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "upstream": {
+        "crate": "z32",
+        "version": "=1.3.0",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "encoding/base/z-base-32"
+    },
+    {
+      "id": "z85",
+      "kind": "encoding",
+      "category": "encoding",
+      "family": "base",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "ZeroMQ RFC 32/Z85 (crate adds a '#' marker so lengths need not be multiples of 4)"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "upstream": {
+        "crate": "z85",
+        "version": "=3.0.7",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "encoding/base/z85"
     },
     {
       "id": "zuc",

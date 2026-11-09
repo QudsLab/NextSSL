@@ -1,0 +1,18 @@
+id        = "murmurhash3"
+kind      = "checksum"
+category  = "checksum"
+family    = "murmurhash"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["MurmurHash3 x86_32 (Austin Appleby), NON-cryptographic"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "simplehash", version = "=0.1.3", license = "MIT" }
+# MurmurHash3 x86_32, seed 0. Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[kat]
+files = ["kat/murmurhash3.json"]
+
+[sizes]
+out = 4

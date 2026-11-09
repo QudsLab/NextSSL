@@ -1,0 +1,18 @@
+id        = "internet-checksum"
+kind      = "checksum"
+category  = "checksum"
+family    = "internet-checksum"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 1071 Internet checksum, NON-cryptographic"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "internet-checksum", version = "=0.2.1", license = "BSD-3-Clause" }
+# RFC 1071 checksum; the crate returns the two bytes in network order. Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[kat]
+files = ["kat/internet-checksum.json"]
+
+[sizes]
+out = 2

@@ -1,0 +1,24 @@
+id        = "kupyna"
+kind      = "hash"
+category  = "hash"
+family    = "kupyna"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["DSTU 7564:2014 (Kupyna)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "kupyna", version = "=0.1.0", license = "MIT OR Apache-2.0" }
+# Kupyna-224/256/384/512 via param out_len. Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[params.out_len]
+type    = "u64"
+min     = 28
+max     = 64
+default = 32
+
+[kat]
+files = ["kat/kupyna.json"]
+
+[sizes]
+out = { min = 28, max = 64 }

@@ -1,0 +1,18 @@
+id        = "rapidhash"
+kind      = "checksum"
+category  = "checksum"
+family    = "rapidhash"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["rapidhash V3 (Nicolas De Carli, Wang Yi), NON-cryptographic"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rapidhash", version = "=4.5.1", license = "MIT OR Apache-2.0" }
+# rapidhash V3, default secrets. Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[kat]
+files = ["kat/rapidhash.json"]
+
+[sizes]
+out = 8

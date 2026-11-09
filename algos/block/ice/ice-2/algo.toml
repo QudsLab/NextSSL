@@ -1,0 +1,21 @@
+id        = "ice-2"
+kind      = "blockcipher"
+category  = "block"
+family    = "ice"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://darkside.com.au/ice/ice.c", sha256 = "ecd05c5f778895aec9ff3433a5117382492417a938b988c7c053333664ceacf1", license = "LicenseRef-Public-Domain", files = ["ice.c", "ice.h", "LICENSE"] }
+
+# Entry point wired: ice.c (ice_key_create(2)/ice_key_set/ice_key_encrypt/ice_key_decrypt; key 16, block 8. The S-boxes are built lazily at first ice_key_create (upstream, not thread-safe on first use)). Other variants not wired: ICE-n for n>2 are not wired.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+block = 8

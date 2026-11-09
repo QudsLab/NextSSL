@@ -68,6 +68,7 @@ nextssl-algo-argon2id = { path = "../../algos/pwhash/argon2/argon2id" }
 nextssl-algo-aria-128 = { path = "../../algos/block/aria/aria-128" }
 nextssl-algo-aria-192 = { path = "../../algos/block/aria/aria-192" }
 nextssl-algo-aria-256 = { path = "../../algos/block/aria/aria-256" }
+nextssl-algo-ascii85 = { path = "../../algos/encoding/base/ascii85" }
 nextssl-algo-ascon-aead128 = { path = "../../algos/aead/ascon/ascon-aead128" }
 nextssl-algo-ascon-aead128a = { path = "../../algos/aead/ascon/ascon-aead128a" }
 nextssl-algo-ascon-cxof128 = { path = "../../algos/xof/ascon/ascon-cxof128" }
@@ -78,6 +79,7 @@ nextssl-algo-balloon = { path = "../../algos/pwhash/balloon/balloon" }
 nextssl-algo-base16 = { path = "../../algos/encoding/base/base16" }
 nextssl-algo-base32 = { path = "../../algos/encoding/base/base32" }
 nextssl-algo-base32hex = { path = "../../algos/encoding/base/base32hex" }
+nextssl-algo-base45 = { path = "../../algos/encoding/base/base45" }
 nextssl-algo-base58 = { path = "../../algos/encoding/base/base58" }
 nextssl-algo-base58check = { path = "../../algos/encoding/base/base58check" }
 nextssl-algo-base64 = { path = "../../algos/encoding/base/base64" }
@@ -111,6 +113,10 @@ nextssl-algo-chacha20 = { path = "../../algos/stream/chacha/chacha20" }
 nextssl-algo-chacha20-poly1305 = { path = "../../algos/aead/chacha/chacha20-poly1305" }
 nextssl-algo-chacha8 = { path = "../../algos/stream/chacha/chacha8" }
 nextssl-algo-chaskey = { path = "../../algos/mac/chaskey/chaskey" }
+nextssl-algo-cityhash = { path = "../../algos/checksum/cityhash/cityhash" }
+nextssl-algo-clefia-128 = { path = "../../algos/block/clefia/clefia-128" }
+nextssl-algo-clefia-192 = { path = "../../algos/block/clefia/clefia-192" }
+nextssl-algo-clefia-256 = { path = "../../algos/block/clefia/clefia-256" }
 nextssl-algo-cloc = { path = "../../algos/aead/cloc/cloc" }
 nextssl-algo-concat-kdf = { path = "../../algos/kdf/concat/concat-kdf" }
 nextssl-algo-crc16 = { path = "../../algos/checksum/crc/crc16" }
@@ -143,6 +149,7 @@ nextssl-algo-deoxys-ii = { path = "../../algos/aead/deoxys/deoxys-ii", optional 
 nextssl-algo-des = { path = "../../algos/block/des/des" }
 nextssl-algo-des-mac = { path = "../../algos/mac/cbc-mac/des-mac" }
 nextssl-algo-dme-sign = { path = "../../algos/sign/dme-sign/dme-sign" }
+nextssl-algo-dragon = { path = "../../algos/stream/dragon/dragon" }
 nextssl-algo-drygascon = { path = "../../algos/aead/drygascon/drygascon" }
 nextssl-algo-drygascon-256 = { path = "../../algos/aead/drygascon/drygascon-256" }
 nextssl-algo-ecdh-p256 = { path = "../../algos/kex/ecdh/ecdh-p256" }
@@ -169,6 +176,14 @@ nextssl-algo-fletcher16 = { path = "../../algos/checksum/fletcher/fletcher16" }
 nextssl-algo-fletcher32 = { path = "../../algos/checksum/fletcher/fletcher32" }
 nextssl-algo-fn-dsa-1024 = { path = "../../algos/sign/fn-dsa/fn-dsa-1024" }
 nextssl-algo-fn-dsa-512 = { path = "../../algos/sign/fn-dsa/fn-dsa-512" }
+nextssl-algo-fnv-1 = { path = "../../algos/checksum/fnv/fnv-1" }
+nextssl-algo-fnv-1a = { path = "../../algos/checksum/fnv/fnv-1a" }
+nextssl-algo-forkae-paef-128-192 = { path = "../../algos/aead/forkae/forkae-paef-128-192" }
+nextssl-algo-forkae-paef-128-256 = { path = "../../algos/aead/forkae/forkae-paef-128-256" }
+nextssl-algo-forkae-paef-128-288 = { path = "../../algos/aead/forkae/forkae-paef-128-288" }
+nextssl-algo-forkae-paef-64-192 = { path = "../../algos/aead/forkae/forkae-paef-64-192" }
+nextssl-algo-forkae-saef-128-192 = { path = "../../algos/aead/forkae/forkae-saef-128-192" }
+nextssl-algo-forkae-saef-128-256 = { path = "../../algos/aead/forkae/forkae-saef-128-256" }
 nextssl-algo-fountain = { path = "../../algos/aead/fountain/fountain" }
 nextssl-algo-ghash = { path = "../../algos/mac/ghash/ghash" }
 nextssl-algo-gift-cofb = { path = "../../algos/aead/gift-cofb/gift-cofb" }
@@ -201,8 +216,11 @@ nextssl-algo-hqc-256 = { path = "../../algos/kem/hqc/hqc-256" }
 nextssl-algo-hss-sha256-h5-h5-w4 = { path = "../../algos/sign/hss/hss-sha256-h5-h5-w4", optional = true }
 nextssl-algo-hyena-v1 = { path = "../../algos/aead/hyena/hyena-v1" }
 nextssl-algo-hyena-v2 = { path = "../../algos/aead/hyena/hyena-v2" }
+nextssl-algo-ice = { path = "../../algos/block/ice/ice" }
+nextssl-algo-ice-2 = { path = "../../algos/block/ice/ice-2" }
 nextssl-algo-idea = { path = "../../algos/block/idea/idea" }
 nextssl-algo-ifeed = { path = "../../algos/aead/ifeed/ifeed" }
+nextssl-algo-internet-checksum = { path = "../../algos/checksum/internet-checksum/internet-checksum" }
 nextssl-algo-isap-a-128a = { path = "../../algos/aead/isap/isap-a-128a" }
 nextssl-algo-isap-k-128a = { path = "../../algos/aead/isap/isap-k-128a" }
 nextssl-algo-iscream = { path = "../../algos/aead/iscream/iscream" }
@@ -216,13 +234,25 @@ nextssl-algo-kangarootwelve = { path = "../../algos/xof/k12/kangarootwelve" }
 nextssl-algo-kasumi = { path = "../../algos/block/kasumi/kasumi" }
 nextssl-algo-keccak256 = { path = "../../algos/hash/sha3/keccak256" }
 nextssl-algo-keccak512 = { path = "../../algos/hash/sha3/keccak512" }
+nextssl-algo-ketje = { path = "../../algos/aead/ketje/ketje" }
+nextssl-algo-keyak = { path = "../../algos/aead/keyak/keyak" }
 nextssl-algo-khazad = { path = "../../algos/block/khazad/khazad" }
 nextssl-algo-kiasu = { path = "../../algos/aead/kiasu/kiasu", optional = true }
 nextssl-algo-kmac128 = { path = "../../algos/mac/kmac/kmac128" }
 nextssl-algo-kmac256 = { path = "../../algos/mac/kmac/kmac256" }
 nextssl-algo-kmacxof128 = { path = "../../algos/mac/kmac/kmacxof128" }
 nextssl-algo-kmacxof256 = { path = "../../algos/mac/kmac/kmacxof256" }
+nextssl-algo-knot-aead-128-256 = { path = "../../algos/aead/knot/knot-aead-128-256" }
+nextssl-algo-knot-aead-128-384 = { path = "../../algos/aead/knot/knot-aead-128-384" }
+nextssl-algo-knot-aead-192-384 = { path = "../../algos/aead/knot/knot-aead-192-384" }
+nextssl-algo-knot-aead-256-512 = { path = "../../algos/aead/knot/knot-aead-256-512" }
+nextssl-algo-knot-hash-256-256 = { path = "../../algos/hash/knot/knot-hash-256-256" }
+nextssl-algo-knot-hash-256-384 = { path = "../../algos/hash/knot/knot-hash-256-384" }
+nextssl-algo-knot-hash-384-384 = { path = "../../algos/hash/knot/knot-hash-384-384" }
+nextssl-algo-knot-hash-512-512 = { path = "../../algos/hash/knot/knot-hash-512-512" }
+nextssl-algo-kupyna = { path = "../../algos/hash/kupyna/kupyna" }
 nextssl-algo-kuznyechik = { path = "../../algos/block/kuznyechik/kuznyechik" }
+nextssl-algo-lex = { path = "../../algos/stream/lex/lex" }
 nextssl-algo-lm-hash = { path = "../../algos/hash/lm/lm-hash" }
 nextssl-algo-lms-sha256-h10-w4 = { path = "../../algos/sign/lms/lms-sha256-h10-w4", optional = true }
 nextssl-algo-lms-sha256-h5-w4 = { path = "../../algos/sign/lms/lms-sha256-h5-w4", optional = true }
@@ -245,6 +275,7 @@ nextssl-algo-md4 = { path = "../../algos/hash/md/md4" }
 nextssl-algo-md5 = { path = "../../algos/hash/md/md5" }
 nextssl-algo-md5crypt = { path = "../../algos/pwhash/crypt/md5crypt" }
 nextssl-algo-md6 = { path = "../../algos/hash/md6/md6" }
+nextssl-algo-metrohash = { path = "../../algos/checksum/metrohash/metrohash" }
 nextssl-algo-ml-dsa-44 = { path = "../../algos/sign/ml-dsa/ml-dsa-44" }
 nextssl-algo-ml-dsa-65 = { path = "../../algos/sign/ml-dsa/ml-dsa-65" }
 nextssl-algo-ml-dsa-87 = { path = "../../algos/sign/ml-dsa/ml-dsa-87" }
@@ -252,6 +283,7 @@ nextssl-algo-ml-kem-1024 = { path = "../../algos/kem/ml-kem/ml-kem-1024" }
 nextssl-algo-ml-kem-512 = { path = "../../algos/kem/ml-kem/ml-kem-512" }
 nextssl-algo-ml-kem-768 = { path = "../../algos/kem/ml-kem/ml-kem-768" }
 nextssl-algo-morus = { path = "../../algos/aead/morus/morus" }
+nextssl-algo-murmurhash3 = { path = "../../algos/checksum/murmurhash/murmurhash3" }
 nextssl-algo-noekeon = { path = "../../algos/block/noekeon/noekeon" }
 nextssl-algo-norx = { path = "../../algos/aead/norx/norx" }
 nextssl-algo-nt-hash = { path = "../../algos/hash/nt/nt-hash" }
@@ -279,6 +311,7 @@ nextssl-algo-pride = { path = "../../algos/block/pride/pride", optional = true }
 nextssl-algo-pyjamask = { path = "../../algos/aead/pyjamask/pyjamask" }
 nextssl-algo-pyjamask-96 = { path = "../../algos/aead/pyjamask/pyjamask-96" }
 nextssl-algo-rabbit = { path = "../../algos/stream/rabbit/rabbit" }
+nextssl-algo-rapidhash = { path = "../../algos/checksum/rapidhash/rapidhash" }
 nextssl-algo-raviyoyla = { path = "../../algos/aead/raviyoyla/raviyoyla" }
 nextssl-algo-rc2 = { path = "../../algos/block/rc/rc2" }
 nextssl-algo-rc4 = { path = "../../algos/stream/rc4/rc4" }
@@ -309,6 +342,7 @@ nextssl-algo-scrypt = { path = "../../algos/pwhash/scrypt/scrypt" }
 nextssl-algo-serpent-128 = { path = "../../algos/block/serpent/serpent-128" }
 nextssl-algo-serpent-192 = { path = "../../algos/block/serpent/serpent-192" }
 nextssl-algo-serpent-256 = { path = "../../algos/block/serpent/serpent-256" }
+nextssl-algo-sha-1dc = { path = "../../algos/hash/sha1/sha-1dc" }
 nextssl-algo-sha0 = { path = "../../algos/hash/sha1/sha0" }
 nextssl-algo-sha1 = { path = "../../algos/hash/sha1/sha1" }
 nextssl-algo-sha224 = { path = "../../algos/hash/sha2/sha224" }
@@ -327,11 +361,20 @@ nextssl-algo-shabal = { path = "../../algos/hash/shabal/shabal" }
 nextssl-algo-shake128 = { path = "../../algos/xof/shake/shake128" }
 nextssl-algo-shake256 = { path = "../../algos/xof/sha3/shake256" }
 nextssl-algo-shamir = { path = "../../algos/threshold/shamir/shamir" }
+nextssl-algo-silc = { path = "../../algos/aead/silc/silc" }
 nextssl-algo-siphash-2-4 = { path = "../../algos/mac/siphash/siphash-2-4" }
 nextssl-algo-siphash-4-8 = { path = "../../algos/mac/siphash/siphash-4-8" }
 nextssl-algo-skein1024 = { path = "../../algos/hash/skein/skein1024" }
 nextssl-algo-skein256 = { path = "../../algos/hash/skein/skein256" }
 nextssl-algo-skein512 = { path = "../../algos/hash/skein/skein512" }
+nextssl-algo-skinny-aead-m1 = { path = "../../algos/aead/skinny-aead/skinny-aead-m1" }
+nextssl-algo-skinny-aead-m2 = { path = "../../algos/aead/skinny-aead/skinny-aead-m2" }
+nextssl-algo-skinny-aead-m3 = { path = "../../algos/aead/skinny-aead/skinny-aead-m3" }
+nextssl-algo-skinny-aead-m4 = { path = "../../algos/aead/skinny-aead/skinny-aead-m4" }
+nextssl-algo-skinny-aead-m5 = { path = "../../algos/aead/skinny-aead/skinny-aead-m5" }
+nextssl-algo-skinny-aead-m6 = { path = "../../algos/aead/skinny-aead/skinny-aead-m6" }
+nextssl-algo-skinny-tk2-hash = { path = "../../algos/hash/skinny-aead/skinny-tk2-hash" }
+nextssl-algo-skinny-tk3-hash = { path = "../../algos/hash/skinny-aead/skinny-tk3-hash" }
 nextssl-algo-skipjack = { path = "../../algos/block/skipjack/skipjack" }
 nextssl-algo-slh-dsa-sha2-128f = { path = "../../algos/sign/slh-dsa/slh-dsa-sha2-128f" }
 nextssl-algo-slh-dsa-sha2-128s = { path = "../../algos/sign/slh-dsa/slh-dsa-sha2-128s" }
@@ -348,6 +391,8 @@ nextssl-algo-slh-dsa-shake-256s = { path = "../../algos/sign/slh-dsa/slh-dsa-sha
 nextssl-algo-sm2-sign = { path = "../../algos/sign/sm2/sm2-sign" }
 nextssl-algo-sm3 = { path = "../../algos/hash/sm3/sm3" }
 nextssl-algo-sm4 = { path = "../../algos/block/sm4/sm4" }
+nextssl-algo-snow-2-0 = { path = "../../algos/stream/snow/snow-2-0" }
+nextssl-algo-sober-128 = { path = "../../algos/stream/sober/sober-128" }
 nextssl-algo-spake2-ed25519 = { path = "../../algos/pake/spake2/spake2-ed25519" }
 nextssl-algo-sparkle-esch = { path = "../../algos/hash/sparkle/sparkle-esch", optional = true }
 nextssl-algo-sparkle-schwaemm = { path = "../../algos/aead/sparkle/sparkle-schwaemm", optional = true }
@@ -356,6 +401,7 @@ nextssl-algo-spoc-128 = { path = "../../algos/aead/spoc/spoc-128" }
 nextssl-algo-spoc-64 = { path = "../../algos/aead/spoc/spoc-64" }
 nextssl-algo-spook = { path = "../../algos/aead/spook/spook" }
 nextssl-algo-spook-su = { path = "../../algos/aead/spook/spook-su" }
+nextssl-algo-spookyhash = { path = "../../algos/checksum/spookyhash/spookyhash" }
 nextssl-algo-srp-6a-2048-sha256 = { path = "../../algos/pake/srp/srp-6a-2048-sha256" }
 nextssl-algo-streebog256 = { path = "../../algos/hash/streebog/streebog256" }
 nextssl-algo-streebog512 = { path = "../../algos/hash/streebog/streebog512" }
@@ -366,6 +412,7 @@ nextssl-algo-sundae-0 = { path = "../../algos/aead/sundae/sundae-0" }
 nextssl-algo-sundae-128 = { path = "../../algos/aead/sundae/sundae-128" }
 nextssl-algo-sundae-64 = { path = "../../algos/aead/sundae/sundae-64" }
 nextssl-algo-tea = { path = "../../algos/block/tea/tea" }
+nextssl-algo-thin-ice = { path = "../../algos/block/ice/thin-ice" }
 nextssl-algo-threefish-1024 = { path = "../../algos/block/threefish/threefish-1024" }
 nextssl-algo-threefish-256 = { path = "../../algos/block/threefish/threefish-256" }
 nextssl-algo-threefish-512 = { path = "../../algos/block/threefish/threefish-512" }
@@ -373,6 +420,7 @@ nextssl-algo-tiger = { path = "../../algos/hash/tiger/tiger" }
 nextssl-algo-tinyjambu = { path = "../../algos/aead/tinyjambu/tinyjambu" }
 nextssl-algo-tinyjambu-192 = { path = "../../algos/aead/tinyjambu/tinyjambu-192" }
 nextssl-algo-tinyjambu-256 = { path = "../../algos/aead/tinyjambu/tinyjambu-256" }
+nextssl-algo-trivium = { path = "../../algos/stream/trivium/trivium" }
 nextssl-algo-turboshake128 = { path = "../../algos/xof/turboshake/turboshake128" }
 nextssl-algo-turboshake256 = { path = "../../algos/xof/turboshake/turboshake256" }
 nextssl-algo-twine-128 = { path = "../../algos/block/twine/twine-128" }
@@ -381,6 +429,7 @@ nextssl-algo-twofish = { path = "../../algos/block/twofish/twofish" }
 nextssl-algo-wage = { path = "../../algos/aead/wage/wage" }
 nextssl-algo-wheesht = { path = "../../algos/aead/wheesht/wheesht" }
 nextssl-algo-whirlpool = { path = "../../algos/hash/whirlpool/whirlpool" }
+nextssl-algo-wyhash = { path = "../../algos/checksum/wyhash/wyhash" }
 nextssl-algo-x25519 = { path = "../../algos/kex/ecdh/x25519" }
 nextssl-algo-x448 = { path = "../../algos/kex/ecdh/x448" }
 nextssl-algo-xchacha20 = { path = "../../algos/stream/chacha/xchacha20" }
@@ -389,11 +438,14 @@ nextssl-algo-xoodyak = { path = "../../algos/aead/xoodyak/xoodyak" }
 nextssl-algo-xoodyak-hash = { path = "../../algos/hash/xoodyak/xoodyak-hash" }
 nextssl-algo-xsalsa20 = { path = "../../algos/stream/salsa/xsalsa20" }
 nextssl-algo-xtea = { path = "../../algos/block/xtea/xtea" }
+nextssl-algo-xxh128 = { path = "../../algos/checksum/xxhash/xxh128" }
 nextssl-algo-xxh3 = { path = "../../algos/checksum/xxhash/xxh3" }
 nextssl-algo-xxhash32 = { path = "../../algos/checksum/xxhash/xxhash32" }
 nextssl-algo-xxhash64 = { path = "../../algos/checksum/xxhash/xxhash64" }
 nextssl-algo-yaes = { path = "../../algos/aead/yaes/yaes" }
 nextssl-algo-yescrypt = { path = "../../algos/pwhash/yescrypt/yescrypt" }
+nextssl-algo-z-base-32 = { path = "../../algos/encoding/base/z-base-32" }
+nextssl-algo-z85 = { path = "../../algos/encoding/base/z85" }
 nextssl-algo-zuc = { path = "../../algos/stream/zuc/zuc" }
 nextssl-algo-zuc-256 = { path = "../../algos/stream/zuc/zuc-256" }
 # END GENERATED DEPENDENCIES

@@ -1,0 +1,21 @@
+id        = "clefia-256"
+kind      = "blockcipher"
+category  = "block"
+family    = "clefia"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://www.sony.co.jp/en/Products/cryptography/clefia/download/clefia_ref.c", sha256 = "302bb99bb12418fccbf41614ec2d1249fbd6703f9119ee0104cf6b3ae1e6a3bf", license = "NOASSERTION", files = ["CRYPTREC_CLEFIA_submission/ref/clefia_ref.c", "CRYPTREC_CLEFIA_submission/ref/clefia_ref.h", "LICENSE"] }
+
+# Entry point wired: CRYPTREC_CLEFIA_submission/ref/clefia_ref.c (ClefiaKeySet(rk, key, 256)/ClefiaEncrypt/ClefiaDecrypt (rounds returned by ClefiaKeySet); block 16, key 32; vendor reference code, not optimised). Other variants not wired: the other two CLEFIA key sizes are separate ids.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 32
+block = 16

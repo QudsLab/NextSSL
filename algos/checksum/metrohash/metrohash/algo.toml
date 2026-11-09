@@ -1,0 +1,18 @@
+id        = "metrohash"
+kind      = "checksum"
+category  = "checksum"
+family    = "metrohash"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["MetroHash64 (J. Andrew Rogers), NON-cryptographic"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "metrohash", version = "=1.0.7", license = "MIT" }
+# MetroHash64, seed 0. Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[kat]
+files = ["kat/metrohash.json"]
+
+[sizes]
+out = 8

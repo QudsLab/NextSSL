@@ -1,0 +1,5 @@
+{
+ "algorithm": "murmurhash3",
+ "vectors": [],
+ "note": "no published vectors collected for this crate"
+}

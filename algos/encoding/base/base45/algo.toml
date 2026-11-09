@@ -1,0 +1,15 @@
+id        = "base45"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 9285"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "base45", version = "=3.2.0", license = "MIT" }
+# base45 Wired in batch 8, not compiled or tested at wiring time (owner order); KAT file empty.
+
+[kat]
+files = ["kat/vectors.json"]

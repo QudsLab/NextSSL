@@ -1,0 +1,20 @@
+id        = "xxh128"
+kind      = "checksum"
+category  = "checksum"
+family    = "xxhash"
+aliases   = ["xxh3-128"]
+tier      = "unverified"
+status    = "active"
+standards = ["xxHash (Yann Collet), NON-cryptographic"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/Cyan4973/xxHash", commit = "2ec67caeb18ec15ae60c0853174331089acddfc0", license = "BSD-2-Clause", files = ["xxhash.c", "xxhash.h", "LICENSE"] }
+# XXH3 128-bit variant (XXH128), seed 0, canonical output. Same upstream copy as xxh3.
+# Upstream is built with -DXXH_NAMESPACE=nextssl__xxh128__ and XXH_NO_STREAM; no source edits. shim.c only calls XXH3_128bits and XXH128_canonicalFromHash.
+# Wired in batch 8, not compiled or tested at wiring time (owner order).
+
+[kat]
+files = ["kat/xxh128.json"]
+
+[sizes]
+out = 16

@@ -1,0 +1,5 @@
+{
+ "algorithm": "fnv-1a",
+ "vectors": [],
+ "note": "no published vectors collected for this crate"
+}

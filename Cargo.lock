@@ -151,6 +151,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d3fb67a6e08acf24fdeccbac2cb6ac4305825bd1f117462e0e6f2f193345ad56"
 
 [[package]]
+name = "ascii85"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1f7b2cc50ccfca05cc3e99a014901ae232948108082a2eecebc3ab6544ebd938"
+
+[[package]]
 name = "autocfg"
 version = "1.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -178,6 +184,12 @@ name = "base16ct"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fd307490d624467aa6f74b0eabb77633d1f758a7b25f12bceb0b22e08d9726f6"
+
+[[package]]
+name = "base45"
+version = "3.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "240e56f4d3c453c36faacb695c535a4d5f8c7d23dac175014f32eb0a71012a03"
 
 [[package]]
 name = "base64"
@@ -613,6 +625,12 @@ dependencies = [
  "inout 0.2.6",
  "zeroize",
 ]
+
+[[package]]
+name = "cityhasher"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ceab37c9e94f42414cccae77e930232c517f1bb190947018cffb0ab41fc40992"
 
 [[package]]
 name = "clang-sys"
@@ -1629,6 +1647,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "internet-checksum"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fc6d6206008e25125b1f97fbe5d309eb7b85141cf9199d52dbd3729a1584dd16"
+
+[[package]]
 name = "itertools"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1707,6 +1731,15 @@ checksum = "01737161ba802849cfd486b5bd209d38ba4943494c249a8126005170c7621edd"
 dependencies = [
  "crypto-common 0.2.2",
  "rand_core 0.10.1",
+]
+
+[[package]]
+name = "kupyna"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a8552d0116a202b5a4760c8bdb345db2121eefeb2730f7db04114167cae68a07"
+dependencies = [
+ "digest 0.11.3",
 ]
 
 [[package]]
@@ -1927,6 +1960,12 @@ dependencies = [
  "rand_core 0.6.4",
  "zeroize",
 ]
+
+[[package]]
+name = "metrohash"
+version = "1.0.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a84011bfadc339f60fbcc38181da8a0a91cd16375394dd52edf9da80deacd8c5"
 
 [[package]]
 name = "minimal-lexical"
@@ -2553,6 +2592,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-ascii85"
+version = "0.0.1"
+dependencies = [
+ "ascii85",
+ "nextssl-core",
+]
+
+[[package]]
 name = "nextssl-algo-ascon-aead128"
 version = "0.0.1"
 dependencies = [
@@ -2647,6 +2694,14 @@ dependencies = [
  "data-encoding",
  "nextssl-core",
  "serde_json",
+]
+
+[[package]]
+name = "nextssl-algo-base45"
+version = "0.0.1"
+dependencies = [
+ "base45",
+ "nextssl-core",
 ]
 
 [[package]]
@@ -2942,6 +2997,44 @@ dependencies = [
  "cc",
  "nextssl-core",
  "serde_json",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-cityhash"
+version = "0.0.1"
+dependencies = [
+ "cityhasher",
+ "nextssl-core",
+]
+
+[[package]]
+name = "nextssl-algo-clefia-128"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-clefia-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-clefia-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
  "zeroize",
 ]
 
@@ -3259,6 +3352,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-dragon"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-drygascon"
 version = "0.0.1"
 dependencies = [
@@ -3508,6 +3611,82 @@ version = "0.0.1"
 dependencies = [
  "falcon-rs",
  "nextssl-core",
+]
+
+[[package]]
+name = "nextssl-algo-fnv-1"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "yafnv",
+]
+
+[[package]]
+name = "nextssl-algo-fnv-1a"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "yafnv",
+]
+
+[[package]]
+name = "nextssl-algo-forkae-paef-128-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-forkae-paef-128-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-forkae-paef-128-288"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-forkae-paef-64-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-forkae-saef-128-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-forkae-saef-128-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -3827,6 +4006,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-ice"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ice-2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-idea"
 version = "0.0.1"
 dependencies = [
@@ -3843,6 +4042,14 @@ dependencies = [
  "nextssl-core",
  "object",
  "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-internet-checksum"
+version = "0.0.1"
+dependencies = [
+ "internet-checksum",
+ "nextssl-core",
 ]
 
 [[package]]
@@ -3969,6 +4176,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-ketje"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-keyak"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-khazad"
 version = "0.0.1"
 dependencies = [
@@ -4025,12 +4252,110 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-knot-aead-128-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-knot-aead-128-384"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-knot-aead-192-384"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-knot-aead-256-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-knot-hash-256-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-knot-hash-256-384"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-knot-hash-384-384"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-knot-hash-512-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-kupyna"
+version = "0.0.1"
+dependencies = [
+ "kupyna",
+ "nextssl-core",
+]
+
+[[package]]
 name = "nextssl-algo-kuznyechik"
 version = "0.0.1"
 dependencies = [
  "kuznyechik",
  "nextssl-core",
  "serde_json",
+]
+
+[[package]]
+name = "nextssl-algo-lex"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -4240,6 +4565,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-metrohash"
+version = "0.0.1"
+dependencies = [
+ "metrohash",
+ "nextssl-core",
+]
+
+[[package]]
 name = "nextssl-algo-ml-dsa-44"
 version = "0.0.1"
 dependencies = [
@@ -4307,6 +4640,14 @@ dependencies = [
  "nextssl-core",
  "object",
  "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-murmurhash3"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "simplehash",
 ]
 
 [[package]]
@@ -4571,6 +4912,14 @@ dependencies = [
  "nextssl-core",
  "rabbit",
  "serde_json",
+]
+
+[[package]]
+name = "nextssl-algo-rapidhash"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "rapidhash",
 ]
 
 [[package]]
@@ -4857,6 +5206,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-sha-1dc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-sha0"
 version = "0.0.1"
 dependencies = [
@@ -5012,6 +5371,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-silc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-siphash-2-4"
 version = "0.0.1"
 dependencies = [
@@ -5053,6 +5422,86 @@ version = "0.0.1"
 dependencies = [
  "nextssl-core",
  "skein",
+]
+
+[[package]]
+name = "nextssl-algo-skinny-aead-m1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-skinny-aead-m2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-skinny-aead-m3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-skinny-aead-m4"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-skinny-aead-m5"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-skinny-aead-m6"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-skinny-tk2-hash"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-skinny-tk3-hash"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -5223,6 +5672,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-snow-2-0"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sober-128"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-spake2-ed25519"
 version = "0.0.1"
 dependencies = [
@@ -5298,6 +5767,16 @@ dependencies = [
  "cc",
  "nextssl-core",
  "serde_json",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-spookyhash"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
  "zeroize",
 ]
 
@@ -5397,6 +5876,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-thin-ice"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-threefish-1024"
 version = "0.0.1"
 dependencies = [
@@ -5458,6 +5947,16 @@ dependencies = [
  "cc",
  "nextssl-core",
  "serde_json",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-trivium"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
  "zeroize",
 ]
 
@@ -5534,6 +6033,14 @@ version = "0.0.1"
 dependencies = [
  "nextssl-core",
  "whirlpool",
+]
+
+[[package]]
+name = "nextssl-algo-wyhash"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "wyhash",
 ]
 
 [[package]]
@@ -5614,6 +6121,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-xxh128"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "serde_json",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-xxh3"
 version = "0.0.1"
 dependencies = [
@@ -5661,6 +6178,22 @@ dependencies = [
  "nextssl-core",
  "serde_json",
  "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-z-base-32"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "z32",
+]
+
+[[package]]
+name = "nextssl-algo-z85"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "z85",
 ]
 
 [[package]]
@@ -5799,6 +6332,7 @@ dependencies = [
  "nextssl-algo-aria-128",
  "nextssl-algo-aria-192",
  "nextssl-algo-aria-256",
+ "nextssl-algo-ascii85",
  "nextssl-algo-ascon-aead128",
  "nextssl-algo-ascon-aead128a",
  "nextssl-algo-ascon-cxof128",
@@ -5809,6 +6343,7 @@ dependencies = [
  "nextssl-algo-base16",
  "nextssl-algo-base32",
  "nextssl-algo-base32hex",
+ "nextssl-algo-base45",
  "nextssl-algo-base58",
  "nextssl-algo-base58check",
  "nextssl-algo-base64",
@@ -5842,6 +6377,10 @@ dependencies = [
  "nextssl-algo-chacha20-poly1305",
  "nextssl-algo-chacha8",
  "nextssl-algo-chaskey",
+ "nextssl-algo-cityhash",
+ "nextssl-algo-clefia-128",
+ "nextssl-algo-clefia-192",
+ "nextssl-algo-clefia-256",
  "nextssl-algo-cloc",
  "nextssl-algo-concat-kdf",
  "nextssl-algo-crc16",
@@ -5874,6 +6413,7 @@ dependencies = [
  "nextssl-algo-des",
  "nextssl-algo-des-mac",
  "nextssl-algo-dme-sign",
+ "nextssl-algo-dragon",
  "nextssl-algo-drygascon",
  "nextssl-algo-drygascon-256",
  "nextssl-algo-ecdh-p256",
@@ -5900,6 +6440,14 @@ dependencies = [
  "nextssl-algo-fletcher32",
  "nextssl-algo-fn-dsa-1024",
  "nextssl-algo-fn-dsa-512",
+ "nextssl-algo-fnv-1",
+ "nextssl-algo-fnv-1a",
+ "nextssl-algo-forkae-paef-128-192",
+ "nextssl-algo-forkae-paef-128-256",
+ "nextssl-algo-forkae-paef-128-288",
+ "nextssl-algo-forkae-paef-64-192",
+ "nextssl-algo-forkae-saef-128-192",
+ "nextssl-algo-forkae-saef-128-256",
  "nextssl-algo-fountain",
  "nextssl-algo-ghash",
  "nextssl-algo-gift-cofb",
@@ -5932,8 +6480,11 @@ dependencies = [
  "nextssl-algo-hss-sha256-h5-h5-w4",
  "nextssl-algo-hyena-v1",
  "nextssl-algo-hyena-v2",
+ "nextssl-algo-ice",
+ "nextssl-algo-ice-2",
  "nextssl-algo-idea",
  "nextssl-algo-ifeed",
+ "nextssl-algo-internet-checksum",
  "nextssl-algo-isap-a-128a",
  "nextssl-algo-isap-k-128a",
  "nextssl-algo-iscream",
@@ -5947,13 +6498,25 @@ dependencies = [
  "nextssl-algo-kasumi",
  "nextssl-algo-keccak256",
  "nextssl-algo-keccak512",
+ "nextssl-algo-ketje",
+ "nextssl-algo-keyak",
  "nextssl-algo-khazad",
  "nextssl-algo-kiasu",
  "nextssl-algo-kmac128",
  "nextssl-algo-kmac256",
  "nextssl-algo-kmacxof128",
  "nextssl-algo-kmacxof256",
+ "nextssl-algo-knot-aead-128-256",
+ "nextssl-algo-knot-aead-128-384",
+ "nextssl-algo-knot-aead-192-384",
+ "nextssl-algo-knot-aead-256-512",
+ "nextssl-algo-knot-hash-256-256",
+ "nextssl-algo-knot-hash-256-384",
+ "nextssl-algo-knot-hash-384-384",
+ "nextssl-algo-knot-hash-512-512",
+ "nextssl-algo-kupyna",
  "nextssl-algo-kuznyechik",
+ "nextssl-algo-lex",
  "nextssl-algo-lm-hash",
  "nextssl-algo-lms-sha256-h10-w4",
  "nextssl-algo-lms-sha256-h5-w4",
@@ -5976,6 +6539,7 @@ dependencies = [
  "nextssl-algo-md5",
  "nextssl-algo-md5crypt",
  "nextssl-algo-md6",
+ "nextssl-algo-metrohash",
  "nextssl-algo-ml-dsa-44",
  "nextssl-algo-ml-dsa-65",
  "nextssl-algo-ml-dsa-87",
@@ -5983,6 +6547,7 @@ dependencies = [
  "nextssl-algo-ml-kem-512",
  "nextssl-algo-ml-kem-768",
  "nextssl-algo-morus",
+ "nextssl-algo-murmurhash3",
  "nextssl-algo-noekeon",
  "nextssl-algo-norx",
  "nextssl-algo-nt-hash",
@@ -6010,6 +6575,7 @@ dependencies = [
  "nextssl-algo-pyjamask",
  "nextssl-algo-pyjamask-96",
  "nextssl-algo-rabbit",
+ "nextssl-algo-rapidhash",
  "nextssl-algo-raviyoyla",
  "nextssl-algo-rc2",
  "nextssl-algo-rc4",
@@ -6040,6 +6606,7 @@ dependencies = [
  "nextssl-algo-serpent-128",
  "nextssl-algo-serpent-192",
  "nextssl-algo-serpent-256",
+ "nextssl-algo-sha-1dc",
  "nextssl-algo-sha0",
  "nextssl-algo-sha1",
  "nextssl-algo-sha224",
@@ -6058,11 +6625,20 @@ dependencies = [
  "nextssl-algo-shake128",
  "nextssl-algo-shake256",
  "nextssl-algo-shamir",
+ "nextssl-algo-silc",
  "nextssl-algo-siphash-2-4",
  "nextssl-algo-siphash-4-8",
  "nextssl-algo-skein1024",
  "nextssl-algo-skein256",
  "nextssl-algo-skein512",
+ "nextssl-algo-skinny-aead-m1",
+ "nextssl-algo-skinny-aead-m2",
+ "nextssl-algo-skinny-aead-m3",
+ "nextssl-algo-skinny-aead-m4",
+ "nextssl-algo-skinny-aead-m5",
+ "nextssl-algo-skinny-aead-m6",
+ "nextssl-algo-skinny-tk2-hash",
+ "nextssl-algo-skinny-tk3-hash",
  "nextssl-algo-skipjack",
  "nextssl-algo-slh-dsa-sha2-128f",
  "nextssl-algo-slh-dsa-sha2-128s",
@@ -6079,6 +6655,8 @@ dependencies = [
  "nextssl-algo-sm2-sign",
  "nextssl-algo-sm3",
  "nextssl-algo-sm4",
+ "nextssl-algo-snow-2-0",
+ "nextssl-algo-sober-128",
  "nextssl-algo-spake2-ed25519",
  "nextssl-algo-sparkle-esch",
  "nextssl-algo-sparkle-schwaemm",
@@ -6087,6 +6665,7 @@ dependencies = [
  "nextssl-algo-spoc-64",
  "nextssl-algo-spook",
  "nextssl-algo-spook-su",
+ "nextssl-algo-spookyhash",
  "nextssl-algo-srp-6a-2048-sha256",
  "nextssl-algo-streebog256",
  "nextssl-algo-streebog512",
@@ -6097,6 +6676,7 @@ dependencies = [
  "nextssl-algo-sundae-128",
  "nextssl-algo-sundae-64",
  "nextssl-algo-tea",
+ "nextssl-algo-thin-ice",
  "nextssl-algo-threefish-1024",
  "nextssl-algo-threefish-256",
  "nextssl-algo-threefish-512",
@@ -6104,6 +6684,7 @@ dependencies = [
  "nextssl-algo-tinyjambu",
  "nextssl-algo-tinyjambu-192",
  "nextssl-algo-tinyjambu-256",
+ "nextssl-algo-trivium",
  "nextssl-algo-turboshake128",
  "nextssl-algo-turboshake256",
  "nextssl-algo-twine-128",
@@ -6112,6 +6693,7 @@ dependencies = [
  "nextssl-algo-wage",
  "nextssl-algo-wheesht",
  "nextssl-algo-whirlpool",
+ "nextssl-algo-wyhash",
  "nextssl-algo-x25519",
  "nextssl-algo-x448",
  "nextssl-algo-xchacha20",
@@ -6120,11 +6702,14 @@ dependencies = [
  "nextssl-algo-xoodyak-hash",
  "nextssl-algo-xsalsa20",
  "nextssl-algo-xtea",
+ "nextssl-algo-xxh128",
  "nextssl-algo-xxh3",
  "nextssl-algo-xxhash32",
  "nextssl-algo-xxhash64",
  "nextssl-algo-yaes",
  "nextssl-algo-yescrypt",
+ "nextssl-algo-z-base-32",
+ "nextssl-algo-z85",
  "nextssl-algo-zuc",
  "nextssl-algo-zuc-256",
  "nextssl-core",
@@ -6577,9 +7162,24 @@ dependencies = [
 
 [[package]]
 name = "rand_core"
+version = "0.9.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "76afc826de14238e6e8c374ddcc1fa19e374fd8dd986b0d2af0d02377261d83c"
+
+[[package]]
+name = "rand_core"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "63b8176103e19a2643978565ca18b50549f6101881c443590420e4dc998a3c69"
+
+[[package]]
+name = "rapidhash"
+version = "4.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5da7e78a036ce858e8d55b7e7dc8ba3a88b78350fd2155d3591bbd966b58589e"
+dependencies = [
+ "rustversion",
+]
 
 [[package]]
 name = "rc2"
@@ -7000,6 +7600,12 @@ name = "simdutf8"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3a9fe34e3e7a50316060351f37187a3f546bce95496156754b601a5fa71b76e"
+
+[[package]]
+name = "simplehash"
+version = "0.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "db6192b3b6d8dbecf2ba8c8e16aa8b0cf64995ec51ce6b44b177287d187c97d3"
 
 [[package]]
 name = "skein"
@@ -7493,6 +8099,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "wyhash"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ca4d373340c479fd1e779f7a763acee85da3e423b1a9a9acccf97babcc92edbb"
+dependencies = [
+ "rand_core 0.9.5",
+]
+
+[[package]]
 name = "x25519-dalek"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7532,6 +8147,27 @@ checksum = "e2acb658219ff8afdcedc1ea506709b2b32812719eb6ac36f47ae43f50404157"
 dependencies = [
  "cipher 0.5.2",
 ]
+
+[[package]]
+name = "yafnv"
+version = "3.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a98cd19b5e3fbcda406d58efc9f5cb2d6e82e381708d52f357b3b3cfb19559b1"
+dependencies = [
+ "num-traits",
+]
+
+[[package]]
+name = "z32"
+version = "1.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2164e798d9e3d84ee2c91139ace54638059a3b23e361f5c11781c2c6459bde0f"
+
+[[package]]
+name = "z85"
+version = "3.0.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c6e61e59a957b7ccee15d2049f86e8bfd6f66968fcd88f018950662d9b86e675"
 
 [[package]]
 name = "zerocopy"

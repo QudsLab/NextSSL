@@ -1,0 +1,21 @@
+id        = "lex"
+kind      = "streamcipher"
+category  = "stream"
+family    = "lex"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "LicenseRef-Public-Domain", files = ["v2/ref/e/ecrypt-sync.h", "v2/ref/e/lex.c", "estream-convert-api.h", "estream-functions.h", "ecrypt-machine.h", "ecrypt-portable.h", "ecrypt-config.h", "LICENSE"] }
+
+# Entry point wired: v2/ref/e/lex.c (ECRYPT_keysetup/ECRYPT_ivsetup/ECRYPT_process_bytes via shim_apply; 128-bit key and IV. Framework headers (ecrypt-portable.h etc.) are byte-identical copies from the pinned SUPERCOP include/ dir). Other variants not wired: other key/IV sizes allowed by the upstream header.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 16
