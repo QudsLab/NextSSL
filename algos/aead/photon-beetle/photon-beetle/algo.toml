@@ -1,0 +1,26 @@
+id        = "photon-beetle"
+kind      = "aead"
+category  = "aead"
+family    = "photon-beetle"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["PHOTON-Beetle (NIST LWC finalist)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "internal-photon256.c", "internal-photon256.h", "internal-util.h", "photon-beetle.c", "photon-beetle.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Param `variant` = rate in bits: 128 (PHOTON-Beetle-AEAD-ENC-128, default) or 32. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[params.variant]
+type    = "enum"
+values  = ["128", "32"]
+default = "128"
+
+[kat]
+files = ["kat/photon-beetle.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16

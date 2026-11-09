@@ -1,0 +1,21 @@
+id        = "norx"
+kind      = "aead"
+category  = "aead"
+family    = "norx"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["NORX64-4-1 (CAESAR round 3 candidate)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/norx/norx", commit = "b7f5f9ab3b69713175821b7319dbec97cb12a004", license = "CC0-1.0", files = ["api.h", "caesar.c", "norx.c", "norx.h", "norx_config.h", "norx_util.h", "LICENSE"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Tier unverified: the only vectors are the authors' own kat.h, produced by the authors' genkat from this same reference code (inputs: bytes i*197+123 etc.); no independent implementation was run. Header and trailer are empty (CAESAR API). Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/norx.json"]
+
+[sizes]
+key = 32
+nonce = 32
+tag = 32

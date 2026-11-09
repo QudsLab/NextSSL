@@ -1,0 +1,21 @@
+id        = "locus"
+kind      = "aead"
+category  = "aead"
+family    = "locus"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["LOCUS-AEAD (NIST LWC round 2)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "internal-gift64.c", "internal-gift64.h", "internal-util.h", "lotus-locus.c", "lotus-locus.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Tag 8 bytes. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/locus.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 8
