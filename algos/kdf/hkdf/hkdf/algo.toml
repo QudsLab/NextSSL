@@ -1,0 +1,25 @@
+id        = "hkdf"
+kind      = "kdf"
+category  = "kdf"
+family    = "hkdf"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 5869", "NIST SP 800-56C"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "hkdf", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `sha2` =0.11.1 and `sha3` =0.11.0 (MIT OR Apache-2.0).
+# Generic HKDF over a closed set of sound hashes (MD5/SHA-1 not selectable).
+
+[params.hash]
+type    = "enum"
+values  = ["sha256", "sha384", "sha512", "sha224", "sha512-224", "sha512-256", "sha3-224", "sha3-256", "sha3-384", "sha3-512"]
+default = "sha256"
+
+[kat]
+files = ["kat/vectors.json", "kat/wycheproof_hkdf_sha256_test.json"]
+
+[sizes]
+key = { min = 1, max = 268435456 }
+out = { min = 1, max = 16320 }

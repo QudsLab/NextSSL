@@ -1,0 +1,2 @@
+C2SP/wycheproof @ d17cc89fa5c8f4f4d378b5385ebf75da5d0926c9 (testvectors_v1/*.json copied verbatim)
+https://github.com/C2SP/wycheproof/tree/d17cc89fa5c8f4f4d378b5385ebf75da5d0926c9/testvectors_v1

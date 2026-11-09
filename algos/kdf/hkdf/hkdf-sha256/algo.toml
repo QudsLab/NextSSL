@@ -1,0 +1,22 @@
+id        = "hkdf-sha256"
+kind      = "kdf"
+category  = "kdf"
+family    = "hkdf"
+aliases   = ["hkdf-sha-256"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 5869", "NIST SP 800-56C"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "hkdf", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `sha2` =0.11.1 (MIT OR Apache-2.0) for SHA-256.
+
+[kat]
+files = ["kat/rfc5869.json"]
+# Wycheproof (C2SP/wycheproof, commit in kat/WYCHEPROOF_COMMIT.txt) is run by the crate's own test:
+# kat/wycheproof_hkdf_sha256_test.json
+
+# key = input keying material (1..=2^28 bytes). out = 1..=255*32 = 8160 bytes.
+[sizes]
+key = { min = 1, max = 268435456 }
+out = { min = 1, max = 8160 }

@@ -1,0 +1,22 @@
+[package]
+name = "nextssl-algo-concat-kdf"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+concat-kdf = { version = "=0.1.0", default-features = false }
+sha2 = { version = "=0.10.9", default-features = false }
+sha3 = { version = "=0.10.8", default-features = false }
+
+[dev-dependencies]
+serde_json.workspace = true
+
+[lints]
+workspace = true

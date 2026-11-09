@@ -1,0 +1,30 @@
+id        = "concat-kdf"
+kind      = "kdf"
+category  = "kdf"
+family    = "concat"
+aliases   = ["kda-onestep", "sskdf", "sp800-56c-onestep", "sskdf-hash"]
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-56A rev.3 section 5.8.2.1 (Concatenation KDF)", "NIST SP 800-56C rev.2 section 4 (one-step KDF, hash option)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "concat-kdf", version = "=0.1.0", license = "MIT OR Apache-2.0" }
+# One id for rows 360 (kda-onestep), 362 (concat-kdf) and 368 (sskdf): they are the same construction H(counter
+# || Z || OtherInfo). The HMAC-based and KMAC-based one-step options are NOT offered by this crate.
+# KAT: ACVP KDA-OneStep groups with SHA2-224, SHA2-512 and SHA3-512; info_hex = t || uPartyId || vPartyId || l
+# (32-bit big endian bit length), the "t||uPartyInfo||vPartyInfo||l" concatenation pattern. Tier standard even
+# though the crate is young: the construction is a 20-line counter loop covered by NIST vectors.
+
+[params.hash]
+type = "enum"
+values = ["sha224", "sha256", "sha384", "sha512", "sha3-224", "sha3-256", "sha3-384", "sha3-512"]
+default = "sha256"
+
+[kat]
+files = ["kat/acvp-onestep.json"]
+
+[sizes]
+out = { min = 1, max = 1048576 }
+key = { min = 1, max = 1048576 }
+salt = 0
+info = { min = 0, max = 65536 }
