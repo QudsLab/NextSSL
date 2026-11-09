@@ -1,0 +1,19 @@
+id        = "sha0"
+kind      = "hash"
+category  = "hash"
+family    = "sha1"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = ["SHA-0 (withdrawn FIPS 180, 1993), sphlib implementation"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/pornin/sphlib", commit = "15b6b8d8f3e4a43c58ba102d712fa6b8a3317035", license = "MIT", files = ["c/sha0.c", "c/md_helper.c", "c/sph_sha0.h", "c/sph_types.h", "LICENSE"] }
+# Tier broken: SHA-0 collisions are practical (Chabaud-Joux 1998). Original 1993 SHA, NOT SHA-1 (no rotate in the message schedule).
+# KAT: the two FIPS 180 (1993) examples via sphlib test_sha0.c. Verbatim sphlib files; symbols prefixed by -D defines in build.rs.
+
+[kat]
+files = ["kat/sha0.json"]
+
+[sizes]
+out = 20

@@ -1,0 +1,18 @@
+id        = "ripemd320"
+kind      = "hash"
+category  = "hash"
+family    = "ripemd"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["RIPEMD-320 (Dobbertin, Bosselaers, Preneel)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "ripemd", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+digest    = "ripemd::Ripemd320"
+
+[kat]
+files = ["kat/reference-vectors.json"]
+
+[sizes]
+out = 40

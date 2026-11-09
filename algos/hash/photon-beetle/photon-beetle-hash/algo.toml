@@ -1,0 +1,19 @@
+id        = "photon-beetle-hash"
+kind      = "hash"
+category  = "hash"
+family    = "photon-beetle"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["PHOTON-Beetle (NIST LWC finalist)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "internal-photon256.c", "internal-photon256.h", "internal-util.h", "photon-beetle.c", "photon-beetle.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Hash256 rate 32. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/photon-beetle-hash.json"]
+
+[sizes]
+out = 32

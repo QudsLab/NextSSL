@@ -1,0 +1,19 @@
+id        = "romulus-hash"
+kind      = "hash"
+category  = "hash"
+family    = "romulus"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["Romulus-H v1.3 (NIST LWC finalist)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/romulusae/romulus", commit = "d0957f82666c32033e435c358e922681c951acdc", license = "MIT", files = ["api.h", "crypto_hash.h", "hash.c", "skinny.h", "skinny_reference.c", "variant.h", "LICENSE"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/romulus-hash.json"]
+
+[sizes]
+out = 32

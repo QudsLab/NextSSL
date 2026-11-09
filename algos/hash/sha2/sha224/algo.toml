@@ -1,0 +1,19 @@
+id        = "sha224"
+kind      = "hash"
+category  = "hash"
+family    = "sha2"
+aliases   = ["sha-224", "sha2-224"]
+tier      = "standard"
+status    = "active"
+standards = ["FIPS 180-4", "RFC 6234"]
+oid       = "2.16.840.1.101.3.4.2.4"
+fips      = true
+copyleft  = false
+upstream  = { crate = "sha2", version = "=0.11.1", license = "MIT OR Apache-2.0" }
+digest    = "sha2::Sha224"
+
+[kat]
+files = ["kat/sha224.json"]
+
+[sizes]
+out = 28

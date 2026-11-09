@@ -1,0 +1,26 @@
+{
+ "algorithm": "ripemd128",
+ "source": "RIPEMD-128 reference vectors, Bosselaers' RIPEMD page (homes.esat.kuleuven.be/~bosselaers/ripemd160.html)",
+ "vectors": [
+  {
+   "id": "empty",
+   "msg_hex": "",
+   "out_hex": "cdf26213a150dc3ecb610f18f6b38b46"
+  },
+  {
+   "id": "a",
+   "msg_hex": "61",
+   "out_hex": "86be7afa339d0fc7cfc785e72f578d33"
+  },
+  {
+   "id": "abc",
+   "msg_hex": "616263",
+   "out_hex": "c14a12199c66e4ba84636b0f69144c77"
+  },
+  {
+   "id": "message-digest",
+   "msg_hex": "6d65737361676520646967657374",
+   "out_hex": "9e327b3d6e523062afc1132d7df9d1b8"
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+id        = "parallelhash128"
+kind      = "hash"
+category  = "hash"
+family    = "parallelhash"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-185"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "tiny-keccak", version = "=2.0.2", license = "CC0-1.0" }
+
+[params.block_size]
+type    = "u64"
+min     = 1
+max     = 4294967295
+default = 8192
+
+[params.out_len]
+type    = "u64"
+min     = 1
+max     = 1024
+default = 32
+
+[params.custom]
+type     = "bytes"
+min      = 0
+max      = 65536
+required = false
+
+[kat]
+files = ["kat/parallelhash128.json"]
+
+[sizes]
+out = { min = 1, max = 1024 }

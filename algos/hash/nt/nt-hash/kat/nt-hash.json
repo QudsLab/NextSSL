@@ -1,0 +1,41 @@
+{
+ "algorithm": "nt-hash",
+ "source": "pycryptodome MD4 (independent) over UTF-16LE(password), MS-NLMP 3.3.1; input is UTF-8",
+ "vectors": [
+  {
+   "id": "pw-0",
+   "msg_hex": "",
+   "out_hex": "31d6cfe0d16ae931b73c59d7e0c089c0"
+  },
+  {
+   "id": "pw-1",
+   "msg_hex": "50617373776f7264",
+   "out_hex": "a4f49c406510bdcab6824ee7c30fd852"
+  },
+  {
+   "id": "pw-2",
+   "msg_hex": "70617373776f7264",
+   "out_hex": "8846f7eaee8fb117ad06bdd830b7586c"
+  },
+  {
+   "id": "pw-3",
+   "msg_hex": "616263",
+   "out_hex": "e0fba38268d0ec66ef1cb452d5885e53"
+  },
+  {
+   "id": "pw-4",
+   "msg_hex": "7061c39f77c3b67264",
+   "out_hex": "23a563ef94ef3392e771a0c45563e6fe"
+  },
+  {
+   "id": "pw-5",
+   "msg_hex": "f09f988078",
+   "out_hex": "4239d4dcd7148a5ea8f750b376cfdbd6"
+  },
+  {
+   "id": "pw-6",
+   "msg_hex": "61616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161",
+   "out_hex": "d2ecf84d0bfd02b60dab8bcb1cc13253"
+  }
+ ]
+}

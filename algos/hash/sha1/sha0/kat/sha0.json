@@ -1,0 +1,16 @@
+{
+ "algorithm": "sha0",
+ "source": "sphlib test_sha0.c (FIPS 180 1993 examples)",
+ "vectors": [
+  {
+   "id": "sphlib-test-0",
+   "msg_hex": "616263",
+   "out_hex": "0164b8a914cd2a5e74c4f7ff082c4d97f1edf880"
+  },
+  {
+   "id": "sphlib-test-1",
+   "msg_hex": "6162636462636465636465666465666765666768666768696768696a68696a6b696a6b6c6a6b6c6d6b6c6d6e6c6d6e6f6d6e6f706e6f7071",
+   "out_hex": "d2516ee1acfa5baf33dfc1c471e438449ef134c8"
+  }
+ ]
+}

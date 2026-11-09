@@ -1,0 +1,19 @@
+id        = "ripemd128"
+kind      = "hash"
+category  = "hash"
+family    = "ripemd"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["ISO/IEC 10118-3"]
+oid       = "1.3.36.3.2.2"
+fips      = false
+copyleft  = false
+upstream  = { crate = "ripemd", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+digest    = "ripemd::Ripemd128"
+
+[kat]
+files = ["kat/reference-vectors.json"]
+
+[sizes]
+out = 16

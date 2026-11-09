@@ -1,0 +1,22 @@
+{
+ "algorithm": "md6",
+ "source": "md6-rs src/lib.rs doc examples @ 02588c18df9f (NOT independent: produced by the same Rivest code)",
+ "vectors": [
+  {
+   "id": "doc-256-lazy-fox",
+   "params": {
+    "out_len": 32
+   },
+   "msg_hex": "546865206c617a7920666f78206a756d7073206f76657220746865206c617a7920646f67",
+   "out_hex": "e45551aae266e1482ac98e24229b3e90dc066177f8fb1a526e9da2cc957197aa"
+  },
+  {
+   "id": "doc-512-zazolc",
+   "params": {
+    "out_len": 64
+   },
+   "msg_hex": "5a61c5bcc3b3c582c4872067c499c59b6cc485206a61c5bac584",
+   "out_hex": "924e916a012c1a8d0fb79a4ad49c555ebdca59b81b4c13412e32a5c93b61adb84db3f90c0351b29e7bae469f8d605dedff5172dea16f00f7b482ef87ed77d91a"
+  }
+ ]
+}

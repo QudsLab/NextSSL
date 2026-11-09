@@ -1,0 +1,19 @@
+id        = "sha256"
+kind      = "hash"
+category  = "hash"
+family    = "sha2"
+aliases   = ["sha-256", "sha2-256"]
+tier      = "safe"
+status    = "active"
+standards = ["FIPS 180-4", "RFC 6234"]
+cose_alg  = -16
+oid       = "2.16.840.1.101.3.4.2.1"
+fips      = true
+upstream  = { crate = "sha2", version = "=0.11.1", license = "MIT OR Apache-2.0" }
+digest    = "sha2::Sha256"
+
+[kat]
+files = ["kat/fips180-4.json"]
+
+[sizes]
+out = 32

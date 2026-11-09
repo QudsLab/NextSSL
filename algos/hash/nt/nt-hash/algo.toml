@@ -1,0 +1,17 @@
+id        = "nt-hash"
+kind      = "hash"
+category  = "hash"
+family    = "nt"
+aliases   = ["ntlm-hash", "ntowfv1"]
+tier      = "broken"
+status    = "active"
+standards = ["MS-NLMP 3.3.1 (NTOWFv1)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "md4", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/nt-hash.json"]
+
+[sizes]
+out = 16

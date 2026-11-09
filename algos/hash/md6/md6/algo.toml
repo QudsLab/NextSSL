@@ -1,0 +1,26 @@
+id        = "md6"
+kind      = "hash"
+category  = "hash"
+family    = "md6"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["MD6 (Rivest et al., NIST SHA-3 round-1 candidate), reference C"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/nabijaczleweli/md6-rs", commit = "02588c18df9f86f83169f51d4c1eab1217d62712", license = "MIT", files = ["ext/md6/md6_compress.c", "ext/md6/md6_compression_hook.c", "ext/md6/md6_mode.c", "ext/md6/md6.h", "LICENSE"] }
+# UNVERIFIED: only the repackaged reference C (md6-rs) could be fetched, the official MD6 site is gone; the only KATs are two same-code doc examples (see kat/README.md).
+# out_len 1..=64 bytes selects d = 8 * out_len bits (any byte multiple; the NIST sizes are 28, 32, 48, 64). Default 32. Keyless, default mode (L = 64), default rounds.
+# Row 50 asked for the md6 crate: not usable as is (its C objects would carry unprefixed symbols), so its vendored C is imported instead.
+
+[params.out_len]
+type    = "u64"
+min     = 1
+max     = 64
+default = 32
+
+[kat]
+files = ["kat/md6.json"]
+
+[sizes]
+out = { min = 1, max = 64 }
