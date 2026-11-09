@@ -1,0 +1,19 @@
+id        = "xoodyak-hash"
+kind      = "hash"
+category  = "hash"
+family    = "xoodyak"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["Xoodyak round-2 (v1) (NIST LWC)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "internal-util.h", "internal-xoodoo.c", "internal-xoodoo.h", "xoodyak.c", "xoodyak.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Source deviation as for xoodyak (no XKCP wrapper). Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/xoodyak-hash.json"]
+
+[sizes]
+out = 32

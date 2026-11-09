@@ -1,0 +1,19 @@
+id        = "whirlpool"
+kind      = "hash"
+category  = "hash"
+family    = "whirlpool"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["ISO/IEC 10118-3:2004"]
+oid       = "1.0.10118.3.0.55"
+fips      = false
+copyleft  = false
+upstream  = { crate = "whirlpool", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+digest    = "whirlpool::Whirlpool"
+
+[kat]
+files = ["kat/whirlpool.json"]
+
+[sizes]
+out = 64
