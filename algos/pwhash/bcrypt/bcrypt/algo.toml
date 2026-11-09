@@ -1,0 +1,26 @@
+id        = "bcrypt"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "bcrypt"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["bcrypt (Provos, Mazieres 1999)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "bcrypt", version = "=0.19.3", license = "MIT" }
+# Legacy tier: 72-byte limit and 4 KiB memory make bcrypt weaker than argon2id/scrypt; kept for interoperability.
+# bcrypt crate is Keats/rust-bcrypt (not RustCrypto).
+
+[params.cost]
+type     = "u32"
+min      = 4
+max      = 16
+default  = 12
+
+[kat]
+files = ["kat/crypt_blowfish.json"]
+
+[sizes]
+salt = 16
+out = 23

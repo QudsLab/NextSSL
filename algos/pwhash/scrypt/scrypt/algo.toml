@@ -1,0 +1,43 @@
+id        = "scrypt"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "scrypt"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 7914"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "scrypt", version = "=0.12.0", license = "MIT OR Apache-2.0" }
+# Empty salt is accepted because RFC 7914 vector 1 uses one; callers should use >= 16 bytes.
+
+[params.ln]
+type     = "u32"
+min      = 1
+max      = 20
+default  = 17
+
+[params.r]
+type     = "u32"
+min      = 1
+max      = 32
+default  = 8
+
+[params.p]
+type     = "u32"
+min      = 1
+max      = 16
+default  = 1
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 1024
+default  = 32
+
+[kat]
+files = ["kat/rfc7914.json"]
+
+[sizes]
+salt = { min = 0, max = 64 }
+out = { min = 16, max = 1024 }

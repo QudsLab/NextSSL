@@ -1,0 +1,33 @@
+id        = "balloon"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "balloon"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Balloon hashing (Boneh, Corrigan-Gibbs, Schechter 2016)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "balloon-hash", version = "=0.5.0", license = "MIT OR Apache-2.0" }
+# UNVERIFIED: the only KATs are 5 vectors from the upstream crate's tests; their cross-implementation provenance is a comment in upstream, not something we re-ran.
+# No official Balloon test vectors are published in the paper. Single-core Balloon only (parallelism fixed at 1); SHA-256 only.
+# Also depends on RustCrypto `sha2` =0.11.1 (MIT OR Apache-2.0).
+
+[params.s_cost]
+type     = "u32"
+min      = 1
+max      = 1048576
+default  = 65536
+
+[params.t_cost]
+type     = "u32"
+min      = 1
+max      = 64
+default  = 3
+
+[kat]
+files = ["kat/balloon-hash-tests.json"]
+
+[sizes]
+salt = { min = 0, max = 64 }
+out = 32

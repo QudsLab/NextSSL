@@ -1,0 +1,94 @@
+{
+ "algorithm": "yescrypt",
+ "source": "openwall/yescrypt TESTS-OK @ 86ea42c29d61 (author reference output), YESCRYPT_DEFAULTS rows with g=0 and output >= 16 bytes",
+ "vectors": [
+  {
+   "id": "tests-ok-0",
+   "password_hex": "",
+   "salt_hex": "",
+   "ln": 2,
+   "r": 1,
+   "p": 1,
+   "t": 0,
+   "out_len": 64,
+   "out_hex": "0cd5af76eb241df8119a9a122ae36920bcc7f414b9c0d58f45008060dade46b0c80922bdcc16a3ab5d201d4c6140c671be1f75272ca904739d5ad1ff672b0c21"
+  },
+  {
+   "id": "tests-ok-1",
+   "password_hex": "",
+   "salt_hex": "",
+   "ln": 2,
+   "r": 1,
+   "p": 1,
+   "t": 1,
+   "out_len": 64,
+   "out_hex": "23b6adf0b60c9a997f58583d80cda48c638cdc2f289edf93a70807725a0d35c468ca362c5557cc04b6811e2e730841f526d8f4f7acfbfa9e06fe1f383a71155e"
+  },
+  {
+   "id": "tests-ok-2",
+   "password_hex": "",
+   "salt_hex": "",
+   "ln": 2,
+   "r": 1,
+   "p": 1,
+   "t": 1,
+   "out_len": 33,
+   "out_hex": "23b6adf0b60c9a997f58583d80cda48c638cdc2f289edf93a70807725a0d35c468"
+  },
+  {
+   "id": "tests-ok-3",
+   "password_hex": "",
+   "salt_hex": "",
+   "ln": 2,
+   "r": 1,
+   "p": 1,
+   "t": 1,
+   "out_len": 32,
+   "out_hex": "23b6adf0b60c9a997f58583d80cda48c638cdc2f289edf93a70807725a0d35c4"
+  },
+  {
+   "id": "tests-ok-4",
+   "password_hex": "",
+   "salt_hex": "",
+   "ln": 2,
+   "r": 1,
+   "p": 1,
+   "t": 1,
+   "out_len": 31,
+   "out_hex": "23b6adf0b60c9a997f58583d80cda48c638cdc2f289edf93a70807725a0d35"
+  },
+  {
+   "id": "tests-ok-5",
+   "password_hex": "70",
+   "salt_hex": "73",
+   "ln": 4,
+   "r": 8,
+   "p": 1,
+   "t": 10,
+   "out_len": 40,
+   "out_hex": "e1f981733a94052fcd7acb1405df0bbde8e499b6a1331b775909b48c2f516c40dcc8301635b7237b"
+  },
+  {
+   "id": "tests-ok-6",
+   "password_hex": "70",
+   "salt_hex": "73",
+   "ln": 4,
+   "r": 8,
+   "p": 1,
+   "t": 0,
+   "out_len": 40,
+   "out_hex": "c8c7ff1122b0b291c3f2608948782cd689cc45579017aaa5ff8baa74a632ec99c3d66930fb2023bb"
+  },
+  {
+   "id": "tests-ok-7",
+   "password_hex": "70",
+   "salt_hex": "73",
+   "ln": 4,
+   "r": 8,
+   "p": 1,
+   "t": 0,
+   "out_len": 32,
+   "out_hex": "c8c7ff1122b0b291c3f2608948782cd689cc45579017aaa5ff8baa74a632ec99"
+  }
+ ]
+}

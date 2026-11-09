@@ -1,0 +1,261 @@
+{
+ "algorithm": "md5crypt",
+ "source": "John the Ripper src/MD5_fmt.c test table (bleeding-jumbo 37bebbe4b6), $1$ entries whose salt uses ./0-9A-Za-z and is at most 8 characters",
+ "vectors": [
+  {
+   "id": "john-0",
+   "hash": "$1$12345678$aIccj83HRDBo6ux1bVx7D1",
+   "password": "0123456789ABCDE"
+  },
+  {
+   "id": "john-1",
+   "hash": "$1$7Uu2iTBB$Y4hQl2WvrOA3LBbLDxbAf0",
+   "password": "12345"
+  },
+  {
+   "id": "john-2",
+   "hash": "$1$12345678$f8QoJuo0DpBRfQSD0vglc1",
+   "password": "12345678"
+  },
+  {
+   "id": "john-3",
+   "hash": "$1$$qRPK7m23GJusamGpoGLby/",
+   "password": ""
+  },
+  {
+   "id": "john-4",
+   "hash": "$1$$AuJCr07mI7DSew03TmBIv/",
+   "password": "no salt"
+  },
+  {
+   "id": "john-5",
+   "hash": "$1$12345678$xek.CpjQUVgdf/P2N9KQf/",
+   "password": ""
+  },
+  {
+   "id": "john-6",
+   "hash": "$1$1234$BdIMOAWFOV2AQlLsrN/Sw.",
+   "password": "1234"
+  },
+  {
+   "id": "john-7",
+   "hash": "$1$bb$19smCEBG0Q1pVil0/HqK./",
+   "password": "aaaaa"
+  },
+  {
+   "id": "john-8",
+   "hash": "$1$coin$rebm0t9KJ56mgGWJF5o5M0",
+   "password": "lapin"
+  },
+  {
+   "id": "john-9",
+   "hash": "$1$pouet$/Ecz/vyk.zCYvrr6wB78h0",
+   "password": "canard"
+  },
+  {
+   "id": "john-10",
+   "hash": "$1$test2$02MCIATVoxq3IhgK6XRkb1",
+   "password": "test1"
+  },
+  {
+   "id": "john-11",
+   "hash": "$1$aussi$X67z3kXsWo92F15uChx1H1",
+   "password": "felicie"
+  },
+  {
+   "id": "john-12",
+   "hash": "$1$boire$gf.YM2y3InYEu9.NbVr.v0",
+   "password": "manger"
+  },
+  {
+   "id": "john-13",
+   "hash": "$1$bas$qvkmmWnVHRCSv/6LQ1doH/",
+   "password": "haut"
+  },
+  {
+   "id": "john-14",
+   "hash": "$1$gauche$EPvd6LZlrgb0MMFPxUrJN1",
+   "password": "droite"
+  },
+  {
+   "id": "john-15",
+   "hash": "$1$JVDbGx8K$T9h8HK4LZxeLPMTAxCfpc1",
+   "password": "password"
+  },
+  {
+   "id": "john-16",
+   "hash": "$1$1Cu6fEvv$42kuaJ5fMEqyVStPuFG040",
+   "password": "0123456789ABCDE"
+  },
+  {
+   "id": "john-17",
+   "hash": "$1$27iyq7Ya$miN09fW1Scj0DHVNyewoU/",
+   "password": ""
+  },
+  {
+   "id": "john-18",
+   "hash": "$1$84Othc1n$v1cuReaa5lRdGuHaOa76n0",
+   "password": "a"
+  },
+  {
+   "id": "john-19",
+   "hash": "$1$4zq0BsCR$U2ua9WZtDEhzy4gFSiLxN1",
+   "password": "aa"
+  },
+  {
+   "id": "john-20",
+   "hash": "$1$DKwjKWxp$PY6PdlPZsXjOppPDoFOz4.",
+   "password": "aaa"
+  },
+  {
+   "id": "john-21",
+   "hash": "$1$OKDV6ppN$viTVmH48bSePiCrMvXT/./",
+   "password": "aaaa"
+  },
+  {
+   "id": "john-22",
+   "hash": "$1$QEWsCY0O$xrTTMKTepiHMp7Oxgz0pX/",
+   "password": "aaaaa"
+  },
+  {
+   "id": "john-23",
+   "hash": "$1$5dfdk2dF$XiJBPNrfKcCgdQ/kcoB40/",
+   "password": "aaaaaa"
+  },
+  {
+   "id": "john-24",
+   "hash": "$1$Ps6A1Cy6$WsvLg9cQhm9JU0rXkLEtz.",
+   "password": "aaaaaaa"
+  },
+  {
+   "id": "john-25",
+   "hash": "$1$9IK7nZ4M$4nx7Mdj05KGPJX/mZaDrh.",
+   "password": "aaaaaaaa"
+  },
+  {
+   "id": "john-26",
+   "hash": "$1$l3pNTqwT$GAc.dcRaxCvC20CFGCjp4/",
+   "password": "aaaaaaaaa"
+  },
+  {
+   "id": "john-27",
+   "hash": "$1$jSAARhJR$6daQ/ekjAL0MgOUgGJyp10",
+   "password": "aaaaaaaaaa"
+  },
+  {
+   "id": "john-28",
+   "hash": "$1$wk3Xwqqg$2AtdiucwJvJgbaVT1jWpb0",
+   "password": "aaaaaaaaaaa"
+  },
+  {
+   "id": "john-29",
+   "hash": "$1$G6Fn69Ei$d7AKJUOIdz/gO4Utc0TQP1",
+   "password": "aaaaaaaaaaaa"
+  },
+  {
+   "id": "john-30",
+   "hash": "$1$A7XJ7lGK$W5jTnH/4lW4XwZ.6F7n1N.",
+   "password": "aaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-31",
+   "hash": "$1$Rcm46RfA$LfdIK/OP16yHzMYHSlx/B.",
+   "password": "aaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-32",
+   "hash": "$1$4bCSSJMN$TcYKTsukD4SFJE1n4MwMZ/",
+   "password": "aaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-33",
+   "hash": "$1$mJxBkkl8$u7OHfWCPmNxvf0um7hH89.",
+   "password": "aaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-34",
+   "hash": "$1$Ub1gBUt4$TNaLxU7Pq5mk/MiDEb60b/",
+   "password": "aaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-35",
+   "hash": "$1$8ot7QScR$x.p4vjIgdFxxS83x29PkJ0",
+   "password": "aaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-36",
+   "hash": "$1$wRi4OjD3$eJjKD2AwLMWfOTRYA30zn.",
+   "password": "aaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-37",
+   "hash": "$1$lmektrsg$2KSRY4EUFzsYNMg80fG4/0",
+   "password": "aaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-38",
+   "hash": "$1$tgVBKBmE$YRvzsi7qHP2MC1Atg8VCV.",
+   "password": "aaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-39",
+   "hash": "$1$oTsk88YC$Eh435T1BQzmjQekfqkHof/",
+   "password": "aaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-40",
+   "hash": "$1$ykxSZEfP$hJrFeGOFk049L.94Mgggj/",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-41",
+   "hash": "$1$LBK4p5tD$5/gAIx8/7hpTVwDC/.KQv/",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-42",
+   "hash": "$1$fkEasaUI$G7CelOWHkol2nVHN8XQP40",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-43",
+   "hash": "$1$gRevVzeY$eMMQrsl5OHL5dP1p/ktJc/",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-44",
+   "hash": "$1$164TNEjj$ppoV6Ju6Vu63j1OlM4zit/",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-45",
+   "hash": "$1$ErPmhjp2$lZZstb2M455Xhk50eeH4i/",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-46",
+   "hash": "$1$NUssS5fT$QaS4Ywt0IwzxbE0FAGnXn0",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-47",
+   "hash": "$1$NxlTyiJ7$gxkXTEJdeTzY8P6tqKmcz.",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-48",
+   "hash": "$1$Cmy9x7gW$kamvHI42Kh1CH4Shy6g6S/",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-49",
+   "hash": "$1$IsuapfCX$4Yq0Adq5nNZgl0LwbSl5Y0",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "id": "john-50",
+   "hash": "$1$rSZfNcKX$N4XPvGrfhKsyoEcRSaqmG0",
+   "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  }
+ ]
+}

@@ -1,0 +1,46 @@
+{
+ "algorithm": "balloon",
+ "source": "RustCrypto balloon-hash 0.5.0 tests/balloon.rs TEST_VECTORS (parallelism 1, SHA-256); upstream states they were cross-checked against nachonavarro/balloon-hashing and nogoegst/balloon, which we could not re-run",
+ "vectors": [
+  {
+   "id": "balloon-hash-0.5.0-tests-0",
+   "password_hex": "68756e7465723432",
+   "salt_hex": "6578616d706c6573616c74",
+   "s_cost": 1024,
+   "t_cost": 3,
+   "out_hex": "716043dff777b44aa7b88dcbab12c078abecfac9d289c5b5195967aa63440dfb"
+  },
+  {
+   "id": "balloon-hash-0.5.0-tests-1",
+   "password_hex": "",
+   "salt_hex": "73616c74",
+   "s_cost": 3,
+   "t_cost": 3,
+   "out_hex": "5f02f8206f9cd212485c6bdf85527b698956701ad0852106f94b94ee94577378"
+  },
+  {
+   "id": "balloon-hash-0.5.0-tests-2",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "",
+   "s_cost": 3,
+   "t_cost": 3,
+   "out_hex": "20aa99d7fe3f4df4bd98c655c5480ec98b143107a331fd491deda885c4d6a6cc"
+  },
+  {
+   "id": "balloon-hash-0.5.0-tests-3",
+   "password_hex": "00",
+   "salt_hex": "00",
+   "s_cost": 3,
+   "t_cost": 3,
+   "out_hex": "4fc7e302ffa29ae0eac31166cee7a552d1d71135f4e0da66486fb68a749b73a4"
+  },
+  {
+   "id": "balloon-hash-0.5.0-tests-4",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "s_cost": 1,
+   "t_cost": 1,
+   "out_hex": "eefda4a8a75b461fa389c1dcfaf3e9dfacbc26f81f22e6f280d15cc18c417545"
+  }
+ ]
+}

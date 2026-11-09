@@ -1,0 +1,45 @@
+id        = "argon2d"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "argon2"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 9106"]
+oid       = ""
+fips      = false
+upstream  = { crate = "argon2", version = "=0.6.0", license = "MIT OR Apache-2.0" }
+
+# The salt is a per-call argument of PwHash::hash/derive (sizes.salt below), not an instance
+# param: declaring it here would make callers supply it twice.
+# Argon2d: data-dependent memory access (side-channel exposed); prefer argon2id for passwords.
+[params.m_kib]
+type    = "u32"
+min     = 8
+max     = 4194304
+default = 65536
+
+[params.t]
+type    = "u32"
+min     = 1
+max     = 1024
+default = 3
+
+[params.p]
+type    = "u32"
+min     = 1
+max     = 255
+default = 1
+
+[params.out_len]
+type    = "u32"
+min     = 16
+max     = 1024
+default = 32
+
+[kat]
+files = ["kat/rfc9106.json", "kat/argon2-cffi-reference.json"]
+
+[sizes]
+salt = { min = 16, max = 64 }
+out  = { min = 16, max = 1024 }

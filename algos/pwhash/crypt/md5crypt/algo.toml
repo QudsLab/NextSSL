@@ -1,0 +1,22 @@
+id        = "md5crypt"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "crypt"
+aliases   = ["md5-crypt", "crypt-md5"]
+tier      = "broken"
+status    = "active"
+standards = ["FreeBSD md5crypt ($1$)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "pwhash", version = "=1.0.0", license = "MIT" }
+# MD5-crypt is broken for new passwords (fast MD5 loop, fixed 1000 iterations, no memory hardness). Legacy
+# interoperability (verifying existing /etc/shadow entries) only: tier broken, root API only.
+# Salt 0..=8 chars of ./0-9A-Za-z (longer or other bytes are errors, not truncated). `derive` is Unsupported.
+# Row said libxcrypt (LGPL, autotools); the pure-Rust pwhash crate (MIT) is used instead.
+
+[kat]
+files = ["kat/john-tests.json"]
+
+[sizes]
+salt = { min = 0, max = 8 }
+out = 16

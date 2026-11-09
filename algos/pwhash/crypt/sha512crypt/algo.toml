@@ -1,0 +1,27 @@
+id        = "sha512crypt"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "crypt"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["Drepper SHA-crypt"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "sha-crypt", version = "=0.6.0", license = "MIT OR Apache-2.0" }
+# Legacy tier: iteration-only hardening, no memory hardness.
+# The output byte-order table (ORDER) is a data table copied verbatim from the sha-crypt crate source (private upstream); it is not hand-written crypto, and the Drepper vectors verify it.
+# The sha-crypt crate is built without its password-hash/mcf features; string handling is ours (strict parser in the adapter).
+
+[params.rounds]
+type     = "u32"
+min      = 1000
+max      = 10000000
+default  = 100000
+
+[kat]
+files = ["kat/drepper.json"]
+
+[sizes]
+salt = { min = 1, max = 16 }
+out = 64

@@ -1,0 +1,1687 @@
+{
+ "algorithm": "pbkdf2",
+ "source": "sha256/sha512: RFC 7914 + Wycheproof pbkdf2_hmacsha256/512 vectors copied from the pbkdf2-hmac-sha256/512 KATs; all ten hashes: Python hashlib.pbkdf2_hmac (OpenSSL), independent of the crate",
+ "note": "vectors with heavy=true run only with NEXTSSL_HEAVY_KAT=1",
+ "vectors": [
+  {
+   "id": "sha256-wycheproof-1",
+   "password_hex": "706173737764",
+   "salt_hex": "73616c74",
+   "iterations": 1,
+   "out_len": 64,
+   "out_hex": "55ac046e56e3089fec1691c22544b605f94185216dde0465e68b9d57c20dacbc49ca9cccf179b645991664b39d77ef317c71b845b1e30bd509112041d3a19783",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-2",
+   "password_hex": "50617373776f7264",
+   "salt_hex": "4e61436c",
+   "iterations": 80000,
+   "out_len": 64,
+   "out_hex": "4ddcd8f60b98be21830cee5ef22701f9641a4418d04c0414aeff08876b34ab56a1d425a1225833549adb841b51c9b3176a272bdebba1d078478f62b397f33c8d",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-3",
+   "password_hex": "7130577430643470",
+   "salt_hex": "798acc7c76739d75",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "0501c73cb9f40b6769513e70e525051e",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-4",
+   "password_hex": "5a30673349567272",
+   "salt_hex": "84bbd18de5ec10ff",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "05fd57d1cc373fa9f37e1857ac1c0af8fbf635e139a42f9dd25a4e4b4698ea13e943f42220384d32a272",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-5",
+   "password_hex": "7439315572766f47",
+   "salt_hex": "5d76db9ca0f0bae2",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "2a3974a8071f005997c00d33812d8cf52e6af76a7ac558bf5dedeb296464bccf696ad753a79eb7b1b21738584a58d03d2b6c2b7bda08788f844655f6a90b0e3444",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-6",
+   "password_hex": "6b6f67583748447a",
+   "salt_hex": "0a8fbd0232a3a7f6e60d6564c92ea35f",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "c81676dbeb95582c66c3fc2636f1cb7f",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-7",
+   "password_hex": "4939745242645168",
+   "salt_hex": "0a3bb93c0de86a174ab005b8089706ab",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "b7a44e0e93f5f7ec0e177292db0b4a1354b62709e0dfe02167e19586fa99a70d777b39f953fb4fa4c342",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-8",
+   "password_hex": "6f4f4d37324f6330",
+   "salt_hex": "3827c3b6b1e6de7aab096eb75e23610d",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "907bc6a107df5940fb4c986b3f1ed888bcb0c41462df94b58de682c5627c1125492fd3091b06d83ce09794edad3776adb107994f671efe7b3ccd1d3a8fdcb444cc",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-9",
+   "password_hex": "6761734354484546654d36526f61386349",
+   "salt_hex": "cac9ae7ef670990e",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "2a9fc926e220c7915ccd8cde2916ae87",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-10",
+   "password_hex": "75375330684678774e33586f76707a6551",
+   "salt_hex": "201b1e277f4ff955",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "0dc0835f4b34eb966f4cf0d662c020eb09b733c7baa78abe2be41a01a1ccad60aad4969ac3fbcb643511",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-11",
+   "password_hex": "51524b6a6d6d6b48524462507178696868",
+   "salt_hex": "e71d6a702d2d54bc",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "2cdbfdc4f06e4d0e743a49ca459eff921b2eaf70e5d69b3c913239c56376c78c47ab66927c322612ad97cb1c824ae425aaefc6647db405dfab3a89cfd2055a0f4c",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-12",
+   "password_hex": "3732317a52704b79306b4c6d3862317279",
+   "salt_hex": "8b9314972ef99ac98b69b6c2ac4247c7",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "0da1ed7920894303780ee9a34fb6fa2f",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-13",
+   "password_hex": "75507078436d7536577a68535030553947",
+   "salt_hex": "874d7cc9369ff9988642ffe05a7f2153",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "35367e9ce58daa37e51883e9828204d438ede1065acf9933dfee1aae0ac7b24b46ae0c2c16885b809e6b",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-14",
+   "password_hex": "6f39505350597a445349783365374d7063",
+   "salt_hex": "1569909588ec25a3afa147cb7fff9fb1",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "7afa4394324fdfe23b879a8fb932c908217e4368ee5ee8dccac2fe2d2f62c12e9f48620c50b7bdb05448c64987b10df54ff5012e9a5064e9f92c51cc7b635d270d",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-15",
+   "password_hex": "4b2d6c600e66535c7f3d6d6c",
+   "salt_hex": "7a4c02db8bd8fcc2",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "b05992b03b7f25b4a24a27e98cdfff3a",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-16",
+   "password_hex": "287e74200e6b69285f5f7e00",
+   "salt_hex": "dddf018487fa4b95",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "89d809be903d632abd1b29130229b3a837bb4943aafb86a520498fa1814cd3f82f0b6c7db8d09d19c439",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-17",
+   "password_hex": "0f3b5e220e1c000c2a703a4d",
+   "salt_hex": "7cf71b19c0daf499",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "5f3110ce1e653e086b289eb972ddd496b44884b7eab0361d0e9a39426b1d977582bd32b84ae1a204a51dbd458757489e01928dbcced2397109a1470d8383804099",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-18",
+   "password_hex": "1f4b7b354903545f2b07720b",
+   "salt_hex": "62f91ea01f3a18aa2f122bd15c4a615b",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "d4bbf153661b4516d740535b37780aaf",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-19",
+   "password_hex": "5d7e1f70174b2f616c0d6722",
+   "salt_hex": "4fb602173327228431dd8d088154c7ec",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "8216132b4952f8be46586e22ce961b597671f9172027e36f2c4cbd189dcaf719981a9c03186d5faadd80",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-20",
+   "password_hex": "2657324e694c6b242b174f1a",
+   "salt_hex": "3cad67ef1eaf3aaafb5ee372d6b1ecb4",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "7103c69766b64bae721776ac272db586c7ba3c4775e33e1f37a24fad51e599d56d344e4566d48928f3c1c52b91642b10c86a29d3d2490eee2889c2899802e38c82",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-21",
+   "password_hex": "15296b0933473119180f3c0645202d5221633803",
+   "salt_hex": "d7412e4137fc4410",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "1c0b23dfd1a3ea727c5c596ca840b393",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-22",
+   "password_hex": "2a1124361d53464245580130076d6b54001e3d01",
+   "salt_hex": "7ecaaed1eab03c3f",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "c0f82935e509c96ad0edf9aa2db243cb81cec0c047d5141915a58ce114c119290228f318a9c5dcd518f6",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-23",
+   "password_hex": "666252024e18233308430820127e753e6b041f56",
+   "salt_hex": "756fafa7fac1f019",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "d571b3006053ce3060ddfdbcf3c782d834e49701d4c745f3a282618cacdff4c73cadb7e719de641860ab0ffc860518d0bf02cec16ca83c26f4df993050ee67f2f7",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-24",
+   "password_hex": "7a106c2773542c791d2f0a02632b69644f666278",
+   "salt_hex": "a36350db68186d747254bd9835219487",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "5f0af11697779ae0530fab32806f2184",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-25",
+   "password_hex": "0b3c6f070149615b5b461c7f5c3a366a6d375402",
+   "salt_hex": "42be6c8fcd7858458fb97cece0069524",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "88d3744fae380954ae5875eca20b998e0d0c991716a8ef90cc1e547d489415ce6f8310742defcf4ca6cd",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-26",
+   "password_hex": "5177161d237c1b64426353434113015665344a6c",
+   "salt_hex": "596dbf5830aa8b00682429883e0b1ed0",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "d8e5a55f92ba0d6da87765c653c82f080472260640e59ebe7d003baca444bdbe553156e5c365be28fc0acb7927e5c9789cdf6b481aa1c39c444a0cfc8b6e475182",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-27",
+   "password_hex": "d0a3d1bed38acc83",
+   "salt_hex": "8dfae85c9f2072ae",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "c06bc1f9a63de10fe5f6936991477029",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-28",
+   "password_hex": "d0bcccab64cf9a",
+   "salt_hex": "15187b0393d8a441",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "6a6287564b66b1f08bfabdfe2907b870b8c6ad8071efd78a7302c9472d7b80fb50c662bf609827006831",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-29",
+   "password_hex": "c4bddd8f4ad69d",
+   "salt_hex": "775bde4bd6e40ddd",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "7e52e8694056266a7da6527dac089f921298dfc497020eecee58d73fd123deb97cf3c2f532505468afc17e6e283ba6b68afcd5e6881be17e1647d3ab491a5589b1",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-30",
+   "password_hex": "c299d292cd92dcb8",
+   "salt_hex": "99c55e182238c8e0c385447685e9ba85",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "fcfa00ce7c0249542e6f3a40ef0a86d0",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-31",
+   "password_hex": "d086d0bed193d9b6",
+   "salt_hex": "42a7aca6a7664f87b405b49d62a074db",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "46abf02c99b9f6d86fbf2e11bf0642b658a82a9e034ddea40df78a84bbc4b1e1e9f5bfbc55b12fba4545",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-32",
+   "password_hex": "da8ddcacde86d3b0",
+   "salt_hex": "f3eb3938f338fe8639813beacd8100a5",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "4438d49f0cd0ff7026fa6283b25bac570e1c845eaccdd80060e896f5420ee54533eb649a6fd9d99d29ceb7dcb18d059d422840aef7d4452d888f59bdd760b5db73",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-33",
+   "password_hex": "cfbec3b9d7acc7a9d585d1a5c28fcca119",
+   "salt_hex": "e9c55717a1259a29",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "a9a7c8ade1041532e085ff65c35f28e8",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-34",
+   "password_hex": "d29cd099d197d1b0da9aca8ec2a3daa5c38a",
+   "salt_hex": "5acc2d76a9f4444c",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "e34b5cf037bec44307bb8a60bbdc7d5f19badd15825150ec453adb490b947c3c1bc4132ec2217be47f60",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-35",
+   "password_hex": "de89d193d18c75c2b8c6bcd190d198c3a2",
+   "salt_hex": "c69c3b58917e0975",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "d9ac15032443c7ed2678a07849c65897a2625f367fee614895c6f4f655094721024342ad24f0fa654bbd1abc7d01993ab21120da4e6f5b36a67885462d14442732",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-36",
+   "password_hex": "da9dd096cb93db88dbbed495ceaacf853c",
+   "salt_hex": "200bba668b2010b1968b82091848937c",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "230bf1d40a4ccfe9a1b5241a8266cef9",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-37",
+   "password_hex": "de81d0a6cea9c7b3cbabce9bda90d29f73",
+   "salt_hex": "36586fdefbe916369412c9f3e6337ddf",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "978fd90caf8646ef894d8c9ffe19d20f0f0dfe80cf5bfe8464385bc0552e226a82b1fa764e8198ffda9f",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-38",
+   "password_hex": "d281da97c8a3d8b7ceb9db80dc8dd4a0c3be",
+   "salt_hex": "ab7c17e3b78fe71e373b0ccb0fc3ccda",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "92b10b7d996d6e3f5d8e7e2c1075cc89c837b85cb72aff0092449b256254591178a6bf7fdfe3742f5fe5e402788058f4f90efc9cc9e9e7547b27bd4d34da333314",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-39",
+   "password_hex": "8423ec7ea4ca4b03",
+   "salt_hex": "8dfae85c9f2072ae",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "5425a8ac3db02f9675331c0560a7b641",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-40",
+   "password_hex": "2c3c932bf0648bda",
+   "salt_hex": "15187b0393d8a441",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "9eb4049ccee01488f15af3b988ef6d4817fce166686c17a7ea1cdc8bc548883ed1d53df6439fecda324b",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-41",
+   "password_hex": "393d474fd84a259d",
+   "salt_hex": "775bde4bd6e40ddd",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "a6d3a1636fe688f9a0aef5050e749c9f641669e6b953958263752382cb324de125315c4f340464c935e15e60dfa61fc8e8cd15386b2ed9894fad8b327338dc91f7",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-42",
+   "password_hex": "48997492c3528738",
+   "salt_hex": "99c55e182238c8e0c385447685e9ba85",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "2b7d2346fbb52fbff8881db235132319",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-43",
+   "password_hex": "74064c3ebc53d676",
+   "salt_hex": "42a7aca6a7664f87b405b49d62a074db",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "a97c2fb6bd6a91470d78af24ee8f0f9e783517ba0396db031a46640c8436368ba9b5d0e048952bb2a6f0",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-44",
+   "password_hex": "668d4f2c8f86f4f0",
+   "salt_hex": "f3eb3938f338fe8639813beacd8100a5",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "8a4399e9487079701b079b6ad3587ff62593ff75c36629268e0cc2f88089203ac27a81ef9b4fa9ab6db5e220fca8f3d46c2b8c5c4d1149d461d1cd2c0884496608",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-45",
+   "password_hex": "e3feb0f96dec61e9dd451465f88f132119",
+   "salt_hex": "e9c55717a1259a29",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "a2641a7a323435e0443cfd8dd60a536e",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-46",
+   "password_hex": "5c9ca419dc576470269a828e40a3aea5ca",
+   "salt_hex": "5acc2d76a9f4444c",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "df3c139e07076d5e37d9dd0b59164903830d8fd1c4cb0b3189a5f97cd73b66f8066c31630bb44e705d9f",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-47",
+   "password_hex": "bf898453344c6875f0b8b9bc2c50fc58e2",
+   "salt_hex": "c69c3b58917e0975",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "bb14e909b953a6576fdd607ccb8ee2d69fc1f9458ae597010c08a17094d64beb156f3db86203d441b7a2a192d75fb8f8ce78baf6f059f3b982a1e1ea32a6f1a958",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-48",
+   "password_hex": "9e9d7c166ad3bec856fe5d15d3aacbc53c",
+   "salt_hex": "200bba668b2010b1968b82091848937c",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "38a92f260cc84a8eb5943df1f19f64a1",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-49",
+   "password_hex": "17812c26bba941f3c2ebdb9bb6904c9f73",
+   "salt_hex": "36586fdefbe916369412c9f3e6337ddf",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "a410ebcad1e884660353e7324d04f9f0e68ea3bb925fefe32b86c8f590029d63f9abc5c34c9a7b07845f",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-50",
+   "password_hex": "6c816697ba2366375bb986c0af0d7d20fe",
+   "salt_hex": "ab7c17e3b78fe71e373b0ccb0fc3ccda",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "2577e802465d3e309dc76be377bbabdc8e59838d9f4f0a23ccd67f118094a851edd9a6ab4d332d8927bb0b77e71da28d6f5db78b2196758340ebf25e74cf681a1f",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-51",
+   "password_hex": "",
+   "salt_hex": "1a71e2118c9fbcc9",
+   "iterations": 4096,
+   "out_len": 32,
+   "out_hex": "3e513d89ea5ad303f17cbf7cbdea54a940f0f5811844dfa875a55a8241d2f8df",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-52",
+   "password_hex": "523249584467597a5a4271363970667a4a714e744b7761545a4544494676766b6a6253417167566e456a6b456b454557504e69383653626a6e376b725764394d67",
+   "salt_hex": "d26b99043c8ba3a4",
+   "iterations": 4096,
+   "out_len": 32,
+   "out_hex": "c8595fa30dc95fb839bebfcc230f06844b2f75a393570b22d6c14d647837b87a",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-53",
+   "password_hex": "63727a466d396430795463456a6468545758693877674e516f544e6d486e61686f6956317071613133655471477933497531354b4f52516339494c53646756527a45524e6b4463723565676a62584a78426572536a74726b6b674341616a63356243354434706e66743836663754626663666370595a30767354454d4930524178",
+   "salt_hex": "9266da5b8c102b27",
+   "iterations": 4096,
+   "out_len": 32,
+   "out_hex": "24a86f12235e0232bc80a84635a43934b2d37ae1120b4aa1728a3ead93868980",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-54",
+   "password_hex": "32647a56696e6f45774464656c656257797058314d6f4f685975585a463172514b7a32535a6c307578576377796f3561416e6f42524e7a5044763072513662693742345a34324f50695258534c6859684441643262746f647633744d54424430744b46316e4b655942656565547a70413145434150713942687a4a4c555a67737636754e4b664450333558414d684a486c736a6f5a796b677130624d506265556941796d6f324371586b64524752633876544176684e5a5838536f564d33704e74594a4a7258766975337547583233736a353847723061614a4b45763765796c373248636e6167713474766e533737626d6376676c79536d347370707a65673869",
+   "salt_hex": "6a06903b78dae6de",
+   "iterations": 4096,
+   "out_len": 32,
+   "out_hex": "a50be9c16f6bf68808436aa3bc6eec36d3c5653c9c7510c1a4a641755b8325fb",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-55",
+   "password_hex": "ff",
+   "salt_hex": "32140a66b88e1683",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "49bc8d940c8f67ae5ee0764f59dea94e",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-56",
+   "password_hex": "ffffffffffffffff",
+   "salt_hex": "8a359634423ed028",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "00ef53593c10c8986f36838017194c2c",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-57",
+   "password_hex": "c0c0c0c0c0c0c0c0",
+   "salt_hex": "d6f596f170ed2414",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "b81cd442c5aa1b23aee69225a501cc70",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-58",
+   "password_hex": "eeeeeeeeeeeeeeee",
+   "salt_hex": "6b2269425e288d03",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "a80f332f10dfc0e4380b2fac8449fe77",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-59",
+   "password_hex": "f0f0f0f0f0f0f0f0",
+   "salt_hex": "ebf0b04633711248",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "a516a9d9e5d310227dc19ef15357b4b1",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha256-wycheproof-60",
+   "password_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "salt_hex": "9de9b71eeb9d9a34",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "5869f35bb108f1c45605ca8109e6661d",
+   "heavy": false,
+   "hash": "sha256"
+  },
+  {
+   "id": "sha512-wycheproof-1",
+   "password_hex": "7130577430643470",
+   "salt_hex": "798acc7c76739d75",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "4935390897319c3efc15d19304109c79",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-2",
+   "password_hex": "5a30673349567272",
+   "salt_hex": "84bbd18de5ec10ff",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "d1b8e64e3b67a548c8bda3118eab1bc3f81b4cc9ead842eda18f6685533c2c7f4f49b8c7a78fea13b776",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-3",
+   "password_hex": "7439315572766f47",
+   "salt_hex": "5d76db9ca0f0bae2",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "a5d7f0fe4adc54e2ac5edc54e005827a90cbd46c00b72be68f8fbd1da98c079b98622a69b1ea44c0d94cdae03c339b742d047ac63cac0d9af59786baee4a158080",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-4",
+   "password_hex": "6b6f67583748447a",
+   "salt_hex": "0a8fbd0232a3a7f6e60d6564c92ea35f",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "23cb042249cf5d03f0cbfe8726df1bee",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-5",
+   "password_hex": "4939745242645168",
+   "salt_hex": "0a3bb93c0de86a174ab005b8089706ab",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "8c9a9843f6c108ad5b95d872bd93f1afd8001871e24ae03100ab33a47b3bf923de1e0bb4a95985563a87",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-6",
+   "password_hex": "6f4f4d37324f6330",
+   "salt_hex": "3827c3b6b1e6de7aab096eb75e23610d",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "0159b91e667079e448ae9707f9d538fcc4f297165f6fc85b2966f951669600ee7553f2b80e72f7c2688f2f4cf0f9f7eaf070333987aa7f7d45843076e1708e1229",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-7",
+   "password_hex": "6761734354484546654d36526f61386349",
+   "salt_hex": "cac9ae7ef670990e",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "4f423de7d3ce6dde25a9c88058f175d4",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-8",
+   "password_hex": "75375330684678774e33586f76707a6551",
+   "salt_hex": "201b1e277f4ff955",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "f5161add0381cd85fd3816902a56f1e5f84349362d9780eca06c201d1aa976106f5c55146c06d33d131d",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-9",
+   "password_hex": "51524b6a6d6d6b48524462507178696868",
+   "salt_hex": "e71d6a702d2d54bc",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "8d4c0251d0344406a8e31261046fb4f2bdd7ef402afa5c4eb5020afc2d516ce2ceaf84a2fb904737234fdfe1b2226c5f64ec5a106ef18e9571a53b0db6a9136f43",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-10",
+   "password_hex": "3732317a52704b79306b4c6d3862317279",
+   "salt_hex": "8b9314972ef99ac98b69b6c2ac4247c7",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "68b052397d9d0009393f939d8a41030a",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-11",
+   "password_hex": "75507078436d7536577a68535030553947",
+   "salt_hex": "874d7cc9369ff9988642ffe05a7f2153",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "f6db4aec63695dfa52aa449120b118ef399ed5efa73c3f59c7aa08cd3cd0aa4401634a7bbf61d753752c",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-12",
+   "password_hex": "6f39505350597a445349783365374d7063",
+   "salt_hex": "1569909588ec25a3afa147cb7fff9fb1",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "b8b2e382821089b02c972c1ca1495bc8d021fabe77733335555c6b27c4a6e73098e8385055891e8a55c05be3d20279bb168b8011f60705928dd05d1451775b62f1",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-13",
+   "password_hex": "4b2d6c600e66535c7f3d6d6c",
+   "salt_hex": "7a4c02db8bd8fcc2",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "d3aca4f6df6e06b97c44fd295ed07965",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-14",
+   "password_hex": "287e74200e6b69285f5f7e00",
+   "salt_hex": "dddf018487fa4b95",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "1fe411d3bde75e596197040e192dd0aa56ba282125db6e91090caace7bef3b07bbd4d3170b3ca8548587",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-15",
+   "password_hex": "0f3b5e220e1c000c2a703a4d",
+   "salt_hex": "7cf71b19c0daf499",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "bcc6ca2f82450f4bff09009af28215e68b01ccfcaabdf176a7eceb61974cdd9a9ce3bd10b1d7f781c4d82612fb42bf3db424912389a0727515fef785d2cc28275c",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-16",
+   "password_hex": "1f4b7b354903545f2b07720b",
+   "salt_hex": "62f91ea01f3a18aa2f122bd15c4a615b",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "26bfec4392af75d5e912d47c7d911fc5",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-17",
+   "password_hex": "5d7e1f70174b2f616c0d6722",
+   "salt_hex": "4fb602173327228431dd8d088154c7ec",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "21f15760b44d879949320ecfa6fb1023c15f6284127c985ce36d83de2fa6e25fe5f98e0e0bcb89acda3f",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-18",
+   "password_hex": "2657324e694c6b242b174f1a",
+   "salt_hex": "3cad67ef1eaf3aaafb5ee372d6b1ecb4",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "26c4a80bfa48325beefc3a32c543b1ed9dcb67458dba5c41b9ec1ea87ba82f52a98beaf2578f1e1d6f781676bc4664e9b629250bf0ad8440f8ceb05c51101ae8c7",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-19",
+   "password_hex": "15296b0933473119180f3c0645202d5221633803",
+   "salt_hex": "d7412e4137fc4410",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "49fa49e9d9d4b8a230b888550fa95d4e",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-20",
+   "password_hex": "2a1124361d53464245580130076d6b54001e3d01",
+   "salt_hex": "7ecaaed1eab03c3f",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "d80c7b2a6c4bfeede1926ad9fac65400078b865bc02d145fc0e045fe37cbbde4cafad121e4935f0b3052",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-21",
+   "password_hex": "666252024e18233308430820127e753e6b041f56",
+   "salt_hex": "756fafa7fac1f019",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "ca4168cd34fd8bf311c180bcf00d7c50482c89f9bd639f8e3217ebcefc99f7cc4bf7fce90a9faed87912293163d5bdb55a61566bccc7366195d72b76f3b26ad332",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-22",
+   "password_hex": "7a106c2773542c791d2f0a02632b69644f666278",
+   "salt_hex": "a36350db68186d747254bd9835219487",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "878ede7d7b80d4dfb2d7bffba76b288d",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-23",
+   "password_hex": "0b3c6f070149615b5b461c7f5c3a366a6d375402",
+   "salt_hex": "42be6c8fcd7858458fb97cece0069524",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "4d631b173437810b9dc991a9b81d2e8a4981cfed6fd6ae508db3f6f6bb4d267388741ead7d3272fd5075",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-24",
+   "password_hex": "5177161d237c1b64426353434113015665344a6c",
+   "salt_hex": "596dbf5830aa8b00682429883e0b1ed0",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "a4647786a04fa4129f5c4c43ff7ca48362b9e25bc962345355f01036c5df2962fab2906218267bd04b11a1834abb965e861e2fa3d721e4dded92ed7eefed058609",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-25",
+   "password_hex": "d0a3d1bed38acc83",
+   "salt_hex": "8dfae85c9f2072ae",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "6b62ce6976fe2c9bd0a8a7acba7b83b5",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-26",
+   "password_hex": "d0bcccab64cf9a",
+   "salt_hex": "15187b0393d8a441",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "3b80d72751093ad48c08b70fd13308834078b52c3c14e47523e189a475b6f6678dafb991bcb5c0b73f2c",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-27",
+   "password_hex": "c4bddd8f4ad69d",
+   "salt_hex": "775bde4bd6e40ddd",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "4bb5ebbe99297ac9a3e3b14ad1a5b52307fbdb991e9bae74561a93e7165086f4a198ad515be73ccda118168150ece8627199ff267c3132e3a556ba3d8d812d8392",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-28",
+   "password_hex": "c299d292cd92dcb8",
+   "salt_hex": "99c55e182238c8e0c385447685e9ba85",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "876ae3968ee80397415e7137d9bddf76",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-29",
+   "password_hex": "d086d0bed193d9b6",
+   "salt_hex": "42a7aca6a7664f87b405b49d62a074db",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "a0d55ac130b1ef52e4dc05203cb78304cc49f56dd165eafc51f009d44cddf6e4befa59d3231c2393e9ab",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-30",
+   "password_hex": "da8ddcacde86d3b0",
+   "salt_hex": "f3eb3938f338fe8639813beacd8100a5",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "1837beaf1c4a9efe10e8f8f6dafea3e494708a2512d7b64a396ed69b419b8c7e65f6ba2809c8555b62be2640d0ae297a68136f7a3fe8e226b87467e67c6254a6a2",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-31",
+   "password_hex": "cfbec3b9d7acc7a9d585d1a5c28fcca119",
+   "salt_hex": "e9c55717a1259a29",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "1b3587d675b3170ab20fdb14f8c88e42",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-32",
+   "password_hex": "d29cd099d197d1b0da9aca8ec2a3daa5c38a",
+   "salt_hex": "5acc2d76a9f4444c",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "93b0fc1b0313bab41929332682d9d2a5b947fbb5bbdb37c06d897dfc4a309eff5f1b1806a6a3b6f5fedf",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-33",
+   "password_hex": "de89d193d18c75c2b8c6bcd190d198c3a2",
+   "salt_hex": "c69c3b58917e0975",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "e44c3d06dc5128edd230cd9bfcbd204fde2369fb39d6370cbb0021ce1610003d7d1789e83f3fa9ed5842f1a5afde4609b3b09ef6595b7f8647c26c6ae87f4b776f",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-34",
+   "password_hex": "da9dd096cb93db88dbbed495ceaacf853c",
+   "salt_hex": "200bba668b2010b1968b82091848937c",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "6a294cfc91bd87da2700085a289a3f10",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-35",
+   "password_hex": "de81d0a6cea9c7b3cbabce9bda90d29f73",
+   "salt_hex": "36586fdefbe916369412c9f3e6337ddf",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "18d49eaf798f4fab75aaadb42f8bcff45b83da5fad7932705cc829897692cedb161268aa04659ef2a1d8",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-36",
+   "password_hex": "d281da97c8a3d8b7ceb9db80dc8dd4a0c3be",
+   "salt_hex": "ab7c17e3b78fe71e373b0ccb0fc3ccda",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "ab933595222171a6bf0ef7288f4761d4e6dd29e68e566fde1b3bb6a5ae380b591334e680ed1fc70f181c54f3a6ea17388cf25c7f18555b1f67a6837b3590578161",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-37",
+   "password_hex": "8423ec7ea4ca4b03",
+   "salt_hex": "8dfae85c9f2072ae",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "196cb574f499f6e20cd00a4eb0f70d4a",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-38",
+   "password_hex": "2c3c932bf0648bda",
+   "salt_hex": "15187b0393d8a441",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "28ea911364150649f9c5831e5d3ab76b4c4009416ba68143388d00e294437ade367fd24fbc79a5173544",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-39",
+   "password_hex": "393d474fd84a259d",
+   "salt_hex": "775bde4bd6e40ddd",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "38688a90efa49043340f480ba134e4d34f2f444c049864b918fbae5e324c7d11e5c790c4d6c4741bbedccc55f02a40a19edb117339e21fff27fd3b3b56b348403f",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-40",
+   "password_hex": "48997492c3528738",
+   "salt_hex": "99c55e182238c8e0c385447685e9ba85",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "f3d1fa6c1cb2bc8f8fae275b69746f03",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-41",
+   "password_hex": "74064c3ebc53d676",
+   "salt_hex": "42a7aca6a7664f87b405b49d62a074db",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "abb8c155cde2637d33261bd5c1db245ceb1e59e8cf223927697375bbc42273bf4f291d582885f9a5b634",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-42",
+   "password_hex": "668d4f2c8f86f4f0",
+   "salt_hex": "f3eb3938f338fe8639813beacd8100a5",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "51960fa5ea92577833bd8ef87911c7e0ace4a94fd4f76afb6ec145455257593953389c7cbe497eae1d787f95b8472b0c251406492c64c25db19ace47d24d8f5a75",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-43",
+   "password_hex": "e3feb0f96dec61e9dd451465f88f132119",
+   "salt_hex": "e9c55717a1259a29",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "2008be3283e9f6049829a4157c1c3088",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-44",
+   "password_hex": "5c9ca419dc576470269a828e40a3aea5ca",
+   "salt_hex": "5acc2d76a9f4444c",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "81a8a54d860990b96d5aa9debadc95c6164ac85294a2350b20b893e73ab7421845bc69ede73805bfcff7",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-45",
+   "password_hex": "bf898453344c6875f0b8b9bc2c50fc58e2",
+   "salt_hex": "c69c3b58917e0975",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "0452a418242f9539f8849d65466c96c984e021ddfde942a6a7e0b6dd1584dc8a536b1722684021444bf60fd958f391a5ba92fa6a44450d089faec32179f01f04c6",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-46",
+   "password_hex": "9e9d7c166ad3bec856fe5d15d3aacbc53c",
+   "salt_hex": "200bba668b2010b1968b82091848937c",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "6320a1e2cc157e09607d4fc9a4ae3269",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-47",
+   "password_hex": "17812c26bba941f3c2ebdb9bb6904c9f73",
+   "salt_hex": "36586fdefbe916369412c9f3e6337ddf",
+   "iterations": 4096,
+   "out_len": 42,
+   "out_hex": "d42a8d13e4901d902c6ebf070fa3b253af9a0783cf5260daca193090337ad8ab783a2e46eb8022996c18",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-48",
+   "password_hex": "6c816697ba2366375bb986c0af0d7d20fe",
+   "salt_hex": "ab7c17e3b78fe71e373b0ccb0fc3ccda",
+   "iterations": 4096,
+   "out_len": 65,
+   "out_hex": "634fc75709b5d0e585269c6f31280bdc79c1aaaf72fd5a13e9848c5fc1be7caeff06fbda3fd83ec67aee6286e4411da66f1c9da5414734d5388f9f95c25a13c99a",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-49",
+   "password_hex": "",
+   "salt_hex": "1a71e2118c9fbcc9",
+   "iterations": 4096,
+   "out_len": 32,
+   "out_hex": "580ad63c3ade95c330d57e32af17fd342457fb0289b5d74c2d01ee109293bbdb",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-50",
+   "password_hex": "523249584467597a5a4271363970667a4a714e744b7761545a4544494676766b6a6253417167566e456a6b456b454557504e69383653626a6e376b725764394d67",
+   "salt_hex": "d26b99043c8ba3a4",
+   "iterations": 4096,
+   "out_len": 32,
+   "out_hex": "983adc3df73cffc0649a9c9682498c6bacbe91980e809d0cf002200d913b2b73",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-51",
+   "password_hex": "63727a466d396430795463456a6468545758693877674e516f544e6d486e61686f6956317071613133655471477933497531354b4f52516339494c53646756527a45524e6b4463723565676a62584a78426572536a74726b6b674341616a63356243354434706e66743836663754626663666370595a30767354454d4930524178",
+   "salt_hex": "9266da5b8c102b27",
+   "iterations": 4096,
+   "out_len": 32,
+   "out_hex": "9a3a9c839c05c455f1e83959f486b23b15f6e91bdf71b3da11bb0dd71ec98d49",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-52",
+   "password_hex": "32647a56696e6f45774464656c656257797058314d6f4f685975585a463172514b7a32535a6c307578576377796f3561416e6f42524e7a5044763072513662693742345a34324f50695258534c6859684441643262746f647633744d54424430744b46316e4b655942656565547a70413145434150713942687a4a4c555a67737636754e4b664450333558414d684a486c736a6f5a796b677130624d506265556941796d6f324371586b64524752633876544176684e5a5838536f564d33704e74594a4a7258766975337547583233736a353847723061614a4b45763765796c373248636e6167713474766e533737626d6376676c79536d347370707a65673869",
+   "salt_hex": "6a06903b78dae6de",
+   "iterations": 4096,
+   "out_len": 32,
+   "out_hex": "c27d89fdfb870fe02f4e3843025d33e91fa2eff7f8a18eefe7113818d1765126",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-53",
+   "password_hex": "ff",
+   "salt_hex": "32140a66b88e1683",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "73eb7888fbad86cdb299455454d26429",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-54",
+   "password_hex": "ffffffffffffffff",
+   "salt_hex": "8a359634423ed028",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "f0bdbf5507d74ab49ee220500107d69f",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-55",
+   "password_hex": "c0c0c0c0c0c0c0c0",
+   "salt_hex": "d6f596f170ed2414",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "51eaac2999bab0ba22134d21f95ea277",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-56",
+   "password_hex": "eeeeeeeeeeeeeeee",
+   "salt_hex": "6b2269425e288d03",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "f4e6be1916b7d1e21e8c4ea77c75b54e",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-57",
+   "password_hex": "f0f0f0f0f0f0f0f0",
+   "salt_hex": "ebf0b04633711248",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "51baf8f1ecab753e30fd1ff995c29355",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "sha512-wycheproof-58",
+   "password_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "salt_hex": "9de9b71eeb9d9a34",
+   "iterations": 4096,
+   "out_len": 16,
+   "out_hex": "2900d1f4870e09094070d986784dbcc8",
+   "heavy": false,
+   "hash": "sha512"
+  },
+  {
+   "id": "py-sha256-8-4-1-16",
+   "hash": "sha256",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "ced7a9c17bd6c2834b918cad40c116c6",
+   "heavy": false
+  },
+  {
+   "id": "py-sha256-11-16-1000-32",
+   "hash": "sha256",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "ae153d657a50d6eae1c21da97eaa7d70488b1bf50a2581c8af2a2a587eabf6bc",
+   "heavy": false
+  },
+  {
+   "id": "py-sha256-0-64-50-64",
+   "hash": "sha256",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "5af4b13b43c78b868982ea0aaccddf8c14cbd5ea73152a50ddee24931d9b25526fc02d77d6ffc07721f02e2fff7997be4243079fa03bfc90ea7acadf18f3ce75",
+   "heavy": false
+  },
+  {
+   "id": "py-sha256-40-9-7-100",
+   "hash": "sha256",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "39a97d23db742ac0e6c54df6beb88ac2f875f1183bbcb350170b822232a012fd4c981b43ba6b26105ac035f63cdfa1f7b7551f1fa1b01da3c7b452909ccb8e90f76ea7943f3b930f455bb1a75b578f447439b654bf3fc544095ba51a07df0d45e133ce2f",
+   "heavy": false
+  },
+  {
+   "id": "py-sha256-3-32-2-1024",
+   "hash": "sha256",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "969bea3b12d741596eaf935d7121c34d63ddd376a86b6dac1ce7408e287b17f0f535a31f74beb342a04836171c97ebd6fd9afd03e24213381ea6454fc659ef2dbc6ea6146c8beb5f656fa3a2a86dccd44358449a10a5f53a9b43689b774e507d9f78eefc337b2249c9dd57003e0a7b4d7f30ec73154051dbd0a5ba5b1d7e5fba3d447b59caa2f0fee882d0e1fad41f04fc5992977ba7eb54e84906167abe0571ace8b6c091413b6ba1089225788b2b21777b75fb56d39351223d83eb86652bde11d6089b9db985fed1fae29a7d19663116563112b57c16295066e8f955f7426c115e80775c0664b0270726bf4cfd0d58f5fa81c80a5aa0d9304b5ee29e0a7f011bae24a613fc369b0d84132878870f6773cc13b7ed6c66c7d3ba037a357f832dfc65b7a9f1401c20bc3b2e15a117d0b04ffa4f32b20e31c482b1dce3b58f26261388c53e26bbf8d5a7064c44cf7a02961e2f5dfdad5f60b75ac800b6ba18570b96a008ecf54a6aed17687ad03fdbef5200bebce05691066e6ffb18d35534f7d9f511d71b8be37b502cf986a762a84c0c172cb4cdae54843ca585ff69ea5a16f0e2991898463eee76f1136e5204d4fdb8a8295a20d8d86f69df0a267ac02fefaee2bcac2a92365bf695838a9c583c58a61d1cfc5899d1992eefcc598fa2bde42497450d68655d02f689daa3f44f6f38157c2a648c9c88317082b559638efff361306ed8becea36b53e2e30f7c17d49e4461144750e06084c32baa35bfa7de8883826e5b05329d82453f88017fec30e42fe011cdf3dd1b7529c7568ad21f71d3fed19e1beb0ffe2c87b707b94305351255061e86cd3bd029be1ddb7e67e8a02ae36d46730c1021136cf86a335eddad276d13f3b66708421e94cbd73eac0f49ae306fc426749cc09fb14670a43f13bd9fc84ca7e832d1f561aaa4e6ce432576274c454f938a7a478e37d5ad8861d441110a293036bd94178dc7a83570c83a49fbc1ad3f49c7be54ce0665720e3b8a18c8fe657d8fbf1e02ba29d7246910d98ffb2bccf001bdc3ce24c3776f88664dcd793061aa3b4eb2ecde158d288cfe3c6f12727f531b24dbd2edd01a9299b2c092c2a5cb235a54138fb6e2a90dcf67ac6441ab4b73bdc1b0158c24acaa6957149286612f74833c14149d08c1e2f049deb8a329fdcb33f03bd8abc461ab5b9304d8b1b52bdf56fc869596dd99812e8cc5d55d361817b297338455f6ec55e51f47b9b5e34439cdc92942333e15f041d6e48f568c5959eb47e5e1f4bdd05180e5496c46bd0d0efd36743238cc19a5edc60b539ca040427f9cfff772be403c119a45234ae0648ea7a5f9b06b2b28e33e195c171857f94a74737b41efd04f2e486f70079a12cd28cf949a94e7eecc5ac51634255ada73526b7e482e2064a2ca86b1a342813e743861e7deae6b9db1bf59880035f5dd",
+   "heavy": false
+  },
+  {
+   "id": "py-sha384-8-4-1-16",
+   "hash": "sha384",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "0af95bba3feed446d0c010407702fca4",
+   "heavy": false
+  },
+  {
+   "id": "py-sha384-11-16-1000-32",
+   "hash": "sha384",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "9f242bf694bd9d443dbddae5333380702a2541d6ee4850d15f584247ffdc76ec",
+   "heavy": false
+  },
+  {
+   "id": "py-sha384-0-64-50-64",
+   "hash": "sha384",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "1ef8a260768d420af8a87b293a621193fa085989bf315fdb66f6ab55dee4b53d1efc7c46f3ba7425c6958d3a6b0d75271b776601695b560257e20efc65334d1e",
+   "heavy": false
+  },
+  {
+   "id": "py-sha384-40-9-7-100",
+   "hash": "sha384",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "bced6fdfa29013663ca47456756da283272319ef5a78448afeab7f4ce4dcc8690d6e8fce888d2f141460c543c22d0d6ed392437030ddacdc1355ce65a3d6c229e96ff0922f8b2340bdc91fa06c8160f9454a192c41d718e15a659d4825319e46764e01b7",
+   "heavy": false
+  },
+  {
+   "id": "py-sha384-3-32-2-1024",
+   "hash": "sha384",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "acbfab43acb168f0810e2f4e6521e294113bef671d1b4809a7bbe375acad52b1859f2f6bba46c8636af9d2a9c505049abdfc6146f884cb97feddc996931c977594ca47dd00caddc374b94a4778c5fda5d04d1904315ec9c08e62990fb90d38b4ccc4176dc32d0c0f44dd40cec2438f5a9172b1113fbf7ac3452c999b4b57c14d982d17cd9af9e8906ede58d79da4f88de63f09c7fbf682478b814fe5c0cd90aa8c976fefd3621003a1d5bcd8e0abf68e6db86629eeaec50524c17ec9aa74ecfc3d0f730a6fb38ac6a4246c6e0986ad1995d7dcaa30bc4759a2d2b018cb0b8dd145a647efde1ed215ec516ab270a1cf2eed07f1d4738cd3dbcf182b4749c60c4200e669e2fe43606707da2557abc30ecbe34db7c4295ece454ee486cbc1aac46935b21901618c5df87fff5ae098d01d1feae8ec7b56eb66e253b092d7b9dd8961b8d6e5a6d98a0483e3105fafd003f7e3fb8d13be7a59b090dfc612cf1faa42cfd73ca915faf521ecdf4a401e38112740e975fbdf7ab619a3bdabd90c8db9794bbc1ebc36f12be40a6bd88fcb68205168f520f7276a121944ae18960d2a95b70ae17e8cfc66b100c3899bf64e769ae17b6dd334c4fa043e4eb2f091d0b0f37f831ffd5c77f18f450903778c1ef2ff9b00e86a581b003d92090bcbc7687a546887d3552e1e91a1c62b4e357e1e61ffbc091d6c90eeecc83a2baed98ec0d346b393fe50df5b28de0e7320e714f1a5b78fc1163f19e83307aca24be85eaf82a8d254243066fc3f08029b26f211df43f83e045441b647bf75730dff233cbb7a3960aeef31be3a089c1f42370c098da6ef04d413287d35c1d2f976cd6ef5e6568ee125dfbbfdc4f6c2d928c638998af5e5b832b56e613b10f7dc16aac151c2ef02da2db745a130e636f6c15bc167b401baaac8eb1150da66c202e5150de32350568915a70d4367ad47975bfa8a7b23284ee3df2141b74ab45797d1979edd357fe0a7d4ffce0e246dca208e5fb8fac41f1388f0c15d1b740b769fcc974feaf2edc25720a5a39d61c6d09c8576ec05e0a8706ca7b308c8dd9080369f2ca3f129b9a7e0bc8150f6bdb3e245622dbf03a9a869f53a35c2d135eaa92a1bca6c18a903553ae979b4d50d25dd7aa9416eabf352ec9dd34ef4905471203634b1e70a634151124d76e4bd3e215a1614e6de7ba11df41d4230bf61641df62ce330e970e5a8faf5b74dfc255fd0a7791ef323c03804df58b22426ab56a7c8af1104d4f08e4fdf60866da38fd0aec847099e567ad58c5924d10ec36b6e881434ef49bcb946cf2961768660d45558913e19c0a9a3d2936a6bc694900f41cc2384283fc0b82c3a75624ddaf611ada242af04adef964aaa859bc96973c3fc3f82cd7e704d24250620e734d2dd9690d92b3aaa114284dab4f64868b5da23e92d537a2939b89e46a44f7ff6",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-8-4-1-16",
+   "hash": "sha512",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "2e895b8f1e5884fe205ac79a917702db",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-11-16-1000-32",
+   "hash": "sha512",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "21387e0733f6d88b83b9d7ddd90f80045b7237ba41f4ca668a2e030c37fccd53",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-0-64-50-64",
+   "hash": "sha512",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "2c7a70769f309898275efd022bd0d3835bdc124fe51909581b9f78fb1115559c66f11f865be44944537920ced262d42bfc62047d315635de2dfbe52188f5b658",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-40-9-7-100",
+   "hash": "sha512",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "175e8e3831c387f95d932990ff996387cfc21e367ba10ba532db0fd24e4d37596a870d46f0caeba0dce9d498a412bc5f0340a89dee9b7d16f9b359f26c8237713afa07eaf85414ab2259f33f8abadbc5dc72925abb044d887e0f99eb5123a131ef02cbd6",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-3-32-2-1024",
+   "hash": "sha512",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "5f4b2ad000924c7228cbd10828b01a6bf800afcd78e619ee0f47b867017d3491631156a2cd454493569a16b4a2f33e1e3bc2d626a305a58ae208b5efd18a0379bc4ea3e733d5577d504a45145c56a5b61a705dbbd001557282c18289c2229eebb654b2bd298b1f6803cba68adf64bba434d920d05bd310d1a4c539310123806b70c0892905c4ec5f4c95286ffbc1454fa75219fce1e538b477fa343c6127889071b1a5439612965e8d5552dc21fdcf357630b3a2cfee788528a729ccabdfb5fc70e688f4b200cdbc7d7c3270b077731c39771ddce66aa09fd8fe5f50c31c3222e0941d5fa883fbca5b93b4d8d7a3137c7e0bb7c49e9e95c5ed92ce3b188d17b06b5abd024ddd0a7419e538c3b417f36f27ea87fe33030eb205f03ac3620f72a4535cc6b34bc835b22b08dad20aff510b909ba66646f71fdd8fb1c4342be02c28b7469f0b7b655b682c3e7738bde5d41d4e749ac620f09dfaccc62911c38684b5ddd7cd71bb23bcc9de0586c3299f498560c453238d87b85b4699ffdd008a537c5352d44cd1c13d72e53c103a2a77b416bb1d34b053242f203e1568e09e81f21ce3eb88f928d3aa99d78211c7d2405b0d42214d63421a2c95a5f355fff60b93cb925fa4698449127457363a0de9bb8a08ec7232684c8ea52581db9d105d6f8af399c32f49d2f2763edfb3a9329b3354f19a8d74ed78c4c94f40fd2c276200ca5dcec244523594f82ed0045bfafa766e353ff5dbee899cb63156d1e6ffbd365088843c2f56335857596575f7c16c663e712afcccf1b76ae28a9c8430543962ca27499d809050f18cbdec8f7960d8e2f91f0dd8060277490491fe6757accc59627d7dca06bd902db54186a022a79cf1c67b1076c386da28ac7bba8a96bf2b78f1f00be822431f275b44e1754a8175df7f8e2d46a60967cf47fd087bc066189ee9bff38e7936d0dfab1d89eb55c3d867b99cd8f167a012d2904b804821b08cc52cdb867134ab08720fb6c099327295d0c2ce41b9b445efbad37feeb57fb5e9792313560180afefd044be6cdedc441737b56d7002e66432221cbe8c7c11e85e4122bf462c8360e75844f6f384d2008ce395e9ae13229969292a7683c70041317743a3f4befc6d5e7e770d125c63675be306c893babf559ee34247f571deac309ae94c5f9da62dedf9ae42ef62d4a951ce4547ee9881a200ab262284a8fd616ead689b05fc84a404700a9c4cdae45fbc094dc4c23f9f7551da67f102a763d9bf4e85534d426f4c87bcf5f8257538578182fe6b6cc7e523077bff326fe5ddee74b6032721518ddd992c56899169f3e3fac45f685ae6eb3a45e625330edb4f22394d8e218a9c76a9f280fa96f3200c51b8b931396b884b2f023db81765c4d8fb72c7e257865bd8d85eb5d07d7c89b899d74d59016cf0dbab3939f2f2331b52ba01017c42",
+   "heavy": false
+  },
+  {
+   "id": "py-sha224-8-4-1-16",
+   "hash": "sha224",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "efb9535ee5c6c5071fef9e6f949ccca7",
+   "heavy": false
+  },
+  {
+   "id": "py-sha224-11-16-1000-32",
+   "hash": "sha224",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "d2b9ea4e4773e4585dcfc96243b392aa461491fe0a4956f298828fbc2a33d66a",
+   "heavy": false
+  },
+  {
+   "id": "py-sha224-0-64-50-64",
+   "hash": "sha224",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "30e728c8568e1c0747da0d97faae342d1e06999ca2169cf270eacf3cd7bbf40886554bb311248730867d2d36ac098d5a5c53c4238c8ee991bacad645598b0e9b",
+   "heavy": false
+  },
+  {
+   "id": "py-sha224-40-9-7-100",
+   "hash": "sha224",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "05a5fe2080d8957919325a818779dd7db0596c5ed3ec057c864b71141a4146b035911f0e9a5619083cb79b140407019fa675a493c5a9955bad821482bf2e43db75729a79e44740bbf46fa74aa179dfa7c021333c51ae78940b66ef6dfad78656eb21a5c0",
+   "heavy": false
+  },
+  {
+   "id": "py-sha224-3-32-2-1024",
+   "hash": "sha224",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "3bb65b6c87b8ede7c4c667039e7dd189101ed126faae7a96ac32fb771387155a7f05e49a5f5942fbe099fcd399bcd3cfce796643df2b3e62e7220c22c94894f2f13cf475c8e597b87fc8fbc867d34fd057b0dfe1a7f5c221eb0eb2cea25a9e95741f665d02b5b09091ec99949a0ae6ff59e43a36d57c2fc5c6b83806146fd19f3233fd4983880503a274d27fbd03fb86b0cd96c8ffb3a797b64505f82bb5bbb23a26a51f2f2609582d745224136d40411996db0be0ae5d1041c6c236831685e7b579ee77694182b4c2ef1e32226707195f4b0e6e298f0e57c2a4eafaa83d695f269ae7957a8187154f35c0cf5780d63a010527ee36ad6832a6d53b1ce01bef070e9e57996ea7a8bce5135e4ef5710e4f89c9365a5e784fbf3e4996eb87582525eeb499d4847779779648cd96882169e2b997aa025d5f25acf7158ea61aa0bfaebc43b8bafaee2e5717504ce10dbd50346b55e8e5bb1283bc1a67ee17f472e10cd7f55d5c12d949f8c046e0dd75407d13dbe088ea60742b21e2002b084cc5cd654cc709318f35521eae37eddea23ef50be21ddafbc80a6611680d2e3512fa2b3f1797277a5c2893275a558ead0f371b5e43704a8f64f6782896714cf2ec74fa7554bbf96621b55732185d05332f0c9ebef4ef30cc541a931b886b1dd0408dc83be41a89e26dcabe0bd0ee84cf94ec622c4f7b507fae03f33ec2d3e9dad62d2188e3e7756a643d5dad073bad8de3763adc01a0027d0ab03211c5d8133cfbb0be3bb15167e8beb1e067f43714bb9dca6be33ef39edcaf2b53ec0fffc2f1cebb6cde63f443c1fcd1744d68d0390e16cc759a1bd985a91f4ab6b288ea1ce9c94e97007aa32e0448151b0c7c44ca2b1c54a5b2a29409b3ef2b3d343f06e5778290af74056545e436a395529fadda67cc1b18254d926ca51f1c0e21fcbe26ead021f2e5094ca481c4e4a64820450226d6e851a8ef75fe86bbc9ef96cb95ca3b57061e150f9da5986e807530e9f62a9d7386f06ae2622576b6e4059dacf704f60508d0a43c6e2861bc3dab946c57671300decc0e33c1b96b7c8bc734016b05b56793ac465be33ca02d4ca5ae3d73591daf1f0c2a92f557bac357570363f2d27e273a6521d9696443cd432b5cfdec23ad1ae987f6d29706401e8727a36b938dd89bda4568f7740af0dbb16340f6d4476d3ee4a5b19d9a890e78bee0086dd8ac7f52635d40e296237b02ed53160ba0c2849a87afb0b7087ee9964b2bdcbc144385539a7d26a4fdd5b84416a6737aed6455afb884a89d3cd0acd5d2e361c96ed93d8a49024c8e5171c2cb11c9f9b382c7c9e907c854b1bf00f2336eb387fe1d2118827843094198fe02528aaf31d77927e42453e511babd6427d3b7abebebaced70b49509ea098f85cb4a4ac56fa04aa9af58445f7f5137637faac2c2600394ece29b1c0b98",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-224-8-4-1-16",
+   "hash": "sha512-224",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "158b9b6626afcfb10c190af55c3abb38",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-224-11-16-1000-32",
+   "hash": "sha512-224",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "53e54d0eeb11c416b39d3fb51ee9fcb7b91d8a5953232f6aafdb45006699ab4c",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-224-0-64-50-64",
+   "hash": "sha512-224",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "463d05c31421d23ff4f9c0dcd2373a7f07bb61d2ae72c451b84cea7137ceec1b07bcc1a9896c1f667520e1daf37aa93cfda6462a0a82fbce21aaa009c544207a",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-224-40-9-7-100",
+   "hash": "sha512-224",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "a68c6e095089104591ccff2f8f0a9ef04c7740af2ee8cb2e531c78b707a70c49d0e6d1523830540bf1e0f459c058d54098010327984a6a8508d8e5338b642a2d56c7460f334fa69cef15c84b31795219b48c740ad98456e829132344556b3943abb26dd2",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-224-3-32-2-1024",
+   "hash": "sha512-224",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "769e0c63405b9b6e1e7b2d781f44714fa7bfc480421f8c22d8375e16776491eac501ea0f79a5629e7cc38164555dbb98d952fa54355938706eb4c1c6de146927e9427c16da1948cdf3b8f8ecc9ff784addf85f931db3015fc11498bcbb5e1768f4fa2ac66b951a53780127f65bf92e4030eac1a59215e1fc5243c80f0d23eb450e5f1470a0acbc96c0335b2b27355f286c9453ff1cfa79e0c382d39423a04e2c5ab4880f471fc22b1f18e2360f99ebfc66e1842aa65bdd109394eb4425808ee5f091fb857bcb4f122289233343cfd8c10b7346ba04efc617454f4f82baf653353db552fc51c3bfc0c5e27b6fbf43505a1bc56eec8eb28639620a26f42195c258a2200085069506674c014ff67f06f24f2f79f1e52dc6e9c884c673945ca426eac318b37080f9f85d767ae45b124c4af7156730c1e58531ddf261dd261857859ef0f18da767f614d327853076e2ed7852aa858d58bd6cea9377dc3ed53f6e000c24b949471d4d5ad53bbbf27047e859746eb96851233cfa9550cbbe2f2e2e01085c4488314fc0221d778b56063c3356071e35fc0679a9995fd96be39d23a9debbe69e83f8910dd58ec8d08c3870697e71f54ca1e89e20285a2e450adf34338b4031b3164b9e2967ed5efdae64f2ace18f4e47f218c7ed8d120bb870ec861ea5ed8c4db98b5730a07bf9baab8bbcd23cc2ea3c7c1f6b54530597c791d828a9416a8ca6f09a0e69cbee2f4163b703b88c4da8ccc4e751a90bbe630d8cf09986a07bd84cffc69fd4a3f4cfe37f93d439f0c51f36ee005f0e357169880f7239b6b41bc7316f1f1e820b42321449fcc6b0307277de8c6677e842cffab89d27d16594e0a4a59d4e092a6d4d08935faaf37eb0af8ae578d662befbf3409849c3326786fb718712e72fe9575fcae508c4584e53b88c92ffa30e0f083a804d37c515be1647beb8caa4588bca098e4b7ecee12fd070a9903981f034f5dd451521a53b74e21a8c553408b0e2d07f866a6fbfa3747c7f0034c2163af7135279c05c2ed6324ee3256a9eb3d951e869719e02fd7e200828066cdbc63d0fd33c8ecc6e252505821eb9775029d924af08714be6ed6c5d3ca9e4e45f0de6892fcd3a1e51bb5e9b1540a5e2a580fba633c8d9f24f2e6cbdcc02acb7f62503078e27a7a8e9f31eccf126b6a818715e638ecd5f3f61ed02ce291bc452ff4cd9de0dbe3bea475116c85aa4ae964fd17c2414d70fe3621307c503152d9137386a967481a8fff0b3441ea553565c93ca9cadf7f3e002581a8966548b1f84f616b6ebde2a2a70e040d8eb8b2c9a70121e69346fa2295dde9e5f94ddf0c7ab97186af2d9c6febdb3b4b36ed53b5fb27eb75fd852b4f633d43a47124859f05eefe1590e48b10078d5c0742330875e59013bb5b83aa6ae029e36349f17d62b06c2a6e98be66f6a654e9088fb2275",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-256-8-4-1-16",
+   "hash": "sha512-256",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "e037f89253a6695a12e26e93eeb38241",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-256-11-16-1000-32",
+   "hash": "sha512-256",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "ddad52c25ffab4bed1a78812f7c78c3881dab88fee9aeb596848903488135f17",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-256-0-64-50-64",
+   "hash": "sha512-256",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "f17427e2d4ca5074fc11935e54452660d9c2ead0e0c5ae3c01dbbf078474e249ade6936476bf304734a3d3d4516a889e8f86e14334d206ff2a329f84c3b63ee0",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-256-40-9-7-100",
+   "hash": "sha512-256",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "b23fa8dc31882b69bdecbc807068d0a63034e63fe5d8cdba15a9f80b8ab7ae7288d1317f2a0fd30094c8c1cec0ae45818eba8b87d4a29867398567dcd55b18f4d3521fcba077ef38329559e16d677d326ab5e076b174bb24f7656429e84acc1ea5337f0d",
+   "heavy": false
+  },
+  {
+   "id": "py-sha512-256-3-32-2-1024",
+   "hash": "sha512-256",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "3f13e02012cf16e985c2838d5c7edf4a0081d3d6027f4ba1eb4163dc2e5ed211915e72496d51941005691f48e6c4d7d3e8847b035358aeaf3dd5d2c955fd840de164708eea583a740a748f988f896edd193890668d2d3664216e78e78e22d07267fc488be28ce6bc0b598daa0167ea593fe60326ccd5b91c553378fa45db334bd60bc024ad398eea857b40436c3950d4f9bc491b4cc9acccd88bfa021531be2759e4facc4bbb413591284c2b3e654e955cdad49d0d533e0aa732abe357b053d4475dd4dfb5d517dc9d7ecd73cb94ba5a6ef5040cad0e797c35f5590bfcfdc0bd9696c2507e0831995bfb9d0499a1f483bf346c96593186f34f6587f924d7fd4afbba50ce377b59239f1127263d99e907800c3c03470f84203f5106a862e6fe7ba8a635227b7f27c8abe1628cb3dedb29459edad196f37c715477a89cb6743a7eb06d13e4aaa754fe220838a97f31fcb8537350de715b5467be19c5e46a20ee6aee98e478887bf79a565d0e8d5c21f67f87b242938d23794f489ec2faa7c627a682bb44bf19684e5c4a733c9c25838d730a85031346a235045b0822029cee9588f105c5fe5d454021b8f1a0ac28846ba1873b9f8ad309975c0bbf63aadbabcd77f5ae88fe03383cc4df16388317997e2592d0c543d7d621f415c7368dff49f746f019058925653a740d9704dd2400dbed92caa1e2249c333eb9303809f9daa2a88257e24a40475115b6f794732c6f046ebec8fc77eea5beddecbe43ffae933aac716deb73824696b1141b91fb85e232a78f07b519e54d7e143181c0538c292de576a06b128cdbafa661d3294cc486a05ea91040d4a4b52449a16039f8dc44a5f5fe9b557a2da6a0f28341c0704b79315adb7996196a1c679e31b82eb53179149e8bbe3fd6436b6bf799e3509ca16e302002c2ec83b9082c12fc13b547d44a2f00bdcf534ddfaf935c9599bf9cfea6efa63d27e67232500b5f24b6fecc007deaa7fab2f22730f4d608c07eb076e19e79322431b9186fa05c09e69823147834ae148db9b1b3d4325a5d58896aba89aa4ceefcdf29efecad213b75ade27822beb2fb86d1bfa06e4aaf4f4adbb8bf01f5f987653e4aa2a7767ea1dc442599960640bb00ae97bad279291d410cefec90beafd8e8b74b0c9cbe7053f7a682b2ff27ae7c5464cffd7926a6f5534f3f494910a41c2cdacdf09447cf90e450639dc86f46c51db1ae4ab40c1961493f37e4f396adbb5a47c616b637821b449ad7c7b194e22bdc0f6985d34a5c77f8dce42472aa821ae4c60b410c09c2a08e0f7fe797da43adbbceef341860483d52202fb42c13f4fb671beb49ecba43d4218842a03f4f0739d8bc076c5460eec0e6550e91c4a7b25dfe1da3926ab250202c1ee2a5216b4fafc0ed6d5a7e4f98ebf7418a422903d2a7ec2167249372c9c4ebcf4d88e0e7c8b8",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-224-8-4-1-16",
+   "hash": "sha3-224",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "752dd0e1b70a6abe5d52ccee34a88653",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-224-11-16-1000-32",
+   "hash": "sha3-224",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "9524d076a3afc73d9daea860a0ec970e89168413cf9cee8eff6ff308d620e088",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-224-0-64-50-64",
+   "hash": "sha3-224",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "4cdd61319a898896cd073a2375ad77dc151aed57a6dd884d510a8317686e699e8b797cad80ace3dd1263ca845834440c634c152a59ffc27c0c29d63994af75dd",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-224-40-9-7-100",
+   "hash": "sha3-224",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "30dc8b4f6d67de68c7305ed82bc3898f307a8ccb816d5f5f6739bd305a216fa2005db3378e56832b9f7147788d2b0694d55c2991341071c607b315412923cca492af260ec289c28e21aa9976b37df1af18911ec001215c49852c469407595d0c85675c22",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-224-3-32-2-1024",
+   "hash": "sha3-224",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "aa44e42c162322e5b738e417e9c50e676f70f09424b844eefc89e7e7570c7ecc5a07adaddf854105968cbd96b25a2a1baa3d95b7eea880c6145d78d1efffc613df7fdd11487267549edb21a42622a9641499032f4365736aa059e0ba6e47a1c879a511251adf097ccec318490a8dc60475eed3ddf7f69637d93952a3bb5cabbe98e2d84403f093174029dd172f3b9a4ddee34326000ac44f31126a06e792593d6fadd5312ad021a821b4a93635fd0b53840a025a2a2289ea1110e5f47736c7c8438814bfddaca7a34e8f13109e6d4d3a1100c6e6a7d1aa443e909f30a8e7cea5cda38625ca6548ffb169ae509235c76e992092dd76fb4dc17de67150ddbc5745026101ca534fd505a89cd4a7a2b98b98e9ef15a38b096276e6d1662419b3faa212dfe18cb31a6fc822d7471e9d1235daec3590db9c7fe7daeb009cb6a484776344195c78ce377f5e2e75f1e145ab14cffd69d4ff55cfce8ce8d2cc60a0f8ad72eb03e02599e6cbdc5de9bce4d653b24e40260d8f126aacd49707704937441e5dc44089155440218b8bbfd5b3d300db869837ef6fdc8edda4237a63249b94de93a6d62a7d4dd1fd7a2fba3b4089a58c47d6c20fd61367ee1312b5c90df97406071e48928d90bb0bd30ba5a25fa904b78b53c7916b4b829465d62c085d335ac107a05ea063f4e74bcac26c281d50103d1b4d4c123400bc06c6698c1eb4fa4950a0f7efae17262bae9408fc42febeb7e175d97043e36723660982447d8c673d0afaf4b5beabba9cabb054c0889ebc53139370a8eb3b00ceada003df8f70f9ae77f179e1a18e954ef2ed4fa26d8766d2a4d7f0565a3cce7ec347530bda42e317c9ef5b7649af0bf474d74d6b8b92e3adaea757ba4b1eaea9189efe8e7558ef70c840aff8c584a4f434afc90bcb13c594f0e0e19917fa15a847d8be442fd39b226372d682d49d0cba6643d4b6fcc0034c8e9f1d7defbb4d43150bdba9fc555d616a596248d02ee0345043e5004dc19454bb379388c1e706d770ba1585bafc11a0249ca299c911ed14eb94cc1817b55b3d381ed0d78473148865465319fcb92f2c524878a6809fdbcc16bebc90f7891a217f924ed935c418ace9c5f85f67b50e36e2f67ae459c3285e8772ac310f7dff66ab334998eeedccf7e9782a57c02b89c324c2712461e42305374d2949b2b7f52efce9ef56dcd43339a56049fe9167d31c8e41402dcdfa839bdbb91b705983f0ed52b184d874c63b3ae835982b09e9cc554a301dd18704d40f2733ad2ed0b131753794fd22777cd6c140546ef44332df8f63c2c70f65ca66ec1dc1e583861f2b90cdf2f05d8042d7afb4ab70d39c281cf1bd0fe4a304e3a4e3fd614a5a43ab3385bf74650648cb90b607f63e2c07294d7cba940b405efc69948ff146e6f39b58c1dfeecb3cd27fb4262601c6cdb2a87ad3de23",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-256-8-4-1-16",
+   "hash": "sha3-256",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "c57d80b3448d9a7b072bf0942f8e75a0",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-256-11-16-1000-32",
+   "hash": "sha3-256",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "3bf066600becc9985614f6ab27d91101360106ac0deab9775d7f10813e58c6b7",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-256-0-64-50-64",
+   "hash": "sha3-256",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "5bcfa7173da43013cf764e1a8547319ff4a2c88753ab6d994d14b20f7c86bbb75ce73b9d67831a52eab411f01a2dd63721d8af4e8621cbcb59a209e26fae23a9",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-256-40-9-7-100",
+   "hash": "sha3-256",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "6adb90f5c53ecb20d670f4cbb8f64a3ea6292cf7aa3a5011971be6d41c823b96243444a74cd87816900bb6d364564bbf2e93c845e8dca6238ebf76102ebc470c941bbfeceb88828d44e1e60aa01e5074871a6d79a0cbf8bf4d5afb67a99d78a4d52659f4",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-256-3-32-2-1024",
+   "hash": "sha3-256",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "5b242adce58e33e3990eddde83174643e498981cef75c3f7c3a63ac54b04088a35818d1068a0bf302d83a16c7fc4b63569979d25b9250eaadcde5a1d744889531bed056691872543624a7e8e3aa8834527bd2b53a346942b5666286805a1d964a0468901f28e6b92ef2fb0a4f72364826f07a384b5d5f09468df0d513405c8464bd1c71a3744244702b03e4b8c4c85405b4757d0dea64387ffb284f2b85a4ab5dc7d254552fa4b8be26c82915ae027c00604f4cbb46efd7bfc8211495c0412b870d20f38a49f552a9bca86a480c06b3c825366f9badb4cef8a72222fc1baf70535d042d5d3ab6f12d8edb3f5770f62a324f27dc29b7a555fa8700f088219fbe579af4e0fe9637bec8697b63ef6f22a536b45bb96604de674158295675b0e9f0fa6c21e90d2051817d4127d899096f7d3910b103822ced5c1e47019e01b081c620cb29c05708f746f5896fdd66d861a14c4a617b683532b05a1731bfd2ea0aa8f8be8fcbc9dc5dd9272c378c611f4a151720b6ff3a0e3926dcefc2f34a904ea7c8babb44df5d2ee066cbdbd48fb78f32bedb2de48312bd24635effd33f296262ae4155cf5873083f4613d25f6403134cdf1bf1746c368aa5a797356ce7773b0fa7a9741bfaa21a44ff0dd7319ee178370e5e92c834a3e0d289e54b950d60caf49925ca1d9b18145b00e86ac7f2461a6320c2294de94798aceb486d756fb310a04367ed051bd9d3ffa64b0be9291008198ff93b6ab1066fe6b6a1a55620de95a11a4a7158edad2dbf745c1d141dfb725633396f4246ebc16ad89f356e2a743e2fa38785f02dcae683049e2222f9cfac5bea54253ce54707e4eef4988a5a91351e870dc99c48af0432c72c4649d6c5588f1830cab6477b7f3f8e3f8baec7a699ff9b49cb81bf940c22f89a71c5f64f85f8d576459232cd167be50d0ffb7684502932dba7561fc68fa260e449f4ca5fd9249488daad4afe68fe1c7dbddb2952b845ae14e3867c0dd4be13c9d223c7802d42f112965622027c3281505d114f29544938734f1128defa5f68126f63a0a0e01250b4bade6c84cb16ac9e95fb4108e68926ac8adf04f9f45aece46b9a0f61067ef85d4756b1647109f9848237afeb0a526e61d7f3cee6da5b8739f0ecaa127545357d96cff3dad5d2f7694abd87c928f60a90a853691fdd994e78865a1863261dea38278427ffd0884835e16e9027d5b4e4ea8f3e9e2ff3e5e079bcaf48264fb998f9dc7577259ff9f76b1d449d78bd3065433faae6aa6e3fb9be5c373c306a01ff951f2e95aecc57af2287ff2e711a88681f52efec52cfd5fb350da8d455b1005f7b95eb525727b1b301b701437dbe1acb33cf0a4ff191f6f859d4249566e9547cc579379c9e5a71d2dd5e7f04f5e5646bab4e88a7e65b4a5dc2989ea7203e5195feb7613ee4e396e34771e0d177748cb",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-384-8-4-1-16",
+   "hash": "sha3-384",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "bb89d098d41b248a02f4a47bdef135c7",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-384-11-16-1000-32",
+   "hash": "sha3-384",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "e82abb8c196a382cee0b3760bbed2f3f3b1608a61e9840f6f3e049ed77868077",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-384-0-64-50-64",
+   "hash": "sha3-384",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "5206a939c8f8b6afdada3ee25a81253d508eca7479c7f48936f3d00be1f0f61652ea0be7da98c12cc64015e9abbe9b14e81c2f0361ca1104dd8f99c9394b49d1",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-384-40-9-7-100",
+   "hash": "sha3-384",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "e1bf8da33484c8d43209b2f94a722d23dcf21b74b9f0410ffcc4d6725286f361d88ee0d3142e80ef032a70c25fa4d671696d686a1ada7279bc59bc5b2a5ccf88cac1a7254b21a4e064d838fde387c1876ca015f944fb9fc416810becad239f6a1867c067",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-384-3-32-2-1024",
+   "hash": "sha3-384",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "2767770e2214e8b77615a04ffcfad3bcb477bdc3427ea70866b6d62b9155f96ecf2c65235220bd2e37c97a6738713f51c8c2d668eb27d7fbf28bfebde1b296b90d534ac481d730de8d6de0e818783b7d733e5357bc147d5af88f5958a9b26ab05ee2023495450a7d8eee8956520eb4d6e08b8b12d4cfea5d62d43696a201e14e069fbd0f7b4102633d4587b8f2414506896301d433982d0351501739211c08a5f4db1cd3e325df0d85915ee2c51b2b245d087bff06a0cc19beb585d5cecf67bed7312f5344b939029aea29e93369bb8137dd974c7a9b2d1a1d20c442c160be9a789b0959fe987758731c90d6dcda7e60739d100b5b6659a076219fa3750d7679ecbfff6364bac09685daf459809f165b358c48f59129657742ed6b9bafeb9e51a906923d8997110d0dcf3c5afd561c79c518f9540ba22f2a101dcbd472f4f292f4efcfb611ea95ea58b78d4b8e49e7a6ab6fbb01f0a7d91e09f5b946bf67a8eb5eaa03ead4a882dd5f65d66c8e77db0d4c61b2aaea06d9d992f0aa753cf2248e21c35554b6618f43452168f76adc9c26b7f465805a02de1d0d462ea9556a7b5de351c8f8d9ed56bba24e2b4615b2472fa5f2802e9f707eef9a066ba3b214d82cad4c5c78f3a5faebfc54b09bd9fddf2ae447dec915c2c88131bab643ca3e659c81ceeedd5e229c4feb3a2fa7223c6983c023b1bbae07c9c9aa2f487fad91dede57458a942e293e3413a995db0f56706177314ea4a134093287c6482bd354b98d00d85819daa8f6eb0abbaab0eaceeaf8b9806ba7d6d4e433fd12be424ae257237b7b2cd31b6e69c9ce0ac3c93f714cf05eb738a79bbcfa2f185c96f5b30ca8d8fd3de3e28fe7e0611afa4ea2c96abe918861c8cd9171b70c42f94e7c969172f6056dbef2a57b8cc845a89505c8df0deed135200d18516924677ef4d78f24c925c661cff85314c6e9b2984802545ff567cd8089e3472931736c268481878d446b7e56ce171504d0281a406b16de0b929b6610d48c71c7226f413cbd1d7da3384d7f06231ae601d62175a56162e4628b6b3c10a488ed5f871d46b591eec54c8e9d63f3b667314ac9644e3d899c3d412c5b4726f78d5ac5f5af8acb47fc1ff07dfe37fc63f957b54b0c3721193a06c8ef2bcc5906a85ef2c8c2f74835ad67a17d24d844d517190b2c7ae6e8d14c051f6b8ad09084c3e7399b24b45313a3ce3fa5be40d583cb51219da69904aca77d5d97fa20ad7e712ecc8a45051df1e26e6d700359cd0bc92470b3a80ebabeb95d20e0e0bac31cf33c3b5572e0c6abba4de178de185c2b7ff762f39e3a6d96f53fcbff418adddb5c21cf5f298075d3f8a9e1ca0ed548daf6511a25557a012daea27a78bdf49f531a1e8b036aa77e9526726924c92a59e617e71811cdedbbb57108d25c89d00fb8e47ac7e2b08dd7e35f56f3c556",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-512-8-4-1-16",
+   "hash": "sha3-512",
+   "password_hex": "08131e29343f4a55",
+   "salt_hex": "040b1219",
+   "iterations": 1,
+   "out_len": 16,
+   "out_hex": "6289105d48abdf65ec9803abfb1f1e00",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-512-11-16-1000-32",
+   "hash": "sha3-512",
+   "password_hex": "0b16212c37424d58636e79",
+   "salt_hex": "10171e252c333a41484f565d646b7279",
+   "iterations": 1000,
+   "out_len": 32,
+   "out_hex": "2d8b165c0b61a135e153811e568859ad664b7b3dda5552ddfe03f4ca69b14224",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-512-0-64-50-64",
+   "hash": "sha3-512",
+   "password_hex": "",
+   "salt_hex": "40474e555c636a71787f868d949ba2a9b0b7bec5ccd3dae1e8eff6fd040b121920272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 50,
+   "out_len": 64,
+   "out_hex": "020b9817d3bb104082efa6f9eb3ab05532e135fe48b93c15052b91607fdbe0769c189e9914b397bf209745c76a63073feeff0fade5c6a4d87a36460543a4a71a",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-512-40-9-7-100",
+   "hash": "sha3-512",
+   "password_hex": "28333e49545f6a75808b96a1acb7c2cdd8e3eef9040f1a25303b46515c67727d88939ea9b4bfcad5",
+   "salt_hex": "0910171e252c333a41",
+   "iterations": 7,
+   "out_len": 100,
+   "out_hex": "7619a4f13d6700ffaf74454555efe7ea14274e0ab745c20dac1337a1840decd6653790646a1aff86355847a90ceb7c20931199545994a28e5b14afe957c24508f2bc00e80b99e5be759c0d419cc42ec2124ff8727a99dda0efc3aea8194db8c3372d69ec",
+   "heavy": false
+  },
+  {
+   "id": "py-sha3-512-3-32-2-1024",
+   "hash": "sha3-512",
+   "password_hex": "030e19",
+   "salt_hex": "20272e353c434a51585f666d747b828990979ea5acb3bac1c8cfd6dde4ebf2f9",
+   "iterations": 2,
+   "out_len": 1024,
+   "out_hex": "311fcea306307ea866efe7993482153e5571d7b1b2c769f0b70b04e7a75e11a1dee18307fcae933794ece97f97be557f0068d57d01a213cf72a4295c8eca8d883f1958ec976f1f6e71f0799606896ac0b5f65ce9840628bd0f3c88118e913eb04b6677bfe2baa9e80a692b3f1fc1286bc560db8f8b4173f25ade2aadae46d7f36b9bf5065c342034a3a77ea6f5ba906af5964e8ab675447f1768a2f41aa223f5487135561b71cc55bd33c2da440bea4681b7720c8431d985875200ba8f94fb2060963932f4c32d06046b77bd524e4496269dfcf2da0ec34670dd3d1d61d96bcd8cd8bb7e91d9d1f6c0ef81db284b02696d0e29075375a0570a4d230ca07cde2bff42a59faec349908e4487a74b1ac027d91a213f5bf74023f02fb524f78259aab527c871b15573ef3344c6e2a25aa40bef509eb50843ecdac7d169c88feb37786fec24a6ceedf92d05749748393e1999b159c12502459fdfa4c66cf79c083011d45287f8804b5638a0500225ffa33af949ccdf30cf493818223695b3d13f5ae493abd9e753a634e04dd992feb58d51156ad03e6a25d2d2951683abfc05d908975d90666364db1eae096f02be9826821e1eee24934e2c15eb08991c6002189a698194111ccaa0140647a95443266f48dcb510c96b5845c55d6ce490284e47725a05f66e666a95acfca7e11b6393dcae9b3d99f70e6a9b642f4d728f3d8eee58dc4bc7f1e38c6bdcc19aa5b764b0ea487aa65d61f16ff98bb875a4e28ec1c6ab415cd1e4f0541d2c46749431dbf035278997dcbb1e46d76ef5caec15b8cfd37c9f52a606531167f8395075cae346393098b5c4ee4ac2530d1d7c661ed835c18afb193a3a69cfbaaa0bd00be5080ec5cb6f9799966284c2c06e00c781321c0515f4a0fb8f81c6f3b4ec0df2eda9b694726d3bdfe03694e4e870bc48eda0016a681ca15f4940a5d428d34189aeaa04f9def2ee466e503783c3e5d6c4901f3bd3798bebeb654505f5ae85d010f6318543f58cde1599becb17450fc8a59f1356096f2962eadab45178204908df1f39d8bb8fe517fd27723d29366aefe2805c29d7a8c4c74d1cca66525906f31b4c9d474c6719647346d1b73ae7631deea160082a9285252f5dddb1fa8c495e8ba9fc7b0ea90430df642605045fe3675ec6cbd3c2d56da05db140dc6896d49e84decd0d6ad3e727680fb7bb70f89eb579af42a320540367ee356b7caea9143e6fdfc57a157652106be52e103d70e837a6b80a52f40e16c3ffe89b7f6d8f68b2a46e8de2819f932e482d031f30cd0bb2b26f1106a457ec142122e12dd77a509c1fb669a887509cff0df738b49af0ca0d69da8ca8aef7db5eb849a8c119122deddf6441c124d3078fcc4e725b6f7a8fefd2a630acf7f1a734ecd83dbb1e4a96491022ccd1c15098d737d716938b82d1958e498acd4a5b38",
+   "heavy": false
+  }
+ ]
+}

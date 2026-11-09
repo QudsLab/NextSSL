@@ -1,0 +1,132 @@
+{
+ "algorithm": "bcrypt",
+ "source": "Openwall crypt_blowfish 1.3 wrapper.c test table (tests[][3]); $2x$ entries and passwords > 71 bytes are not included (see README)",
+ "vectors": [
+  {
+   "id": "crypt_blowfish-1.3-0-2a",
+   "password_hex": "552a55",
+   "salt_hex": "10410410410410410410410410410410",
+   "cost": 5,
+   "out_hex": "1bb69143f9a8d304c8d23d99ab049a77a68e2ccc744206",
+   "mcf": "$2b$05$CCCCCCCCCCCCCCCCCCCCC.E5YPO9kmyuRGyh0XouQYb4YMJKvyOeW",
+   "source_mcf": "$2a$05$CCCCCCCCCCCCCCCCCCCCC.E5YPO9kmyuRGyh0XouQYb4YMJKvyOeW"
+  },
+  {
+   "id": "crypt_blowfish-1.3-1-2a",
+   "password_hex": "552a552a",
+   "salt_hex": "10410410410410410410410410410410",
+   "cost": 5,
+   "out_hex": "5c84350bdfbaa96ac16f615ae79f35cfdacd682d369f23",
+   "mcf": "$2b$05$CCCCCCCCCCCCCCCCCCCCC.VGOzA784oUp/Z0DY336zx7pLYAy0lwK",
+   "source_mcf": "$2a$05$CCCCCCCCCCCCCCCCCCCCC.VGOzA784oUp/Z0DY336zx7pLYAy0lwK"
+  },
+  {
+   "id": "crypt_blowfish-1.3-2-2a",
+   "password_hex": "552a552a55",
+   "salt_hex": "65965965965965965965965965965965",
+   "cost": 5,
+   "out_hex": "09e673a3f9a544818eb8dd69a8cb28b32f6f7be604cfa7",
+   "mcf": "$2b$05$XXXXXXXXXXXXXXXXXXXXXOAcXxm9kjPGEMsLznoKqmqw7tc8WCx4a",
+   "source_mcf": "$2a$05$XXXXXXXXXXXXXXXXXXXXXOAcXxm9kjPGEMsLznoKqmqw7tc8WCx4a"
+  },
+  {
+   "id": "crypt_blowfish-1.3-3-2y",
+   "password_hex": "ffffa3",
+   "salt_hex": "05030085d5ed4c176b2ac3cbee47291c",
+   "cost": 5,
+   "out_hex": "106ee09c971c43a19d8a25c595df91dff4f09b56543b98",
+   "mcf": "$2b$05$/OK.fbVrR/bpIqNJ5ianF.CE5elHaaO4EbggVDjb8P19RukzXSM3e",
+   "source_mcf": "$2y$05$/OK.fbVrR/bpIqNJ5ianF.CE5elHaaO4EbggVDjb8P19RukzXSM3e"
+  },
+  {
+   "id": "crypt_blowfish-1.3-4-2b",
+   "password_hex": "ffffa3",
+   "salt_hex": "05030085d5ed4c176b2ac3cbee47291c",
+   "cost": 5,
+   "out_hex": "106ee09c971c43a19d8a25c595df91dff4f09b56543b98",
+   "mcf": "$2b$05$/OK.fbVrR/bpIqNJ5ianF.CE5elHaaO4EbggVDjb8P19RukzXSM3e",
+   "source_mcf": "$2b$05$/OK.fbVrR/bpIqNJ5ianF.CE5elHaaO4EbggVDjb8P19RukzXSM3e"
+  },
+  {
+   "id": "crypt_blowfish-1.3-5-2y",
+   "password_hex": "a3",
+   "salt_hex": "05030085d5ed4c176b2ac3cbee47291c",
+   "cost": 5,
+   "out_hex": "51cf6e8dda3a010d4caf11e9677ad2368498ffca969c4b",
+   "mcf": "$2b$05$/OK.fbVrR/bpIqNJ5ianF.Sa7shbm4.OzKpvFnX1pQLmQW96oUlCq",
+   "source_mcf": "$2y$05$/OK.fbVrR/bpIqNJ5ianF.Sa7shbm4.OzKpvFnX1pQLmQW96oUlCq"
+  },
+  {
+   "id": "crypt_blowfish-1.3-6-2b",
+   "password_hex": "a3",
+   "salt_hex": "05030085d5ed4c176b2ac3cbee47291c",
+   "cost": 5,
+   "out_hex": "51cf6e8dda3a010d4caf11e9677ad2368498ffca969c4b",
+   "mcf": "$2b$05$/OK.fbVrR/bpIqNJ5ianF.Sa7shbm4.OzKpvFnX1pQLmQW96oUlCq",
+   "source_mcf": "$2b$05$/OK.fbVrR/bpIqNJ5ianF.Sa7shbm4.OzKpvFnX1pQLmQW96oUlCq"
+  },
+  {
+   "id": "crypt_blowfish-1.3-7-2y",
+   "password_hex": "ffa33334ffffffa3333435",
+   "salt_hex": "05030085d5ed4c176b2ac3cbee47291c",
+   "cost": 5,
+   "out_hex": "a80069e3b657869f2a091716c4980012e9bad5386e6919",
+   "mcf": "$2b$05$/OK.fbVrR/bpIqNJ5ianF.o./n25XVfn6oAPaUvHe.Csk4zRfsYPi",
+   "source_mcf": "$2y$05$/OK.fbVrR/bpIqNJ5ianF.o./n25XVfn6oAPaUvHe.Csk4zRfsYPi"
+  },
+  {
+   "id": "crypt_blowfish-1.3-8-2y",
+   "password_hex": "ffa3333435",
+   "salt_hex": "05030085d5ed4c176b2ac3cbee47291c",
+   "cost": 5,
+   "out_hex": "a538efe270494e3b7cd6812bff1696c71bacd2986787f8",
+   "mcf": "$2b$05$/OK.fbVrR/bpIqNJ5ianF.nRht2l/HRhr6zmCp9vYUvvsqynflf9e",
+   "source_mcf": "$2y$05$/OK.fbVrR/bpIqNJ5ianF.nRht2l/HRhr6zmCp9vYUvvsqynflf9e"
+  },
+  {
+   "id": "crypt_blowfish-1.3-9-2y",
+   "password_hex": "a36162",
+   "salt_hex": "05030085d5ed4c176b2ac3cbee47291c",
+   "cost": 5,
+   "out_hex": "f0a8674a62f4bea4d77b7d3070fbc9864c2c0074e750a5",
+   "mcf": "$2b$05$/OK.fbVrR/bpIqNJ5ianF.6IflQkJytoRVc1yuaNtHfiuq.FRlSIS",
+   "source_mcf": "$2y$05$/OK.fbVrR/bpIqNJ5ianF.6IflQkJytoRVc1yuaNtHfiuq.FRlSIS"
+  },
+  {
+   "id": "crypt_blowfish-1.3-10-2a",
+   "password_hex": "",
+   "salt_hex": "10410410410410410410410410410410",
+   "cost": 5,
+   "out_hex": "f702365c4d4ae1d53d97cd28b0b93f11f79fce44d560fd",
+   "mcf": "$2b$05$CCCCCCCCCCCCCCCCCCCCC.7uG0VCzI2bS7j6ymqJi9CdcdxiRTWNy",
+   "source_mcf": "$2a$05$CCCCCCCCCCCCCCCCCCCCC.7uG0VCzI2bS7j6ymqJi9CdcdxiRTWNy"
+  }
+ ],
+ "refused_2a": [
+  {
+   "id": "crypt_blowfish-1.3-2a-8bit-0",
+   "password_hex": "ffffa3",
+   "source_mcf": "$2a$05$/OK.fbVrR/bpIqNJ5ianF.nqd1wy.pTMdcvrRWxyiGL2eMz.2a85."
+  },
+  {
+   "id": "crypt_blowfish-1.3-2a-8bit-1",
+   "password_hex": "a3",
+   "source_mcf": "$2a$05$/OK.fbVrR/bpIqNJ5ianF.Sa7shbm4.OzKpvFnX1pQLmQW96oUlCq"
+  },
+  {
+   "id": "crypt_blowfish-1.3-2a-8bit-2",
+   "password_hex": "ffa33334ffffffa3333435",
+   "source_mcf": "$2a$05$/OK.fbVrR/bpIqNJ5ianF.ZC1JEJ8Z4gPfpe1JOr/oyPXTWl9EFd."
+  },
+  {
+   "id": "crypt_blowfish-1.3-2a-8bit-3",
+   "password_hex": "ffa3333435",
+   "source_mcf": "$2a$05$/OK.fbVrR/bpIqNJ5ianF.nRht2l/HRhr6zmCp9vYUvvsqynflf9e"
+  },
+  {
+   "id": "crypt_blowfish-1.3-2a-8bit-4",
+   "password_hex": "a36162",
+   "source_mcf": "$2a$05$/OK.fbVrR/bpIqNJ5ianF.6IflQkJytoRVc1yuaNtHfiuq.FRlSIS"
+  }
+ ]
+}

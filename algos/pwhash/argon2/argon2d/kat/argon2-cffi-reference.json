@@ -1,0 +1,106 @@
+{
+ "algorithm": "argon2d",
+ "source": "argon2-cffi (bundles the phc-winner-argon2 reference C), Argon2d v=19, salts 16..64 bytes",
+ "note": "generated once by the reference C implementation (argon2-cffi from PyPI); not produced by NextSSL code",
+ "vectors": [
+  {
+   "id": "ref-0",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "000102030405060708090a0b0c0d0e0f",
+   "t": 2,
+   "m_kib": 8,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "6f8a8214a846bff73bbca9ad7ab0e134365825290275e8f6064dc06e398abcff",
+   "phc": "$argon2d$v=19$m=8,t=2,p=1$AAECAwQFBgcICQoLDA0ODw$b4qCFKhGv/c7vKmterDhNDZYJSkCdej2Bk3AbjmKvP8"
+  },
+  {
+   "id": "ref-1",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "000102030405060708090a0b0c0d0e0f",
+   "t": 3,
+   "m_kib": 64,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "2c7ea30febc58d5b4dd6b04aa9fa69df4568b434e5d8c230491daa06c9b07a14",
+   "phc": "$argon2d$v=19$m=64,t=3,p=1$AAECAwQFBgcICQoLDA0ODw$LH6jD+vFjVtN1rBKqfpp30VotDTl2MIwSR2qBsmwehQ"
+  },
+  {
+   "id": "ref-2",
+   "password_hex": "646966666572656e7470617373776f7264",
+   "salt_hex": "0102030405060708090a0b0c0d0e0f10",
+   "t": 1,
+   "m_kib": 256,
+   "p": 2,
+   "out_len": 32,
+   "out_hex": "6df0416b1dffffeeaf1d5786896a8b253f22ce605a6daca5f1ab2f83533a2926",
+   "phc": "$argon2d$v=19$m=256,t=1,p=2$AQIDBAUGBwgJCgsMDQ4PEA$bfBBax3//+6vHVeGiWqLJT8izmBabayl8asvg1M6KSY"
+  },
+  {
+   "id": "ref-3",
+   "password_hex": "",
+   "salt_hex": "000102030405060708090a0b0c0d0e0f",
+   "t": 2,
+   "m_kib": 64,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "5e2e878b078621f5a768849d2af5d8745ccf87a50b6f564fed4a3297d428cb13",
+   "phc": "$argon2d$v=19$m=64,t=2,p=1$AAECAwQFBgcICQoLDA0ODw$Xi6HiweGIfWnaISdKvXYdFzPh6ULb1ZP7Uoyl9QoyxM"
+  },
+  {
+   "id": "ref-4",
+   "password_hex": "7077007a65726f",
+   "salt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "t": 2,
+   "m_kib": 128,
+   "p": 4,
+   "out_len": 16,
+   "out_hex": "28ec0583169395c7625fe5c9ad1e703d",
+   "phc": "$argon2d$v=19$m=128,t=2,p=4$AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8$KOwFgxaTlcdiX+XJrR5wPQ"
+  },
+  {
+   "id": "ref-5",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+   "t": 2,
+   "m_kib": 64,
+   "p": 1,
+   "out_len": 64,
+   "out_hex": "db940c9459a927994c9c8113c7dbde80ade4fe655bc8a6f86026a40e0a85b104689622c2a727ed6adee564f994f586c67f06ee8e5ec0586629e051c01a184059",
+   "phc": "$argon2d$v=19$m=64,t=2,p=1$AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+Pw$25QMlFmpJ5lMnIETx9vegK3k/mVbyKb4YCakDgqFsQRoliLCpyftat7lZPmU9YbGfwbujl7AWGYp4FHAGhhAWQ"
+  },
+  {
+   "id": "ref-6",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "000102030405060708090a0b0c0d0e0f",
+   "t": 2,
+   "m_kib": 64,
+   "p": 3,
+   "out_len": 100,
+   "out_hex": "81860efd656ce0a123ec9671bf44f777bd492bad9a52c53b0aeb4e26541d018b40fbd2b8fb03b2d311fa0d2055208d21b9f7e377f949d748206d74f49c5480310341b84efdfbaef6b2957140e28cef9d6fa5685f7908f9c0dc5fc8ad28eef5361a761424",
+   "phc": "$argon2d$v=19$m=64,t=2,p=3$AAECAwQFBgcICQoLDA0ODw$gYYO/WVs4KEj7JZxv0T3d71JK62aUsU7CutOJlQdAYtA+9K4+wOy0xH6DSBVII0huffjd/lJ10ggbXT0nFSAMQNBuE79+672spVxQOKM751vpWhfeQj5wNxfyK0o7vU2GnYUJA"
+  },
+  {
+   "id": "ref-7",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "000102030405060708090a0b0c0d0e0f",
+   "t": 1,
+   "m_kib": 1024,
+   "p": 1,
+   "out_len": 1024,
+   "out_hex": "339cc3f5c4f1fcfee179c128a17aa18d61a05bdaee34754aa65cce08487fc9763736abb8d93e62b510b120322468b387b8c7aeb7a9ffe9a465277b8d9034aff516491beaa9f097dc54c23191ecac9f5a10a9ce1244177cd24057b5112937f3bd6fdb01b950b0b61ddee999f55d32189631a087d5d8cd6c201fb50897fabb285818f9f78d87a093d05f54738d079ab9079a6329d0cbda97b7d3b2880d7b47ea6aa85a2b7a1f5494210f2deefbd939a5afda2bdc654e944adad5074c46d9a8a350f555edf1e9b43fc602daff3647869876b17342a5711cb41d16b6cdb771def826d280626bb5f803626d9cd28c77fbfee6b42f71b55b56e6a87fc0c8b40236336f6121e400392625f0cb8440780bdf9150869960e8bc600aade9478120cc82779d0298147127b2d11edb5e0c1f89bf2cada670d9388483ae3c072024743c645039e5b55c454b35ea6e3623290773b7239bf33253ed372c02d43716ffaa207065148e891dcb9ee6be35fc8b5379f9bcf871380ba01f66e69cc1d622bbd0160b0784ac045e31226a674baa6ca2db2a61dfe05d5e286d820e0dc68e8328889d6e360a0fbac023b7fec2371c514897bd5cdb9e9b9d104a3c47dd4d7ffb212939c76e14190e3b9648ea37546cb3c13fbc179ea8776325b4b446a76229266b5a25090dfdf5d57232015bbc27222a54152921b203c26c933167c67f0ee331d124e5dc445e5650ae6d8114edf8f370471e33bf5a316df197cf64d6636e82b98a991cdfd8bfd01cc1d4e22cc14ed410727b865b7a912deefa2de3b9b13664118bc8fb72945bb5c4b34fb19e5c474117c754154e8878676ec6a8169f540cbdfd687294e4f4567364e112342aa53c1cb5e096922c70d4f11a999e35e7b12c0107825041c81508b9d24d66b7d9cdc5fcd6a55fbbf0202bf629cf7c9acd0cba890dc834b670e7fa18ad93fea24afef178f3f48369539d5da2b14df6f83e3faa662e738baf8bc6c500362f0d6468368e9e3c5ea7e3784b22d152ef02bcdf2f54bc804b949bea2b8c3c5ff6697fc0ceacb34452f253f7eee8aacedfa0934ef0238ea5e1abe7d011b1ae066f5680b08c61ebc1189bd75fc72e4a74564666893df84fdfe651234f7fc362949b7571e8b15f43f454aa76d04c37f6fced74de3fb5539aa834882b349a0fe8a42f5e47b2fbf0684424a08e3b6c6c7d886cf1027441ce8c8428184756ee6d2c7dd16242826a7281b738b3e69224f788672c9475acb12059721e354fa06cbabb3aed7e8fe3d69ddc98a613c872bf9510ca20b654aaefae16b80dfab7654f6ec9224f7886ee61b00d7f6e898e18c1a3c812304bc0334a3fcd7ea7b3c48008251a2fb73e9a8d62a988ce63dd2e6b3c9d3ce76686a2f0dfa7ff09a2fe9657024d2e3a347c29d9a4e4c0254e7a357178da783f2a79aa9c143fdf09945cf0a021ee",
+   "phc": "$argon2d$v=19$m=1024,t=1,p=1$AAECAwQFBgcICQoLDA0ODw$M5zD9cTx/P7hecEooXqhjWGgW9ruNHVKplzOCEh/yXY3Nqu42T5itRCxIDIkaLOHuMeut6n/6aRlJ3uNkDSv9RZJG+qp8JfcVMIxkeysn1oQqc4SRBd80kBXtREpN/O9b9sBuVCwth3e6Zn1XTIYljGgh9XYzWwgH7UIl/q7KFgY+feNh6CT0F9Uc40HmrkHmmMp0Mval7fTsogNe0fqaqhaK3ofVJQhDy3u+9k5pa/aK9xlTpRK2tUHTEbZqKNQ9VXt8em0P8YC2v82R4aYdrFzQqVxHLQdFrbNt3He+CbSgGJrtfgDYm2c0ox3+/7mtC9xtVtW5qh/wMi0AjYzb2Eh5AA5JiXwy4RAeAvfkVCGmWDovGAKrelHgSDMgnedApgUcSey0R7bXgwfib8sraZw2TiEg648ByAkdDxkUDnltVxFSzXqbjYjKQdztyOb8zJT7TcsAtQ3Fv+qIHBlFI6JHcue5r41/ItTefm8+HE4C6AfZuacwdYiu9AWCweErAReMSJqZ0uqbKLbKmHf4F1eKG2CDg3GjoMoiJ1uNgoPusAjt/7CNxxRSJe9XNuem50QSjxH3U1/+yEpOcduFBkOO5ZI6jdUbLPBP7wXnqh3YyW0tEanYikma1olCQ399dVyMgFbvCciKlQVKSGyA8JskzFnxn8O4zHRJOXcRF5WUK5tgRTt+PNwRx4zv1oxbfGXz2TWY26CuYqZHN/Yv9AcwdTiLMFO1BBye4ZbepEt7vot47mxNmQRi8j7cpRbtcSzT7GeXEdBF8dUFU6IeGduxqgWn1QMvf1ocpTk9FZzZOESNCqlPBy14JaSLHDU8RqZnjXnsSwBB4JQQcgVCLnSTWa32c3F/NalX7vwICv2Kc98ms0MuokNyDS2cOf6GK2T/qJK/vF48/SDaVOdXaKxTfb4Pj+qZi5zi6+LxsUANi8NZGg2jp48XqfjeEsi0VLvArzfL1S8gEuUm+orjDxf9ml/wM6ss0RS8lP37uiqzt+gk07wI46l4avn0BGxrgZvVoCwjGHrwRib11/HLkp0VkZmiT34T9/mUSNPf8NilJt1ceixX0P0VKp20Ew39vztdN4/tVOaqDSIKzSaD+ikL15HsvvwaEQkoI47bGx9iGzxAnRBzoyEKBhHVu5tLH3RYkKCanKBtziz5pIk94hnLJR1rLEgWXIeNU+gbLq7Ou1+j+PWndyYphPIcr+VEMogtlSq764WuA36t2VPbskiT3iG7mGwDX9uiY4YwaPIEjBLwDNKP81+p7PEgAglGi+3PpqNYqmIzmPdLms8nTznZoai8N+n/wmi/pZXAk0uOjR8Kdmk5MAlTno1cXjaeD8qeaqcFD/fCZRc8KAh7g"
+  },
+  {
+   "id": "ref-8",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "ffffffffffffffffffffffffffffffff",
+   "t": 2,
+   "m_kib": 65536,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "10e4da71451220112401fe9000cb5ce877181701e2150ce42cb65bb5d7df167e",
+   "phc": "$argon2d$v=19$m=65536,t=2,p=1$/////////////////////w$EOTacUUSIBEkAf6QAMtc6HcYFwHiFQzkLLZbtdffFn4"
+  }
+ ]
+}

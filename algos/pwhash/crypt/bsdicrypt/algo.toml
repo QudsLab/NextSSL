@@ -1,0 +1,29 @@
+id        = "bsdicrypt"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "crypt"
+aliases   = ["bsdi-crypt", "extended-des-crypt"]
+tier      = "broken"
+status    = "active"
+standards = ["BSDi extended DES crypt"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "pwhash", version = "=1.0.0", license = "MIT" }
+# BSDi extended DES-crypt is broken (56-bit DES, 24-bit salt). Legacy interoperability only: tier broken, root
+# API only.
+# Param rounds 1..=1048575 (default 7250) instead of the algorithm maximum 2^24-1 so a hostile hash string
+# cannot demand unbounded work. Salt exactly 4 chars of ./0-9A-Za-z. `derive` is Unsupported. Row said libxcrypt
+# (LGPL, autotools); the pure-Rust pwhash crate (MIT) is used instead.
+
+[params.rounds]
+type = "u64"
+min = 1
+max = 1048575
+default = 7250
+
+[kat]
+files = ["kat/john-tests.json"]
+
+[sizes]
+salt = 4
+out = 8

@@ -1,0 +1,32 @@
+id        = "pbkdf2-hmac-sha512"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "pbkdf2"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 8018", "NIST SP 800-132"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "pbkdf2", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `sha2` =0.11.1 (MIT OR Apache-2.0).
+
+[params.iterations]
+type     = "u32"
+min      = 1
+max      = 16777216
+default  = 210000
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 1024
+default  = 64
+
+[kat]
+files = ["kat/vectors.json"]
+# Wycheproof (C2SP/wycheproof @ d17cc89fa5c8f4f4d378b5385ebf75da5d0926c9, testvectors_v1/pbkdf2_hmacsha512_test.json) is embedded in vectors.json (all valid cases; salt 4..=36, dkLen 16..=65).
+
+[sizes]
+salt = { min = 4, max = 64 }
+out = { min = 16, max = 1024 }

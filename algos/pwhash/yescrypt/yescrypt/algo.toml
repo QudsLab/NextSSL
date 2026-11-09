@@ -1,0 +1,52 @@
+id        = "yescrypt"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "yescrypt"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["yescrypt (PHC finalist; Peslyak), YESCRYPT_DEFAULTS flavour"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/openwall/yescrypt", commit = "86ea42c29d616b1376307b50f40dc56d57d909fe", license = "BSD-2-Clause", files = ["yescrypt-ref.c", "yescrypt-common.c", "sha256.c", "insecure_memzero.c", "yescrypt.h", "sha256.h", "sysendian.h", "insecure_memzero.h", "LICENSE"] }
+# Repository has no LICENSE file; every source file carries a BSD-2-Clause style notice (stored as upstream/LICENSE, see PATCHES.md). Owner to confirm.
+# Exposes yescrypt_kdf with flags YESCRYPT_DEFAULTS (RW, 6 rounds, gather 4, simple 2, 12K S-boxes), no ROM, g = 0. Portable reference core yescrypt-ref.c.
+# PHC-style string is NextSSL framing ($yescrypt$ln=,r=,p=,t=$salt$hash), NOT the native $y$ crypt format.
+# Memory = 128 * r * 2^ln bytes <= 1 GiB (checked before any allocation); salt 0..=64 bytes.
+
+[params.ln]
+type     = "u32"
+min      = 2
+max      = 20
+default  = 14
+
+[params.r]
+type     = "u32"
+min      = 1
+max      = 32
+default  = 8
+
+[params.p]
+type     = "u32"
+min      = 1
+max      = 16
+default  = 1
+
+[params.t]
+type     = "u32"
+min      = 0
+max      = 255
+default  = 0
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 1024
+default  = 32
+
+[kat]
+files = ["kat/yescrypt.json"]
+
+[sizes]
+salt = { min = 0, max = 64 }
+out = { min = 16, max = 1024 }

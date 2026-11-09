@@ -1,0 +1,66 @@
+{
+ "algorithm": "bsdicrypt",
+ "source": "John the Ripper src/BSDI_fmt.c test table (bleeding-jumbo 37bebbe4b6), \"_\" entries (rounds are read from the hash string)",
+ "vectors": [
+  {
+   "id": "john-0",
+   "hash": "_J9..CCCCXBrJUJV154M",
+   "password": "U*U*U*U*"
+  },
+  {
+   "id": "john-1",
+   "hash": "_J9..CCCCXUhOBTXzaiE",
+   "password": "U*U***U"
+  },
+  {
+   "id": "john-2",
+   "hash": "_J9..CCCC4gQ.mB/PffM",
+   "password": "U*U***U*"
+  },
+  {
+   "id": "john-3",
+   "hash": "_J9..XXXXvlzQGqpPPdk",
+   "password": "*U*U*U*U"
+  },
+  {
+   "id": "john-4",
+   "hash": "_J9..XXXXsqM/YSSP..Y",
+   "password": "*U*U*U*U*"
+  },
+  {
+   "id": "john-5",
+   "hash": "_J9..XXXXVL7qJCnku0I",
+   "password": "*U*U*U*U*U*U*U*U"
+  },
+  {
+   "id": "john-6",
+   "hash": "_J9..XXXXAj8cFbP5scI",
+   "password": "*U*U*U*U*U*U*U*U*"
+  },
+  {
+   "id": "john-7",
+   "hash": "_J9..SDizh.vll5VED9g",
+   "password": "ab1234567"
+  },
+  {
+   "id": "john-8",
+   "hash": "_J9..SDizRjWQ/zePPHc",
+   "password": "cr1234567"
+  },
+  {
+   "id": "john-9",
+   "hash": "_J9..SDizxmRI1GjnQuE",
+   "password": "zxyDPWgydbQjgq"
+  },
+  {
+   "id": "john-10",
+   "hash": "_K9..SaltNrQgIYUAeoY",
+   "password": "726 even"
+  },
+  {
+   "id": "john-11",
+   "hash": "_J9..SDSD5YGyRCr4W4c",
+   "password": ""
+  }
+ ]
+}

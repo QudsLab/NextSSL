@@ -1,0 +1,69 @@
+{
+ "algorithm": "sha512crypt",
+ "source": "Ulrich Drepper, 'Unix crypt using SHA-256 and SHA-512' (akkadia.org/drepper/SHA-crypt.txt), test table tests2; long salts are truncated to 16 characters and the rounds=10 case is clamped to 1000 exactly as in the expected strings",
+ "vectors": [
+  {
+   "id": "drepper-sha512-crypt-0",
+   "password_hex": "48656c6c6f20776f726c6421",
+   "salt_hex": "73616c74737472696e67",
+   "rounds": 5000,
+   "out_hex": "f83e2b20ed85669de5986e0f3a6c7946be71a9e25abc874de21b079a322452a137331565efcc55ba8a5388a21bda77b94d94a22709a5914343da6a7ac5e1ceff",
+   "phc": "$6$saltstring$svn8UoSVapNtMuq1ukKS4tPQd8iKwSMHWjl/O817G3uBnIFNjnQJuesI68u4OTLiBFdcbYEdFCoEOfaS35inz1",
+   "setting": "$6$saltstring"
+  },
+  {
+   "id": "drepper-sha512-crypt-1",
+   "password_hex": "48656c6c6f20776f726c6421",
+   "salt_hex": "73616c74737472696e6773616c747374",
+   "rounds": 10000,
+   "out_hex": "9a38041ad290538834e858ea0a17aae3f988b75968aadd0af8399d27e68499373b5800deaf8c094fadec9a5eaa53e307e4d7c89e854c8b8d077ed1cd9ac91f3b",
+   "phc": "$6$rounds=10000$saltstringsaltst$OW1/O6BYHV6BcXZu8QVeXbDWra3Oeqh0sbHbbMCVNSnCM/UrjmM0Dp8vOuZeHBy/YTBmSK6H9qs/y3RnOaw5v.",
+   "setting": "$6$rounds=10000$saltstringsaltstring"
+  },
+  {
+   "id": "drepper-sha512-crypt-2",
+   "password_hex": "54686973206973206a75737420612074657374",
+   "salt_hex": "746f6f6c6f6e6773616c74737472696e",
+   "rounds": 5000,
+   "out_hex": "31a7bc74dcb26117b6a4711e7569993eee5caec035bd4467aac5fd5cc1c658cbc77194d0d253f660db0f7e9f92e81fa843e59d76e12315d6f7b162ea290c42b2",
+   "phc": "$6$toolongsaltstrin$lQ8jolhgVRVhY4b5pZKaysCLi0QBxGoNeKQzQ3glMhwllF7oGDZxUhx1yxdYcz/e1JSbq3y6JMxxl8audkUEm0",
+   "setting": "$6$rounds=5000$toolongsaltstring"
+  },
+  {
+   "id": "drepper-sha512-crypt-3",
+   "password_hex": "612076657279206d756368206c6f6e676572207465787420746f20656e63727970742e202054686973206f6e65206576656e20737472657463686573206f766572206d6f72657468616e206f6e65206c696e652e",
+   "salt_hex": "616e6f746865726c6f6e6773616c7473",
+   "rounds": 1400,
+   "out_hex": "9bb692fc07d1f0928422faf694eb69afebc3b90bd041cde100bfed58cf21919c5008459359e1c8178e20fd920bb4c79f3924267402ca15e43ebc64a74a6de8f7",
+   "phc": "$6$rounds=1400$anotherlongsalts$POfYwTEok97VWcjxIiSOjiykti.o/pQs.wPvMxQ6Fm7I6IoYN3CmLs66x9t0oSwbtEW7o7UmJEiDwGqd8p4ur1",
+   "setting": "$6$rounds=1400$anotherlongsaltstring"
+  },
+  {
+   "id": "drepper-sha512-crypt-4",
+   "password_hex": "7765206861766520612073686f72742073616c7420737472696e6720627574206e6f7420612073686f72742070617373776f7264",
+   "salt_hex": "73686f7274",
+   "rounds": 77777,
+   "out_hex": "a2cef922417640db64f5fb766d4d3e81bb52bc70f4e9aa423e47633d359ef07e0b2cab0ee6d0177e075ed5e13826a86a7d24e7312a956a1cc587d3e7ecea32a8",
+   "phc": "$6$rounds=77777$short$WuQyW2YR.hBNpjjRhpYD/ifIw05xdfeEyQoMxIXbkvr0gge1a1x3yRULJ5CCaUeOxFmtlcGZelFl5CxtgfiAc0",
+   "setting": "$6$rounds=77777$short"
+  },
+  {
+   "id": "drepper-sha512-crypt-5",
+   "password_hex": "612073686f727420737472696e67",
+   "salt_hex": "6173616c746f66313663686172732e2e",
+   "rounds": 123456,
+   "out_hex": "4deef0af8d55527fb477d5963e2feeb9d05d90a29706bdf1a81a3bafcc13b047ea0084223e0a5eea4e371671ac38d18f2c96ddce4f6121ca421583e7954acfef",
+   "phc": "$6$rounds=123456$asaltof16chars..$BtCwjqMJGx5hrJhZywWvt0RLE8uZ4oPwcelCjmw2kSYu.Ec6ycULevoBK25fs2xXgMNrCzIMVcgEJAstJeonj1",
+   "setting": "$6$rounds=123456$asaltof16chars.."
+  },
+  {
+   "id": "drepper-sha512-crypt-6",
+   "password_hex": "746865206d696e696d756d206e756d626572206973207374696c6c206f62736572766564",
+   "salt_hex": "726f756e6473746f6f6c6f77",
+   "rounds": 1000,
+   "out_hex": "3088e1a75a08c84c0cf5d20151078b0525cd80b7645b26f48740b6d3d0b717bee9a284831e1c97f9a1bce6b746460971b50f66122aa4f6593724d998d374e323",
+   "phc": "$6$rounds=1000$roundstoolow$kUMsbe306n21p9R.FRkW3IGn.S9NPN0x50YhH1xhLsPuWGsUSklZt58jaTfF4ZEQpyUNGc0dqbpBYYBaHHrsX.",
+   "setting": "$6$rounds=10$roundstoolow"
+  }
+ ]
+}

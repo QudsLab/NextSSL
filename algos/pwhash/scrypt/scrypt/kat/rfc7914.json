@@ -1,0 +1,51 @@
+{
+ "algorithm": "scrypt",
+ "source": "RFC 7914 section 12 (scrypt test vectors); the N=2^20 vector (1 GiB) is flagged heavy; the others cross-checked with Python hashlib.scrypt",
+ "note": "vectors with heavy=true run only with NEXTSSL_HEAVY_KAT=1",
+ "vectors": [
+  {
+   "id": "rfc7914-s12-1",
+   "password_hex": "",
+   "salt_hex": "",
+   "ln": 4,
+   "r": 1,
+   "p": 1,
+   "out_len": 64,
+   "out_hex": "77d6576238657b203b19ca42c18a0497f16b4844e3074ae8dfdffa3fede21442fcd0069ded0948f8326a753a0fc81f17e8d3e0fb2e0d3628cf35e20c38d18906",
+   "heavy": false
+  },
+  {
+   "id": "rfc7914-s12-2",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "4e61436c",
+   "ln": 10,
+   "r": 8,
+   "p": 16,
+   "out_len": 64,
+   "out_hex": "fdbabe1c9d3472007856e7190d01e9fe7c6ad7cbc8237830e77376634b3731622eaf30d92e22a3886ff109279d9830dac727afb94a83ee6d8360cbdfa2cc0640",
+   "heavy": false
+  },
+  {
+   "id": "rfc7914-s12-3",
+   "password_hex": "706c656173656c65746d65696e",
+   "salt_hex": "536f6469756d43686c6f72696465",
+   "ln": 14,
+   "r": 8,
+   "p": 1,
+   "out_len": 64,
+   "out_hex": "7023bdcb3afd7348461c06cd81fd38ebfda8fbba904f8e3ea9b543f6545da1f2d5432955613f0fcf62d49705242a9af9e61e85dc0d651e40dfcf017b45575887",
+   "heavy": false
+  },
+  {
+   "id": "rfc7914-s12-4",
+   "password_hex": "706c656173656c65746d65696e",
+   "salt_hex": "536f6469756d43686c6f72696465",
+   "ln": 20,
+   "r": 8,
+   "p": 1,
+   "out_len": 64,
+   "out_hex": "2101cb9b6a511aaeaddbbe09cf70f881ec568d574a2ffd4dabe5ee9820adaa478e56fd8f4ba5d09ffa1c6d927c40f4c337304049e8a952fbcbf45c6fa77a41a4",
+   "heavy": true
+  }
+ ]
+}

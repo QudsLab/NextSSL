@@ -1,0 +1,38 @@
+id        = "pbkdf2"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "pbkdf2"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["RFC 8018", "NIST SP 800-132", "RFC 7914 section 11"]
+fips      = true
+copyleft  = false
+upstream  = { crate = "pbkdf2", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `sha2` =0.11.1 and `sha3` =0.11.0 (MIT OR Apache-2.0).
+# Generic PBKDF2-HMAC over a closed set of sound hashes; SHA-1 stays in pbkdf2-hmac-sha1 (legacy).
+# PHC id is `pbkdf2-<hash>` (pbkdf2-sha256, pbkdf2-sha3-512, ...).
+
+[params.hash]
+type    = "enum"
+values  = ["sha256", "sha384", "sha512", "sha224", "sha512-224", "sha512-256", "sha3-224", "sha3-256", "sha3-384", "sha3-512"]
+default = "sha256"
+
+[params.iterations]
+type     = "u32"
+min      = 1
+max      = 16777216
+default  = 600000
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 1024
+default  = 32
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+salt = { min = 4, max = 64 }
+out = { min = 16, max = 1024 }

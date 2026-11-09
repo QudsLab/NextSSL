@@ -1,0 +1,98 @@
+{
+ "algorithm": "argon2id",
+ "source": "phc-winner-argon2 src/test.c, Argon2id section (hashtest calls at lines 233-264, version 0x13), pinned commit",
+ "repo": "https://github.com/P-H-C/phc-winner-argon2",
+ "commit": "f57e61e19229e23c4445b85494dbf7c07de721cb",
+ "file": "src/test.c",
+ "note": "salts are 8 bytes (below the nextssl 16-byte minimum): these run against the upstream crate directly; the glue must reject such salts. m_kib = 1 << m_log2 as in test.c",
+ "vectors": [
+  {
+   "id": "test.c:L233-L236",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "736f6d6573616c74",
+   "t": 2,
+   "m_kib": 65536,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "09316115d5cf24ed5a15a31a3ba326e5cf32edc24702987c02b6566f61913cf7",
+   "phc": "$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQ$CTFhFdXPJO1aFaMaO6Mm5c8y7cJHAph8ArZWb2GRPPc"
+  },
+  {
+   "id": "test.c:L237-L240",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "736f6d6573616c74",
+   "t": 2,
+   "m_kib": 262144,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "78fe1ec91fb3aa5657d72e710854e4c3d9b9198c742f9616c2f085bed95b2e8c",
+   "phc": "$argon2id$v=19$m=262144,t=2,p=1$c29tZXNhbHQ$eP4eyR+zqlZX1y5xCFTkw9m5GYx0L5YWwvCFvtlbLow"
+  },
+  {
+   "id": "test.c:L241-L244",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "736f6d6573616c74",
+   "t": 2,
+   "m_kib": 256,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "9dfeb910e80bad0311fee20f9c0e2b12c17987b4cac90c2ef54d5b3021c68bfe",
+   "phc": "$argon2id$v=19$m=256,t=2,p=1$c29tZXNhbHQ$nf65EOgLrQMR/uIPnA4rEsF5h7TKyQwu9U1bMCHGi/4"
+  },
+  {
+   "id": "test.c:L245-L248",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "736f6d6573616c74",
+   "t": 2,
+   "m_kib": 256,
+   "p": 2,
+   "out_len": 32,
+   "out_hex": "6d093c501fd5999645e0ea3bf620d7b8be7fd2db59c20d9fff9539da2bf57037",
+   "phc": "$argon2id$v=19$m=256,t=2,p=2$c29tZXNhbHQ$bQk8UB/VmZZF4Oo79iDXuL5/0ttZwg2f/5U52iv1cDc"
+  },
+  {
+   "id": "test.c:L249-L252",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "736f6d6573616c74",
+   "t": 1,
+   "m_kib": 65536,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "f6a5adc1ba723dddef9b5ac1d464e180fcd9dffc9d1cbf76cca2fed795d9ca98",
+   "phc": "$argon2id$v=19$m=65536,t=1,p=1$c29tZXNhbHQ$9qWtwbpyPd3vm1rB1GThgPzZ3/ydHL92zKL+15XZypg"
+  },
+  {
+   "id": "test.c:L253-L256",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "736f6d6573616c74",
+   "t": 4,
+   "m_kib": 65536,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "9025d48e68ef7395cca9079da4c4ec3affb3c8911fe4f86d1a2520856f63172c",
+   "phc": "$argon2id$v=19$m=65536,t=4,p=1$c29tZXNhbHQ$kCXUjmjvc5XMqQedpMTsOv+zyJEf5PhtGiUghW9jFyw"
+  },
+  {
+   "id": "test.c:L257-L260",
+   "password_hex": "646966666572656e7470617373776f7264",
+   "salt_hex": "736f6d6573616c74",
+   "t": 2,
+   "m_kib": 65536,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "0b84d652cf6b0c4beaef0dfe278ba6a80df6696281d7e0d2891b817d8c458fde",
+   "phc": "$argon2id$v=19$m=65536,t=2,p=1$c29tZXNhbHQ$C4TWUs9rDEvq7w3+J4umqA32aWKB1+DSiRuBfYxFj94"
+  },
+  {
+   "id": "test.c:L261-L264",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "6469666673616c74",
+   "t": 2,
+   "m_kib": 65536,
+   "p": 1,
+   "out_len": 32,
+   "out_hex": "bdf32b05ccc42eb15d58fd19b1f856b113da1e9a5874fdcc544308565aa8141c",
+   "phc": "$argon2id$v=19$m=65536,t=2,p=1$ZGlmZnNhbHQ$vfMrBczELrFdWP0ZsfhWsRPaHppYdP3MVEMIVlqoFBw"
+  }
+ ]
+}

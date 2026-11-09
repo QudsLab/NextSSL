@@ -1,0 +1,20 @@
+[package]
+name = "nextssl-algo-bsdicrypt"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+pwhash = { version = "=1.0.0", default-features = false }
+
+[dev-dependencies]
+serde_json.workspace = true
+
+[lints]
+workspace = true

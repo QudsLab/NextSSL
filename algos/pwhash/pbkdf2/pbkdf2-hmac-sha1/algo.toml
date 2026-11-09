@@ -1,0 +1,34 @@
+id        = "pbkdf2-hmac-sha1"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "pbkdf2"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["RFC 8018", "RFC 6070", "NIST SP 800-132"]
+oid       = "1.2.840.113549.1.5.12"
+fips      = true
+copyleft  = false
+upstream  = { crate = "pbkdf2", version = "=0.13.0", license = "MIT OR Apache-2.0" }
+# Also depends on RustCrypto `sha1` =0.11.0 (MIT OR Apache-2.0).
+# Legacy tier: SHA-1 PRF is weak against GPU cracking; kept for interoperability.
+
+[params.iterations]
+type     = "u32"
+min      = 1
+max      = 16777216
+default  = 1300000
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 1024
+default  = 20
+
+[kat]
+files = ["kat/vectors.json"]
+# Wycheproof (C2SP/wycheproof @ d17cc89fa5c8f4f4d378b5385ebf75da5d0926c9, testvectors_v1/pbkdf2_hmacsha1_test.json) is embedded in vectors.json (all valid cases; salt 4..=36, dkLen 16..=65).
+
+[sizes]
+salt = { min = 4, max = 64 }
+out = { min = 16, max = 1024 }
