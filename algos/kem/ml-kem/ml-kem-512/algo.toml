@@ -1,0 +1,24 @@
+id        = "ml-kem-512"
+kind      = "kem"
+category  = "kem"
+family    = "ml-kem"
+aliases   = ["mlkem512"]
+tier      = "safe"
+status    = "active"
+standards = ["FIPS 203"]
+oid       = "2.16.840.1.101.3.4.4.1"
+fips      = true
+copyleft  = false
+upstream  = { crate = "ml-kem", version = "=0.3.4", license = "Apache-2.0 OR MIT" }
+
+[kat]
+files = ["kat/acvp-keygen.json", "kat/acvp-encapdecap.json"]
+
+# sk is the FIPS 203 expanded decapsulation key (dk, 1632 bytes) so NIST decapsulation vectors replay.
+[sizes]
+pk    = 800
+sk    = 1632
+ct    = 768
+ss    = 32
+seed  = 64
+coins = 32

@@ -1,0 +1,5 @@
+{
+  "algorithm": "mceliece-8192128f",
+  "vectors": [],
+  "note": "no published KAT replayed; tier unverified. PQClean META.yml carries only sha256 of the NIST KAT output."
+}

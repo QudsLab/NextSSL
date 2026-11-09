@@ -1,0 +1,23 @@
+[package]
+name = "nextssl-algo-ml-kem-512"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+zeroize.workspace = true
+# `hazmat` exposes encapsulate_deterministic (needed for caller-supplied coins / KAT replay).
+ml-kem = { version = "=0.3.4", default-features = false, features = ["zeroize", "hazmat"] }
+
+[dev-dependencies]
+nextssl-core = { workspace = true, features = ["testing"] }
+serde_json.workspace = true
+
+[lints]
+workspace = true

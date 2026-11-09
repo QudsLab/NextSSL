@@ -1,0 +1,26 @@
+id        = "mceliece-6688128f"
+kind      = "kem"
+category  = "kem"
+family    = "classic-mceliece"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/PQClean/PQClean", commit = "0586a824fc0d49df0b6b6e9179d8d15d06d0974f", license = "LicenseRef-Public-Domain", files = ["common/aes.c", "common/aes.h", "common/compat.h", "common/crypto_declassify.h", "common/fips202.c", "common/fips202.h", "common/randombytes.h", "crypto_kem/mceliece6688128f/clean/LICENSE", "crypto_kem/mceliece6688128f/clean/aes256ctr.c", "crypto_kem/mceliece6688128f/clean/aes256ctr.h", "crypto_kem/mceliece6688128f/clean/api.h", "crypto_kem/mceliece6688128f/clean/benes.c", "crypto_kem/mceliece6688128f/clean/benes.h", "crypto_kem/mceliece6688128f/clean/bm.c", "crypto_kem/mceliece6688128f/clean/bm.h", "crypto_kem/mceliece6688128f/clean/controlbits.c", "crypto_kem/mceliece6688128f/clean/controlbits.h", "crypto_kem/mceliece6688128f/clean/crypto_hash.h", "crypto_kem/mceliece6688128f/clean/crypto_int16.c", "crypto_kem/mceliece6688128f/clean/crypto_int16.h", "crypto_kem/mceliece6688128f/clean/crypto_int32.c", "crypto_kem/mceliece6688128f/clean/crypto_int32.h", "crypto_kem/mceliece6688128f/clean/crypto_kem.h", "crypto_kem/mceliece6688128f/clean/crypto_uint16.c", "crypto_kem/mceliece6688128f/clean/crypto_uint16.h", "crypto_kem/mceliece6688128f/clean/crypto_uint32.c", "crypto_kem/mceliece6688128f/clean/crypto_uint32.h", "crypto_kem/mceliece6688128f/clean/crypto_uint64.c", "crypto_kem/mceliece6688128f/clean/crypto_uint64.h", "crypto_kem/mceliece6688128f/clean/decrypt.c", "crypto_kem/mceliece6688128f/clean/decrypt.h", "crypto_kem/mceliece6688128f/clean/encrypt.c", "crypto_kem/mceliece6688128f/clean/encrypt.h", "crypto_kem/mceliece6688128f/clean/gf.c", "crypto_kem/mceliece6688128f/clean/gf.h", "crypto_kem/mceliece6688128f/clean/int32_sort.h", "crypto_kem/mceliece6688128f/clean/namespace.h", "crypto_kem/mceliece6688128f/clean/operations.c", "crypto_kem/mceliece6688128f/clean/operations.h", "crypto_kem/mceliece6688128f/clean/params.h", "crypto_kem/mceliece6688128f/clean/pk_gen.c", "crypto_kem/mceliece6688128f/clean/pk_gen.h", "crypto_kem/mceliece6688128f/clean/root.c", "crypto_kem/mceliece6688128f/clean/root.h", "crypto_kem/mceliece6688128f/clean/sk_gen.c", "crypto_kem/mceliece6688128f/clean/sk_gen.h", "crypto_kem/mceliece6688128f/clean/synd.c", "crypto_kem/mceliece6688128f/clean/synd.h", "crypto_kem/mceliece6688128f/clean/transpose.c", "crypto_kem/mceliece6688128f/clean/transpose.h", "crypto_kem/mceliece6688128f/clean/uint64_sort.h", "crypto_kem/mceliece6688128f/clean/util.c", "crypto_kem/mceliece6688128f/clean/util.h", "LICENSE"] }
+
+# 
+# unverified: no published known-answer vector is replayed yet (PQClean ships only KAT hashes in
+# META.yml; the designers' .rsp files are not in the collection). Roundtrip tests only. Not compiled
+# or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1044992
+sk = 13932
+ct = 208
+ss = 32
+seed = 0
+coins = 0
