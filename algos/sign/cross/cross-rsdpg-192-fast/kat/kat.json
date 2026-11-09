@@ -1,0 +1,5 @@
+{
+  "algorithm": "cross-rsdpg-192-fast",
+  "vectors": [],
+  "note": "no published KAT replayed; tier unverified. PQClean META.yml carries only sha256 of the NIST KAT output."
+}

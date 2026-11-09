@@ -1,0 +1,25 @@
+id        = "cross-rsdpg-192-small"
+kind      = "sign"
+category  = "sign"
+family    = "cross"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/open-quantum-safe/liboqs", commit = "7bf154f197696f5bf04be2ea4c576db86bb6a238", license = "CC0-1.0", files = ["common/fips202.c", "common/fips202.h", "common/randombytes.h", "crypto_sign/cross-rsdpg-192-small/clean/CROSS.c", "crypto_sign/cross-rsdpg-192-small/clean/CROSS.h", "crypto_sign/cross-rsdpg-192-small/clean/LICENSE", "crypto_sign/cross-rsdpg-192-small/clean/api.h", "crypto_sign/cross-rsdpg-192-small/clean/csprng_hash.c", "crypto_sign/cross-rsdpg-192-small/clean/csprng_hash.h", "crypto_sign/cross-rsdpg-192-small/clean/fp_arith.h", "crypto_sign/cross-rsdpg-192-small/clean/merkle.c", "crypto_sign/cross-rsdpg-192-small/clean/merkle_tree.h", "crypto_sign/cross-rsdpg-192-small/clean/namespace.h", "crypto_sign/cross-rsdpg-192-small/clean/pack_unpack.c", "crypto_sign/cross-rsdpg-192-small/clean/pack_unpack.h", "crypto_sign/cross-rsdpg-192-small/clean/parameters.h", "crypto_sign/cross-rsdpg-192-small/clean/restr_arith.h", "crypto_sign/cross-rsdpg-192-small/clean/seedtree.c", "crypto_sign/cross-rsdpg-192-small/clean/seedtree.h", "crypto_sign/cross-rsdpg-192-small/clean/set.h", "crypto_sign/cross-rsdpg-192-small/clean/sha3.h", "crypto_sign/cross-rsdpg-192-small/clean/sign.c", "LICENSE"] }
+
+# scheme files: liboqs upcross_*_clean (CROSS v2.2 authors' code); upstream/common/{fips202,randombytes.h} are verbatim PQClean@0586a824fc0d49df0b6b6e9179d8d15d06d0974f.
+# unverified: no published known-answer vector is replayed yet (PQClean ships only KAT hashes in
+# META.yml; the designers' .rsp files are not in the collection). Roundtrip tests only. Not compiled
+# or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 83
+sk = 48
+sig = { min = 1, max = 20452 }
+seed = 0
+ctx = 0
