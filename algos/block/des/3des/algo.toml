@@ -1,0 +1,21 @@
+id        = "3des"
+kind      = "blockcipher"
+category  = "block"
+family    = "des"
+aliases   = ["tdes", "tdea", "des-ede3"]
+tier      = "legacy"
+status    = "active"
+standards = ["SP 800-67", "ISO/IEC 18033-3"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "des", version = "=0.9.0", license = "MIT OR Apache-2.0" }
+cipher    = "des::TdesEde3"
+# Triple DES EDE with three 8-byte keys (24-byte key, parity bits ignored). 64-bit block: unsafe beyond about
+# 2^20 blocks per key (Sweet32); NIST disallows it for new use after 2023. Two-key keying: pass k1||k2||k1.
+
+[kat]
+files = ["kat/acvp-tdes-ecb.json"]
+
+[sizes]
+key = 24
+block = 8

@@ -1,0 +1,20 @@
+id        = "kalyna-512-512"
+kind      = "blockcipher"
+category  = "block"
+family    = "kalyna"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["DSTU 7624:2014 (Kalyna)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/mouse07410/kalyna", commit = "d6131d15343b2bc6d6bf399a4430ecdfb8496c99", license = "BSD-3-Clause", files = ["kalyna.c", "kalyna.h", "tables.c", "tables.h", "transformations.h", "LICENSE"] }
+# Tier unverified: single unofficial mirror of the Ukrainian reference implementation (mouse07410/kalyna), provenance of the code unproven; the vectors are those in its main.c (they match the DSTU 7624 test vectors as published, but the standard text was not available to compare).
+# Kalyna block 512 bits, key 512 bits. Sibling ids carry the other sizes. Words are little-endian as in the reference. Known gap (rule 9): the upstream context holds round keys in heap memory that KalynaDelete frees without wiping.
+
+[kat]
+files = ["kat/kalyna-512-512.json"]
+
+[sizes]
+key = 64
+block = 64

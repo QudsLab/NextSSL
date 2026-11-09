@@ -1,0 +1,24 @@
+{
+ "algorithm": "cast6",
+ "source": "RFC 2612 Appendix A (CAST-256 intermediate value KAT: PT / KEY / final CT per key size)",
+ "vectors": [
+  {
+   "id": "rfc2612-A-128",
+   "key_hex": "2342bb9efa38542c0af75647f29f615d",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "c842a08972b43d20836c91d1b7530f6b"
+  },
+  {
+   "id": "rfc2612-A-192",
+   "key_hex": "2342bb9efa38542cbed0ac83940ac298bac77a7717942863",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "1b386c0210dcadcbdd0e41aa08a7a7e8"
+  },
+  {
+   "id": "rfc2612-A-256",
+   "key_hex": "2342bb9efa38542cbed0ac83940ac2988d7c47ce264908461cc1b5137ae6b604",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "4f6a2038286897b9c9870136553317fa"
+  }
+ ]
+}

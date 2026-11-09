@@ -1,0 +1,20 @@
+id        = "idea"
+kind      = "blockcipher"
+category  = "block"
+family    = "idea"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["IDEA (Lai, Massey 1991)", "NESSIE"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "idea", version = "=0.6.0", license = "MIT OR Apache-2.0" }
+cipher    = "idea::Idea"
+# IDEA was patent-encumbered until 2012 (patents expired). 64-bit block.
+
+[kat]
+files = ["kat/nessie.json"]
+
+[sizes]
+key = 16
+block = 8

@@ -1,0 +1,15 @@
+{
+ "algorithm": "kalyna-128-256",
+ "source": "reference/main.c of mouse07410/kalyna @ d6131d15343b2bc6d6bf399a4430ecdfb8496c99",
+ "vectors": [
+  {
+   "id": "main-c-128-256",
+   "params": {
+    "variant": "128-256"
+   },
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "202122232425262728292a2b2c2d2e2f",
+   "ct_hex": "58ec3e091000158a1148f7166f334f14"
+  }
+ ]
+}

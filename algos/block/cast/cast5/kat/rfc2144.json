@@ -1,0 +1,24 @@
+{
+ "algorithm": "cast5",
+ "source": "RFC 2144 Appendix B.1 (CAST-128 single key/plaintext/ciphertext sets, 128/80/40-bit keys; short keys are used at their natural length)",
+ "vectors": [
+  {
+   "id": "rfc2144-B1-128bit",
+   "key_hex": "0123456712345678234567893456789a",
+   "pt_hex": "0123456789abcdef",
+   "ct_hex": "238b4fe5847e44b2"
+  },
+  {
+   "id": "rfc2144-B1-80bit",
+   "key_hex": "01234567123456782345",
+   "pt_hex": "0123456789abcdef",
+   "ct_hex": "eb6a711a2c02271b"
+  },
+  {
+   "id": "rfc2144-B1-40bit",
+   "key_hex": "0123456712",
+   "pt_hex": "0123456789abcdef",
+   "ct_hex": "7ac816d16e9b302e"
+  }
+ ]
+}

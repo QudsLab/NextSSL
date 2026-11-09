@@ -1,0 +1,21 @@
+id        = "des"
+kind      = "blockcipher"
+category  = "block"
+family    = "des"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = ["FIPS 46-3 (withdrawn)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "des", version = "=0.9.0", license = "MIT OR Apache-2.0" }
+cipher    = "des::Des"
+# Single DES: 56-bit key, brute-forceable. Legacy interoperability only. The 8th bit of every key byte is a
+# parity bit and is ignored by the cipher (not checked).
+
+[kat]
+files = ["kat/nist-des-kat.json"]
+
+[sizes]
+key = 8
+block = 8

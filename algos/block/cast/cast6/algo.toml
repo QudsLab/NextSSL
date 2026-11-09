@@ -1,0 +1,19 @@
+id        = "cast6"
+kind      = "blockcipher"
+category  = "block"
+family    = "cast"
+aliases   = ["cast-256", "cast256"]
+tier      = "legacy"
+status    = "active"
+standards = ["RFC 2612", "CAST-256"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "cast6", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+# CAST-256 (AES candidate), keys 16/20/24/28/32 bytes, 128-bit block.
+
+[kat]
+files = ["kat/rfc2612.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+block = 16

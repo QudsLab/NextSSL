@@ -1,0 +1,2016 @@
+{
+ "algorithm": "3des",
+ "source": "NIST ACVP-Server ACVP-TDES-ECB-1.0 internalProjection.json: encrypt AFT groups, keying option 1 (three independent keys), single-block tests",
+ "vectors": [
+  {
+   "id": "acvp-permutation-1",
+   "key_hex": "10071034c898012001010101010101011046103489988020",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "63a8da2dabb06bbc"
+  },
+  {
+   "id": "acvp-permutation-2",
+   "key_hex": "010791049119010101010101010101010107940491190401",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "ebfe64565305e58b"
+  },
+  {
+   "id": "acvp-permutation-3",
+   "key_hex": "108691151919010101010101010101011086911519580101",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b039a304b63042b6"
+  },
+  {
+   "id": "acvp-permutation-4",
+   "key_hex": "310791549808010101010101010101013107919498080101",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7dc529985effce87"
+  },
+  {
+   "id": "acvp-permutation-5",
+   "key_hex": "100794049819010101010101010101010107910491190401",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "6d8e0c7f2b7d458a"
+  },
+  {
+   "id": "acvp-permutation-6",
+   "key_hex": "104691348998013101010101010101011007103489988020",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5447679a1f34c19b"
+  },
+  {
+   "id": "acvp-permutation-7",
+   "key_hex": "9107d0158919010101010101010101011007d01598980120",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5548f9a1c7aff525"
+  },
+  {
+   "id": "acvp-permutation-8",
+   "key_hex": "100791159819010b01010101010101011004801598190101",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4d9b5a10210bb24b"
+  },
+  {
+   "id": "acvp-permutation-9",
+   "key_hex": "5107b0151958010101010101010101011007b01519190101",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "ebf972f6b6ce1d62"
+  },
+  {
+   "id": "acvp-permutation-10",
+   "key_hex": "10079119981a080101010101010101011007921098190101",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "9246ecf6ad385100"
+  },
+  {
+   "id": "acvp-permutation-11",
+   "key_hex": "100291159810010401010101010101011002911598190104",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5ae9633fc6cfc4a5"
+  },
+  {
+   "id": "acvp-permutation-12",
+   "key_hex": "100480159819010201010101010101011004801598190108",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b76eba7016cdc42e"
+  },
+  {
+   "id": "acvp-permutation-13",
+   "key_hex": "1007d0158998010101010101010101019107911589980101",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "e21d969fa85e0a74"
+  },
+  {
+   "id": "acvp-permutation-14",
+   "key_hex": "10079115b908014001010101010101013107911598080140",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "26548cced5e9ab3c"
+  },
+  {
+   "id": "acvp-permutation-15",
+   "key_hex": "100291159810020101010101010101011002911698100101",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "6af1d0b6e2c60c2f"
+  },
+  {
+   "id": "acvp-permutation-16",
+   "key_hex": "19079210981a010101010101010101011007911998190801",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "8b1f20f7cb8d6bee"
+  },
+  {
+   "id": "acvp-inversepermutation-17",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "04b261fa5326e2dc",
+   "ct_hex": "0000000000000040"
+  },
+  {
+   "id": "acvp-inversepermutation-18",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "67f3fb9234f91b44",
+   "ct_hex": "0000000000000080"
+  },
+  {
+   "id": "acvp-inversepermutation-19",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "a1a7419ddab95ace",
+   "ct_hex": "0000000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-20",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "4bab3be1502e3b36",
+   "ct_hex": "0000000000000001"
+  },
+  {
+   "id": "acvp-inversepermutation-21",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "48fa767115332704",
+   "ct_hex": "0000000000000020"
+  },
+  {
+   "id": "acvp-inversepermutation-22",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "9c6bffab1beb8b52",
+   "ct_hex": "0000000000000010"
+  },
+  {
+   "id": "acvp-inversepermutation-23",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "468194dcf98b2158",
+   "ct_hex": "0000000000000002"
+  },
+  {
+   "id": "acvp-inversepermutation-24",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "3eaaa91a4be43304",
+   "ct_hex": "0000000000000004"
+  },
+  {
+   "id": "acvp-inversepermutation-25",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "bc1fcf65f3170c73",
+   "ct_hex": "0000000000000008"
+  },
+  {
+   "id": "acvp-inversepermutation-26",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "dcd1d77d6600a2fe",
+   "ct_hex": "0000000000000100"
+  },
+  {
+   "id": "acvp-inversepermutation-27",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "5c6b7af32670026c",
+   "ct_hex": "0000000000000200"
+  },
+  {
+   "id": "acvp-inversepermutation-28",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "185be784645109cc",
+   "ct_hex": "0000000000000400"
+  },
+  {
+   "id": "acvp-inversepermutation-29",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "dd9281ff7e45b1e4",
+   "ct_hex": "0000000000000800"
+  },
+  {
+   "id": "acvp-inversepermutation-30",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "09348d0771280a30",
+   "ct_hex": "0000000000001000"
+  },
+  {
+   "id": "acvp-inversepermutation-31",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "a288cecbc97b0cf0",
+   "ct_hex": "0000000000002000"
+  },
+  {
+   "id": "acvp-inversepermutation-32",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "4e0eab65b72f5807",
+   "ct_hex": "0000000000004000"
+  },
+  {
+   "id": "acvp-inversepermutation-33",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "c1eddb096b6735db",
+   "ct_hex": "0000000000008000"
+  },
+  {
+   "id": "acvp-inversepermutation-34",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "5a4ccee5c102b5d4",
+   "ct_hex": "0000000000010000"
+  },
+  {
+   "id": "acvp-inversepermutation-35",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "3fcee28e75776c26",
+   "ct_hex": "0000000000020000"
+  },
+  {
+   "id": "acvp-inversepermutation-36",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "3a6158f4cd139e82",
+   "ct_hex": "0000000000040000"
+  },
+  {
+   "id": "acvp-inversepermutation-37",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "46920988dd1ca4f9",
+   "ct_hex": "0000000000080000"
+  },
+  {
+   "id": "acvp-inversepermutation-38",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "9a94db58d2ca1e41",
+   "ct_hex": "0000000000100000"
+  },
+  {
+   "id": "acvp-inversepermutation-39",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "9cfdbc10a154427b",
+   "ct_hex": "0000000000200000"
+  },
+  {
+   "id": "acvp-inversepermutation-40",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "e1d8454e13a263d9",
+   "ct_hex": "0000000000400000"
+  },
+  {
+   "id": "acvp-inversepermutation-41",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "86cabf1a905fb292",
+   "ct_hex": "0000000000800000"
+  },
+  {
+   "id": "acvp-inversepermutation-42",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "465e7f3af7a6c631",
+   "ct_hex": "0000000001000000"
+  },
+  {
+   "id": "acvp-inversepermutation-43",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "14d6402457aeb1b8",
+   "ct_hex": "0000000002000000"
+  },
+  {
+   "id": "acvp-inversepermutation-44",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "65cbf3bc30a8b31e",
+   "ct_hex": "0000000004000000"
+  },
+  {
+   "id": "acvp-inversepermutation-45",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "781a3d7a8e214e25",
+   "ct_hex": "0000000008000000"
+  },
+  {
+   "id": "acvp-inversepermutation-46",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "7af9b72157e4055b",
+   "ct_hex": "0000000010000000"
+  },
+  {
+   "id": "acvp-inversepermutation-47",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "28a2fc5b27aa6e60",
+   "ct_hex": "0000000020000000"
+  },
+  {
+   "id": "acvp-inversepermutation-48",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "d7b7443fd84f71df",
+   "ct_hex": "0000000040000000"
+  },
+  {
+   "id": "acvp-inversepermutation-49",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "99346162e348fc04",
+   "ct_hex": "0000000100000000"
+  },
+  {
+   "id": "acvp-inversepermutation-50",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "8b633c511bc93e68",
+   "ct_hex": "0000000080000000"
+  },
+  {
+   "id": "acvp-inversepermutation-51",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "89abf4889bd14688",
+   "ct_hex": "0000000200000000"
+  },
+  {
+   "id": "acvp-inversepermutation-52",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "5854aa838688a052",
+   "ct_hex": "0000000400000000"
+  },
+  {
+   "id": "acvp-inversepermutation-53",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "dc45570c45bbddf8",
+   "ct_hex": "0000000800000000"
+  },
+  {
+   "id": "acvp-inversepermutation-54",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "5e58100ccc69a048",
+   "ct_hex": "0000001000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-55",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "d873605ee1eb460a",
+   "ct_hex": "0000002000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-56",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "330a1b2aed1ab9e2",
+   "ct_hex": "0000004000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-57",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "20866f5578318493",
+   "ct_hex": "0000008000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-58",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "1e6f01e224b5cef5",
+   "ct_hex": "0000010000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-59",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "b923beaae7dfabab",
+   "ct_hex": "0000020000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-60",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "5eefed062545e6ca",
+   "ct_hex": "0000040000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-61",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "669e6d195fa6c4bb",
+   "ct_hex": "0000080000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-62",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "b52fe95c8ffacf18",
+   "ct_hex": "0000100000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-63",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "ddb2c4ba45c8ea55",
+   "ct_hex": "0000200000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-64",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "3941356522aeecd4",
+   "ct_hex": "0000400000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-65",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "b447937aff6c7fe9",
+   "ct_hex": "0000800000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-66",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "faeb66717392e405",
+   "ct_hex": "0001000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-67",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0f0f547c30179310",
+   "ct_hex": "0002000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-68",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "8c90824c5fe62439",
+   "ct_hex": "0004000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-69",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "a5f09171c714d535",
+   "ct_hex": "0008000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-70",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "496f5ebd8891ddb2",
+   "ct_hex": "0010000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-71",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "62b43e3589ab83ba",
+   "ct_hex": "0020000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-72",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "5c449f6e034f6cc8",
+   "ct_hex": "0040000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-73",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "831448dc3d3ecbbc",
+   "ct_hex": "0080000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-74",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "33350fee09e04cd9",
+   "ct_hex": "0100000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-75",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0a9fc0bfbf041c0a",
+   "ct_hex": "0200000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-76",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "4179aa89fe2eb0b4",
+   "ct_hex": "0400000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-77",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "38bfbb8bc06c933d",
+   "ct_hex": "0800000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-78",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "43cf8189d260e752",
+   "ct_hex": "1000000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-79",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "43cf8189d260e752",
+   "ct_hex": "1000000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-80",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "89b76e068e8576d7",
+   "ct_hex": "2000000000000000"
+  },
+  {
+   "id": "acvp-inversepermutation-81",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "dd64211b29b0e679",
+   "ct_hex": "4000000000000000"
+  },
+  {
+   "id": "acvp-substitutiontable-82",
+   "key_hex": "7ca110454a1a6e5701010101010101010202020202020202",
+   "pt_hex": "01a1d6d039776742",
+   "ct_hex": "dd3e08fc7845a8bb"
+  },
+  {
+   "id": "acvp-substitutiontable-83",
+   "key_hex": "0131d9619dc1376e01010101010101010202020202020202",
+   "pt_hex": "5cd54ca83def57da",
+   "ct_hex": "d122ed515fabfa36"
+  },
+  {
+   "id": "acvp-substitutiontable-84",
+   "key_hex": "07a1133e4a0b268601010101010101010202020202020202",
+   "pt_hex": "0248d43806f67172",
+   "ct_hex": "9ee38e7f62a36709"
+  },
+  {
+   "id": "acvp-substitutiontable-85",
+   "key_hex": "3849674c2602319e01010101010101010202020202020202",
+   "pt_hex": "51454b582ddf440a",
+   "ct_hex": "fb00f18ce7e82f73"
+  },
+  {
+   "id": "acvp-substitutiontable-86",
+   "key_hex": "04b915ba43feb5b601010101010101010202020202020202",
+   "pt_hex": "42fd443059577fa2",
+   "ct_hex": "c190f8e48ba67946"
+  },
+  {
+   "id": "acvp-substitutiontable-87",
+   "key_hex": "0113b970fd34f2ce01010101010101010202020202020202",
+   "pt_hex": "059b5e0851cf143a",
+   "ct_hex": "63e8ffa321074743"
+  },
+  {
+   "id": "acvp-substitutiontable-88",
+   "key_hex": "0170f175468fb5e601010101010101010202020202020202",
+   "pt_hex": "0756d8e0774761d2",
+   "ct_hex": "59bf5f5be81a6109"
+  },
+  {
+   "id": "acvp-substitutiontable-89",
+   "key_hex": "43297fad38e373fe01010101010101010202020202020202",
+   "pt_hex": "762514b829bf486a",
+   "ct_hex": "658ab5dba2bf2223"
+  },
+  {
+   "id": "acvp-substitutiontable-90",
+   "key_hex": "07a7137045da2a1601010101010101010202020202020202",
+   "pt_hex": "3bdd119049372802",
+   "ct_hex": "e405c572ba16bcd0"
+  },
+  {
+   "id": "acvp-substitutiontable-91",
+   "key_hex": "04689104c2fd3b2f01010101010101010202020202020202",
+   "pt_hex": "26955f6835af609a",
+   "ct_hex": "eb5dc50fcc719982"
+  },
+  {
+   "id": "acvp-substitutiontable-92",
+   "key_hex": "37d06bb516cb754601010101010101010202020202020202",
+   "pt_hex": "164d5e404f275232",
+   "ct_hex": "190012c646a1b6f3"
+  },
+  {
+   "id": "acvp-substitutiontable-93",
+   "key_hex": "1f08260d1ac2465e01010101010101010202020202020202",
+   "pt_hex": "6b056e18759f5cca",
+   "ct_hex": "cd99f8d90f76de95"
+  },
+  {
+   "id": "acvp-substitutiontable-94",
+   "key_hex": "584023641aba617601010101010101010202020202020202",
+   "pt_hex": "004bd6ef09176062",
+   "ct_hex": "6fcd2183a3ba2e5c"
+  },
+  {
+   "id": "acvp-substitutiontable-95",
+   "key_hex": "025816164629b00701010101010101010202020202020202",
+   "pt_hex": "480d39006ee762f2",
+   "ct_hex": "c622d6a3023bf211"
+  },
+  {
+   "id": "acvp-substitutiontable-96",
+   "key_hex": "49793ebc79b3258f01010101010101010202020202020202",
+   "pt_hex": "437540c8698f3cfa",
+   "ct_hex": "ad1a75e5562e5566"
+  },
+  {
+   "id": "acvp-substitutiontable-97",
+   "key_hex": "4fb05e1515ab73a701010101010101010202020202020202",
+   "pt_hex": "072d43a077075292",
+   "ct_hex": "5e1a36711fa3b75c"
+  },
+  {
+   "id": "acvp-substitutiontable-98",
+   "key_hex": "49e95d6d4ca229bf01010101010101010202020202020202",
+   "pt_hex": "02fe55778117f12a",
+   "ct_hex": "b11bdf7828fcc5bd"
+  },
+  {
+   "id": "acvp-substitutiontable-99",
+   "key_hex": "018310dc409b26d601010101010101010202020202020202",
+   "pt_hex": "1d9d5c5018f728c2",
+   "ct_hex": "8f4ea8235a1ad5ef"
+  },
+  {
+   "id": "acvp-substitutiontable-100",
+   "key_hex": "1c587f1c13924fef01010101010101010202020202020202",
+   "pt_hex": "305532286d6f295a",
+   "ct_hex": "457d227b21cdce21"
+  },
+  {
+   "id": "acvp-variablekey-101",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefd",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "e588fe83ccc30399"
+  },
+  {
+   "id": "acvp-variablekey-102",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "abefc7577d35a797"
+  },
+  {
+   "id": "acvp-variablekey-103",
+   "key_hex": "01010101010101010707070707070707fefefefefefefedf",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "023d041282e99734"
+  },
+  {
+   "id": "acvp-variablekey-104",
+   "key_hex": "01010101010101010707070707070707fefefefefefbfefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "844fab66c7610e16"
+  },
+  {
+   "id": "acvp-variablekey-105",
+   "key_hex": "01010101010101010707070707070707fefefefefef7fefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "95db66e0e21b336d"
+  },
+  {
+   "id": "acvp-variablekey-106",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefb",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "e9353f2948b711cc"
+  },
+  {
+   "id": "acvp-variablekey-107",
+   "key_hex": "01010101010101010707070707070707fefefefefefefef7",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "fcf1d5e83de87c68"
+  },
+  {
+   "id": "acvp-variablekey-108",
+   "key_hex": "01010101010101010707070707070707fefefefefefefebf",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "1076949b7a2224a8"
+  },
+  {
+   "id": "acvp-variablekey-109",
+   "key_hex": "01010101010101010707070707070707fefefefefefefeef",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "a124451fe813c4e6"
+  },
+  {
+   "id": "acvp-variablekey-110",
+   "key_hex": "01010101010101010707070707070707fefefefefefefe7f",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "9e9d19e7daa90e79"
+  },
+  {
+   "id": "acvp-variablekey-111",
+   "key_hex": "01010101010101010707070707070707fefefefefefe7ffe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "292644f5e889fe11"
+  },
+  {
+   "id": "acvp-variablekey-112",
+   "key_hex": "01010101010101010707070707070707fefefefefefefbfe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "e9f4ec6b9d7d97d1"
+  },
+  {
+   "id": "acvp-variablekey-113",
+   "key_hex": "01010101010101010707070707070707fefefefefefeeffe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "01bdb6018c395bf5"
+  },
+  {
+   "id": "acvp-variablekey-114",
+   "key_hex": "01010101010101010707070707070707fefefefefefdfefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "78a2bdf690ba76be"
+  },
+  {
+   "id": "acvp-variablekey-115",
+   "key_hex": "01010101010101010707070707070707fefefefefefefdfe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "04eaf4faa3033e16"
+  },
+  {
+   "id": "acvp-variablekey-116",
+   "key_hex": "01010101010101010707070707070707fefefefefefef7fe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "12ba5f94ca9e9791"
+  },
+  {
+   "id": "acvp-variablekey-117",
+   "key_hex": "01010101010101010707070707070707fefefefefefedffe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "863578c2238cfeaf"
+  },
+  {
+   "id": "acvp-variablekey-118",
+   "key_hex": "01010101010101010707070707070707fefefefefefebffe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "03c931651cf4b80d"
+  },
+  {
+   "id": "acvp-variablekey-119",
+   "key_hex": "01010101010101010707070707070707fefefefefeeffefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "cb773d2745b4a0ea"
+  },
+  {
+   "id": "acvp-variablekey-120",
+   "key_hex": "01010101010101010707070707070707fefefefefedffefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "e189fa15ac7ff4d5"
+  },
+  {
+   "id": "acvp-variablekey-121",
+   "key_hex": "01010101010101010707070707070707fefefefefebffefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4d9ae86566c66bf3"
+  },
+  {
+   "id": "acvp-variablekey-122",
+   "key_hex": "01010101010101010707070707070707fefefefefdfefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "1e87ed4d0d920acb"
+  },
+  {
+   "id": "acvp-variablekey-123",
+   "key_hex": "01010101010101010707070707070707fefefefefe7ffefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "95010359f5b8931a"
+  },
+  {
+   "id": "acvp-variablekey-124",
+   "key_hex": "01010101010101010707070707070707fefefefefbfefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "8d157b01e977aab9"
+  },
+  {
+   "id": "acvp-variablekey-125",
+   "key_hex": "01010101010101010707070707070707fefefefef7fefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "3d5576b5b9442fd3"
+  },
+  {
+   "id": "acvp-variablekey-126",
+   "key_hex": "01010101010101010707070707070707fefefefeeffefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7812a21b78c6b608"
+  },
+  {
+   "id": "acvp-variablekey-127",
+   "key_hex": "01010101010101010707070707070707fefefefedffefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b4a3c8127eb1ddd7"
+  },
+  {
+   "id": "acvp-variablekey-128",
+   "key_hex": "01010101010101010707070707070707fefefefebffefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "83b5d839b6682202"
+  },
+  {
+   "id": "acvp-variablekey-129",
+   "key_hex": "01010101010101010707070707070707fefefefe7ffefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "07dcf3246a5c0092"
+  },
+  {
+   "id": "acvp-variablekey-130",
+   "key_hex": "01010101010101010707070707070707fefefefdfefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "352c6edaab6c04ab"
+  },
+  {
+   "id": "acvp-variablekey-131",
+   "key_hex": "01010101010101010707070707070707fefefefbfefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "68f0442030c99fd8"
+  },
+  {
+   "id": "acvp-variablekey-132",
+   "key_hex": "01010101010101010707070707070707fefefef7fefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "2b85c96867449f70"
+  },
+  {
+   "id": "acvp-variablekey-133",
+   "key_hex": "01010101010101010707070707070707fefefeeffefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "3c599a91c2564d88"
+  },
+  {
+   "id": "acvp-variablekey-134",
+   "key_hex": "01010101010101010707070707070707fefefedffefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "0c601458ac1decbc"
+  },
+  {
+   "id": "acvp-variablekey-135",
+   "key_hex": "01010101010101010707070707070707fefefebffefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "74e263566105981e"
+  },
+  {
+   "id": "acvp-variablekey-136",
+   "key_hex": "01010101010101010707070707070707fefefe7ffefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "3136ea63c65384da"
+  },
+  {
+   "id": "acvp-variablekey-137",
+   "key_hex": "01010101010101010707070707070707fefefdfefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "85f88eb4ac85a0c8"
+  },
+  {
+   "id": "acvp-variablekey-138",
+   "key_hex": "01010101010101010707070707070707fefefbfefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "cd77ccb45f0b6dd5"
+  },
+  {
+   "id": "acvp-variablekey-139",
+   "key_hex": "01010101010101010707070707070707fefef7fefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "232e0bac09686499"
+  },
+  {
+   "id": "acvp-variablekey-140",
+   "key_hex": "01010101010101010707070707070707fefeeffefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b04eda24e2ee3a27"
+  },
+  {
+   "id": "acvp-variablekey-141",
+   "key_hex": "01010101010101010707070707070707fefedffefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7bf2197505f3a1d7"
+  },
+  {
+   "id": "acvp-variablekey-142",
+   "key_hex": "01010101010101010707070707070707fefebffefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4fe16b3db1359583"
+  },
+  {
+   "id": "acvp-variablekey-143",
+   "key_hex": "01010101010101010707070707070707fefe7ffefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "13a627fde4401b8a"
+  },
+  {
+   "id": "acvp-variablekey-144",
+   "key_hex": "01010101010101010707070707070707fefdfefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "fa29f18a04d94707"
+  },
+  {
+   "id": "acvp-variablekey-145",
+   "key_hex": "01010101010101010707070707070707fefbfefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "cd598d4d33ccfd8a"
+  },
+  {
+   "id": "acvp-variablekey-146",
+   "key_hex": "01010101010101010707070707070707fef7fefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "54f7fad5024e3915"
+  },
+  {
+   "id": "acvp-variablekey-147",
+   "key_hex": "01010101010101010707070707070707feeffefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "56787438da453f84"
+  },
+  {
+   "id": "acvp-variablekey-148",
+   "key_hex": "01010101010101010707070707070707fedffefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "aac60592090770b5"
+  },
+  {
+   "id": "acvp-variablekey-149",
+   "key_hex": "01010101010101010707070707070707febffefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4d09ab3178396516"
+  },
+  {
+   "id": "acvp-variablekey-150",
+   "key_hex": "01010101010101010707070707070707fe7ffefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "ca33742a09b48cfd"
+  },
+  {
+   "id": "acvp-variablekey-151",
+   "key_hex": "01010101010101010707070707070707fdfefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "1bc1d7beeb0ee26b"
+  },
+  {
+   "id": "acvp-variablekey-152",
+   "key_hex": "01010101010101010707070707070707fbfefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "01c7c3ddffb57b3a"
+  },
+  {
+   "id": "acvp-variablekey-153",
+   "key_hex": "01010101010101010707070707070707f7fefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "0a13201a0f651a8b"
+  },
+  {
+   "id": "acvp-variablekey-154",
+   "key_hex": "01010101010101010707070707070707effefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "ac53e7de3a091923"
+  },
+  {
+   "id": "acvp-variablekey-155",
+   "key_hex": "01010101010101010707070707070707dffefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "3d644e331dda1969"
+  },
+  {
+   "id": "acvp-variablekey-156",
+   "key_hex": "01010101010101010707070707070707bffefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b1aacdf83db085d0"
+  },
+  {
+   "id": "acvp-variablekey-157",
+   "key_hex": "010101010101010107070707070707077ffefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "133556b0afc11a98"
+  },
+  {
+   "id": "acvp-variablekey-158",
+   "key_hex": "01010101010101010707070707070704fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "a1c74317eb157fec"
+  },
+  {
+   "id": "acvp-variablekey-159",
+   "key_hex": "01010101010101010707070707070702fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c1f52f6304929c9f"
+  },
+  {
+   "id": "acvp-variablekey-160",
+   "key_hex": "0101010101010101070707070707070efefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4d4d0f088937a12e"
+  },
+  {
+   "id": "acvp-variablekey-161",
+   "key_hex": "01010101010101010707070707070716fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "864990d2690d8e44"
+  },
+  {
+   "id": "acvp-variablekey-162",
+   "key_hex": "01010101010101010707070707070726fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c3f1c7715d0a49e9"
+  },
+  {
+   "id": "acvp-variablekey-163",
+   "key_hex": "01010101010101010707070707070726fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c3f1c7715d0a49e9"
+  },
+  {
+   "id": "acvp-variablekey-164",
+   "key_hex": "01010101010101010707070707070746fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5d5a0aa17f0eb16b"
+  },
+  {
+   "id": "acvp-variablekey-165",
+   "key_hex": "01010101010101010707070707070786fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "f323fc8f5d7f1c11"
+  },
+  {
+   "id": "acvp-variablekey-166",
+   "key_hex": "01010101010101010707070707070407fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "d139b009adc56e1f"
+  },
+  {
+   "id": "acvp-variablekey-167",
+   "key_hex": "01010101010101010707070707070207fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "22f4088a86c4cc13"
+  },
+  {
+   "id": "acvp-variablekey-168",
+   "key_hex": "01010101010101010707070707070e07fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "e3ad5dc81f5ce50a"
+  },
+  {
+   "id": "acvp-variablekey-169",
+   "key_hex": "01010101010101010707070707071607fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b4e6e86b75fa7420"
+  },
+  {
+   "id": "acvp-variablekey-170",
+   "key_hex": "01010101010101010707070707072607fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7c3b67f5e0f6cd3c"
+  },
+  {
+   "id": "acvp-variablekey-171",
+   "key_hex": "01010101010101010707070707074607fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "36fb0be2b7d54894"
+  },
+  {
+   "id": "acvp-variablekey-172",
+   "key_hex": "01010101010101010707070707078607fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "f60e84a8276a012f"
+  },
+  {
+   "id": "acvp-variablekey-173",
+   "key_hex": "01010101010101010707070707040707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "0990e3335183086e"
+  },
+  {
+   "id": "acvp-variablekey-174",
+   "key_hex": "01010101010101010707070707020707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c035ecc2bf9a9ec6"
+  },
+  {
+   "id": "acvp-variablekey-175",
+   "key_hex": "010101010101010107070707070e0707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "9d1babf0bfedeb43"
+  },
+  {
+   "id": "acvp-variablekey-176",
+   "key_hex": "01010101010101010707070707160707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5769c5af5aaba993"
+  },
+  {
+   "id": "acvp-variablekey-177",
+   "key_hex": "01010101010101010707070707260707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "0fffc8cf2f240312"
+  },
+  {
+   "id": "acvp-variablekey-178",
+   "key_hex": "01010101010101010707070707460707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b789ef5f2ed25ef7"
+  },
+  {
+   "id": "acvp-variablekey-179",
+   "key_hex": "01010101010101010707070707860707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "ef4b8942f2a14738"
+  },
+  {
+   "id": "acvp-variablekey-180",
+   "key_hex": "01010101010101010707070704070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "84f99d4aaef13ee6"
+  },
+  {
+   "id": "acvp-variablekey-181",
+   "key_hex": "01010101010101010707070702070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b12a8e0be9d6ace5"
+  },
+  {
+   "id": "acvp-variablekey-182",
+   "key_hex": "0101010101010101070707070e070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "486d9760e694266c"
+  },
+  {
+   "id": "acvp-variablekey-183",
+   "key_hex": "01010101010101010707070716070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b9bda3b665c54e7f"
+  },
+  {
+   "id": "acvp-variablekey-184",
+   "key_hex": "01010101010101010707070726070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "65b79a812abb3828"
+  },
+  {
+   "id": "acvp-variablekey-185",
+   "key_hex": "01010101010101010707070746070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "f2cdc946ba283132"
+  },
+  {
+   "id": "acvp-variablekey-186",
+   "key_hex": "01010101010101010707070786070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "a4ecf2121a60717f"
+  },
+  {
+   "id": "acvp-variablekey-187",
+   "key_hex": "01010101010101010707070407070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "2da32eadd33d080f"
+  },
+  {
+   "id": "acvp-variablekey-188",
+   "key_hex": "01010101010101010707072607070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "66363490c9066b05"
+  },
+  {
+   "id": "acvp-variablekey-189",
+   "key_hex": "01010101010101010707070207070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "134d66f8334c74c5"
+  },
+  {
+   "id": "acvp-variablekey-190",
+   "key_hex": "01010101010101010707070e07070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "06f4c9afc8e2c4fb"
+  },
+  {
+   "id": "acvp-variablekey-191",
+   "key_hex": "01010101010101010707071607070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c5aa82770489b815"
+  },
+  {
+   "id": "acvp-variablekey-192",
+   "key_hex": "01010101010101010707074607070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "8665f1f94927671e"
+  },
+  {
+   "id": "acvp-variablekey-193",
+   "key_hex": "01010101010101010707078607070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5059b3c2fca9ddae"
+  },
+  {
+   "id": "acvp-variablekey-194",
+   "key_hex": "01010101010101010707160707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c355693867596dfa"
+  },
+  {
+   "id": "acvp-variablekey-195",
+   "key_hex": "01010101010101010707040707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "083e07f0bd19b603"
+  },
+  {
+   "id": "acvp-variablekey-196",
+   "key_hex": "01010101010101010707020707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c5a0182c7e58abd2"
+  },
+  {
+   "id": "acvp-variablekey-197",
+   "key_hex": "010101010101010107070e0707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7cf1b90c10aab1b8"
+  },
+  {
+   "id": "acvp-variablekey-198",
+   "key_hex": "01010101010101010707260707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "e2f3617fd377c8de"
+  },
+  {
+   "id": "acvp-variablekey-199",
+   "key_hex": "01010101010101010707460707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "182b87465039b113"
+  },
+  {
+   "id": "acvp-variablekey-200",
+   "key_hex": "01010101010101010707860707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7e413c6c8e255678"
+  },
+  {
+   "id": "acvp-variablekey-201",
+   "key_hex": "01010101010101010704070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "a625e87608d6fe8c"
+  },
+  {
+   "id": "acvp-variablekey-202",
+   "key_hex": "01010101010101010702070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "ac0a5fcc2dbc7fb8"
+  },
+  {
+   "id": "acvp-variablekey-203",
+   "key_hex": "0101010101010101070e070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c92e9b49c60f9dc3"
+  },
+  {
+   "id": "acvp-variablekey-204",
+   "key_hex": "01010101010101010716070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "af50d9ba25d06556"
+  },
+  {
+   "id": "acvp-variablekey-205",
+   "key_hex": "01010101010101010726070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c15464366f728065"
+  },
+  {
+   "id": "acvp-variablekey-206",
+   "key_hex": "01010101010101010746070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5fbdf6d43c1394d1"
+  },
+  {
+   "id": "acvp-variablekey-207",
+   "key_hex": "01010101010101010786070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4021db6fc4f32974"
+  },
+  {
+   "id": "acvp-variablekey-208",
+   "key_hex": "01010101010101012607070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5e92d72cc808938d"
+  },
+  {
+   "id": "acvp-variablekey-209",
+   "key_hex": "01010101010101010407070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "15e9b08888a38df5"
+  },
+  {
+   "id": "acvp-variablekey-210",
+   "key_hex": "01010101010101010207070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "d7f11af5aac8f45e"
+  },
+  {
+   "id": "acvp-variablekey-211",
+   "key_hex": "01010101010101010e07070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "d335e10be3bb037a"
+  },
+  {
+   "id": "acvp-variablekey-212",
+   "key_hex": "01010101010101011607070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "70a2610126de31d5"
+  },
+  {
+   "id": "acvp-variablekey-213",
+   "key_hex": "01010101010101014607070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "41184675ab4179d3"
+  },
+  {
+   "id": "acvp-variablekey-214",
+   "key_hex": "01010101010101080707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b98a50b36aea9676"
+  },
+  {
+   "id": "acvp-variablekey-215",
+   "key_hex": "01010101010101018607070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "0abda7e028cfc607"
+  },
+  {
+   "id": "acvp-variablekey-216",
+   "key_hex": "01010101010101020707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "f45cf503268f0df3"
+  },
+  {
+   "id": "acvp-variablekey-217",
+   "key_hex": "01010101010101040707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "dd803b9c719626e1"
+  },
+  {
+   "id": "acvp-variablekey-218",
+   "key_hex": "01010101010101100707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b5410d4057370251"
+  },
+  {
+   "id": "acvp-variablekey-219",
+   "key_hex": "01010101010101200707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "94b979fbe2028ffa"
+  },
+  {
+   "id": "acvp-variablekey-220",
+   "key_hex": "01010101010101400707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "ce98307b13148ec9"
+  },
+  {
+   "id": "acvp-variablekey-221",
+   "key_hex": "01010101010101800707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4ff4259f36ac3b68"
+  },
+  {
+   "id": "acvp-variablekey-222",
+   "key_hex": "01010101010102010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "3982d9c36bb318e5"
+  },
+  {
+   "id": "acvp-variablekey-223",
+   "key_hex": "01010101010104010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "a4131de6d689ea1f"
+  },
+  {
+   "id": "acvp-variablekey-224",
+   "key_hex": "01010101010108010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "8645d81c40698c20"
+  },
+  {
+   "id": "acvp-variablekey-225",
+   "key_hex": "01010101010110010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "3a966515a3dc90be"
+  },
+  {
+   "id": "acvp-variablekey-226",
+   "key_hex": "01010101010120010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "cdd227daca28b44c"
+  },
+  {
+   "id": "acvp-variablekey-227",
+   "key_hex": "01010101010140010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "382a45d15d46b838"
+  },
+  {
+   "id": "acvp-variablekey-228",
+   "key_hex": "01010101010180010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c0cf7ff9956e9c63"
+  },
+  {
+   "id": "acvp-variablekey-229",
+   "key_hex": "01010101010201010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "121ea69f240bc290"
+  },
+  {
+   "id": "acvp-variablekey-230",
+   "key_hex": "01010101010401010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "133fb4c1f2119903"
+  },
+  {
+   "id": "acvp-variablekey-231",
+   "key_hex": "01010101010801010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "245d3a87d7497824"
+  },
+  {
+   "id": "acvp-variablekey-232",
+   "key_hex": "01010101011001010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "cfe1e631ba75ead5"
+  },
+  {
+   "id": "acvp-variablekey-233",
+   "key_hex": "01010101012001010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4b2c22535e0dfe83"
+  },
+  {
+   "id": "acvp-variablekey-234",
+   "key_hex": "01010101014001010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "14a9a58da191758f"
+  },
+  {
+   "id": "acvp-variablekey-235",
+   "key_hex": "01010101018001010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "e0f5f8f0c088739a"
+  },
+  {
+   "id": "acvp-variablekey-236",
+   "key_hex": "01010101020101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "fe75f80546dbae9a"
+  },
+  {
+   "id": "acvp-variablekey-237",
+   "key_hex": "01010101040101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "656a6355bc59f280"
+  },
+  {
+   "id": "acvp-variablekey-238",
+   "key_hex": "01010101080101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "026c7a31ffc9e3cc"
+  },
+  {
+   "id": "acvp-variablekey-239",
+   "key_hex": "01010101100101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "cbe4fa0e8047614b"
+  },
+  {
+   "id": "acvp-variablekey-240",
+   "key_hex": "01010101200101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "15e1e9a8586ebdd4"
+  },
+  {
+   "id": "acvp-variablekey-241",
+   "key_hex": "01010101400101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "8629fafd6e3c518a"
+  },
+  {
+   "id": "acvp-variablekey-242",
+   "key_hex": "01010101800101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "57d81814553b035c"
+  },
+  {
+   "id": "acvp-variablekey-243",
+   "key_hex": "01010102010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7e7001a8ca01d83d"
+  },
+  {
+   "id": "acvp-variablekey-244",
+   "key_hex": "01010104010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7d4c6cde8aac3c3f"
+  },
+  {
+   "id": "acvp-variablekey-245",
+   "key_hex": "01010108010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "59c0c1ecdc53a813"
+  },
+  {
+   "id": "acvp-variablekey-246",
+   "key_hex": "01010110010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4008bc789cf46d97"
+  },
+  {
+   "id": "acvp-variablekey-247",
+   "key_hex": "01010120010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "386b0a72b6f86cf8"
+  },
+  {
+   "id": "acvp-variablekey-248",
+   "key_hex": "01010801010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "850cf7a0f167675b"
+  },
+  {
+   "id": "acvp-variablekey-249",
+   "key_hex": "01010140010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b64ce43e96232e51"
+  },
+  {
+   "id": "acvp-variablekey-250",
+   "key_hex": "01010180010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "0eedfef9f2698e88"
+  },
+  {
+   "id": "acvp-variablekey-251",
+   "key_hex": "01010201010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b91cdeddcaaff66e"
+  },
+  {
+   "id": "acvp-variablekey-252",
+   "key_hex": "01010401010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "cc37f34fb91813b9"
+  },
+  {
+   "id": "acvp-variablekey-253",
+   "key_hex": "01011001010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "2bc62ab1c10ed704"
+  },
+  {
+   "id": "acvp-variablekey-254",
+   "key_hex": "01012001010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "92b14af83edb0f91"
+  },
+  {
+   "id": "acvp-variablekey-255",
+   "key_hex": "01014001010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "6063437e5aa75472"
+  },
+  {
+   "id": "acvp-variablekey-256",
+   "key_hex": "01018001010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7e113958fb251bba"
+  },
+  {
+   "id": "acvp-variablekey-257",
+   "key_hex": "01100101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "64b3fcee1bcf46e1"
+  },
+  {
+   "id": "acvp-variablekey-258",
+   "key_hex": "01020101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b90de7ae178c5c7e"
+  },
+  {
+   "id": "acvp-variablekey-259",
+   "key_hex": "01040101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "90da19bdcd5aae23"
+  },
+  {
+   "id": "acvp-variablekey-260",
+   "key_hex": "01080101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "21824ae57d69ff07"
+  },
+  {
+   "id": "acvp-variablekey-261",
+   "key_hex": "01200101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "cdf86332822acc35"
+  },
+  {
+   "id": "acvp-variablekey-262",
+   "key_hex": "01400101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "64e9d581c79bc72a"
+  },
+  {
+   "id": "acvp-variablekey-263",
+   "key_hex": "01800101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "6d30e7e323e9c192"
+  },
+  {
+   "id": "acvp-variablekey-264",
+   "key_hex": "02010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4a146cfb71d315b3"
+  },
+  {
+   "id": "acvp-variablekey-265",
+   "key_hex": "04010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "325427e526bf2634"
+  },
+  {
+   "id": "acvp-variablekey-266",
+   "key_hex": "08010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "10a72682c142da01"
+  },
+  {
+   "id": "acvp-variablekey-267",
+   "key_hex": "10010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "1b0072804fc9a76a"
+  },
+  {
+   "id": "acvp-variablekey-268",
+   "key_hex": "20010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "69caf2e5f38243b8"
+  },
+  {
+   "id": "acvp-variablekey-269",
+   "key_hex": "40010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "e322dfacc664e4d2"
+  },
+  {
+   "id": "acvp-variabletext-270",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "abefc7577d35a797"
+  },
+  {
+   "id": "acvp-variabletext-271",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000001",
+   "ct_hex": "dbdf63ee7e8bf237"
+  },
+  {
+   "id": "acvp-variabletext-272",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000002",
+   "ct_hex": "2cc180e9f1ed7aa3"
+  },
+  {
+   "id": "acvp-variabletext-273",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000004",
+   "ct_hex": "46e3ed010e2de2a7"
+  },
+  {
+   "id": "acvp-variabletext-274",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000008",
+   "ct_hex": "3849a892ecea8689"
+  },
+  {
+   "id": "acvp-variabletext-275",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000010",
+   "ct_hex": "4b488a8d25b43876"
+  },
+  {
+   "id": "acvp-variabletext-276",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000020",
+   "ct_hex": "4490dab5ba7ef7fd"
+  },
+  {
+   "id": "acvp-variabletext-277",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000040",
+   "ct_hex": "a2ab4d89cc45d1c1"
+  },
+  {
+   "id": "acvp-variabletext-278",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000080",
+   "ct_hex": "8594d0fef17cd8df"
+  },
+  {
+   "id": "acvp-variabletext-279",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000100",
+   "ct_hex": "b47a09637f3fe2c6"
+  },
+  {
+   "id": "acvp-variabletext-280",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000800",
+   "ct_hex": "15c2986011bf4665"
+  },
+  {
+   "id": "acvp-variabletext-281",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000004000",
+   "ct_hex": "e70de7d8ce91f507"
+  },
+  {
+   "id": "acvp-variabletext-282",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000020000",
+   "ct_hex": "48fbd93313ed9d8a"
+  },
+  {
+   "id": "acvp-variabletext-283",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000200",
+   "ct_hex": "631cfa554fc141ea"
+  },
+  {
+   "id": "acvp-variabletext-284",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000000400",
+   "ct_hex": "cc146bcdb2aba5c4"
+  },
+  {
+   "id": "acvp-variabletext-285",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000001000",
+   "ct_hex": "1f6892b6d289ddcd"
+  },
+  {
+   "id": "acvp-variabletext-286",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000002000",
+   "ct_hex": "284873339805d8e6"
+  },
+  {
+   "id": "acvp-variabletext-287",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000008000",
+   "ct_hex": "7067482681e99547"
+  },
+  {
+   "id": "acvp-variabletext-288",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000010000",
+   "ct_hex": "8d39c6f345b0f3dc"
+  },
+  {
+   "id": "acvp-variabletext-289",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000040000",
+   "ct_hex": "cf45e6276d66e38c"
+  },
+  {
+   "id": "acvp-variabletext-290",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000080000",
+   "ct_hex": "addb11c419fcdc67"
+  },
+  {
+   "id": "acvp-variabletext-291",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000100000",
+   "ct_hex": "13a42d661692d01f"
+  },
+  {
+   "id": "acvp-variabletext-292",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000200000",
+   "ct_hex": "b74d26c25183a20d"
+  },
+  {
+   "id": "acvp-variabletext-293",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000400000",
+   "ct_hex": "ae8ac99c9ca5afa9"
+  },
+  {
+   "id": "acvp-variabletext-294",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000000800000",
+   "ct_hex": "f6817ab6b991f46b"
+  },
+  {
+   "id": "acvp-variabletext-295",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000001000000",
+   "ct_hex": "2a1f29d9a705f79b"
+  },
+  {
+   "id": "acvp-variabletext-296",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000004000000",
+   "ct_hex": "59fe89f6ca3311da"
+  },
+  {
+   "id": "acvp-variabletext-297",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000002000000",
+   "ct_hex": "dfc6f3e52d8dbb44"
+  },
+  {
+   "id": "acvp-variabletext-298",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000008000000",
+   "ct_hex": "067c2f5b5e85e0de"
+  },
+  {
+   "id": "acvp-variabletext-299",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000010000000",
+   "ct_hex": "3c7ce1650258c4b5"
+  },
+  {
+   "id": "acvp-variabletext-300",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000020000000",
+   "ct_hex": "248b9ea0cccff5fc"
+  },
+  {
+   "id": "acvp-variabletext-301",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000040000000",
+   "ct_hex": "354d27364c19e4b9"
+  },
+  {
+   "id": "acvp-variabletext-302",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000100000000",
+   "ct_hex": "1dd5938607b7efaa"
+  },
+  {
+   "id": "acvp-variabletext-303",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000080000000",
+   "ct_hex": "f092c52f6dbad8a9"
+  },
+  {
+   "id": "acvp-variabletext-304",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000200000000",
+   "ct_hex": "e1ccdd2d9a1d0ed9"
+  },
+  {
+   "id": "acvp-variabletext-305",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000400000000",
+   "ct_hex": "51629647e9c4422c"
+  },
+  {
+   "id": "acvp-variabletext-306",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000000800000000",
+   "ct_hex": "d17e531573df59ef"
+  },
+  {
+   "id": "acvp-variabletext-307",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000001000000000",
+   "ct_hex": "b80743d04de998b5"
+  },
+  {
+   "id": "acvp-variabletext-308",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000002000000000",
+   "ct_hex": "4ce5de901e40716e"
+  },
+  {
+   "id": "acvp-variabletext-309",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0002000000000000",
+   "ct_hex": "9c157df1fb17a905"
+  },
+  {
+   "id": "acvp-variabletext-310",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000004000000000",
+   "ct_hex": "855a0d59a34c94d6"
+  },
+  {
+   "id": "acvp-variabletext-311",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000008000000000",
+   "ct_hex": "44d1fe4d76d25162"
+  },
+  {
+   "id": "acvp-variabletext-312",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000010000000000",
+   "ct_hex": "5cae0e90793a858b"
+  },
+  {
+   "id": "acvp-variabletext-313",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000020000000000",
+   "ct_hex": "449f6f955edc21a9"
+  },
+  {
+   "id": "acvp-variabletext-314",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000040000000000",
+   "ct_hex": "a8da4f5022b1c3b7"
+  },
+  {
+   "id": "acvp-variabletext-315",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000100000000000",
+   "ct_hex": "249aa7cc4c571e6a"
+  },
+  {
+   "id": "acvp-variabletext-316",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000080000000000",
+   "ct_hex": "29917e3d1c7f6f1e"
+  },
+  {
+   "id": "acvp-variabletext-317",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000200000000000",
+   "ct_hex": "1954a2d96944310b"
+  },
+  {
+   "id": "acvp-variabletext-318",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000400000000000",
+   "ct_hex": "b282caadf33a2e86"
+  },
+  {
+   "id": "acvp-variabletext-319",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0000800000000000",
+   "ct_hex": "b58a0a2c30134bea"
+  },
+  {
+   "id": "acvp-variabletext-320",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0001000000000000",
+   "ct_hex": "b5eaaddcce1b0b8c"
+  },
+  {
+   "id": "acvp-variabletext-321",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0004000000000000",
+   "ct_hex": "0234454330760993"
+  },
+  {
+   "id": "acvp-variabletext-322",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0008000000000000",
+   "ct_hex": "473ff62fd13913b3"
+  },
+  {
+   "id": "acvp-variabletext-323",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0010000000000000",
+   "ct_hex": "1ea449eeeae715ec"
+  },
+  {
+   "id": "acvp-variabletext-324",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0020000000000000",
+   "ct_hex": "5aed94192a191af7"
+  },
+  {
+   "id": "acvp-variabletext-325",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0040000000000000",
+   "ct_hex": "5abc4e0c629e2b83"
+  },
+  {
+   "id": "acvp-variabletext-326",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0080000000000000",
+   "ct_hex": "bbdbb21f8b55dbc6"
+  },
+  {
+   "id": "acvp-variabletext-327",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0100000000000000",
+   "ct_hex": "0a66b9c44f15b463"
+  },
+  {
+   "id": "acvp-variabletext-328",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0200000000000000",
+   "ct_hex": "9615a4279219223f"
+  },
+  {
+   "id": "acvp-variabletext-329",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0400000000000000",
+   "ct_hex": "bacf3734a648a8f6"
+  },
+  {
+   "id": "acvp-variabletext-330",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "0800000000000000",
+   "ct_hex": "bf17728e7f67794b"
+  },
+  {
+   "id": "acvp-variabletext-331",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "1000000000000000",
+   "ct_hex": "4d07a5c5e67a9f48"
+  },
+  {
+   "id": "acvp-variabletext-332",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "2000000000000000",
+   "ct_hex": "7aa3e61994cc18e8"
+  },
+  {
+   "id": "acvp-variabletext-333",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "4000000000000000",
+   "ct_hex": "d1a3b99d0599ebb9"
+  },
+  {
+   "id": "acvp-variabletext-334",
+   "key_hex": "01010101010101010707070707070707fefefefefefefefe",
+   "pt_hex": "8000000000000000",
+   "ct_hex": "56342a393b74cb00"
+  },
+  {
+   "id": "acvp-multiblockmessage-669",
+   "key_hex": "c73b52b575dfe03bce25f73d0d2cd049e625982c13581c6b",
+   "pt_hex": "911fa0e145974afb",
+   "ct_hex": "e8eb6b308f974107"
+  }
+ ]
+}

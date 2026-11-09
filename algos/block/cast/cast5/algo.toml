@@ -1,0 +1,20 @@
+id        = "cast5"
+kind      = "blockcipher"
+category  = "block"
+family    = "cast"
+aliases   = ["cast-128", "cast128"]
+tier      = "legacy"
+status    = "active"
+standards = ["RFC 2144", "CAST-128"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "cast5", version = "=0.12.0", license = "MIT OR Apache-2.0" }
+# CAST-128 with 5..16 byte keys (40..128 bits); 12 rounds for keys up to 80 bits, 16 rounds above, as in RFC
+# 2144. 64-bit block.
+
+[kat]
+files = ["kat/rfc2144.json"]
+
+[sizes]
+key = { min = 5, max = 16 }
+block = 8
