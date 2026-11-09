@@ -1,0 +1,58 @@
+[package]
+name = "nextssl-compose"
+description = "NextSSL composition engine: constructors (hmac, hkdf, pbkdf2, cmac, cbc, drbgs, hashcash) over any registered digest or cipher"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[features]
+default = []
+# BEGIN GENERATED FEATURES (cargo xtask gen)
+compose-all = ["dep:aria", "dep:belt_block", "dep:camellia", "dep:des", "dep:gost94", "dep:groestl", "dep:idea", "dep:jh", "dep:kuznyechik", "dep:magma", "dep:md2", "dep:md4", "dep:md5", "dep:ripemd", "dep:sha1", "dep:sm3", "dep:sm4", "dep:streebog", "dep:tiger", "dep:whirlpool"]
+# END GENERATED FEATURES
+
+[dependencies]
+nextssl-core.workspace = true
+nextssl-registry.workspace = true
+# Upstream generic constructors; the digest and cipher types come from the generated block.
+hmac = { version = "=0.13.0", default-features = false, features = ["zeroize"] }
+hkdf = { version = "=0.13.0", default-features = false }
+pbkdf2 = { version = "=0.13.0", default-features = false, features = ["hmac"] }
+cmac = { version = "=0.8.0", default-features = false, features = ["zeroize"] }
+cbc = { version = "=0.2.1", default-features = false, features = ["alloc", "block-padding", "zeroize"] }
+ecb = { version = "=0.2.1", default-features = false, features = ["alloc", "block-padding", "zeroize"] }
+cfb-mode = { version = "=0.9.1", default-features = false, features = ["zeroize"] }
+# BEGIN GENERATED DEPENDENCIES (cargo xtask gen)
+aes = { version = "=0.9.4", default-features = false, features = ["zeroize"] }
+aria = { version = "=0.2.0", default-features = false, features = ["zeroize"], optional = true }
+belt_block = { package = "belt-block", version = "=0.2.0", default-features = false, features = ["zeroize"], optional = true }
+camellia = { version = "=0.2.1", default-features = false, features = ["zeroize"], optional = true }
+des = { version = "=0.9.0", default-features = false, features = ["zeroize"], optional = true }
+gost94 = { version = "=0.11.0", default-features = false, optional = true }
+groestl = { version = "=0.11.0", default-features = false, optional = true }
+idea = { version = "=0.6.0", default-features = false, features = ["zeroize"], optional = true }
+jh = { version = "=0.2.0", default-features = false, optional = true }
+kuznyechik = { version = "=0.9.0", default-features = false, features = ["zeroize"], optional = true }
+magma = { version = "=0.10.0", default-features = false, features = ["zeroize"], optional = true }
+md2 = { version = "=0.11.0", default-features = false, optional = true }
+md4 = { version = "=0.11.0", default-features = false, optional = true }
+md5 = { package = "md-5", version = "=0.11.0", default-features = false, optional = true }
+ripemd = { version = "=0.2.0", default-features = false, optional = true }
+sha1 = { version = "=0.11.0", default-features = false, optional = true }
+sha2 = { version = "=0.11.1", default-features = false }
+sha3 = { version = "=0.11.0", default-features = false }
+sm3 = { version = "=0.5.0", default-features = false, optional = true }
+sm4 = { version = "=0.6.0", default-features = false, features = ["zeroize"], optional = true }
+streebog = { version = "=0.11.0", default-features = false, optional = true }
+tiger = { version = "=0.3.0", default-features = false, optional = true }
+whirlpool = { version = "=0.11.0", default-features = false, optional = true }
+# END GENERATED DEPENDENCIES
+
+[dev-dependencies]
+nextssl-core = { workspace = true, features = ["testing"] }
+serde_json.workspace = true
+
+[lints]
+workspace = true
