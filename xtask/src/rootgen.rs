@@ -372,7 +372,13 @@ fn ops(kind: Kind) -> Vec<Op> {
             ),
         ],
         Kind::Zk => vec![
-            op("setup", "setup_params: &[u8]", VEC, "zk_setup", "setup_params"),
+            op(
+                "setup",
+                "setup_params: &[u8]",
+                VEC,
+                "zk_setup",
+                "setup_params",
+            ),
             op(
                 "prove",
                 "setup: &[u8], statement: &[u8], witness: &[u8]",

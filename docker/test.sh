@@ -4,11 +4,12 @@
 # Always runs the base suite (gen --check, fmt, clippy, test) unless NEXTSSL_SKIP_BASE=1.
 # Slow layers are opt-in through env flags:
 #   NEXTSSL_SYMBOLS=1     cargo xtask check-symbols (nm over the ffi staticlib/cdylib + C archives)
-#   NEXTSSL_MIRI=1        cargo +nightly miri test (core, registry, ffi; C-backed algos skipped)
+#   NEXTSSL_MIRI=1        cargo +nightly miri test (core, registry and ffi unit tests; see scope note below)
 #   NEXTSSL_FUZZ_SECS=N   run every fuzz target for N seconds (libFuzzer, ASan)
 #   NEXTSSL_FUZZ_BUILD=1  only build the fuzz targets
 #   NEXTSSL_ASAN=1        nightly -Zsanitizer=address + C compiled with ASan/UBSan, -Zbuild-std
 #   NEXTSSL_WASM=1        wasm32-unknown-unknown build + wasm32-wasip1 tests under wasmtime
+#   NEXTSSL_FFI_SWEEP=1   one round trip per registered algorithm through the C ABI (native, about 4 minutes)
 #   NEXTSSL_ALL=1         all of the above (fuzz seconds default 60)
 set -euxo pipefail
 cd "$(dirname "$0")/.."
@@ -25,6 +26,11 @@ if [ "${NEXTSSL_SKIP_BASE:-0}" != "1" ]; then
   cargo test --workspace
 fi
 
+if [ "${NEXTSSL_FFI_SWEEP:-0}" = "1" ]; then
+  # Registry-driven: every algorithm through the generic nextssl_root_* functions (crates/nextssl-ffi/src/abi_sweep.rs).
+  NEXTSSL_FFI_SWEEP=1 cargo test -p nextssl-ffi sweep -- --nocapture
+fi
+
 if [ "${NEXTSSL_SYMBOLS:-0}" = "1" ]; then
   cargo xtask check-symbols
 fi
@@ -33,7 +39,11 @@ if [ "${NEXTSSL_MIRI:-0}" = "1" ]; then
   # KAT tests read algos/**/kat/*.json, so Miri needs host file access.
   # blake2b (C via FFI) is skipped under cfg(miri); the ffi crate is exercised with pure-Rust algos.
   MIRIFLAGS="-Zmiri-disable-isolation" CARGO_TARGET_DIR=/tmp/target-miri \
-    cargo +nightly miri test -p nextssl-core -p nextssl-registry -p nextssl-ffi
+    cargo +nightly miri test -p nextssl-core -p nextssl-registry -p nextssl-ffi --lib
+  # Scope: library unit tests only. Excluded: crates/nextssl-registry/tests/kat.rs, which runs every
+  # algorithm of the catalog (388) and the published KATs; under the Miri interpreter that does not
+  # finish in CI time (SLH-DSA, ML-DSA, scrypt, ...). The same file runs natively, under ASan/UBSan
+  # and in wasmtime. Individual pure-Rust algorithm crates are not run under Miri.
 fi
 
 if [ "${NEXTSSL_ASAN:-0}" = "1" ]; then
@@ -67,17 +77,23 @@ if [ -n "${NEXTSSL_FUZZ_SECS:-}" ]; then
 fi
 
 if [ "${NEXTSSL_WASM:-0}" = "1" ]; then
-  # The blake2b C core is compiled with clang for wasm. Only libc *headers* are needed
-  # (Debian wasi-libc); memcpy/memset resolve at link time (compiler_builtins / Rust's wasi-libc).
+  # The C upstreams are compiled with clang for wasm, against the Debian wasi-libc headers.
   # The wasi headers refuse the bare unknown-unknown target, so the C objects are compiled with
-  # --target=wasm32-wasip1; they call no WASI functions, so the module has no WASI imports.
+  # --target=wasm32-wasip1.
   export CC_wasm32_unknown_unknown=clang AR_wasm32_unknown_unknown=llvm-ar
   export CFLAGS_wasm32_unknown_unknown="--target=wasm32-wasip1 -isystem /usr/include/wasm32-wasi"
   export CC_wasm32_wasip1=clang AR_wasm32_wasip1=llvm-ar
   export CFLAGS_wasm32_wasip1="-isystem /usr/include/wasm32-wasi"
-  cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release
+  # Many C upstreams call malloc/calloc/free/assert/errno, and wasm32-unknown-unknown has no libc, so the
+  # Debian wasi-libc archive is linked in. The module then carries WASI imports: this step is a link
+  # check of the whole catalog, not a ready-to-ship browser module. getrandom 0.4 needs its wasm_js
+  # backend cfg (see crates/nextssl-wasm/Cargo.toml); this env var replaces .cargo/config.toml rustflags.
+  CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_RUSTFLAGS='--cfg getrandom_backend="wasm_js" -C link-arg=-L/usr/lib/wasm32-wasi -C link-arg=-lc' \
+    cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release
   ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm"
   # KAT + unit tests inside wasmtime (/src preopened so the KAT json files are readable).
+  # The default 1 MiB wasm stack overflows in the larger code-based schemes (CROSS, McEliece).
+  CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864" \
   CARGO_TARGET_WASM32_WASIP1_RUNNER="wasmtime run --dir=/src" \
     cargo test --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm
 fi

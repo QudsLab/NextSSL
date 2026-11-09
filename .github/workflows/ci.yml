@@ -17,7 +17,12 @@ jobs:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
       - run: cargo xtask gen --check
+      # Formatting does not depend on the OS. On Windows `cargo fmt --all` passes every crate's
+      # source paths to one rustfmt process and, with the whole catalog, overflows the 32 KiB
+      # CreateProcess command line ("filename or extension is too long"), so the check runs on
+      # Linux and macOS only. Excluded: Windows formatting check.
       - run: cargo fmt --all --check
+        if: runner.os != 'Windows'
       - run: cargo clippy --workspace --all-targets -- -D warnings
       - run: cargo test --workspace
 

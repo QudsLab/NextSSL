@@ -189,7 +189,12 @@ pub fn bad_staticlib(
         let member = s.member.as_deref().unwrap_or("");
         let krate = crate_of(member);
         let ours = krate == "nextssl" || krate.starts_with("nextssl_");
-        let ok = if c_members.contains(member) {
+        // `anon.<hash>.<n>.llvm.<id>` are rustc/LLVM-generated anonymous constants (string and
+        // table data). They carry no API and are not callable by name; rustc cannot rename them.
+        let rust_anon = is_rust_member(member) && n.starts_with("anon.");
+        let ok = if rust_anon {
+            true
+        } else if c_members.contains(member) {
             c_prefixes.iter().any(|p| n.starts_with(p.as_str()))
         } else if is_rust_member(member) && ours {
             n.starts_with("nextssl_") || is_toolchain_symbol(n)
@@ -513,6 +518,18 @@ mod tests {
             s(None, "blake2b_final"),
         ];
         assert_eq!(bad_c_symbols(&syms, &p), vec!["blake2b_final".to_string()]);
+    }
+
+    #[test]
+    fn rustc_anonymous_constants_are_not_symbols() {
+        let p = vec!["nextssl__blake2b_512__".to_string()];
+        let cm: BTreeSet<String> = ["0abc-blake2b-ref.o".to_string()].into();
+        let rust = "k256-1.k256.2-cgu.0.rcgu.o";
+        let ok = [s(Some(rust), "anon.fc19426b.4.llvm.6621301557543301098")];
+        assert!(bad_staticlib(&ok, &p, &cm).is_empty());
+        // The exemption is for Rust objects only; a C object may not export `anon.*`.
+        let c = [s(Some("0abc-blake2b-ref.o"), "anon.x.1")];
+        assert_eq!(bad_staticlib(&c, &p, &cm).len(), 1);
     }
 
     #[test]

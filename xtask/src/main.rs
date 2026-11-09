@@ -295,16 +295,24 @@ fn validate(a: &Algo, dir: &Path) -> Res<()> {
         )));
     }
     if let Some(f) = &a.feature {
-        if !is_ident(f) || matches!(f.as_str(), "copyleft" | "default" | "compose-all" | "testing" | "all-heavy")
+        if !is_ident(f)
+            || matches!(
+                f.as_str(),
+                "copyleft" | "default" | "compose-all" | "testing" | "all-heavy"
+            )
         {
-            return Err(ctx("feature must be a lowercase cargo feature name, not a reserved one"));
+            return Err(ctx(
+                "feature must be a lowercase cargo feature name, not a reserved one",
+            ));
         }
     }
     match (a.smoke.as_deref(), a.smoke_reason.as_deref()) {
         (None, None) => {}
         (Some("skip"), Some(r)) if !r.trim().is_empty() => {
             if !matches!(kind, Kind::Zk | Kind::He | Kind::Threshold) {
-                return Err(ctx("smoke = \"skip\" is allowed only for zk, he and threshold"));
+                return Err(ctx(
+                    "smoke = \"skip\" is allowed only for zk, he and threshold",
+                ));
             }
         }
         _ => {
@@ -371,9 +379,8 @@ fn validate(a: &Algo, dir: &Path) -> Res<()> {
             let dep = deps
                 .and_then(|d| {
                     d.get(c.as_str()).or_else(|| {
-                        d.values().find(|v| {
-                            v.get("package").and_then(|p| p.as_str()) == Some(c.as_str())
-                        })
+                        d.values()
+                            .find(|v| v.get("package").and_then(|p| p.as_str()) == Some(c.as_str()))
                     })
                 })
                 .ok_or_else(|| ctx(&format!("Cargo.toml does not depend on {c}")))?;
@@ -740,7 +747,17 @@ fn root_feature_block(algos: &[Algo]) -> String {
 }
 
 fn gen_root_cargo(algos: &[Algo]) -> Res<String> {
-    let path = root().join("crates/nextssl-root/Cargo.toml");
+    gen_feature_cargo("crates/nextssl-root/Cargo.toml", algos)
+}
+
+/// Same generated feature block for `nextssl-ffi`, so the C ABI can be built with every heavy
+/// algorithm without hand-listing the features.
+fn gen_ffi_cargo(algos: &[Algo]) -> Res<String> {
+    gen_feature_cargo("crates/nextssl-ffi/Cargo.toml", algos)
+}
+
+fn gen_feature_cargo(rel: &str, algos: &[Algo]) -> Res<String> {
+    let path = root().join(rel);
     let cur = std::fs::read_to_string(&path)
         .map_err(|e| e.to_string())?
         .replace("\r\n", "\n");
@@ -748,10 +765,10 @@ fn gen_root_cargo(algos: &[Algo]) -> Res<String> {
     let end = "# END GENERATED FEATURES";
     let b = cur
         .find(begin)
-        .ok_or("root Cargo.toml: BEGIN FEATURES marker missing")?;
+        .ok_or_else(|| format!("{rel}: BEGIN FEATURES marker missing"))?;
     let e = cur
         .find(end)
-        .ok_or("root Cargo.toml: END FEATURES marker missing")?;
+        .ok_or_else(|| format!("{rel}: END FEATURES marker missing"))?;
     Ok(format!(
         "{}{}{}",
         &cur[..b + begin.len()],
@@ -863,6 +880,10 @@ fn run_gen(check: bool) -> Res<()> {
         (
             r.join("crates/nextssl-root/Cargo.toml"),
             gen_root_cargo(&algos)?,
+        ),
+        (
+            r.join("crates/nextssl-ffi/Cargo.toml"),
+            gen_ffi_cargo(&algos)?,
         ),
         (
             r.join("crates/nextssl-root/src/generated.rs"),
