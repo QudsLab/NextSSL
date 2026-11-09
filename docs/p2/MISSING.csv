@@ -1,0 +1,378 @@
+num,algorithm,category,bucket,spec_source,spec_url,owner_row_status
+51,radio-gatun,Hash / Digest / XOF,NOT_FOUND,NIST SHA-3 competition (round 2/final) / other hash competitions,https://csrc.nist.gov/projects/hash-functions/sha-3-project,REAL_SOURCED
+88,marsupilami14,Hash / Digest / XOF,NOT_FOUND,KangarooTwelve (Keccak team) / IETF CFRG draft,https://keccak.team/kangarootwelve.html,REAL_SOURCED
+104,griffin,Hash / Digest / XOF,NOT_FOUND,Griffin (ePrint 2022/403),https://eprint.iacr.org/2022/403,REAL_SOURCED
+105,reinforced-concrete,Hash / Digest / XOF,NOT_FOUND,Reinforced Concrete (ePrint 2021/1038),https://eprint.iacr.org/2021/1038,REAL_SOURCED
+123,pomelo,Password KDFs,NOT_FOUND,Password Hashing Competition / RFC 9106,https://www.rfc-editor.org/rfc/rfc9106,REAL_SOURCED
+124,makwa,Password KDFs,NOT_FOUND,Password Hashing Competition / RFC 9106,https://www.rfc-editor.org/rfc/rfc9106,REAL_SOURCED
+145,present,Symmetric Block Ciphers,NOT_FOUND,PRESENT (CHES 2007) / ISO/IEC 29192-2,https://en.wikipedia.org/wiki/Block_cipher,REAL_SOURCED
+146,led,Symmetric Block Ciphers,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+147,piccolo,Symmetric Block Ciphers,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+148,clefia,Symmetric Block Ciphers,NOT_FOUND,Sony CLEFIA / ISO/IEC 29192-2,https://www.sony.net/Products/cryptography/clefia/,REAL_SOURCED
+164,misty1,Symmetric Block Ciphers,NOT_FOUND,NESSIE project portfolio/candidates,https://www.cosic.esat.kuleuven.be/nessie/,REAL_SOURCED
+178,shacal,Symmetric Block Ciphers,NOT_FOUND,NESSIE project portfolio/candidates,https://www.cosic.esat.kuleuven.be/nessie/,REAL_SOURCED
+180,feal,Symmetric Block Ciphers,NOT_FOUND,"Original designs; RFC 2144 (CAST5), 2268 (RC2), 2040 (RC5/RC6), 3713 (Camellia)",https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+182,prince,Symmetric Block Ciphers,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+183,pride,Symmetric Block Ciphers,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+184,twine,Symmetric Block Ciphers,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+185,katan,Symmetric Block Ciphers,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+186,ktantan,Symmetric Block Ciphers,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+189,lblock,Symmetric Block Ciphers,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+190,rectangle,Symmetric Block Ciphers,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+191,mmb,Symmetric Block Ciphers,NOT_FOUND,"Original designs; RFC 2144 (CAST5), 2268 (RC2), 2040 (RC5/RC6), 3713 (Camellia)",https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+208,mickeyv2,Stream Ciphers,NOT_FOUND,eSTREAM project (portfolio / phase 3),https://www.ecrypt.eu.org/stream/,REAL_SOURCED
+211,isaac+,Stream Ciphers,NOT_FOUND,"Original design papers / telecom standards (3GPP, Bluetooth, GSM)",https://en.wikipedia.org/wiki/Stream_cipher,REAL_WEAK_SOURCE
+213,wake,Stream Ciphers,NOT_FOUND,"Original design papers / telecom standards (3GPP, Bluetooth, GSM)",https://en.wikipedia.org/wiki/Stream_cipher,REAL_WEAK_SOURCE
+217,e0,Stream Ciphers,NOT_FOUND,"Original design papers / telecom standards (3GPP, Bluetooth, GSM)",https://en.wikipedia.org/wiki/Stream_cipher,REAL_WEAK_SOURCE
+224,edon80,Stream Ciphers,NOT_FOUND,eSTREAM project (portfolio / phase 3),https://www.ecrypt.eu.org/stream/,REAL_SOURCED
+225,f-fcsr,Stream Ciphers,NOT_FOUND,eSTREAM project (portfolio / phase 3),https://www.ecrypt.eu.org/stream/,REAL_SOURCED
+226,hermes8,Stream Ciphers,NOT_FOUND,eSTREAM project (portfolio / phase 3),https://www.ecrypt.eu.org/stream/,REAL_SOURCED
+229,pomaranch,Stream Ciphers,NOT_FOUND,eSTREAM project (portfolio / phase 3),https://www.ecrypt.eu.org/stream/,REAL_SOURCED
+251,aes-xpn,AEAD Algorithms,NOT_FOUND,IEEE 802.1AEbw (GCM-AES-XPN),https://standards.ieee.org/ieee/802.1AEbw/5260/,REAL_SOURCED
+266,marble,AEAD Algorithms,NOT_FOUND,CAESAR competition submissions / portfolio,https://competitions.cr.yp.to/caesar-submissions.html,REAL_SOURCED
+281,otr-aead,AEAD Algorithms,NOT_FOUND,CAESAR competition submissions / portfolio,https://competitions.cr.yp.to/caesar-submissions.html,REAL_SOURCED
+290,rocca,AEAD Algorithms,NOT_FOUND,CAESAR competition submissions / portfolio,https://competitions.cr.yp.to/caesar-submissions.html,REAL_SOURCED
+291,rocca-s,AEAD Algorithms,NOT_FOUND,CAESAR competition submissions / portfolio,https://competitions.cr.yp.to/caesar-submissions.html,REAL_SOURCED
+305,orbita,AEAD Algorithms,NOT_FOUND,NIST Lightweight Crypto: round 2 / CAESAR candidates,https://csrc.nist.gov/projects/lightweight-cryptography,REAL_SOURCED
+306,saeb,AEAD Algorithms,NOT_FOUND,NIST Lightweight Crypto: round 2 / CAESAR candidates,https://csrc.nist.gov/projects/lightweight-cryptography,REAL_SOURCED
+344,lightmac,MAC Algorithms,NOT_FOUND,Original papers (Luykx et al.; Mouha et al.; Petrank-Rackoff; Iwata-Kurosawa),,REAL_SOURCED
+346,emac,MAC Algorithms,NOT_FOUND,Original papers (Luykx et al.; Mouha et al.; Petrank-Rackoff; Iwata-Kurosawa),,REAL_SOURCED
+347,tmac,MAC Algorithms,NOT_FOUND,Original papers (Luykx et al.; Mouha et al.; Petrank-Rackoff; Iwata-Kurosawa),,REAL_SOURCED
+356,kdf-ikev1,Key Derivation Functions,NOT_FOUND,RFC 2409,https://www.rfc-editor.org/rfc/rfc2409,REAL_SOURCED
+379,x3dh,Key Agreement / KEM,NOT_FOUND,Signal specifications,https://signal.org/docs/,REAL_SOURCED
+445,kcdsa,Digital Signatures,NOT_FOUND,KS X 1212 / TTAK.KO-12.0001,,REAL_WEAK_SOURCE
+452,bls-blind-sig,Digital Signatures,NOT_FOUND,Boldyreva 2003,,REAL_WEAK_SOURCE
+456,group-sig,Digital Signatures,NOT_FOUND,Generic constructions (Chaum-van Heyst 1991; Rivest-Shamir-Tauman 2001),,REAL_WEAK_SOURCE
+495,hors,PQ Digital Signatures,NOT_FOUND,Hash-based signature building blocks (papers; SPHINCS+/XMSS specs),https://csrc.nist.gov/pubs/sp/800/208/final,REAL_WEAK_SOURCE
+500,gmss,Stateful Hash Signatures,NOT_FOUND,Hash-based signature building blocks (papers; SPHINCS+/XMSS specs),https://csrc.nist.gov/pubs/sp/800/208/final,REAL_WEAK_SOURCE
+502,bpqs,Stateful Hash Signatures,NOT_FOUND,Hash-based signature building blocks (papers; SPHINCS+/XMSS specs),https://csrc.nist.gov/pubs/sp/800/208/final,REAL_WEAK_SOURCE
+505,tbls,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+506,gargos,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+507,tecla,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+508,the-clash,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+509,classic-schnorr-t,Threshold / MPC,NOT_FOUND,"NIST MPTC console (""Classic Schnorr"", Fireblocks-3MI)",https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+510,bam,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+511,ccgmp,Threshold / MPC,NOT_FOUND,"NIST MPTC console (""CGGMP"", Fireblocks-3MI)",https://csrc.nist.gov/Projects/threshold-cryptography/console,FIX_NAME
+512,haystack,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+514,quorus,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+515,redeta,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+516,splitkey,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+517,minimpc,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+518,maestro,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+519,amber,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+520,hermine,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+521,least,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+522,tanuki,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+523,vinaigrette,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+524,pantheria,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+526,zama-zhenith,Threshold / MPC,NOT_FOUND,NIST MPTC console (Zama: ZHEnith),https://csrc.nist.gov/Projects/threshold-cryptography/console,FIX_NAME
+527,piver,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+528,schmivitz,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+529,smallwood,Threshold / MPC,NOT_FOUND,NIST MPTC console of submitted previews (IR 8214C Threshold Call),https://csrc.nist.gov/Projects/threshold-cryptography/console,CONFIRMED
+534,pvss,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+536,vole,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+537,beaver,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+540,roast,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+545,lindell17,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+546,doerner-shelat,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+550,gmw,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+551,proactive-ss,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+552,async-dkg,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+553,robust-dkg,Threshold / MPC,NOT_FOUND,Original papers (CRYPTO/CCS/EUROCRYPT); ROAST ePrint 2022/550,https://eprint.iacr.org/2022/550,REAL_WEAK_SOURCE
+554,ring-sig-generic,Threshold / MPC,NOT_FOUND,Generic constructions (Chaum-van Heyst 1991; Rivest-Shamir-Tauman 2001),,REAL_WEAK_SOURCE
+555,linkable-ring-sig,Threshold / MPC,NOT_FOUND,Generic constructions (Chaum-van Heyst 1991; Rivest-Shamir-Tauman 2001),,REAL_WEAK_SOURCE
+560,hight,Lightweight Crypto,NOT_FOUND,"Korean standards (KISA / TTA KS X 1213) / RFC 5794, 4269",https://www.rfc-editor.org/rfc/rfc5794,REAL_SOURCED
+565,mibs,Lightweight Crypto,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+566,klein,Lightweight Crypto,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+567,puffin,Lightweight Crypto,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+568,spongent,Lightweight Crypto,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+569,quark,Lightweight Crypto,NOT_FOUND,Lightweight design papers (CHES/CRYPTO/ASIACRYPT); ISO/IEC 29192 where noted,https://en.wikipedia.org/wiki/Block_cipher,REAL_WEAK_SOURCE
+580,fortuna,DRBG / RNG,NOT_FOUND,"Ferguson-Schneier ""Practical Cryptography"" / Kelsey-Schneier-Ferguson 1999",,REAL_SOURCED
+584,yarrow,DRBG / RNG,NOT_FOUND,"Ferguson-Schneier ""Practical Cryptography"" / Kelsey-Schneier-Ferguson 1999",,REAL_SOURCED
+597,plonk,ZK Proofs / HE,NOT_FOUND,PLONK (ePrint 2019/953),https://eprint.iacr.org/2019/953,REAL_SOURCED
+604,sonic,ZK Proofs / HE,NOT_FOUND,Sonic (ePrint 2019/099),https://eprint.iacr.org/2019/099,REAL_SOURCED
+607,ligero,ZK Proofs / HE,NOT_FOUND,"Ames et al., CCS 2017 (ePrint 2022/1608)",https://eprint.iacr.org/2022/1608,REAL_SOURCED
+611,pinocchio,ZK Proofs / HE,NOT_FOUND,Pinocchio (ePrint 2013/279),https://eprint.iacr.org/2013/279,REAL_SOURCED
+612,supersonic,ZK Proofs / HE,NOT_FOUND,Supersonic (ePrint 2019/1229),https://eprint.iacr.org/2019/1229,REAL_SOURCED
+617,dm-cggi,ZK Proofs / HE,NOT_FOUND,"TFHE (CGGI, ASIACRYPT 2016/JoC 2020); FHEW (DM, EUROCRYPT 2015)",https://eprint.iacr.org/2018/421,REAL_SOURCED
+620,hypernova,ZK Proofs / HE,NOT_FOUND,HyperNova (ePrint 2023/573),https://eprint.iacr.org/2023/573,REAL_SOURCED
+621,protostar,ZK Proofs / HE,NOT_FOUND,ProtoStar (ePrint 2023/620),https://eprint.iacr.org/2023/620,REAL_SOURCED
+624,brakedown,ZK Proofs / HE,NOT_FOUND,Brakedown (ePrint 2021/1043),https://eprint.iacr.org/2021/1043,REAL_SOURCED
+625,orion,ZK Proofs / HE,NOT_FOUND,Orion (ePrint 2022/1010),https://eprint.iacr.org/2022/1010,REAL_SOURCED
+626,stir,ZK Proofs / HE,NOT_FOUND,STIR (ePrint 2024/390),https://eprint.iacr.org/2024/390,REAL_SOURCED
+627,whir,ZK Proofs / HE,NOT_FOUND,WHIR (ePrint 2024/1586),https://eprint.iacr.org/2024/1586,REAL_SOURCED
+629,gemini,ZK Proofs / HE,NOT_FOUND,Gemini (ePrint 2022/420),https://eprint.iacr.org/2022/420,REAL_SOURCED
+630,latticefold,ZK Proofs / HE,NOT_FOUND,LatticeFold (ePrint 2024/257),https://eprint.iacr.org/2024/257,REAL_SOURCED
+631,jolt,ZK Proofs / HE,NOT_FOUND,"Lasso/Jolt (ePrint 2023/1216, 2023/1217)",https://eprint.iacr.org/2023/1217,REAL_SOURCED
+633,lasso,ZK Proofs / HE,NOT_FOUND,"Lasso/Jolt (ePrint 2023/1216, 2023/1217)",https://eprint.iacr.org/2023/1217,REAL_SOURCED
+636,ggpr,ZK Proofs / HE,NOT_FOUND,GGPR (ePrint 2012/215),https://eprint.iacr.org/2012/215,REAL_SOURCED
+637,bctv14,ZK Proofs / HE,NOT_FOUND,BCTV14 (ePrint 2013/507),https://eprint.iacr.org/2013/507,REAL_SOURCED
+638,pghr13,ZK Proofs / HE,NOT_FOUND,Pinocchio (ePrint 2013/279),https://eprint.iacr.org/2013/279,REAL_SOURCED
+639,hyrax,ZK Proofs / HE,NOT_FOUND,Hyrax (ePrint 2017/1132),https://eprint.iacr.org/2017/1132,REAL_SOURCED
+640,libra,ZK Proofs / HE,NOT_FOUND,Libra (ePrint 2019/317),https://eprint.iacr.org/2019/317,REAL_SOURCED
+641,virgo,ZK Proofs / HE,NOT_FOUND,Virgo (IEEE S&P 2020),,REAL_SOURCED
+642,fractal,ZK Proofs / HE,NOT_FOUND,Fractal (ePrint 2019/1076),https://eprint.iacr.org/2019/1076,REAL_SOURCED
+643,aurora,ZK Proofs / HE,NOT_FOUND,Aurora (ePrint 2018/828),https://eprint.iacr.org/2018/828,REAL_SOURCED
+663,dragonfly,Protocol Primitives,NOT_FOUND,RFC 7664 / WPA3-SAE (IEEE 802.11),https://www.rfc-editor.org/rfc/rfc7664,REAL_SOURCED
+670,aucpace,Protocol Primitives,NOT_FOUND,Original protocol papers,,REAL_SOURCED
+671,kemtls,Protocol Primitives,NOT_FOUND,KEMTLS (CCS 2020) / IETF TLS hybrid drafts,https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml,REAL_SOURCED
+679,oscore,Protocol Primitives,NOT_FOUND,RFC 8613,https://www.rfc-editor.org/rfc/rfc8613,REAL_SOURCED
+681,dtls13,Protocol Primitives,NOT_FOUND,RFC 9147,https://www.rfc-editor.org/rfc/rfc9147,REAL_SOURCED
+683,disco,Protocol Primitives,NOT_FOUND,Noise Protocol Framework spec / Noise Pipes,https://noiseprotocol.org/noise.html,REAL_SOURCED
+684,noisesocket,Protocol Primitives,NOT_FOUND,Noise Protocol Framework spec / Noise Pipes,https://noiseprotocol.org/noise.html,REAL_SOURCED
+685,zrtp,Protocol Primitives,NOT_FOUND,RFC 6189,https://www.rfc-editor.org/rfc/rfc6189,REAL_SOURCED
+687,yak,Protocol Primitives,NOT_FOUND,Original protocol papers,,REAL_SOURCED
+688,sesame,Protocol Primitives,NOT_FOUND,Signal specifications,https://signal.org/docs/,REAL_SOURCED
+692,speke,Protocol Primitives,NOT_FOUND,Original protocol papers,,REAL_SOURCED
+693,curvecp,Protocol Primitives,NOT_FOUND,CurveCP (Bernstein),https://curvecp.org/,REAL_SOURCED
+694,minimalt,Protocol Primitives,NOT_FOUND,Original protocol papers,,REAL_SOURCED
+695,sts,Protocol Primitives,NOT_FOUND,Original protocol papers,,REAL_SOURCED
+760,pietrzak-vdf,Verifiable Delay Functions,NOT_FOUND,"Wesolowski (ePrint 2018/623), Pietrzak (ePrint 2018/627), Lenstra-Wesolowski 2015 (Sloth)",https://eprint.iacr.org/2018/623,REAL_SOURCED
+761,sloth-vdf,Verifiable Delay Functions,NOT_FOUND,"Wesolowski (ePrint 2018/623), Pietrzak (ePrint 2018/627), Lenstra-Wesolowski 2015 (Sloth)",https://eprint.iacr.org/2018/623,REAL_SOURCED
+765,functional-encryption,Advanced Primitives,NOT_FOUND,Original papers (IBE: Boneh-Franklin 2001; ABE: Sahai-Waters 2005; ORAM: Goldreich-Ostrovsky 1996),,REAL_SOURCED
+766,witness-encryption,Advanced Primitives,NOT_FOUND,Original papers (IBE: Boneh-Franklin 2001; ABE: Sahai-Waters 2005; ORAM: Goldreich-Ostrovsky 1996),,REAL_SOURCED
+767,chameleon-hash,Advanced Primitives,NOT_FOUND,Original papers (IBE: Boneh-Franklin 2001; ABE: Sahai-Waters 2005; ORAM: Goldreich-Ostrovsky 1996),,REAL_SOURCED
+768,rsa-accumulator,Advanced Primitives,NOT_FOUND,Original papers (IBE: Boneh-Franklin 2001; ABE: Sahai-Waters 2005; ORAM: Goldreich-Ostrovsky 1996),,REAL_SOURCED
+769,bilinear-accumulator,Advanced Primitives,NOT_FOUND,Original papers (IBE: Boneh-Franklin 2001; ABE: Sahai-Waters 2005; ORAM: Goldreich-Ostrovsky 1996),,REAL_SOURCED
+770,vector-commitment,Advanced Primitives,NOT_FOUND,Original papers (IBE: Boneh-Franklin 2001; ABE: Sahai-Waters 2005; ORAM: Goldreich-Ostrovsky 1996),,REAL_SOURCED
+771,psi,Advanced Primitives,NOT_FOUND,Original papers (IBE: Boneh-Franklin 2001; ABE: Sahai-Waters 2005; ORAM: Goldreich-Ostrovsky 1996),,REAL_SOURCED
+772,secure-aggregation,Advanced Primitives,NOT_FOUND,Original papers (IBE: Boneh-Franklin 2001; ABE: Sahai-Waters 2005; ORAM: Goldreich-Ostrovsky 1996),,REAL_SOURCED
+775,blakley-ss,Advanced Primitives,NOT_FOUND,Blakley 1979 / Brickell 1989,,REAL_SOURCED
+776,brickell-ss,Advanced Primitives,NOT_FOUND,Blakley 1979 / Brickell 1989,,REAL_SOURCED
+777,coord-mpc,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+778,fafrost,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+779,ku,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+780,lazer,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+781,lemur,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+782,lotrs,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+783,macaw,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+784,kea,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+785,kakapo,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+786,symphony,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+787,ohverture,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+788,sharp,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+789,macnifico,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+790,talus,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+791,threshcon,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+792,trout-plus-plus,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+793,twig,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+794,nexus,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+795,zhenith,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+796,split-rsa,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+797,split-ecdsa,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+798,trilithium,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+799,softspokenot,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+800,authenticated-garbling,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+801,s-mtccrl,Threshold / MPC,ADDED_NOT_SEARCHED,NIST MPTC console of submitted previews,https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+802,th-bfv,ZK Proofs / HE,ADDED_NOT_SEARCHED,NIST MPTC console (S5/S6 categories),https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+803,th-fhew,ZK Proofs / HE,ADDED_NOT_SEARCHED,NIST MPTC console (S5/S6 categories),https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+804,th-bgv,ZK Proofs / HE,ADDED_NOT_SEARCHED,NIST MPTC console (S5/S6 categories),https://csrc.nist.gov/Projects/threshold-cryptography/console,ADDED_MISSING
+820,vox,PQ Digital Signatures,ADDED_NOT_SEARCHED,"NIST onramp Round 1 slides (Moody, PKI Consortium 2023)",https://pkic.org/events/2023/pqc-conference-amsterdam-nl/pkic-pqcc_dustin-moody_nist_nist-standardization-of-additional-signature-schemes.pdf,ADDED_MISSING
+839,fn-dsa-512,PQ Digital Signatures,ADDED_NOT_SEARCHED,NIST FIPS 206 FN-DSA (draft as of mid-2026),https://csrc.nist.gov/projects/post-quantum-cryptography,ADDED_MISSING
+840,fn-dsa-1024,PQ Digital Signatures,ADDED_NOT_SEARCHED,NIST FIPS 206 FN-DSA (draft as of mid-2026),https://csrc.nist.gov/projects/post-quantum-cryptography,ADDED_MISSING
+841,x25519mlkem768,Key Agreement / KEM,ADDED_NOT_SEARCHED,IANA TLS Supported Groups registry,https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml,ADDED_MISSING
+842,secp256r1mlkem768,Key Agreement / KEM,ADDED_NOT_SEARCHED,IANA TLS Supported Groups registry,https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml,ADDED_MISSING
+843,secp384r1mlkem1024,Key Agreement / KEM,ADDED_NOT_SEARCHED,IANA TLS Supported Groups registry,https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml,ADDED_MISSING
+845,sntrup761x25519-sha512,Key Agreement / KEM,ADDED_NOT_SEARCHED,OpenSSH release notes (sntrup761x25519-sha512),https://www.openssh.com/specs.html,ADDED_MISSING
+859,trivia-ck,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+860,pi-cipher,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+862,prost,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+863,omd,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+867,avalanche,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+868,cbeam,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+870,faser,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+871,hkc,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+880,aes-cobra,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+881,aes-cpfb,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+882,aes-cmcc,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+885,++ae,AEAD Algorithms,ADDED_NOT_SEARCHED,CAESAR submissions list,https://competitions.cr.yp.to/caesar-submissions.html,ADDED_MISSING
+887,hctr2,Block Cipher Modes,ADDED_NOT_SEARCHED,Linux kernel crypto / paper (Crowley-Biggers 2018),https://eprint.iacr.org/2018/720,ADDED_MISSING
+888,adiantum,Block Cipher Modes,ADDED_NOT_SEARCHED,Linux kernel crypto / paper (Crowley-Biggers 2018),https://eprint.iacr.org/2018/720,ADDED_MISSING
+889,cmc,Block Cipher Modes,ADDED_NOT_SEARCHED,IEEE 1619.2 / original papers,https://standards.ieee.org/ieee/1619.2/,ADDED_MISSING
+890,eme2,Block Cipher Modes,ADDED_NOT_SEARCHED,IEEE 1619.2 / original papers,https://standards.ieee.org/ieee/1619.2/,ADDED_MISSING
+894,mars,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+896,deal,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+897,dfc,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+898,e2,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+899,frog,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+900,hpc,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+901,loki97,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+902,magenta,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+903,sc2000,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+904,hasty-pudding,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NIST AES development process (round 1/2 candidates),https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines/archived-crypto-projects/aes-development,ADDED_MISSING
+906,hierocrypt-3,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NESSIE project candidates,https://www.cosic.esat.kuleuven.be/nessie/,ADDED_MISSING
+907,hierocrypt-l1,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NESSIE project candidates,https://www.cosic.esat.kuleuven.be/nessie/,ADDED_MISSING
+908,nimbus,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NESSIE project candidates,https://www.cosic.esat.kuleuven.be/nessie/,ADDED_MISSING
+909,nush,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NESSIE project candidates,https://www.cosic.esat.kuleuven.be/nessie/,ADDED_MISSING
+910,q,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NESSIE project candidates,https://www.cosic.esat.kuleuven.be/nessie/,ADDED_MISSING
+912,grand-cru,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,NESSIE project candidates,https://www.cosic.esat.kuleuven.be/nessie/,ADDED_MISSING
+913,lucifer,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+914,loki89,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+915,loki91,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+916,newdes,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+917,ice,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+918,khufu,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+919,khafre,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+920,cs-cipher,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+921,cobra,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+924,mercy,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+925,cipherunicorn-a,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+926,cipherunicorn-e,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+927,cryptomeria,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+928,cmea,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Original design papers / Wikipedia block cipher index,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+929,midori,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+930,mcrypton,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+931,iceberg,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+932,hummingbird-2,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+934,craft,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+935,qarma,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+936,mantis,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+937,deoxys-bc,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+938,kiasu-bc,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+940,rasta,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+941,hera,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+942,pasta,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Lightweight / tweakable design papers,https://en.wikipedia.org/wiki/Block_cipher,ADDED_MISSING
+943,sm7,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Ukrainian DSTU 7624 / Belarus STB 34.101.31 / Chinese standards,https://eprint.iacr.org/2015/650,ADDED_MISSING
+944,sm1,Symmetric Block Ciphers,ADDED_NOT_SEARCHED,Ukrainian DSTU 7624 / Belarus STB 34.101.31 / Chinese standards,https://eprint.iacr.org/2015/650,ADDED_MISSING
+947,snefru,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Historical hash designs,https://en.wikipedia.org/wiki/List_of_hash_functions,ADDED_MISSING
+948,haval,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Historical hash designs,https://en.wikipedia.org/wiki/List_of_hash_functions,ADDED_MISSING
+949,lesamnta,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Historical hash designs,https://en.wikipedia.org/wiki/List_of_hash_functions,ADDED_MISSING
+952,sha-1dc,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Historical hash designs,https://en.wikipedia.org/wiki/List_of_hash_functions,ADDED_MISSING
+956,blake2xb,Hash / Digest / XOF,ADDED_NOT_SEARCHED,BLAKE2 spec,https://www.blake2.net/,ADDED_MISSING
+957,blake2xs,Hash / Digest / XOF,ADDED_NOT_SEARCHED,BLAKE2 spec,https://www.blake2.net/,ADDED_MISSING
+958,turboshake128,Hash / Digest / XOF,ADDED_NOT_SEARCHED,IETF CFRG KangarooTwelve draft (TurboSHAKE),https://datatracker.ietf.org/doc/draft-irtf-cfrg-kangarootwelve/,ADDED_MISSING
+959,turboshake256,Hash / Digest / XOF,ADDED_NOT_SEARCHED,IETF CFRG KangarooTwelve draft (TurboSHAKE),https://datatracker.ietf.org/doc/draft-irtf-cfrg-kangarootwelve/,ADDED_MISSING
+961,anemoi,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+962,tip5,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+963,monolith,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+964,rescue-prime,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+965,vision,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+967,hades,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+968,gmimc,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+969,ciminion,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+970,arion,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+972,friday,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+973,chaghri,Hash / Digest / XOF,ADDED_NOT_SEARCHED,ePrint (Anemoi 2022/840; Poseidon2 2023/323; Tip5 2023/107; Monolith 2023/1025),https://eprint.iacr.org/,ADDED_MISSING
+974,sha256d,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Blockchain protocol specs,https://zips.z.cash/protocol/protocol.pdf,ADDED_MISSING
+975,hash160,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Blockchain protocol specs,https://zips.z.cash/protocol/protocol.pdf,ADDED_MISSING
+976,equihash,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Blockchain protocol specs,https://zips.z.cash/protocol/protocol.pdf,ADDED_MISSING
+979,ethash,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Blockchain protocol specs,https://zips.z.cash/protocol/protocol.pdf,ADDED_MISSING
+981,kawpow,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Blockchain protocol specs,https://zips.z.cash/protocol/protocol.pdf,ADDED_MISSING
+982,autolykos2,Hash / Digest / XOF,ADDED_NOT_SEARCHED,Blockchain protocol specs,https://zips.z.cash/protocol/protocol.pdf,ADDED_MISSING
+983,murmurhash2,Encoding & Checksum,ADDED_NOT_SEARCHED,Non-cryptographic hash functions (project repos),https://github.com/rurban/smhasher,ADDED_MISSING
+986,farmhash,Encoding & Checksum,ADDED_NOT_SEARCHED,Non-cryptographic hash functions (project repos),https://github.com/rurban/smhasher,ADDED_MISSING
+989,spookyhash,Encoding & Checksum,ADDED_NOT_SEARCHED,Non-cryptographic hash functions (project repos),https://github.com/rurban/smhasher,ADDED_MISSING
+993,xxh128,Encoding & Checksum,ADDED_NOT_SEARCHED,Non-cryptographic hash functions (project repos),https://github.com/rurban/smhasher,ADDED_MISSING
+996,jenkins-lookup3,Encoding & Checksum,ADDED_NOT_SEARCHED,Non-cryptographic hash functions (project repos),https://github.com/rurban/smhasher,ADDED_MISSING
+997,pearson,Encoding & Checksum,ADDED_NOT_SEARCHED,Non-cryptographic hash functions (project repos),https://github.com/rurban/smhasher,ADDED_MISSING
+998,djb2,Encoding & Checksum,ADDED_NOT_SEARCHED,Non-cryptographic hash functions (project repos),https://github.com/rurban/smhasher,ADDED_MISSING
+999,luhn,Encoding & Checksum,ADDED_NOT_SEARCHED,Check-digit algorithms (ISO 7064 / Luhn US 2950048),https://www.iso.org/standard/31531.html,ADDED_MISSING
+1000,verhoeff,Encoding & Checksum,ADDED_NOT_SEARCHED,Check-digit algorithms (ISO 7064 / Luhn US 2950048),https://www.iso.org/standard/31531.html,ADDED_MISSING
+1001,damm,Encoding & Checksum,ADDED_NOT_SEARCHED,Check-digit algorithms (ISO 7064 / Luhn US 2950048),https://www.iso.org/standard/31531.html,ADDED_MISSING
+1002,iso7064-mod97-10,Encoding & Checksum,ADDED_NOT_SEARCHED,Check-digit algorithms (ISO 7064 / Luhn US 2950048),https://www.iso.org/standard/31531.html,ADDED_MISSING
+1003,isbn-check,Encoding & Checksum,ADDED_NOT_SEARCHED,Check-digit algorithms (ISO 7064 / Luhn US 2950048),https://www.iso.org/standard/31531.html,ADDED_MISSING
+1005,crc24-openpgp,Encoding & Checksum,ADDED_NOT_SEARCHED,RFC 1071 / RFC 4880 / POSIX,https://www.rfc-editor.org/rfc/rfc1071,ADDED_MISSING
+1006,cksum-posix,Encoding & Checksum,ADDED_NOT_SEARCHED,RFC 1071 / RFC 4880 / POSIX,https://www.rfc-editor.org/rfc/rfc1071,ADDED_MISSING
+1007,bip39,Encoding & Checksum,ADDED_NOT_SEARCHED,Various RFCs / BIPs,https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki,ADDED_MISSING
+1008,slip39,Encoding & Checksum,ADDED_NOT_SEARCHED,Various RFCs / BIPs,https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki,ADDED_MISSING
+1010,crockford-base32,Encoding & Checksum,ADDED_NOT_SEARCHED,Various RFCs / BIPs,https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki,ADDED_MISSING
+1014,uuencode,Encoding & Checksum,ADDED_NOT_SEARCHED,Various RFCs / BIPs,https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki,ADDED_MISSING
+1017,base36,Encoding & Checksum,ADDED_NOT_SEARCHED,Various RFCs / BIPs,https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki,ADDED_MISSING
+1019,sober-t16,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1020,sober-t32,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1021,lili-128,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1022,phelix,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1023,py,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1024,pypy,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1025,helix,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1026,turing,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1027,mugi,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1028,multi-s01,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1029,vest,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1030,achterbahn,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1032,frogbit,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1033,mir-1,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1034,polar-bear,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1035,tsc-4,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1036,moustique,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1037,yamb,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1038,dicing,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1039,abc,Stream Ciphers,ADDED_NOT_SEARCHED,eSTREAM / NESSIE / SASC candidates,https://www.ecrypt.eu.org/stream/,ADDED_MISSING
+1041,eea1,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1042,eea2,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1043,eea3,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1044,eia1,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1045,eia2,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1046,eia3,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1047,uea1,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1048,uea2,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1049,uia1,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1050,uia2,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1051,gea1,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1052,gea2,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1053,gea3,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1054,gea4,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1055,gea5,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1056,snow-v,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1057,zuc-256,Stream Ciphers,ADDED_NOT_SEARCHED,3GPP / ETSI SAGE specs,https://www.3gpp.org/specifications-technologies/specifications-by-series,ADDED_MISSING
+1058,crypto1,Stream Ciphers,ADDED_NOT_SEARCHED,Design papers / reverse-engineering literature,https://en.wikipedia.org/wiki/Crypto-1,ADDED_MISSING
+1059,hitag2,Stream Ciphers,ADDED_NOT_SEARCHED,Design papers / reverse-engineering literature,https://en.wikipedia.org/wiki/Crypto-1,ADDED_MISSING
+1060,keeloq,Stream Ciphers,ADDED_NOT_SEARCHED,Design papers / reverse-engineering literature,https://en.wikipedia.org/wiki/Crypto-1,ADDED_MISSING
+1061,oryx,Stream Ciphers,ADDED_NOT_SEARCHED,Design papers / reverse-engineering literature,https://en.wikipedia.org/wiki/Crypto-1,ADDED_MISSING
+1062,a5-gmr-1,Stream Ciphers,ADDED_NOT_SEARCHED,Design papers / reverse-engineering literature,https://en.wikipedia.org/wiki/Crypto-1,ADDED_MISSING
+1063,a5-gmr-2,Stream Ciphers,ADDED_NOT_SEARCHED,Design papers / reverse-engineering literature,https://en.wikipedia.org/wiki/Crypto-1,ADDED_MISSING
+1064,plantlet,Stream Ciphers,ADDED_NOT_SEARCHED,"Lightweight stream cipher papers (Plantlet, Fruit, Sprout, Lizard)",,ADDED_MISSING
+1065,fruit,Stream Ciphers,ADDED_NOT_SEARCHED,"Lightweight stream cipher papers (Plantlet, Fruit, Sprout, Lizard)",,ADDED_MISSING
+1066,sprout,Stream Ciphers,ADDED_NOT_SEARCHED,"Lightweight stream cipher papers (Plantlet, Fruit, Sprout, Lizard)",,ADDED_MISSING
+1067,lizard,Stream Ciphers,ADDED_NOT_SEARCHED,"Lightweight stream cipher papers (Plantlet, Fruit, Sprout, Lizard)",,ADDED_MISSING
+1068,kreyvium,Stream Ciphers,ADDED_NOT_SEARCHED,"Lightweight stream cipher papers (Plantlet, Fruit, Sprout, Lizard)",,ADDED_MISSING
+1070,ed25519ph,Digital Signatures,ADDED_NOT_SEARCHED,RFC 8032,https://www.rfc-editor.org/rfc/rfc8032,ADDED_MISSING
+1071,ed25519ctx,Digital Signatures,ADDED_NOT_SEARCHED,RFC 8032,https://www.rfc-editor.org/rfc/rfc8032,ADDED_MISSING
+1072,ed448ph,Digital Signatures,ADDED_NOT_SEARCHED,RFC 8032,https://www.rfc-editor.org/rfc/rfc8032,ADDED_MISSING
+1074,vxeddsa,Digital Signatures,ADDED_NOT_SEARCHED,Signal XEdDSA/VXEdDSA spec,https://signal.org/docs/specifications/xeddsa/,ADDED_MISSING
+1076,bip340-schnorr,Digital Signatures,ADDED_NOT_SEARCHED,BIP-340,https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki,ADDED_MISSING
+1077,frost-rfc9591,Digital Signatures,ADDED_NOT_SEARCHED,RFC 9591 (FROST),https://www.rfc-editor.org/rfc/rfc9591,ADDED_MISSING
+1080,elgamal-signature,Digital Signatures,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1081,nyberg-rueppel,Digital Signatures,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1082,ps-signature,Digital Signatures,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1083,cl-signature,Digital Signatures,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1085,merkle-signature-scheme,Digital Signatures,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1088,sm9-sign,Digital Signatures,ADDED_NOT_SEARCHED,"National standards (DSTU 4145, GOST R 34.10-94, SM9)",https://www.rfc-editor.org/rfc/rfc8998,ADDED_MISSING
+1091,sm2-kex,Key Agreement / KEM,ADDED_NOT_SEARCHED,National standards / original papers,https://www.rfc-editor.org/rfc/rfc8998,ADDED_MISSING
+1092,sm9-enc,Key Agreement / KEM,ADDED_NOT_SEARCHED,National standards / original papers,https://www.rfc-editor.org/rfc/rfc8998,ADDED_MISSING
+1094,goldwasser-micali,Key Agreement / KEM,ADDED_NOT_SEARCHED,National standards / original papers,https://www.rfc-editor.org/rfc/rfc8998,ADDED_MISSING
+1095,okamoto-uchiyama,Key Agreement / KEM,ADDED_NOT_SEARCHED,National standards / original papers,https://www.rfc-editor.org/rfc/rfc8998,ADDED_MISSING
+1096,damgard-jurik,Key Agreement / KEM,ADDED_NOT_SEARCHED,National standards / original papers,https://www.rfc-editor.org/rfc/rfc8998,ADDED_MISSING
+1097,bgn,Key Agreement / KEM,ADDED_NOT_SEARCHED,National standards / original papers,https://www.rfc-editor.org/rfc/rfc8998,ADDED_MISSING
+1098,oprf,Key Agreement / KEM,ADDED_NOT_SEARCHED,RFC 9497 / RFC 9474 / RFC 9380 / RFC 9496,https://www.rfc-editor.org/rfc/rfc9497,ADDED_MISSING
+1099,voprf,Key Agreement / KEM,ADDED_NOT_SEARCHED,RFC 9497 / RFC 9474 / RFC 9380 / RFC 9496,https://www.rfc-editor.org/rfc/rfc9497,ADDED_MISSING
+1100,poprf,Key Agreement / KEM,ADDED_NOT_SEARCHED,RFC 9497 / RFC 9474 / RFC 9380 / RFC 9496,https://www.rfc-editor.org/rfc/rfc9497,ADDED_MISSING
+1104,decaf448,Key Agreement / KEM,ADDED_NOT_SEARCHED,RFC 9497 / RFC 9474 / RFC 9380 / RFC 9496,https://www.rfc-editor.org/rfc/rfc9497,ADDED_MISSING
+1105,hyperplonk,ZK Proofs / HE,ADDED_NOT_SEARCHED,"ePrint papers (HyperPlonk, Binius, Circle STARK, Plookup 2020/315, cq 2022/1763, Caulk 2022/621, CycleFold 2023/1192)",https://eprint.iacr.org/,ADDED_MISSING
+1106,binius,ZK Proofs / HE,ADDED_NOT_SEARCHED,"ePrint papers (HyperPlonk, Binius, Circle STARK, Plookup 2020/315, cq 2022/1763, Caulk 2022/621, CycleFold 2023/1192)",https://eprint.iacr.org/,ADDED_MISSING
+1107,circle-stark,ZK Proofs / HE,ADDED_NOT_SEARCHED,"ePrint papers (HyperPlonk, Binius, Circle STARK, Plookup 2020/315, cq 2022/1763, Caulk 2022/621, CycleFold 2023/1192)",https://eprint.iacr.org/,ADDED_MISSING
+1108,plookup,ZK Proofs / HE,ADDED_NOT_SEARCHED,"ePrint papers (HyperPlonk, Binius, Circle STARK, Plookup 2020/315, cq 2022/1763, Caulk 2022/621, CycleFold 2023/1192)",https://eprint.iacr.org/,ADDED_MISSING
+1109,cq,ZK Proofs / HE,ADDED_NOT_SEARCHED,"ePrint papers (HyperPlonk, Binius, Circle STARK, Plookup 2020/315, cq 2022/1763, Caulk 2022/621, CycleFold 2023/1192)",https://eprint.iacr.org/,ADDED_MISSING
+1110,caulk,ZK Proofs / HE,ADDED_NOT_SEARCHED,"ePrint papers (HyperPlonk, Binius, Circle STARK, Plookup 2020/315, cq 2022/1763, Caulk 2022/621, CycleFold 2023/1192)",https://eprint.iacr.org/,ADDED_MISSING
+1111,cyclefold,ZK Proofs / HE,ADDED_NOT_SEARCHED,"ePrint papers (HyperPlonk, Binius, Circle STARK, Plookup 2020/315, cq 2022/1763, Caulk 2022/621, CycleFold 2023/1192)",https://eprint.iacr.org/,ADDED_MISSING
+1114,fhew,ZK Proofs / HE,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1115,regev-lwe-pke,ZK Proofs / HE,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1116,lpr-ring-lwe-pke,ZK Proofs / HE,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1118,sealpir,Advanced Primitives,ADDED_NOT_SEARCHED,"Original papers (SealPIR, SimplePIR/DoublePIR, Spiral)",,ADDED_MISSING
+1119,simplepir,Advanced Primitives,ADDED_NOT_SEARCHED,"Original papers (SealPIR, SimplePIR/DoublePIR, Spiral)",,ADDED_MISSING
+1120,doublepir,Advanced Primitives,ADDED_NOT_SEARCHED,"Original papers (SealPIR, SimplePIR/DoublePIR, Spiral)",,ADDED_MISSING
+1121,spiral,Advanced Primitives,ADDED_NOT_SEARCHED,"Original papers (SealPIR, SimplePIR/DoublePIR, Spiral)",,ADDED_MISSING
+1122,yao-garbled-circuits,Advanced Primitives,ADDED_NOT_SEARCHED,Original papers (Yao 1986; Free-XOR; Half-gates),,ADDED_MISSING
+1123,free-xor,Advanced Primitives,ADDED_NOT_SEARCHED,Original papers (Yao 1986; Free-XOR; Half-gates),,ADDED_MISSING
+1124,half-gates,Advanced Primitives,ADDED_NOT_SEARCHED,Original papers (Yao 1986; Free-XOR; Half-gates),,ADDED_MISSING
+1125,point-and-permute,Advanced Primitives,ADDED_NOT_SEARCHED,Original papers (Yao 1986; Free-XOR; Half-gates),,ADDED_MISSING
+1128,rsw-timelock,Verifiable Delay Functions,ADDED_NOT_SEARCHED,Rivest-Shamir-Wagner 1996 / Ethereum MinRoot,https://people.csail.mit.edu/rivest/pubs/RSW96.pdf,ADDED_MISSING
+1129,minroot-vdf,Verifiable Delay Functions,ADDED_NOT_SEARCHED,Rivest-Shamir-Wagner 1996 / Ethereum MinRoot,https://people.csail.mit.edu/rivest/pubs/RSW96.pdf,ADDED_MISSING
+1131,ansi-x9.31-prng,DRBG / RNG,ADDED_NOT_SEARCHED,ANSI X9.31 / FIPS 186-2 Appx 3,https://csrc.nist.gov/pubs/fips/186-2/final,ADDED_MISSING
+1132,fips186-2-prng,DRBG / RNG,ADDED_NOT_SEARCHED,ANSI X9.31 / FIPS 186-2 Appx 3,https://csrc.nist.gov/pubs/fips/186-2/final,ADDED_MISSING
+1133,blum-blum-shub,DRBG / RNG,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1134,blum-micali,DRBG / RNG,ADDED_NOT_SEARCHED,Original papers,,ADDED_MISSING
+1135,arc4random,DRBG / RNG,ADDED_NOT_SEARCHED,OpenBSD arc4random / libc,https://man.openbsd.org/arc4random,ADDED_MISSING
+1137,xorshift128-plus,DRBG / RNG,ADDED_NOT_SEARCHED,Non-cryptographic PRNGs (Matsumoto-Nishimura 1998; Vigna; O'Neill),https://prng.di.unimi.it/,ADDED_MISSING
+1139,pcg64,DRBG / RNG,ADDED_NOT_SEARCHED,Non-cryptographic PRNGs (Matsumoto-Nishimura 1998; Vigna; O'Neill),https://prng.di.unimi.it/,ADDED_MISSING
+1141,lcg,DRBG / RNG,ADDED_NOT_SEARCHED,Non-cryptographic PRNGs (Matsumoto-Nishimura 1998; Vigna; O'Neill),https://prng.di.unimi.it/,ADDED_MISSING

@@ -1,0 +1,224 @@
+num,algorithm,category,proposed_path,kind,upstream_type,upstream,license,evidence_url,confidence,notes
+504,frost,Threshold / MPC,mpc/frost/frost,none,crate,frost-ed25519=3.0.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/frost-ed25519,high,ZcashFoundation FROST (Ed25519 ciphersuite); 600481 downloads
+505,tbls,Threshold / MPC,mpc/tbls/tbls,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+506,gargos,Threshold / MPC,mpc/gargos/gargos,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+507,tecla,Threshold / MPC,mpc/tecla/tecla,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+508,the-clash,Threshold / MPC,mpc/the-clash/the-clash,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+509,classic-schnorr-t,Threshold / MPC,mpc/classic-schnorr-t/classic-schnorr-t,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+510,bam,Threshold / MPC,mpc/bam/bam,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+511,ccgmp,Threshold / MPC,mpc/ccgmp/ccgmp,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+512,haystack,Threshold / MPC,mpc/haystack/haystack,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+513,mithril,Threshold / MPC,mpc/mithril/mithril,none,crate,mithril-stm=0.13.0,Apache-2.0,https://crates.io/api/v1/crates/mithril-stm,high,IntersectMBO Mithril STM; 88425 downloads
+514,quorus,Threshold / MPC,mpc/quorus/quorus,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+515,redeta,Threshold / MPC,mpc/redeta/redeta,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+516,splitkey,Threshold / MPC,mpc/splitkey/splitkey,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+517,minimpc,Threshold / MPC,mpc/minimpc/minimpc,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+518,maestro,Threshold / MPC,mpc/maestro/maestro,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+519,amber,Threshold / MPC,mpc/amber/amber,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+520,hermine,Threshold / MPC,mpc/hermine/hermine,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+521,least,Threshold / MPC,mpc/least/least,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+522,tanuki,Threshold / MPC,mpc/tanuki/tanuki,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+523,vinaigrette,Threshold / MPC,mpc/vinaigrette/vinaigrette,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+524,pantheria,Threshold / MPC,mpc/pantheria/pantheria,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+525,zama-tfhe,Threshold / MPC,mpc/zama-tfhe/zama-tfhe,none,crate,tfhe=1.8.2,BSD-3-Clause-Clear,https://crates.io/api/v1/crates/tfhe,high,Zama TFHE-rs (same upstream as tfhe); 595884 downloads
+526,zama-zhenith,Threshold / MPC,mpc/zama-zhenith/zama-zhenith,none,none,,,,low,no upstream found
+527,piver,Threshold / MPC,mpc/piver/piver,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+528,schmivitz,Threshold / MPC,mpc/schmivitz/schmivitz,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+529,smallwood,Threshold / MPC,mpc/smallwood/smallwood,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+530,shamir,Threshold / MPC,mpc/shamir/shamir,none,crate,vsss-rs=6.0.1,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/vsss-rs,high,vsss-rs Shamir secret sharing; 2130752 downloads
+531,feldman-vss,Threshold / MPC,mpc/feldman-vss/feldman-vss,none,crate,vsss-rs=6.0.1,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/vsss-rs,high,vsss-rs Feldman VSS; 2130752 downloads
+532,pedersen-vss,Threshold / MPC,mpc/pedersen-vss/pedersen-vss,none,crate,vsss-rs=6.0.1,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/vsss-rs,high,vsss-rs Pedersen VSS; 2130752 downloads
+533,dkg,Threshold / MPC,mpc/dkg/dkg,none,crate,dkg=0.6.1,MIT,https://crates.io/api/v1/crates/dkg,high,serai-dex dkg crate (Pedersen DKG); 46996 downloads
+534,pvss,Threshold / MPC,mpc/pvss/pvss,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+535,ot,Threshold / MPC,mpc/ot/ot,none,crate,oblivious_transfer_protocols=0.12.0,Apache-2.0,https://crates.io/api/v1/crates/oblivious_transfer_protocols,medium,OT protocols crate; 33558 downloads
+536,vole,Threshold / MPC,mpc/vole/vole,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+537,beaver,Threshold / MPC,mpc/beaver/beaver,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+538,mpc-ecdsa,Threshold / MPC,mpc/mpc-ecdsa/mpc-ecdsa,none,crate,cggmp21=0.6.3,MIT OR Apache-2.0,https://crates.io/api/v1/crates/cggmp21,low,generic threshold ECDSA; CGGMP21 as representative; 46074 downloads
+539,mpc-schnorr,Threshold / MPC,mpc/mpc-schnorr/mpc-schnorr,none,crate,frost-core=3.0.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/frost-core,medium,threshold Schnorr via FROST core; generic MPC-Schnorr not confirmed; 1249233 downloads
+540,roast,Threshold / MPC,mpc/roast/roast,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+541,gg18,Threshold / MPC,mpc/gg18/gg18,none,crate,multi-party-ecdsa=0.8.1,GPL-3.0-or-later,https://crates.io/api/v1/crates/multi-party-ecdsa,medium,"KZen/ZenGo GG18/GG20; GPL-3.0-or-later, copyleft feature; 6631 downloads"
+542,gg20,Threshold / MPC,mpc/gg20/gg20,none,crate,multi-party-ecdsa=0.8.1,GPL-3.0-or-later,https://crates.io/api/v1/crates/multi-party-ecdsa,medium,"KZen/ZenGo GG18/GG20; GPL-3.0-or-later, copyleft feature; 6631 downloads"
+543,gg21,Threshold / MPC,mpc/gg21/gg21,none,crate,cggmp21=0.6.3,MIT OR Apache-2.0,https://crates.io/api/v1/crates/cggmp21,medium,LFDT-Lockness CGGMP21 (successor of GG20); 46074 downloads
+544,cmp,Threshold / MPC,mpc/cmp/cmp,none,port,https://github.com/fireblocks/mpc-lib@00ae08b7f1bdbb887aedece384aca2f942aae432,GPL-3.0,https://api.github.com/repos/fireblocks/mpc-lib/commits/main,low,Fireblocks mpc-lib (Go) CMP; port per owner rule
+545,lindell17,Threshold / MPC,mpc/lindell17/lindell17,none,none,,,https://github.com/coinbase/kryptology,low,no lindell path in kryptology tree; not ported
+546,doerner-shelat,Threshold / MPC,mpc/doerner-shelat/doerner-shelat,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+547,spdz,Threshold / MPC,mpc/spdz/spdz,none,cpp,https://github.com/data61/MP-SPDZ@3411e0fac5158a6ad196ad54faa5a80d658fb33c,NOASSERTION,https://api.github.com/repos/data61/MP-SPDZ/commits/master,medium,"MP-SPDZ implements SPDZ (C++ core, Python frontend); GitHub license detection NOASSERTION, verify LICENSE file"
+548,mascot,Threshold / MPC,mpc/mascot/mascot,none,cpp,https://github.com/data61/MP-SPDZ@3411e0fac5158a6ad196ad54faa5a80d658fb33c,NOASSERTION,https://api.github.com/repos/data61/MP-SPDZ/commits/master,medium,"MP-SPDZ implements MASCOT; GitHub license detection NOASSERTION, verify LICENSE file"
+549,bmr,Threshold / MPC,mpc/bmr/bmr,none,cpp,https://github.com/data61/MP-SPDZ@3411e0fac5158a6ad196ad54faa5a80d658fb33c,NOASSERTION,https://api.github.com/repos/data61/MP-SPDZ/commits/master,low,"MP-SPDZ includes a BMR protocol; module not confirmed; GitHub license detection NOASSERTION, verify LICENSE file"
+550,gmw,Threshold / MPC,mpc/gmw/gmw,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+551,proactive-ss,Threshold / MPC,mpc/proactive-ss/proactive-ss,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+552,async-dkg,Threshold / MPC,mpc/async-dkg/async-dkg,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+553,robust-dkg,Threshold / MPC,mpc/robust-dkg/robust-dkg,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+554,ring-sig-generic,Threshold / MPC,mpc/ring-sig-generic/ring-sig-generic,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+555,linkable-ring-sig,Threshold / MPC,mpc/linkable-ring-sig/linkable-ring-sig,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+573,csprng-system,DRBG / RNG,rng/csprng-system/csprng-system,EntropySource,crate,getrandom=0.4.3,MIT OR Apache-2.0,https://crates.io/api/v1/crates/getrandom,high,OS RNG via getrandom crate; 2529821051 downloads
+574,trng,DRBG / RNG,rng/trng/trng,EntropySource,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+575,entropy-pool,DRBG / RNG,rng/entropy-pool/entropy-pool,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+576,reseed-scheduler,DRBG / RNG,rng/reseed-scheduler/reseed-scheduler,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+577,rdrand,DRBG / RNG,rng/rdrand/rdrand,EntropySource,crate,rdrand=0.9.0,ISC,https://crates.io/api/v1/crates/rdrand,high,rdrand crate (RDRAND and RDSEED instructions); 45733895 downloads
+578,rdseed,DRBG / RNG,rng/rdseed/rdseed,EntropySource,crate,rdrand=0.9.0,ISC,https://crates.io/api/v1/crates/rdrand,high,rdrand crate also exposes RDSEED; 45733895 downloads
+580,fortuna,DRBG / RNG,rng/fortuna/fortuna,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+582,nist-sp800-90c,DRBG / RNG,rng/nist-sp800-90c/nist-sp800-90c,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+584,yarrow,DRBG / RNG,rng/yarrow/yarrow,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+585,cryptgenrandom,DRBG / RNG,rng/cryptgenrandom/cryptgenrandom,EntropySource,crate,windows=0.62.2,MIT OR Apache-2.0,https://crates.io/api/v1/crates/windows,medium,platform binding: windows-rs CryptGenRandom; 398350286 downloads
+586,egd,DRBG / RNG,rng/egd/egd,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+587,prngd,DRBG / RNG,rng/prngd/prngd,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+588,lavarnd,DRBG / RNG,rng/lavarnd/lavarnd,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+591,getentropy,DRBG / RNG,rng/getentropy/getentropy,EntropySource,crate,getrandom=0.4.3,MIT OR Apache-2.0,https://crates.io/api/v1/crates/getrandom,medium,getrandom uses getentropy on OpenBSD/macOS; 2529821051 downloads
+592,bcryptgenrandom,DRBG / RNG,rng/bcryptgenrandom/bcryptgenrandom,EntropySource,crate,windows=0.62.2,MIT OR Apache-2.0,https://crates.io/api/v1/crates/windows,high,platform binding: windows-rs BCryptGenRandom; 398350286 downloads
+593,nist-randomness-beacon,DRBG / RNG,rng/nist-randomness-beacon/nist-randomness-beacon,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+594,qrng,DRBG / RNG,rng/qrng/qrng,none,none,,,,low,no verifiable upstream found in crates.io or GitHub search
+596,groth16,ZK Proofs / HE,zk/groth16/groth16,none,crate,ark-groth16=0.6.0,MIT/Apache-2.0,https://crates.io/api/v1/crates/ark-groth16,high,arkworks Groth16; 7434479 downloads
+597,plonk,ZK Proofs / HE,zk/plonk/plonk,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+598,marlin,ZK Proofs / HE,zk/marlin/marlin,none,crate,ark-marlin=0.3.0,MIT/Apache-2.0,https://crates.io/api/v1/crates/ark-marlin,medium,arkworks Marlin; crate last updated 2021; 56473 downloads
+599,halo2,ZK Proofs / HE,zk/halo2/halo2,none,crate,halo2_proofs=0.4.1,MIT OR Apache-2.0,https://crates.io/api/v1/crates/halo2_proofs,high,zcash halo2 (PLONKish IOP); 3703022 downloads
+600,plonky2,ZK Proofs / HE,zk/plonky2/plonky2,none,crate,plonky2=1.1.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/plonky2,high,Polygon Zero plonky2; 143916 downloads
+601,stark,ZK Proofs / HE,zk/stark/stark,none,crate,winterfell=0.13.1,MIT,https://crates.io/api/v1/crates/winterfell,high,Winterfell STARK prover/verifier; 302145 downloads
+602,bulletproofs,ZK Proofs / HE,zk/bulletproofs/bulletproofs,none,crate,bulletproofs=5.0.0,MIT,https://crates.io/api/v1/crates/bulletproofs,high,zkcrypto bulletproofs; 3118302 downloads
+603,spartan,ZK Proofs / HE,zk/spartan/spartan,none,crate,spartan=0.9.0,non-standard,https://crates.io/api/v1/crates/spartan,high,"microsoft/Spartan; crates.io license field says non-standard, repo LICENSE is MIT; 26680 downloads"
+604,sonic,ZK Proofs / HE,zk/sonic/sonic,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+605,kzg-commitment,ZK Proofs / HE,zk/kzg-commitment/kzg-commitment,none,crate,ark-poly-commit=0.6.0,MIT/Apache-2.0,https://crates.io/api/v1/crates/ark-poly-commit,high,arkworks KZG polynomial commitment; 576084 downloads
+606,fri,ZK Proofs / HE,zk/fri/fri,none,crate,winter-fri=0.13.1,MIT,https://crates.io/api/v1/crates/winter-fri,high,Winterfell FRI; 804390 downloads
+607,ligero,ZK Proofs / HE,zk/ligero/ligero,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+608,dory,ZK Proofs / HE,zk/dory/dory,none,crate,dory-pcs=0.5.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/dory-pcs,high,a16z Dory polynomial commitment; 162524 downloads
+609,gm17,ZK Proofs / HE,zk/gm17/gm17,none,crate,ark-gm17=0.3.0,MIT/Apache-2.0,https://crates.io/api/v1/crates/ark-gm17,medium,arkworks GM17; crate last updated 2021; 62586 downloads
+610,tfhe,ZK Proofs / HE,zk/tfhe/tfhe,none,crate,tfhe=1.8.2,BSD-3-Clause-Clear,https://crates.io/api/v1/crates/tfhe,high,Zama TFHE-rs; 595884 downloads
+611,pinocchio,ZK Proofs / HE,zk/pinocchio/pinocchio,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+612,supersonic,ZK Proofs / HE,zk/supersonic/supersonic,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+613,bgv,ZK Proofs / HE,zk/bgv/bgv,none,cpp,https://github.com/openfheorg/openfhe-development@b59e1f291965f14fbee5172cd83a20f5b856204f,BSD-2-Clause,https://api.github.com/repos/openfheorg/openfhe-development/commits/main,high,OpenFHE BGV (C++)
+614,ckks,ZK Proofs / HE,zk/ckks/ckks,none,cpp,https://github.com/openfheorg/openfhe-development@b59e1f291965f14fbee5172cd83a20f5b856204f,BSD-2-Clause,https://api.github.com/repos/openfheorg/openfhe-development/commits/main,high,OpenFHE CKKS (C++); Microsoft SEAL is an alternative
+615,bfv,ZK Proofs / HE,zk/bfv/bfv,none,cpp,https://github.com/openfheorg/openfhe-development@b59e1f291965f14fbee5172cd83a20f5b856204f,BSD-2-Clause,https://api.github.com/repos/openfheorg/openfhe-development/commits/main,high,OpenFHE BFV (C++)
+616,gsw,ZK Proofs / HE,zk/gsw/gsw,none,cpp,https://github.com/openfheorg/openfhe-development@b59e1f291965f14fbee5172cd83a20f5b856204f,BSD-2-Clause,https://api.github.com/repos/openfheorg/openfhe-development/commits/main,low,OpenFHE FHEW/GSW-style bootstrapping; no standalone GSW module confirmed
+617,dm-cggi,ZK Proofs / HE,zk/dm-cggi/dm-cggi,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+618,nova,ZK Proofs / HE,zk/nova/nova,none,crate,nova-snark=0.76.0,non-standard,https://crates.io/api/v1/crates/nova-snark,high,microsoft/Nova; repo LICENSE MIT; 156151 downloads
+619,supernova,ZK Proofs / HE,zk/supernova/supernova,none,crate,nova-snark=0.76.0,non-standard,https://crates.io/api/v1/crates/nova-snark,medium,SuperNova lives in microsoft/Nova; confirm module in pinned version; 156151 downloads
+620,hypernova,ZK Proofs / HE,zk/hypernova/hypernova,none,none,,,,low,no standalone HyperNova crate found
+621,protostar,ZK Proofs / HE,zk/protostar/protostar,none,none,,,,low,no standalone ProtoStar crate found
+622,shplonk,ZK Proofs / HE,zk/shplonk/shplonk,none,crate,halo2_proofs=0.4.1,MIT OR Apache-2.0,https://crates.io/api/v1/crates/halo2_proofs,medium,SHPLONK multiopen inside halo2_proofs; 3703022 downloads
+623,ipa,ZK Proofs / HE,zk/ipa/ipa,none,crate,halo2_proofs=0.4.1,MIT OR Apache-2.0,https://crates.io/api/v1/crates/halo2_proofs,medium,IPA commitment inside halo2_proofs; 3703022 downloads
+624,brakedown,ZK Proofs / HE,zk/brakedown/brakedown,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+625,orion,ZK Proofs / HE,zk/orion/orion,none,none,,,,low,no upstream found in this research pass
+626,stir,ZK Proofs / HE,zk/stir/stir,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+627,whir,ZK Proofs / HE,zk/whir/whir,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+628,basefold,ZK Proofs / HE,zk/basefold/basefold,none,crate,slop-basefold=6.10.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/slop-basefold,medium,Succinct SLOP basefold; not a standalone BaseFold repo; 671090 downloads
+629,gemini,ZK Proofs / HE,zk/gemini/gemini,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+630,latticefold,ZK Proofs / HE,zk/latticefold/latticefold,none,none,,,,low,no crate on crates.io
+631,jolt,ZK Proofs / HE,zk/jolt/jolt,none,none,,,,low,a16z/jolt is Rust (Apache-2.0) but not on crates.io; crates jolt-core is an unrelated JS runtime. Candidate repo https://github.com/a16z/jolt
+632,sp1,ZK Proofs / HE,zk/sp1/sp1,none,crate,sp1-sdk=6.10.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/sp1-sdk,high,Succinct SP1 SDK; 1614808 downloads
+633,lasso,ZK Proofs / HE,zk/lasso/lasso,none,none,,,,low,crates.io lasso is an unrelated string interner; Lasso lookup lives only in a16z/jolt (git)
+635,risc-zero,ZK Proofs / HE,zk/risc-zero/risc-zero,none,crate,risc0-zkvm=3.0.6,Apache-2.0,https://crates.io/api/v1/crates/risc0-zkvm,high,RISC Zero zkVM; 2106262 downloads
+636,ggpr,ZK Proofs / HE,zk/ggpr/ggpr,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+637,bctv14,ZK Proofs / HE,zk/bctv14/bctv14,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+638,pghr13,ZK Proofs / HE,zk/pghr13/pghr13,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+639,hyrax,ZK Proofs / HE,zk/hyrax/hyrax,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+640,libra,ZK Proofs / HE,zk/libra/libra,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+641,virgo,ZK Proofs / HE,zk/virgo/virgo,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+642,fractal,ZK Proofs / HE,zk/fractal/fractal,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+643,aurora,ZK Proofs / HE,zk/aurora/aurora,none,none,,,,low,no crate or repo with >=10k downloads found (ark-plonk 404; lcpc-* 2.8k; hyrax 1.4k; stir/whir crate names unrelated)
+645,noise-nn,Protocol Primitives,protocol/noise/noise-nn,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+646,noise-kn,Protocol Primitives,protocol/noise/noise-kn,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+647,noise-nk,Protocol Primitives,protocol/noise/noise-nk,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+648,noise-kk,Protocol Primitives,protocol/noise/noise-kk,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+649,noise-nx,Protocol Primitives,protocol/noise/noise-nx,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+650,noise-xn,Protocol Primitives,protocol/noise/noise-xn,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+651,noise-xk,Protocol Primitives,protocol/noise/noise-xk,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+652,noise-kx,Protocol Primitives,protocol/noise/noise-kx,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+653,noise-in,Protocol Primitives,protocol/noise/noise-in,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+654,noise-ik,Protocol Primitives,protocol/noise/noise-ik,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+655,noise-ix,Protocol Primitives,protocol/noise/noise-ix,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+656,noise-xx,Protocol Primitives,protocol/noise/noise-xx,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,high,snow Noise framework (one handshake pattern); 30784866 downloads
+657,noise-ikpsk2,Protocol Primitives,protocol/noise/noise-ikpsk2,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,medium,snow with PSK modifiers; pattern support to verify; 30784866 downloads
+663,dragonfly,Protocol Primitives,protocol/dragonfly/dragonfly,none,none,,,,low,no crate >=10k downloads or repo found in keyword search
+664,otrv4,Protocol Primitives,protocol/otrv4/otrv4,none,none,,,,low,no OTRv4 crate found
+665,mtproto,Protocol Primitives,protocol/mtproto/mtproto,none,crate,grammers-crypto=0.11.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/grammers-crypto,medium,"Telegram MTProto crypto utilities (grammers, Codeberg repo); 392431 downloads"
+666,wireguard,Protocol Primitives,protocol/wireguard/wireguard,none,crate,boringtun=0.7.1,BSD-3-Clause,https://crates.io/api/v1/crates/boringtun,high,Cloudflare boringtun WireGuard; 1946556 downloads
+667,mls,Protocol Primitives,protocol/mls/mls,none,crate,openmls=0.9.2,MIT,https://crates.io/api/v1/crates/openmls,high,OpenMLS (RFC 9420); 1205802 downloads
+670,aucpace,Protocol Primitives,protocol/aucpace/aucpace,none,none,,,,low,no crate >=10k downloads or repo found in keyword search
+671,kemtls,Protocol Primitives,protocol/kemtls/kemtls,none,none,,,,low,no KEMTLS implementation crate found
+672,pq-tls-hybrid,Protocol Primitives,protocol/pq-tls-hybrid/pq-tls-hybrid,none,crate,rustls=0.23.46,Apache-2.0 OR ISC OR MIT,https://crates.io/api/v1/crates/rustls,medium,rustls hybrid key exchange; verify PQ group in pinned version; 1096258774 downloads
+673,ech,Protocol Primitives,protocol/ech/ech,none,crate,rustls=0.23.46,Apache-2.0 OR ISC OR MIT,https://crates.io/api/v1/crates/rustls,medium,rustls Encrypted Client Hello; verify feature in pinned version; 1096258774 downloads
+674,odohdtls,Protocol Primitives,protocol/odohdtls/odohdtls,none,none,,,,low,no upstream found
+675,oblivious-http,Protocol Primitives,protocol/oblivious-http/oblivious-http,none,crate,ohttp=0.8.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/ohttp,high,martinthomson ohttp (RFC 9458); 503001 downloads
+676,privacy-pass,Protocol Primitives,protocol/privacy-pass/privacy-pass,none,crate,privacypass=0.1.0,MIT,https://crates.io/api/v1/crates/privacypass,medium,raphaelrobert privacypass (RFC 9578); 28503 downloads
+678,edhoc,Protocol Primitives,protocol/edhoc/edhoc,none,crate,lakers=0.8.0,BSD-3-Clause,https://crates.io/api/v1/crates/lakers,medium,lakers EDHOC implementation (RFC 9528); 93574 downloads
+679,oscore,Protocol Primitives,protocol/oscore/oscore,none,none,,,,low,rust-oscore crate has 156 downloads; below 10k threshold
+680,dtls12,Protocol Primitives,protocol/dtls12/dtls12,none,crate,webrtc-dtls=0.12.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/webrtc-dtls,high,webrtc-rs DTLS (DTLS 1.2); 5055263 downloads
+681,dtls13,Protocol Primitives,protocol/dtls13/dtls13,none,none,,,,low,no DTLS 1.3 crate found
+682,noise-xxfallback,Protocol Primitives,protocol/noise/noise-xxfallback,none,crate,snow=0.10.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/snow,medium,XXfallback pattern; snow support to verify; 30784866 downloads
+683,disco,Protocol Primitives,protocol/disco/disco,none,none,,,,low,"disco crate has 1.9k downloads, below 10k threshold"
+684,noisesocket,Protocol Primitives,protocol/noisesocket/noisesocket,none,none,,,,low,no NoiseSocket implementation crate >=10k found
+685,zrtp,Protocol Primitives,protocol/zrtp/zrtp,none,none,,,,low,no crate >=10k downloads or repo found in keyword search
+687,yak,Protocol Primitives,protocol/yak/yak,none,none,,,,low,no crate >=10k downloads or repo found in keyword search
+688,sesame,Protocol Primitives,protocol/sesame/sesame,none,none,,,,low,no crate >=10k downloads or repo found in keyword search
+691,otr,Protocol Primitives,protocol/otr/otr,none,none,,,,low,no OTR crate found
+692,speke,Protocol Primitives,protocol/speke/speke,none,none,,,,low,no crate >=10k downloads or repo found in keyword search
+693,curvecp,Protocol Primitives,protocol/curvecp/curvecp,none,none,,,,low,no crate >=10k downloads or repo found in keyword search
+694,minimalt,Protocol Primitives,protocol/minimalt/minimalt,none,none,,,,low,no crate >=10k downloads or repo found in keyword search
+695,sts,Protocol Primitives,protocol/sts/sts,none,none,,,,low,no crate >=10k downloads or repo found in keyword search
+696,x509v3,PKI / Certificates,pki/x509v3/x509v3,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+697,crl,PKI / Certificates,pki/crl/crl,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+698,ocsp,PKI / Certificates,pki/ocsp/ocsp,none,crate,x509-ocsp=0.2.1,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-ocsp,high,RustCrypto x509-ocsp; 1191981 downloads
+699,ocsp-stapling,PKI / Certificates,pki/ocsp-stapling/ocsp-stapling,none,crate,x509-ocsp=0.2.1,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-ocsp,medium,OCSP response structures; stapling is TLS-level; 1191981 downloads
+700,csr,PKI / Certificates,pki/csr/csr,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+702,scep,PKI / Certificates,pki/scep/scep,none,none,,,,low,no crate >=10k downloads found; no trustworthy upstream located
+703,est,PKI / Certificates,pki/est/est,none,none,,,,low,no crate >=10k downloads found; no trustworthy upstream located
+704,acme,PKI / Certificates,pki/acme/acme,none,crate,instant-acme=0.8.5,Apache-2.0,https://crates.io/api/v1/crates/instant-acme,medium,instant-acme ACME client (RFC 8555); 3821144 downloads
+705,ct,PKI / Certificates,pki/ct/ct,none,none,,,,low,no crate >=10k downloads found; no trustworthy upstream located
+706,mft,PKI / Certificates,pki/mft/mft,none,crate,rpki=0.20.1,BSD-3-Clause,https://crates.io/api/v1/crates/rpki,medium,NLnet Labs rpki-rs (manifests); 237454 downloads
+707,roa,PKI / Certificates,pki/roa/roa,none,crate,rpki=0.20.1,BSD-3-Clause,https://crates.io/api/v1/crates/rpki,medium,NLnet Labs rpki-rs (ROAs); 237454 downloads
+708,tal,PKI / Certificates,pki/tal/tal,none,crate,rpki=0.20.1,BSD-3-Clause,https://crates.io/api/v1/crates/rpki,medium,NLnet Labs rpki-rs (trust anchor locators); 237454 downloads
+709,rfc822name,PKI / Certificates,pki/x509-ext/rfc822name,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+710,ipaddress,PKI / Certificates,pki/x509-ext/ipaddress,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+711,subjectaltname,PKI / Certificates,pki/x509-ext/subjectaltname,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+712,authoritykeyid,PKI / Certificates,pki/x509-ext/authoritykeyid,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+713,subjectkeyid,PKI / Certificates,pki/x509-ext/subjectkeyid,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+714,keyusage,PKI / Certificates,pki/x509-ext/keyusage,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+715,extendedkeyusage,PKI / Certificates,pki/x509-ext/extendedkeyusage,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+716,basicconstraints,PKI / Certificates,pki/x509-ext/basicconstraints,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+717,nameconstraints,PKI / Certificates,pki/x509-ext/nameconstraints,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+718,cdp,PKI / Certificates,pki/x509-ext/cdp,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+719,aia,PKI / Certificates,pki/x509-ext/aia,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+720,ocsp-nocheck,PKI / Certificates,pki/ocsp-nocheck/ocsp-nocheck,none,crate,x509-ocsp=0.2.1,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-ocsp,medium,RustCrypto x509-ocsp (nocheck extension); 1191981 downloads
+721,precert-poison,PKI / Certificates,pki/precert-poison/precert-poison,none,none,,,,low,no crate >=10k downloads found; no trustworthy upstream located
+722,sct,PKI / Certificates,pki/sct/sct,none,none,,,,low,no crate >=10k downloads found; no trustworthy upstream located
+723,tls-features,PKI / Certificates,pki/x509-ext/tls-features,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+724,signed-timestamp,PKI / Certificates,pki/signed-timestamp/signed-timestamp,none,crate,x509-tsp=0.1.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-tsp,medium,RFC 3161 timestamp token structures; 2928075 downloads
+725,tsp,PKI / Certificates,pki/tsp/tsp,none,crate,x509-tsp=0.1.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-tsp,high,RustCrypto x509-tsp (RFC 3161); 2928075 downloads
+726,cades,PKI / Certificates,pki/cades/cades,none,none,,,,low,no crate >=10k downloads found; no trustworthy upstream located
+727,pades,PKI / Certificates,pki/pades/pades,none,none,,,,low,no crate >=10k downloads found; no trustworthy upstream located
+728,xades,PKI / Certificates,pki/xades/xades,none,none,,,,low,no crate >=10k downloads found; no trustworthy upstream located
+734,x509v1,PKI / Certificates,pki/x509v1/x509v1,none,crate,x509-cert=0.3.0,Apache-2.0 OR MIT,https://crates.io/api/v1/crates/x509-cert,high,RustCrypto x509-cert (structures and extensions); 56680566 downloads
+736,pkcs11,Hardware / HSM / TEE,platform/pkcs11/pkcs11,none,crate,cryptoki=0.12.1,Apache-2.0,https://crates.io/api/v1/crates/cryptoki,high,platform binding: PKCS#11 wrapper; 3543699 downloads
+737,pkcs11-3.0,Hardware / HSM / TEE,platform/pkcs11-3-0/pkcs11-3-0,none,crate,cryptoki=0.12.1,Apache-2.0,https://crates.io/api/v1/crates/cryptoki,high,platform binding: PKCS#11 3.0 wrapper; 3543699 downloads
+738,cng,Hardware / HSM / TEE,platform/cng/cng,none,crate,windows=0.62.2,MIT OR Apache-2.0,https://crates.io/api/v1/crates/windows,high,platform binding: Microsoft windows-rs (CNG); 398350286 downloads
+739,tpm2.0,Hardware / HSM / TEE,platform/tpm2-0/tpm2-0,none,crate,tss-esapi=7.7.0,Apache-2.0,https://crates.io/api/v1/crates/tss-esapi,high,platform binding: TPM2 ESAPI; 4370229 downloads
+740,intel-sgx,Hardware / HSM / TEE,platform/intel-sgx/intel-sgx,none,crate,sgx-isa=0.6.0,MPL-2.0,https://crates.io/api/v1/crates/sgx-isa,medium,platform binding: Fortanix SGX ISA constants (MPL-2.0); 582804 downloads
+741,intel-tdx,Hardware / HSM / TEE,platform/intel-tdx/intel-tdx,none,crate,tdx-tdcall=0.2.1,BSD-2-Clause-Patent,https://crates.io/api/v1/crates/tdx-tdcall,low,platform binding candidate: TDX TDCALL wrapper; verify before use; 3996 downloads
+742,amd-sev,Hardware / HSM / TEE,platform/amd-sev/amd-sev,none,crate,sev=8.0.0,Apache-2.0,https://crates.io/api/v1/crates/sev,high,platform binding: virtee sev (AMD SEV); 2714095 downloads
+743,amd-sev-snp,Hardware / HSM / TEE,platform/amd-sev-snp/amd-sev-snp,none,crate,sev=8.0.0,Apache-2.0,https://crates.io/api/v1/crates/sev,high,platform binding: virtee sev (SEV-SNP); 2714095 downloads
+744,arm-trustzone,Hardware / HSM / TEE,platform/arm-trustzone/arm-trustzone,none,crate,optee-teec=0.10.0,Apache-2.0,https://crates.io/api/v1/crates/optee-teec,medium,platform binding: Teaclave OP-TEE TEE client API; 30641 downloads
+745,arm-cca,Hardware / HSM / TEE,platform/arm-cca/arm-cca,none,none,,,,low,no ARM CCA binding crate found
+746,apple-secure-enclave,Hardware / HSM / TEE,platform/apple-secure-enclave/apple-secure-enclave,none,crate,security-framework=3.7.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/security-framework,medium,platform binding: Apple Security.framework; 440333644 downloads
+747,nitro-enclaves,Hardware / HSM / TEE,platform/nitro-enclaves/nitro-enclaves,none,crate,aws-nitro-enclaves-nsm-api=0.5.2,Apache-2.0,https://crates.io/api/v1/crates/aws-nitro-enclaves-nsm-api,high,platform binding: AWS Nitro NSM API; 5576495 downloads
+748,nvidia-cc,Hardware / HSM / TEE,platform/nvidia-cc/nvidia-cc,none,none,,,,low,no NVIDIA confidential computing binding crate found
+754,opencryptoki,Hardware / HSM / TEE,platform/opencryptoki/opencryptoki,none,c,https://github.com/opencryptoki/opencryptoki@fd0753b8a055d60c075b2452d1ffc7c2a71b713d,NOASSERTION,https://api.github.com/repos/opencryptoki/opencryptoki/commits/master,medium,"platform binding: OpenCryptoki (C) PKCS#11; GitHub license detection NOASSERTION, verify LICENSE file"
+755,softhsm2,Hardware / HSM / TEE,platform/softhsm2/softhsm2,none,cpp,https://github.com/opendnssec/SoftHSMv2@e59a00d31ad499aa4c6187d169f5c5bac58b608d,NOASSERTION,https://api.github.com/repos/opendnssec/SoftHSMv2/commits/main,medium,"platform binding: SoftHSM v2 (C++) software HSM; GitHub license detection NOASSERTION, verify LICENSE file"
+756,capi,Hardware / HSM / TEE,platform/capi/capi,none,crate,windows=0.62.2,MIT OR Apache-2.0,https://crates.io/api/v1/crates/windows,medium,platform binding: windows-rs (Windows CryptoAPI); 398350286 downloads
+757,tpm1.2,Hardware / HSM / TEE,platform/tpm1-2/tpm1-2,none,none,,,,low,TPM 1.2 not covered by tss-esapi (TSS 2.0 only); no TPM1.2 crate found
+759,wesolowski-vdf,Verifiable Delay Functions,vdf/wesolowski-vdf/wesolowski-vdf,none,cpp,https://github.com/chia-network/chiavdf@7b11b6166b1e47bcf8b20c4f4230a35f7fb8982b,Apache-2.0,https://api.github.com/repos/chia-network/chiavdf/commits/main,medium,"Chia chiavdf (C++, Wesolowski VDF)"
+760,pietrzak-vdf,Verifiable Delay Functions,vdf/pietrzak-vdf/pietrzak-vdf,none,none,,,,low,"no Pietrzak VDF crate found (vdf-rs 334 dl; poanetwork vdf 9.7k dl, 2019)"
+761,sloth-vdf,Verifiable Delay Functions,vdf/sloth-vdf/sloth-vdf,none,none,,,,low,no sloth VDF crate found
+762,ibe,Advanced Primitives,advanced/ibe/ibe,none,crate,ibe=0.3.0,MIT,https://crates.io/api/v1/crates/ibe,medium,identity-based encryption crate; 35393 downloads
+763,abe,Advanced Primitives,advanced/abe/abe,none,crate,rabe=0.4.2,MIT,https://crates.io/api/v1/crates/rabe,medium,Fraunhofer AISEC rabe ABE schemes; 83715 downloads
+764,pre,Advanced Primitives,advanced/pre/pre,none,crate,recrypt=0.16.0,AGPL-3.0-only,https://crates.io/api/v1/crates/recrypt,low,proxy re-encryption crate; scheme variant not verified; 122901 downloads
+765,functional-encryption,Advanced Primitives,advanced/functional-encryption/functional-encryption,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+766,witness-encryption,Advanced Primitives,advanced/witness-encryption/witness-encryption,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+767,chameleon-hash,Advanced Primitives,advanced/chameleon-hash/chameleon-hash,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+768,rsa-accumulator,Advanced Primitives,advanced/rsa-accumulator/rsa-accumulator,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+769,bilinear-accumulator,Advanced Primitives,advanced/bilinear-accumulator/bilinear-accumulator,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+770,vector-commitment,Advanced Primitives,advanced/vector-commitment/vector-commitment,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+771,psi,Advanced Primitives,advanced/psi/psi,none,none,,,,low,crates.io psi is Linux pressure stall info; no PSI crate found
+772,secure-aggregation,Advanced Primitives,advanced/secure-aggregation/secure-aggregation,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+773,oram,Advanced Primitives,advanced/oram/oram,none,crate,oram=0.1.0,MIT OR Apache-2.0,https://crates.io/api/v1/crates/oram,medium,Facebook oram crate (Path ORAM); 36930 downloads
+775,blakley-ss,Advanced Primitives,advanced/blakley-ss/blakley-ss,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
+776,brickell-ss,Advanced Primitives,advanced/brickell-ss/brickell-ss,none,none,,,,low,"no crate >=10k downloads or repo found in keyword search (monero-clsag 5.9k, vole 1.6k, oblivious-transfer 1.7k)"
