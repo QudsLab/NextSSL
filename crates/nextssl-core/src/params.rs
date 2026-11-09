@@ -44,6 +44,18 @@ pub struct ParamSpec {
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Params(BTreeMap<String, Value>);
 
+/// Parameters can carry key material (`bytes` parameters such as a keyed-hash key), so every
+/// byte-string value is wiped when the set is dropped.
+impl Drop for Params {
+    fn drop(&mut self) {
+        for v in self.0.values_mut() {
+            if let Value::Bytes(b) = v {
+                zeroize::Zeroize::zeroize(b);
+            }
+        }
+    }
+}
+
 impl Params {
     pub fn new() -> Self {
         Self::default()

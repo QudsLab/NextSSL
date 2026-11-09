@@ -12,18 +12,79 @@ use core::ffi::{c_char, CStr};
 use nextssl_core::Error;
 use std::panic::{catch_unwind, AssertUnwindSafe};
 
+#[cfg(all(test, not(miri)))]
+mod abi_sweep;
+#[cfg(test)]
+mod abi_tests;
+mod boundary;
+mod exports;
+mod handles;
+mod json;
+pub mod ops;
+
+pub use boundary::{NextsslIn, NextsslOut};
+pub use exports::*;
+
+/// Version of the C ABI; bumped on any incompatible change.
+pub const NEXTSSL_ABI_VERSION: u32 = 1;
+
 pub const NEXTSSL_OK: i32 = 0;
 pub const NEXTSSL_ERR_UNKNOWN_ALGORITHM: i32 = 1;
 pub const NEXTSSL_ERR_WRONG_KIND: i32 = 2;
 pub const NEXTSSL_ERR_TIER_NOT_ALLOWED: i32 = 3;
 pub const NEXTSSL_ERR_PARAM: i32 = 4;
+pub const NEXTSSL_ERR_PARAM_UNKNOWN: i32 = 5;
+pub const NEXTSSL_ERR_PARAM_TYPE: i32 = 6;
+pub const NEXTSSL_ERR_PARAM_RANGE: i32 = 7;
 pub const NEXTSSL_ERR_INVALID_LENGTH: i32 = 8;
 pub const NEXTSSL_ERR_INVALID_INPUT: i32 = 9;
 pub const NEXTSSL_ERR_BAD_OUTPUT_LEN: i32 = 10;
 pub const NEXTSSL_ERR_BACKEND: i32 = 11;
+pub const NEXTSSL_ERR_UNSUPPORTED: i32 = 12;
+pub const NEXTSSL_ERR_UNIMPLEMENTED: i32 = 13;
 pub const NEXTSSL_ERR_AUTHENTICATION_FAILED: i32 = 14;
+pub const NEXTSSL_ERR_NOT_INSTANTIATED: i32 = 15;
+pub const NEXTSSL_ERR_RESEED_REQUIRED: i32 = 16;
+pub const NEXTSSL_ERR_ENTROPY_FAILURE: i32 = 17;
+pub const NEXTSSL_ERR_WORK_LIMIT: i32 = 18;
+pub const NEXTSSL_ERR_KEY_EXHAUSTED: i32 = 19;
+pub const NEXTSSL_ERR_PERSIST_FAILED: i32 = 20;
+pub const NEXTSSL_ERR_PROTOCOL_ABORTED: i32 = 21;
 pub const NEXTSSL_ERR_NULL_POINTER: i32 = 100;
 pub const NEXTSSL_ERR_PANIC: i32 = 101;
+pub const NEXTSSL_ERR_BAD_HANDLE: i32 = 102;
+
+/// Static message for an error code, NUL-terminated.
+pub(crate) fn error_message(code: i32) -> &'static str {
+    match code {
+        0 => "ok\0",
+        1 => "unknown algorithm\0",
+        2 => "algorithm is of a different kind\0",
+        3 => "algorithm tier is not allowed through this entry point (use nextssl_root_*)\0",
+        4 => "required parameter missing\0",
+        5 => "unknown parameter\0",
+        6 => "parameter has the wrong type\0",
+        7 => "parameter out of range\0",
+        8 => "a length is outside the permitted range\0",
+        9 => "malformed or non-canonical input\0",
+        10 => "output buffer too small; the required size is in out.len\0",
+        11 => "algorithm backend failed\0",
+        12 => "operation not supported by this algorithm\0",
+        13 => "algorithm is not implemented yet\0",
+        14 => "authentication failed (invalid tag, signature, proof or password)\0",
+        15 => "DRBG is not instantiated\0",
+        16 => "DRBG reseed required\0",
+        17 => "entropy source failure\0",
+        18 => "proof-of-work work limit reached\0",
+        19 => "stateful signature key is exhausted\0",
+        20 => "key state could not be persisted\0",
+        21 => "protocol aborted\0",
+        100 => "null pointer argument\0",
+        101 => "internal panic caught at the ABI boundary\0",
+        102 => "unknown or already released handle\0",
+        _ => "unknown error code\0",
+    }
+}
 
 type Op = fn(&str, &[u8]) -> nextssl_core::Result<Vec<u8>>;
 

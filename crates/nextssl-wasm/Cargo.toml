@@ -17,5 +17,12 @@ copyleft = ["nextssl/copyleft"]
 nextssl.workspace = true
 wasm-bindgen = "0.2"
 
+# On wasm32-unknown-unknown there is no OS entropy: crates in the registry that pull getrandom
+# (falcon-rs, crrl via rand_core, bcrypt, os-entropy) need the JS backend, selected here.
+# getrandom 0.4 also needs `--cfg getrandom_backend="wasm_js"`, set in .cargo/config.toml.
+[target.'cfg(all(target_arch = "wasm32", target_os = "unknown"))'.dependencies]
+getrandom_02 = { package = "getrandom", version = "0.2", features = ["js"] }
+getrandom_04 = { package = "getrandom", version = "0.4", features = ["wasm_js"] }
+
 [lints]
 workspace = true

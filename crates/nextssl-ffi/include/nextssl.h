@@ -6,6 +6,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+// Version of the C ABI; bumped on any incompatible change.
+#define NEXTSSL_ABI_VERSION 1
+
 #define NEXTSSL_OK 0
 
 #define NEXTSSL_ERR_UNKNOWN_ALGORITHM 1
@@ -16,6 +19,12 @@
 
 #define NEXTSSL_ERR_PARAM 4
 
+#define NEXTSSL_ERR_PARAM_UNKNOWN 5
+
+#define NEXTSSL_ERR_PARAM_TYPE 6
+
+#define NEXTSSL_ERR_PARAM_RANGE 7
+
 #define NEXTSSL_ERR_INVALID_LENGTH 8
 
 #define NEXTSSL_ERR_INVALID_INPUT 9
@@ -24,15 +33,130 @@
 
 #define NEXTSSL_ERR_BACKEND 11
 
+#define NEXTSSL_ERR_UNSUPPORTED 12
+
+#define NEXTSSL_ERR_UNIMPLEMENTED 13
+
 #define NEXTSSL_ERR_AUTHENTICATION_FAILED 14
+
+#define NEXTSSL_ERR_NOT_INSTANTIATED 15
+
+#define NEXTSSL_ERR_RESEED_REQUIRED 16
+
+#define NEXTSSL_ERR_ENTROPY_FAILURE 17
+
+#define NEXTSSL_ERR_WORK_LIMIT 18
+
+#define NEXTSSL_ERR_KEY_EXHAUSTED 19
+
+#define NEXTSSL_ERR_PERSIST_FAILED 20
+
+#define NEXTSSL_ERR_PROTOCOL_ABORTED 21
 
 #define NEXTSSL_ERR_NULL_POINTER 100
 
 #define NEXTSSL_ERR_PANIC 101
 
+#define NEXTSSL_ERR_BAD_HANDLE 102
+
+// Most live handles at once.
+#define NEXTSSL_MAX_HANDLES 4096
+
+// Upper bound for caller-chosen output lengths (XOF, KDF, RNG, DRBG): 16 MiB.
+#define NEXTSSL_MAX_OUT (1 << 24)
+
+// Read-only byte input.
+typedef struct nextssl_in {
+  const uint8_t *ptr;
+  size_t len;
+} nextssl_in;
+
+// Writable byte output with in/out length.
+typedef struct nextssl_out {
+  uint8_t *ptr;
+  size_t cap;
+  size_t len;
+} nextssl_out;
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
+// Version of this C ABI (bumped on any incompatible change).
+uint32_t nextssl_abi_version(void);
+
+// AEAD open of `ciphertext || tag` (safe/standard). A failed tag is `AUTHENTICATION_FAILED`
+// and releases no plaintext.
+int32_t nextssl_aead_open(const char *alg,
+                          const char *params,
+                          const struct nextssl_in *key,
+                          const struct nextssl_in *nonce,
+                          const struct nextssl_in *aad,
+                          const struct nextssl_in *ct,
+                          struct nextssl_out *out);
+
+// AEAD seal (safe/standard): writes `ciphertext || tag`. The caller owns nonce uniqueness.
+int32_t nextssl_aead_seal(const char *alg,
+                          const char *params,
+                          const struct nextssl_in *key,
+                          const struct nextssl_in *nonce,
+                          const struct nextssl_in *aad,
+                          const struct nextssl_in *pt,
+                          struct nextssl_out *out);
+
+// One algorithm (by id or alias) as a JSON object (same fields as `nextssl_algorithms_json`).
+int32_t nextssl_algorithm_info_json(const char *alg, struct nextssl_out *out);
+
+// All algorithms as JSON: `{"abi_version":N,"algorithms":[{...}]}`. Each entry has `id`, `kind`,
+// `category`, `family`, `aliases`, `tier`, `status`, `standards`, `license`, `copyleft`,
+// `c_backed`, `safe_api`, `root_only_kind`, `cose_alg`, `oid`, `sizes`, `params` and `ops`.
+// `kind` is null or empty for all kinds, or one kind name (`hash`, `aead`, `kem`, ...).
+int32_t nextssl_algorithms_json(const char *kind, struct nextssl_out *out);
+
+// Decrypt one block (safe/standard).
+int32_t nextssl_blockcipher_decrypt(const char *alg,
+                                    const char *params,
+                                    const struct nextssl_in *key,
+                                    const struct nextssl_in *block,
+                                    struct nextssl_out *out);
+
+// Encrypt one block (safe/standard). `block` must be exactly the cipher's block size.
+int32_t nextssl_blockcipher_encrypt(const char *alg,
+                                    const char *params,
+                                    const struct nextssl_in *key,
+                                    const struct nextssl_in *block,
+                                    struct nextssl_out *out);
+
+// Decrypt with a concrete block-cipher mode (safe/standard). Bad padding is an error; do not
+// expose that distinction on a network.
+int32_t nextssl_blockmode_decrypt(const char *alg,
+                                  const char *params,
+                                  const struct nextssl_in *key,
+                                  const struct nextssl_in *nonce,
+                                  const struct nextssl_in *data,
+                                  struct nextssl_out *out);
+
+// Encrypt with a concrete block-cipher mode such as `aes-256-cbc` (safe/standard). `nonce` is
+// the IV or tweak, empty for modes that take none.
+int32_t nextssl_blockmode_encrypt(const char *alg,
+                                  const char *params,
+                                  const struct nextssl_in *key,
+                                  const struct nextssl_in *nonce,
+                                  const struct nextssl_in *data,
+                                  struct nextssl_out *out);
+
+// Allocate `size` zeroed bytes in the library's memory (for WebAssembly hosts). Returns null
+// for 0, for more than 256 MiB, or on failure. Release with `nextssl_buf_free` and the same size.
+uint8_t *nextssl_buf_alloc(size_t size);
+
+// Wipe and release a buffer from `nextssl_buf_alloc`. `ptr` may be null.
+void nextssl_buf_free(uint8_t *ptr, size_t size);
+
+// Non-cryptographic checksum (CRC, Adler, ...), safe/standard tiers only.
+int32_t nextssl_checksum(const char *alg,
+                         const char *params,
+                         const struct nextssl_in *data,
+                         struct nextssl_out *out);
 
 // Strictly decode `data` (safe/standard tier).
 //
@@ -46,6 +170,12 @@ int32_t nextssl_decode(const char *alg,
                        uint8_t *out,
                        size_t out_cap,
                        size_t *out_len);
+
+// Strictly decode `data` (safe/standard), with parameters.
+int32_t nextssl_decode_with(const char *alg,
+                            const char *params,
+                            const struct nextssl_in *data,
+                            struct nextssl_out *out);
 
 // Decrypts a COSE_Encrypt0 envelope made by `nextssl_encrypt_with_key`. The algorithm is read
 // from the authenticated header. Failure releases no plaintext.
@@ -64,6 +194,29 @@ int32_t nextssl_decrypt(const uint8_t *key,
                         size_t out_cap,
                         size_t *out_len);
 
+// Zeroize and release a DRBG handle. A second free is `NEXTSSL_ERR_BAD_HANDLE`.
+int32_t nextssl_drbg_free(uint64_t handle);
+
+// Generate exactly `want` bytes (1..=16 MiB, and within the DRBG's per-request limit) from a DRBG handle.
+int32_t nextssl_drbg_generate(uint64_t handle,
+                              const struct nextssl_in *additional,
+                              size_t want,
+                              struct nextssl_out *out);
+
+// Instantiate a DRBG (safe/standard). Entropy and nonce are caller-supplied (take them from
+// `nextssl_rng_fill`); `*handle` receives an opaque id (0 on error). Release it with `nextssl_drbg_free`.
+int32_t nextssl_drbg_new(const char *alg,
+                         const char *params,
+                         const struct nextssl_in *entropy,
+                         const struct nextssl_in *nonce,
+                         const struct nextssl_in *personalization,
+                         uint64_t *handle);
+
+// Reseed a DRBG handle.
+int32_t nextssl_drbg_reseed(uint64_t handle,
+                            const struct nextssl_in *entropy,
+                            const struct nextssl_in *additional);
+
 // Encode `data` (safe/standard tier).
 //
 // # Safety
@@ -76,6 +229,12 @@ int32_t nextssl_encode(const char *alg,
                        uint8_t *out,
                        size_t out_cap,
                        size_t *out_len);
+
+// Encode `data` (safe/standard), with parameters (for example `hrp=bc` for bech32).
+int32_t nextssl_encode_with(const char *alg,
+                            const char *params,
+                            const struct nextssl_in *data,
+                            struct nextssl_out *out);
 
 // Encrypts `pt` into a COSE_Encrypt0 envelope (binary CBOR). `alg` is `"xchacha20-poly1305"`
 // or `"aes-256-gcm"`; `key` must be 32 bytes. `aad` is authenticated but not stored.
@@ -95,6 +254,9 @@ int32_t nextssl_encrypt_with_key(const char *alg,
                                  size_t out_cap,
                                  size_t *out_len);
 
+// Static, NUL-terminated English message for an error code (never null).
+const char *nextssl_error_message(int32_t code);
+
 // Hash `data` with a safe/standard tier algorithm.
 //
 // # Safety
@@ -107,6 +269,193 @@ int32_t nextssl_hash(const char *alg,
                      uint8_t *out,
                      size_t out_cap,
                      size_t *out_len);
+
+// Hash `data` with a safe/standard algorithm, with parameters. `out` receives the digest.
+int32_t nextssl_hash_with(const char *alg,
+                          const char *params,
+                          const struct nextssl_in *data,
+                          struct nextssl_out *out);
+
+// Key derivation (safe/standard): exactly `want` bytes (1..=16 MiB), or an error if the KDF
+// cannot produce that many.
+int32_t nextssl_kdf(const char *alg,
+                    const char *params,
+                    const struct nextssl_in *ikm,
+                    const struct nextssl_in *salt,
+                    const struct nextssl_in *info,
+                    size_t want,
+                    struct nextssl_out *out);
+
+// KEM decapsulation (safe/standard). Wrong lengths are errors; an invalid ciphertext follows
+// the scheme (ML-KEM returns a pseudorandom secret by implicit rejection).
+int32_t nextssl_kem_decaps(const char *alg,
+                           const char *params,
+                           const struct nextssl_in *sk,
+                           const struct nextssl_in *ct,
+                           struct nextssl_out *ss);
+
+// KEM encapsulation (safe/standard): `ct` goes to the peer, `ss` is the shared secret.
+int32_t nextssl_kem_encaps(const char *alg,
+                           const char *params,
+                           const struct nextssl_in *pk,
+                           struct nextssl_out *ct,
+                           struct nextssl_out *ss);
+
+// KEM key pair (safe/standard) from the OS entropy source: `pk` and `sk`.
+int32_t nextssl_kem_keygen(const char *alg,
+                           const char *params,
+                           struct nextssl_out *pk,
+                           struct nextssl_out *sk);
+
+// Shared secret from our private key and the peer's public key (safe/standard). The raw
+// secret is not hashed; feed it to a KDF.
+int32_t nextssl_kex_agree(const char *alg,
+                          const char *params,
+                          const struct nextssl_in *sk,
+                          const struct nextssl_in *peer_pk,
+                          struct nextssl_out *ss);
+
+// Key-exchange key pair (X25519, ECDH, ...), safe/standard.
+int32_t nextssl_kex_keygen(const char *alg,
+                           const char *params,
+                           struct nextssl_out *pk,
+                           struct nextssl_out *sk);
+
+// MAC tag (safe/standard). `tag_len` 0 selects the longest tag the MAC declares; any other
+// value must be a declared tag length.
+int32_t nextssl_mac(const char *alg,
+                    const char *params,
+                    const struct nextssl_in *key,
+                    const struct nextssl_in *data,
+                    size_t tag_len,
+                    struct nextssl_out *out);
+
+// Constant-time MAC check (safe/standard). `NEXTSSL_OK` = valid, `AUTHENTICATION_FAILED` = wrong tag.
+int32_t nextssl_mac_verify(const char *alg,
+                           const char *params,
+                           const struct nextssl_in *key,
+                           const struct nextssl_in *data,
+                           const struct nextssl_in *tag);
+
+// Decrypt with a generic mode over a block cipher (safe/standard).
+int32_t nextssl_mode_decrypt(const char *alg,
+                             const char *params,
+                             const char *cipher,
+                             const char *cipher_params,
+                             const struct nextssl_in *key,
+                             const struct nextssl_in *iv,
+                             const struct nextssl_in *data,
+                             struct nextssl_out *out);
+
+// Encrypt with a generic mode (`alg`) over the block cipher `cipher` (both safe/standard).
+int32_t nextssl_mode_encrypt(const char *alg,
+                             const char *params,
+                             const char *cipher,
+                             const char *cipher_params,
+                             const struct nextssl_in *key,
+                             const struct nextssl_in *iv,
+                             const struct nextssl_in *data,
+                             struct nextssl_out *out);
+
+// Proof of work solver (safe/standard): at most `max_work` attempts, then `WORK_LIMIT`.
+int32_t nextssl_pow_solve(const char *alg,
+                          const char *params,
+                          const struct nextssl_in *challenge,
+                          uint32_t difficulty,
+                          uint64_t max_work,
+                          struct nextssl_out *out);
+
+// Verify a proof of work (safe/standard). `AUTHENTICATION_FAILED` = solution does not meet the difficulty.
+int32_t nextssl_pow_verify(const char *alg,
+                           const char *params,
+                           const struct nextssl_in *challenge,
+                           const struct nextssl_in *solution,
+                           uint32_t difficulty);
+
+// Password hash as a PHC string with a fresh random salt (safe/standard).
+int32_t nextssl_pwhash(const char *alg,
+                       const char *params,
+                       const struct nextssl_in *password,
+                       struct nextssl_out *out);
+
+// Raw key derivation from a password (safe/standard): exactly `want` bytes.
+int32_t nextssl_pwhash_derive(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *password,
+                              const struct nextssl_in *salt,
+                              size_t want,
+                              struct nextssl_out *out);
+
+// Password hash as a PHC string with a caller-supplied salt (safe/standard).
+int32_t nextssl_pwhash_salted(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *password,
+                              const struct nextssl_in *salt,
+                              struct nextssl_out *out);
+
+// Verify a password against a PHC string (safe/standard). `AUTHENTICATION_FAILED` = wrong password.
+int32_t nextssl_pwhash_verify(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *password,
+                              const struct nextssl_in *phc);
+
+// Fill `out` with exactly `want` bytes (1..=16 MiB) from the entropy source `alg`
+// (for example `os-entropy`), safe/standard tiers.
+int32_t nextssl_rng_fill(const char *alg, const char *params, size_t want, struct nextssl_out *out);
+
+// AEAD open, any tier.
+int32_t nextssl_root_aead_open(const char *alg,
+                               const char *params,
+                               const struct nextssl_in *key,
+                               const struct nextssl_in *nonce,
+                               const struct nextssl_in *aad,
+                               const struct nextssl_in *ct,
+                               struct nextssl_out *out);
+
+// AEAD seal, any tier.
+int32_t nextssl_root_aead_seal(const char *alg,
+                               const char *params,
+                               const struct nextssl_in *key,
+                               const struct nextssl_in *nonce,
+                               const struct nextssl_in *aad,
+                               const struct nextssl_in *pt,
+                               struct nextssl_out *out);
+
+// Decrypt one block, any tier.
+int32_t nextssl_root_blockcipher_decrypt(const char *alg,
+                                         const char *params,
+                                         const struct nextssl_in *key,
+                                         const struct nextssl_in *block,
+                                         struct nextssl_out *out);
+
+// Encrypt one block, any tier.
+int32_t nextssl_root_blockcipher_encrypt(const char *alg,
+                                         const char *params,
+                                         const struct nextssl_in *key,
+                                         const struct nextssl_in *block,
+                                         struct nextssl_out *out);
+
+// Block-cipher mode decrypt, any tier.
+int32_t nextssl_root_blockmode_decrypt(const char *alg,
+                                       const char *params,
+                                       const struct nextssl_in *key,
+                                       const struct nextssl_in *nonce,
+                                       const struct nextssl_in *data,
+                                       struct nextssl_out *out);
+
+// Block-cipher mode encrypt, any tier.
+int32_t nextssl_root_blockmode_encrypt(const char *alg,
+                                       const char *params,
+                                       const struct nextssl_in *key,
+                                       const struct nextssl_in *nonce,
+                                       const struct nextssl_in *data,
+                                       struct nextssl_out *out);
+
+// Non-cryptographic checksum, any tier.
+int32_t nextssl_root_checksum(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *data,
+                              struct nextssl_out *out);
 
 // Strictly decode `data` (any tier).
 //
@@ -121,6 +470,20 @@ int32_t nextssl_root_decode(const char *alg,
                             size_t out_cap,
                             size_t *out_len);
 
+// Strictly decode `data` (any tier), with parameters.
+int32_t nextssl_root_decode_with(const char *alg,
+                                 const char *params,
+                                 const struct nextssl_in *data,
+                                 struct nextssl_out *out);
+
+// Instantiate a DRBG of any tier.
+int32_t nextssl_root_drbg_new(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *entropy,
+                              const struct nextssl_in *nonce,
+                              const struct nextssl_in *personalization,
+                              uint64_t *handle);
+
 // Encode `data` (any tier).
 //
 // # Safety
@@ -134,6 +497,12 @@ int32_t nextssl_root_encode(const char *alg,
                             size_t out_cap,
                             size_t *out_len);
 
+// Encode `data` (any tier), with parameters.
+int32_t nextssl_root_encode_with(const char *alg,
+                                 const char *params,
+                                 const struct nextssl_in *data,
+                                 struct nextssl_out *out);
+
 // Hash `data` with any-tier algorithm.
 //
 // # Safety
@@ -146,6 +515,355 @@ int32_t nextssl_root_hash(const char *alg,
                           uint8_t *out,
                           size_t out_cap,
                           size_t *out_len);
+
+// Hash `data` with an algorithm of any tier, with parameters.
+int32_t nextssl_root_hash_with(const char *alg,
+                               const char *params,
+                               const struct nextssl_in *data,
+                               struct nextssl_out *out);
+
+// Homomorphic decryption (root only).
+int32_t nextssl_root_he_decrypt(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *sk,
+                                const struct nextssl_in *ct,
+                                struct nextssl_out *out);
+
+// Homomorphic encryption (root only).
+int32_t nextssl_root_he_encrypt(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *pk,
+                                const struct nextssl_in *pt,
+                                struct nextssl_out *out);
+
+// Homomorphic evaluation (root only). `op` is `add`, `sub`, `mul`, `neg`, `and`, `or`, `xor`
+// or `not`; `cts` is a packed list (`u32` little-endian length, then bytes, repeated).
+int32_t nextssl_root_he_eval(const char *alg,
+                             const char *params,
+                             const char *op,
+                             const struct nextssl_in *cts,
+                             const struct nextssl_in *evk,
+                             struct nextssl_out *out);
+
+// Homomorphic encryption key set (root only): secret, public and evaluation keys.
+int32_t nextssl_root_he_keygen(const char *alg,
+                               const char *params,
+                               const struct nextssl_in *he_params,
+                               struct nextssl_out *sk,
+                               struct nextssl_out *pk,
+                               struct nextssl_out *evk);
+
+// Key derivation, any tier.
+int32_t nextssl_root_kdf(const char *alg,
+                         const char *params,
+                         const struct nextssl_in *ikm,
+                         const struct nextssl_in *salt,
+                         const struct nextssl_in *info,
+                         size_t want,
+                         struct nextssl_out *out);
+
+// KEM decapsulation, any tier.
+int32_t nextssl_root_kem_decaps(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *sk,
+                                const struct nextssl_in *ct,
+                                struct nextssl_out *ss);
+
+// KEM encapsulation, any tier.
+int32_t nextssl_root_kem_encaps(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *pk,
+                                struct nextssl_out *ct,
+                                struct nextssl_out *ss);
+
+// KEM key pair, any tier.
+int32_t nextssl_root_kem_keygen(const char *alg,
+                                const char *params,
+                                struct nextssl_out *pk,
+                                struct nextssl_out *sk);
+
+// Key agreement, any tier.
+int32_t nextssl_root_kex_agree(const char *alg,
+                               const char *params,
+                               const struct nextssl_in *sk,
+                               const struct nextssl_in *peer_pk,
+                               struct nextssl_out *ss);
+
+// Key-exchange key pair, any tier.
+int32_t nextssl_root_kex_keygen(const char *alg,
+                                const char *params,
+                                struct nextssl_out *pk,
+                                struct nextssl_out *sk);
+
+// MAC tag, any tier.
+int32_t nextssl_root_mac(const char *alg,
+                         const char *params,
+                         const struct nextssl_in *key,
+                         const struct nextssl_in *data,
+                         size_t tag_len,
+                         struct nextssl_out *out);
+
+// Constant-time MAC check, any tier.
+int32_t nextssl_root_mac_verify(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *key,
+                                const struct nextssl_in *data,
+                                const struct nextssl_in *tag);
+
+// Generic mode over a block cipher, decrypt, any tier.
+int32_t nextssl_root_mode_decrypt(const char *alg,
+                                  const char *params,
+                                  const char *cipher,
+                                  const char *cipher_params,
+                                  const struct nextssl_in *key,
+                                  const struct nextssl_in *iv,
+                                  const struct nextssl_in *data,
+                                  struct nextssl_out *out);
+
+// Generic mode over a block cipher, encrypt, any tier.
+int32_t nextssl_root_mode_encrypt(const char *alg,
+                                  const char *params,
+                                  const char *cipher,
+                                  const char *cipher_params,
+                                  const struct nextssl_in *key,
+                                  const struct nextssl_in *iv,
+                                  const struct nextssl_in *data,
+                                  struct nextssl_out *out);
+
+// Release a PAKE or threshold session (root only).
+int32_t nextssl_root_pake_free(uint64_t handle);
+
+// Start a PAKE (root only). `role` 0 = initiator, 1 = responder. `*handle` receives the session
+// (0 on error); `msg` receives the first message (empty when this role waits for the peer).
+int32_t nextssl_root_pake_start(const char *alg,
+                                const char *params,
+                                uint32_t role,
+                                const struct nextssl_in *password,
+                                const struct nextssl_in *context,
+                                uint64_t *handle,
+                                struct nextssl_out *msg);
+
+// One PAKE step (root only). `msg_out` is the message for the peer; `ss` is empty until
+// `*done` is 1, when it holds the shared secret and the session is closed. A step consumes the
+// session: after any error, including `BAD_OUTPUT_LEN`, the handle is invalid. Use buffers of
+// at least 64 KiB, or retry from `nextssl_root_pake_start` with the size the error reports.
+int32_t nextssl_root_pake_step(uint64_t handle,
+                               const struct nextssl_in *msg_in,
+                               struct nextssl_out *msg_out,
+                               struct nextssl_out *ss,
+                               uint32_t *done);
+
+// Public-key decryption (root only). Every failure is the same `AUTHENTICATION_FAILED`.
+int32_t nextssl_root_pke_decrypt(const char *alg,
+                                 const char *params,
+                                 const struct nextssl_in *sk,
+                                 const struct nextssl_in *ct,
+                                 const struct nextssl_in *label,
+                                 struct nextssl_out *out);
+
+// Public-key encryption of `pt` to `pk`, bound to `label` (root only).
+int32_t nextssl_root_pke_encrypt(const char *alg,
+                                 const char *params,
+                                 const struct nextssl_in *pk,
+                                 const struct nextssl_in *pt,
+                                 const struct nextssl_in *label,
+                                 struct nextssl_out *out);
+
+// Public-key encryption key pair (root only).
+int32_t nextssl_root_pke_keygen(const char *alg,
+                                const char *params,
+                                struct nextssl_out *pk,
+                                struct nextssl_out *sk);
+
+// Proof of work solver, any tier.
+int32_t nextssl_root_pow_solve(const char *alg,
+                               const char *params,
+                               const struct nextssl_in *challenge,
+                               uint32_t difficulty,
+                               uint64_t max_work,
+                               struct nextssl_out *out);
+
+// Verify a proof of work, any tier.
+int32_t nextssl_root_pow_verify(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *challenge,
+                                const struct nextssl_in *solution,
+                                uint32_t difficulty);
+
+// Password hash as a PHC string with a fresh random salt, any tier.
+int32_t nextssl_root_pwhash(const char *alg,
+                            const char *params,
+                            const struct nextssl_in *password,
+                            struct nextssl_out *out);
+
+// Raw key derivation from a password, any tier.
+int32_t nextssl_root_pwhash_derive(const char *alg,
+                                   const char *params,
+                                   const struct nextssl_in *password,
+                                   const struct nextssl_in *salt,
+                                   size_t want,
+                                   struct nextssl_out *out);
+
+// Password hash as a PHC string with a caller-supplied salt, any tier.
+int32_t nextssl_root_pwhash_salted(const char *alg,
+                                   const char *params,
+                                   const struct nextssl_in *password,
+                                   const struct nextssl_in *salt,
+                                   struct nextssl_out *out);
+
+// Verify a password against a PHC string, any tier.
+int32_t nextssl_root_pwhash_verify(const char *alg,
+                                   const char *params,
+                                   const struct nextssl_in *password,
+                                   const struct nextssl_in *phc);
+
+// Entropy source, any tier.
+int32_t nextssl_root_rng_fill(const char *alg,
+                              const char *params,
+                              size_t want,
+                              struct nextssl_out *out);
+
+// Detached signature, any tier.
+int32_t nextssl_root_sign_detached(const char *alg,
+                                   const char *params,
+                                   const struct nextssl_in *sk,
+                                   const struct nextssl_in *msg,
+                                   const struct nextssl_in *ctx,
+                                   struct nextssl_out *sig);
+
+// Signature key pair, any tier.
+int32_t nextssl_root_sign_keygen(const char *alg,
+                                 const char *params,
+                                 struct nextssl_out *pk,
+                                 struct nextssl_out *sk);
+
+// Stateful hash-based signature key pair (root only): `pk` and the serialized secret `state`.
+int32_t nextssl_root_stateful_keygen(const char *alg,
+                                     const char *params,
+                                     struct nextssl_out *pk,
+                                     struct nextssl_out *state);
+
+// Signatures left in a serialized key state, and the key's lifetime total (root only).
+int32_t nextssl_root_stateful_remaining(const char *alg,
+                                        const char *params,
+                                        const struct nextssl_in *state,
+                                        uint64_t *remaining,
+                                        uint64_t *max_signatures);
+
+// Stateful signature (root only). Writes the signature and the advanced `new_state`. The
+// caller MUST persist `new_state` and discard the old state before releasing the signature;
+// signing again from an old state reuses a one-time key and breaks the scheme.
+int32_t nextssl_root_stateful_sign(const char *alg,
+                                   const char *params,
+                                   const struct nextssl_in *state,
+                                   const struct nextssl_in *msg,
+                                   struct nextssl_out *sig,
+                                   struct nextssl_out *new_state);
+
+// Verify a stateful signature (root only).
+int32_t nextssl_root_stateful_verify(const char *alg,
+                                     const char *params,
+                                     const struct nextssl_in *pk,
+                                     const struct nextssl_in *msg,
+                                     const struct nextssl_in *sig);
+
+// Stream cipher, any tier.
+int32_t nextssl_root_stream_apply(const char *alg,
+                                  const char *params,
+                                  const struct nextssl_in *key,
+                                  const struct nextssl_in *nonce,
+                                  const struct nextssl_in *data,
+                                  struct nextssl_out *out);
+
+// Reconstruct a secret from a packed list of shares (root only).
+int32_t nextssl_root_threshold_combine(const char *alg,
+                                       const char *params,
+                                       const struct nextssl_in *shares,
+                                       struct nextssl_out *out);
+
+// Release a threshold session (root only).
+int32_t nextssl_root_threshold_free(uint64_t handle);
+
+// Split a secret into `n` shares, any `t` of which reconstruct it (root only). `out` receives
+// the shares as a packed list (`u32` little-endian length, then bytes, repeated).
+int32_t nextssl_root_threshold_split(const char *alg,
+                                     const char *params,
+                                     const struct nextssl_in *secret,
+                                     size_t t,
+                                     size_t n,
+                                     struct nextssl_out *out);
+
+// Start a threshold session for one party (root only): `op` 0 = distributed key generation,
+// 1 = signing (`input` is then the message or the party's key share, per the scheme).
+int32_t nextssl_root_threshold_start(const char *alg,
+                                     const char *params,
+                                     uint32_t op,
+                                     uint16_t party,
+                                     uint16_t t,
+                                     uint16_t n,
+                                     const struct nextssl_in *input,
+                                     uint64_t *handle,
+                                     struct nextssl_out *msg);
+
+// One threshold step (root only); same rules as `nextssl_root_pake_step`. `output` (key share
+// or signature) is empty until `*done` is 1.
+int32_t nextssl_root_threshold_step(uint64_t handle,
+                                    const struct nextssl_in *msg_in,
+                                    struct nextssl_out *msg_out,
+                                    struct nextssl_out *output,
+                                    uint32_t *done);
+
+// Verifiable delay function evaluation (root only): `output` and `proof`.
+int32_t nextssl_root_vdf_eval(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *challenge,
+                              uint64_t t,
+                              struct nextssl_out *output,
+                              struct nextssl_out *proof);
+
+// Verifiable delay function verification (root only).
+int32_t nextssl_root_vdf_verify(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *challenge,
+                                uint64_t t,
+                                const struct nextssl_in *output,
+                                const struct nextssl_in *proof);
+
+// Verify a detached signature, any tier.
+int32_t nextssl_root_verify_detached(const char *alg,
+                                     const char *params,
+                                     const struct nextssl_in *pk,
+                                     const struct nextssl_in *msg,
+                                     const struct nextssl_in *ctx,
+                                     const struct nextssl_in *sig);
+
+// Extendable-output function, any tier.
+int32_t nextssl_root_xof(const char *alg,
+                         const char *params,
+                         const struct nextssl_in *data,
+                         size_t want,
+                         struct nextssl_out *out);
+
+// Zero-knowledge proof (root only).
+int32_t nextssl_root_zk_prove(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *setup,
+                              const struct nextssl_in *statement,
+                              const struct nextssl_in *witness,
+                              struct nextssl_out *out);
+
+// Zero-knowledge setup (root only).
+int32_t nextssl_root_zk_setup(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *setup_params,
+                              struct nextssl_out *out);
+
+// Zero-knowledge verification (root only). `AUTHENTICATION_FAILED` = proof does not verify.
+int32_t nextssl_root_zk_verify(const char *alg,
+                               const char *params,
+                               const struct nextssl_in *setup,
+                               const struct nextssl_in *statement,
+                               const struct nextssl_in *proof);
 
 // Signs `msg` into a COSE_Sign1 envelope. `alg` is `"ml-dsa-65"` or `"ed25519"`; `sk` is the
 // algorithm's 32-byte private key.
@@ -165,6 +883,29 @@ int32_t nextssl_sign(const char *alg,
                      size_t out_cap,
                      size_t *out_len);
 
+// Detached signature over `msg` (safe/standard). `ctx` is the domain-separation context; a
+// non-empty one on an algorithm without contexts is an error.
+int32_t nextssl_sign_detached(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *sk,
+                              const struct nextssl_in *msg,
+                              const struct nextssl_in *ctx,
+                              struct nextssl_out *sig);
+
+// Signature key pair (safe/standard).
+int32_t nextssl_sign_keygen(const char *alg,
+                            const char *params,
+                            struct nextssl_out *pk,
+                            struct nextssl_out *sk);
+
+// XOR the keystream of a stream cipher into `data` (safe/standard). Encrypt and decrypt are the same call.
+int32_t nextssl_stream_apply(const char *alg,
+                             const char *params,
+                             const struct nextssl_in *key,
+                             const struct nextssl_in *nonce,
+                             const struct nextssl_in *data,
+                             struct nextssl_out *out);
+
 // Verifies a COSE_Sign1 envelope and writes its payload to `out`. The envelope must name
 // exactly `alg`. A bad signature is `NEXTSSL_ERR_AUTHENTICATION_FAILED`.
 //
@@ -183,8 +924,24 @@ int32_t nextssl_verify(const char *alg,
                        size_t out_cap,
                        size_t *out_len);
 
+// Verify a detached signature (safe/standard). `NEXTSSL_OK` = valid; `AUTHENTICATION_FAILED`
+// = does not verify; any other code = malformed input. Treat every non-zero code as rejection.
+int32_t nextssl_verify_detached(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *pk,
+                                const struct nextssl_in *msg,
+                                const struct nextssl_in *ctx,
+                                const struct nextssl_in *sig);
+
 // Library version as a static NUL-terminated string.
 const char *nextssl_version(void);
+
+// Extendable-output function (safe/standard): exactly `want` bytes (1..=16 MiB) into `out`.
+int32_t nextssl_xof(const char *alg,
+                    const char *params,
+                    const struct nextssl_in *data,
+                    size_t want,
+                    struct nextssl_out *out);
 
 #ifdef __cplusplus
 }  // extern "C"

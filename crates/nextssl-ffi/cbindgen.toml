@@ -11,6 +11,10 @@ documentation_style = "c99"
 [export]
 include = []
 
+[export.rename]
+"NextsslIn" = "nextssl_in"
+"NextsslOut" = "nextssl_out"
+
 [fn]
 sort_by = "Name"
 

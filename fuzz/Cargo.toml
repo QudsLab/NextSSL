@@ -12,6 +12,7 @@ libfuzzer-sys = "0.4"
 nextssl = { path = "../crates/nextssl" }
 nextssl-root = { path = "../crates/nextssl-root" }
 nextssl-core = { path = "../crates/nextssl-core" }
+nextssl-ffi = { path = "../crates/nextssl-ffi" }
 
 # Not part of the main workspace (needs nightly to run).
 [workspace]
@@ -31,5 +32,11 @@ doc = false
 [[bin]]
 name = "fuzz_envelope_decode"
 path = "fuzz_targets/fuzz_envelope_decode.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "fuzz_ffi_ops"
+path = "fuzz_targets/fuzz_ffi_ops.rs"
 test = false
 doc = false
