@@ -1,0 +1,16 @@
+id        = "hmac-drbg-sha256"
+kind      = "drbg"
+category  = "drbg"
+family    = "hmac"
+aliases   = ["hmac_drbg-sha256", "hmac-drbg"]
+tier      = "standard"
+status    = "active"
+standards = ["NIST SP 800-90A Rev. 1 section 10.1.2"]
+fips      = false
+upstream  = { crate = "libcrux-hmac-drbg", version = "=0.0.2", license = "Apache-2.0" }
+
+[kat]
+files = ["kat/cavp-hmac-drbg-sha256.json"]
+
+[sizes]
+seed = { min = 32, max = 1024 }
