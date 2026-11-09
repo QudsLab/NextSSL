@@ -1,0 +1,23 @@
+id        = "sm2-sign"
+kind      = "sign"
+category  = "sign"
+family    = "sm2"
+aliases   = ["sm2-dsa"]
+tier      = "unverified"
+status    = "active"
+standards = ["GB/T 32918.2", "RFC 8998"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "sm2", version = "=0.14.0", license = "Apache-2.0 OR MIT" }
+# RustCrypto sm2 0.14.0, DSA with SM3 and the default distinguishing id. UNTESTED (wire batch 5): not compiled, KAT empty.
+# Candidate KAT: GB/T 32918.5 example (256-bit prime field); to be added in the fix pass.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+pk   = 65
+sk   = 32
+sig  = 64
+seed = 32
+ctx  = 0

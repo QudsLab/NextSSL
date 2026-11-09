@@ -1,0 +1,17 @@
+[package]
+name = "nextssl-algo-sm2-sign"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+sm2 = { version = "=0.14.0", default-features = false, features = ["dsa", "alloc"] }
+
+[lints]
+workspace = true

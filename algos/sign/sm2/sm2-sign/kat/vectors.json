@@ -1,0 +1,5 @@
+{
+ "algorithm": "sm2-sign",
+ "vectors": [],
+ "note": "no independent vectors imported yet"
+}

@@ -1,0 +1,30 @@
+id        = "slh-dsa-sha2-128s"
+kind      = "sign"
+category  = "sign"
+family    = "slh-dsa"
+aliases   = ["slhdsasha2-128s"]
+tier      = "safe"
+status    = "active"
+standards = ["FIPS 205"]
+oid       = "2.16.840.1.101.3.4.3.20"
+fips      = true
+copyleft  = false
+upstream  = { crate = "slh-dsa", version = "=0.1.0", license = "Apache-2.0 OR MIT" }
+# RustCrypto slh-dsa 0.1.0 (its README: never independently audited). No IANA COSE algorithm id exists for SLH-DSA, so the safe envelope cannot carry it: use nextssl_root_*. The crate does not zeroize SK.seed/SK.prf (rule 9 gap) and does not check PK.root of a stored sk against its seeds. Private key = the FIPS 205 4n-byte sk; the seed form is SK.seed||SK.prf||PK.seed.
+# FIPS 205 default is hedged signing; deterministic = 1 selects the deterministic variant.
+[params.deterministic]
+type     = "u32"
+min      = 0
+max      = 1
+default  = 0
+required = false
+
+[kat]
+files = ["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"]
+
+[sizes]
+pk   = 32
+sk   = 64
+sig  = 7856
+seed = 48
+ctx  = { min = 0, max = 255 }

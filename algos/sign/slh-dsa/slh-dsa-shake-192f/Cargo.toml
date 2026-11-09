@@ -1,0 +1,24 @@
+[package]
+name = "nextssl-algo-slh-dsa-shake-192f"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+zeroize.workspace = true
+slh-dsa = { version = "=0.1.0", default-features = false, features = ["alloc"] }
+# slh-dsa asks for `signature >= 2.3.0-pre.4`; later pre-releases are source-incompatible, so pin the one it was built with.
+signature = { version = "=2.3.0-pre.4", default-features = false }
+
+[dev-dependencies]
+nextssl-core = { workspace = true, features = ["testing"] }
+serde_json.workspace = true
+
+[lints]
+workspace = true
