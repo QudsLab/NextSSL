@@ -1,2 +1,0 @@
-bin/wasm/emscripten-wasm32/libnextssl.wasm
-bin/wasm/emscripten-wasm32/libnextssl.js

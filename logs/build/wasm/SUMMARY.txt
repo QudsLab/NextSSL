@@ -1,2 +1,0 @@
-emscripten-wasm32: SUCCESS
-wasi-wasm32: SUCCESS

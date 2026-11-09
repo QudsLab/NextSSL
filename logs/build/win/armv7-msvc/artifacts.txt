@@ -1,2 +1,0 @@
-bin\win\armv7-msvc\Release\nextssl.dll
-bin\win\armv7-msvc\Release\nextssl.lib
