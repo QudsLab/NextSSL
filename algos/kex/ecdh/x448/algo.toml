@@ -1,0 +1,22 @@
+id        = "x448"
+kind      = "kex"
+category  = "kex"
+family    = "ecdh"
+aliases   = ["curve448-dh"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 7748"]
+oid       = "1.3.101.111"
+fips      = false
+copyleft  = false
+upstream  = { crate = "x448", version = "=0.14.0-pre.12", license = "Apache-2.0 OR MIT" }
+# RustCrypto x448 0.14.0-pre.12 (a pre-release; the stable 0.6.0 named in sources_C.csv does not zeroize secrets). Pinned exactly. Low-order public keys and all-zero shared secrets are explicit errors.
+[kat]
+files = ["kat/rfc7748.json", "kat/wycheproof-x448_test.json"]
+
+# sk is the 56-byte RFC 7748 scalar (clamped inside the upstream). seed is 32..=56 bytes, zero-extended at the high end.
+[sizes]
+pk   = 56
+sk   = 56
+ss   = 56
+seed = { min = 32, max = 56 }

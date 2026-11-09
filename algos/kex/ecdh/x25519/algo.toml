@@ -1,0 +1,22 @@
+id        = "x25519"
+kind      = "kex"
+category  = "kex"
+family    = "ecdh"
+aliases   = ["curve25519-dh"]
+tier      = "standard"
+status    = "active"
+standards = ["RFC 7748"]
+oid       = "1.3.101.110"
+fips      = false
+copyleft  = false
+upstream  = { crate = "x25519-dalek", version = "=3.0.0", license = "BSD-3-Clause" }
+
+[kat]
+files = ["kat/rfc7748.json", "kat/wycheproof-x25519_test.json"]
+
+# sk is the 32-byte RFC 7748 scalar (clamped inside the upstream); ss is X25519(sk, peer).
+[sizes]
+pk   = 32
+sk   = 32
+ss   = 32
+seed = 32

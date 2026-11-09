@@ -1,0 +1,23 @@
+[package]
+name = "nextssl-algo-x25519"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+zeroize.workspace = true
+# static_secrets: the Kex trait needs a reusable secret built from caller-held bytes.
+x25519-dalek = { version = "=3.0.0", default-features = false, features = ["zeroize", "static_secrets"] }
+
+[dev-dependencies]
+nextssl-core = { workspace = true, features = ["testing"] }
+serde_json.workspace = true
+
+[lints]
+workspace = true

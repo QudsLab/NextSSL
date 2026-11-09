@@ -1,0 +1,22 @@
+id        = "ecdh-p256"
+kind      = "kex"
+category  = "kex"
+family    = "ecdh"
+aliases   = ["ecdh-secp256r1"]
+tier      = "standard"
+status    = "active"
+standards = ["SEC 1", "NIST SP 800-56A Rev. 3"]
+oid       = "1.3.132.1.12"
+fips      = true
+copyleft  = false
+upstream  = { crate = "p256", version = "=0.14.0", license = "Apache-2.0 OR MIT" }
+# RustCrypto p256 (elliptic-curve ecdh). Raw x-coordinate shared secret (the safe layer feeds it to a KDF). Public keys are SEC1 uncompressed points only; the Wycheproof cases that use compressed points are expected to fail with an explicit error. Private key is the raw scalar. No NIST ACVP KAS-ECC replay: Wycheproof ecpoint vectors only (accept and reject).
+[kat]
+files = ["kat/wycheproof-ecdh_secp256r1_ecpoint_test.json"]
+
+# seed is a big-endian scalar of 32..=32 bytes, left-padded with zeros to the field size.
+[sizes]
+pk   = 65
+sk   = 32
+ss   = 32
+seed = { min = 32, max = 32 }
