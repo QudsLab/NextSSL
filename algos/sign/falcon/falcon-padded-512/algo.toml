@@ -1,0 +1,25 @@
+id        = "falcon-padded-512"
+kind      = "sign"
+category  = "sign"
+family    = "falcon"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/PQClean/PQClean", commit = "0586a824fc0d49df0b6b6e9179d8d15d06d0974f", license = "MIT", files = ["common/fips202.c", "common/fips202.h", "common/randombytes.h", "crypto_sign/falcon-padded-512/clean/LICENSE", "crypto_sign/falcon-padded-512/clean/api.h", "crypto_sign/falcon-padded-512/clean/codec.c", "crypto_sign/falcon-padded-512/clean/common.c", "crypto_sign/falcon-padded-512/clean/fft.c", "crypto_sign/falcon-padded-512/clean/fpr.c", "crypto_sign/falcon-padded-512/clean/fpr.h", "crypto_sign/falcon-padded-512/clean/inner.h", "crypto_sign/falcon-padded-512/clean/keygen.c", "crypto_sign/falcon-padded-512/clean/pqclean.c", "crypto_sign/falcon-padded-512/clean/rng.c", "crypto_sign/falcon-padded-512/clean/sign.c", "crypto_sign/falcon-padded-512/clean/vrfy.c", "LICENSE"] }
+
+# 
+# unverified: no published known-answer vector is replayed yet (PQClean ships only KAT hashes in
+# META.yml; the designers' .rsp files are not in the collection). Roundtrip tests only. Not compiled
+# or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 897
+sk = 1281
+sig = 666
+seed = 0
+ctx = 0

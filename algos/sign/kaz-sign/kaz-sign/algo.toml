@@ -1,0 +1,24 @@
+id        = "kaz-sign"
+kind      = "sign"
+category  = "sign"
+family    = "kaz-sign"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = true
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/KAZ-SIGN.zip", sha256 = "4e96e6189ae90ebd765390f10f80fc27a473edfb7b0aebeef518708e7acddfd3", license = "LicenseRef-Public-Domain AND LicenseRef-GPL-unspecified AND LicenseRef-LGPL-unspecified", files = ["KAZ-SIGN/Reference_Implementation/kaz458/api.h", "KAZ-SIGN/Reference_Implementation/kaz458/gmp.h", "KAZ-SIGN/Reference_Implementation/kaz458/kaz_api.c", "KAZ-SIGN/Reference_Implementation/kaz458/kaz_api.h", "KAZ-SIGN/Reference_Implementation/kaz458/rng.h", "KAZ-SIGN/Reference_Implementation/kaz458/rotate-bits.h", "KAZ-SIGN/Reference_Implementation/kaz458/sha256.c", "KAZ-SIGN/Reference_Implementation/kaz458/sha256.h", "KAZ-SIGN/Reference_Implementation/kaz458/sign.c", "LICENSE"] }
+
+# Variant wired: KAZ-SIGN/Reference_Implementation/kaz458 (sign). Other variants not wired: KAZ-SIGN/Reference_Implementation/kaz738, KAZ-SIGN/Reference_Implementation/kaz970, KAZ-SIGN/Optimized_Implementation/kaz458, KAZ-SIGN/Optimized_Implementation/kaz738, KAZ-SIGN/Optimized_Implementation/kaz970.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 59
+sk = 77
+sig = { min = 1, max = 32 }
+seed = 0
+ctx = 0
