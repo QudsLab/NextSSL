@@ -135,6 +135,15 @@ secret_bytes!(
     /// Deterministic key-generation seed, KEM coins, or DRBG entropy input.
     Seed
 );
+secret_bytes!(
+    /// Serialized state of a stateful hash-based signature key (XMSS, LMS/HSS). It has no `Clone`:
+    /// copying a one-time-key state is exactly the bug stateful signatures must prevent.
+    StatefulKey
+);
+secret_bytes!(
+    /// One share of a split secret (index and value, in the scheme's own encoding).
+    Share
+);
 public_bytes!(
     /// Asymmetric public key in the algorithm's native encoding.
     PublicKey

@@ -79,11 +79,15 @@ pub enum Kind {
     Zk,
     Threshold,
     Vdf,
+    Pke,
+    Pake,
+    StatefulSign,
+    He,
 }
 
 impl Kind {
     /// Every kind, in a stable order.
-    pub const ALL: [Kind; 21] = [
+    pub const ALL: [Kind; 25] = [
         Kind::Hash,
         Kind::Xof,
         Kind::Mac,
@@ -105,6 +109,10 @@ impl Kind {
         Kind::Zk,
         Kind::Threshold,
         Kind::Vdf,
+        Kind::Pke,
+        Kind::Pake,
+        Kind::StatefulSign,
+        Kind::He,
     ];
 
     /// The string used in `algo.toml` `kind = "..."`.
@@ -131,6 +139,10 @@ impl Kind {
             Kind::Zk => "zk",
             Kind::Threshold => "threshold",
             Kind::Vdf => "vdf",
+            Kind::Pke => "pke",
+            Kind::Pake => "pake",
+            Kind::StatefulSign => "statefulsign",
+            Kind::He => "he",
         }
     }
 
@@ -150,6 +162,9 @@ impl Kind {
             Kind::Kem => &["pk", "sk", "ct", "ss", "seed", "coins"],
             Kind::Kex => &["pk", "sk", "ss", "seed"],
             Kind::Sign => &["pk", "sk", "sig", "seed", "ctx"],
+            Kind::Pke => &["pk", "sk", "ct", "out", "ctx"],
+            Kind::Pake => &["key", "ss"],
+            Kind::StatefulSign => &["pk", "sk", "sig", "seed"],
             Kind::Drbg => &["seed"],
             Kind::Xof
             | Kind::Mode
@@ -158,8 +173,24 @@ impl Kind {
             | Kind::Pow
             | Kind::Zk
             | Kind::Threshold
-            | Kind::Vdf => &[],
+            | Kind::Vdf
+            | Kind::He => &[],
         }
+    }
+
+    /// Kinds reachable only through the root API, never through the safe API or the COSE
+    /// envelope, whatever tier the algorithm declares (BRIEF_kinds.md).
+    pub const fn root_only(self) -> bool {
+        matches!(
+            self,
+            Kind::Pke
+                | Kind::Pake
+                | Kind::StatefulSign
+                | Kind::Zk
+                | Kind::Threshold
+                | Kind::He
+                | Kind::Vdf
+        )
     }
 }
 
@@ -173,6 +204,7 @@ mod tests {
             assert_eq!(Kind::parse(k.as_str()), Some(k));
         }
         assert_eq!(Kind::parse("nope"), None);
+        assert!(Kind::Pke.root_only() && Kind::Vdf.root_only() && !Kind::Sign.root_only());
         let mut names: alloc::vec::Vec<_> = Kind::ALL.iter().map(|k| k.as_str()).collect();
         names.sort_unstable();
         names.dedup();

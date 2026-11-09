@@ -518,9 +518,148 @@ fn stub_parts(kind: Kind) -> (&'static str, &'static str) {
 "#,
         ),
         Kind::Pow => ("Error, Params, Pow, Result", ""),
-        Kind::Zk => ("Error, Params, Result, Zk", ""),
-        Kind::Threshold => ("Error, Params, Result, Threshold", ""),
-        Kind::Vdf => ("Error, Params, Result, Vdf", ""),
+        Kind::Zk => (
+            "EntropySource, Error, Params, Result, Zk",
+            r#"    fn setup(&self, _params: &[u8], _rng: &mut dyn EntropySource) -> Result<Vec<u8>> {
+        Err(Error::Unimplemented)
+    }
+
+    fn prove(
+        &self,
+        _setup: &[u8],
+        _statement: &[u8],
+        _witness: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>> {
+        Err(Error::Unimplemented)
+    }
+
+    fn verify(&self, _setup: &[u8], _statement: &[u8], _proof: &[u8]) -> Result<bool> {
+        Err(Error::Unimplemented)
+    }
+"#,
+        ),
+        Kind::Threshold => (
+            "Error, Params, Result, Threshold",
+            r#"    fn max_parties(&self) -> usize {
+        0 // TODO: largest n
+    }
+"#,
+        ),
+        Kind::Vdf => (
+            "Error, Params, Result, Vdf",
+            r#"    fn max_t(&self) -> u64 {
+        0 // TODO: the max_t cap
+    }
+
+    fn eval(&self, _challenge: &[u8], _t: u64) -> Result<(Vec<u8>, Vec<u8>)> {
+        Err(Error::Unimplemented)
+    }
+
+    fn verify(&self, _challenge: &[u8], _t: u64, _output: &[u8], _proof: &[u8]) -> Result<bool> {
+        Err(Error::Unimplemented)
+    }
+"#,
+        ),
+        Kind::Pke => (
+            "EntropySource, Error, Params, Pke, PrivateKey, PublicKey, Result, Sizes, Zeroizing",
+            r#"    fn sizes(&self) -> Sizes {
+        Sizes::NONE // TODO: pk, sk, ct, out, ctx
+    }
+
+    fn encrypt(
+        &self,
+        _pk: &PublicKey,
+        _pt: &[u8],
+        _label: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>> {
+        Err(Error::Unimplemented)
+    }
+
+    fn decrypt(
+        &self,
+        _sk: &PrivateKey,
+        _ct: &[u8],
+        _label: &[u8],
+    ) -> Result<Zeroizing<Vec<u8>>> {
+        Err(Error::Unimplemented)
+    }
+"#,
+        ),
+        Kind::Pake => (
+            "EntropySource, Error, Pake, PakeRole, PakeState, Params, Result, Sizes",
+            r#"    fn sizes(&self) -> Sizes {
+        Sizes::NONE // TODO: key (password length), ss
+    }
+
+    fn start(
+        &self,
+        _role: PakeRole,
+        _password: &[u8],
+        _context: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<(Box<dyn PakeState>, Vec<u8>)> {
+        Err(Error::Unimplemented)
+    }
+"#,
+        ),
+        Kind::StatefulSign => (
+            "Error, Params, PublicKey, Result, Signature, Sizes, StatefulKey, StatefulSign",
+            r#"    fn sizes(&self) -> Sizes {
+        Sizes::NONE // TODO: pk, sk, sig, seed
+    }
+
+    fn max_signatures(&self) -> u64 {
+        0 // TODO
+    }
+
+    fn remaining(&self, _key: &StatefulKey) -> Result<u64> {
+        Err(Error::Unimplemented)
+    }
+
+    fn sign(
+        &self,
+        _key: &mut StatefulKey,
+        _msg: &[u8],
+        _persist: &mut dyn FnMut(&[u8]) -> Result<()>,
+    ) -> Result<Signature> {
+        Err(Error::Unimplemented)
+    }
+
+    fn verify(&self, _pk: &PublicKey, _msg: &[u8], _sig: &Signature) -> Result<bool> {
+        Err(Error::Unimplemented)
+    }
+"#,
+        ),
+        Kind::He => (
+            "EntropySource, Error, He, HeKeys, HeOp, Params, PrivateKey, PublicKey, Result, Zeroizing",
+            r#"    fn ops(&self) -> &'static [HeOp] {
+        &[]
+    }
+
+    fn keygen(&self, _params: &[u8], _rng: &mut dyn EntropySource) -> Result<HeKeys> {
+        Err(Error::Unimplemented)
+    }
+
+    fn encrypt(
+        &self,
+        _public: &PublicKey,
+        _pt: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>> {
+        Err(Error::Unimplemented)
+    }
+
+    fn decrypt(&self, _secret: &PrivateKey, _ct: &[u8]) -> Result<Zeroizing<Vec<u8>>> {
+        Err(Error::Unimplemented)
+    }
+
+    fn eval(&self, _op: HeOp, _cts: &[&[u8]], _evk: &PublicKey) -> Result<Vec<u8>> {
+        Err(Error::Unimplemented)
+    }
+"#,
+        ),
     }
 }
 
@@ -548,6 +687,10 @@ fn trait_name(kind: Kind) -> &'static str {
         Kind::Zk => "Zk",
         Kind::Threshold => "Threshold",
         Kind::Vdf => "Vdf",
+        Kind::Pke => "Pke",
+        Kind::Pake => "Pake",
+        Kind::StatefulSign => "StatefulSign",
+        Kind::He => "He",
     }
 }
 

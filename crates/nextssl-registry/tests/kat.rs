@@ -13,7 +13,8 @@
 //! cross-kind behaviour, not those vectors.
 
 use nextssl_core::{
-    Ciphertext, Error, Kind, Params, PrivateKey, PublicKey, Seed, Signature, SymmetricKey, Value,
+    Ciphertext, Error, HeOp, Kind, PakeRole, PakeStep, Params, PrivateKey, PublicKey, Seed,
+    SharedSecret, Signature, StatefulKey, SymmetricKey, Value,
 };
 use nextssl_registry::{
     all, check_sizes, decode_in, encode_in, hash_in, instantiate_in, AlgoInfo, Instance, Policy,
@@ -197,6 +198,11 @@ fn pick(l: Option<nextssl_core::Len>, preferred: usize) -> usize {
 fn smoke(a: &AlgoInfo, inst: &Instance) {
     let s = a.sizes;
     let ctx = a.id;
+    if let Some(reason) = a.smoke_skip {
+        // Declared in algo.toml (`smoke = "skip"`, zk / he / threshold only); named in the log.
+        println!("SMOKE SKIP {}: {reason}", a.id);
+        return;
+    }
     match inst {
         Instance::Hash(h) => {
             let mut out = vec![0u8; h.output_len()];
@@ -472,13 +478,249 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
             );
         }
         Instance::Rng(_) | Instance::Drbg(_) | Instance::Encoding(_) => {}
-        Instance::Mode(_)
-        | Instance::Checksum(_)
-        | Instance::Pow(_)
-        | Instance::Zk(_)
-        | Instance::Threshold(_)
-        | Instance::Vdf(_) => {}
+        Instance::Mode(_) | Instance::Checksum(_) | Instance::Pow(_) => {}
+        Instance::Pke(p) => {
+            let (pk, sk) = p.keygen(&mut rng()).unwrap();
+            assert!(s.pk.unwrap().contains(pk.len()), "{ctx}: pk length");
+            assert!(s.sk.unwrap().contains(sk.len()), "{ctx}: sk length");
+            let pt = vec![0x42u8; pick(s.out, 16)];
+            let label = vec![0x4Cu8; pick(s.ctx, 5)];
+            let ct = p.encrypt(&pk, &pt, &label, &mut rng()).unwrap();
+            assert!(s.ct.unwrap().contains(ct.len()), "{ctx}: ct length");
+            assert_eq!(&p.decrypt(&sk, &ct, &label).unwrap()[..], &pt[..], "{ctx}");
+            // every failure is the one uniform error; the only alternative is implicit rejection
+            // (RSA PKCS#1 v1.5): a synthetic plaintext that is never the original
+            match p.decrypt(&sk, &flip(ct.clone()), &label) {
+                Err(e) => assert_eq!(e, Error::AuthenticationFailed, "{ctx}: flipped ct"),
+                Ok(got) => assert_ne!(&got[..], &pt[..], "{ctx}: flipped ct decrypted to the original"),
+            }
+            if s.ctx.map(|c| c.max()).unwrap_or(0) > 0 {
+                let other = vec![0x4Du8; label.len().max(1)];
+                assert_eq!(
+                    p.decrypt(&sk, &ct, &other).err(),
+                    Some(Error::AuthenticationFailed),
+                    "{ctx}: wrong label"
+                );
+            } else {
+                assert!(
+                    p.encrypt(&pk, &pt, b"label", &mut rng()).is_err(),
+                    "{ctx}: label must not be ignored"
+                );
+            }
+            assert!(p.decrypt(&sk, &[0u8; 3], &label).is_err(), "{ctx}: short ct");
+            let max_pt = s.out.unwrap().max();
+            if max_pt < (1 << 20) {
+                assert!(
+                    p.encrypt(&pk, &vec![1u8; max_pt + 1], &label, &mut rng())
+                        .is_err(),
+                    "{ctx}: over-long plaintext"
+                );
+            }
+        }
+        Instance::Pake(k) => {
+            let pw = vec![0x70u8; pick(s.key, 13)];
+            let (da, db) = run_pake(&**k, &pw, &pw);
+            let (da, db) = (da.expect("initiator finished"), db.expect("responder finished"));
+            assert_eq!(da, db, "{ctx}: same password, same secret");
+            assert!(s.ss.unwrap().contains(da.len()), "{ctx}: secret length");
+            // a different password never yields equal secrets
+            let mut other = pw.clone();
+            other[0] ^= 1;
+            let (xa, xb) = run_pake(&**k, &pw, &other);
+            if let (Some(xa), Some(xb)) = (xa, xb) {
+                assert_ne!(xa, xb, "{ctx}: wrong password agreed");
+            }
+            // a junk first message ends the exchange
+            let (st, _) = k
+                .start(PakeRole::Responder, &pw, b"ctx", &mut rng())
+                .unwrap();
+            // (SRP accepts any non-zero A and only fails at the proof, so "continues" is allowed;
+            // finishing with a secret on junk is not)
+            assert!(
+                !matches!(st.step(&[0xFFu8; 7]), Ok(PakeStep::Done(..))),
+                "{ctx}: junk message finished the exchange"
+            );
+            assert!(
+                k.start(PakeRole::Initiator, &[], b"ctx", &mut rng()).is_err()
+                    || s.key.unwrap().min() == 0,
+                "{ctx}: empty password"
+            );
+        }
+        Instance::StatefulSign(g) => {
+            let (pk, mut key): (PublicKey, StatefulKey) = g.keygen(&mut rng()).unwrap();
+            assert_eq!(pk.len(), fixed(s.pk), "{ctx}");
+            let before = g.remaining(&key).unwrap();
+            assert_eq!(before, g.max_signatures(), "{ctx}");
+            // a failing persist releases nothing and leaves the key as it was
+            let mut fail = |_: &[u8]| -> nextssl_core::Result<()> { Err(Error::PersistFailed) };
+            assert!(g.sign(&mut key, b"m", &mut fail).is_err(), "{ctx}");
+            assert_eq!(g.remaining(&key).unwrap(), before, "{ctx}: state moved");
+            let mut stored: Vec<u8> = Vec::new();
+            let mut keep = |b: &[u8]| -> nextssl_core::Result<()> {
+                stored = b.to_vec();
+                Ok(())
+            };
+            let sig = g.sign(&mut key, b"message", &mut keep).unwrap();
+            assert_eq!(stored, key.as_bytes(), "{ctx}: persisted state is the new state");
+            assert_eq!(g.remaining(&key).unwrap(), before - 1, "{ctx}");
+            assert!(s.sig.unwrap().contains(sig.len()), "{ctx}");
+            assert!(g.verify(&pk, b"message", &sig).unwrap(), "{ctx}");
+            assert!(!g.verify(&pk, b"messagE", &sig).unwrap_or(false), "{ctx}");
+            // small keys are run to exhaustion: the next call is an explicit error, no persist
+            if g.max_signatures() <= 64 {
+                let mut never = |_: &[u8]| -> nextssl_core::Result<()> {
+                    panic!("persist called for an exhausted key")
+                };
+                let mut noop = |_: &[u8]| -> nextssl_core::Result<()> { Ok(()) };
+                while g.remaining(&key).unwrap() > 0 {
+                    g.sign(&mut key, b"x", &mut noop).unwrap();
+                }
+                assert_eq!(
+                    g.sign(&mut key, b"x", &mut never).err(),
+                    Some(Error::KeyExhausted),
+                    "{ctx}"
+                );
+            }
+        }
+        Instance::Zk(z) => {
+            // The statement and witness encodings are relation-specific, so the generic run only
+            // checks setup and that garbage is never accepted. Heavy systems declare smoke = skip.
+            let setup = z.setup(&[], &mut rng()).unwrap();
+            assert!(!z.verify(&setup, &[], &[0u8; 8]).unwrap_or(false), "{ctx}");
+        }
+        Instance::Threshold(t) => {
+            let secret = vec![0x5Au8; 32];
+            let n = 3.min(t.max_parties());
+            let th = 2.min(n);
+            let shares = t.split(&secret, th, n, &mut rng()).unwrap();
+            assert_eq!(shares.len(), n, "{ctx}");
+            assert_eq!(&t.combine(&shares[..th]).unwrap()[..], &secret[..], "{ctx}");
+            for (tt, nn) in [(0, n), (n + 1, n), (1, t.max_parties() + 1)] {
+                assert!(t.split(&secret, tt, nn, &mut rng()).is_err(), "{ctx}: {tt}/{nn}");
+            }
+            if th > 1 {
+                // too few shares: an error, never the secret
+                assert_ne!(
+                    t.combine(&shares[..1]).ok().map(|v| v.to_vec()),
+                    Some(secret.clone()),
+                    "{ctx}: one share revealed the secret"
+                );
+            }
+            let dup = [shares[0].as_bytes().to_vec(), shares[0].as_bytes().to_vec()];
+            let dup: Vec<nextssl_core::Share> = dup
+                .iter()
+                .map(|b| nextssl_core::Share::from_bytes(b, nextssl_core::Len::range(0, 1 << 20)).unwrap())
+                .collect();
+            assert_ne!(
+                t.combine(&dup).ok().map(|v| v.to_vec()),
+                Some(secret.clone()),
+                "{ctx}: duplicate shares reconstructed"
+            );
+        }
+        Instance::Vdf(v) => {
+            let t = 8u64.min(v.max_t());
+            let (out, proof) = v.eval(b"challenge", t).unwrap();
+            assert!(v.verify(b"challenge", t, &out, &proof).unwrap(), "{ctx}");
+            assert!(!v.verify(b"challengE", t, &out, &proof).unwrap_or(false), "{ctx}");
+            assert!(!v.verify(b"challenge", t, &out, &flip(proof)).unwrap_or(false), "{ctx}");
+            assert!(v.eval(b"challenge", 0).is_err(), "{ctx}: t = 0");
+            if v.max_t() < u64::MAX {
+                assert!(v.eval(b"challenge", v.max_t() + 1).is_err(), "{ctx}: t over cap");
+                assert!(
+                    v.verify(b"challenge", v.max_t() + 1, &out, &[]).is_err(),
+                    "{ctx}: verify t over cap"
+                );
+            }
+        }
+        Instance::He(h) => {
+            let keys = h.keygen(&[], &mut rng()).unwrap();
+            // convention: a one-byte unsigned integer plaintext
+            let c2 = h.encrypt(&keys.public, &[2], &mut rng()).unwrap();
+            let c3 = h.encrypt(&keys.public, &[3], &mut rng()).unwrap();
+            assert_eq!(&h.decrypt(&keys.secret, &c2).unwrap()[..], &[2], "{ctx}");
+            let all_ops = [
+                HeOp::Add, HeOp::Sub, HeOp::Mul, HeOp::Neg, HeOp::And, HeOp::Or, HeOp::Xor, HeOp::Not,
+            ];
+            for op in all_ops {
+                if !h.ops().contains(&op) {
+                    assert_eq!(
+                        h.eval(op, &[&c2, &c3], &keys.eval).err(),
+                        Some(Error::Unsupported),
+                        "{ctx}: undeclared op {op:?}"
+                    );
+                }
+            }
+            if h.ops().contains(&HeOp::Add) {
+                let sum = h.eval(HeOp::Add, &[&c2, &c3], &keys.eval).unwrap();
+                assert_eq!(&h.decrypt(&keys.secret, &sum).unwrap()[..], &[5], "{ctx}");
+                assert!(h.eval(HeOp::Add, &[&c2], &keys.eval).is_err(), "{ctx}: operand count");
+            }
+        }
     }
+}
+
+/// Runs a two-party exchange with an in-process message queue. Returns each side's secret when
+/// it finished; a rejected message ends the run with whatever finished before.
+fn run_pake(
+    k: &dyn nextssl_core::Pake,
+    pw_a: &[u8],
+    pw_b: &[u8],
+) -> (Option<SharedSecret>, Option<SharedSecret>) {
+    use std::collections::VecDeque;
+    let (sa, ma) = k.start(PakeRole::Initiator, pw_a, b"ctx", &mut rng()).unwrap();
+    let (sb, mb) = k.start(PakeRole::Responder, pw_b, b"ctx", &mut rng()).unwrap();
+    let (mut sa, mut sb) = (Some(sa), Some(sb));
+    let (mut qa, mut qb): (VecDeque<Vec<u8>>, VecDeque<Vec<u8>>) = (VecDeque::new(), VecDeque::new());
+    if !ma.is_empty() {
+        qb.push_back(ma);
+    }
+    if !mb.is_empty() {
+        qa.push_back(mb);
+    }
+    let (mut da, mut db) = (None, None);
+    for _ in 0..64 {
+        let mut progressed = false;
+        if let Some(m) = qb.pop_front() {
+            progressed = true;
+            if let Some(st) = sb.take() {
+                match st.step(&m) {
+                    Ok(PakeStep::Send(n, out)) => {
+                        sb = Some(n);
+                        if !out.is_empty() {
+                            qa.push_back(out);
+                        }
+                    }
+                    Ok(PakeStep::Done(ss, last)) => {
+                        db = Some(ss);
+                        qa.extend(last.filter(|l| !l.is_empty()));
+                    }
+                    Err(_) => return (da, db),
+                }
+            }
+        }
+        if let Some(m) = qa.pop_front() {
+            progressed = true;
+            if let Some(st) = sa.take() {
+                match st.step(&m) {
+                    Ok(PakeStep::Send(n, out)) => {
+                        sa = Some(n);
+                        if !out.is_empty() {
+                            qb.push_back(out);
+                        }
+                    }
+                    Ok(PakeStep::Done(ss, last)) => {
+                        da = Some(ss);
+                        qb.extend(last.filter(|l| !l.is_empty()));
+                    }
+                    Err(_) => return (da, db),
+                }
+            }
+        }
+        if (da.is_some() && db.is_some()) || !progressed {
+            break;
+        }
+    }
+    (da, db)
 }
 
 /// Stack for the per-algorithm worker. Classic McEliece keeps multi-hundred-KB arrays on the
@@ -569,6 +811,134 @@ fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
     // Every kind that has a registered algorithm was instantiated; print for the test log.
     println!("kinds exercised: {kinds:?}");
     assert!(kinds.len() >= 10, "too few kinds registered: {kinds:?}");
+}
+
+/// Replays the published-vector files that carry `"replay": "registry"` (AEAD, block cipher,
+/// stream cipher and signature verification). Verify-only for signatures, so no randomness is
+/// needed. Every mismatch is collected and printed as `KAT FAIL <algo> / <file> / <id>` before
+/// the final assert, so one bad vector never hides the others. Expected values are never edited.
+fn replay_registry_vector(inst: &Instance, v: &J) -> Result<(), String> {
+    let hex = |k: &str| -> Result<Vec<u8>, String> {
+        v.get(k)
+            .and_then(J::as_str)
+            .map(unhex)
+            .ok_or_else(|| format!("missing {k}"))
+    };
+    let skey = |b: &[u8]| SymmetricKey::from_bytes(b, nextssl_core::Len::fixed(b.len())).map_err(|e| e.to_string());
+    match inst {
+        Instance::Aead(c) => {
+            let (key, nonce, aad) = (skey(&hex("key_hex")?)?, hex("nonce_hex")?, hex("aad_hex")?);
+            let (pt, ct) = (hex("pt_hex")?, hex("ct_hex")?);
+            let got = c.seal(&key, &nonce, &aad, &pt).map_err(|e| format!("seal: {e}"))?;
+            if got != ct {
+                return Err(format!("seal mismatch: got {}", got.iter().map(|b| format!("{b:02x}")).collect::<String>()));
+            }
+            let back = c.open(&key, &nonce, &aad, &ct).map_err(|e| format!("open: {e}"))?;
+            if back[..] != pt[..] {
+                return Err("open returned a different plaintext".into());
+            }
+            Ok(())
+        }
+        Instance::BlockCipher(b) => {
+            let (key, pt, ct) = (skey(&hex("key_hex")?)?, hex("pt_hex")?, hex("ct_hex")?);
+            let mut blk = pt.clone();
+            b.encrypt_block(&key, &mut blk).map_err(|e| format!("encrypt: {e}"))?;
+            if blk != ct {
+                return Err(format!("encrypt mismatch: got {}", blk.iter().map(|b| format!("{b:02x}")).collect::<String>()));
+            }
+            b.decrypt_block(&key, &mut blk).map_err(|e| format!("decrypt: {e}"))?;
+            if blk != pt {
+                return Err("decrypt did not return the plaintext".into());
+            }
+            Ok(())
+        }
+        Instance::StreamCipher(c) => {
+            let (key, nonce, data, out) = (skey(&hex("key_hex")?)?, hex("nonce_hex")?, hex("data_hex")?, hex("out_hex")?);
+            let mut buf = data.clone();
+            c.apply_keystream(&key, &nonce, &mut buf).map_err(|e| e.to_string())?;
+            if buf != out {
+                return Err(format!("keystream mismatch: got {}", buf.iter().map(|b| format!("{b:02x}")).collect::<String>()));
+            }
+            Ok(())
+        }
+        Instance::Sign(g) => {
+            let (pk, msg, sig) = (hex("pk_hex")?, hex("msg_hex")?, hex("sig_hex")?);
+            let pk = PublicKey::from_vec(pk.clone(), nextssl_core::Len::fixed(pk.len())).map_err(|e| e.to_string())?;
+            let sig = Signature::from_vec(sig.clone(), nextssl_core::Len::fixed(sig.len())).map_err(|e| e.to_string())?;
+            match g.verify(&pk, &msg, b"", &sig) {
+                Ok(true) => Ok(()),
+                Ok(false) => Err("verify returned false for a published signature".into()),
+                Err(e) => Err(format!("verify error: {e}")),
+            }
+        }
+        _ => Err("kind not replayable by the registry harness".into()),
+    }
+}
+
+#[test]
+fn published_kats_replay_through_the_registry() {
+    let root = algos_dir();
+    let mut ran = 0usize;
+    let mut files = 0usize;
+    let mut failures: Vec<String> = Vec::new();
+    for a in all() {
+        #[cfg(miri)]
+        if a.c_backed {
+            continue;
+        }
+        for f in a.kat {
+            let path = root.join(a.dir).join(f);
+            let doc: J = serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+            if doc.get("replay").and_then(J::as_str) != Some("registry") {
+                continue;
+            }
+            files += 1;
+            let vectors = doc["vectors"].as_array().expect("vectors").clone();
+            let (id, file) = (a.id, f.to_string());
+            let (tx, rx) = std::sync::mpsc::channel();
+            let h = std::thread::Builder::new()
+                .name(format!("kat-{id}"))
+                .stack_size(WORKER_STACK)
+                .spawn(move || {
+                    let mut out: Vec<String> = Vec::new();
+                    let a = all().iter().find(|x| x.id == id).unwrap();
+                    for v in &vectors {
+                        let name = v["id"].as_str().unwrap_or("?").to_string();
+                        let params = if v.get("params").is_some() { params_of(v) } else { a.smoke_params() };
+                        let r = match instantiate_in(all(), Policy::Any, a.id, &params) {
+                            Ok(inst) => std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| replay_registry_vector(&inst, v)))
+                                .unwrap_or_else(|_| Err("panic".into())),
+                            Err(e) => Err(format!("instantiate: {e}")),
+                        };
+                        match r {
+                            Ok(()) => out.push(format!("ok {name}")),
+                            Err(m) => out.push(format!("KAT FAIL {} / {} / {name}: {m}", a.id, file)),
+                        }
+                    }
+                    let _ = tx.send(out);
+                })
+                .expect("spawn");
+            match rx.recv_timeout(PER_ALGO_TIMEOUT) {
+                Ok(lines) => {
+                    for l in lines {
+                        if let Some(rest) = l.strip_prefix("ok ") {
+                            let _ = rest;
+                            ran += 1;
+                        } else {
+                            println!("{l}");
+                            failures.push(l);
+                            ran += 1;
+                        }
+                    }
+                    let _ = h.join();
+                }
+                Err(_) => failures.push(format!("KAT FAIL {} / {f}: HANG", a.id)),
+            }
+        }
+    }
+    println!("published KATs: {files} files, {ran} vectors replayed, {} failed", failures.len());
+    assert!(files >= 20, "suspiciously few published KAT files: {files}");
+    assert!(failures.is_empty(), "{} published KAT vectors failed", failures.len());
 }
 
 #[test]

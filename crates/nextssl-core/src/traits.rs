@@ -14,7 +14,10 @@
 //! - Instances are immutable `Send + Sync` objects unless the trait holds state
 //!   (`EntropySource`, `Drbg`: `Send` only, `&mut self`).
 
-use crate::keys::{Ciphertext, PrivateKey, PublicKey, Seed, SharedSecret, Signature, SymmetricKey};
+use crate::keys::{
+    Ciphertext, PrivateKey, PublicKey, Seed, Share, SharedSecret, Signature, StatefulKey,
+    SymmetricKey,
+};
 use crate::len::fixed_nonzero;
 use crate::{Error, Result, Sizes};
 use alloc::boxed::Box;
@@ -374,9 +377,7 @@ pub trait Drbg: Send {
 }
 
 // ---------------------------------------------------------------------------------------
-// Reserved kinds (P3). Intentionally empty: methods are added when the first algorithm of the
-// family is imported. Nothing implements them yet, so adding required methods then is not a
-// breaking change for existing glue.
+// Proof of work
 // ---------------------------------------------------------------------------------------
 
 /// Proof of work (hashcash, Argon2-based, Equihash, ...). Challenges will carry the full
@@ -400,11 +401,292 @@ pub trait Pow: Send + Sync {
     fn verify(&self, challenge: &[u8], solution: &[u8], difficulty: u32) -> Result<bool>;
 }
 
+// ---------------------------------------------------------------------------------------
+// Root-only kinds (BRIEF_kinds.md). Never reachable through the safe API or the COSE envelope
+// (`Kind::root_only`: the registry refuses them under the safe policy whatever their tier).
+// ---------------------------------------------------------------------------------------
+
+/// Public-key encryption (RSA-OAEP, RSA PKCS#1 v1.5, HPKE, ECIES).
+///
+/// `sizes`: `pk`, `sk`, `ct` (range: ciphertext length), `out` (range: plaintext length) and `ctx`
+/// (range: label length, `0` = labels unsupported and a non-empty label is an error).
+pub trait Pke: Send + Sync {
+    fn sizes(&self) -> Sizes;
+
+    /// Fresh key pair from `rng`. `Unsupported` when the algorithm only encrypts to keys made
+    /// elsewhere.
+    fn keygen(&self, _rng: &mut dyn EntropySource) -> Result<(PublicKey, PrivateKey)> {
+        Err(Error::Unsupported)
+    }
+
+    /// Encrypts `pt` to `pk`, bound to `label` (OAEP label, HPKE `info`, ECIES shared info).
+    /// A plaintext or label outside `sizes()` is an error, never truncated.
+    fn encrypt(
+        &self,
+        pk: &PublicKey,
+        pt: &[u8],
+        label: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>>;
+
+    /// Wrong length is `Err`. Every other decryption failure (bad padding, bad tag, wrong label,
+    /// wrong key) is the same single `Error::AuthenticationFailed`: no oracle, no detail.
+    fn decrypt(&self, sk: &PrivateKey, ct: &[u8], label: &[u8]) -> Result<Zeroizing<Vec<u8>>>;
+}
+
+/// Which side of a password-authenticated exchange this party plays. For client/server
+/// protocols (SRP, OPAQUE) the initiator is the client and the responder the server.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PakeRole {
+    Initiator,
+    Responder,
+}
+
+/// One step result of an interactive state machine.
+pub enum PakeStep {
+    /// Send this message to the peer; continue with the new state.
+    Send(Box<dyn PakeState>, Vec<u8>),
+    /// Finished: the shared secret and, optionally, a last message the peer still needs.
+    Done(SharedSecret, Option<Vec<u8>>),
+}
+
+/// State of one party in a PAKE. `step` consumes the state, so a state cannot be reused, and a
+/// rejected message is an `Err` that has already dropped (and zeroized) the state.
+pub trait PakeState: Send {
+    fn step(self: Box<Self>, msg: &[u8]) -> Result<PakeStep>;
+}
+
+/// Password-authenticated key exchange (SPAKE2, OPAQUE, SRP, CPace). Interactive.
+///
+/// `sizes`: `key` (range: password length) and `ss` (shared secret length).
+pub trait Pake: Send + Sync {
+    fn sizes(&self) -> Sizes;
+
+    /// Begins an exchange. Returns the state and the first message to send; the message is
+    /// empty when this role waits for the peer first. `password` outside `sizes().key` is an
+    /// error. `context` is bound into the transcript where the protocol supports it.
+    fn start(
+        &self,
+        role: PakeRole,
+        password: &[u8],
+        context: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<(Box<dyn PakeState>, Vec<u8>)>;
+}
+
+/// Stateful hash-based signatures (XMSS, XMSS-MT, LMS, HSS). One-time keys must never be reused.
+///
+/// `sizes`: `pk`, `sk` (range: serialized state), `sig`, `seed` (`0` = keygen only from `rng`).
+/// There is no way to clone a [`StatefulKey`].
+pub trait StatefulSign: Send + Sync {
+    fn sizes(&self) -> Sizes;
+
+    /// Total number of signatures one key can make.
+    fn max_signatures(&self) -> u64;
+
+    /// Signatures this key can still make. `Err` for a malformed key state.
+    fn remaining(&self, key: &StatefulKey) -> Result<u64>;
+
+    /// Deterministic keygen; `seed.len()` must equal `sizes().seed`.
+    fn keygen_from_seed(&self, _seed: &Seed) -> Result<(PublicKey, StatefulKey)> {
+        Err(Error::Unsupported)
+    }
+
+    fn keygen(&self, rng: &mut dyn EntropySource) -> Result<(PublicKey, StatefulKey)> {
+        let seed = draw_seed(rng, self.sizes().seed)?;
+        self.keygen_from_seed(&seed)
+    }
+
+    /// Signs `msg`. The advanced key state is passed to `persist` and must come back `Ok`
+    /// before the signature is returned; a `persist` error returns that error (or
+    /// `Error::PersistFailed`) and no signature, and `key` keeps its old state. An exhausted
+    /// key is `Error::KeyExhausted`. On success `key` holds the advanced state.
+    fn sign(
+        &self,
+        key: &mut StatefulKey,
+        msg: &[u8],
+        persist: &mut dyn FnMut(&[u8]) -> Result<()>,
+    ) -> Result<Signature>;
+
+    /// `Ok(false)`: well-formed signature that does not verify. `Err`: malformed key or signature.
+    fn verify(&self, pk: &PublicKey, msg: &[u8], sig: &Signature) -> Result<bool>;
+}
+
 /// Zero-knowledge proof systems (Schnorr proofs, Bulletproofs, SNARKs, STARKs).
-pub trait Zk: Send + Sync {}
+///
+/// `params`, `statement`, `witness`, `setup` and `proof` are the system's own encodings.
+pub trait Zk: Send + Sync {
+    /// Public parameters (proving and verifying material) for `params`. Systems with no setup
+    /// return a small fixed blob so the same calls work everywhere.
+    fn setup(&self, params: &[u8], rng: &mut dyn EntropySource) -> Result<Vec<u8>>;
+
+    /// Proves knowledge of `witness` for `statement`. The glue wipes every copy of `witness`.
+    fn prove(
+        &self,
+        setup: &[u8],
+        statement: &[u8],
+        witness: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>>;
+
+    /// `Ok(false)`: well-formed proof that does not verify. `Err`: malformed input.
+    fn verify(&self, setup: &[u8], statement: &[u8], proof: &[u8]) -> Result<bool>;
+}
+
+/// What an interactive threshold session computes.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ThresholdOp {
+    /// Distributed key generation: output is this party's key share.
+    Dkg,
+    /// Threshold signing: `input` is the message, output the signature.
+    Sign,
+}
+
+/// Parameters of one party's interactive session.
+#[derive(Debug, Clone)]
+pub struct ThresholdSession {
+    pub op: ThresholdOp,
+    /// This party's id, `1..=n`.
+    pub party: u16,
+    pub t: u16,
+    pub n: u16,
+    /// Message to sign, or the party's key share for `Sign`.
+    pub input: Vec<u8>,
+}
+
+/// One step result of an interactive threshold session.
+pub enum ThresholdStep {
+    Send(Box<dyn ThresholdState>, Vec<u8>),
+    /// Finished: the output (key share or signature) and an optional last message.
+    Done(Zeroizing<Vec<u8>>, Option<Vec<u8>>),
+}
+
+/// Same shape as [`PakeState`]: consumed on every step.
+pub trait ThresholdState: Send {
+    fn step(self: Box<Self>, msg: &[u8]) -> Result<ThresholdStep>;
+}
+
+/// Checks `1 <= t <= n <= max_n`.
+pub fn check_threshold(t: usize, n: usize, max_n: usize) -> Result<()> {
+    if t < 1 || t > n || n > max_n {
+        return Err(Error::InvalidInput(
+            "threshold needs 1 <= t <= n <= max parties",
+        ));
+    }
+    Ok(())
+}
+
+/// Checks a party id is in `1..=n`.
+pub fn check_party(party: usize, n: usize) -> Result<()> {
+    if party < 1 || party > n {
+        return Err(Error::ProtocolAborted("party id outside 1..=n"));
+    }
+    Ok(())
+}
 
 /// Threshold schemes (Shamir, FROST, threshold ECDSA, DKG).
-pub trait Threshold: Send + Sync {}
+pub trait Threshold: Send + Sync {
+    /// Sizes: `key` (secret length), `out` (share length) where fixed; may be empty.
+    fn sizes(&self) -> Sizes {
+        Sizes::NONE
+    }
+
+    /// Largest `n` this scheme accepts.
+    fn max_parties(&self) -> usize;
+
+    /// Secret sharing: `t` of `n` shares reconstruct `secret`. `1 <= t <= n <= max_parties()`
+    /// is enforced ([`check_threshold`]); `Unsupported` for schemes without plain sharing.
+    fn split(
+        &self,
+        _secret: &[u8],
+        _t: usize,
+        _n: usize,
+        _rng: &mut dyn EntropySource,
+    ) -> Result<Vec<Share>> {
+        Err(Error::Unsupported)
+    }
+
+    /// Reconstructs from shares. Duplicate ids, mixed lengths or too few shares are errors; a
+    /// wrong set never silently returns a different secret where the scheme can detect it.
+    fn combine(&self, _shares: &[Share]) -> Result<Zeroizing<Vec<u8>>> {
+        Err(Error::Unsupported)
+    }
+
+    /// Interactive DKG or signing for one party. `party` must be in `1..=n` and `1 <= t <= n`.
+    fn start(
+        &self,
+        _session: &ThresholdSession,
+        _rng: &mut dyn EntropySource,
+    ) -> Result<(Box<dyn ThresholdState>, Vec<u8>)> {
+        Err(Error::Unsupported)
+    }
+}
+
+/// Operation on ciphertexts. A scheme lists what it supports in [`He::ops`]; any other op is
+/// `Error::Unsupported`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum HeOp {
+    Add,
+    Sub,
+    Mul,
+    Neg,
+    And,
+    Or,
+    Xor,
+    Not,
+}
+
+impl HeOp {
+    /// Number of ciphertext operands.
+    pub const fn arity(self) -> usize {
+        match self {
+            HeOp::Neg | HeOp::Not => 1,
+            _ => 2,
+        }
+    }
+}
+
+/// Key set of a homomorphic scheme.
+pub struct HeKeys {
+    /// Decryption key.
+    pub secret: PrivateKey,
+    /// Encryption key.
+    pub public: PublicKey,
+    /// Evaluation key (server key, relinearisation keys): public.
+    pub eval: PublicKey,
+}
+
+/// Homomorphic encryption (TFHE, BFV, BGV, CKKS, Paillier, ...).
+pub trait He: Send + Sync {
+    /// Operations [`He::eval`] supports.
+    fn ops(&self) -> &'static [HeOp];
+
+    /// Generates a key set. `params` is the scheme's own encoding (empty = defaults).
+    fn keygen(&self, params: &[u8], rng: &mut dyn EntropySource) -> Result<HeKeys>;
+
+    fn encrypt(
+        &self,
+        public: &PublicKey,
+        pt: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>>;
+
+    fn decrypt(&self, secret: &PrivateKey, ct: &[u8]) -> Result<Zeroizing<Vec<u8>>>;
+
+    /// Applies `op` to `cts` (exactly `op.arity()` operands). An op outside [`He::ops`] is
+    /// `Error::Unsupported`; a wrong operand count is `Error::InvalidInput`.
+    fn eval(&self, op: HeOp, cts: &[&[u8]], evk: &PublicKey) -> Result<Vec<u8>>;
+}
 
 /// Verifiable delay functions (Wesolowski, Pietrzak).
-pub trait Vdf: Send + Sync {}
+pub trait Vdf: Send + Sync {
+    /// Largest delay `t` this instance accepts (the `max_t` cap param); `eval` and `verify`
+    /// reject `t == 0` and `t > max_t()` with `Error::ParamOutOfRange("t")`.
+    fn max_t(&self) -> u64;
+
+    /// Returns `(output, proof)` after `t` sequential steps on `challenge`.
+    fn eval(&self, challenge: &[u8], t: u64) -> Result<(Vec<u8>, Vec<u8>)>;
+
+    /// `Ok(false)`: well-formed proof that does not verify. `Err`: malformed input or bad `t`.
+    fn verify(&self, challenge: &[u8], t: u64, output: &[u8], proof: &[u8]) -> Result<bool>;
+}

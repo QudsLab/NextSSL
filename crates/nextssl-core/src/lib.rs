@@ -20,15 +20,17 @@ pub mod testing;
 
 pub use error::{Error, Result};
 pub use keys::{
-    ct_eq, Ciphertext, PrivateKey, PublicKey, Seed, SharedSecret, Signature, SymmetricKey,
+    ct_eq, Ciphertext, PrivateKey, PublicKey, Seed, Share, SharedSecret, Signature, StatefulKey,
+    SymmetricKey,
 };
 pub use len::{Len, Sizes};
 pub use params::{ParamSpec, ParamType, Params, Value};
 pub use tier::{Kind, Status, Tier};
 pub use traits::{
-    Aead, BlockCipher, BlockMode, Checksum, Drbg, Encoding, EntropySource, Hash, Kdf, Kem, Kex,
-    KeyedBlockCipher, Mac, Mode, Pow, PwHash, Sign, StreamCipher, Threshold, Vdf, Xof, Zk,
-    MAX_INPUT_LEN,
+    check_party, check_threshold, Aead, BlockCipher, BlockMode, Checksum, Drbg, Encoding,
+    EntropySource, Hash, He, HeKeys, HeOp, Kdf, Kem, Kex, KeyedBlockCipher, Mac, Mode, Pake,
+    PakeRole, PakeState, PakeStep, Pke, Pow, PwHash, Sign, StatefulSign, StreamCipher, Threshold,
+    ThresholdOp, ThresholdSession, ThresholdState, ThresholdStep, Vdf, Xof, Zk, MAX_INPUT_LEN,
 };
 pub use zeroize::{Zeroize, ZeroizeOnDrop, Zeroizing};
 

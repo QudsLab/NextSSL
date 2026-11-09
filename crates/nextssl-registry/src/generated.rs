@@ -25,6 +25,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/des/3des",
         kat: &["kat/acvp-tdes-ecb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_3des::new),
     },
     AlgoInfo {
@@ -47,6 +48,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/ace/ace",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_ace::new),
     },
     AlgoInfo {
@@ -69,6 +71,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/acorn/acorn",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_acorn::new),
     },
     AlgoInfo {
@@ -91,6 +94,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/adler/adler32",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_adler32::new),
     },
     AlgoInfo {
@@ -113,6 +117,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aegis/aegis128l",
         kat: &["kat/draft-aegis.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aegis128l::new),
     },
     AlgoInfo {
@@ -135,6 +140,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aegis/aegis256",
         kat: &["kat/draft-aegis.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aegis256::new),
     },
     AlgoInfo {
@@ -157,6 +163,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/aes/aes-128",
         kat: &["kat/cavp-ecb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_aes_128::new),
     },
     AlgoInfo {
@@ -181,6 +188,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-cbc/aes-128-cbc",
         kat: &["kat/acvp-cbc.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_128_cbc::new),
     },
     AlgoInfo {
@@ -203,6 +211,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-ccm/aes-128-ccm",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_128_ccm::new),
     },
     AlgoInfo {
@@ -225,6 +234,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-ccm/aes-128-ccm-8",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_128_ccm_8::new),
     },
     AlgoInfo {
@@ -247,6 +257,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-cfb/aes-128-cfb",
         kat: &["kat/acvp-cfb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_128_cfb::new),
     },
     AlgoInfo {
@@ -269,6 +280,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-cfb/aes-128-cfb8",
         kat: &["kat/acvp-cfb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_128_cfb8::new),
     },
     AlgoInfo {
@@ -291,6 +303,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/aes-ctr/aes-128-ctr",
         kat: &["kat/acvp-ctr.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_aes_128_ctr::new),
     },
     AlgoInfo {
@@ -313,6 +326,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-eax/aes-128-eax",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_128_eax::new),
     },
     AlgoInfo {
@@ -337,6 +351,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-ecb/aes-128-ecb",
         kat: &["kat/acvp-ecb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_128_ecb::new),
     },
     AlgoInfo {
@@ -359,6 +374,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-gcm/aes-128-gcm",
         kat: &["kat/acvp-gcm.json", "kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_128_gcm::new),
     },
     AlgoInfo {
@@ -381,6 +397,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-gcm-siv/aes-128-gcm-siv",
         kat: &["kat/acvp-gcm-siv.json", "kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_128_gcm_siv::new),
     },
     AlgoInfo {
@@ -403,6 +420,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/aes-ofb/aes-128-ofb",
         kat: &["kat/acvp-ofb.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_aes_128_ofb::new),
     },
     AlgoInfo {
@@ -425,6 +443,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-xts/aes-128-xts",
         kat: &["kat/acvp-xts.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_128_xts::new),
     },
     AlgoInfo {
@@ -447,6 +466,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/aes/aes-192",
         kat: &["kat/cavp-ecb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_aes_192::new),
     },
     AlgoInfo {
@@ -471,6 +491,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-cbc/aes-192-cbc",
         kat: &["kat/acvp-cbc.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_192_cbc::new),
     },
     AlgoInfo {
@@ -493,6 +514,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-ccm/aes-192-ccm",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_192_ccm::new),
     },
     AlgoInfo {
@@ -515,6 +537,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-cfb/aes-192-cfb",
         kat: &["kat/acvp-cfb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_192_cfb::new),
     },
     AlgoInfo {
@@ -537,6 +560,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-cfb/aes-192-cfb8",
         kat: &["kat/acvp-cfb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_192_cfb8::new),
     },
     AlgoInfo {
@@ -559,6 +583,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/aes-ctr/aes-192-ctr",
         kat: &["kat/acvp-ctr.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_aes_192_ctr::new),
     },
     AlgoInfo {
@@ -581,6 +606,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-eax/aes-192-eax",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_192_eax::new),
     },
     AlgoInfo {
@@ -605,6 +631,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-ecb/aes-192-ecb",
         kat: &["kat/acvp-ecb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_192_ecb::new),
     },
     AlgoInfo {
@@ -627,6 +654,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-gcm/aes-192-gcm",
         kat: &["kat/acvp-gcm.json", "kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_192_gcm::new),
     },
     AlgoInfo {
@@ -649,6 +677,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/aes-ofb/aes-192-ofb",
         kat: &["kat/acvp-ofb.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_aes_192_ofb::new),
     },
     AlgoInfo {
@@ -671,6 +700,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/aes/aes-256",
         kat: &["kat/fips197.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_aes_256::new),
     },
     AlgoInfo {
@@ -695,6 +725,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-cbc/aes-256-cbc",
         kat: &["kat/acvp-cbc.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_256_cbc::new),
     },
     AlgoInfo {
@@ -717,6 +748,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-ccm/aes-256-ccm",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_256_ccm::new),
     },
     AlgoInfo {
@@ -739,6 +771,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-cfb/aes-256-cfb",
         kat: &["kat/acvp-cfb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_256_cfb::new),
     },
     AlgoInfo {
@@ -761,6 +794,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-cfb/aes-256-cfb8",
         kat: &["kat/acvp-cfb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_256_cfb8::new),
     },
     AlgoInfo {
@@ -783,6 +817,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/aes-ctr/aes-256-ctr",
         kat: &["kat/sp800-38a.json", "kat/xcheck-wrap.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_aes_256_ctr::new),
     },
     AlgoInfo {
@@ -805,6 +840,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-eax/aes-256-eax",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_256_eax::new),
     },
     AlgoInfo {
@@ -829,6 +865,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-ecb/aes-256-ecb",
         kat: &["kat/acvp-ecb.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_256_ecb::new),
     },
     AlgoInfo {
@@ -851,6 +888,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-gcm/aes-256-gcm",
         kat: &["kat/sp800-38d.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_256_gcm::new),
     },
     AlgoInfo {
@@ -873,6 +911,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-gcm-siv/aes-256-gcm-siv",
         kat: &["kat/acvp-gcm-siv.json", "kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_256_gcm_siv::new),
     },
     AlgoInfo {
@@ -895,6 +934,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/aes-ofb/aes-256-ofb",
         kat: &["kat/acvp-ofb.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_aes_256_ofb::new),
     },
     AlgoInfo {
@@ -917,6 +957,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-xts/aes-256-xts",
         kat: &["kat/acvp-xts.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_256_xts::new),
     },
     AlgoInfo {
@@ -939,6 +980,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/cmac/aes-cmac",
         kat: &["kat/rfc4493.json", "kat/wycheproof_aes_cmac_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_aes_cmac::new),
     },
     AlgoInfo {
@@ -961,6 +1003,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/cmac/aes-cmac-prf-128",
         kat: &["kat/rfc4615.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_aes_cmac_prf_128::new),
     },
     AlgoInfo {
@@ -983,6 +1026,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-copa/aes-copa",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_copa::new),
     },
     AlgoInfo {
@@ -1007,6 +1051,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-fpe/aes-fpe-ff1",
         kat: &["kat/acvp-ff1.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_fpe_ff1::new),
     },
     AlgoInfo {
@@ -1029,6 +1074,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/aes-gmac/aes-gmac",
         kat: &["kat/acvp-gmac.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_aes_gmac::new),
     },
     AlgoInfo {
@@ -1051,6 +1097,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-kw/aes-kw",
         kat: &["kat/acvp-kw.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_kw::new),
     },
     AlgoInfo {
@@ -1073,6 +1120,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mode/aes-kw/aes-kwp",
         kat: &["kat/acvp-kwp.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockMode(nextssl_algo_aes_kwp::new),
     },
     AlgoInfo {
@@ -1095,6 +1143,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/pmac/aes-pmac",
         kat: &["kat/rogaway-pmac.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_aes_pmac::new),
     },
     AlgoInfo {
@@ -1117,6 +1166,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-siv/aes-siv-cmac-256",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_siv_cmac_256::new),
     },
     AlgoInfo {
@@ -1139,6 +1189,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/aes-siv/aes-siv-cmac-512",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_siv_cmac_512::new),
     },
     AlgoInfo {
@@ -1161,6 +1212,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/anubis/anubis",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_anubis::new),
     },
     AlgoInfo {
@@ -1188,6 +1240,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/argon2/argon2d",
         kat: &["kat/rfc9106.json", "kat/argon2-cffi-reference.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_argon2d::new),
     },
     AlgoInfo {
@@ -1215,6 +1268,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/argon2/argon2i",
         kat: &["kat/rfc9106.json", "kat/phc-winner-argon2-test-c.json", "kat/argon2-cffi-reference.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_argon2i::new),
     },
     AlgoInfo {
@@ -1242,6 +1296,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/argon2/argon2id",
         kat: &["kat/rfc9106.json", "kat/phc-winner-argon2-test-c.json", "kat/argon2-cffi-reference.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_argon2id::new),
     },
     AlgoInfo {
@@ -1264,6 +1319,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/aria/aria-128",
         kat: &["kat/cryptopp-aria.json", "kat/rfc5794.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_aria_128::new),
     },
     AlgoInfo {
@@ -1286,6 +1342,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/aria/aria-192",
         kat: &["kat/cryptopp-aria.json", "kat/rfc5794.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_aria_192::new),
     },
     AlgoInfo {
@@ -1308,6 +1365,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/aria/aria-256",
         kat: &["kat/cryptopp-aria.json", "kat/rfc5794.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_aria_256::new),
     },
     AlgoInfo {
@@ -1330,6 +1388,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/ascon/ascon-aead128",
         kat: &["kat/ascon-aead128.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_ascon_aead128::new),
     },
     AlgoInfo {
@@ -1352,6 +1411,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/ascon/ascon-aead128a",
         kat: &["kat/ascon-aead128a.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_ascon_aead128a::new),
     },
     AlgoInfo {
@@ -1376,6 +1436,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "xof/ascon/ascon-cxof128",
         kat: &["kat/ascon-cxof128.json"],
+        smoke_skip: None,
         ctor: Ctor::Xof(nextssl_algo_ascon_cxof128::new),
     },
     AlgoInfo {
@@ -1398,6 +1459,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/ascon/ascon-hash256",
         kat: &["kat/ascon-hash256.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_ascon_hash256::new),
     },
     AlgoInfo {
@@ -1420,6 +1482,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/ascon/ascon-mac",
         kat: &["kat/ascon-mac.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_ascon_mac::new),
     },
     AlgoInfo {
@@ -1444,6 +1507,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/ascon/ascon-prf",
         kat: &["kat/ascon-prf.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_ascon_prf::new),
     },
     AlgoInfo {
@@ -1469,6 +1533,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/balloon/balloon",
         kat: &["kat/balloon-hash-tests.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_balloon::new),
     },
     AlgoInfo {
@@ -1491,6 +1556,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/base/base16",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_base16::new),
     },
     AlgoInfo {
@@ -1513,6 +1579,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/base/base32",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_base32::new),
     },
     AlgoInfo {
@@ -1535,6 +1602,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/base/base32hex",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_base32hex::new),
     },
     AlgoInfo {
@@ -1557,6 +1625,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/base/base58",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_base58::new),
     },
     AlgoInfo {
@@ -1579,6 +1648,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/base/base58check",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_base58check::new),
     },
     AlgoInfo {
@@ -1601,6 +1671,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/base/base64",
         kat: &["kat/rfc4648.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_base64::new),
     },
     AlgoInfo {
@@ -1623,6 +1694,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/base/base64url",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_base64url::new),
     },
     AlgoInfo {
@@ -1645,6 +1717,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/base/base85",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_base85::new),
     },
     AlgoInfo {
@@ -1667,6 +1740,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/base/base91",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_base91::new),
     },
     AlgoInfo {
@@ -1691,6 +1765,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/bcrypt/bcrypt",
         kat: &["kat/crypt_blowfish.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_bcrypt::new),
     },
     AlgoInfo {
@@ -1715,6 +1790,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[("hrp", "nextssl")],
         dir: "encoding/bech32/bech32",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_bech32::new),
     },
     AlgoInfo {
@@ -1739,6 +1815,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[("hrp", "nextssl")],
         dir: "encoding/bech32/bech32m",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_bech32m::new),
     },
     AlgoInfo {
@@ -1761,6 +1838,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/belt/belt",
         kat: &["kat/stb34.101.31.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_belt::new),
     },
     AlgoInfo {
@@ -1785,6 +1863,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/blake2/blake2b-512",
         kat: &["kat/blake2b-kat.json", "kat/blake2b-unkeyed.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_blake2b_512::new),
     },
     AlgoInfo {
@@ -1807,6 +1886,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/blake2/blake2b-mac",
         kat: &["kat/blake2-kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_blake2b_mac::new),
     },
     AlgoInfo {
@@ -1829,6 +1909,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/blake2/blake2bp",
         kat: &["kat/blake2bp.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_blake2bp::new),
     },
     AlgoInfo {
@@ -1853,6 +1934,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/blake2/blake2s",
         kat: &["kat/blake2s.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_blake2s::new),
     },
     AlgoInfo {
@@ -1875,6 +1957,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/blake2/blake2s-mac",
         kat: &["kat/blake2-kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_blake2s_mac::new),
     },
     AlgoInfo {
@@ -1897,6 +1980,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/blake2/blake2sp",
         kat: &["kat/blake2sp.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_blake2sp::new),
     },
     AlgoInfo {
@@ -1919,6 +2003,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/blake3/blake3",
         kat: &["kat/blake3.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_blake3::new),
     },
     AlgoInfo {
@@ -1941,6 +2026,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/blake3/blake3-mac",
         kat: &["kat/blake3-keyed.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_blake3_mac::new),
     },
     AlgoInfo {
@@ -1963,6 +2049,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/blowfish/blowfish",
         kat: &["kat/young-vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_blowfish::new),
     },
     AlgoInfo {
@@ -1987,6 +2074,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/bmw/bmw",
         kat: &["kat/bmw.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_bmw::new),
     },
     AlgoInfo {
@@ -2011,7 +2099,32 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/crypt/bsdicrypt",
         kat: &["kat/john-tests.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_bsdicrypt::new),
+    },
+    #[cfg(feature = "bulletproofs")]
+    AlgoInfo {
+        id: "bulletproofs-range",
+        kind: Kind::Zk,
+        category: "zk",
+        family: "bulletproofs",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &[],
+        license: "MIT",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes::NONE,
+        params: &[],
+        test_params: &[],
+        dir: "zk/bulletproofs/bulletproofs-range",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Zk(nextssl_algo_bulletproofs_range::new),
     },
     AlgoInfo {
         id: "camellia-128",
@@ -2033,6 +2146,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/camellia/camellia-128",
         kat: &["kat/cryptopp-camellia.json", "kat/rfc3713.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_camellia_128::new),
     },
     AlgoInfo {
@@ -2055,6 +2169,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/camellia/camellia-192",
         kat: &["kat/cryptopp-camellia.json", "kat/rfc3713.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_camellia_192::new),
     },
     AlgoInfo {
@@ -2077,6 +2192,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/camellia/camellia-256",
         kat: &["kat/cryptopp-camellia.json", "kat/rfc3713.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_camellia_256::new),
     },
     AlgoInfo {
@@ -2099,6 +2215,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/cast/cast5",
         kat: &["kat/rfc2144.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_cast5::new),
     },
     AlgoInfo {
@@ -2121,6 +2238,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/cast/cast6",
         kat: &["kat/rfc2612.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_cast6::new),
     },
     AlgoInfo {
@@ -2143,6 +2261,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/cbc-mac/cbc-mac",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_cbc_mac::new),
     },
     AlgoInfo {
@@ -2167,6 +2286,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/chacha/chacha12",
         kat: &["kat/strombergson.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_chacha12::new),
     },
     AlgoInfo {
@@ -2191,6 +2311,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/chacha/chacha20",
         kat: &["kat/rfc8439.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_chacha20::new),
     },
     AlgoInfo {
@@ -2213,6 +2334,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/chacha/chacha20-poly1305",
         kat: &["kat/wycheproof.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_chacha20_poly1305::new),
     },
     AlgoInfo {
@@ -2237,6 +2359,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/chacha/chacha8",
         kat: &["kat/strombergson.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_chacha8::new),
     },
     AlgoInfo {
@@ -2261,6 +2384,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/chaskey/chaskey",
         kat: &["kat/chaskey.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_chaskey::new),
     },
     AlgoInfo {
@@ -2283,6 +2407,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/cloc/cloc",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_cloc::new),
     },
     AlgoInfo {
@@ -2307,6 +2432,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kdf/concat/concat-kdf",
         kat: &["kat/acvp-onestep.json"],
+        smoke_skip: None,
         ctor: Ctor::Kdf(nextssl_algo_concat_kdf::new),
     },
     AlgoInfo {
@@ -2329,6 +2455,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/crc/crc16",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_crc16::new),
     },
     AlgoInfo {
@@ -2351,6 +2478,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/crc/crc32",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_crc32::new),
     },
     AlgoInfo {
@@ -2373,6 +2501,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/crc/crc32c",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_crc32c::new),
     },
     AlgoInfo {
@@ -2395,6 +2524,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/crc/crc64-ecma",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_crc64_ecma::new),
     },
     AlgoInfo {
@@ -2417,6 +2547,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/crc/crc8",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_crc8::new),
     },
     AlgoInfo {
@@ -2439,6 +2570,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdp-128-balanced",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdp_128_balanced::new),
     },
     AlgoInfo {
@@ -2461,6 +2593,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdp-128-fast",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdp_128_fast::new),
     },
     AlgoInfo {
@@ -2483,6 +2616,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdp-128-small",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdp_128_small::new),
     },
     AlgoInfo {
@@ -2505,6 +2639,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdp-192-balanced",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdp_192_balanced::new),
     },
     AlgoInfo {
@@ -2527,6 +2662,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdp-192-fast",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdp_192_fast::new),
     },
     AlgoInfo {
@@ -2549,6 +2685,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdp-192-small",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdp_192_small::new),
     },
     AlgoInfo {
@@ -2571,6 +2708,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdp-256-balanced",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdp_256_balanced::new),
     },
     AlgoInfo {
@@ -2593,6 +2731,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdp-256-fast",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdp_256_fast::new),
     },
     AlgoInfo {
@@ -2615,6 +2754,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdp-256-small",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdp_256_small::new),
     },
     AlgoInfo {
@@ -2637,6 +2777,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdpg-128-balanced",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdpg_128_balanced::new),
     },
     AlgoInfo {
@@ -2659,6 +2800,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdpg-128-fast",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdpg_128_fast::new),
     },
     AlgoInfo {
@@ -2681,6 +2823,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdpg-128-small",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdpg_128_small::new),
     },
     AlgoInfo {
@@ -2703,6 +2846,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdpg-192-balanced",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdpg_192_balanced::new),
     },
     AlgoInfo {
@@ -2725,6 +2869,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdpg-192-fast",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdpg_192_fast::new),
     },
     AlgoInfo {
@@ -2747,6 +2892,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdpg-192-small",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdpg_192_small::new),
     },
     AlgoInfo {
@@ -2769,6 +2915,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdpg-256-balanced",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdpg_256_balanced::new),
     },
     AlgoInfo {
@@ -2791,6 +2938,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdpg-256-fast",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdpg_256_fast::new),
     },
     AlgoInfo {
@@ -2813,6 +2961,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/cross/cross-rsdpg-256-small",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_cross_rsdpg_256_small::new),
     },
     AlgoInfo {
@@ -2837,6 +2986,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "xof/cshake/cshake128",
         kat: &["kat/cshake128.json"],
+        smoke_skip: None,
         ctor: Ctor::Xof(nextssl_algo_cshake128::new),
     },
     AlgoInfo {
@@ -2861,6 +3011,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "xof/cshake/cshake256",
         kat: &["kat/cshake256.json"],
+        smoke_skip: None,
         ctor: Ctor::Xof(nextssl_algo_cshake256::new),
     },
     AlgoInfo {
@@ -2885,6 +3036,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/cubehash/cubehash",
         kat: &["kat/cubehash.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_cubehash::new),
     },
     #[cfg(feature = "copyleft")]
@@ -2908,6 +3060,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/deoxys/deoxys-ii",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_deoxys_ii::new),
     },
     AlgoInfo {
@@ -2930,6 +3083,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/des/des",
         kat: &["kat/nist-des-kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_des::new),
     },
     AlgoInfo {
@@ -2952,6 +3106,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/cbc-mac/des-mac",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_des_mac::new),
     },
     AlgoInfo {
@@ -2974,6 +3129,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/dme-sign/dme-sign",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dme_sign::new),
     },
     AlgoInfo {
@@ -2996,6 +3152,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/drygascon/drygascon",
         kat: &["kat/drygascon.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_drygascon::new),
     },
     AlgoInfo {
@@ -3018,6 +3175,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/drygascon/drygascon-256",
         kat: &["kat/drygascon-256.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_drygascon_256::new),
     },
     AlgoInfo {
@@ -3040,6 +3198,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kex/ecdh/ecdh-p256",
         kat: &["kat/wycheproof-ecdh_secp256r1_ecpoint_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Kex(nextssl_algo_ecdh_p256::new),
     },
     AlgoInfo {
@@ -3062,6 +3221,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kex/ecdh/ecdh-p384",
         kat: &["kat/wycheproof-ecdh_secp384r1_ecpoint_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Kex(nextssl_algo_ecdh_p384::new),
     },
     AlgoInfo {
@@ -3084,6 +3244,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kex/ecdh/ecdh-p521",
         kat: &["kat/wycheproof-ecdh_secp521r1_ecpoint_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Kex(nextssl_algo_ecdh_p521::new),
     },
     AlgoInfo {
@@ -3108,6 +3269,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/ecdsa/ecdsa-p256",
         kat: &["kat/acvp-ecdsa.json", "kat/wycheproof-ecdsa_secp256r1_sha256_p1363_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ecdsa_p256::new),
     },
     AlgoInfo {
@@ -3132,6 +3294,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/ecdsa/ecdsa-p384",
         kat: &["kat/acvp-ecdsa.json", "kat/wycheproof-ecdsa_secp384r1_sha384_p1363_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ecdsa_p384::new),
     },
     AlgoInfo {
@@ -3156,6 +3319,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/ecdsa/ecdsa-p521",
         kat: &["kat/acvp-ecdsa.json", "kat/wycheproof-ecdsa_secp521r1_sha512_p1363_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ecdsa_p521::new),
     },
     AlgoInfo {
@@ -3180,6 +3344,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/ecdsa/ecdsa-secp256k1",
         kat: &["kat/wycheproof-ecdsa_secp256k1_sha256_p1363_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ecdsa_secp256k1::new),
     },
     AlgoInfo {
@@ -3204,6 +3369,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/echo/echo",
         kat: &["kat/echo.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_echo::new),
     },
     AlgoInfo {
@@ -3226,6 +3392,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/eddsa/ed25519",
         kat: &["kat/rfc8032-7.1.json", "kat/wycheproof-ed25519_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ed25519::new),
     },
     AlgoInfo {
@@ -3248,7 +3415,31 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/eddsa/ed448",
         kat: &["kat/rfc8032-7.4.json", "kat/wycheproof-ed448_test.json", "kat/acvp-eddsa-ed448.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ed448::new),
+    },
+    AlgoInfo {
+        id: "ed448ph",
+        kind: Kind::Sign,
+        category: "sign",
+        family: "eddsa",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 8032"],
+        license: "MIT",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { pk: Some(Len::fixed(57)), sk: Some(Len::fixed(57)), sig: Some(Len::fixed(114)), seed: Some(Len::fixed(57)), ctx: Some(Len::range(0, 255)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "sign/eddsa/ed448ph",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Sign(nextssl_algo_ed448ph::new),
     },
     AlgoInfo {
         id: "edon-r",
@@ -3270,6 +3461,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/edon-r/edon-r",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_edon_r::new),
     },
     AlgoInfo {
@@ -3292,6 +3484,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/elephant/elephant-dumbo",
         kat: &["kat/elephant-dumbo.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_elephant_dumbo::new),
     },
     AlgoInfo {
@@ -3314,6 +3507,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/elephant/elephant-jumbo",
         kat: &["kat/elephant-jumbo.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_elephant_jumbo::new),
     },
     AlgoInfo {
@@ -3336,6 +3530,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/falcon/falcon-1024",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_falcon_1024::new),
     },
     AlgoInfo {
@@ -3358,6 +3553,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/falcon/falcon-512",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_falcon_512::new),
     },
     AlgoInfo {
@@ -3380,6 +3576,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/falcon/falcon-padded-1024",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_falcon_padded_1024::new),
     },
     AlgoInfo {
@@ -3402,7 +3599,31 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/falcon/falcon-padded-512",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_falcon_padded_512::new),
+    },
+    AlgoInfo {
+        id: "feal",
+        kind: Kind::BlockCipher,
+        category: "block",
+        family: "feal",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &[],
+        license: "NOASSERTION",
+        copyleft: false,
+        c_backed: true,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { key: Some(Len::fixed(16)), block: Some(Len::fixed(8)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "block/feal/feal",
+        kat: &["kat/kat.json", "kat/published.json"],
+        smoke_skip: None,
+        ctor: Ctor::BlockCipher(nextssl_algo_feal::new),
     },
     AlgoInfo {
         id: "ff70",
@@ -3428,6 +3649,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "encoding/ff70/ff70",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_ff70::new),
     },
     AlgoInfo {
@@ -3450,6 +3672,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/fletcher/fletcher16",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_fletcher16::new),
     },
     AlgoInfo {
@@ -3472,7 +3695,54 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/fletcher/fletcher32",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_fletcher32::new),
+    },
+    AlgoInfo {
+        id: "fn-dsa-1024",
+        kind: Kind::Sign,
+        category: "sign",
+        family: "fn-dsa",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["FIPS 206 (draft)"],
+        license: "MIT",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { pk: Some(Len::fixed(1793)), sk: Some(Len::fixed(2305)), sig: Some(Len::fixed(1577)), seed: Some(Len::fixed(48)), ctx: Some(Len::range(0, 255)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "sign/fn-dsa/fn-dsa-1024",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Sign(nextssl_algo_fn_dsa_1024::new),
+    },
+    AlgoInfo {
+        id: "fn-dsa-512",
+        kind: Kind::Sign,
+        category: "sign",
+        family: "fn-dsa",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["FIPS 206 (draft)"],
+        license: "MIT",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { pk: Some(Len::fixed(897)), sk: Some(Len::fixed(1281)), sig: Some(Len::fixed(809)), seed: Some(Len::fixed(48)), ctx: Some(Len::range(0, 255)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "sign/fn-dsa/fn-dsa-512",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Sign(nextssl_algo_fn_dsa_512::new),
     },
     AlgoInfo {
         id: "fountain",
@@ -3494,6 +3764,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/fountain/fountain",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_fountain::new),
     },
     AlgoInfo {
@@ -3518,6 +3789,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/fugue/fugue",
         kat: &["kat/fugue.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_fugue::new),
     },
     AlgoInfo {
@@ -3540,6 +3812,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/ghash/ghash",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_ghash::new),
     },
     AlgoInfo {
@@ -3562,6 +3835,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/gift-cofb/gift-cofb",
         kat: &["kat/gift-cofb.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_gift_cofb::new),
     },
     AlgoInfo {
@@ -3584,6 +3858,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/gimli/gimli",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_gimli::new),
     },
     AlgoInfo {
@@ -3606,6 +3881,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/gost-r-34-11-94/gost-r-34-11-94",
         kat: &["kat/gost-r-34-11-94.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_gost_r_34_11_94::new),
     },
     AlgoInfo {
@@ -3628,6 +3904,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/grain/grain-128aead",
         kat: &["kat/grain-128aead.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_grain_128aead::new),
     },
     AlgoInfo {
@@ -3652,6 +3929,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/groestl/groestl",
         kat: &["kat/groestl.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_groestl::new),
     },
     AlgoInfo {
@@ -3676,6 +3954,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/hamsi/hamsi",
         kat: &["kat/hamsi.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_hamsi::new),
     },
     AlgoInfo {
@@ -3698,6 +3977,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/has160/has160",
         kat: &["kat/has160.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_has160::new),
     },
     AlgoInfo {
@@ -3720,7 +4000,31 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/hc/hc256",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_hc256::new),
+    },
+    AlgoInfo {
+        id: "hitag2",
+        kind: Kind::StreamCipher,
+        category: "stream",
+        family: "hitag2",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &[],
+        license: "NOASSERTION",
+        copyleft: false,
+        c_backed: true,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { key: Some(Len::fixed(6)), nonce: Some(Len::fixed(8)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "stream/hitag2/hitag2",
+        kat: &["kat/kat.json"],
+        smoke_skip: None,
+        ctor: Ctor::StreamCipher(nextssl_algo_hitag2::new),
     },
     AlgoInfo {
         id: "hkdf",
@@ -3744,6 +4048,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kdf/hkdf/hkdf",
         kat: &["kat/vectors.json", "kat/wycheproof_hkdf_sha256_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Kdf(nextssl_algo_hkdf::new),
     },
     AlgoInfo {
@@ -3768,6 +4073,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kdf/hkdf/hkdf-expand",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Kdf(nextssl_algo_hkdf_expand::new),
     },
     AlgoInfo {
@@ -3792,6 +4098,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kdf/hkdf/hkdf-extract",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Kdf(nextssl_algo_hkdf_extract::new),
     },
     AlgoInfo {
@@ -3814,6 +4121,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kdf/hkdf/hkdf-sha256",
         kat: &["kat/rfc5869.json"],
+        smoke_skip: None,
         ctor: Ctor::Kdf(nextssl_algo_hkdf_sha256::new),
     },
     AlgoInfo {
@@ -3838,6 +4146,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/hmac/hmac",
         kat: &["kat/rfc4231.json", "kat/py-hmac.json", "kat/wycheproof_hmac_sha256_test.json", "kat/wycheproof_hmac_sha512_test.json", "kat/wycheproof_hmac_sha3_256_test.json", "kat/wycheproof_hmac_sha3_384_test.json", "kat/wycheproof_hmac_sha3_512_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_hmac::new),
     },
     AlgoInfo {
@@ -3860,6 +4169,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "drbg/hmac/hmac-drbg-sha256",
         kat: &["kat/cavp-hmac-drbg-sha256.json"],
+        smoke_skip: None,
         ctor: Ctor::Drbg(nextssl_algo_hmac_drbg_sha256::new),
     },
     AlgoInfo {
@@ -3882,6 +4192,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/hmac/hmac-md5",
         kat: &["kat/rfc2202.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_hmac_md5::new),
     },
     AlgoInfo {
@@ -3904,6 +4215,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/hmac/hmac-sha1",
         kat: &["kat/rfc2202.json", "kat/wycheproof_hmac_sha1_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_hmac_sha1::new),
     },
     AlgoInfo {
@@ -3926,6 +4238,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/hmac/hmac-sha256",
         kat: &["kat/rfc4231.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_hmac_sha256::new),
     },
     AlgoInfo {
@@ -3948,6 +4261,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/hmac/hmac-sha3-256",
         kat: &["kat/py-hmac.json", "kat/wycheproof_hmac_sha3_256_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_hmac_sha3_256::new),
     },
     AlgoInfo {
@@ -3970,6 +4284,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/hmac/hmac-sha3-384",
         kat: &["kat/py-hmac.json", "kat/wycheproof_hmac_sha3_384_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_hmac_sha3_384::new),
     },
     AlgoInfo {
@@ -3992,6 +4307,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/hmac/hmac-sha3-512",
         kat: &["kat/py-hmac.json", "kat/wycheproof_hmac_sha3_512_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_hmac_sha3_512::new),
     },
     AlgoInfo {
@@ -4014,7 +4330,80 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/hmac/hmac-sha512",
         kat: &["kat/rfc4231.json", "kat/wycheproof_hmac_sha512_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_hmac_sha512::new),
+    },
+    #[cfg(feature = "hpke")]
+    AlgoInfo {
+        id: "hpke-p256-sha256-aes128gcm",
+        kind: Kind::Pke,
+        category: "pke",
+        family: "hpke",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 9180"],
+        license: "MIT/Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { out: Some(Len::range(0, 65536)), pk: Some(Len::fixed(65)), sk: Some(Len::fixed(32)), ct: Some(Len::range(81, 65617)), ctx: Some(Len::range(0, 1024)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pke/hpke/hpke-p256-sha256-aes128gcm",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pke(nextssl_algo_hpke_p256_sha256_aes128gcm::new),
+    },
+    #[cfg(feature = "hpke")]
+    AlgoInfo {
+        id: "hpke-x25519-sha256-aes128gcm",
+        kind: Kind::Pke,
+        category: "pke",
+        family: "hpke",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 9180"],
+        license: "MIT/Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { out: Some(Len::range(0, 65536)), pk: Some(Len::fixed(32)), sk: Some(Len::fixed(32)), ct: Some(Len::range(48, 65584)), ctx: Some(Len::range(0, 1024)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pke/hpke/hpke-x25519-sha256-aes128gcm",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pke(nextssl_algo_hpke_x25519_sha256_aes128gcm::new),
+    },
+    #[cfg(feature = "hpke")]
+    AlgoInfo {
+        id: "hpke-x25519-sha256-chacha20poly1305",
+        kind: Kind::Pke,
+        category: "pke",
+        family: "hpke",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 9180"],
+        license: "MIT/Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { out: Some(Len::range(0, 65536)), pk: Some(Len::fixed(32)), sk: Some(Len::fixed(32)), ct: Some(Len::range(48, 65584)), ctx: Some(Len::range(0, 1024)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pke/hpke/hpke-x25519-sha256-chacha20poly1305",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pke(nextssl_algo_hpke_x25519_sha256_chacha20poly1305::new),
     },
     AlgoInfo {
         id: "hqc-128",
@@ -4036,6 +4425,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/hqc/hqc-128",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_hqc_128::new),
     },
     AlgoInfo {
@@ -4058,6 +4448,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/hqc/hqc-192",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_hqc_192::new),
     },
     AlgoInfo {
@@ -4080,6 +4471,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/hqc/hqc-256",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_hqc_256::new),
     },
     AlgoInfo {
@@ -4102,7 +4494,32 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/hs1-siv/hs1-siv",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_hs1_siv::new),
+    },
+    #[cfg(feature = "hbs-lms")]
+    AlgoInfo {
+        id: "hss-sha256-h5-h5-w4",
+        kind: Kind::StatefulSign,
+        category: "sign",
+        family: "hss",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 8554", "NIST SP 800-208"],
+        license: "Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { pk: Some(Len::fixed(60)), sk: Some(Len::range(32, 512)), sig: Some(Len::range(256, 65536)), seed: Some(Len::fixed(32)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "sign/hss/hss-sha256-h5-h5-w4",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::StatefulSign(nextssl_algo_hss_sha256_h5_h5_w4::new),
     },
     AlgoInfo {
         id: "hyena-v1",
@@ -4124,6 +4541,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/hyena/hyena-v1",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_hyena_v1::new),
     },
     AlgoInfo {
@@ -4146,6 +4564,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/hyena/hyena-v2",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_hyena_v2::new),
     },
     AlgoInfo {
@@ -4168,6 +4587,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/idea/idea",
         kat: &["kat/nessie.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_idea::new),
     },
     AlgoInfo {
@@ -4190,6 +4610,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/ifeed/ifeed",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_ifeed::new),
     },
     AlgoInfo {
@@ -4212,6 +4633,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/isap/isap-a-128a",
         kat: &["kat/isap-a-128a.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_isap_a_128a::new),
     },
     AlgoInfo {
@@ -4234,6 +4656,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/isap/isap-k-128a",
         kat: &["kat/isap-k-128a.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_isap_k_128a::new),
     },
     AlgoInfo {
@@ -4256,6 +4679,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/iscream/iscream",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_iscream::new),
     },
     AlgoInfo {
@@ -4280,6 +4704,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/jh/jh",
         kat: &["kat/jh.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_jh::new),
     },
     #[cfg(feature = "copyleft")]
@@ -4303,6 +4728,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/joltik/joltik",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_joltik::new),
     },
     AlgoInfo {
@@ -4325,6 +4751,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/kalyna/kalyna",
         kat: &["kat/kalyna.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_kalyna::new),
     },
     AlgoInfo {
@@ -4347,6 +4774,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/kalyna/kalyna-128-256",
         kat: &["kat/kalyna-128-256.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_kalyna_128_256::new),
     },
     AlgoInfo {
@@ -4369,6 +4797,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/kalyna/kalyna-256-256",
         kat: &["kat/kalyna-256-256.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_kalyna_256_256::new),
     },
     AlgoInfo {
@@ -4391,6 +4820,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/kalyna/kalyna-256-512",
         kat: &["kat/kalyna-256-512.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_kalyna_256_512::new),
     },
     AlgoInfo {
@@ -4413,6 +4843,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/kalyna/kalyna-512-512",
         kat: &["kat/kalyna-512-512.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_kalyna_512_512::new),
     },
     AlgoInfo {
@@ -4437,6 +4868,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "xof/k12/kangarootwelve",
         kat: &["kat/kangarootwelve.json"],
+        smoke_skip: None,
         ctor: Ctor::Xof(nextssl_algo_kangarootwelve::new),
     },
     AlgoInfo {
@@ -4459,6 +4891,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/kasumi/kasumi",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_kasumi::new),
     },
     #[cfg(feature = "copyleft")]
@@ -4482,6 +4915,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/kaz-sign/kaz-sign",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_kaz_sign::new),
     },
     AlgoInfo {
@@ -4504,6 +4938,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha3/keccak256",
         kat: &["kat/keccak256.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_keccak256::new),
     },
     AlgoInfo {
@@ -4526,6 +4961,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha3/keccak512",
         kat: &["kat/keccak512.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_keccak512::new),
     },
     AlgoInfo {
@@ -4548,6 +4984,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/khazad/khazad",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_khazad::new),
     },
     #[cfg(feature = "copyleft")]
@@ -4571,6 +5008,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/kiasu/kiasu",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_kiasu::new),
     },
     AlgoInfo {
@@ -4595,6 +5033,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/kmac/kmac128",
         kat: &["kat/nist-sp800-185-samples.json", "kat/wycheproof_kmac128_no_customization_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_kmac128::new),
     },
     AlgoInfo {
@@ -4619,6 +5058,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/kmac/kmac256",
         kat: &["kat/nist-sp800-185-samples.json", "kat/wycheproof_kmac256_no_customization_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_kmac256::new),
     },
     AlgoInfo {
@@ -4643,6 +5083,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/kmac/kmacxof128",
         kat: &["kat/nist-sp800-185-samples.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_kmacxof128::new),
     },
     AlgoInfo {
@@ -4667,6 +5108,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/kmac/kmacxof256",
         kat: &["kat/nist-sp800-185-samples.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_kmacxof256::new),
     },
     AlgoInfo {
@@ -4689,6 +5131,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/kuznyechik/kuznyechik",
         kat: &["kat/rfc7801.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_kuznyechik::new),
     },
     AlgoInfo {
@@ -4711,7 +5154,56 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/lm/lm-hash",
         kat: &["kat/lm-hash.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_lm_hash::new),
+    },
+    #[cfg(feature = "hbs-lms")]
+    AlgoInfo {
+        id: "lms-sha256-h10-w4",
+        kind: Kind::StatefulSign,
+        category: "sign",
+        family: "lms",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 8554", "NIST SP 800-208"],
+        license: "Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { pk: Some(Len::fixed(60)), sk: Some(Len::range(32, 512)), sig: Some(Len::range(256, 65536)), seed: Some(Len::fixed(32)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "sign/lms/lms-sha256-h10-w4",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::StatefulSign(nextssl_algo_lms_sha256_h10_w4::new),
+    },
+    #[cfg(feature = "hbs-lms")]
+    AlgoInfo {
+        id: "lms-sha256-h5-w4",
+        kind: Kind::StatefulSign,
+        category: "sign",
+        family: "lms",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 8554", "NIST SP 800-208"],
+        license: "Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { pk: Some(Len::fixed(60)), sk: Some(Len::range(32, 512)), sig: Some(Len::range(256, 65536)), seed: Some(Len::fixed(32)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "sign/lms/lms-sha256-h5-w4",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::StatefulSign(nextssl_algo_lms_sha256_h5_w4::new),
     },
     AlgoInfo {
         id: "locus",
@@ -4733,6 +5225,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/locus/locus",
         kat: &["kat/locus.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_locus::new),
     },
     AlgoInfo {
@@ -4755,6 +5248,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/lotus/lotus",
         kat: &["kat/lotus.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lotus::new),
     },
     AlgoInfo {
@@ -4779,6 +5273,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/luffa/luffa",
         kat: &["kat/luffa.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_luffa::new),
     },
     AlgoInfo {
@@ -4801,6 +5296,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/magma/magma",
         kat: &["kat/rfc8891.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_magma::new),
     },
     AlgoInfo {
@@ -4823,6 +5319,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-348864",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_348864::new),
     },
     AlgoInfo {
@@ -4845,6 +5342,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-348864f",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_348864f::new),
     },
     AlgoInfo {
@@ -4867,6 +5365,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-460896",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_460896::new),
     },
     AlgoInfo {
@@ -4889,6 +5388,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-460896f",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_460896f::new),
     },
     AlgoInfo {
@@ -4911,6 +5411,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-6688128",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_6688128::new),
     },
     AlgoInfo {
@@ -4933,6 +5434,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-6688128f",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_6688128f::new),
     },
     AlgoInfo {
@@ -4955,6 +5457,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-6960119",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_6960119::new),
     },
     AlgoInfo {
@@ -4977,6 +5480,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-6960119f",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_6960119f::new),
     },
     AlgoInfo {
@@ -4999,6 +5503,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-8192128",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_8192128::new),
     },
     AlgoInfo {
@@ -5021,6 +5526,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/classic-mceliece/mceliece-8192128f",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_mceliece_8192128f::new),
     },
     AlgoInfo {
@@ -5043,6 +5549,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/md/md2",
         kat: &["kat/md2.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_md2::new),
     },
     AlgoInfo {
@@ -5065,6 +5572,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/md/md4",
         kat: &["kat/md4.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_md4::new),
     },
     AlgoInfo {
@@ -5087,6 +5595,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/md/md5",
         kat: &["kat/md5.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_md5::new),
     },
     AlgoInfo {
@@ -5109,6 +5618,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/crypt/md5crypt",
         kat: &["kat/john-tests.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_md5crypt::new),
     },
     AlgoInfo {
@@ -5133,6 +5643,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/md6/md6",
         kat: &["kat/md6.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_md6::new),
     },
     AlgoInfo {
@@ -5157,6 +5668,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/ml-dsa/ml-dsa-44",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ml_dsa_44::new),
     },
     AlgoInfo {
@@ -5181,6 +5693,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/ml-dsa/ml-dsa-65",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ml_dsa_65::new),
     },
     AlgoInfo {
@@ -5205,6 +5718,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/ml-dsa/ml-dsa-87",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ml_dsa_87::new),
     },
     AlgoInfo {
@@ -5227,6 +5741,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/ml-kem/ml-kem-1024",
         kat: &["kat/acvp-keygen.json", "kat/acvp-encapdecap.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_ml_kem_1024::new),
     },
     AlgoInfo {
@@ -5249,6 +5764,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/ml-kem/ml-kem-512",
         kat: &["kat/acvp-keygen.json", "kat/acvp-encapdecap.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_ml_kem_512::new),
     },
     AlgoInfo {
@@ -5271,6 +5787,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/ml-kem/ml-kem-768",
         kat: &["kat/acvp-keygen.json", "kat/acvp-encapdecap.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_ml_kem_768::new),
     },
     AlgoInfo {
@@ -5293,6 +5810,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/morus/morus",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_morus::new),
     },
     AlgoInfo {
@@ -5315,6 +5833,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/noekeon/noekeon",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_noekeon::new),
     },
     AlgoInfo {
@@ -5337,6 +5856,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/norx/norx",
         kat: &["kat/norx.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_norx::new),
     },
     AlgoInfo {
@@ -5359,6 +5879,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/nt/nt-hash",
         kat: &["kat/nt-hash.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_nt_hash::new),
     },
     AlgoInfo {
@@ -5381,6 +5902,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/ntru/ntruhps2048509",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_ntruhps2048509::new),
     },
     AlgoInfo {
@@ -5403,6 +5925,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/ntru/ntruhps2048677",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_ntruhps2048677::new),
     },
     AlgoInfo {
@@ -5425,6 +5948,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/ntru/ntruhps40961229",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_ntruhps40961229::new),
     },
     AlgoInfo {
@@ -5447,6 +5971,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/ntru/ntruhps4096821",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_ntruhps4096821::new),
     },
     AlgoInfo {
@@ -5469,6 +5994,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/ntru/ntruhrss1373",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_ntruhrss1373::new),
     },
     AlgoInfo {
@@ -5491,7 +6017,32 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kem/ntru/ntruhrss701",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_ntruhrss701::new),
+    },
+    #[cfg(feature = "opaque-ke")]
+    AlgoInfo {
+        id: "opaque-ristretto255-sha512",
+        kind: Kind::Pake,
+        category: "pake",
+        family: "opaque",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 9807"],
+        license: "Apache-2.0 OR MIT",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { key: Some(Len::range(1, 256)), ss: Some(Len::fixed(64)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pake/opaque/opaque-ristretto255-sha512",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pake(nextssl_algo_opaque_ristretto255_sha512::new),
     },
     AlgoInfo {
         id: "orange",
@@ -5513,6 +6064,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/orange/orange",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_orange::new),
     },
     AlgoInfo {
@@ -5535,6 +6087,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/oribatida/oribatida-192",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_oribatida_192::new),
     },
     AlgoInfo {
@@ -5557,6 +6110,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/oribatida/oribatida-256",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_oribatida_256::new),
     },
     AlgoInfo {
@@ -5579,6 +6133,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "rng/os/os-entropy",
         kat: &["kat/os-entropy-behaviour.json"],
+        smoke_skip: None,
         ctor: Ctor::Rng(nextssl_algo_os_entropy::new),
     },
     AlgoInfo {
@@ -5605,6 +6160,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/parallelhash/parallelhash128",
         kat: &["kat/parallelhash128.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_parallelhash128::new),
     },
     AlgoInfo {
@@ -5631,6 +6187,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/parallelhash/parallelhash256",
         kat: &["kat/parallelhash256.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_parallelhash256::new),
     },
     AlgoInfo {
@@ -5657,6 +6214,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/pbkdf2/pbkdf2",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_pbkdf2::new),
     },
     AlgoInfo {
@@ -5682,6 +6240,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/pbkdf2/pbkdf2-hmac-sha1",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_pbkdf2_hmac_sha1::new),
     },
     AlgoInfo {
@@ -5707,6 +6266,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/pbkdf2/pbkdf2-hmac-sha256",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_pbkdf2_hmac_sha256::new),
     },
     AlgoInfo {
@@ -5732,6 +6292,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/pbkdf2/pbkdf2-hmac-sha512",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_pbkdf2_hmac_sha512::new),
     },
     AlgoInfo {
@@ -5756,6 +6317,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/photon-beetle/photon-beetle",
         kat: &["kat/photon-beetle.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_photon_beetle::new),
     },
     AlgoInfo {
@@ -5778,6 +6340,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/photon-beetle/photon-beetle-hash",
         kat: &["kat/photon-beetle-hash.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_photon_beetle_hash::new),
     },
     AlgoInfo {
@@ -5800,7 +6363,32 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/poly1305/poly1305",
         kat: &["kat/rfc8439.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_poly1305::new),
+    },
+    #[cfg(feature = "copyleft")]
+    AlgoInfo {
+        id: "pride",
+        kind: Kind::BlockCipher,
+        category: "block",
+        family: "pride",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &[],
+        license: "LGPL-3.0-or-later",
+        copyleft: true,
+        c_backed: true,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { key: Some(Len::fixed(16)), block: Some(Len::fixed(8)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "block/pride/pride",
+        kat: &["kat/kat.json", "kat/published.json"],
+        smoke_skip: None,
+        ctor: Ctor::BlockCipher(nextssl_algo_pride::new),
     },
     AlgoInfo {
         id: "pyjamask",
@@ -5822,6 +6410,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/pyjamask/pyjamask",
         kat: &["kat/pyjamask.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_pyjamask::new),
     },
     AlgoInfo {
@@ -5844,6 +6433,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/pyjamask/pyjamask-96",
         kat: &["kat/pyjamask-96.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_pyjamask_96::new),
     },
     AlgoInfo {
@@ -5866,6 +6456,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/rabbit/rabbit",
         kat: &["kat/cryptopp-rabbit.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_rabbit::new),
     },
     AlgoInfo {
@@ -5888,6 +6479,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/raviyoyla/raviyoyla",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_raviyoyla::new),
     },
     AlgoInfo {
@@ -5912,6 +6504,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/rc/rc2",
         kat: &["kat/rfc2268.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_rc2::new),
     },
     AlgoInfo {
@@ -5934,6 +6527,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/rc4/rc4",
         kat: &["kat/rfc6229.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_rc4::new),
     },
     AlgoInfo {
@@ -5956,6 +6550,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/rc/rc5",
         kat: &["kat/rfc2040.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_rc5::new),
     },
     AlgoInfo {
@@ -5964,7 +6559,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         category: "block",
         family: "rc",
         aliases: &[],
-        tier: Tier::Unverified,
+        tier: Tier::Research,
         status: Status::Active,
         standards: &[],
         license: "NOASSERTION",
@@ -5978,6 +6573,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/rc/rc6",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_rc6::new),
     },
     AlgoInfo {
@@ -6000,6 +6596,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/ripemd/ripemd128",
         kat: &["kat/reference-vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_ripemd128::new),
     },
     AlgoInfo {
@@ -6022,6 +6619,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/ripemd/ripemd160",
         kat: &["kat/ripemd160.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_ripemd160::new),
     },
     AlgoInfo {
@@ -6044,6 +6642,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/ripemd/ripemd256",
         kat: &["kat/reference-vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_ripemd256::new),
     },
     AlgoInfo {
@@ -6066,6 +6665,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/ripemd/ripemd320",
         kat: &["kat/reference-vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_ripemd320::new),
     },
     AlgoInfo {
@@ -6088,6 +6688,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/romulus/romulus",
         kat: &["kat/romulus.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_romulus::new),
     },
     AlgoInfo {
@@ -6110,7 +6711,152 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/romulus/romulus-hash",
         kat: &["kat/romulus-hash.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_romulus_hash::new),
+    },
+    #[cfg(feature = "rsa")]
+    AlgoInfo {
+        id: "rsa-oaep-2048",
+        kind: Kind::Pke,
+        category: "pke",
+        family: "rsa-oaep",
+        aliases: &[],
+        tier: Tier::Legacy,
+        status: Status::Active,
+        standards: &["RFC 8017"],
+        license: "MIT OR Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { out: Some(Len::range(0, 190)), pk: Some(Len::range(264, 288)), sk: Some(Len::range(768, 1344)), ct: Some(Len::fixed(256)), ctx: Some(Len::range(0, 64)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pke/rsa-oaep/rsa-oaep-2048",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pke(nextssl_algo_rsa_oaep_2048::new),
+    },
+    #[cfg(feature = "rsa")]
+    AlgoInfo {
+        id: "rsa-oaep-3072",
+        kind: Kind::Pke,
+        category: "pke",
+        family: "rsa-oaep",
+        aliases: &[],
+        tier: Tier::Legacy,
+        status: Status::Active,
+        standards: &["RFC 8017"],
+        license: "MIT OR Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { out: Some(Len::range(0, 318)), pk: Some(Len::range(392, 416)), sk: Some(Len::range(1152, 1984)), ct: Some(Len::fixed(384)), ctx: Some(Len::range(0, 64)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pke/rsa-oaep/rsa-oaep-3072",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pke(nextssl_algo_rsa_oaep_3072::new),
+    },
+    #[cfg(feature = "rsa")]
+    AlgoInfo {
+        id: "rsa-oaep-4096",
+        kind: Kind::Pke,
+        category: "pke",
+        family: "rsa-oaep",
+        aliases: &[],
+        tier: Tier::Legacy,
+        status: Status::Active,
+        standards: &["RFC 8017"],
+        license: "MIT OR Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { out: Some(Len::range(0, 446)), pk: Some(Len::range(520, 544)), sk: Some(Len::range(1536, 2624)), ct: Some(Len::fixed(512)), ctx: Some(Len::range(0, 64)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pke/rsa-oaep/rsa-oaep-4096",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pke(nextssl_algo_rsa_oaep_4096::new),
+    },
+    #[cfg(feature = "rsa")]
+    AlgoInfo {
+        id: "rsa-pkcs1v15-enc-2048",
+        kind: Kind::Pke,
+        category: "pke",
+        family: "rsa-pkcs1v15-enc",
+        aliases: &[],
+        tier: Tier::Broken,
+        status: Status::Active,
+        standards: &["RFC 8017"],
+        license: "MIT OR Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { out: Some(Len::range(0, 245)), pk: Some(Len::range(264, 288)), sk: Some(Len::range(768, 1344)), ct: Some(Len::fixed(256)), ctx: Some(Len::fixed(0)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pke/rsa-pkcs1v15-enc/rsa-pkcs1v15-enc-2048",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pke(nextssl_algo_rsa_pkcs1v15_enc_2048::new),
+    },
+    #[cfg(feature = "rsa")]
+    AlgoInfo {
+        id: "rsa-pkcs1v15-enc-3072",
+        kind: Kind::Pke,
+        category: "pke",
+        family: "rsa-pkcs1v15-enc",
+        aliases: &[],
+        tier: Tier::Broken,
+        status: Status::Active,
+        standards: &["RFC 8017"],
+        license: "MIT OR Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { out: Some(Len::range(0, 373)), pk: Some(Len::range(392, 416)), sk: Some(Len::range(1152, 1984)), ct: Some(Len::fixed(384)), ctx: Some(Len::fixed(0)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pke/rsa-pkcs1v15-enc/rsa-pkcs1v15-enc-3072",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pke(nextssl_algo_rsa_pkcs1v15_enc_3072::new),
+    },
+    #[cfg(feature = "rsa")]
+    AlgoInfo {
+        id: "rsa-pkcs1v15-enc-4096",
+        kind: Kind::Pke,
+        category: "pke",
+        family: "rsa-pkcs1v15-enc",
+        aliases: &[],
+        tier: Tier::Broken,
+        status: Status::Active,
+        standards: &["RFC 8017"],
+        license: "MIT OR Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { out: Some(Len::range(0, 501)), pk: Some(Len::range(520, 544)), sk: Some(Len::range(1536, 2624)), ct: Some(Len::fixed(512)), ctx: Some(Len::fixed(0)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pke/rsa-pkcs1v15-enc/rsa-pkcs1v15-enc-4096",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pke(nextssl_algo_rsa_pkcs1v15_enc_4096::new),
     },
     AlgoInfo {
         id: "sablier",
@@ -6132,6 +6878,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/sablier/sablier",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_sablier::new),
     },
     AlgoInfo {
@@ -6154,6 +6901,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/saeaes/saeaes",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_saeaes::new),
     },
     AlgoInfo {
@@ -6176,6 +6924,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/safer/safer-plus",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_safer_plus::new),
     },
     AlgoInfo {
@@ -6198,6 +6947,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/salsa/salsa20",
         kat: &["kat/estream.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_salsa20::new),
     },
     AlgoInfo {
@@ -6220,6 +6970,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/salsa/salsa20-12",
         kat: &["kat/estream.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_salsa20_12::new),
     },
     AlgoInfo {
@@ -6242,6 +6993,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/salsa/salsa20-8",
         kat: &["kat/estream.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_salsa20_8::new),
     },
     AlgoInfo {
@@ -6264,6 +7016,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/saturnin/saturnin",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_saturnin::new),
     },
     AlgoInfo {
@@ -6286,6 +7039,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/schnorr/schnorr-bip340",
         kat: &["kat/bip340-test-vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_schnorr_bip340::new),
     },
     AlgoInfo {
@@ -6308,6 +7062,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/scream/scream",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_scream::new),
     },
     AlgoInfo {
@@ -6335,6 +7090,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/scrypt/scrypt",
         kat: &["kat/rfc7914.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_scrypt::new),
     },
     AlgoInfo {
@@ -6357,6 +7113,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/serpent/serpent-128",
         kat: &["kat/nessie.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_serpent_128::new),
     },
     AlgoInfo {
@@ -6379,6 +7136,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/serpent/serpent-192",
         kat: &["kat/nessie.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_serpent_192::new),
     },
     AlgoInfo {
@@ -6401,6 +7159,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/serpent/serpent-256",
         kat: &["kat/nessie.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_serpent_256::new),
     },
     AlgoInfo {
@@ -6423,6 +7182,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha1/sha0",
         kat: &["kat/sha0.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha0::new),
     },
     AlgoInfo {
@@ -6445,6 +7205,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha1/sha1",
         kat: &["kat/sha1.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha1::new),
     },
     AlgoInfo {
@@ -6467,6 +7228,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha2/sha224",
         kat: &["kat/sha224.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha224::new),
     },
     AlgoInfo {
@@ -6489,6 +7251,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha2/sha256",
         kat: &["kat/fips180-4.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha256::new),
     },
     AlgoInfo {
@@ -6513,6 +7276,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/crypt/sha256crypt",
         kat: &["kat/drepper.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_sha256crypt::new),
     },
     AlgoInfo {
@@ -6535,6 +7299,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha3/sha3-224",
         kat: &["kat/sha3-224.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha3_224::new),
     },
     AlgoInfo {
@@ -6557,6 +7322,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha3/sha3-256",
         kat: &["kat/sha3-256.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha3_256::new),
     },
     AlgoInfo {
@@ -6579,6 +7345,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha3/sha3-384",
         kat: &["kat/sha3-384.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha3_384::new),
     },
     AlgoInfo {
@@ -6601,6 +7368,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha3/sha3-512",
         kat: &["kat/sha3-512.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha3_512::new),
     },
     AlgoInfo {
@@ -6623,6 +7391,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha2/sha384",
         kat: &["kat/sha384.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha384::new),
     },
     AlgoInfo {
@@ -6645,6 +7414,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha2/sha512",
         kat: &["kat/sha512.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha512::new),
     },
     AlgoInfo {
@@ -6667,6 +7437,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha2/sha512-224",
         kat: &["kat/sha512-224.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha512_224::new),
     },
     AlgoInfo {
@@ -6689,6 +7460,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sha2/sha512-256",
         kat: &["kat/sha512-256.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sha512_256::new),
     },
     AlgoInfo {
@@ -6713,6 +7485,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/crypt/sha512crypt",
         kat: &["kat/drepper.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_sha512crypt::new),
     },
     AlgoInfo {
@@ -6737,6 +7510,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/shabal/shabal",
         kat: &["kat/shabal.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_shabal::new),
     },
     AlgoInfo {
@@ -6759,6 +7533,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "xof/shake/shake128",
         kat: &["kat/shake128.json"],
+        smoke_skip: None,
         ctor: Ctor::Xof(nextssl_algo_shake128::new),
     },
     AlgoInfo {
@@ -6781,7 +7556,31 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "xof/sha3/shake256",
         kat: &["kat/cavp-shake256.json"],
+        smoke_skip: None,
         ctor: Ctor::Xof(nextssl_algo_shake256::new),
+    },
+    AlgoInfo {
+        id: "shamir",
+        kind: Kind::Threshold,
+        category: "threshold",
+        family: "shamir",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &[],
+        license: "MIT/Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes::NONE,
+        params: &[],
+        test_params: &[],
+        dir: "threshold/shamir/shamir",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Threshold(nextssl_algo_shamir::new),
     },
     AlgoInfo {
         id: "shavite3",
@@ -6805,6 +7604,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/shavite3/shavite3",
         kat: &["kat/shavite3.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_shavite3::new),
     },
     AlgoInfo {
@@ -6829,6 +7629,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/simd/simd",
         kat: &["kat/simd.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_simd::new),
     },
     AlgoInfo {
@@ -6853,6 +7654,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/siphash/siphash-2-4",
         kat: &["kat/siphash-2-4.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_siphash_2_4::new),
     },
     AlgoInfo {
@@ -6877,6 +7679,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "mac/siphash/siphash-4-8",
         kat: &["kat/siphash-4-8.json"],
+        smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_siphash_4_8::new),
     },
     AlgoInfo {
@@ -6899,6 +7702,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/skein/skein1024",
         kat: &["kat/skein1024.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_skein1024::new),
     },
     AlgoInfo {
@@ -6921,6 +7725,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/skein/skein256",
         kat: &["kat/skein256.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_skein256::new),
     },
     AlgoInfo {
@@ -6943,6 +7748,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/skein/skein512",
         kat: &["kat/skein512.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_skein512::new),
     },
     AlgoInfo {
@@ -6951,7 +7757,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         category: "block",
         family: "skipjack",
         aliases: &[],
-        tier: Tier::Unverified,
+        tier: Tier::Research,
         status: Status::Active,
         standards: &[],
         license: "NOASSERTION",
@@ -6965,6 +7771,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/skipjack/skipjack",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_skipjack::new),
     },
     AlgoInfo {
@@ -6989,6 +7796,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-sha2-128f",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_sha2_128f::new),
     },
     AlgoInfo {
@@ -7013,6 +7821,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-sha2-128s",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_sha2_128s::new),
     },
     AlgoInfo {
@@ -7037,6 +7846,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-sha2-192f",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_sha2_192f::new),
     },
     AlgoInfo {
@@ -7061,6 +7871,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-sha2-192s",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_sha2_192s::new),
     },
     AlgoInfo {
@@ -7085,6 +7896,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-sha2-256f",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_sha2_256f::new),
     },
     AlgoInfo {
@@ -7109,6 +7921,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-sha2-256s",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_sha2_256s::new),
     },
     AlgoInfo {
@@ -7133,6 +7946,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-shake-128f",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_shake_128f::new),
     },
     AlgoInfo {
@@ -7157,6 +7971,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-shake-128s",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_shake_128s::new),
     },
     AlgoInfo {
@@ -7181,6 +7996,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-shake-192f",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_shake_192f::new),
     },
     AlgoInfo {
@@ -7205,6 +8021,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-shake-192s",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_shake_192s::new),
     },
     AlgoInfo {
@@ -7229,6 +8046,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-shake-256f",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_shake_256f::new),
     },
     AlgoInfo {
@@ -7253,6 +8071,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/slh-dsa/slh-dsa-shake-256s",
         kat: &["kat/acvp-keygen.json", "kat/acvp-siggen.json", "kat/acvp-sigver.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_slh_dsa_shake_256s::new),
     },
     AlgoInfo {
@@ -7261,7 +8080,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         category: "sign",
         family: "sm2",
         aliases: &["sm2-dsa"],
-        tier: Tier::Unverified,
+        tier: Tier::Research,
         status: Status::Active,
         standards: &["GB/T 32918.2", "RFC 8998"],
         license: "Apache-2.0 OR MIT",
@@ -7275,6 +8094,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "sign/sm2/sm2-sign",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sm2_sign::new),
     },
     AlgoInfo {
@@ -7297,6 +8117,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sm3/sm3",
         kat: &["kat/sm3.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sm3::new),
     },
     AlgoInfo {
@@ -7319,7 +8140,31 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/sm4/sm4",
         kat: &["kat/cross-impl.json", "kat/sm4-paper.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_sm4::new),
+    },
+    AlgoInfo {
+        id: "spake2-ed25519",
+        kind: Kind::Pake,
+        category: "pake",
+        family: "spake2",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["draft-irtf-cfrg-spake2"],
+        license: "MIT OR Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { key: Some(Len::range(1, 256)), ss: Some(Len::fixed(32)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pake/spake2/spake2-ed25519",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pake(nextssl_algo_spake2_ed25519::new),
     },
     #[cfg(feature = "copyleft")]
     AlgoInfo {
@@ -7342,6 +8187,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/sparkle/sparkle-esch",
         kat: &["kat/sparkle-esch.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sparkle_esch::new),
     },
     #[cfg(feature = "copyleft")]
@@ -7365,6 +8211,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/sparkle/sparkle-schwaemm",
         kat: &["kat/sparkle-schwaemm.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_sparkle_schwaemm::new),
     },
     AlgoInfo {
@@ -7387,6 +8234,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/spix/spix",
         kat: &["kat/spix.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_spix::new),
     },
     AlgoInfo {
@@ -7409,6 +8257,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/spoc/spoc-128",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_spoc_128::new),
     },
     AlgoInfo {
@@ -7431,6 +8280,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/spoc/spoc-64",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_spoc_64::new),
     },
     AlgoInfo {
@@ -7455,6 +8305,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/spook/spook",
         kat: &["kat/spook.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_spook::new),
     },
     AlgoInfo {
@@ -7479,7 +8330,31 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/spook/spook-su",
         kat: &["kat/spook-su.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_spook_su::new),
+    },
+    AlgoInfo {
+        id: "srp-6a-2048-sha256",
+        kind: Kind::Pake,
+        category: "pake",
+        family: "srp",
+        aliases: &[],
+        tier: Tier::Legacy,
+        status: Status::Active,
+        standards: &["RFC 5054", "RFC 2945"],
+        license: "MIT OR Apache-2.0",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { key: Some(Len::range(1, 256)), ss: Some(Len::range(1, 256)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "pake/srp/srp-6a-2048-sha256",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Pake(nextssl_algo_srp_6a_2048_sha256::new),
     },
     AlgoInfo {
         id: "streebog256",
@@ -7501,6 +8376,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/streebog/streebog256",
         kat: &["kat/streebog256.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_streebog256::new),
     },
     AlgoInfo {
@@ -7523,6 +8399,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/streebog/streebog512",
         kat: &["kat/streebog512.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_streebog512::new),
     },
     AlgoInfo {
@@ -7545,6 +8422,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/stribob/stribob",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_stribob::new),
     },
     AlgoInfo {
@@ -7567,6 +8445,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/subterranean/subterranean",
         kat: &["kat/subterranean.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_subterranean::new),
     },
     AlgoInfo {
@@ -7589,6 +8468,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/sundae/sundae",
         kat: &["kat/sundae.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_sundae::new),
     },
     AlgoInfo {
@@ -7611,6 +8491,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/sundae/sundae-0",
         kat: &["kat/sundae-0.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_sundae_0::new),
     },
     AlgoInfo {
@@ -7633,6 +8514,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/sundae/sundae-128",
         kat: &["kat/sundae-128.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_sundae_128::new),
     },
     AlgoInfo {
@@ -7655,6 +8537,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/sundae/sundae-64",
         kat: &["kat/sundae-64.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_sundae_64::new),
     },
     AlgoInfo {
@@ -7663,7 +8546,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         category: "block",
         family: "tea",
         aliases: &[],
-        tier: Tier::Unverified,
+        tier: Tier::Research,
         status: Status::Active,
         standards: &[],
         license: "NOASSERTION",
@@ -7677,6 +8560,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/tea/tea",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_tea::new),
     },
     AlgoInfo {
@@ -7701,6 +8585,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/threefish/threefish-1024",
         kat: &["kat/cryptopp-threefish.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_threefish_1024::new),
     },
     AlgoInfo {
@@ -7725,6 +8610,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/threefish/threefish-256",
         kat: &["kat/cryptopp-threefish.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_threefish_256::new),
     },
     AlgoInfo {
@@ -7749,6 +8635,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/threefish/threefish-512",
         kat: &["kat/cryptopp-threefish.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_threefish_512::new),
     },
     #[cfg(feature = "copyleft")]
@@ -7772,6 +8659,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/tiaoxin/tiaoxin",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_tiaoxin::new),
     },
     AlgoInfo {
@@ -7794,6 +8682,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/tiger/tiger",
         kat: &["kat/tiger.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_tiger::new),
     },
     AlgoInfo {
@@ -7816,6 +8705,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/tinyjambu/tinyjambu",
         kat: &["kat/tinyjambu.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_tinyjambu::new),
     },
     AlgoInfo {
@@ -7838,6 +8728,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/tinyjambu/tinyjambu-192",
         kat: &["kat/tinyjambu-192.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_tinyjambu_192::new),
     },
     AlgoInfo {
@@ -7860,7 +8751,100 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/tinyjambu/tinyjambu-256",
         kat: &["kat/tinyjambu-256.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_tinyjambu_256::new),
+    },
+    AlgoInfo {
+        id: "turboshake128",
+        kind: Kind::Xof,
+        category: "xof",
+        family: "turboshake",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 9861"],
+        license: "MIT",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes::NONE,
+        params: &[],
+        test_params: &[],
+        dir: "xof/turboshake/turboshake128",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Xof(nextssl_algo_turboshake128::new),
+    },
+    AlgoInfo {
+        id: "turboshake256",
+        kind: Kind::Xof,
+        category: "xof",
+        family: "turboshake",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["RFC 9861"],
+        license: "MIT",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes::NONE,
+        params: &[],
+        test_params: &[],
+        dir: "xof/turboshake/turboshake256",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::Xof(nextssl_algo_turboshake256::new),
+    },
+    AlgoInfo {
+        id: "twine-128",
+        kind: Kind::BlockCipher,
+        category: "block",
+        family: "twine",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &[],
+        license: "MIT",
+        copyleft: false,
+        c_backed: true,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { key: Some(Len::fixed(16)), block: Some(Len::fixed(8)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "block/twine/twine-128",
+        kat: &["kat/kat.json"],
+        smoke_skip: None,
+        ctor: Ctor::BlockCipher(nextssl_algo_twine_128::new),
+    },
+    AlgoInfo {
+        id: "twine-80",
+        kind: Kind::BlockCipher,
+        category: "block",
+        family: "twine",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &[],
+        license: "MIT",
+        copyleft: false,
+        c_backed: true,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { key: Some(Len::fixed(10)), block: Some(Len::fixed(8)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "block/twine/twine-80",
+        kat: &["kat/kat.json"],
+        smoke_skip: None,
+        ctor: Ctor::BlockCipher(nextssl_algo_twine_80::new),
     },
     AlgoInfo {
         id: "twofish",
@@ -7882,6 +8866,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/twofish/twofish",
         kat: &["kat/ecb_ival.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_twofish::new),
     },
     AlgoInfo {
@@ -7904,6 +8889,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/wage/wage",
         kat: &["kat/wage.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_wage::new),
     },
     AlgoInfo {
@@ -7926,6 +8912,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/wheesht/wheesht",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_wheesht::new),
     },
     AlgoInfo {
@@ -7948,6 +8935,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/whirlpool/whirlpool",
         kat: &["kat/whirlpool.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_whirlpool::new),
     },
     AlgoInfo {
@@ -7970,6 +8958,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kex/ecdh/x25519",
         kat: &["kat/rfc7748.json", "kat/wycheproof-x25519_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Kex(nextssl_algo_x25519::new),
     },
     AlgoInfo {
@@ -7992,6 +8981,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "kex/ecdh/x448",
         kat: &["kat/rfc7748.json", "kat/wycheproof-x448_test.json"],
+        smoke_skip: None,
         ctor: Ctor::Kex(nextssl_algo_x448::new),
     },
     AlgoInfo {
@@ -8014,6 +9004,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/chacha/xchacha20",
         kat: &["kat/draft-xchacha.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_xchacha20::new),
     },
     AlgoInfo {
@@ -8036,6 +9027,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/chacha/xchacha20-poly1305",
         kat: &["kat/draft-xchacha.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_xchacha20_poly1305::new),
     },
     AlgoInfo {
@@ -8058,6 +9050,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/xoodyak/xoodyak",
         kat: &["kat/xoodyak.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_xoodyak::new),
     },
     AlgoInfo {
@@ -8080,6 +9073,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "hash/xoodyak/xoodyak-hash",
         kat: &["kat/xoodyak-hash.json"],
+        smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_xoodyak_hash::new),
     },
     AlgoInfo {
@@ -8102,6 +9096,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/salsa/xsalsa20",
         kat: &["kat/nacl.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_xsalsa20::new),
     },
     AlgoInfo {
@@ -8110,7 +9105,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         category: "block",
         family: "xtea",
         aliases: &[],
-        tier: Tier::Unverified,
+        tier: Tier::Research,
         status: Status::Active,
         standards: &[],
         license: "NOASSERTION",
@@ -8124,6 +9119,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "block/xtea/xtea",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_xtea::new),
     },
     AlgoInfo {
@@ -8146,6 +9142,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/xxhash/xxh3",
         kat: &["kat/xxh3.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_xxh3::new),
     },
     AlgoInfo {
@@ -8168,6 +9165,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/xxhash/xxhash32",
         kat: &["kat/xxhash32.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_xxhash32::new),
     },
     AlgoInfo {
@@ -8190,6 +9188,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "checksum/xxhash/xxhash64",
         kat: &["kat/xxhash64.json"],
+        smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_xxhash64::new),
     },
     AlgoInfo {
@@ -8212,6 +9211,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "aead/yaes/yaes",
         kat: &["kat/kat.json"],
+        smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_yaes::new),
     },
     AlgoInfo {
@@ -8240,6 +9240,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "pwhash/yescrypt/yescrypt",
         kat: &["kat/yescrypt.json"],
+        smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_yescrypt::new),
     },
     AlgoInfo {
@@ -8248,7 +9249,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         category: "stream",
         family: "zuc",
         aliases: &[],
-        tier: Tier::Unverified,
+        tier: Tier::Research,
         status: Status::Active,
         standards: &["3GPP TS 35.221 (ZUC-128 keystream)"],
         license: "MIT",
@@ -8262,6 +9263,30 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         test_params: &[],
         dir: "stream/zuc/zuc",
         kat: &["kat/vectors.json"],
+        smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_zuc::new),
+    },
+    AlgoInfo {
+        id: "zuc-256",
+        kind: Kind::StreamCipher,
+        category: "stream",
+        family: "zuc",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["ZUC-256 version 1.1 (ZUC design team)"],
+        license: "MIT",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes { key: Some(Len::fixed(32)), nonce: Some(Len::fixed(23)), ..Sizes::NONE },
+        params: &[],
+        test_params: &[],
+        dir: "stream/zuc/zuc-256",
+        kat: &["kat/vectors.json"],
+        smoke_skip: None,
+        ctor: Ctor::StreamCipher(nextssl_algo_zuc_256::new),
     },
 ];

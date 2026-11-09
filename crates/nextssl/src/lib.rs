@@ -435,6 +435,7 @@ mod tests {
             test_params: &[],
             dir: "",
             kat: &[],
+            smoke_skip: None,
             ctor: Ctor::Hash(new_fake),
         }
     }

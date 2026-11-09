@@ -133,7 +133,8 @@ pub fn verify(alg: &str, pk: &PublicKey, envelope: &[u8], aad: &[u8]) -> Result<
 use nextssl_core::{Ciphertext, SharedSecret, MAX_INPUT_LEN};
 use nextssl_registry::{
     new_aead_in, new_blockcipher_in, new_blockmode_in, new_checksum_in, new_kdf_in, new_kem_in,
-    new_kex_in, new_mac_in, new_pwhash_in, new_sign_in, new_streamcipher_in, new_xof_in,
+    new_kex_in, new_mac_in, new_pke_in, new_pwhash_in, new_sign_in,
+    new_streamcipher_in, new_threshold_in, new_vdf_in, new_xof_in, new_zk_in,
 };
 
 fn check_input(data: &[u8]) -> Result<()> {
@@ -508,6 +509,173 @@ pub fn kex_agree_with(
 
 pub fn kex_agree(alg: &str, sk: &PrivateKey, peer_pk: &PublicKey) -> Result<SharedSecret> {
     kex_agree_with(alg, &Params::new(), sk, peer_pk)
+}
+
+// ---- root-only kinds: pke, zk, vdf, threshold ---------------------------------------------
+// Not reachable from the safe API. Pake, stateful signatures and homomorphic encryption are
+// stateful or multi-object: build them with `nextssl_registry::new_<kind>_in(.., Policy::Any, ..)`.
+
+pub use nextssl_registry::{new_he_in, new_pake_in, new_statefulsign_in};
+
+pub fn pke_keygen_with(alg: &str, params: &Params) -> Result<(PublicKey, PrivateKey)> {
+    new_pke_in(reg(), Policy::Any, alg, params)?.keygen(&mut *os_rng()?)
+}
+
+pub fn pke_keygen(alg: &str) -> Result<(PublicKey, PrivateKey)> {
+    pke_keygen_with(alg, &Params::new())
+}
+
+pub fn pke_encrypt_with(
+    alg: &str,
+    params: &Params,
+    pk: &PublicKey,
+    pt: &[u8],
+    label: &[u8],
+) -> Result<Vec<u8>> {
+    check_input(pt)?;
+    new_pke_in(reg(), Policy::Any, alg, params)?.encrypt(pk, pt, label, &mut *os_rng()?)
+}
+
+pub fn pke_encrypt(alg: &str, pk: &PublicKey, pt: &[u8], label: &[u8]) -> Result<Vec<u8>> {
+    pke_encrypt_with(alg, &Params::new(), pk, pt, label)
+}
+
+/// Every decryption failure is the same `Error::AuthenticationFailed`.
+pub fn pke_decrypt_with(
+    alg: &str,
+    params: &Params,
+    sk: &PrivateKey,
+    ct: &[u8],
+    label: &[u8],
+) -> Result<Zeroizing<Vec<u8>>> {
+    check_input(ct)?;
+    new_pke_in(reg(), Policy::Any, alg, params)?.decrypt(sk, ct, label)
+}
+
+pub fn pke_decrypt(
+    alg: &str,
+    sk: &PrivateKey,
+    ct: &[u8],
+    label: &[u8],
+) -> Result<Zeroizing<Vec<u8>>> {
+    pke_decrypt_with(alg, &Params::new(), sk, ct, label)
+}
+
+pub fn zk_setup_with(alg: &str, params: &Params, setup_params: &[u8]) -> Result<Vec<u8>> {
+    check_input(setup_params)?;
+    new_zk_in(reg(), Policy::Any, alg, params)?.setup(setup_params, &mut *os_rng()?)
+}
+
+pub fn zk_setup(alg: &str, setup_params: &[u8]) -> Result<Vec<u8>> {
+    zk_setup_with(alg, &Params::new(), setup_params)
+}
+
+pub fn zk_prove_with(
+    alg: &str,
+    params: &Params,
+    setup: &[u8],
+    statement: &[u8],
+    witness: &[u8],
+) -> Result<Vec<u8>> {
+    check_input(setup)?;
+    check_input(statement)?;
+    check_input(witness)?;
+    new_zk_in(reg(), Policy::Any, alg, params)?.prove(setup, statement, witness, &mut *os_rng()?)
+}
+
+pub fn zk_prove(alg: &str, setup: &[u8], statement: &[u8], witness: &[u8]) -> Result<Vec<u8>> {
+    zk_prove_with(alg, &Params::new(), setup, statement, witness)
+}
+
+pub fn zk_verify_with(
+    alg: &str,
+    params: &Params,
+    setup: &[u8],
+    statement: &[u8],
+    proof: &[u8],
+) -> Result<bool> {
+    check_input(setup)?;
+    check_input(statement)?;
+    check_input(proof)?;
+    new_zk_in(reg(), Policy::Any, alg, params)?.verify(setup, statement, proof)
+}
+
+pub fn zk_verify(alg: &str, setup: &[u8], statement: &[u8], proof: &[u8]) -> Result<bool> {
+    zk_verify_with(alg, &Params::new(), setup, statement, proof)
+}
+
+pub fn vdf_eval_with(
+    alg: &str,
+    params: &Params,
+    challenge: &[u8],
+    t: u64,
+) -> Result<(Vec<u8>, Vec<u8>)> {
+    check_input(challenge)?;
+    new_vdf_in(reg(), Policy::Any, alg, params)?.eval(challenge, t)
+}
+
+pub fn vdf_eval(alg: &str, challenge: &[u8], t: u64) -> Result<(Vec<u8>, Vec<u8>)> {
+    vdf_eval_with(alg, &Params::new(), challenge, t)
+}
+
+pub fn vdf_verify_with(
+    alg: &str,
+    params: &Params,
+    challenge: &[u8],
+    t: u64,
+    output: &[u8],
+    proof: &[u8],
+) -> Result<bool> {
+    check_input(challenge)?;
+    check_input(output)?;
+    check_input(proof)?;
+    new_vdf_in(reg(), Policy::Any, alg, params)?.verify(challenge, t, output, proof)
+}
+
+pub fn vdf_verify(
+    alg: &str,
+    challenge: &[u8],
+    t: u64,
+    output: &[u8],
+    proof: &[u8],
+) -> Result<bool> {
+    vdf_verify_with(alg, &Params::new(), challenge, t, output, proof)
+}
+
+/// `t` of `n` secret sharing; `1 <= t <= n <= max_parties` is enforced by the algorithm.
+pub fn threshold_split_with(
+    alg: &str,
+    params: &Params,
+    secret: &[u8],
+    t: usize,
+    n: usize,
+) -> Result<Vec<nextssl_core::Share>> {
+    check_input(secret)?;
+    new_threshold_in(reg(), Policy::Any, alg, params)?.split(secret, t, n, &mut *os_rng()?)
+}
+
+pub fn threshold_split(
+    alg: &str,
+    secret: &[u8],
+    t: usize,
+    n: usize,
+) -> Result<Vec<nextssl_core::Share>> {
+    threshold_split_with(alg, &Params::new(), secret, t, n)
+}
+
+pub fn threshold_combine_with(
+    alg: &str,
+    params: &Params,
+    shares: &[nextssl_core::Share],
+) -> Result<Zeroizing<Vec<u8>>> {
+    new_threshold_in(reg(), Policy::Any, alg, params)?.combine(shares)
+}
+
+pub fn threshold_combine(
+    alg: &str,
+    shares: &[nextssl_core::Share],
+) -> Result<Zeroizing<Vec<u8>>> {
+    threshold_combine_with(alg, &Params::new(), shares)
 }
 
 // ---- composition engine and random keygen, any tier -----------------------------------------

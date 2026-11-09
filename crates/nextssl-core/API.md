@@ -10,7 +10,7 @@ replace the `Stub` in `glue.rs` -> add KATs -> `cargo xtask gen`. `new(&Params) 
 - Secrets live only in `SymmetricKey` / `PrivateKey` / `SharedSecret` / `Seed` or `Zeroizing<_>` (zeroize on drop, constant-time `==`, redacted `Debug`, no `Clone`). Wipe copies you make. No `Debug`/logging of secrets.
 - `sizes()` must declare the fields in `Kind::required_sizes()` and stay **within** `algo.toml [sizes]` (checked by `nextssl_registry::check_sizes`). Variable sizes use `Len::range`. `0` means "none" for `seed`, `coins`, `ctx`, AEAD `nonce`.
 - Constant time for anything secret-dependent: compare with `nextssl_core::ct_eq`, never `==` on slices.
-- Instances are `Send + Sync` and immutable; only `EntropySource` and `Drbg` are `&mut self` (`Send` only).
+- Instances are `Send + Sync` and immutable; only `EntropySource` and `Drbg` are `&mut self` (`Send` only). Interactive kinds keep their state in a separate object (`PakeState`, `ThresholdState`) that is consumed by every step.
 
 ## Traits (`kind =` in algo.toml) and required `[sizes]`
 | kind | trait | required methods | sizes |
@@ -33,7 +33,13 @@ replace the `Stub` in `glue.rs` -> add KATs -> `cargo xtask gen`. `new(&Params) 
 | rng | `EntropySource` | `fill(out)` | - |
 | drbg | `Drbg` | `sizes`, `security_strength`, `max_request_len`, `instantiate(entropy,nonce,personalization)`, `reseed(entropy,additional)`, `generate(additional,out)`, `uninstantiate` | seed (entropy input) |
 | pow | `Pow` | `sizes` (`out` = solution length), `difficulty()` inclusive range, `solve(challenge, difficulty, max_work)` (`WorkLimitExceeded` at the cap), `verify(challenge, solution, difficulty)` (`Ok(false)` = valid form, not enough work) | - |
-| zk threshold vdf | empty stubs | none yet (P3) | - |
+| pke | `Pke` | `sizes`, `encrypt(pk,pt,label,rng)`, `decrypt(sk,ct,label)` (every failure is `AuthenticationFailed`), optional `keygen(rng)` (RSA-OAEP, PKCS#1 v1.5 enc = tier broken, HPKE, ECIES; root only) | pk sk ct out ctx |
+| pake | `Pake`, `PakeState` | `sizes`, `start(role,password,context,rng) -> (state, first msg)`; `PakeState::step(self: Box<Self>, msg) -> PakeStep::{Send(state,msg) \| Done(SharedSecret, Option<msg>)}` (SPAKE2, OPAQUE, SRP, CPace; root only) | key ss |
+| statefulsign | `StatefulSign` | `sizes`, `max_signatures`, `remaining(key)`, `keygen(rng)` / `keygen_from_seed`, `sign(&mut StatefulKey, msg, persist)`, `verify` (XMSS, LMS/HSS; root only) | pk sk sig seed |
+| zk | `Zk` | `setup(params,rng)`, `prove(setup,statement,witness,rng)`, `verify(setup,statement,proof)` (root only) | - |
+| threshold | `Threshold` | `max_parties`, `split(secret,t,n,rng)`, `combine(shares)`, interactive `start(session,rng)` with `ThresholdState::step` (same shape as Pake); `1 <= t <= n <= max_parties` and party ids `1..=n` are enforced (root only) | - |
+| he | `He` | `ops()`, `keygen(params,rng) -> HeKeys`, `encrypt`, `decrypt`, `eval(op, cts, evk)`; an op outside `ops()` is `Unsupported` (root only) | - |
+| vdf | `Vdf` | `max_t()` (the `max_t` cap param), `eval(challenge,t) -> (output, proof)`, `verify(challenge,t,output,proof)`; `t == 0` or `t > max_t` is `ParamOutOfRange("t")` (root only) | - |
 
 ## Conventions
 - `Kem`/`Kex`/`Sign` with no deterministic seed (RSA-KEM, McEliece variants...): override `keygen`/`encaps`, return `Unsupported` from `*_from_seed`, set `seed = 0`.
@@ -79,3 +85,12 @@ Deterministic (seed) versus random: the plain `keygen` functions draw from the O
 
 ## Proof of work
 `hashcash(h)` is the hashcash v1 stamp `1:bits:date:resource:ext:rand:counter`. Challenge = `date:resource:ext:rand` (`date` is 6, 10 or 12 digits), difficulty = leading zero bits (1..=min(64, hash bits)), solution = the counter text. `solve` takes `max_work` and returns `WorkLimitExceeded` when it is reached. Calendar dates are not checked (expiry is for the application). Equihash, RandomX and Cuckoo Cycle wait.
+
+## Root-only kinds (pke, pake, statefulsign, zk, threshold, he, vdf)
+`Kind::root_only()` is true for these. The registry refuses them under the safe policy whatever their tier (`TierNotAllowed`), and none has a COSE envelope. `nextssl_root` has string entry points for pke, zk, vdf and threshold (`pke_encrypt`, `zk_prove`, `vdf_eval`, `threshold_split`, plus the generated per-algorithm modules); pake, statefulsign and he are used through `nextssl_registry::new_<kind>_in(.., Policy::Any, ..)` because they carry state or several key objects.
+- **Pke:** `ctx` in `[sizes]` is the label length range (`0` = no labels, a non-empty label is an error). Plaintext length range is `out`. Decrypt returns the one uniform `AuthenticationFailed` for bad padding, tag, label or key; a wrong length is `InvalidLength`. The one exception is implicit rejection (RSA PKCS#1 v1.5 in `rsa` 0.10): bad padding returns a deterministic synthetic plaintext, never an error and never the original.
+- **Pake:** states are consumed by `step`; a rejected message is an `Err` (use `Error::ProtocolAborted`) and the state is already gone. The first message may be empty (that role waits). For client/server protocols the initiator is the client.
+- **StatefulSign:** the glue builds the advanced key state, calls `persist(&new_state)`, and only after `Ok` stores it in the key and releases the signature. A `persist` error is returned as is and no signature is made. An exhausted key is `Error::KeyExhausted` before `persist` is called. `StatefulKey` has no `Clone`.
+- **Zk, He, Threshold:** a heavy algorithm may set `smoke = "skip"` and `smoke_reason = "..."` in `algo.toml`; the registry smoke test then names it in the log and does not run the generic round trip. Generic convention for the others: He plaintext is one unsigned byte; Zk is only given `setup(&[])`.
+- **Vdf:** the `max_t` cap is a `[params.max_t]` (u64). Never loop longer than the cap.
+- Secrets: `StatefulKey`, `Share`, `HeKeys::secret` and Zk witnesses are zeroized on every exit path.

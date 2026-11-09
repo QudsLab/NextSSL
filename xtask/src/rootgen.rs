@@ -168,8 +168,8 @@ const PK: &str = "&::nextssl_core::PublicKey";
 const SK: &str = "&::nextssl_core::PrivateKey";
 const PAIR: &str = "crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)>";
 
-/// The operations generated per kind. Kinds not listed here (mode, rng, drbg, pow, zk,
-/// threshold, vdf) have no root string API yet and get `ID` and `INFO` only.
+/// The operations generated per kind. Kinds not listed here (mode, rng, drbg, pow, pake,
+/// statefulsign, he) have no root string API and get `ID` and `INFO` only.
 fn ops(kind: Kind) -> Vec<Op> {
     match kind {
         Kind::Hash => vec![op("hash", "data: &[u8]", VEC, "hash", "data")],
@@ -353,13 +353,81 @@ fn ops(kind: Kind) -> Vec<Op> {
                 "key, nonce, data",
             ),
         ],
+        // Root-only kinds (BRIEF_kinds.md): string entry points in nextssl-root, no envelope.
+        Kind::Pke => vec![
+            op("keygen", "", PAIR, "pke_keygen", ""),
+            op(
+                "encrypt",
+                &format!("pk: {PK}, pt: &[u8], label: &[u8]"),
+                VEC,
+                "pke_encrypt",
+                "pk, pt, label",
+            ),
+            op(
+                "decrypt",
+                &format!("sk: {SK}, ct: &[u8], label: &[u8]"),
+                ZVEC,
+                "pke_decrypt",
+                "sk, ct, label",
+            ),
+        ],
+        Kind::Zk => vec![
+            op("setup", "setup_params: &[u8]", VEC, "zk_setup", "setup_params"),
+            op(
+                "prove",
+                "setup: &[u8], statement: &[u8], witness: &[u8]",
+                VEC,
+                "zk_prove",
+                "setup, statement, witness",
+            ),
+            op(
+                "verify",
+                "setup: &[u8], statement: &[u8], proof: &[u8]",
+                "crate::Result<bool>",
+                "zk_verify",
+                "setup, statement, proof",
+            ),
+        ],
+        Kind::Vdf => vec![
+            op(
+                "eval",
+                "challenge: &[u8], t: u64",
+                "crate::Result<(Vec<u8>, Vec<u8>)>",
+                "vdf_eval",
+                "challenge, t",
+            ),
+            op(
+                "verify",
+                "challenge: &[u8], t: u64, output: &[u8], proof: &[u8]",
+                "crate::Result<bool>",
+                "vdf_verify",
+                "challenge, t, output, proof",
+            ),
+        ],
+        Kind::Threshold => vec![
+            op(
+                "split",
+                "secret: &[u8], t: usize, n: usize",
+                "crate::Result<Vec<::nextssl_core::Share>>",
+                "threshold_split",
+                "secret, t, n",
+            ),
+            op(
+                "combine",
+                "shares: &[::nextssl_core::Share]",
+                ZVEC,
+                "threshold_combine",
+                "shares",
+            ),
+        ],
+        // Interactive or multi-object kinds are used through `nextssl_registry::new_<kind>_in`.
         Kind::Mode
         | Kind::Rng
         | Kind::Drbg
         | Kind::Pow
-        | Kind::Zk
-        | Kind::Threshold
-        | Kind::Vdf => vec![],
+        | Kind::Pake
+        | Kind::StatefulSign
+        | Kind::He => vec![],
     }
 }
 
@@ -429,10 +497,9 @@ pub fn gen_root(algos: &[Algo], lib_rs: &str) -> Res<String> {
     by_id.sort_by(|x, y| x.1.id.cmp(&y.1.id));
     for (m, a) in &by_id {
         let kind = Kind::parse(&a.kind).expect("validated kind");
-        let gate = if a.copyleft {
-            "#[cfg(feature = \"copyleft\")]\n"
-        } else {
-            ""
+        let gate = match crate::cfg_gate(a) {
+            Some(g) => format!("#[cfg({g})]\n"),
+            None => String::new(),
         };
         let has_required = a.params.values().any(|p| p.required);
         let _ = writeln!(s, "/// `{}` ({}, tier {}).", a.id, a.kind, a.tier);
@@ -442,7 +509,7 @@ pub fn gen_root(algos: &[Algo], lib_rs: &str) -> Res<String> {
                 "/// Has required parameters: only the `*_with` forms can succeed."
             );
         }
-        s.push_str(gate);
+        s.push_str(&gate);
         let _ = writeln!(s, "pub mod {m} {{");
         let _ = writeln!(s, "    /// Registry id.");
         let _ = writeln!(s, "    pub const ID: &str = {:?};", a.id);
@@ -473,8 +540,8 @@ pub fn gen_root(algos: &[Algo], lib_rs: &str) -> Res<String> {
     s.push_str("    /// `(id, INFO id)` for every generated module.\n");
     s.push_str("    fn modules() -> Vec<(&'static str, &'static str)> {\n        vec![\n");
     for (m, a) in &by_id {
-        if a.copyleft {
-            let _ = writeln!(s, "            #[cfg(feature = \"copyleft\")]");
+        if let Some(g) = crate::cfg_gate(a) {
+            let _ = writeln!(s, "            #[cfg({g})]");
         }
         let _ = writeln!(s, "            ({:?}, crate::{m}::INFO.id),", a.id);
     }

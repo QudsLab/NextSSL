@@ -6,9 +6,9 @@
 //! table only when the `copyleft` cargo feature is on.
 
 use nextssl_core::{
-    Aead, BlockCipher, BlockMode, Checksum, Drbg, Encoding, EntropySource, Error, Hash, Kdf, Kem,
-    Kex, Kind, Len, Mac, Mode, ParamSpec, Params, Pow, PwHash, Result, Sign, Sizes, Status,
-    StreamCipher, Threshold, Tier, Vdf, Xof, Zk, MAX_INPUT_LEN,
+    Aead, BlockCipher, BlockMode, Checksum, Drbg, Encoding, EntropySource, Error, Hash, He, Kdf,
+    Kem, Kex, Kind, Len, Mac, Mode, Pake, ParamSpec, Params, Pke, Pow, PwHash, Result, Sign,
+    Sizes, StatefulSign, Status, StreamCipher, Threshold, Tier, Vdf, Xof, Zk, MAX_INPUT_LEN,
 };
 
 mod generated;
@@ -106,6 +106,10 @@ kinds! {
     Zk => Zk, new_zk_in;
     Threshold => Threshold, new_threshold_in;
     Vdf => Vdf, new_vdf_in;
+    Pke => Pke, new_pke_in;
+    Pake => Pake, new_pake_in;
+    StatefulSign => StatefulSign, new_statefulsign_in;
+    He => He, new_he_in;
 }
 
 impl Instance {
@@ -130,12 +134,16 @@ impl Instance {
             Instance::Sign(x) => x.sizes(),
             Instance::Drbg(x) => x.sizes(),
             Instance::Pow(x) => x.sizes(),
+            Instance::Pke(x) => x.sizes(),
+            Instance::Pake(x) => x.sizes(),
+            Instance::StatefulSign(x) => x.sizes(),
+            Instance::Threshold(x) => x.sizes(),
             Instance::Xof(_)
             | Instance::Mode(_)
             | Instance::Rng(_)
             | Instance::Encoding(_)
             | Instance::Zk(_)
-            | Instance::Threshold(_)
+            | Instance::He(_)
             | Instance::Vdf(_) => Sizes::NONE,
         }
     }
@@ -172,6 +180,9 @@ pub struct AlgoInfo {
     pub dir: &'static str,
     /// KAT files relative to `dir`.
     pub kat: &'static [&'static str],
+    /// `Some(reason)` when `algo.toml` declares `smoke = "skip"` (only `zk`, `he` and
+    /// `threshold`, where setup is too heavy for the generic round trip).
+    pub smoke_skip: Option<&'static str>,
     pub ctor: Ctor,
 }
 
@@ -219,7 +230,9 @@ fn resolve<'a>(
     if info.kind != kind {
         return Err(Error::WrongKind);
     }
-    if !allowed(info.tier, policy) {
+    if !allowed(info.tier, policy) || (kind.root_only() && policy == Policy::Safe) {
+        // Root-only kinds (pke, pake, statefulsign, zk, threshold, he, vdf) are never reachable
+        // from the safe API, whatever tier they declare.
         return Err(Error::TierNotAllowed(info.tier));
     }
     Ok(info)
@@ -264,7 +277,11 @@ pub fn instantiate_in(
         Pow,
         Zk,
         Threshold,
-        Vdf
+        Vdf,
+        Pke,
+        Pake,
+        StatefulSign,
+        He
     ))
 }
 

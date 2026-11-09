@@ -48,6 +48,14 @@ pub enum Error {
     EntropyFailure(&'static str),
     /// A proof-of-work solver reached its work cap without finding a solution.
     WorkLimitExceeded,
+    /// A stateful signature key has no one-time keys left. No signature is produced.
+    KeyExhausted,
+    /// The caller's `persist` callback failed, so the advanced key state was not stored and no
+    /// signature is released.
+    PersistFailed,
+    /// An interactive protocol (PAKE, threshold round) rejected a message or a party id. The
+    /// protocol state is destroyed and cannot be reused.
+    ProtocolAborted(&'static str),
 }
 
 impl fmt::Display for Error {
@@ -80,6 +88,9 @@ impl fmt::Display for Error {
             Error::ReseedRequired => f.write_str("DRBG reseed required"),
             Error::EntropyFailure(m) => write!(f, "entropy source failure: {m}"),
             Error::WorkLimitExceeded => f.write_str("proof-of-work work limit reached"),
+            Error::KeyExhausted => f.write_str("stateful signature key is exhausted"),
+            Error::PersistFailed => f.write_str("key state could not be persisted"),
+            Error::ProtocolAborted(m) => write!(f, "protocol aborted: {m}"),
         }
     }
 }
@@ -108,6 +119,9 @@ impl Error {
             Error::ReseedRequired => 16,
             Error::EntropyFailure(_) => 17,
             Error::WorkLimitExceeded => 18,
+            Error::KeyExhausted => 19,
+            Error::PersistFailed => 20,
+            Error::ProtocolAborted(_) => 21,
         }
     }
 }

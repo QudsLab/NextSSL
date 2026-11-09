@@ -205,6 +205,11 @@ struct Algo {
     /// GPL/LGPL/AGPL upstream: only reachable with the `copyleft` cargo feature.
     #[serde(default)]
     copyleft: bool,
+    /// Heavy upstream (big dependency tree): the algorithm is an optional dependency of the
+    /// registry, enabled by the cargo feature of this name (shared by siblings that use the same
+    /// upstream). The default build stays small.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    feature: Option<String>,
     #[serde(default, skip_serializing_if = "SizesToml::is_empty")]
     sizes: SizesToml,
     /// Composition engine, kind `hash`: crate path of the RustCrypto `Digest` type behind this
@@ -223,6 +228,12 @@ struct Algo {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     slot_version: Option<String>,
     upstream: Upstream,
+    /// `smoke = "skip"` (kinds `zk`, `he`, `threshold` only): the generic registry round trip is
+    /// not run because setup is too heavy. `smoke_reason` is then required.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    smoke: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    smoke_reason: Option<String>,
     #[serde(default)]
     params: BTreeMap<String, Param>,
     kat: Kat,
@@ -283,6 +294,25 @@ fn validate(a: &Algo, dir: &Path) -> Res<()> {
             kind.required_sizes()
         )));
     }
+    if let Some(f) = &a.feature {
+        if !is_ident(f) || matches!(f.as_str(), "copyleft" | "default" | "compose-all" | "testing" | "all-heavy")
+        {
+            return Err(ctx("feature must be a lowercase cargo feature name, not a reserved one"));
+        }
+    }
+    match (a.smoke.as_deref(), a.smoke_reason.as_deref()) {
+        (None, None) => {}
+        (Some("skip"), Some(r)) if !r.trim().is_empty() => {
+            if !matches!(kind, Kind::Zk | Kind::He | Kind::Threshold) {
+                return Err(ctx("smoke = \"skip\" is allowed only for zk, he and threshold"));
+            }
+        }
+        _ => {
+            return Err(ctx(
+                "smoke must be \"skip\" together with a non-empty smoke_reason",
+            ))
+        }
+    }
     if !a.oid.is_empty()
         && !a
             .oid
@@ -335,9 +365,17 @@ fn validate(a: &Algo, dir: &Path) -> Res<()> {
                 .map_err(|e| ctx(&format!("Cargo.toml: {e}")))?
                 .parse()
                 .map_err(|e| ctx(&format!("Cargo.toml: {e}")))?;
-            let dep = cargo
-                .get("dependencies")
-                .and_then(|d| d.get(c))
+            // The dependency may be renamed (`rsa09 = { package = "rsa", version = ".." }`) to keep
+            // two incompatible releases of one crate apart; the pin is checked on the package.
+            let deps = cargo.get("dependencies").and_then(|d| d.as_table());
+            let dep = deps
+                .and_then(|d| {
+                    d.get(c.as_str()).or_else(|| {
+                        d.values().find(|v| {
+                            v.get("package").and_then(|p| p.as_str()) == Some(c.as_str())
+                        })
+                    })
+                })
                 .ok_or_else(|| ctx(&format!("Cargo.toml does not depend on {c}")))?;
             let ver = match dep {
                 toml::Value::String(s) => Some(s.as_str()),
@@ -567,8 +605,8 @@ fn gen_registry(algos: &[Algo]) -> String {
     for a in algos {
         let lib = lib_ident(&a.id);
         let kind = variant("kind", &a.kind);
-        if a.copyleft {
-            let _ = writeln!(s, "    #[cfg(feature = \"copyleft\")]");
+        if let Some(g) = cfg_gate(a) {
+            let _ = writeln!(s, "    #[cfg({g})]");
         }
         let _ = writeln!(s, "    AlgoInfo {{");
         let _ = writeln!(s, "        id: {:?},", a.id);
@@ -633,6 +671,10 @@ fn gen_registry(algos: &[Algo]) -> String {
         let _ = writeln!(s, "        test_params: &[{}],", tests.join(", "));
         let _ = writeln!(s, "        dir: {:?},", a.dir);
         let _ = writeln!(s, "        kat: {},", rust_str_list(&a.kat.files));
+        let _ = match (&a.smoke, &a.smoke_reason) {
+            (Some(_), Some(r)) => writeln!(s, "        smoke_skip: Some({r:?}),"),
+            _ => writeln!(s, "        smoke_skip: None,"),
+        };
         let _ = writeln!(s, "        ctor: Ctor::{kind}({lib}::new),");
         let _ = writeln!(s, "    }},");
     }
@@ -663,22 +705,79 @@ fn rustfmt(src: String) -> Res<String> {
     Ok(String::from_utf8_lossy(&out.stdout).replace("\r\n", "\n"))
 }
 
-/// Rewrites the generated blocks of the registry `Cargo.toml` (dependencies and the
-/// `copyleft` feature). Copyleft algorithms are optional dependencies enabled only by it.
+/// `cfg(..)` predicate that gates an algorithm: `copyleft`, its heavy `feature`, or both.
+pub(crate) fn cfg_gate(a: &Algo) -> Option<String> {
+    match (a.copyleft, &a.feature) {
+        (false, None) => None,
+        (true, None) => Some("feature = \"copyleft\"".into()),
+        (false, Some(f)) => Some(format!("feature = {f:?}")),
+        (true, Some(f)) => Some(format!("all(feature = \"copyleft\", feature = {f:?})")),
+    }
+}
+
+/// Heavy feature name -> crate names that it enables, sorted.
+fn heavy_features(algos: &[Algo]) -> BTreeMap<String, Vec<String>> {
+    let mut m: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    for a in algos {
+        if let Some(f) = &a.feature {
+            m.entry(f.clone()).or_default().push(crate_name(&a.id));
+        }
+    }
+    m
+}
+
+/// The generated `[features]` block of `nextssl-root`: every heavy feature forwards to the
+/// registry; `all-heavy` turns them all on.
+fn root_feature_block(algos: &[Algo]) -> String {
+    let heavy = heavy_features(algos);
+    let mut s = String::new();
+    for f in heavy.keys() {
+        let _ = writeln!(s, "{f} = [\"nextssl-registry/{f}\"]");
+    }
+    let all: Vec<String> = heavy.keys().map(|f| format!("{f:?}")).collect();
+    let _ = writeln!(s, "all-heavy = [{}]", all.join(", "));
+    s
+}
+
+fn gen_root_cargo(algos: &[Algo]) -> Res<String> {
+    let path = root().join("crates/nextssl-root/Cargo.toml");
+    let cur = std::fs::read_to_string(&path)
+        .map_err(|e| e.to_string())?
+        .replace("\r\n", "\n");
+    let begin = "# BEGIN GENERATED FEATURES (cargo xtask gen)\n";
+    let end = "# END GENERATED FEATURES";
+    let b = cur
+        .find(begin)
+        .ok_or("root Cargo.toml: BEGIN FEATURES marker missing")?;
+    let e = cur
+        .find(end)
+        .ok_or("root Cargo.toml: END FEATURES marker missing")?;
+    Ok(format!(
+        "{}{}{}",
+        &cur[..b + begin.len()],
+        root_feature_block(algos),
+        &cur[e..]
+    ))
+}
+
+/// Rewrites the generated blocks of the registry `Cargo.toml` (dependencies and features).
+/// Copyleft and heavy algorithms are optional dependencies enabled only by their feature.
 fn splice_registry_cargo(cur: &str, algos: &[Algo]) -> Res<String> {
     let cur = cur.replace("\r\n", "\n");
     let mut out = cur.clone();
     let mut deps = String::new();
     let mut feat: Vec<String> = Vec::new();
     for a in algos {
-        if a.copyleft {
+        if a.copyleft || a.feature.is_some() {
             let _ = writeln!(
                 deps,
                 "{} = {{ path = \"../../algos/{}\", optional = true }}",
                 crate_name(&a.id),
                 a.dir
             );
-            feat.push(format!("\"dep:{}\"", crate_name(&a.id)));
+            if a.copyleft {
+                feat.push(format!("\"dep:{}\"", crate_name(&a.id)));
+            }
         } else {
             let _ = writeln!(
                 deps,
@@ -688,7 +787,14 @@ fn splice_registry_cargo(cur: &str, algos: &[Algo]) -> Res<String> {
             );
         }
     }
-    let feats = format!("copyleft = [{}]\n", feat.join(", "));
+    let mut feats = format!("copyleft = [{}]\n", feat.join(", "));
+    let heavy = heavy_features(algos);
+    for (f, crates) in &heavy {
+        let deps: Vec<String> = crates.iter().map(|c| format!("\"dep:{c}\"")).collect();
+        let _ = writeln!(feats, "{f} = [{}]", deps.join(", "));
+    }
+    let all: Vec<String> = heavy.keys().map(|f| format!("{f:?}")).collect();
+    let _ = writeln!(feats, "all-heavy = [{}]", all.join(", "));
     for (what, body) in [("DEPENDENCIES", deps), ("FEATURES", feats)] {
         let begin = format!("# BEGIN GENERATED {what} (cargo xtask gen)\n");
         let end = format!("# END GENERATED {what}");
@@ -753,6 +859,10 @@ fn run_gen(check: bool) -> Res<()> {
         (
             r.join("crates/nextssl-registry/Cargo.toml"),
             gen_registry_cargo(&algos)?,
+        ),
+        (
+            r.join("crates/nextssl-root/Cargo.toml"),
+            gen_root_cargo(&algos)?,
         ),
         (
             r.join("crates/nextssl-root/src/generated.rs"),

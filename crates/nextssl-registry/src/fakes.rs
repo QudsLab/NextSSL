@@ -5,7 +5,10 @@
 use super::*;
 use nextssl_core::keys::{Ciphertext, PrivateKey, PublicKey, Seed, SharedSecret, Signature};
 use nextssl_core::testing::FixedEntropy;
-use nextssl_core::{ct_eq, KeyedBlockCipher, ParamType, SymmetricKey, Value, Zeroizing};
+use nextssl_core::{
+    ct_eq, HeKeys, HeOp, KeyedBlockCipher, PakeRole, PakeState, PakeStep, ParamType, Share,
+    StatefulKey, SymmetricKey, ThresholdSession, ThresholdState, Value, Zeroizing,
+};
 
 fn l(n: usize) -> Option<Len> {
     Some(Len::fixed(n))
@@ -563,11 +566,333 @@ impl Pow for FPow {
     }
 }
 struct FZk;
-impl Zk for FZk {}
+impl Zk for FZk {
+    fn setup(&self, _params: &[u8], _rng: &mut dyn EntropySource) -> Result<Vec<u8>> {
+        Ok(vec![1])
+    }
+    fn prove(
+        &self,
+        setup: &[u8],
+        statement: &[u8],
+        witness: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>> {
+        if setup != [1] {
+            return Err(Error::InvalidInput("setup"));
+        }
+        // toy relation: statement = fold(witness)
+        if statement != [fold(witness)] {
+            return Err(Error::InvalidInput("witness does not match statement"));
+        }
+        Ok(vec![fold(statement)])
+    }
+    fn verify(&self, setup: &[u8], statement: &[u8], proof: &[u8]) -> Result<bool> {
+        if setup != [1] || statement.len() != 1 || proof.len() != 1 {
+            return Err(Error::InvalidInput("lengths"));
+        }
+        Ok(proof[0] == fold(statement))
+    }
+}
+
 struct FThreshold;
-impl Threshold for FThreshold {}
+impl Threshold for FThreshold {
+    fn max_parties(&self) -> usize {
+        8
+    }
+    fn split(
+        &self,
+        secret: &[u8],
+        t: usize,
+        n: usize,
+        _rng: &mut dyn EntropySource,
+    ) -> Result<Vec<Share>> {
+        nextssl_core::check_threshold(t, n, self.max_parties())?;
+        if secret.is_empty() {
+            return Err(Error::InvalidInput("empty secret"));
+        }
+        // toy, NOT sharing: every share carries t, its id and the secret
+        (1..=n)
+            .map(|i| {
+                let mut v = vec![t as u8, i as u8];
+                v.extend_from_slice(secret);
+                Share::from_vec(v, Len::range(3, 4096))
+            })
+            .collect()
+    }
+    fn combine(&self, shares: &[Share]) -> Result<Zeroizing<Vec<u8>>> {
+        let first = shares.first().ok_or(Error::InvalidInput("no shares"))?;
+        let t = first.as_bytes()[0] as usize;
+        if shares.len() < t {
+            return Err(Error::InvalidInput("too few shares"));
+        }
+        let mut ids: Vec<u8> = shares.iter().map(|s| s.as_bytes()[1]).collect();
+        ids.sort_unstable();
+        ids.dedup();
+        if ids.len() != shares.len() {
+            return Err(Error::InvalidInput("duplicate share id"));
+        }
+        Ok(Zeroizing::new(first.as_bytes()[2..].to_vec()))
+    }
+    fn start(
+        &self,
+        s: &ThresholdSession,
+        _rng: &mut dyn EntropySource,
+    ) -> Result<(Box<dyn ThresholdState>, Vec<u8>)> {
+        nextssl_core::check_threshold(s.t as usize, s.n as usize, self.max_parties())?;
+        nextssl_core::check_party(s.party as usize, s.n as usize)?;
+        Err(Error::Unsupported)
+    }
+}
+
 struct FVdf;
-impl Vdf for FVdf {}
+impl FVdf {
+    fn run(challenge: &[u8], t: u64) -> u8 {
+        (0..t).fold(fold(challenge), |a, _| a.wrapping_mul(3).wrapping_add(1))
+    }
+    fn check_t(&self, t: u64) -> Result<()> {
+        if t == 0 || t > self.max_t() {
+            return Err(Error::ParamOutOfRange("t"));
+        }
+        Ok(())
+    }
+}
+impl Vdf for FVdf {
+    fn max_t(&self) -> u64 {
+        1000
+    }
+    fn eval(&self, challenge: &[u8], t: u64) -> Result<(Vec<u8>, Vec<u8>)> {
+        self.check_t(t)?;
+        let o = Self::run(challenge, t);
+        Ok((vec![o], vec![o ^ 0xFF]))
+    }
+    fn verify(&self, challenge: &[u8], t: u64, output: &[u8], proof: &[u8]) -> Result<bool> {
+        self.check_t(t)?;
+        if output.len() != 1 || proof.len() != 1 {
+            return Err(Error::InvalidInput("lengths"));
+        }
+        Ok(output[0] == Self::run(challenge, t) && proof[0] == output[0] ^ 0xFF)
+    }
+}
+
+struct FPke;
+impl FPke {
+    fn tag(k: u8, pt: &[u8], label: &[u8]) -> u8 {
+        fold(pt) ^ fold(label) ^ k
+    }
+}
+impl Pke for FPke {
+    fn sizes(&self) -> Sizes {
+        Sizes {
+            pk: l(1),
+            sk: l(1),
+            ct: r(1, 33),
+            out: r(0, 32),
+            ctx: r(0, 8),
+            ..Sizes::NONE
+        }
+    }
+    fn keygen(&self, rng: &mut dyn EntropySource) -> Result<(PublicKey, PrivateKey)> {
+        let mut k = [0u8; 1];
+        rng.fill(&mut k)?;
+        Ok((
+            PublicKey::from_bytes(&k, Len::fixed(1))?,
+            PrivateKey::from_bytes(&k, Len::fixed(1))?,
+        ))
+    }
+    fn encrypt(
+        &self,
+        pk: &PublicKey,
+        pt: &[u8],
+        label: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>> {
+        let s = self.sizes();
+        s.pk.unwrap().check("pk", pk.len())?;
+        s.out.unwrap().check("plaintext", pt.len())?;
+        s.ctx.unwrap().check("label", label.len())?;
+        let k = pk.as_bytes()[0];
+        let mut ct: Vec<u8> = pt.iter().map(|b| b ^ k).collect();
+        ct.push(Self::tag(k, pt, label));
+        Ok(ct)
+    }
+    fn decrypt(&self, sk: &PrivateKey, ct: &[u8], label: &[u8]) -> Result<Zeroizing<Vec<u8>>> {
+        let s = self.sizes();
+        s.sk.unwrap().check("sk", sk.len())?;
+        s.ct.unwrap().check("ciphertext", ct.len())?;
+        s.ctx.unwrap().check("label", label.len())?;
+        let k = sk.as_bytes()[0];
+        let (body, tag) = ct.split_at(ct.len() - 1);
+        let pt: Zeroizing<Vec<u8>> = Zeroizing::new(body.iter().map(|b| b ^ k).collect());
+        if tag[0] != Self::tag(k, &pt, label) {
+            return Err(Error::AuthenticationFailed);
+        }
+        Ok(pt)
+    }
+}
+
+struct FPake;
+struct FPakeWait {
+    expect: u8,
+    ss: [u8; 4],
+}
+impl FPake {
+    fn secret(pw: &[u8], ctx: &[u8]) -> [u8; 4] {
+        [fold(pw), fold(ctx), 7, fold(pw) ^ fold(ctx)]
+    }
+}
+impl PakeState for FPakeWait {
+    fn step(self: Box<Self>, msg: &[u8]) -> Result<PakeStep> {
+        if msg != [self.expect] {
+            return Err(Error::ProtocolAborted("bad message"));
+        }
+        let ss = SharedSecret::from_bytes(&self.ss, Len::fixed(4))?;
+        // the responder (odd `expect`) answers once; the initiator ends
+        Ok(PakeStep::Done(
+            ss,
+            if self.expect & 1 == 1 {
+                Some(vec![self.expect ^ 1])
+            } else {
+                None
+            },
+        ))
+    }
+}
+impl Pake for FPake {
+    fn sizes(&self) -> Sizes {
+        Sizes {
+            key: r(1, 32),
+            ss: l(4),
+            ..Sizes::NONE
+        }
+    }
+    fn start(
+        &self,
+        role: PakeRole,
+        password: &[u8],
+        context: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<(Box<dyn PakeState>, Vec<u8>)> {
+        self.sizes().key.unwrap().check("password", password.len())?;
+        let ss = Self::secret(password, context);
+        let h = fold(password) | 1; // odd: expected by the responder
+        match role {
+            PakeRole::Initiator => Ok((Box::new(FPakeWait { expect: h ^ 1, ss }), vec![h])),
+            PakeRole::Responder => Ok((Box::new(FPakeWait { expect: h, ss }), vec![])),
+        }
+    }
+}
+
+struct FStateful;
+const FS_MAX: u64 = 3;
+impl FStateful {
+    fn parse(key: &StatefulKey) -> Result<(u64, u8)> {
+        Len::fixed(9).check("sk", key.len())?;
+        let b = key.as_bytes();
+        let mut n = [0u8; 8];
+        n.copy_from_slice(&b[..8]);
+        Ok((u64::from_be_bytes(n), b[8]))
+    }
+}
+impl StatefulSign for FStateful {
+    fn sizes(&self) -> Sizes {
+        Sizes {
+            pk: l(1),
+            sk: l(9),
+            sig: l(9),
+            seed: l(1),
+            ..Sizes::NONE
+        }
+    }
+    fn max_signatures(&self) -> u64 {
+        FS_MAX
+    }
+    fn remaining(&self, key: &StatefulKey) -> Result<u64> {
+        Ok(FS_MAX.saturating_sub(Self::parse(key)?.0))
+    }
+    fn keygen_from_seed(&self, seed: &Seed) -> Result<(PublicKey, StatefulKey)> {
+        Len::fixed(1).check("seed", seed.len())?;
+        let s = seed.as_bytes()[0];
+        let mut st = vec![0u8; 8];
+        st.push(s);
+        Ok((
+            PublicKey::from_bytes(&[s ^ 0x5A], Len::fixed(1))?,
+            StatefulKey::from_vec(st, Len::fixed(9))?,
+        ))
+    }
+    fn sign(
+        &self,
+        key: &mut StatefulKey,
+        msg: &[u8],
+        persist: &mut dyn FnMut(&[u8]) -> Result<()>,
+    ) -> Result<Signature> {
+        let (n, s) = Self::parse(key)?;
+        if n >= FS_MAX {
+            return Err(Error::KeyExhausted);
+        }
+        let mut next = Zeroizing::new((n + 1).to_be_bytes().to_vec());
+        next.push(s);
+        persist(&next)?;
+        let mut sig = n.to_be_bytes().to_vec();
+        sig.push(fold(msg) ^ s ^ n as u8);
+        *key = StatefulKey::from_bytes(&next, Len::fixed(9))?;
+        Signature::from_vec(sig, Len::fixed(9))
+    }
+    fn verify(&self, pk: &PublicKey, msg: &[u8], sig: &Signature) -> Result<bool> {
+        Len::fixed(1).check("pk", pk.len())?;
+        Len::fixed(9).check("sig", sig.len())?;
+        let s = pk.as_bytes()[0] ^ 0x5A;
+        let b = sig.as_bytes();
+        Ok(b[8] == fold(msg) ^ s ^ b[7])
+    }
+}
+
+struct FHe;
+impl He for FHe {
+    fn ops(&self) -> &'static [HeOp] {
+        &[HeOp::Add]
+    }
+    fn keygen(&self, params: &[u8], rng: &mut dyn EntropySource) -> Result<HeKeys> {
+        if !params.is_empty() {
+            return Err(Error::InvalidInput("params"));
+        }
+        let mut k = [0u8; 1];
+        rng.fill(&mut k)?;
+        Ok(HeKeys {
+            secret: PrivateKey::from_bytes(&k, Len::fixed(1))?,
+            public: PublicKey::from_bytes(&k, Len::fixed(1))?,
+            eval: PublicKey::from_bytes(&[0], Len::fixed(1))?,
+        })
+    }
+    fn encrypt(
+        &self,
+        public: &PublicKey,
+        pt: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<Vec<u8>> {
+        if pt.len() != 1 || public.len() != 1 {
+            return Err(Error::InvalidInput("lengths"));
+        }
+        Ok(vec![pt[0].wrapping_add(public.as_bytes()[0])])
+    }
+    fn decrypt(&self, secret: &PrivateKey, ct: &[u8]) -> Result<Zeroizing<Vec<u8>>> {
+        if ct.len() != 1 || secret.len() != 1 {
+            return Err(Error::InvalidInput("lengths"));
+        }
+        Ok(Zeroizing::new(vec![
+            ct[0].wrapping_sub(secret.as_bytes()[0]),
+        ]))
+    }
+    fn eval(&self, op: HeOp, cts: &[&[u8]], _evk: &PublicKey) -> Result<Vec<u8>> {
+        if !self.ops().contains(&op) {
+            return Err(Error::Unsupported);
+        }
+        if cts.len() != op.arity() || cts.iter().any(|c| c.len() != 1) {
+            return Err(Error::InvalidInput("operands"));
+        }
+        // toy: (a + k) + (b + k) is a + b + 2k; the test uses k = 0 keys only for this op
+        Ok(vec![cts[0][0].wrapping_add(cts[1][0])])
+    }
+}
 
 // ---- table ---------------------------------------------------------------------------
 
@@ -614,11 +939,15 @@ fn ctor_for(kind: Kind) -> (Ctor, Sizes) {
         Kind::Zk => (c!(Zk, FZk), Sizes::NONE),
         Kind::Threshold => (c!(Threshold, FThreshold), Sizes::NONE),
         Kind::Vdf => (c!(Vdf, FVdf), Sizes::NONE),
+        Kind::Pke => (c!(Pke, FPke), FPke.sizes()),
+        Kind::Pake => (c!(Pake, FPake), FPake.sizes()),
+        Kind::StatefulSign => (c!(StatefulSign, FStateful), FStateful.sizes()),
+        Kind::He => (c!(He, FHe), Sizes::NONE),
     }
 }
 
 // Indexed like `Kind::ALL`. Static (not leaked) so Miri reports no leaks.
-const IDS: [&str; 21] = [
+const IDS: [&str; 25] = [
     "fake-hash",
     "fake-xof",
     "fake-mac",
@@ -640,8 +969,12 @@ const IDS: [&str; 21] = [
     "fake-zk",
     "fake-threshold",
     "fake-vdf",
+    "fake-pke",
+    "fake-pake",
+    "fake-statefulsign",
+    "fake-he",
 ];
-const ALIASES: [[&str; 1]; 21] = [
+const ALIASES: [[&str; 1]; 25] = [
     ["f-hash"],
     ["f-xof"],
     ["f-mac"],
@@ -663,6 +996,10 @@ const ALIASES: [[&str; 1]; 21] = [
     ["f-zk"],
     ["f-threshold"],
     ["f-vdf"],
+    ["f-pke"],
+    ["f-pake"],
+    ["f-statefulsign"],
+    ["f-he"],
 ];
 
 /// One fake per kind, ids `fake-<kind>`, alias `f-<kind>`, all at `tier`.
@@ -694,6 +1031,7 @@ fn table(tier: Tier) -> Vec<AlgoInfo> {
                 test_params: &[],
                 dir: "",
                 kat: &[],
+                smoke_skip: None,
                 ctor,
             }
         })
@@ -709,7 +1047,7 @@ fn every_kind_registers_instantiates_and_matches_its_metadata() {
     let t = table(Tier::Safe);
     assert_eq!(t.len(), Kind::ALL.len());
     for info in &t {
-        let inst = instantiate_in(&t, Policy::Safe, info.id, &Params::new()).unwrap();
+        let inst = instantiate_in(&t, Policy::Any, info.id, &Params::new()).unwrap();
         assert_eq!(inst.kind(), info.kind, "{}", info.id);
         assert_eq!(info.ctor.kind(), info.kind);
         assert_eq!(info.id, format!("fake-{}", info.kind.as_str()), "IDS order");
@@ -739,7 +1077,17 @@ fn tier_policy_applies_to_every_kind() {
     for tier in [Tier::Safe, Tier::Standard] {
         let t = table(tier);
         for info in &t {
-            assert!(instantiate_in(&t, Policy::Safe, info.id, &Params::new()).is_ok());
+            let r = instantiate_in(&t, Policy::Safe, info.id, &Params::new());
+            if info.kind.root_only() {
+                // never reachable from the safe API, even at tier safe
+                assert!(
+                    matches!(r, Err(Error::TierNotAllowed(x)) if x == tier),
+                    "{}",
+                    info.id
+                );
+            } else {
+                assert!(r.is_ok(), "{}", info.id);
+            }
         }
     }
 }
@@ -978,7 +1326,16 @@ fn keyless_kinds_and_reserved_stubs() {
     );
     assert!(decode_in(&t, Policy::Any, "fake-encoding", &Params::new(), b"01FF").is_err());
     assert!(decode_in(&t, Policy::Any, "fake-encoding", &Params::new(), b"0").is_err());
-    for kind in [Kind::Pow, Kind::Zk, Kind::Threshold, Kind::Vdf] {
+    for kind in [
+        Kind::Pow,
+        Kind::Zk,
+        Kind::Threshold,
+        Kind::Vdf,
+        Kind::Pke,
+        Kind::Pake,
+        Kind::StatefulSign,
+        Kind::He,
+    ] {
         let id = format!("fake-{}", kind.as_str());
         assert_eq!(
             instantiate_in(&t, Policy::Any, &id, &Params::new())
@@ -987,4 +1344,98 @@ fn keyless_kinds_and_reserved_stubs() {
             kind
         );
     }
+}
+
+#[test]
+fn stateful_sign_persists_before_release_and_never_reuses_a_state() {
+    let t = table(Tier::Safe);
+    let s = new_statefulsign_in(&t, Policy::Any, "fake-statefulsign", &Params::new()).unwrap();
+    let (pk, mut key) = s.keygen(&mut FixedEntropy::new(&[9])).unwrap();
+    assert_eq!(s.remaining(&key).unwrap(), 3);
+    // persist failure: no signature, state unchanged
+    let mut fail = |_: &[u8]| -> Result<()> { Err(Error::PersistFailed) };
+    assert_eq!(s.sign(&mut key, b"m", &mut fail), Err(Error::PersistFailed));
+    assert_eq!(s.remaining(&key).unwrap(), 3);
+    // the state handed to persist is the advanced one, and each signature differs
+    let mut stored: Vec<Vec<u8>> = Vec::new();
+    let mut sigs = Vec::new();
+    for _ in 0..3 {
+        let mut keep = |b: &[u8]| -> Result<()> {
+            stored.push(b.to_vec());
+            Ok(())
+        };
+        let sig = s.sign(&mut key, b"m", &mut keep).unwrap();
+        assert!(s.verify(&pk, b"m", &sig).unwrap());
+        sigs.push(sig);
+    }
+    assert_eq!(stored.len(), 3);
+    assert_ne!(sigs[0], sigs[1]);
+    assert_eq!(s.remaining(&key).unwrap(), 0);
+    let mut never = |_: &[u8]| -> Result<()> { panic!("persist called for an exhausted key") };
+    assert_eq!(s.sign(&mut key, b"m", &mut never), Err(Error::KeyExhausted));
+}
+
+#[test]
+fn pke_pake_threshold_vdf_he_contracts() {
+    let t = table(Tier::Safe);
+    let mut rng = FixedEntropy::new(&[7; 64]);
+    // Pke: uniform decrypt failure, bounds enforced
+    let p = new_pke_in(&t, Policy::Any, "fake-pke", &Params::new()).unwrap();
+    let (pk, sk) = p.keygen(&mut rng).unwrap();
+    let ct = p.encrypt(&pk, b"hello", b"lbl", &mut rng).unwrap();
+    assert_eq!(&p.decrypt(&sk, &ct, b"lbl").unwrap()[..], b"hello");
+    assert_eq!(p.decrypt(&sk, &ct, b"other"), Err(Error::AuthenticationFailed));
+    assert!(p.encrypt(&pk, &[0; 33], b"", &mut rng).is_err());
+    // Pake: both parties finish with the same secret; a wrong message ends the exchange
+    let k = new_pake_in(&t, Policy::Any, "fake-pake", &Params::new()).unwrap();
+    let (a, m1) = k.start(PakeRole::Initiator, b"pw", b"ctx", &mut rng).unwrap();
+    let (b, m0) = k.start(PakeRole::Responder, b"pw", b"ctx", &mut rng).unwrap();
+    assert!(m0.is_empty());
+    let PakeStep::Done(sb, Some(m2)) = b.step(&m1).unwrap() else { panic!("responder") };
+    let PakeStep::Done(sa, None) = a.step(&m2).unwrap() else { panic!("initiator") };
+    assert_eq!(sa, sb);
+    let (a2, _) = k.start(PakeRole::Initiator, b"pw", b"ctx", &mut rng).unwrap();
+    assert!(matches!(a2.step(b"junk"), Err(Error::ProtocolAborted(_))));
+    assert!(k.start(PakeRole::Initiator, b"", b"", &mut rng).is_err());
+    // Threshold: 1 <= t <= n <= max enforced, party ids validated
+    let th = new_threshold_in(&t, Policy::Any, "fake-threshold", &Params::new()).unwrap();
+    for (tt, n) in [(0, 3), (4, 3), (1, 9)] {
+        assert!(th.split(b"s", tt, n, &mut rng).is_err(), "{tt}/{n}");
+    }
+    let shares = th.split(b"secret", 2, 3, &mut rng).unwrap();
+    assert_eq!(&th.combine(&shares[..2]).unwrap()[..], b"secret");
+    assert!(th.combine(&shares[..1]).is_err());
+    let sess = |party| ThresholdSession {
+        op: nextssl_core::ThresholdOp::Dkg,
+        party,
+        t: 2,
+        n: 3,
+        input: vec![],
+    };
+    assert!(matches!(
+        th.start(&sess(0), &mut rng),
+        Err(Error::ProtocolAborted(_))
+    ));
+    assert!(matches!(
+        th.start(&sess(4), &mut rng),
+        Err(Error::ProtocolAborted(_))
+    ));
+    // Vdf: t cap
+    let v = new_vdf_in(&t, Policy::Any, "fake-vdf", &Params::new()).unwrap();
+    let (o, pr) = v.eval(b"c", 10).unwrap();
+    assert!(v.verify(b"c", 10, &o, &pr).unwrap());
+    assert!(!v.verify(b"c", 11, &o, &pr).unwrap());
+    assert_eq!(v.eval(b"c", 0), Err(Error::ParamOutOfRange("t")));
+    assert_eq!(v.eval(b"c", 1001), Err(Error::ParamOutOfRange("t")));
+    // He: undeclared op is an error
+    let h = new_he_in(&t, Policy::Any, "fake-he", &Params::new()).unwrap();
+    let keys = h.keygen(&[], &mut FixedEntropy::new(&[0])).unwrap();
+    let c1 = h.encrypt(&keys.public, &[3], &mut rng).unwrap();
+    assert_eq!(
+        h.eval(HeOp::Mul, &[&c1, &c1], &keys.eval),
+        Err(Error::Unsupported)
+    );
+    assert!(h.eval(HeOp::Add, &[&c1], &keys.eval).is_err());
+    let sum = h.eval(HeOp::Add, &[&c1, &c1], &keys.eval).unwrap();
+    assert_eq!(&h.decrypt(&keys.secret, &sum).unwrap()[..], &[6]);
 }

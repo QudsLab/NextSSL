@@ -428,6 +428,7 @@ fn fake(id: &'static str, tier: Tier, cose: i64) -> AlgoInfo {
         test_params: &[],
         dir: "",
         kat: &[],
+        smoke_skip: None,
         ctor: Ctor::Aead(toy),
     }
 }
