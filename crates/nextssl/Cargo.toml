@@ -1,0 +1,28 @@
+[package]
+name = "nextssl"
+description = "NextSSL safe API: safe and standard tier algorithms only"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[features]
+# Off by default: exposes GPL/LGPL algorithms (REBUILD_PLAN.md section 11).
+copyleft = ["nextssl-registry/copyleft"]
+# Every digest and cipher type selectable in compositions (bigger binary). See nextssl-compose.
+compose-all = ["nextssl-compose/compose-all"]
+
+[dependencies]
+nextssl-core.workspace = true
+nextssl-registry.workspace = true
+nextssl-compose.workspace = true
+coset = "=0.4.2"
+base64ct.workspace = true
+zeroize.workspace = true
+
+[dev-dependencies]
+nextssl-core = { workspace = true, features = ["testing"] }
+
+[lints]
+workspace = true
