@@ -1,0 +1,19 @@
+id        = "md2"
+kind      = "hash"
+category  = "hash"
+family    = "md"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = ["RFC 1319"]
+oid       = "1.2.840.113549.2.2"
+fips      = false
+copyleft  = false
+upstream  = { crate = "md2", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+digest    = "md2::Md2"
+
+[kat]
+files = ["kat/md2.json"]
+
+[sizes]
+out = 16

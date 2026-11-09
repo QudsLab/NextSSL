@@ -1,0 +1,19 @@
+id        = "has160"
+kind      = "hash"
+category  = "hash"
+family    = "has160"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["HAS-160 (KISA TTAS.KO-12.0011/R1), RHash implementation"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rhash/RHash", commit = "7b2801dfcae0a2afd970d69e822edd49132538b5", license = "0BSD", files = ["librhash/has160.c", "librhash/byte_order.c", "librhash/has160.h", "librhash/byte_order.h", "librhash/ustd.h", "COPYING"] }
+# Tier legacy: Korean national standard, SHA-1-class design with published attacks on reduced rounds; not broken in full.
+# Row note "KISA reference not fetched": vectors come from the standard via randombit.net (see kat/README.md).
+
+[kat]
+files = ["kat/has160.json"]
+
+[sizes]
+out = 20

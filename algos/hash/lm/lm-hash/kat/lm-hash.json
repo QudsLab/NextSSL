@@ -1,0 +1,46 @@
+{
+ "algorithm": "lm-hash",
+ "source": "pycryptodome DES-ECB (independent) per the LM hash definition (MS-NLMP); ASCII, uppercased, max 14 bytes",
+ "vectors": [
+  {
+   "id": "pw-0",
+   "msg_hex": "",
+   "out_hex": "aad3b435b51404eeaad3b435b51404ee"
+  },
+  {
+   "id": "pw-1",
+   "msg_hex": "70617373776f7264",
+   "out_hex": "e52cac67419a9a224a3b108f3fa6cb6d"
+  },
+  {
+   "id": "pw-2",
+   "msg_hex": "50617373776f7264",
+   "out_hex": "e52cac67419a9a224a3b108f3fa6cb6d"
+  },
+  {
+   "id": "pw-3",
+   "msg_hex": "50415353574f5244",
+   "out_hex": "e52cac67419a9a224a3b108f3fa6cb6d"
+  },
+  {
+   "id": "pw-4",
+   "msg_hex": "61626364656667",
+   "out_hex": "e0c510199cc66abdaad3b435b51404ee"
+  },
+  {
+   "id": "pw-5",
+   "msg_hex": "6162636465666768",
+   "out_hex": "e0c510199cc66abd5acdcd7c247fa83a"
+  },
+  {
+   "id": "pw-6",
+   "msg_hex": "4142434445464748494a4b4c4d4e",
+   "out_hex": "e0c510199cc66abd8c51ec214bebdea1"
+  },
+  {
+   "id": "pw-7",
+   "msg_hex": "313233343536",
+   "out_hex": "44efce164ab921caaad3b435b51404ee"
+  }
+ ]
+}

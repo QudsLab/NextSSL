@@ -1,0 +1,17 @@
+id        = "lm-hash"
+kind      = "hash"
+category  = "hash"
+family    = "lm"
+aliases   = ["lanman-hash", "lmowfv1"]
+tier      = "broken"
+status    = "active"
+standards = ["MS-NLMP (LMOWFv1)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "des", version = "=0.9.0", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/lm-hash.json"]
+
+[sizes]
+out = 16

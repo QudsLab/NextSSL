@@ -1,0 +1,19 @@
+id        = "gost-r-34-11-94"
+kind      = "hash"
+category  = "hash"
+family    = "gost-r-34-11-94"
+aliases   = ["gost94", "gost94-cryptopro"]
+tier      = "legacy"
+status    = "active"
+standards = ["GOST R 34.11-94", "RFC 5831", "RFC 4357 (CryptoPro parameter set)"]
+oid       = "1.2.643.2.2.9"
+fips      = false
+copyleft  = false
+upstream  = { crate = "gost94", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+digest    = "gost94::Gost94CryptoPro"
+
+[kat]
+files = ["kat/gost-r-34-11-94.json"]
+
+[sizes]
+out = 32

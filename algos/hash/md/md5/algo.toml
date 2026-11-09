@@ -1,0 +1,19 @@
+id        = "md5"
+kind      = "hash"
+category  = "hash"
+family    = "md"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = ["RFC 1321"]
+oid       = "1.2.840.113549.2.5"
+fips      = false
+copyleft  = false
+upstream  = { crate = "md-5", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+digest    = "md5::Md5"
+
+[kat]
+files = ["kat/md5.json"]
+
+[sizes]
+out = 16

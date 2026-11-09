@@ -1,0 +1,19 @@
+id        = "md4"
+kind      = "hash"
+category  = "hash"
+family    = "md"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = ["RFC 1320"]
+oid       = "1.2.840.113549.2.4"
+fips      = false
+copyleft  = false
+upstream  = { crate = "md4", version = "=0.11.0", license = "MIT OR Apache-2.0" }
+digest    = "md4::Md4"
+
+[kat]
+files = ["kat/md4.json"]
+
+[sizes]
+out = 16

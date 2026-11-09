@@ -1,0 +1,24 @@
+id        = "jh"
+kind      = "hash"
+category  = "hash"
+family    = "jh"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["JH (SHA-3 finalist), round-3/final version"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "jh", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+digests   = { "jh-224" = "jh::Jh224", "jh-256" = "jh::Jh256", "jh-384" = "jh::Jh384", "jh-512" = "jh::Jh512" }
+
+[params.out_len]
+type    = "u64"
+min     = 28
+max     = 64
+default = 32
+
+[kat]
+files = ["kat/jh.json"]
+
+[sizes]
+out = { min = 28, max = 64 }
