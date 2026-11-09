@@ -3220,6 +3220,31 @@
       "dir": "pwhash/crypt/bsdicrypt"
     },
     {
+      "id": "bulletproofs-range",
+      "kind": "zk",
+      "category": "zk",
+      "family": "bulletproofs",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "feature": "bulletproofs",
+      "upstream": {
+        "crate": "bulletproofs",
+        "version": "=5.0.0",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "zk/bulletproofs/bulletproofs-range"
+    },
+    {
       "id": "camellia-128",
       "kind": "blockcipher",
       "category": "block",
@@ -5734,6 +5759,42 @@
       "dir": "sign/eddsa/ed448"
     },
     {
+      "id": "ed448ph",
+      "kind": "sign",
+      "category": "sign",
+      "family": "eddsa",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 8032"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "pk": 57,
+        "sk": 57,
+        "sig": 114,
+        "seed": 57,
+        "ctx": {
+          "min": 0,
+          "max": 255
+        }
+      },
+      "upstream": {
+        "crate": "crrl",
+        "version": "=0.9.0",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "sign/eddsa/ed448ph"
+    },
+    {
       "id": "edon-r",
       "kind": "hash",
       "category": "hash",
@@ -6061,6 +6122,40 @@
       "dir": "sign/falcon/falcon-padded-512"
     },
     {
+      "id": "feal",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "feal",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "block": 8
+      },
+      "upstream": {
+        "repo": "https://github.com/Vozec/Feal-ALL",
+        "commit": "9d01773dd69205eb24c3f541455356e6802c39f0",
+        "license": "NOASSERTION",
+        "files": [
+          "port/feal.c",
+          "port/feal.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json",
+          "kat/published.json"
+        ]
+      },
+      "dir": "block/feal/feal"
+    },
+    {
       "id": "ff70",
       "kind": "encoding",
       "category": "encoding",
@@ -6162,6 +6257,78 @@
         ]
       },
       "dir": "checksum/fletcher/fletcher32"
+    },
+    {
+      "id": "fn-dsa-1024",
+      "kind": "sign",
+      "category": "sign",
+      "family": "fn-dsa",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "FIPS 206 (draft)"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "pk": 1793,
+        "sk": 2305,
+        "sig": 1577,
+        "seed": 48,
+        "ctx": {
+          "min": 0,
+          "max": 255
+        }
+      },
+      "upstream": {
+        "crate": "falcon-rs",
+        "version": "=0.3.1",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "sign/fn-dsa/fn-dsa-1024"
+    },
+    {
+      "id": "fn-dsa-512",
+      "kind": "sign",
+      "category": "sign",
+      "family": "fn-dsa",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "FIPS 206 (draft)"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "pk": 897,
+        "sk": 1281,
+        "sig": 809,
+        "seed": 48,
+        "ctx": {
+          "min": 0,
+          "max": 255
+        }
+      },
+      "upstream": {
+        "crate": "falcon-rs",
+        "version": "=0.3.1",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "sign/fn-dsa/fn-dsa-512"
     },
     {
       "id": "fountain",
@@ -6589,6 +6756,39 @@
         ]
       },
       "dir": "stream/hc/hc256"
+    },
+    {
+      "id": "hitag2",
+      "kind": "streamcipher",
+      "category": "stream",
+      "family": "hitag2",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 6,
+        "nonce": 8
+      },
+      "upstream": {
+        "repo": "https://github.com/jackiecan/hitag2",
+        "commit": "0246bb75fa264263d8aec6d6de70de959a1c2cf8",
+        "license": "NOASSERTION",
+        "files": [
+          "port/hitag2.c",
+          "port/hitag2.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "stream/hitag2/hitag2"
     },
     {
       "id": "hkdf",
@@ -7181,6 +7381,135 @@
       "dir": "mac/hmac/hmac-sha512"
     },
     {
+      "id": "hpke-p256-sha256-aes128gcm",
+      "kind": "pke",
+      "category": "pke",
+      "family": "hpke",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 9180"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "hpke",
+      "sizes": {
+        "out": {
+          "min": 0,
+          "max": 65536
+        },
+        "pk": 65,
+        "sk": 32,
+        "ct": {
+          "min": 81,
+          "max": 65617
+        },
+        "ctx": {
+          "min": 0,
+          "max": 1024
+        }
+      },
+      "upstream": {
+        "crate": "hpke",
+        "version": "=0.15.1",
+        "license": "MIT/Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pke/hpke/hpke-p256-sha256-aes128gcm"
+    },
+    {
+      "id": "hpke-x25519-sha256-aes128gcm",
+      "kind": "pke",
+      "category": "pke",
+      "family": "hpke",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 9180"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "hpke",
+      "sizes": {
+        "out": {
+          "min": 0,
+          "max": 65536
+        },
+        "pk": 32,
+        "sk": 32,
+        "ct": {
+          "min": 48,
+          "max": 65584
+        },
+        "ctx": {
+          "min": 0,
+          "max": 1024
+        }
+      },
+      "upstream": {
+        "crate": "hpke",
+        "version": "=0.15.1",
+        "license": "MIT/Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pke/hpke/hpke-x25519-sha256-aes128gcm"
+    },
+    {
+      "id": "hpke-x25519-sha256-chacha20poly1305",
+      "kind": "pke",
+      "category": "pke",
+      "family": "hpke",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 9180"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "hpke",
+      "sizes": {
+        "out": {
+          "min": 0,
+          "max": 65536
+        },
+        "pk": 32,
+        "sk": 32,
+        "ct": {
+          "min": 48,
+          "max": 65584
+        },
+        "ctx": {
+          "min": 0,
+          "max": 1024
+        }
+      },
+      "upstream": {
+        "crate": "hpke",
+        "version": "=0.15.1",
+        "license": "MIT/Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pke/hpke/hpke-x25519-sha256-chacha20poly1305"
+    },
+    {
       "id": "hqc-128",
       "kind": "kem",
       "category": "kem",
@@ -7408,6 +7737,46 @@
         ]
       },
       "dir": "aead/hs1-siv/hs1-siv"
+    },
+    {
+      "id": "hss-sha256-h5-h5-w4",
+      "kind": "statefulsign",
+      "category": "sign",
+      "family": "hss",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 8554",
+        "NIST SP 800-208"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "hbs-lms",
+      "sizes": {
+        "pk": 60,
+        "sk": {
+          "min": 32,
+          "max": 512
+        },
+        "sig": {
+          "min": 256,
+          "max": 65536
+        },
+        "seed": 32
+      },
+      "upstream": {
+        "crate": "hbs-lms",
+        "version": "=0.2.0-alpha.1",
+        "license": "Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "sign/hss/hss-sha256-h5-h5-w4"
     },
     {
       "id": "hyena-v1",
@@ -8473,6 +8842,86 @@
         ]
       },
       "dir": "hash/lm/lm-hash"
+    },
+    {
+      "id": "lms-sha256-h10-w4",
+      "kind": "statefulsign",
+      "category": "sign",
+      "family": "lms",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 8554",
+        "NIST SP 800-208"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "hbs-lms",
+      "sizes": {
+        "pk": 60,
+        "sk": {
+          "min": 32,
+          "max": 512
+        },
+        "sig": {
+          "min": 256,
+          "max": 65536
+        },
+        "seed": 32
+      },
+      "upstream": {
+        "crate": "hbs-lms",
+        "version": "=0.2.0-alpha.1",
+        "license": "Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "sign/lms/lms-sha256-h10-w4"
+    },
+    {
+      "id": "lms-sha256-h5-w4",
+      "kind": "statefulsign",
+      "category": "sign",
+      "family": "lms",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 8554",
+        "NIST SP 800-208"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "hbs-lms",
+      "sizes": {
+        "pk": 60,
+        "sk": {
+          "min": 32,
+          "max": 512
+        },
+        "sig": {
+          "min": 256,
+          "max": 65536
+        },
+        "seed": 32
+      },
+      "upstream": {
+        "crate": "hbs-lms",
+        "version": "=0.2.0-alpha.1",
+        "license": "Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "sign/lms/lms-sha256-h5-w4"
     },
     {
       "id": "locus",
@@ -10468,6 +10917,40 @@
       "dir": "kem/ntru/ntruhrss701"
     },
     {
+      "id": "opaque-ristretto255-sha512",
+      "kind": "pake",
+      "category": "pake",
+      "family": "opaque",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 9807"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "opaque-ke",
+      "sizes": {
+        "key": {
+          "min": 1,
+          "max": 256
+        },
+        "ss": 64
+      },
+      "upstream": {
+        "crate": "opaque-ke",
+        "version": "=4.0.1",
+        "license": "Apache-2.0 OR MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pake/opaque/opaque-ristretto255-sha512"
+    },
+    {
       "id": "orange",
       "kind": "aead",
       "category": "aead",
@@ -11070,6 +11553,40 @@
       "dir": "mac/poly1305/poly1305"
     },
     {
+      "id": "pride",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "pride",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": true,
+      "sizes": {
+        "key": 16,
+        "block": 8
+      },
+      "upstream": {
+        "repo": "https://github.com/obfusk/pypride",
+        "commit": "97d724c086a0f498bdd049ddaf0b6f9e30822492",
+        "license": "LGPL-3.0-or-later",
+        "files": [
+          "port/pride.c",
+          "port/pride.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json",
+          "kat/published.json"
+        ]
+      },
+      "dir": "block/pride/pride"
+    },
+    {
       "id": "pyjamask",
       "kind": "aead",
       "category": "aead",
@@ -11335,7 +11852,7 @@
       "category": "block",
       "family": "rc",
       "aliases": [],
-      "tier": "unverified",
+      "tier": "research",
       "status": "active",
       "standards": [],
       "fips": false,
@@ -11584,6 +12101,273 @@
         ]
       },
       "dir": "hash/romulus/romulus-hash"
+    },
+    {
+      "id": "rsa-oaep-2048",
+      "kind": "pke",
+      "category": "pke",
+      "family": "rsa-oaep",
+      "aliases": [],
+      "tier": "legacy",
+      "status": "active",
+      "standards": [
+        "RFC 8017"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "rsa",
+      "sizes": {
+        "out": {
+          "min": 0,
+          "max": 190
+        },
+        "pk": {
+          "min": 264,
+          "max": 288
+        },
+        "sk": {
+          "min": 768,
+          "max": 1344
+        },
+        "ct": 256,
+        "ctx": {
+          "min": 0,
+          "max": 64
+        }
+      },
+      "upstream": {
+        "crate": "rsa",
+        "version": "=0.10.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pke/rsa-oaep/rsa-oaep-2048"
+    },
+    {
+      "id": "rsa-oaep-3072",
+      "kind": "pke",
+      "category": "pke",
+      "family": "rsa-oaep",
+      "aliases": [],
+      "tier": "legacy",
+      "status": "active",
+      "standards": [
+        "RFC 8017"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "rsa",
+      "sizes": {
+        "out": {
+          "min": 0,
+          "max": 318
+        },
+        "pk": {
+          "min": 392,
+          "max": 416
+        },
+        "sk": {
+          "min": 1152,
+          "max": 1984
+        },
+        "ct": 384,
+        "ctx": {
+          "min": 0,
+          "max": 64
+        }
+      },
+      "upstream": {
+        "crate": "rsa",
+        "version": "=0.10.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pke/rsa-oaep/rsa-oaep-3072"
+    },
+    {
+      "id": "rsa-oaep-4096",
+      "kind": "pke",
+      "category": "pke",
+      "family": "rsa-oaep",
+      "aliases": [],
+      "tier": "legacy",
+      "status": "active",
+      "standards": [
+        "RFC 8017"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "rsa",
+      "sizes": {
+        "out": {
+          "min": 0,
+          "max": 446
+        },
+        "pk": {
+          "min": 520,
+          "max": 544
+        },
+        "sk": {
+          "min": 1536,
+          "max": 2624
+        },
+        "ct": 512,
+        "ctx": {
+          "min": 0,
+          "max": 64
+        }
+      },
+      "upstream": {
+        "crate": "rsa",
+        "version": "=0.10.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pke/rsa-oaep/rsa-oaep-4096"
+    },
+    {
+      "id": "rsa-pkcs1v15-enc-2048",
+      "kind": "pke",
+      "category": "pke",
+      "family": "rsa-pkcs1v15-enc",
+      "aliases": [],
+      "tier": "broken",
+      "status": "active",
+      "standards": [
+        "RFC 8017"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "rsa",
+      "sizes": {
+        "out": {
+          "min": 0,
+          "max": 245
+        },
+        "pk": {
+          "min": 264,
+          "max": 288
+        },
+        "sk": {
+          "min": 768,
+          "max": 1344
+        },
+        "ct": 256,
+        "ctx": 0
+      },
+      "upstream": {
+        "crate": "rsa",
+        "version": "=0.10.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pke/rsa-pkcs1v15-enc/rsa-pkcs1v15-enc-2048"
+    },
+    {
+      "id": "rsa-pkcs1v15-enc-3072",
+      "kind": "pke",
+      "category": "pke",
+      "family": "rsa-pkcs1v15-enc",
+      "aliases": [],
+      "tier": "broken",
+      "status": "active",
+      "standards": [
+        "RFC 8017"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "rsa",
+      "sizes": {
+        "out": {
+          "min": 0,
+          "max": 373
+        },
+        "pk": {
+          "min": 392,
+          "max": 416
+        },
+        "sk": {
+          "min": 1152,
+          "max": 1984
+        },
+        "ct": 384,
+        "ctx": 0
+      },
+      "upstream": {
+        "crate": "rsa",
+        "version": "=0.10.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pke/rsa-pkcs1v15-enc/rsa-pkcs1v15-enc-3072"
+    },
+    {
+      "id": "rsa-pkcs1v15-enc-4096",
+      "kind": "pke",
+      "category": "pke",
+      "family": "rsa-pkcs1v15-enc",
+      "aliases": [],
+      "tier": "broken",
+      "status": "active",
+      "standards": [
+        "RFC 8017"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "feature": "rsa",
+      "sizes": {
+        "out": {
+          "min": 0,
+          "max": 501
+        },
+        "pk": {
+          "min": 520,
+          "max": 544
+        },
+        "sk": {
+          "min": 1536,
+          "max": 2624
+        },
+        "ct": 512,
+        "ctx": 0
+      },
+      "upstream": {
+        "crate": "rsa",
+        "version": "=0.10.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pke/rsa-pkcs1v15-enc/rsa-pkcs1v15-enc-4096"
     },
     {
       "id": "sablier",
@@ -12675,6 +13459,30 @@
       "dir": "xof/sha3/shake256"
     },
     {
+      "id": "shamir",
+      "kind": "threshold",
+      "category": "threshold",
+      "family": "shamir",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "upstream": {
+        "crate": "sharks",
+        "version": "=0.5.0",
+        "license": "MIT/Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "threshold/shamir/shamir"
+    },
+    {
       "id": "shavite3",
       "kind": "hash",
       "category": "hash",
@@ -12954,7 +13762,7 @@
       "category": "block",
       "family": "skipjack",
       "aliases": [],
-      "tier": "unverified",
+      "tier": "research",
       "status": "active",
       "standards": [],
       "fips": false,
@@ -13591,7 +14399,7 @@
       "aliases": [
         "sm2-dsa"
       ],
-      "tier": "unverified",
+      "tier": "research",
       "status": "active",
       "standards": [
         "GB/T 32918.2",
@@ -13684,6 +14492,39 @@
         ]
       },
       "dir": "block/sm4/sm4"
+    },
+    {
+      "id": "spake2-ed25519",
+      "kind": "pake",
+      "category": "pake",
+      "family": "spake2",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "draft-irtf-cfrg-spake2"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": {
+          "min": 1,
+          "max": 256
+        },
+        "ss": 32
+      },
+      "upstream": {
+        "crate": "spake2",
+        "version": "=0.4.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pake/spake2/spake2-ed25519"
     },
     {
       "id": "sparkle-esch",
@@ -13985,6 +14826,43 @@
         ]
       },
       "dir": "aead/spook/spook-su"
+    },
+    {
+      "id": "srp-6a-2048-sha256",
+      "kind": "pake",
+      "category": "pake",
+      "family": "srp",
+      "aliases": [],
+      "tier": "legacy",
+      "status": "active",
+      "standards": [
+        "RFC 5054",
+        "RFC 2945"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": {
+          "min": 1,
+          "max": 256
+        },
+        "ss": {
+          "min": 1,
+          "max": 256
+        }
+      },
+      "upstream": {
+        "crate": "srp",
+        "version": "=0.6.0",
+        "license": "MIT OR Apache-2.0"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "pake/srp/srp-6a-2048-sha256"
     },
     {
       "id": "streebog256",
@@ -14308,7 +15186,7 @@
       "category": "block",
       "family": "tea",
       "aliases": [],
-      "tier": "unverified",
+      "tier": "research",
       "status": "active",
       "standards": [],
       "fips": false,
@@ -14653,6 +15531,124 @@
         ]
       },
       "dir": "aead/tinyjambu/tinyjambu-256"
+    },
+    {
+      "id": "turboshake128",
+      "kind": "xof",
+      "category": "xof",
+      "family": "turboshake",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 9861"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "upstream": {
+        "crate": "turboshake",
+        "version": "=0.5.0",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "xof/turboshake/turboshake128"
+    },
+    {
+      "id": "turboshake256",
+      "kind": "xof",
+      "category": "xof",
+      "family": "turboshake",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "RFC 9861"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "upstream": {
+        "crate": "turboshake",
+        "version": "=0.5.0",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "xof/turboshake/turboshake256"
+    },
+    {
+      "id": "twine-128",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "twine",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 16,
+        "block": 8
+      },
+      "upstream": {
+        "repo": "https://github.com/amoallim15/xtwine",
+        "commit": "fa1e0706ef92afc2ef3031c16e16c3b6232cb5b3",
+        "license": "MIT",
+        "files": [
+          "port/twine.c",
+          "port/twine.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "block/twine/twine-128"
+    },
+    {
+      "id": "twine-80",
+      "kind": "blockcipher",
+      "category": "block",
+      "family": "twine",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 10,
+        "block": 8
+      },
+      "upstream": {
+        "repo": "https://github.com/amoallim15/xtwine",
+        "commit": "fa1e0706ef92afc2ef3031c16e16c3b6232cb5b3",
+        "license": "MIT",
+        "files": [
+          "port/twine.c",
+          "port/twine.h",
+          "LICENSE"
+        ]
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/kat.json"
+        ]
+      },
+      "dir": "block/twine/twine-80"
     },
     {
       "id": "twofish",
@@ -15049,7 +16045,7 @@
       "category": "block",
       "family": "xtea",
       "aliases": [],
-      "tier": "unverified",
+      "tier": "research",
       "status": "active",
       "standards": [],
       "fips": false,
@@ -15318,7 +16314,7 @@
       "category": "stream",
       "family": "zuc",
       "aliases": [],
-      "tier": "unverified",
+      "tier": "research",
       "status": "active",
       "standards": [
         "3GPP TS 35.221 (ZUC-128 keystream)"
@@ -15341,6 +16337,36 @@
         ]
       },
       "dir": "stream/zuc/zuc"
+    },
+    {
+      "id": "zuc-256",
+      "kind": "streamcipher",
+      "category": "stream",
+      "family": "zuc",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "ZUC-256 version 1.1 (ZUC design team)"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "key": 32,
+        "nonce": 23
+      },
+      "upstream": {
+        "crate": "zuc",
+        "version": "=0.4.1",
+        "license": "MIT"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/vectors.json"
+        ]
+      },
+      "dir": "stream/zuc/zuc-256"
     }
   ]
 }
