@@ -1,0 +1,638 @@
+{
+ "algorithm": "gift-cofb",
+ "source": "NIST LWC submission package known-answer files (see kat/README.md)",
+ "vectors": [
+  {
+   "id": "gift-cofb-count-1",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "",
+   "pt_hex": "",
+   "ct_hex": "368965836d36614de2fc24d0f801b9af"
+  },
+  {
+   "id": "gift-cofb-count-2",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00",
+   "pt_hex": "",
+   "ct_hex": "ae5dcdd1285d5177fe251deb99d727dc"
+  },
+  {
+   "id": "gift-cofb-count-3",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "0001",
+   "pt_hex": "",
+   "ct_hex": "c4879e1b355d97dea42cb661b2c1f9ca"
+  },
+  {
+   "id": "gift-cofb-count-4",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102",
+   "pt_hex": "",
+   "ct_hex": "059fe55d95148d4c1c485ddbf54d13ce"
+  },
+  {
+   "id": "gift-cofb-count-5",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203",
+   "pt_hex": "",
+   "ct_hex": "142cc1cda6763a7d00dbeac3428b32c5"
+  },
+  {
+   "id": "gift-cofb-count-6",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "0001020304",
+   "pt_hex": "",
+   "ct_hex": "6eca633ca9a7fcde6405d6e58013fa84"
+  },
+  {
+   "id": "gift-cofb-count-7",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405",
+   "pt_hex": "",
+   "ct_hex": "0438d3f55f865830be95fddbb0a7e87b"
+  },
+  {
+   "id": "gift-cofb-count-8",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203040506",
+   "pt_hex": "",
+   "ct_hex": "c2e069e719f1ba1d5365fda235fb0d87"
+  },
+  {
+   "id": "gift-cofb-count-9",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "0001020304050607",
+   "pt_hex": "",
+   "ct_hex": "ac7ad95573311214661e84a6d3038e41"
+  },
+  {
+   "id": "gift-cofb-count-10",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708",
+   "pt_hex": "",
+   "ct_hex": "a51cd94fcb75546450013f090e811eae"
+  },
+  {
+   "id": "gift-cofb-count-11",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "",
+   "ct_hex": "e8c2f8e67b44f9d7b18f693164b5d770"
+  },
+  {
+   "id": "gift-cofb-count-12",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a",
+   "pt_hex": "",
+   "ct_hex": "ab90b02d62b3cb751bdf8ef83bb0d99c"
+  },
+  {
+   "id": "gift-cofb-count-13",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b",
+   "pt_hex": "",
+   "ct_hex": "0bb2578f84fe2c44632b77fe9ebbe8a9"
+  },
+  {
+   "id": "gift-cofb-count-14",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c",
+   "pt_hex": "",
+   "ct_hex": "fd0d5692aef0586b823eb8ebc2115eff"
+  },
+  {
+   "id": "gift-cofb-count-15",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d",
+   "pt_hex": "",
+   "ct_hex": "51eab7523279c19c4ed743cbc2236832"
+  },
+  {
+   "id": "gift-cofb-count-16",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e",
+   "pt_hex": "",
+   "ct_hex": "a85d987fc0bfae45a351f236c65c0b9b"
+  },
+  {
+   "id": "gift-cofb-count-17",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f",
+   "pt_hex": "",
+   "ct_hex": "709657d81ddc509aa20dc66f18ff9907"
+  },
+  {
+   "id": "gift-cofb-count-18",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10",
+   "pt_hex": "",
+   "ct_hex": "6591ab7e3cacb1a5b0be50633e735296"
+  },
+  {
+   "id": "gift-cofb-count-19",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "pt_hex": "",
+   "ct_hex": "872a74ef1a0a154ac03193a0e5f102ba"
+  },
+  {
+   "id": "gift-cofb-count-20",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "pt_hex": "",
+   "ct_hex": "04a9c25803344d4492dc1b904da1bb57"
+  },
+  {
+   "id": "gift-cofb-count-21",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "pt_hex": "",
+   "ct_hex": "da9bd7b18d1b3d2edb4fbf09d4e57220"
+  },
+  {
+   "id": "gift-cofb-count-22",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "pt_hex": "",
+   "ct_hex": "b05b707c1124707b162a08faa50b9422"
+  },
+  {
+   "id": "gift-cofb-count-23",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "",
+   "ct_hex": "cc8aad64d5d49c093b8116614c3b7735"
+  },
+  {
+   "id": "gift-cofb-count-24",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "pt_hex": "",
+   "ct_hex": "e874561ce6fd1cedc4b31f02258969e3"
+  },
+  {
+   "id": "gift-cofb-count-25",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "",
+   "ct_hex": "71804cb26338625f1b75d86c2ccf8299"
+  },
+  {
+   "id": "gift-cofb-count-26",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "pt_hex": "",
+   "ct_hex": "b7597fa5d5fd44e33ff9b5c822930614"
+  },
+  {
+   "id": "gift-cofb-count-27",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "pt_hex": "",
+   "ct_hex": "4c4986ea5e14b33db84f153eee28e07c"
+  },
+  {
+   "id": "gift-cofb-count-28",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a",
+   "pt_hex": "",
+   "ct_hex": "48630643b25d44119dcd293ba4a6be64"
+  },
+  {
+   "id": "gift-cofb-count-29",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "pt_hex": "",
+   "ct_hex": "2a4260459974e7047bbfe89568ca6b8c"
+  },
+  {
+   "id": "gift-cofb-count-30",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "pt_hex": "",
+   "ct_hex": "b746e916d03a0ef127d8c7843204796b"
+  },
+  {
+   "id": "gift-cofb-count-31",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "",
+   "ct_hex": "6020335133c61586e214ecf980021acc"
+  },
+  {
+   "id": "gift-cofb-count-32",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "pt_hex": "",
+   "ct_hex": "aebb30e1fe26d2768a58747b3f07d380"
+  },
+  {
+   "id": "gift-cofb-count-33",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "",
+   "ct_hex": "f4938d33a80fb4e4443695f60244969b"
+  },
+  {
+   "id": "gift-cofb-count-34",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "",
+   "pt_hex": "00",
+   "ct_hex": "5df96db329e92688242ef4e06f94fe1bd9"
+  },
+  {
+   "id": "gift-cofb-count-35",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00",
+   "pt_hex": "00",
+   "ct_hex": "2673fa1a8b8a87c239fa9122be845864f9"
+  },
+  {
+   "id": "gift-cofb-count-36",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "0001",
+   "pt_hex": "00",
+   "ct_hex": "23553fbb2e7aac2d9776804296258cef50"
+  },
+  {
+   "id": "gift-cofb-count-37",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102",
+   "pt_hex": "00",
+   "ct_hex": "4a96ae33e2ce34b43b65f01fbbad520f53"
+  },
+  {
+   "id": "gift-cofb-count-38",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203",
+   "pt_hex": "00",
+   "ct_hex": "aca607799d59571e4ae951ea51c2994a02"
+  },
+  {
+   "id": "gift-cofb-count-39",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "0001020304",
+   "pt_hex": "00",
+   "ct_hex": "c4b746bf4e5b2aad95f82b30d4a74e8aab"
+  },
+  {
+   "id": "gift-cofb-count-40",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405",
+   "pt_hex": "00",
+   "ct_hex": "82d5dd3b5394ae09f72105337eb1976086"
+  },
+  {
+   "id": "gift-cofb-count-64",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "00",
+   "ct_hex": "2eee4128127eab1e3f6eed919421332d2e"
+  },
+  {
+   "id": "gift-cofb-count-65",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "pt_hex": "00",
+   "ct_hex": "4627a07ed15e8c805980f83a378ad58149"
+  },
+  {
+   "id": "gift-cofb-count-66",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "00",
+   "ct_hex": "ba4bbaa4ffb4ebff61add4d1dc4e136c8d"
+  },
+  {
+   "id": "gift-cofb-count-75",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "0001020304050607",
+   "pt_hex": "0001",
+   "ct_hex": "1f132a6d4440388c101591ddaa90b7315c7b"
+  },
+  {
+   "id": "gift-cofb-count-100",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "",
+   "pt_hex": "000102",
+   "ct_hex": "5d595fca542f0b0074829e35d04e327e6ce091"
+  },
+  {
+   "id": "gift-cofb-count-112",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b",
+   "pt_hex": "000102",
+   "ct_hex": "f945fd4ef7068447130e8033655f3f3f5368be"
+  },
+  {
+   "id": "gift-cofb-count-128",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "pt_hex": "000102",
+   "ct_hex": "5f84702b178d705758ec035b2919de4f720b67"
+  },
+  {
+   "id": "gift-cofb-count-129",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "pt_hex": "000102",
+   "ct_hex": "8838b47d5db869bf9d9f0af1602955bf48d800"
+  },
+  {
+   "id": "gift-cofb-count-130",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "000102",
+   "ct_hex": "2e05613bba02f5167b65acd5b4e7d34b9da1f5"
+  },
+  {
+   "id": "gift-cofb-count-149",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f",
+   "pt_hex": "00010203",
+   "ct_hex": "3bff715a127dfc412f41cc213b7d8fcb9f0a9c95"
+  },
+  {
+   "id": "gift-cofb-count-186",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "pt_hex": "0001020304",
+   "ct_hex": "0ba3c9fee8be76d11bbaaa746163be7db77b383893"
+  },
+  {
+   "id": "gift-cofb-count-223",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "000102030405",
+   "ct_hex": "3774f177ddc0c40c1cd0e77098e4750700d629b87caf"
+  },
+  {
+   "id": "gift-cofb-count-256",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "00010203040506",
+   "ct_hex": "3774f177ddc0982050fb8fa44af386c839fd72f79e4d2d"
+  },
+  {
+   "id": "gift-cofb-count-257",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "pt_hex": "00010203040506",
+   "ct_hex": "642e07e311a8262fe80407c3c86d04d34fd3b429d42b90"
+  },
+  {
+   "id": "gift-cofb-count-260",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "pt_hex": "00010203040506",
+   "ct_hex": "5f8470c7082bffb200b365c5d5f94b9da9b671e84f4d5d"
+  },
+  {
+   "id": "gift-cofb-count-297",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "0001020304050607",
+   "ct_hex": "baf563c60fbeddc5f1b7ad0a6fe762709b58150618957a48"
+  },
+  {
+   "id": "gift-cofb-count-334",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102",
+   "pt_hex": "00010203040506070809",
+   "ct_hex": "4acac27bdc76d9ecb02eae0d9a6b164debb01bb42119c5adf43e"
+  },
+  {
+   "id": "gift-cofb-count-371",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203040506",
+   "pt_hex": "000102030405060708090a",
+   "ct_hex": "51154c40a682ca589070213cc231a297663133724fa88f6ac6bfc9"
+  },
+  {
+   "id": "gift-cofb-count-408",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a",
+   "pt_hex": "000102030405060708090a0b",
+   "ct_hex": "abc3924173986d9eaa16ce0d569a337b2f6bc452c0df1510f436b25c"
+  },
+  {
+   "id": "gift-cofb-count-445",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e",
+   "pt_hex": "000102030405060708090a0b0c",
+   "ct_hex": "63c244a171d6f7a407c8d8f90df74a49f61f0282cc8a8b53236abc06a0"
+  },
+  {
+   "id": "gift-cofb-count-482",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "pt_hex": "000102030405060708090a0b0c0d",
+   "ct_hex": "2cfb2e5466bc5c2fc5eb6f03d66f22cb7bca30209a0eb286cc62832f64f6"
+  },
+  {
+   "id": "gift-cofb-count-500",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203",
+   "pt_hex": "000102030405060708090a0b0c0d0e",
+   "ct_hex": "aca0e4daf3ceaebbe2ad9211ff6cc7fa943b99d5703a8364a4b55b3dfdc665"
+  },
+  {
+   "id": "gift-cofb-count-519",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "pt_hex": "000102030405060708090a0b0c0d0e",
+   "ct_hex": "5a6c16fd92fcfa3e896bbc9ac80fd0ede9fc463d84235c254ab619a3fa341b"
+  },
+  {
+   "id": "gift-cofb-count-556",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f",
+   "ct_hex": "8662d3d8f719f940747f63acda752452e832aaccf63816b84bd1141c259a362d"
+  },
+  {
+   "id": "gift-cofb-count-593",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10",
+   "ct_hex": "46b584fe672c7ba161c34f9ea5624d291827251b0c90af242b3d6abf5dad433274"
+  },
+  {
+   "id": "gift-cofb-count-630",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "0001",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "ct_hex": "23f20757eed9bd23444f77cf570fba2d5f0c3ca38142c5e81f6392939483422a21e993"
+  },
+  {
+   "id": "gift-cofb-count-667",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "ct_hex": "827cd57c82f771d6f75dd14cb99fa79888c04b3ec8d452ac8ad170ddda8ddc6f747d228e"
+  },
+  {
+   "id": "gift-cofb-count-704",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "ct_hex": "d6e7a7ebf79ef94bb7f6ac47c51753a9b685e92008043bd1b903580ce29ace4f4cceb081f2"
+  },
+  {
+   "id": "gift-cofb-count-741",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "ct_hex": "7bbc47d028ffd9dcab64290758e52faf034043d0621707303c63ede4579451086f9283886e98"
+  },
+  {
+   "id": "gift-cofb-count-778",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "ct_hex": "2e39b59f582173d0d75744b0b9ae78c80bedfc3bcdd7a785e7b303e2318d644b4e1b0a3a43b32b"
+  },
+  {
+   "id": "gift-cofb-count-815",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "ct_hex": "30c092f85750867a9d839f33ee18cc0f9096f440a541bab9ceca4e63a028f2f226cbf57fbee8c345"
+  },
+  {
+   "id": "gift-cofb-count-852",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "ct_hex": "9ec0e62126ed4ee8048e9a42fd06904687a4606a119b7d6a65ca102f32cab08bc88ef4bd52f14cacb5"
+  },
+  {
+   "id": "gift-cofb-count-889",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "ct_hex": "2e0561bd540b6fb527e7e1d16b4b4c74ed788143600abac92910a9e23b80e8366005c4ab9627c488921b"
+  },
+  {
+   "id": "gift-cofb-count-926",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "ct_hex": "26e9e1e6ca70a3aaeeefdb32d4ff5d58d9b2f8dfe90de676310410d683a48ffaa726a543c590db8161f7454f"
+  },
+  {
+   "id": "gift-cofb-count-963",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "0001020304",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "ct_hex": "c4391456a101a0e34edaca527ac73ed2b842b7a14f6f4644e493fe6f6375b25f26490fb9729613aa156e9cdc09"
+  },
+  {
+   "id": "gift-cofb-count-1000",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "ct_hex": "fc4099b87e0bd6c76bbea0eb9850af5d78e45862d38c244d07a7768f118cb6bc6078f334af97219b336860e3d41e"
+  },
+  {
+   "id": "gift-cofb-count-1037",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "ct_hex": "7e20b012b76a04839ad7ba817afd08e1ea84d92c62b5c9f0e621371c1e643638c47b1b9cd22876495243731c28e544"
+  },
+  {
+   "id": "gift-cofb-count-1074",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "ct_hex": "54b63042b7680d22824effe3da23161c2d8984731fce0c7c609deae12d761cdcfbc3cbb7e6ed73ae25f7a5c93cd9c34e"
+  },
+  {
+   "id": "gift-cofb-count-1089",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "ct_hex": "baf563c60fbeddc5662995f4c678be80a7f7de9b3ad8c97aa6ca17016d2ae6508e6fb3f79b412a1627ab7dfa755e0a22"
+  }
+ ]
+}

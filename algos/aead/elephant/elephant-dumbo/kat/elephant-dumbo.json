@@ -1,0 +1,638 @@
+{
+ "algorithm": "elephant-dumbo",
+ "source": "NIST LWC submission package known-answer files (see kat/README.md)",
+ "vectors": [
+  {
+   "id": "dumbo-count-1",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "",
+   "pt_hex": "",
+   "ct_hex": "99ad0d35bbb90aa7"
+  },
+  {
+   "id": "dumbo-count-2",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00",
+   "pt_hex": "",
+   "ct_hex": "ded044e7eee9f069"
+  },
+  {
+   "id": "dumbo-count-3",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "0001",
+   "pt_hex": "",
+   "ct_hex": "0cc483162feab754"
+  },
+  {
+   "id": "dumbo-count-4",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "pt_hex": "",
+   "ct_hex": "659d3dead70d2abb"
+  },
+  {
+   "id": "dumbo-count-5",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00010203",
+   "pt_hex": "",
+   "ct_hex": "0b61ee7aa5d245ef"
+  },
+  {
+   "id": "dumbo-count-6",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "0001020304",
+   "pt_hex": "",
+   "ct_hex": "916219448c0fd045"
+  },
+  {
+   "id": "dumbo-count-7",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405",
+   "pt_hex": "",
+   "ct_hex": "9bacf481dd66d403"
+  },
+  {
+   "id": "dumbo-count-8",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00010203040506",
+   "pt_hex": "",
+   "ct_hex": "fdf4e9397191a319"
+  },
+  {
+   "id": "dumbo-count-9",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "0001020304050607",
+   "pt_hex": "",
+   "ct_hex": "66d9ee19310bf9ad"
+  },
+  {
+   "id": "dumbo-count-10",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708",
+   "pt_hex": "",
+   "ct_hex": "ae9f9c43a1c1efc7"
+  },
+  {
+   "id": "dumbo-count-11",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "",
+   "ct_hex": "45c57404b30fb1b7"
+  },
+  {
+   "id": "dumbo-count-12",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a",
+   "pt_hex": "",
+   "ct_hex": "8a875fe342003dfc"
+  },
+  {
+   "id": "dumbo-count-13",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b",
+   "pt_hex": "",
+   "ct_hex": "7707887e42f415fa"
+  },
+  {
+   "id": "dumbo-count-14",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c",
+   "pt_hex": "",
+   "ct_hex": "2d881b8ab33b8103"
+  },
+  {
+   "id": "dumbo-count-15",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d",
+   "pt_hex": "",
+   "ct_hex": "d1fba317b0193457"
+  },
+  {
+   "id": "dumbo-count-16",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e",
+   "pt_hex": "",
+   "ct_hex": "61bc1a89a444fc65"
+  },
+  {
+   "id": "dumbo-count-17",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f",
+   "pt_hex": "",
+   "ct_hex": "01c0b1b4276bc596"
+  },
+  {
+   "id": "dumbo-count-18",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10",
+   "pt_hex": "",
+   "ct_hex": "d5e14c3898b8096c"
+  },
+  {
+   "id": "dumbo-count-19",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "pt_hex": "",
+   "ct_hex": "c6546d76a2c45a74"
+  },
+  {
+   "id": "dumbo-count-20",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "pt_hex": "",
+   "ct_hex": "41c8df8cec0bee0d"
+  },
+  {
+   "id": "dumbo-count-21",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "pt_hex": "",
+   "ct_hex": "013ca534b0f71f22"
+  },
+  {
+   "id": "dumbo-count-22",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "pt_hex": "",
+   "ct_hex": "3e981a262bee3450"
+  },
+  {
+   "id": "dumbo-count-23",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "",
+   "ct_hex": "e2b9da22782e4fb3"
+  },
+  {
+   "id": "dumbo-count-24",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "pt_hex": "",
+   "ct_hex": "7f9d29e4d48e7936"
+  },
+  {
+   "id": "dumbo-count-25",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "",
+   "ct_hex": "33ce1cffadba0fbd"
+  },
+  {
+   "id": "dumbo-count-26",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "pt_hex": "",
+   "ct_hex": "a5340b87ec01ebf7"
+  },
+  {
+   "id": "dumbo-count-27",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "pt_hex": "",
+   "ct_hex": "9d53c503d0b9943a"
+  },
+  {
+   "id": "dumbo-count-28",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a",
+   "pt_hex": "",
+   "ct_hex": "bcae22fb6b4b0071"
+  },
+  {
+   "id": "dumbo-count-29",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "pt_hex": "",
+   "ct_hex": "e3f6c5d56fc6b773"
+  },
+  {
+   "id": "dumbo-count-30",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "pt_hex": "",
+   "ct_hex": "75cce11ab4567088"
+  },
+  {
+   "id": "dumbo-count-31",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "",
+   "ct_hex": "51c496ebe32e726d"
+  },
+  {
+   "id": "dumbo-count-32",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "pt_hex": "",
+   "ct_hex": "1bded7551fa9ca73"
+  },
+  {
+   "id": "dumbo-count-33",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "",
+   "ct_hex": "24f760685ac9b843"
+  },
+  {
+   "id": "dumbo-count-34",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "",
+   "pt_hex": "00",
+   "ct_hex": "c909dad7810c416e41"
+  },
+  {
+   "id": "dumbo-count-35",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00",
+   "pt_hex": "00",
+   "ct_hex": "c94ea79e535911948f"
+  },
+  {
+   "id": "dumbo-count-36",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "0001",
+   "pt_hex": "00",
+   "ct_hex": "c99cb359a29812d3b2"
+  },
+  {
+   "id": "dumbo-count-37",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "pt_hex": "00",
+   "ct_hex": "c9f5eae75e60f54e5d"
+  },
+  {
+   "id": "dumbo-count-38",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00010203",
+   "pt_hex": "00",
+   "ct_hex": "c99b1634ce122a2109"
+  },
+  {
+   "id": "dumbo-count-39",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "0001020304",
+   "pt_hex": "00",
+   "ct_hex": "c90115c3f03bf7b4a3"
+  },
+  {
+   "id": "dumbo-count-40",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405",
+   "pt_hex": "00",
+   "ct_hex": "c90bdb2e356a9eb0e5"
+  },
+  {
+   "id": "dumbo-count-64",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "00",
+   "ct_hex": "c9c1b34c5f54d6168b"
+  },
+  {
+   "id": "dumbo-count-65",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "pt_hex": "00",
+   "ct_hex": "c98ba90de1a851ae95"
+  },
+  {
+   "id": "dumbo-count-66",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "00",
+   "ct_hex": "c9b480badced31dca5"
+  },
+  {
+   "id": "dumbo-count-75",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "0001020304050607",
+   "pt_hex": "0001",
+   "ct_hex": "c903888c80fd5c398e4d"
+  },
+  {
+   "id": "dumbo-count-100",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "",
+   "pt_hex": "000102",
+   "ct_hex": "c9034aee97703e68e1afad"
+  },
+  {
+   "id": "dumbo-count-112",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b",
+   "pt_hex": "000102",
+   "ct_hex": "c9034a003df57591acb0f0"
+  },
+  {
+   "id": "dumbo-count-128",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "pt_hex": "000102",
+   "ct_hex": "c9034a94ccb8debc9e1279"
+  },
+  {
+   "id": "dumbo-count-129",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "pt_hex": "000102",
+   "ct_hex": "c9034a02f69c11670ed582"
+  },
+  {
+   "id": "dumbo-count-130",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "000102",
+   "ct_hex": "c9034a26feebe03076d767"
+  },
+  {
+   "id": "dumbo-count-149",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f",
+   "pt_hex": "00010203",
+   "ct_hex": "c9034a2f5daeee048965197a"
+  },
+  {
+   "id": "dumbo-count-186",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "pt_hex": "0001020304",
+   "ct_hex": "c9034a2f7f58b55c727a4f0ca0"
+  },
+  {
+   "id": "dumbo-count-223",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "000102030405",
+   "ct_hex": "c9034a2f7f96d04392079b95960b"
+  },
+  {
+   "id": "dumbo-count-256",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "pt_hex": "00010203040506",
+   "ct_hex": "c9034a2f7f9698028d5dc3f93d02b5"
+  },
+  {
+   "id": "dumbo-count-257",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "pt_hex": "00010203040506",
+   "ct_hex": "c9034a2f7f969894774abbb886e6ff"
+  },
+  {
+   "id": "dumbo-count-260",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "pt_hex": "00010203040506",
+   "ct_hex": "c9034a2f7f9698d2b584e93b41ba7b"
+  },
+  {
+   "id": "dumbo-count-297",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "0001020304050607",
+   "ct_hex": "c9034a2f7f9698dc46a3d5b588e4405a"
+  },
+  {
+   "id": "dumbo-count-334",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102",
+   "pt_hex": "00010203040506070809",
+   "ct_hex": "c9034a2f7f9698dcb41a4f8558fd5aec5667"
+  },
+  {
+   "id": "dumbo-count-371",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00010203040506",
+   "pt_hex": "000102030405060708090a",
+   "ct_hex": "c9034a2f7f9698dcb41acc1f148b3cba1e72e3"
+  },
+  {
+   "id": "dumbo-count-408",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a",
+   "pt_hex": "000102030405060708090a0b",
+   "ct_hex": "c9034a2f7f9698dcb41acccf3fa4cf6811696043"
+  },
+  {
+   "id": "dumbo-count-445",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e",
+   "pt_hex": "000102030405060708090a0b0c",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf7c46a1e149f217ce"
+  },
+  {
+   "id": "dumbo-count-482",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "pt_hex": "000102030405060708090a0b0c0d",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf54707d83fe6eb1b82d"
+  },
+  {
+   "id": "dumbo-count-500",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00010203",
+   "pt_hex": "000102030405060708090a0b0c0d0e",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549babcec4c009151500"
+  },
+  {
+   "id": "dumbo-count-519",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "pt_hex": "000102030405060708090a0b0c0d0e",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bdf32035e784929d9"
+  },
+  {
+   "id": "dumbo-count-556",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf7e4518748ebb52137"
+  },
+  {
+   "id": "dumbo-count-593",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747a24ccd774717b9cc"
+  },
+  {
+   "id": "dumbo-count-630",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "0001",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246aed4c2ab224e9de7"
+  },
+  {
+   "id": "dumbo-count-667",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10111213",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a83700ae5fb83f4176"
+  },
+  {
+   "id": "dumbo-count-704",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868c9a3f678f38b6c94"
+  },
+  {
+   "id": "dumbo-count-741",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa1615656b3521ae9a"
+  },
+  {
+   "id": "dumbo-count-778",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10111213141516",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0efcd1661aa51fbfba"
+  },
+  {
+   "id": "dumbo-count-815",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0e767c1dd69940a85a4a"
+  },
+  {
+   "id": "dumbo-count-852",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0e76edd70c0cafa60177a6"
+  },
+  {
+   "id": "dumbo-count-889",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f10111213141516171819",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0e76ed271e6f021ed4d0464a"
+  },
+  {
+   "id": "dumbo-count-926",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0e76ed27fa0cb39fe6c8835e2013"
+  },
+  {
+   "id": "dumbo-count-963",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "0001020304",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0e76ed27fa0c2e51f193a1379437c6"
+  },
+  {
+   "id": "dumbo-count-1000",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0e76ed27fa0c2e336e67525cee2dc2d3"
+  },
+  {
+   "id": "dumbo-count-1037",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0e76ed27fa0c2e3365add947ccf66b27e2"
+  },
+  {
+   "id": "dumbo-count-1074",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f10",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0e76ed27fa0c2e33654ef3c86306304e3ab8"
+  },
+  {
+   "id": "dumbo-count-1089",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "ct_hex": "c9034a2f7f9698dcb41acccfbf549bf747d246a868fa0e76ed27fa0c2e33654e02de4f56f23f8b97"
+  }
+ ]
+}

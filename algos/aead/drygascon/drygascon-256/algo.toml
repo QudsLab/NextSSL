@@ -1,0 +1,21 @@
+id        = "drygascon-256"
+kind      = "aead"
+category  = "aead"
+family    = "drygascon"
+aliases   = []
+tier      = "research"
+status    = "active"
+standards = ["DryGASCON (NIST LWC round 2)"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "drygascon.c", "drygascon.h", "drygascon128_arm_selector.h", "internal-drysponge.c", "internal-drysponge.h", "internal-util.h", "COPYING"] }
+# Not a NIST standard; NIST LWC candidate. Tier research keeps it on the root API only.
+# Family member: DryGASCON256, 32-byte key and 32-byte tag. Sibling ids carry the other sizes because the generic tests need fixed metadata sizes per id. Known gap (rule 9): the upstream keeps key-derived state on the stack and does not wipe it.
+
+[kat]
+files = ["kat/drygascon-256.json"]
+
+[sizes]
+key = 32
+nonce = 16
+tag = 32
