@@ -1,0 +1,26 @@
+id        = "threefish-512"
+kind      = "blockcipher"
+category  = "block"
+family    = "threefish"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["Skein 1.3 (Threefish)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "threefish", version = "=0.6.0", license = "MIT OR Apache-2.0" }
+# Threefish is the tweakable block cipher inside Skein. Optional param `tweak` (16 bytes); when absent the tweak
+# is all zero. The tweak is public data, not a secret.
+# Block size equals key size (32/64/128 bytes). Not a general-purpose cipher outside Skein.
+
+[params.tweak]
+type = "bytes"
+min = 16
+max = 16
+
+[kat]
+files = ["kat/cryptopp-threefish.json"]
+
+[sizes]
+key = 64
+block = 64

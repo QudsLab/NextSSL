@@ -1,0 +1,126 @@
+{
+ "algorithm": "sm4",
+ "source": "Crypto++ TestVectors/sm4.txt entries marked \"Botan 2.3 generated\" / \"Crypto++ 6.0 generated\" (independent implementations, not RustCrypto)",
+ "vectors": [
+  {
+   "id": "xchk-0",
+   "key_hex": "eb23add6454757555747395b76661c9a",
+   "pt_hex": "d294d879a1f02c7c5906d6c2d0c54d9f",
+   "ct_hex": "865de90d6b6e99273e2d44859d9c16df"
+  },
+  {
+   "id": "xchk-1",
+   "key_hex": "11e3790f430b4729da1eef291bce99cd",
+   "pt_hex": "04a36e56b2032b725dde112fce3f8398",
+   "ct_hex": "4076848ad4563b9d8e3fd09ba2e5dcfe"
+  },
+  {
+   "id": "xchk-2",
+   "key_hex": "4310652e0bb55c2cba9aebd4fc2bed5c",
+   "pt_hex": "cb33507774e6e161cd5029e901c6c36a",
+   "ct_hex": "64b8d9fb4114d490ffbd105969310ef9"
+  },
+  {
+   "id": "xchk-3",
+   "key_hex": "fdba958326cd690f28c7632b5ebef6a1",
+   "pt_hex": "bae8a9b1c3319d3fc9d48817e034fe1b",
+   "ct_hex": "19c70a4e9fe8d6739863224c8734a79b"
+  },
+  {
+   "id": "xchk-4",
+   "key_hex": "63af71ae3ce38fd96afaaaf12cc3d5d3",
+   "pt_hex": "a505b41e20c73c777f56235261198e56",
+   "ct_hex": "2f6071bc04f55844bc8675fabea3f727"
+  },
+  {
+   "id": "xchk-5",
+   "key_hex": "03f360d31da9dbd2f0bfffeaefdb1d1e",
+   "pt_hex": "8177f025ddbc7ce919dc5d2612548878",
+   "ct_hex": "d7447f601c174aabc62e06bb85bb597c"
+  },
+  {
+   "id": "xchk-6",
+   "key_hex": "ea326bd4223b2f1be3cb0319220adcae",
+   "pt_hex": "15dbe19a7fac233433cb9ca190fac2f1",
+   "ct_hex": "6bc11d09bb46092831e2399cf1525f43"
+  },
+  {
+   "id": "xchk-7",
+   "key_hex": "f1163693e6e70cbf48e774368142286f",
+   "pt_hex": "95ff06c4a634e09baad6f1b2230662c7",
+   "ct_hex": "558614db4dd8aa43717c14c7b87a8d79"
+  },
+  {
+   "id": "xchk-8",
+   "key_hex": "cbad11138e97ee20b140bd8923031488",
+   "pt_hex": "a514119f5ab688278e581cfca5bdff5f",
+   "ct_hex": "8e4682e2a5f92b777caff65275528caf"
+  },
+  {
+   "id": "xchk-9",
+   "key_hex": "3198ab4e006a5180966d5075912bc406",
+   "pt_hex": "5f9b108b715f047b7879e323b0d95c3b",
+   "ct_hex": "7b40084f82caaa25821862f986abd424"
+  },
+  {
+   "id": "xchk-10",
+   "key_hex": "f11235535318fa844a3cbe643169f59e",
+   "pt_hex": "a27ee076e48e6f389710ec7b5e8a3be5",
+   "ct_hex": "94cfe3f59e8507fec41dbe738ccd53e1"
+  },
+  {
+   "id": "xchk-11",
+   "key_hex": "419a55a70c401da6571654bc4af1f6d7",
+   "pt_hex": "9b6294ae9be009c87caefcd842632a1d",
+   "ct_hex": "9868917b7329ce6f1e1fba6e404d8f20"
+  },
+  {
+   "id": "xchk-12",
+   "key_hex": "ee1e457608d7704a99f76c73815cbfa8",
+   "pt_hex": "c89c30ad3b257ca7635052ed63b6d268",
+   "ct_hex": "ce25779ca2a8eefd7add059273e2a1fd"
+  },
+  {
+   "id": "xchk-13",
+   "key_hex": "43d99b186beaa4e2de3159f77bf708fa",
+   "pt_hex": "91cb86ca6b0fdf6671ff4ae4bf63ad6c",
+   "ct_hex": "3a6b1df36c9cbfc327ff8b6c7318579c"
+  },
+  {
+   "id": "xchk-14",
+   "key_hex": "bbe5816e2b56084fcdeab9b739ce899e",
+   "pt_hex": "b607bb382377f3b6d5fb740e3bf0e822",
+   "ct_hex": "4dcdc1708360a700130c3bd90c8f626f"
+  },
+  {
+   "id": "xchk-15",
+   "key_hex": "bf35fee606e59d0e1e18bda40180672c",
+   "pt_hex": "6f217dad31488a54a7f4482d1be230bc",
+   "ct_hex": "de1aaea076633b37b54aef10b180661a"
+  },
+  {
+   "id": "xchk-16",
+   "key_hex": "d2b1ce2cfdb2306be24f0364434f7734",
+   "pt_hex": "7ab0e2cc96e55659e5078591f510b721",
+   "ct_hex": "052e420981d36c01a96a8302f71fb7a6"
+  },
+  {
+   "id": "xchk-17",
+   "key_hex": "2ddd024a42b24a9652c8c52021024c33",
+   "pt_hex": "c9bd217786c00f420a88d6818b685a02",
+   "ct_hex": "ce273e3523b443eb34c7b6a153fc9308"
+  },
+  {
+   "id": "xchk-18",
+   "key_hex": "4a6453202ec4378492bfa3d6a685f6cd",
+   "pt_hex": "b9edc63029f5fa1390918736590a3483",
+   "ct_hex": "2c7e67e24281ba3271e6fff2d2b91b75"
+  },
+  {
+   "id": "xchk-19",
+   "key_hex": "6fc86efe73b3af96014e490882a34825",
+   "pt_hex": "13805831d15593ba3cf4553d4aefdb71",
+   "ct_hex": "a32951875534f6b1abb12465ef370fdc"
+  }
+ ]
+}

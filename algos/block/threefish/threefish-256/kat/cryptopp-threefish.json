@@ -1,0 +1,24 @@
+{
+ "algorithm": "threefish-256",
+ "source": "Crypto++ TestVectors/threefish.txt: skein_golden_kat_internals.txt (Skein authors) and Botan threefish.vec; key/tweak/block words converted to little-endian bytes",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "key_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+   "pt_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+   "ct_hex": "84da2a1f8beaee947066ae3e3103f1ad536db1f4a1192495116b9f3ce6133fd8",
+   "params": {
+    "tweak_hex": "00000000000000000000000000000000"
+   }
+  },
+  {
+   "id": "cryptopp-1",
+   "key_hex": "101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f",
+   "pt_hex": "fffefdfcfbfaf9f8f7f6f5f4f3f2f1f0efeeedecebeae9e8e7e6e5e4e3e2e1e0",
+   "ct_hex": "e0d091ff0eea8fdfc98192e62ed80ad59d865d08588df476657056b5955e97df",
+   "params": {
+    "tweak_hex": "000102030405060708090a0b0c0d0e0f"
+   }
+  }
+ ]
+}

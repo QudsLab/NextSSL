@@ -1,0 +1,12 @@
+{
+ "algorithm": "sm4",
+ "source": "SM4 specification example (eprint 2008/329 section 5) via Crypto++ TestVectors/sm4.txt",
+ "vectors": [
+  {
+   "id": "paper-0",
+   "key_hex": "0123456789abcdeffedcba9876543210",
+   "pt_hex": "0123456789abcdeffedcba9876543210",
+   "ct_hex": "681edf34d206965e86b3e94f536e4246"
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+id        = "twofish"
+kind      = "blockcipher"
+category  = "block"
+family    = "twofish"
+aliases   = []
+tier      = "standard"
+status    = "active"
+standards = ["AES finalist (Twofish)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "twofish", version = "=0.8.0", license = "MIT OR Apache-2.0" }
+
+[kat]
+files = ["kat/ecb_ival.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+block = 16
