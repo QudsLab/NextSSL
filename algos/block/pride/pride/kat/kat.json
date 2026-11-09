@@ -1,0 +1,69 @@
+{
+ "algorithm": "pride",
+ "source": "Differential against the original Python code (https://github.com/obfusk/pypride@97d724c086a0), sample of 10 of 3120 random inputs",
+ "independence": "NOT independent: expected outputs were produced by the ORIGINAL source that the C port was translated from (differential test, not a designers' vector)",
+ "gen": "port_ws/diff.py",
+ "replay": "glue",
+ "vectors": [
+  {
+   "id": "diff-0",
+   "key_hex": "8920a15e430fd9dba2c9855533dce6fb",
+   "pt_hex": "414a9d5260653c37",
+   "ct_hex": "61feb789504b892f"
+  },
+  {
+   "id": "diff-1",
+   "key_hex": "7f947a9c4a78ff91137c05236a064937",
+   "pt_hex": "d6b196233b4fcba1",
+   "ct_hex": "9cd71d2e6456d342"
+  },
+  {
+   "id": "diff-2",
+   "key_hex": "18bd00bec30d0773711e26b8d2503661",
+   "pt_hex": "a512a01baeae6cab",
+   "ct_hex": "63645c9c715e80d4"
+  },
+  {
+   "id": "diff-3",
+   "key_hex": "7e257b2abd9c893eaafd0be02cc48dcc",
+   "pt_hex": "8102ac5018f56f21",
+   "ct_hex": "bdbdd42a99e5a682"
+  },
+  {
+   "id": "diff-4",
+   "key_hex": "a951d870c6250607db10606cd905bc68",
+   "pt_hex": "4aac197710fd1269",
+   "ct_hex": "8278efec2596a755"
+  },
+  {
+   "id": "diff-5",
+   "key_hex": "d53042774dd68078214482a017a3dc01",
+   "pt_hex": "427c3cb6598995e4",
+   "ct_hex": "0110e97f32ff4fc2"
+  },
+  {
+   "id": "diff-6",
+   "key_hex": "b247d7dd6b0e3a12571bc16f4b114388",
+   "pt_hex": "0a0be80322307ef5",
+   "ct_hex": "80d508619736e223"
+  },
+  {
+   "id": "diff-7",
+   "key_hex": "2e313b356aa2d1369762258a9a19f9de",
+   "pt_hex": "24b8e7219735f8ff",
+   "ct_hex": "61694b9843838414"
+  },
+  {
+   "id": "diff-8",
+   "key_hex": "d832911ad816defe5ae8b4cf0cc2ae97",
+   "pt_hex": "d925243eded5ded0",
+   "ct_hex": "49d3cc225611e319"
+  },
+  {
+   "id": "diff-9",
+   "key_hex": "00fba0ff2ec1e8eff42245de9fa9ef42",
+   "pt_hex": "37fffd93346bb691",
+   "ct_hex": "d2103a84c69a459e"
+  }
+ ]
+}

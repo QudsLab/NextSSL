@@ -1,5 +1,23 @@
 {
-  "algorithm": "zuc",
-  "note": "No published KAT vectors collected yet. Tier stays `unverified`. Untested: wired in batch 3 under owner order (no cargo check/test).",
-  "vectors": []
+ "algorithm": "zuc",
+ "source": "ZUC-128 keystream test sets from the GSMA/ETSI EEA3-EIA3 ZUC specification v1.6, as encoded in Bouncy Castle ZucTest.java (data = zeros, out = keystream)",
+ "independence": "independent (spec test sets via BC)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "gsma-zuc128-set1",
+   "key_hex": "00000000000000000000000000000000",
+   "nonce_hex": "00000000000000000000000000000000",
+   "data_hex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "out_hex": "27bede74018082da87d4e5b69f18bf6632070e0f39b7b692b4673edc3184a48e27636f4414510d62cc15cfe194ec4f6d4b8c8fcc630648badf41b6f9d16a36ca"
+  },
+  {
+   "id": "gsma-zuc128-set2",
+   "key_hex": "ffffffffffffffffffffffffffffffff",
+   "nonce_hex": "ffffffffffffffffffffffffffffffff",
+   "data_hex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "out_hex": "0657cfa07096398b734b6cb4883eedf4257a76eb97595208d884adcdb1cbffb8e0f9d15846a0eed015328503351138f740d079af17296c232c4f022d6e4acac6"
+  }
+ ]
 }

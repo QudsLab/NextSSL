@@ -1,0 +1,25 @@
+id        = "fn-dsa-1024"
+kind      = "sign"
+category  = "sign"
+family    = "fn-dsa"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["FIPS 206 (draft)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "falcon-rs", version = "=0.3.1", license = "MIT" }
+# lattice-safe/falcon-rs 0.3.1 vendored in upstream/ (library name `falcon`; ported from Pornin's C reference; deps getrandom, libm, zeroize).
+# unverified: source found by web search, no independent KAT imported yet. FIPS 206 is still a draft and NIST has published no FN-DSA vectors; the crate's own parity check is against the Falcon C reference.
+# Signatures use the constant-time encoding only (1577 bytes); the HashFN-DSA pre-hash mode and the compressed/padded encodings are not offered.
+# Shares the vendored upstream of fn-dsa-512.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+pk   = 1793
+sk   = 2305
+sig  = 1577
+seed = 48
+ctx  = { min = 0, max = 255 }

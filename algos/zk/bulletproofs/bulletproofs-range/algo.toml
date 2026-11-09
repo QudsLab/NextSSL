@@ -1,0 +1,19 @@
+id        = "bulletproofs-range"
+kind      = "zk"
+category  = "zk"
+family    = "bulletproofs"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+feature   = "bulletproofs"
+upstream  = { crate = "bulletproofs", version = "=5.0.0", license = "MIT" }
+# dalek-cryptography/bulletproofs 5.0.0 (zkcrypto fork line), single-value range proof over Ristretto255, no trusted setup.
+# Generic smoke runs setup and a garbage-proof check only; a full prove/verify KAT is for the fix pass. UNTESTED (wire batch 6, owner order).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]

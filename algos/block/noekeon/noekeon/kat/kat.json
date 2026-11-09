@@ -1,5 +1,57 @@
 {
-  "algorithm": "noekeon",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "noekeon",
+ "source": "libtomcrypt built-in self-test vectors (noekeon_test) in src\\ciphers\\noekeon.c. SAME-SOURCE: this is the copied code's own test table",
+ "independence": "same-source (libtomcrypt's own test vectors; the cipher spec vectors it cites are not independently re-fetched)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libtomcrypt-0",
+   "key_hex": "aa3c8c86d98bf8be21e0360978fbe490",
+   "pt_hex": "e4966cd313a06cafd023c9fd45322316",
+   "ct_hex": "a6ecb8a861fd62d91302fe9e47013fc3"
+  },
+  {
+   "id": "libtomcrypt-1",
+   "key_hex": "ed43d187217ee0973d76c3372e7daed3",
+   "pt_hex": "e33832ccf22f2f0a4a8b8f18122017d3",
+   "ct_hex": "94a5dff5ae1cbb22adeba70db78290a0"
+  },
+  {
+   "id": "libtomcrypt-2",
+   "key_hex": "6fdc2338f210fbd3c18c02f6b46ad5a8",
+   "pt_hex": "db29edb55fb3603a92a8eb9c6d9d3e8f",
+   "ct_hex": "78f36ff89ebb8c6ae810f7002215303d"
+  },
+  {
+   "id": "libtomcrypt-3",
+   "key_hex": "2c0c02ef6bc4f20b2eb9e0bfd936c24e",
+   "pt_hex": "84e2fe64b1b9fe76a83f45c7407aafee",
+   "ct_hex": "2a08d6a21c6308b0f8bcb3a166f7aecf"
+  },
+  {
+   "id": "libtomcrypt-4",
+   "key_hex": "6f30f89fda6ea091040f6c8b7df72a4b",
+   "pt_hex": "65b6a6d042140860348d372f01f046be",
+   "ct_hex": "66ac0b621d6811f527b1135df32ae918"
+  },
+  {
+   "id": "libtomcrypt-5",
+   "key_hex": "caa416b71c922eadeba7db6992cb35ef",
+   "pt_hex": "816f8e4d96c6b36783f563c7206d4023",
+   "ct_hex": "44f76362f043bb674a75124246292819"
+  },
+  {
+   "id": "libtomcrypt-6",
+   "key_hex": "6bcf222fe01bb0aad83c919918b228e8",
+   "pt_hex": "7c37c7d0ac9229f160829389aa61aaa9",
+   "ct_hex": "e5891bb3fe8b0ca1a6c7be12730fc119"
+  },
+  {
+   "id": "libtomcrypt-7",
+   "key_hex": "e6d0f1032ede708dd89e365c0552e70d",
+   "pt_hex": "e242e7920ef782a2b8218d26ba2de632",
+   "ct_hex": "1edd7522b9368a0f32fdd44865125a2f"
+  }
+ ]
 }

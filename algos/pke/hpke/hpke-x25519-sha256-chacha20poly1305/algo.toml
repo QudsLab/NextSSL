@@ -1,0 +1,24 @@
+id        = "hpke-x25519-sha256-chacha20poly1305"
+kind      = "pke"
+category  = "pke"
+family    = "hpke"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 9180"]
+fips      = false
+copyleft  = false
+feature   = "hpke"
+upstream  = { crate = "hpke", version = "=0.15.1", license = "MIT/Apache-2.0" }
+# rozbb/rust-hpke 0.15.1, base mode, single-shot. DHKEM(X25519, HKDF-SHA256), HKDF-SHA256, ChaCha20-Poly1305 (suite 0x0020/0x0001/0x0003).
+# Candidate KAT: RFC 9180 appendix A.1/A.3 vectors (the crate ships them as kat_tests); UNTESTED (wire batch 6, owner order).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+pk  = 32
+sk  = 32
+ct  = { min = 48, max = 65584 }
+out = { min = 0, max = 65536 }
+ctx = { min = 0, max = 1024 }

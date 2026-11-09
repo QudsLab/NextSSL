@@ -1,0 +1,21 @@
+id        = "zuc-256"
+kind      = "streamcipher"
+category  = "stream"
+family    = "zuc"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["ZUC-256 version 1.1 (ZUC design team)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "zuc", version = "=0.4.1", license = "MIT" }
+# Nugine/zuc 0.4.1 vendored in upstream/ under the dependency name zuc256-src (the registry already uses the crates.io zuc 0.4.1 for zuc).
+# unverified: source found by web search, no independent KAT imported yet. Raw keystream XOR (key 32, IV 23), no MAC, no addendum variants.
+# License: manifest said 'not seen'; Cargo.toml and the vendored LICENSE say MIT.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+key   = 32
+nonce = 23

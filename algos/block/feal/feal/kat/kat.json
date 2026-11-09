@@ -1,0 +1,69 @@
+{
+ "algorithm": "feal",
+ "source": "Differential against the original Python code (https://github.com/Vozec/Feal-ALL@9d01773dd692), sample of 10 of 4560 random inputs",
+ "independence": "NOT independent: expected outputs were produced by the ORIGINAL source that the C port was translated from (differential test, not a designers' vector)",
+ "gen": "port_ws/diff.py",
+ "replay": "glue",
+ "vectors": [
+  {
+   "id": "diff-0",
+   "key_hex": "e2fd1a85e6c5b945c08d67bdecf03807",
+   "pt_hex": "5e6dbecc378bb9c1",
+   "ct_hex": "671c3537d7443623"
+  },
+  {
+   "id": "diff-1",
+   "key_hex": "a225b7e53d4f19405bea7d0b296c7666",
+   "pt_hex": "18ce112bbbee8a68",
+   "ct_hex": "68c331902998c8ac"
+  },
+  {
+   "id": "diff-2",
+   "key_hex": "bfdd611064b22289a366bc0dacab9188",
+   "pt_hex": "276b247bd346613a",
+   "ct_hex": "534edc3e1aa664f6"
+  },
+  {
+   "id": "diff-3",
+   "key_hex": "b4741489a0b3b0c376e9611db8b85671",
+   "pt_hex": "ded3ca0eade08e25",
+   "ct_hex": "ea9c50bf00966200"
+  },
+  {
+   "id": "diff-4",
+   "key_hex": "132d5869837449db1b82a04b0f751919",
+   "pt_hex": "c31cae27f1161dc2",
+   "ct_hex": "f31f3fad82c75c0b"
+  },
+  {
+   "id": "diff-5",
+   "key_hex": "f91b68a95ae7cdb792ddea1907e82c6c",
+   "pt_hex": "9bc1985c92459a7c",
+   "ct_hex": "239d4c631216fdf1"
+  },
+  {
+   "id": "diff-6",
+   "key_hex": "338400f573cd7c5cadc35c393e886a8b",
+   "pt_hex": "804c31af328ba5d2",
+   "ct_hex": "9f65a25742d9c591"
+  },
+  {
+   "id": "diff-7",
+   "key_hex": "b2a8631c214b5d4ba3829b1495c55922",
+   "pt_hex": "c22a9c59dc7e671f",
+   "ct_hex": "2dc433d9d5228f80"
+  },
+  {
+   "id": "diff-8",
+   "key_hex": "ba2604a838b8b192dedb5730c43eb14c",
+   "pt_hex": "7d9355231d4ffb25",
+   "ct_hex": "d66aa046781dc7eb"
+  },
+  {
+   "id": "diff-9",
+   "key_hex": "9128ee6e65728f419afae59906f38260",
+   "pt_hex": "9a22fdb94ce32814",
+   "ct_hex": "d13a9858a74a9238"
+  }
+ ]
+}

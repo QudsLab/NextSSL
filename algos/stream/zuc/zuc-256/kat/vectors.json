@@ -1,0 +1,5 @@
+{
+ "algorithm": "zuc-256",
+ "vectors": [],
+ "note": "no independent vectors imported yet; see algo.toml notes"
+}

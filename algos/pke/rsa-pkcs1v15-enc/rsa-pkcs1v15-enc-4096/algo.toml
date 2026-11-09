@@ -1,0 +1,25 @@
+id        = "rsa-pkcs1v15-enc-4096"
+kind      = "pke"
+category  = "pke"
+family    = "rsa-pkcs1v15-enc"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = ["RFC 8017"]
+fips      = false
+copyleft  = false
+feature   = "rsa"
+upstream  = { crate = "rsa", version = "=0.10.0", license = "MIT OR Apache-2.0" }
+# RustCrypto rsa 0.10.0 (+ sha2 =0.11.1, rand_core =0.10.1; see rsa-oaep-4096 for why not 0.9.10). PKCS#1 v1.5 encryption padding is
+# vulnerable to padding oracles (Bleichenbacher) in protocols that leak validity: tier broken.
+# One sibling id per modulus (4096); public exponent 65537. UNTESTED (wire batch 6, owner order).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+pk  = { min = 520, max = 544 }
+sk  = { min = 1536, max = 2624 }
+ct  = 512
+out = { min = 0, max = 501 }
+ctx = 0

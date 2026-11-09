@@ -1,0 +1,20 @@
+id        = "srp-6a-2048-sha256"
+kind      = "pake"
+category  = "pake"
+family    = "srp"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["RFC 5054", "RFC 2945"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "srp", version = "=0.6.0", license = "MIT OR Apache-2.0" }
+# RustCrypto PAKEs srp 0.6.0, RFC 5054 2048-bit group, SHA-256. Legacy: the crate's key is the raw premaster secret, not H(S) of RFC 2945,
+# and big integers are not zeroized. UNTESTED (wire batch 6, owner order).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+key = { min = 1, max = 256 }
+ss  = { min = 1, max = 256 }

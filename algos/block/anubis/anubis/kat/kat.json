@@ -1,5 +1,69 @@
 {
-  "algorithm": "anubis",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "anubis",
+ "source": "libtomcrypt built-in self-test vectors (anubis_test) in src\\ciphers\\anubis.c. SAME-SOURCE: this is the copied code's own test table",
+ "independence": "same-source (libtomcrypt's own test vectors; the cipher spec vectors it cites are not independently re-fetched)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libtomcrypt-0",
+   "key_hex": "80000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "b835bdc334829d8371bfa371e4b3c4fd"
+  },
+  {
+   "id": "libtomcrypt-1",
+   "key_hex": "00000000000000000000000000000001",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "e6141eafebe0593c48e1cdf21bbaa189"
+  },
+  {
+   "id": "libtomcrypt-2",
+   "key_hex": "0000000000000000000000000000000000000001",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "b80dfb9be4a15887b376d5021895c12e"
+  },
+  {
+   "id": "libtomcrypt-3",
+   "key_hex": "800000000000000000000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "7d623b52c74c64d8ebc72d579785438f"
+  },
+  {
+   "id": "libtomcrypt-4",
+   "key_hex": "80000000000000000000000000000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "689e05946a94438fe78e373d249792f5"
+  },
+  {
+   "id": "libtomcrypt-5",
+   "key_hex": "00000000000000000000000000000000000000000000000000000001",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "ddb7b0b4e9b49b9c3820250b47c21f89"
+  },
+  {
+   "id": "libtomcrypt-6",
+   "key_hex": "0000000000000000000000000000000000000000000000000000000000000001",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "699cafdd94c7bc6044fe02058a6eefbd"
+  },
+  {
+   "id": "libtomcrypt-7",
+   "key_hex": "800000000000000000000000000000000000000000000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "0fc7a2c01117ac43525edf6cf396336c"
+  },
+  {
+   "id": "libtomcrypt-8",
+   "key_hex": "80000000000000000000000000000000000000000000000000000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "fee20e2a9dc583baa3a6d6a6f2e806a5"
+  },
+  {
+   "id": "libtomcrypt-9",
+   "key_hex": "00000000000000000000000000000000000000000000000000000000000000000000000000000001",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "863dcc4a60349c28a7daa43b0ad7fdc7"
+  }
+ ]
 }

@@ -1,0 +1,21 @@
+id        = "feal"
+kind      = "blockcipher"
+category  = "block"
+family    = "feal"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/Vozec/Feal-ALL", commit = "9d01773dd69205eb24c3f541455356e6802c39f0", license = "NOASSERTION", files = ["port/feal.c", "port/feal.h", "LICENSE"] }
+# Port exception (hard rule 1): FEAL-NX with N = 32 rounds (FEAL-32X), 64-bit block, 128-bit key.
+# Line-by-line C port of the original Python source (FEAL/feal_nx.py + FEAL/utils.py (F2, Fk, S0, S1)); the original is not copied, only translated. Tier unverified (root only).
+# Differential test against the original (run in Docker, --network none, disposable copy): see kat/README.md and upstream/ORIGIN.md. Not compiled or tested in cargo at wiring time (owner order).
+# Fixed at N = 32 rounds (FEAL-32X); the port itself takes any even N up to 64 and was differential-tested for N in 2..64.
+[kat]
+files = ["kat/kat.json", "kat/published.json"]
+
+[sizes]
+key = 16
+block = 8

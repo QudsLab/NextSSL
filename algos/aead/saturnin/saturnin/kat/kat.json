@@ -1,5 +1,89 @@
 {
-  "algorithm": "saturnin",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "saturnin",
+ "source": "NIST LWC KAT format (Count/Key/Nonce/PT/AD/CT, ct = ciphertext || tag) from rweather/lightweight-crypto test/kat/SATURNIN-CTR-Cascade.txt; the repo README says these came from the NIST submissions",
+ "independence": "same-repo: vectors are the submission teams' (per the repo README) but live in the same repository as the copied code; the NIST round-1/2 zips for this candidate are not in the collection, so not cross-checked",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "lwc-count-1",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "",
+   "pt_hex": "",
+   "ct_hex": "ba6f18356b82c46910fe1738e72d99a43250269b8fe631ce0c1c6a38a5afc6cb"
+  },
+  {
+   "id": "lwc-count-122",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "000102",
+   "ct_hex": "73a361e46d4dcbd2d06d5c0f486d405b0d1d1729258cb52dd4c5b406b753d88a5150d0"
+  },
+  {
+   "id": "lwc-count-243",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a",
+   "pt_hex": "00010203040506",
+   "ct_hex": "73a3610620a34b3e797baba9f982dbbb03b38500abc9f8195f45d1870a33a2d78cb4a28eafed20"
+  },
+  {
+   "id": "lwc-count-364",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "",
+   "pt_hex": "000102030405060708090a",
+   "ct_hex": "73a3610620a34b523a47eae1495698513d61dc203ec518e3e24c6e2f23982e32763993500b784215471f0e"
+  },
+  {
+   "id": "lwc-count-485",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "000102030405060708090a0b0c0d",
+   "ct_hex": "73a3610620a34b523a47ea4eddff49e3df7700724987ee63527f0a2a7cb3debcd01956ce95e71321fc61cfc03fd9"
+  },
+  {
+   "id": "lwc-count-605",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "ct_hex": "73a3610620a34b523a47ea4eddff83ac52374d542a309b2af5d0b5dfd7d6f1703178db5975dec230bb2267f5b51733151017"
+  },
+  {
+   "id": "lwc-count-726",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "ct_hex": "73a3610620a34b523a47ea4eddff83ac52370b3a163ac8738d6ebb5c902b0c6ffb5768ad949b7beec3a3d4c754be1ab1ba01254e07"
+  },
+  {
+   "id": "lwc-count-847",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "ct_hex": "73a3610620a34b523a47ea4eddff83ac52370b3a1643965ace97e10fbd9e3aa4b232d48acdc5531e39f33cae1be22c5dc0b5abbf1a94498a8b"
+  },
+  {
+   "id": "lwc-count-968",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "ct_hex": "73a3610620a34b523a47ea4eddff83ac52370b3a1643965ace464be43f658c3a45efde83e4462a18a14078bf4f417454c5a523a8eb279acca5c3bba81a"
+  },
+  {
+   "id": "lwc-count-1089",
+   "key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "ct_hex": "73a3610620a34b523a47ea4eddff83ac52370b3a1643965ace464be43f5033f5e9e56ed79c0be6ed0b3a96fc6cf741e1d5e5398f23f98d8208fba00f43ba6bc7"
+  }
+ ]
 }

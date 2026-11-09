@@ -1,0 +1,79 @@
+{
+ "algorithm": "hitag2",
+ "source": "Differential against the original Python code (https://github.com/jackiecan/hitag2@0246bb75fa26), sample of 10 of 3000 random inputs",
+ "independence": "NOT independent: expected outputs were produced by the ORIGINAL source that the C port was translated from (differential test, not a designers' vector)",
+ "gen": "port_ws/diff.py",
+ "replay": "glue",
+ "vectors": [
+  {
+   "id": "diff-0",
+   "key_hex": "dbd8d88b3f07",
+   "nonce_hex": "dda798c1a13cd7ea",
+   "data_hex": "01d9d6e8511fdbad5e9691b67ffc99f3c2c5112b62244b829d350dc0462dde11ffb13775fdc25340d132ef41c636e0fef6a00d7ce3b7dc4fd2217f66bfe175",
+   "out_hex": "6d6b2077f5dd629eeef61e336e4c3b3a4c87e7b673a27275ae16ec6213d40dc934a0716dd2e44b60e5b3b59043df69f8137043e0bf06eaa20b85fc961f9072"
+  },
+  {
+   "id": "diff-1",
+   "key_hex": "acfc080e81fa",
+   "nonce_hex": "ab67d55f191c24ad",
+   "data_hex": "7df2d9e2f451b64465b7a8c34eccd3ae6f15e5936a7f6667b20bf343a640b23119cb66d531b7ffd2543df8d628ea26eb639904f243bb905b38ac707bc1c44c32bf1ab40754d641bfc68d1732610d238ea8937864cb66c0cd292c296088f774ab642c5934a53a05352fed55db7e4f70168ac609e8cec8dea7af1e0bdc5d540f1cbb",
+   "out_hex": "7395231a6d213bd96de5bf6d9351751073d07e9df18741293683a7af968d87ba486823c0e1dae9b9a27622764deab66ddaad939674dacef0b351846b1cb2afbaf0b5ad9bd806b858f1d7debc61c9085e8fbccd02213ec1b81373b99e1dbf79297d054dbf79718405153a6f9fece6aceb8803fa2bf0e814818b254b29db9d8f0ff0"
+  },
+  {
+   "id": "diff-2",
+   "key_hex": "7606dca67208",
+   "nonce_hex": "c48d8e81faa39ad3",
+   "data_hex": "99b45cf57d1d2c1b",
+   "out_hex": "89e75a065dee3f36"
+  },
+  {
+   "id": "diff-3",
+   "key_hex": "43ba22e2427a",
+   "nonce_hex": "53f54c12eb2db8de",
+   "data_hex": "4b16",
+   "out_hex": "7b78"
+  },
+  {
+   "id": "diff-4",
+   "key_hex": "64462c58bf22",
+   "nonce_hex": "d6b7c8402b4012a8",
+   "data_hex": "39220fbfdbe480647543a2323bd35ceed0c0fd5375dcbcc69918a09a77782ee5aa9f58c7e3ed276b323e8330f25f3b7577cb514cf4933404336dc648d9a1bc8fc1",
+   "out_hex": "027be45b0a48e4a5ba3f8e1e031b850261a435e0086338c0f105d9e83f52815313f5e6cc634fffd007ca163eb2e87d717db8bf31e909ebf809ecc112a1d062eb49"
+  },
+  {
+   "id": "diff-5",
+   "key_hex": "4ca87eefd3ef",
+   "nonce_hex": "9a0497e8b1849b7b",
+   "data_hex": "f7ba95ee7d147477",
+   "out_hex": "8e2719e344d2a9ac"
+  },
+  {
+   "id": "diff-6",
+   "key_hex": "89c9e92cdcb5",
+   "nonce_hex": "22339ade8bf7fa3f",
+   "data_hex": "a524c4",
+   "out_hex": "017f7c"
+  },
+  {
+   "id": "diff-7",
+   "key_hex": "80cc0c5e025d",
+   "nonce_hex": "cfc9463d8564d701",
+   "data_hex": "2f240ae75145",
+   "out_hex": "0d934672837c"
+  },
+  {
+   "id": "diff-8",
+   "key_hex": "72b3fc4d45a9",
+   "nonce_hex": "9a68f35461b82c32",
+   "data_hex": "2b9709abe45de2dce09db9b4bdae04933b723b314c11076c9d7172afa8a23499b8b6d8758d4a8f5147a4e49a3ebf77c1d34678edc9ede5e8c2826b3cc8ad89f44a",
+   "out_hex": "a96a4f103eb6a5469e9b97f53f785333ee572fcad462404157f528dbb4f4136a2033f7aab376195a0e2aa8e19d6bb479b7cc40394d8b413412947bac1ea036002f"
+  },
+  {
+   "id": "diff-9",
+   "key_hex": "b20d1b89aa6c",
+   "nonce_hex": "7864913838dbdc04",
+   "data_hex": "e63f70769546",
+   "out_hex": "8256822ed7fa"
+  }
+ ]
+}

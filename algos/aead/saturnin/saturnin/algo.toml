@@ -11,7 +11,7 @@ copyleft  = false
 upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["aead-common.c", "aead-common.h", "internal-saturnin.c", "internal-saturnin.h", "internal-util.h", "saturnin.c", "saturnin.h", "LICENSE"] }
 
 # Entry point wired: . (saturnin_aead_encrypt). Other variants not wired: saturnin_short.
-# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# published vectors replayed by crates/nextssl-registry/tests/kat.rs; sources and sha256 in kat/README.md
 # License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
 [kat]
 files = ["kat/kat.json"]

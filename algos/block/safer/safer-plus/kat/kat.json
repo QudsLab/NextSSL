@@ -1,5 +1,27 @@
 {
-  "algorithm": "safer-plus",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "safer-plus",
+ "source": "libtomcrypt built-in self-test vectors (saferp_test) in src\\ciphers\\safer\\saferp.c. SAME-SOURCE: this is the copied code's own test table",
+ "independence": "same-source (libtomcrypt's own test vectors; the cipher spec vectors it cites are not independently re-fetched)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libtomcrypt-0",
+   "key_hex": "2923be84e16cd6ae529049f1f1bbe9eb",
+   "pt_hex": "b3a6db3c870c3e99245e0d1c06b747de",
+   "ct_hex": "e01fb60a0cff54467f0d59f90939a5dc"
+  },
+  {
+   "id": "libtomcrypt-1",
+   "key_hex": "48d38f75e6d91d2ae5c0f72b788187440e5f5000d4618dbe",
+   "pt_hex": "7b0515073b33821f187092da6454ceb1",
+   "ct_hex": "5c88043f395f640096828210c16fdb85"
+  },
+  {
+   "id": "libtomcrypt-2",
+   "key_hex": "f3a88dfebef2eb71ffa0d03b75068c7e8778734dd0be82bedbc246412b8cfa30",
+   "pt_hex": "7f70f0a754863295aa5b68130be6fcf5",
+   "ct_hex": "580b1924ace5cad5aa416999dc68998a"
+  }
+ ]
 }

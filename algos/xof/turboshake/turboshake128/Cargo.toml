@@ -1,0 +1,17 @@
+[package]
+name = "nextssl-algo-turboshake128"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+turboshake = { path = "upstream", version = "=0.5.0" }
+
+[lints]
+workspace = true

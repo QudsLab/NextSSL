@@ -1,0 +1,21 @@
+id        = "opaque-ristretto255-sha512"
+kind      = "pake"
+category  = "pake"
+family    = "opaque"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 9807"]
+fips      = false
+copyleft  = false
+feature   = "opaque-ke"
+upstream  = { crate = "opaque-ke", version = "=4.0.1", license = "Apache-2.0 OR MIT" }
+# facebook/opaque-ke 4.0.1, OPAQUE-3DH with ristretto255, SHA-512 and Argon2 (default parameters of the argon2 crate). The responder registers the password it is given at start (a stored record), the exchange is the login flow.
+# UNTESTED (wire batch 6, owner order). Candidate KAT: RFC 9807 appendix C test vectors (need a seeded setup the crate does not expose through this adapter).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+key = { min = 1, max = 256 }
+ss  = 64

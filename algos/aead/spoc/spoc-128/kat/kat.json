@@ -1,5 +1,89 @@
 {
-  "algorithm": "spoc-128",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "spoc-128",
+ "source": "NIST LWC KAT format (Count/Key/Nonce/PT/AD/CT, ct = ciphertext || tag) from rweather/lightweight-crypto test/kat/SpoC-128.txt; the repo README says these came from the NIST submissions",
+ "independence": "same-repo: vectors are the submission teams' (per the repo README) but live in the same repository as the copied code; the NIST round-1/2 zips for this candidate are not in the collection, so not cross-checked",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "lwc-count-1",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "",
+   "pt_hex": "",
+   "ct_hex": "5a32211f98add5ba77539a4660512dcb"
+  },
+  {
+   "id": "lwc-count-122",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "000102",
+   "ct_hex": "1a6aa7e94ec40b2f9996cfd662f785878534bb"
+  },
+  {
+   "id": "lwc-count-243",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a",
+   "pt_hex": "00010203040506",
+   "ct_hex": "6473e8eb73119771b0963a4fd717593ab1a279ef4f5788"
+  },
+  {
+   "id": "lwc-count-364",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "",
+   "pt_hex": "000102030405060708090a",
+   "ct_hex": "5948ec25b8d12d6ab99745b73701803b4b133ee07439dc909ebdda"
+  },
+  {
+   "id": "lwc-count-485",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "000102030405060708090a0b0c0d",
+   "ct_hex": "1a6aa7ff120e4e1d69498f1935dafd673540bceb1d858b526aa9e8aabc9e"
+  },
+  {
+   "id": "lwc-count-605",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "ct_hex": "9fd321f3bd55da8c371d0e2f3c5853f930a2c5b58d7705687616a3b5b8dea4922098"
+  },
+  {
+   "id": "lwc-count-726",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "ct_hex": "49a0541c4e10fb19bb20ec55115ff193f8c1255ddd9b830fb723eb8abef7da21371cb48c62"
+  },
+  {
+   "id": "lwc-count-847",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "ct_hex": "a5ce2547d26a3f7a065e765620be796fac977896639f2884d5424378e8162fd21b45974a9ece6f41a9"
+  },
+  {
+   "id": "lwc-count-968",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "ct_hex": "9fd321f3bd55da8c371d0e2f3c5853f930a2ecd65eca39e64226c57f82ea2a69eeab2168631e725b5d37b52d4e"
+  },
+  {
+   "id": "lwc-count-1089",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "ct_hex": "49a0541c4e10fb19bb20ec55115ff193f8c1255dddd173cf79bab9135718aa59c68bd981024c84e5135f17c10c3e7f56"
+  }
+ ]
 }

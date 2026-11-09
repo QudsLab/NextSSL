@@ -1,0 +1,21 @@
+id        = "hitag2"
+kind      = "streamcipher"
+category  = "stream"
+family    = "hitag2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/jackiecan/hitag2", commit = "0246bb75fa264263d8aec6d6de70de959a1c2cf8", license = "NOASSERTION", files = ["port/hitag2.c", "port/hitag2.h", "LICENSE"] }
+# Port exception (hard rule 1): HITAG2 (NXP RFID stream cipher), 48-bit key, 32-bit uid + 32-bit nonce, 48-bit LFSR.
+# Line-by-line C port of the original Python source (hitag.py); the original is not copied, only translated. Tier unverified (root only).
+# Differential test against the original (run in Docker, --network none, disposable copy): see kat/README.md and upstream/ORIGIN.md. Not compiled or tested in cargo at wiring time (owner order).
+# Broken in practice (known attacks on the 48-bit cipher); kept as an archive entry. Byte conventions are NextSSL's (shim.c): big-endian key, nonce = uid || nonce.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 6
+nonce = 8

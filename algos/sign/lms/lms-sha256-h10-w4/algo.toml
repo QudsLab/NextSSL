@@ -1,0 +1,23 @@
+id        = "lms-sha256-h10-w4"
+kind      = "statefulsign"
+category  = "sign"
+family    = "lms"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 8554", "NIST SP 800-208"]
+fips      = false
+copyleft  = false
+feature   = "hbs-lms"
+upstream  = { crate = "hbs-lms", version = "=0.2.0-alpha.1", license = "Apache-2.0" }
+# Fraunhofer-AISEC hbs-lms 0.2.0-alpha.1 (an alpha release): LMS_SHA256_M32_H10 with LMOTS_SHA256_N32_W4, single level, 1024 signatures.
+# The crate does not zeroize SigningKey. UNTESTED (wire batch 6, owner order). Candidate KAT: RFC 8554 appendix F, NIST SP 800-208 ACVP LMS vectors.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+pk   = 60
+sk   = { min = 32, max = 512 }
+sig  = { min = 256, max = 65536 }
+seed = 32

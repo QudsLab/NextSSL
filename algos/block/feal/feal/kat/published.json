@@ -1,0 +1,14 @@
+{
+ "algorithm": "feal",
+ "source": "test.py of the original repository: FEAL-NX spec (NTT, call-3e.pdf) example, 32 rounds",
+ "independence": "taken from the original repository's tests, citing the designers' document",
+ "replay": "glue",
+ "vectors": [
+  {
+   "id": "published-0",
+   "key_hex": "0123456789abcdef0123456789abcdef",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "9c9b54973df685f8"
+  }
+ ]
+}

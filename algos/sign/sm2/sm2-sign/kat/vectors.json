@@ -1,5 +1,16 @@
 {
  "algorithm": "sm2-sign",
- "vectors": [],
- "note": "no independent vectors imported yet"
+ "source": "GB/T 32918.5 / GM/T 0003.5-2012 Annex A signature example (d, message 'message digest', r, s) as encoded in OpenSSL test/sm2_internal_test.c; verify-only",
+ "independence": "independent (standard annex example via OpenSSL)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "gmt-0003.5-2012-annex-a",
+   "pk_hex": "0409f9df311e5421a150dd7d161e4bc5c672179fad1833fc076bb08ff356f35020ccea490ce26775a52dc6ea718cc1aa600aed05fbf35e084a6632f6072da9ad13",
+   "msg_hex": "6d65737361676520646967657374",
+   "sig_hex": "f5a03b0648d2c4630eeac513e1bb81a15944da3827d5b74143ac7eaceee720b3b1b6aa29df212fd8763182bc0d421ca1bb9038fd1f7f42d4840b69c485bbc1aa",
+   "note": "ID 1234567812345678 (default), curve sm2p256v1; pk = d*G computed here with a throwaway affine-add (verification tooling only), d from the same test"
+  }
+ ]
 }

@@ -1,0 +1,35 @@
+[package]
+name = "zuc"
+version = "0.4.1"
+edition = "2021"
+description = "ZUC Stream Cipher Algorithms"
+license = "MIT"
+repository = "https://github.com/Nugine/zuc"
+readme = "README.md"
+documentation = "https://docs.rs/zuc"
+categories = ["cryptography", "no-std"]
+keywords = ["zuc", "eea", "eia", "stream-cipher", "crypto"]
+rust-version = "1.86.0"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[features]
+default = []
+std = ["cipher/std", "digest/std", "std-next/std"]
+
+[dependencies]
+cipher = { version = "0.4.4", default-features = false }
+const-str = { version = "1.1.0", default-features = false }
+digest = { version = "0.10.7", default-features = false, features = ["mac"] }
+numeric_cast = "0.3.0"
+std-next = { version = "0.1.9", default-features = false }
+
+[dev-dependencies]
+criterion = "0.8.2"
+rand = "0.10.2"
+
+[[bench]]
+name = "zuc"
+harness = false

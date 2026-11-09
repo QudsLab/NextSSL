@@ -1,0 +1,17 @@
+id        = "turboshake256"
+kind      = "xof"
+category  = "xof"
+family    = "turboshake"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 9861"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "turboshake", version = "=0.5.0", license = "MIT" }
+# itzmeanjan/turboshake 0.5.0, vendored in upstream/ (pure Rust, zero dependencies, no build.rs). Domain separator fixed at 0x1F.
+# unverified: source found by web search, no independent KAT imported yet (RFC 9861 publishes TurboSHAKE vectors).
+# Shares the vendored upstream of turboshake128.
+
+[kat]
+files = ["kat/vectors.json"]

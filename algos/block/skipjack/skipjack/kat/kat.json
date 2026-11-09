@@ -1,5 +1,70 @@
 {
-  "algorithm": "skipjack",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "skipjack",
+ "source": "Crypto++ TestVectors/skipjack.txt (SKIPJACK/ECB section = NIST SP 800-17 Table 6, byte-reversed to spec order, see note) plus the NIST SKIPJACK specification example (as printed in libtomcrypt skipjack.c)",
+ "independence": "independent (SP 800-17 table via Crypto++; spec example is the NIST published one)",
+ "gen": "kat1",
+ "replay": "registry",
+ "note": "Crypto++ skipjack.cpp SetKey reads key[9-i] and loads blocks as little-endian words, so its printed key/pt/ct are the byte-reversal of the NIST spec byte order; the stored values here are reversed accordingly. Rows are not otherwise edited.",
+ "vectors": [
+  {
+   "id": "sp800-17-0",
+   "key_hex": "00000000000000000080",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5a1f464194e4007a"
+  },
+  {
+   "id": "sp800-17-1",
+   "key_hex": "00000000000000002000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4070049b098b10f4"
+  },
+  {
+   "id": "sp800-17-2",
+   "key_hex": "00000000000000080000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "eea0762e107e9b81"
+  },
+  {
+   "id": "sp800-17-3",
+   "key_hex": "00000000000002000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "45a66fbf492e70ca"
+  },
+  {
+   "id": "sp800-17-4",
+   "key_hex": "00000000800000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "305c0f759ef4137c"
+  },
+  {
+   "id": "sp800-17-5",
+   "key_hex": "00000040000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b9ba85d550903a91"
+  },
+  {
+   "id": "sp800-17-6",
+   "key_hex": "00001000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7db4d76168fafa7c"
+  },
+  {
+   "id": "sp800-17-7",
+   "key_hex": "00040000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4110ca0431ec9588"
+  },
+  {
+   "id": "sp800-17-8",
+   "key_hex": "01000000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "a850b4e3c2e7d074"
+  },
+  {
+   "id": "nist-skipjack-spec-example",
+   "key_hex": "00998877665544332211",
+   "pt_hex": "33221100ddccbbaa",
+   "ct_hex": "2587cae27a12d300"
+  }
+ ]
 }

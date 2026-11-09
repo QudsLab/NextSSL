@@ -1,0 +1,5 @@
+{
+ "algorithm": "lms-sha256-h5-w4",
+ "vectors": [],
+ "note": "no independent vectors imported yet; see algo.toml notes"
+}

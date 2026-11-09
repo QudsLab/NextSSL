@@ -1,0 +1,18 @@
+[package]
+name = "nextssl-algo-shamir"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+sharks = { version = "=0.5.0", default-features = false }
+rand_core = { version = "=0.6.4", default-features = false }
+
+[lints]
+workspace = true

@@ -1,0 +1,20 @@
+id        = "spake2-ed25519"
+kind      = "pake"
+category  = "pake"
+family    = "spake2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["draft-irtf-cfrg-spake2"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "spake2", version = "=0.4.0", license = "MIT OR Apache-2.0" }
+# RustCrypto PAKEs spake2 0.4.0, Ed25519 group. This is the python-spake2 compatible construction, not RFC 9382.
+# The crate has no key confirmation and does not zeroize its state (see docs/UPSTREAM_ISSUES.md). UNTESTED (wire batch 6, owner order).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+key = { min = 1, max = 256 }
+ss  = 32

@@ -1,0 +1,61 @@
+[package]
+autobenches = false
+autoexamples = false
+autotests = false
+name = "crrl"
+version = "0.9.0"
+authors = ["Thomas Pornin <thomas.pornin@nccgroup.com>"]
+edition = "2018"
+license = "MIT"
+description = "Library for cryptographic research"
+repository = "https://github.com/pornin/crrl"
+readme = "README.md"
+categories = ["cryptography", "no-std"]
+keywords = ["cryptography", "ed25519", "ristretto255", "p256", "jq255e"]
+exclude = ["extra/*"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rand_core = "0.6"
+
+[features]
+default = [ "std", "omnes" ]
+std = [ "alloc" ]
+alloc = []
+w32_backend = []
+w64_backend = []
+gf255_m51 = []
+gf255_m64 = []
+gfb254_m64 = []
+gfb254_x86clmul = []
+gfb254_arm64pmull = []
+omnes = [ "decaf448", "ed25519", "ed448", "frost", "jq255e", "jq255s", "lms", "p256", "ristretto255", "secp256k1", "gls254", "x25519", "x448", "modint256", "gf255", "gfgen" ]
+decaf448 = [ "ed448" ]
+ed25519 = [ "gf25519", "modint256" ]
+ed448 = [ "gf448", "gfgen" ]
+frost = [ "alloc" ]
+jq255e = [ "gf255e", "modint256", "blake2s" ]
+jq255s = [ "gf255s", "modint256", "blake2s" ]
+lms = []
+p256 = [ "gfp256", "modint256" ]
+ristretto255 = [ "ed25519" ]
+secp256k1 = [ "gfsecp256k1", "modint256" ]
+gls254 = [ "gfb254", "modint256", "blake2s" ]
+x25519 = [ "ed25519" ]
+x448 = [ "ed448" ]
+gfgen = []
+gf255 = []
+gf255e = []
+gf255s = []
+gf25519 = []
+gfp256 = []
+gfsecp256k1 = []
+gf448 = []
+modint256 = []
+gfb254 = []
+gls254bench = []
+zz32 = []
+zz64 = []
+blake2s = []
+

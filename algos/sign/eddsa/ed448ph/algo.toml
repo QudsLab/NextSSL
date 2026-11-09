@@ -1,0 +1,25 @@
+id        = "ed448ph"
+kind      = "sign"
+category  = "sign"
+family    = "eddsa"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 8032"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "crrl", version = "=0.9.0", license = "MIT" }
+# pornin/crrl 0.9.0 vendored in upstream/ (features ed448 + std only; pure Rust, rand_core 0.6 is the only dependency, no build.rs).
+# unverified: source found by web search, no independent KAT imported yet (RFC 8032 section 7.3 has Ed448ph vectors).
+# Prehash is SHAKE256 with a 64-byte output, computed with the vendored crate's own SHAKE256 because the upstream leaves that step to the caller.
+# Upstream PrivateKey is Copy and is not zeroized on drop (hard rule 9 cannot be met by the glue).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+pk   = 57
+sk   = 57
+sig  = 114
+seed = 57
+ctx  = { min = 0, max = 255 }

@@ -1,5 +1,58 @@
 {
-  "algorithm": "base85",
-  "note": "No published KAT vectors collected yet. Tier stays `unverified`. Untested: wired in batch 3 under owner order (no cargo check/test).",
-  "vectors": []
+ "algorithm": "base85",
+ "source": "CPython base64.b85encode (independent RFC 1924 alphabet, 4-byte groups, partial last group = n+1 chars); inputs are fixed patterns, not RFC text (RFC 1924 itself gives one whole-128-bit-number example that this group codec does not claim to match)",
+ "independence": "independent (CPython implementation; generated, not a published table)",
+ "gen": "kat1",
+ "vectors": [
+  {
+   "id": "cpython-b85-0",
+   "data_hex": "",
+   "text": ""
+  },
+  {
+   "id": "cpython-b85-1",
+   "data_hex": "01",
+   "text": "0R"
+  },
+  {
+   "id": "cpython-b85-2",
+   "data_hex": "0102",
+   "text": "0Rj"
+  },
+  {
+   "id": "cpython-b85-3",
+   "data_hex": "010203",
+   "text": "0RjU"
+  },
+  {
+   "id": "cpython-b85-4",
+   "data_hex": "01020304",
+   "text": "0RjUA"
+  },
+  {
+   "id": "cpython-b85-5",
+   "data_hex": "0102030405",
+   "text": "0RjUA1p"
+  },
+  {
+   "id": "cpython-b85-6",
+   "data_hex": "010203040506",
+   "text": "0RjUA1qJ"
+  },
+  {
+   "id": "cpython-b85-7",
+   "data_hex": "01020304050607",
+   "text": "0RjUA1qKH"
+  },
+  {
+   "id": "cpython-b85-8",
+   "data_hex": "108000000000000000080800200c417a",
+   "text": "5P$#x0000000;;GAPhlz"
+  },
+  {
+   "id": "cpython-b85-9",
+   "data_hex": "ffffffff",
+   "text": "|NsC0"
+  }
+ ]
 }

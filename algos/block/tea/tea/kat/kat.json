@@ -1,5 +1,69 @@
 {
-  "algorithm": "tea",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "tea",
+ "source": "Crypto++ TestVectors/tea.txt (TEA/ECB section, source: klockstone teavect.htm)",
+ "independence": "independent (Crypto++ vector file from the designer's published test data)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "cryptopp-tea-0",
+   "key_hex": "00000000000000000000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "41ea3a0a94baa940"
+  },
+  {
+   "id": "cryptopp-tea-1",
+   "key_hex": "b84e28afa0a47295ed6506981024eea0",
+   "pt_hex": "6220ae1cc88ba95e",
+   "ct_hex": "5ddf75d97a4ce68f"
+  },
+  {
+   "id": "cryptopp-tea-2",
+   "key_hex": "bdb43728a9c3801a32a1e65408b63bb9",
+   "pt_hex": "b20bd3e8d32c758c",
+   "ct_hex": "21410574cc4264c6"
+  },
+  {
+   "id": "cryptopp-tea-3",
+   "key_hex": "2486dcbab7c7af9d8cc0400a9c241876",
+   "pt_hex": "6cbc8c66dd46249e",
+   "ct_hex": "b59c5d45a90066f9"
+  },
+  {
+   "id": "cryptopp-tea-4",
+   "key_hex": "fe48f4fbc5294093759ca8e269c53e0f",
+   "pt_hex": "3e9798077b172fac",
+   "ct_hex": "60388adaa21fa8e8"
+  },
+  {
+   "id": "cryptopp-tea-5",
+   "key_hex": "7d2c6c5744b71215c10105a1bfdb29fa",
+   "pt_hex": "9ece39b6d9cb4e09",
+   "ct_hex": "9b0b256ddc04574c"
+  },
+  {
+   "id": "cryptopp-tea-6",
+   "key_hex": "f6a0d30c3de21a3fa7e307c6017bc3a7",
+   "pt_hex": "66fd8c7761341d1c",
+   "ct_hex": "d8f8fc86d01b5761"
+  },
+  {
+   "id": "cryptopp-tea-7",
+   "key_hex": "9bd0321eb7c56d5b63a1bfac91f56dff",
+   "pt_hex": "7281794f4368d224",
+   "ct_hex": "e4c63780019aedf7"
+  },
+  {
+   "id": "cryptopp-tea-8",
+   "key_hex": "cc960edae12f106d556ad85378e8e265",
+   "pt_hex": "128df6ada6537187",
+   "ct_hex": "f23892aa288cb926"
+  },
+  {
+   "id": "cryptopp-tea-9",
+   "key_hex": "5c60bff27072d01c4513c5eb8f3a38ab",
+   "pt_hex": "80d9c4adcf899635",
+   "ct_hex": "2bb0f1b3c023ed11"
+  }
+ ]
 }

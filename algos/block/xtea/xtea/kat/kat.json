@@ -1,5 +1,39 @@
 {
-  "algorithm": "xtea",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "xtea",
+ "source": "Bouncy Castle XTEATest.java (vectors from the C implementation at simonshepherd.supanet.com/tea.htm)",
+ "independence": "independent (BC, from Shepherd's reference results)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "bc-xtea-0",
+   "key_hex": "00000000000000000000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "dee9d4d8f7131ed9"
+  },
+  {
+   "id": "bc-xtea-1",
+   "key_hex": "00000000000000000000000000000000",
+   "pt_hex": "0102030405060708",
+   "ct_hex": "065c1b8975c6a816"
+  },
+  {
+   "id": "bc-xtea-2",
+   "key_hex": "0123456712345678234567893456789a",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "1ff9a0261ac64264"
+  },
+  {
+   "id": "bc-xtea-3",
+   "key_hex": "0123456712345678234567893456789a",
+   "pt_hex": "0102030405060708",
+   "ct_hex": "8c67155b2ef91ead"
+  },
+  {
+   "id": "cryptopp-xtea-r32-0",
+   "key_hex": "27f917b1c1da899360e2acaaa6eb923d",
+   "pt_hex": "af20a390547571aa",
+   "ct_hex": "d26428af0a202283"
+  }
+ ]
 }

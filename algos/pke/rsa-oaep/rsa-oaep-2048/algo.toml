@@ -1,0 +1,27 @@
+id        = "rsa-oaep-2048"
+kind      = "pke"
+category  = "pke"
+family    = "rsa-oaep"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["RFC 8017"]
+fips      = false
+copyleft  = false
+feature   = "rsa"
+upstream  = { crate = "rsa", version = "=0.10.0", license = "MIT OR Apache-2.0" }
+# RustCrypto rsa 0.10.0 (+ sha2 =0.11.1, rand_core =0.10.1). The manifest pinned rsa 0.9.10, but 0.9.x needs `signature` >=2,<2.3 while the
+# slh-dsa glue pins `signature =2.3.0-pre.4`: one semver-compatible crate cannot be selected twice, so a renamed dependency does not help.
+# 0.10 uses signature 3 like the rest of the workspace. Tier legacy: constant-time hardening is still being finished upstream.
+# One sibling id per modulus (2048); public exponent fixed to 65537; OAEP hash fixed to SHA-256. UNTESTED (wire batch 6, owner order).
+# Candidate KATs: Wycheproof rsa_oaep_*_test.json, RFC 8017 examples; to be added in the fix pass.
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]
+pk  = { min = 264, max = 288 }
+sk  = { min = 768, max = 1344 }
+ct  = 256
+out = { min = 0, max = 190 }
+ctx = { min = 0, max = 64 }

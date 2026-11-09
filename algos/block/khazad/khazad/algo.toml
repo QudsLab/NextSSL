@@ -11,7 +11,7 @@ copyleft  = false
 upstream  = { repo = "https://github.com/libtom/libtomcrypt", commit = "6c6d5104de66f3ca0dfd7b68540ef86869982b07", license = "NOASSERTION", files = ["src/headers/tomcrypt.h", "src/headers/tomcrypt_argchk.h", "src/headers/tomcrypt_cfg.h", "src/headers/tomcrypt_cipher.h", "src/headers/tomcrypt_custom.h", "src/headers/tomcrypt_hash.h", "src/headers/tomcrypt_mac.h", "src/headers/tomcrypt_macros.h", "src/headers/tomcrypt_math.h", "src/headers/tomcrypt_misc.h", "src/headers/tomcrypt_pk.h", "src/headers/tomcrypt_pkcs.h", "src/headers/tomcrypt_private.h", "src/headers/tomcrypt_prng.h", "src/ciphers/khazad.c", "src/misc/zeromem.c", "LICENSE"] }
 
 # Entry point wired: src/ciphers/khazad.c (khazad_setup/khazad_ecb_encrypt/khazad_ecb_decrypt (num_rounds=0 = default); descriptor khazad: key 16, block 8; builds with ARGTYPE=4, LTC_NO_TEST; zeromem.c copied verbatim from the pinned libtomcrypt clone). Other variants not wired: none.
-# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# published vectors replayed by crates/nextssl-registry/tests/kat.rs; sources and sha256 in kat/README.md
 # License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
 [kat]
 files = ["kat/kat.json"]

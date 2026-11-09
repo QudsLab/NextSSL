@@ -1,0 +1,17 @@
+[package]
+name = "nextssl-algo-fn-dsa-512"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+falcon-rs = { path = "upstream", version = "=0.3.1" }
+
+[lints]
+workspace = true

@@ -1,5 +1,33 @@
 {
-  "algorithm": "khazad",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "khazad",
+ "source": "libtomcrypt built-in self-test vectors (khazad_test) in src\\ciphers\\khazad.c. SAME-SOURCE: this is the copied code's own test table",
+ "independence": "same-source (libtomcrypt's own test vectors; the cipher spec vectors it cites are not independently re-fetched)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libtomcrypt-0",
+   "key_hex": "80000000000000000000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "49a4ce32ac190e3f"
+  },
+  {
+   "id": "libtomcrypt-1",
+   "key_hex": "00000000000000000000000000000001",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "645d773e40abdd53"
+  },
+  {
+   "id": "libtomcrypt-2",
+   "key_hex": "00000000000000000000000000000000",
+   "pt_hex": "8000000000000000",
+   "ct_hex": "9e399864f78eca02"
+  },
+  {
+   "id": "libtomcrypt-3",
+   "key_hex": "00000000000000000000000000000000",
+   "pt_hex": "0000000000000001",
+   "ct_hex": "a9df3d2c64d3ea28"
+  }
+ ]
 }

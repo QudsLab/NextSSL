@@ -1,5 +1,30 @@
 {
   "algorithm": "hc256",
-  "note": "No published KAT vectors collected yet. Tier stays `unverified`. Untested: wired in batch 3 under owner order (no cargo check/test).",
-  "vectors": []
+  "source": "Crypto++ TestVectors/hc256.txt: the 3 designer vectors (HC-256 testvectors.txt). The 7 Crypto++-generated vectors are in disputed.json.",
+  "independence": "independent (eSTREAM reference output as shipped by Crypto++)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "cryptopp-hc256-0",
+      "key_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "nonce_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "data_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "out_hex": "5b078985d8f6f30d42c5c02fa6b6795153f06534801f89f24e74248b720b4818"
+    },
+    {
+      "id": "cryptopp-hc256-1",
+      "key_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "nonce_hex": "0100000000000000000000000000000000000000000000000000000000000000",
+      "data_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "out_hex": "afe2a2bf4f17cee9fec2058bd1b18bb15fc042ee712b3101dd501fc60b082a50"
+    },
+    {
+      "id": "cryptopp-hc256-2",
+      "key_hex": "5500000000000000000000000000000000000000000000000000000000000000",
+      "nonce_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "data_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "out_hex": "1c404afe4fe25fed958f9ad1ae36c06f88a65a3cc0abe223aeb3902f420ed3a8"
+    }
+  ]
 }

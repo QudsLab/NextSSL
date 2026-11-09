@@ -1,0 +1,5 @@
+{
+ "algorithm": "spake2-ed25519",
+ "vectors": [],
+ "note": "no independent vectors imported yet; see algo.toml notes"
+}

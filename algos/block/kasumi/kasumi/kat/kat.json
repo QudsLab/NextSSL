@@ -1,5 +1,39 @@
 {
-  "algorithm": "kasumi",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "kasumi",
+ "source": "libtomcrypt built-in self-test vectors (kasumi_test) in src\\ciphers\\kasumi.c. SAME-SOURCE: this is the copied code's own test table",
+ "independence": "same-source (libtomcrypt's own test vectors; the cipher spec vectors it cites are not independently re-fetched)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libtomcrypt-0",
+   "key_hex": "80000000000000000000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "4b58a771afc7e5e8"
+  },
+  {
+   "id": "libtomcrypt-1",
+   "key_hex": "00800000000000000000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "7eef113c95bb5a77"
+  },
+  {
+   "id": "libtomcrypt-2",
+   "key_hex": "00008000000000000000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "5f140686d7ad5a39"
+  },
+  {
+   "id": "libtomcrypt-3",
+   "key_hex": "00000000000000000000000000000001",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "2e1491cf70aa465d"
+  },
+  {
+   "id": "libtomcrypt-4",
+   "key_hex": "00000000000000000000000000000100",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "b54586f4ab9ae546"
+  }
+ ]
 }

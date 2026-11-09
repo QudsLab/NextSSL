@@ -1,0 +1,18 @@
+id        = "shamir"
+kind      = "threshold"
+category  = "threshold"
+family    = "shamir"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { crate = "sharks", version = "=0.5.0", license = "MIT/Apache-2.0" }
+# c0dearm/sharks 0.5.0 instead of the manifest's vsss-rs 6.0.1 (the brief allows either; vsss-rs' generic share/identifier
+# types could not be pinned down without a compile). Plain Shamir over GF(256), no verifiable sharing. UNTESTED (wire batch 6, owner order).
+
+[kat]
+files = ["kat/vectors.json"]
+
+[sizes]

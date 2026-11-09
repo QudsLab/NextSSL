@@ -1,5 +1,89 @@
 {
-  "algorithm": "hyena-v1",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "hyena-v1",
+ "source": "NIST LWC KAT format (Count/Key/Nonce/PT/AD/CT, ct = ciphertext || tag) from rweather/lightweight-crypto test/kat/HYENA-v1.txt; the repo README says these came from the NIST submissions",
+ "independence": "same-repo: vectors are the submission teams' (per the repo README) but live in the same repository as the copied code; the NIST round-1/2 zips for this candidate are not in the collection, so not cross-checked",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "lwc-count-1",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "",
+   "pt_hex": "",
+   "ct_hex": "f83ca141a233342b1507192f171774a6"
+  },
+  {
+   "id": "lwc-count-122",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "000102",
+   "ct_hex": "c679feb71225b8c9a7bc5536c11cb5db25706b"
+  },
+  {
+   "id": "lwc-count-243",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a",
+   "pt_hex": "00010203040506",
+   "ct_hex": "df24a5af535a101dcedb81764b7bb50d64013d5698d497"
+  },
+  {
+   "id": "lwc-count-364",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "",
+   "pt_hex": "000102030405060708090a",
+   "ct_hex": "35d7cead7db14e4816787f03664f18419fbfbd3de2c1ead4947422"
+  },
+  {
+   "id": "lwc-count-485",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415",
+   "pt_hex": "000102030405060708090a0b0c0d",
+   "ct_hex": "c679febd0374a93955eb199fa852215103ab93312872f869240f6f984308"
+  },
+  {
+   "id": "lwc-count-605",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011",
+   "ct_hex": "ca1261316a9fcf24b26bd1fb2cf8f43d3071a616059539baa49dc51fafa23171690a"
+  },
+  {
+   "id": "lwc-count-726",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "ct_hex": "8156be5107696054b469fbb479a0fc46e9085c0ad07d46a28accec2ad502d8d5623ff0d3c8"
+  },
+  {
+   "id": "lwc-count-847",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f1011121314",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718",
+   "ct_hex": "cee9c14898596b7989402f88db9147e06da191c59b750c289bdfe1d610dcdd4ea54a2658684afdce34"
+  },
+  {
+   "id": "lwc-count-968",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "00010203040506070809",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c",
+   "ct_hex": "ca1261316a9fcf24b26bd1fb2cf8f43d3071a6774bee9db9d02b5e20579595a3f38cbbd4f88eb7b967dd555be1"
+  },
+  {
+   "id": "lwc-count-1089",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "nonce_hex": "000102030405060708090a0b",
+   "aad_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "pt_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "ct_hex": "8156be5107696054b469fbb479a0fc46e9085c0ad01c24278c953900f7cb39717c224d92ef5a1f60421cfa077a764c69"
+  }
+ ]
 }

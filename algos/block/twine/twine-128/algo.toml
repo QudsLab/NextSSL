@@ -1,0 +1,20 @@
+id        = "twine-128"
+kind      = "blockcipher"
+category  = "block"
+family    = "twine"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/amoallim15/xtwine", commit = "fa1e0706ef92afc2ef3031c16e16c3b6232cb5b3", license = "MIT", files = ["port/twine.c", "port/twine.h", "LICENSE"] }
+# Port exception (hard rule 1): TWINE-128 (SAC 2012), 64-bit block, 128-bit key, 36 rounds.
+# Line-by-line C port of the original Python source (src/algo.py (_key_schedule_128, _encrypt, _decrypt)); the original is not copied, only translated. Tier unverified (root only).
+# Differential test against the original (run in Docker, --network none, disposable copy): see kat/README.md and upstream/ORIGIN.md. Not compiled or tested in cargo at wiring time (owner order).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+block = 8

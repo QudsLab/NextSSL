@@ -1,5 +1,45 @@
 {
-  "algorithm": "rc6",
-  "vectors": [],
-  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+ "algorithm": "rc6",
+ "source": "Crypto++ TestData/rc6val.dat (RC6-32/20 key/plaintext/ciphertext, the RC6 AES-submission vectors)",
+ "independence": "independent (RC6 submission vectors as shipped by Crypto++)",
+ "gen": "kat1",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "rc6val-0",
+   "key_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "8fc3a53656b1f778c129df4e9848a41e"
+  },
+  {
+   "id": "rc6val-1",
+   "key_hex": "0123456789abcdef0112233445566778",
+   "pt_hex": "02132435465768798a9bacbdcedfe0f1",
+   "ct_hex": "524e192f4715c6231f51f6367ea43f18"
+  },
+  {
+   "id": "rc6val-2",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "6cd61bcb190b30384e8a3f168690ae82"
+  },
+  {
+   "id": "rc6val-3",
+   "key_hex": "0123456789abcdef0112233445566778899aabbccddeeff0",
+   "pt_hex": "02132435465768798a9bacbdcedfe0f1",
+   "ct_hex": "688329d019e505041e52e92af95291d4"
+  },
+  {
+   "id": "rc6val-4",
+   "key_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "8f5fbd0510d15fa893fa3fda6e857ec2"
+  },
+  {
+   "id": "rc6val-5",
+   "key_hex": "0123456789abcdef0112233445566778899aabbccddeeff01032547698badcfe",
+   "pt_hex": "02132435465768798a9bacbdcedfe0f1",
+   "ct_hex": "c8241816f0d7e48920ad16a1674e5d48"
+  }
+ ]
 }

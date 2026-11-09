@@ -13,3 +13,14 @@ Sources:
   - sha256: 985e5ecc172e181eaf49e89508b9470dcf478002eb7e8559c707eb42dc97dfe7
   - downloaded: 2026-11-08
   - C2SP/wycheproof commit d17cc89fa5c8f4f4d378b5385ebf75da5d0926c9
+
+<!-- kat1:begin -->
+## Published vectors added by kat1 (D:\Dev\kat_work\kat1\gen.py)
+
+### acvp-gcm.json (10 vectors, at most 10 kept per parameter set)
+- independence: independent (Wycheproof, generated outside this repo)
+- source file: `testvectors_v1/aes_gcm_test.json`
+  - URL: https://github.com/C2SP/wycheproof/blob/d17cc89fa5c8f4f4d378b5385ebf75da5d0926c9/testvectors_v1/aes_gcm_test.json
+  - sha256 of the file used: `985e5ecc172e181eaf49e89508b9470dcf478002eb7e8559c707eb42dc97dfe7`
+
+<!-- kat1:end -->

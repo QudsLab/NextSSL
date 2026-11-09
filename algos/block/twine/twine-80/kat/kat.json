@@ -1,0 +1,69 @@
+{
+ "algorithm": "twine-80",
+ "source": "Differential against the original Python code (https://github.com/amoallim15/xtwine@fa1e0706ef92), sample of 10 of 2408 random inputs",
+ "independence": "NOT independent: expected outputs were produced by the ORIGINAL source that the C port was translated from (differential test, not a designers' vector)",
+ "gen": "port_ws/diff.py",
+ "replay": "glue",
+ "vectors": [
+  {
+   "id": "diff-0",
+   "key_hex": "b8d45aa5f7e671309a3e",
+   "pt_hex": "352b978538f2921a",
+   "ct_hex": "11367e2ca034b650"
+  },
+  {
+   "id": "diff-1",
+   "key_hex": "a2cf6fd5c2956ce3ab7d",
+   "pt_hex": "84fcb1bfd6ac225c",
+   "ct_hex": "67c70b3827def348"
+  },
+  {
+   "id": "diff-2",
+   "key_hex": "d27964fd6750dcbebb0c",
+   "pt_hex": "e6b5328c1c8d5abf",
+   "ct_hex": "e2fc2e35955153f0"
+  },
+  {
+   "id": "diff-3",
+   "key_hex": "b7a2c507b6a71421ca1a",
+   "pt_hex": "6d840e888741d558",
+   "ct_hex": "bd0b7d2c6180ed6d"
+  },
+  {
+   "id": "diff-4",
+   "key_hex": "9d6df061931f73950c91",
+   "pt_hex": "40af6ed64ff5812e",
+   "ct_hex": "7b7ef0927f5fc1ed"
+  },
+  {
+   "id": "diff-5",
+   "key_hex": "5b966ad6f4e99db47b5d",
+   "pt_hex": "5aef15d5807a4e5d",
+   "ct_hex": "d7b18b41b79354b2"
+  },
+  {
+   "id": "diff-6",
+   "key_hex": "142b98789cf5b9a47811",
+   "pt_hex": "185bcd0a7f68eb67",
+   "ct_hex": "82b3fe93f736dc4e"
+  },
+  {
+   "id": "diff-7",
+   "key_hex": "f4eab49bb6d7264ce5a5",
+   "pt_hex": "43fd57a6efd9db25",
+   "ct_hex": "20aedfdb15d9f986"
+  },
+  {
+   "id": "diff-8",
+   "key_hex": "a819c419fc17b4e24d69",
+   "pt_hex": "22d5a78fa887d521",
+   "ct_hex": "aa31b67279754adb"
+  },
+  {
+   "id": "diff-9",
+   "key_hex": "3c07fb4a866fea00cee4",
+   "pt_hex": "c63c165222085f6d",
+   "ct_hex": "8d195075f32af009"
+  }
+ ]
+}
