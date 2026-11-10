@@ -1,8 +1,10 @@
 //! `cargo xtask gen [--check]`: algos/**/algo.toml -> registry tables, docs/algo.generated.json
 //! and the C header. Output is deterministic (algorithms sorted by id).
 //! `cargo xtask check-symbols`: symbol-prefix rules (see symbols.rs).
+//! `cargo xtask build-link [--check]`: one shared native link dir for all C build.rs (buildlink.rs).
 //! `cargo xtask new ...`: scaffold an algorithm folder (see scaffold.rs).
 
+mod buildlink;
 mod composegen;
 mod rootgen;
 mod scaffold;
@@ -934,9 +936,10 @@ fn main() {
     let res = match args.first().map(String::as_str) {
         Some("gen") => run_gen(args.iter().any(|a| a == "--check")),
         Some("check-symbols") => symbols::run(),
+        Some("build-link") => buildlink::run(args.iter().any(|a| a == "--check")),
         Some("new") => scaffold::run(&args[1..]),
         _ => Err(
-            "usage: cargo xtask gen [--check] | check-symbols | new <category>/<family>/<id> ..."
+            "usage: cargo xtask gen [--check] | check-symbols | build-link [--check] | new <category>/<family>/<id> ..."
                 .to_string(),
         ),
     };
