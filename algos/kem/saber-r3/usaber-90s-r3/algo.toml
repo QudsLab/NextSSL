@@ -1,0 +1,25 @@
+id        = "usaber-90s-r3"
+kind      = "kem"
+category  = "kem"
+family    = "saber-r3"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/post-quantum-cryptography/documents/round-3/submissions/Saber-Round3.zip", sha256 = "dcc1df14f3dfc12583a37e44211b93893dc83e1ae03241194410c8673c9ae31d", license = "NOASSERTION", files = ["SABER_indcpa.c", "SABER_indcpa.h", "SABER_params.h", "aes256ctr.c", "aes256ctr.h", "api.h", "cbd.c", "cbd.h", "fips202.c", "fips202.h", "kem.c", "pack_unpack.c", "pack_unpack.h", "poly.c", "poly.h", "poly_mul.c", "poly_mul.h", "rng.h", "sha2.h", "sha256.c", "sha512.c", "symmetric-aes.c", "symmetric.h", "verify.c", "verify.h", "LICENSE"] }
+
+# Variant wired: . (kem). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 992
+sk = 2208
+ct = 1056
+ss = 32
+seed = 0
+coins = 0

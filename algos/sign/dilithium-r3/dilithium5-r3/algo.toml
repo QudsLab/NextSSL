@@ -1,0 +1,24 @@
+id        = "dilithium5-r3"
+kind      = "sign"
+category  = "sign"
+family    = "dilithium-r3"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/post-quantum-cryptography/documents/round-3/submissions/Dilithium-Round3.zip", sha256 = "ecc0473cf28dee1d35dd3f31e288f05210a8ced4b190935c66b3e7d315e6f6fa", license = "NOASSERTION", files = ["aes256ctr.c", "aes256ctr.h", "api.h", "config.h", "fips202.c", "fips202.h", "ntt.c", "ntt.h", "packing.c", "packing.h", "params.h", "poly.c", "poly.h", "polyvec.c", "polyvec.h", "randombytes.h", "reduce.c", "reduce.h", "rng.h", "rounding.c", "rounding.h", "sign.c", "sign.h", "symmetric-aes.c", "symmetric-shake.c", "symmetric.h", "test/cpucycles.h", "LICENSE"] }
+
+# Variant wired: . (sign). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1312
+sk = 2544
+sig = { min = 1, max = 2420 }
+seed = 0
+ctx = 0

@@ -4460,6 +4460,126 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-dilithium2-aes-r-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium2-aes-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium2-r-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium2-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium3-aes-r-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium3-aes-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium3-r-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium3-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium5-aes-r-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium5-aes-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium5-r-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-dilithium5-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-dme-sign"
 version = "0.0.1"
 dependencies = [
@@ -5710,6 +5830,66 @@ dependencies = [
  "kuznyechik",
  "nextssl-core",
  "serde_json",
+]
+
+[[package]]
+name = "nextssl-algo-kyber1024-90s-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-kyber1024-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-kyber512-90s-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-kyber512-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-kyber768-90s-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-kyber768-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -7897,6 +8077,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-usaber-90s-r3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-wage"
 version = "0.0.1"
 dependencies = [
@@ -8597,6 +8787,18 @@ dependencies = [
  "nextssl-algo-deoxysii256",
  "nextssl-algo-des",
  "nextssl-algo-des-mac",
+ "nextssl-algo-dilithium2-aes-r-r3",
+ "nextssl-algo-dilithium2-aes-r3",
+ "nextssl-algo-dilithium2-r-r3",
+ "nextssl-algo-dilithium2-r3",
+ "nextssl-algo-dilithium3-aes-r-r3",
+ "nextssl-algo-dilithium3-aes-r3",
+ "nextssl-algo-dilithium3-r-r3",
+ "nextssl-algo-dilithium3-r3",
+ "nextssl-algo-dilithium5-aes-r-r3",
+ "nextssl-algo-dilithium5-aes-r3",
+ "nextssl-algo-dilithium5-r-r3",
+ "nextssl-algo-dilithium5-r3",
  "nextssl-algo-dme-sign",
  "nextssl-algo-dragon",
  "nextssl-algo-drygascon",
@@ -8727,6 +8929,12 @@ dependencies = [
  "nextssl-algo-knot-hash-512-512",
  "nextssl-algo-kupyna",
  "nextssl-algo-kuznyechik",
+ "nextssl-algo-kyber1024-90s-r3",
+ "nextssl-algo-kyber1024-r3",
+ "nextssl-algo-kyber512-90s-r3",
+ "nextssl-algo-kyber512-r3",
+ "nextssl-algo-kyber768-90s-r3",
+ "nextssl-algo-kyber768-r3",
  "nextssl-algo-lea-128",
  "nextssl-algo-lea-192",
  "nextssl-algo-lea-256",
@@ -8955,6 +9163,7 @@ dependencies = [
  "nextssl-algo-twine-128",
  "nextssl-algo-twine-80",
  "nextssl-algo-twofish",
+ "nextssl-algo-usaber-90s-r3",
  "nextssl-algo-wage",
  "nextssl-algo-wheesht",
  "nextssl-algo-wheeshtv1mr3fr1t256",
