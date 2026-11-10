@@ -709,6 +709,59 @@ pub fn prng(alg: &str, params: Option<&str>, seed: &[u8], want: usize) -> R {
     one(out)
 }
 
+pub fn h2c_hash(alg: &str, params: Option<&str>, msg: &[u8], dst: &[u8]) -> R {
+    chk(msg)?;
+    let h = make!(new_hashtocurve_in, Kind::HashToCurve, Policy::Any, alg, params);
+    one(h.hash(msg, dst)?)
+}
+
+pub fn h2c_encode(alg: &str, params: Option<&str>, msg: &[u8], dst: &[u8]) -> R {
+    chk(msg)?;
+    let h = make!(new_hashtocurve_in, Kind::HashToCurve, Policy::Any, alg, params);
+    one(h.encode(msg, dst)?)
+}
+
+pub fn oprf_keygen(alg: &str, params: Option<&str>) -> R {
+    let o = make!(new_oprf_in, Kind::Oprf, Policy::Any, alg, params);
+    let (pk, sk) = o.keygen(&mut *rng(Policy::Any)?)?;
+    keypair(pk, sk)
+}
+
+pub fn oprf_blind(alg: &str, params: Option<&str>, input: &[u8]) -> R {
+    chk(input)?;
+    let o = make!(new_oprf_in, Kind::Oprf, Policy::Any, alg, params);
+    let (state, blinded) = o.blind(input, &mut *rng(Policy::Any)?)?;
+    Ok(vec![state, z(blinded)])
+}
+
+pub fn oprf_evaluate(alg: &str, params: Option<&str>, sk: &[u8], blinded: &[u8], info: &[u8]) -> R {
+    chk(blinded)?;
+    chk(info)?;
+    let o = make!(new_oprf_in, Kind::Oprf, Policy::Any, alg, params);
+    let (ev, proof) = o.evaluate(&privkey(sk)?, blinded, info, &mut *rng(Policy::Any)?)?;
+    Ok(vec![z(ev), z(proof)])
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn oprf_finalize(
+    alg: &str,
+    params: Option<&str>,
+    state: &[u8],
+    input: &[u8],
+    evaluated: &[u8],
+    proof: &[u8],
+    pk: &[u8],
+    info: &[u8],
+) -> R {
+    chk(state)?;
+    chk(input)?;
+    chk(evaluated)?;
+    chk(proof)?;
+    chk(info)?;
+    let o = make!(new_oprf_in, Kind::Oprf, Policy::Any, alg, params);
+    Ok(vec![o.finalize(state, input, evaluated, proof, &pubkey(pk)?, info)?])
+}
+
 pub fn vdf_eval(alg: &str, params: Option<&str>, challenge: &[u8], t: u64) -> R {
     chk(challenge)?;
     let v = make!(new_vdf_in, Kind::Vdf, Policy::Any, alg, params);

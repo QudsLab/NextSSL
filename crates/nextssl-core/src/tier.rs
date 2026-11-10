@@ -84,11 +84,13 @@ pub enum Kind {
     StatefulSign,
     He,
     Prng,
+    HashToCurve,
+    Oprf,
 }
 
 impl Kind {
     /// Every kind, in a stable order.
-    pub const ALL: [Kind; 26] = [
+    pub const ALL: [Kind; 28] = [
         Kind::Hash,
         Kind::Xof,
         Kind::Mac,
@@ -115,6 +117,8 @@ impl Kind {
         Kind::StatefulSign,
         Kind::He,
         Kind::Prng,
+        Kind::HashToCurve,
+        Kind::Oprf,
     ];
 
     /// The string used in `algo.toml` `kind = "..."`.
@@ -146,6 +150,8 @@ impl Kind {
             Kind::StatefulSign => "statefulsign",
             Kind::He => "he",
             Kind::Prng => "prng",
+            Kind::HashToCurve => "h2c",
+            Kind::Oprf => "oprf",
         }
     }
 
@@ -170,6 +176,8 @@ impl Kind {
             Kind::StatefulSign => &["pk", "sk", "sig", "seed"],
             Kind::Drbg => &["seed"],
             Kind::Prng => &["seed", "out"],
+            Kind::HashToCurve => &["out"],
+            Kind::Oprf => &["pk", "sk"],
             Kind::Xof
             | Kind::Mode
             | Kind::Rng
@@ -195,6 +203,8 @@ impl Kind {
                 | Kind::He
                 | Kind::Vdf
                 | Kind::Prng
+                | Kind::HashToCurve
+                | Kind::Oprf
         )
     }
 }

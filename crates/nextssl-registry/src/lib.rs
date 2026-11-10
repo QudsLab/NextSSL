@@ -6,8 +6,8 @@
 //! table only when the `copyleft` cargo feature is on.
 
 use nextssl_core::{
-    Aead, BlockCipher, BlockMode, Checksum, Drbg, Encoding, EntropySource, Error, Hash, He, Kdf,
-    Kem, Kex, Kind, Len, Mac, Mode, Pake, ParamSpec, Params, Pke, Pow, Prng, PwHash, Result, Sign, Sizes,
+    Aead, BlockCipher, BlockMode, Checksum, Drbg, Encoding, EntropySource, Error, Hash, HashToCurve, He, Kdf,
+    Kem, Kex, Kind, Len, Mac, Mode, Oprf, Pake, ParamSpec, Params, Pke, Pow, Prng, PwHash, Result, Sign, Sizes,
     StatefulSign, Status, StreamCipher, Threshold, Tier, Vdf, Xof, Zk, MAX_INPUT_LEN,
 };
 
@@ -111,6 +111,8 @@ kinds! {
     StatefulSign => StatefulSign, new_statefulsign_in;
     He => He, new_he_in;
     Prng => Prng, new_prng_in;
+    HashToCurve => HashToCurve, new_hashtocurve_in;
+    Oprf => Oprf, new_oprf_in;
 }
 
 impl Instance {
@@ -140,6 +142,8 @@ impl Instance {
             Instance::StatefulSign(x) => x.sizes(),
             Instance::Threshold(x) => x.sizes(),
             Instance::Prng(x) => x.sizes(),
+            Instance::HashToCurve(x) => x.sizes(),
+            Instance::Oprf(x) => x.sizes(),
             Instance::Xof(_)
             | Instance::Mode(_)
             | Instance::Rng(_)
@@ -284,7 +288,9 @@ pub fn instantiate_in(
         Pake,
         StatefulSign,
         He,
-        Prng
+        Prng,
+        HashToCurve,
+        Oprf
     ))
 }
 

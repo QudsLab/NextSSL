@@ -503,6 +503,20 @@ int32_t nextssl_root_encode_with(const char *alg,
                                  const struct nextssl_in *data,
                                  struct nextssl_out *out);
 
+// RFC 9380 `encode_to_curve` (root only): SEC1 compressed point; `dst` is 1..=255 bytes.
+int32_t nextssl_root_h2c_encode(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *msg,
+                                const struct nextssl_in *dst,
+                                struct nextssl_out *out);
+
+// RFC 9380 `hash_to_curve` (root only): SEC1 compressed point; `dst` is 1..=255 bytes.
+int32_t nextssl_root_h2c_hash(const char *alg,
+                              const char *params,
+                              const struct nextssl_in *msg,
+                              const struct nextssl_in *dst,
+                              struct nextssl_out *out);
+
 // Hash `data` with any-tier algorithm.
 //
 // # Safety
@@ -629,6 +643,39 @@ int32_t nextssl_root_mode_encrypt(const char *alg,
                                   const struct nextssl_in *iv,
                                   const struct nextssl_in *data,
                                   struct nextssl_out *out);
+
+// Oblivious PRF client blinding (root only): secret `state` and `blinded` element.
+int32_t nextssl_root_oprf_blind(const char *alg,
+                                const char *params,
+                                const struct nextssl_in *input,
+                                struct nextssl_out *state,
+                                struct nextssl_out *blinded);
+
+// Oblivious PRF server evaluation (root only): `evaluated` element and `proof` (empty in base mode).
+int32_t nextssl_root_oprf_evaluate(const char *alg,
+                                   const char *params,
+                                   const struct nextssl_in *sk,
+                                   const struct nextssl_in *blinded,
+                                   const struct nextssl_in *info,
+                                   struct nextssl_out *evaluated,
+                                   struct nextssl_out *proof);
+
+// Oblivious PRF client finalisation (root only). A proof that does not verify is `AUTHENTICATION_FAILED`.
+int32_t nextssl_root_oprf_finalize(const char *alg,
+                                   const char *params,
+                                   const struct nextssl_in *state,
+                                   const struct nextssl_in *input,
+                                   const struct nextssl_in *evaluated,
+                                   const struct nextssl_in *proof,
+                                   const struct nextssl_in *pk,
+                                   const struct nextssl_in *info,
+                                   struct nextssl_out *out);
+
+// Oblivious PRF key pair (root only).
+int32_t nextssl_root_oprf_keygen(const char *alg,
+                                 const char *params,
+                                 struct nextssl_out *pk,
+                                 struct nextssl_out *sk);
 
 // Release a PAKE or threshold session (root only).
 int32_t nextssl_root_pake_free(uint64_t handle);

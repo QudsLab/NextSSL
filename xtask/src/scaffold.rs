@@ -557,6 +557,44 @@ fn stub_parts(kind: Kind) -> (&'static str, &'static str) {
     }
 "#,
         ),
+        Kind::HashToCurve => (
+            "Error, HashToCurve, Params, Result, Sizes",
+            r#"    fn sizes(&self) -> Sizes {
+        Sizes::NONE // TODO: out = encoded point length
+    }
+
+    fn hash(&self, _msg: &[u8], _dst: &[u8]) -> Result<Vec<u8>> {
+        Err(Error::Unimplemented)
+    }
+
+    fn encode(&self, _msg: &[u8], _dst: &[u8]) -> Result<Vec<u8>> {
+        Err(Error::Unimplemented)
+    }
+"#,
+        ),
+        Kind::Oprf => (
+            "EntropySource, Error, Oprf, Params, PrivateKey, PublicKey, Result, Sizes, Zeroizing",
+            r#"    fn sizes(&self) -> Sizes {
+        Sizes::NONE // TODO: pk and sk
+    }
+
+    fn keygen(&self, _rng: &mut dyn EntropySource) -> Result<(PublicKey, PrivateKey)> {
+        Err(Error::Unimplemented)
+    }
+
+    fn blind(&self, _input: &[u8], _rng: &mut dyn EntropySource) -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)> {
+        Err(Error::Unimplemented)
+    }
+
+    fn evaluate(&self, _sk: &PrivateKey, _blinded: &[u8], _info: &[u8], _rng: &mut dyn EntropySource) -> Result<(Vec<u8>, Vec<u8>)> {
+        Err(Error::Unimplemented)
+    }
+
+    fn finalize(&self, _state: &[u8], _input: &[u8], _evaluated: &[u8], _proof: &[u8], _pk: &PublicKey, _info: &[u8]) -> Result<Zeroizing<Vec<u8>>> {
+        Err(Error::Unimplemented)
+    }
+"#,
+        ),
         Kind::Vdf => (
             "Error, Params, Result, Vdf",
             r#"    fn max_t(&self) -> u64 {
@@ -699,6 +737,8 @@ fn trait_name(kind: Kind) -> &'static str {
         Kind::Threshold => "Threshold",
         Kind::Vdf => "Vdf",
         Kind::Prng => "Prng",
+        Kind::HashToCurve => "HashToCurve",
+        Kind::Oprf => "Oprf",
         Kind::Pke => "Pke",
         Kind::Pake => "Pake",
         Kind::StatefulSign => "StatefulSign",

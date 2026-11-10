@@ -28,7 +28,7 @@ pub use params::{ParamSpec, ParamType, Params, Value};
 pub use tier::{Kind, Status, Tier};
 pub use traits::{
     check_party, check_threshold, Aead, BlockCipher, BlockMode, Checksum, Drbg, Encoding,
-    EntropySource, Hash, He, HeKeys, HeOp, Kdf, Kem, Kex, KeyedBlockCipher, Mac, Mode, Pake,
+    EntropySource, Hash, HashToCurve, He, HeKeys, HeOp, Kdf, Kem, Kex, KeyedBlockCipher, Mac, Mode, Oprf, Pake,
     PakeRole, PakeState, PakeStep, Pke, Pow, Prng, PwHash, Sign, StatefulSign, StreamCipher, Threshold,
     ThresholdOp, ThresholdSession, ThresholdState, ThresholdStep, Vdf, Xof, Zk, MAX_INPUT_LEN,
 };

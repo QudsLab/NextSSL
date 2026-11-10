@@ -517,6 +517,24 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
                 }
             }
         }
+        Instance::HashToCurve(h) => {
+            let a = h.hash(b"msg", b"dst").unwrap();
+            assert_eq!(a, h.hash(b"msg", b"dst").unwrap(), "{ctx}: deterministic");
+            assert_ne!(a, h.encode(b"msg", b"dst").unwrap(), "{ctx}: ro vs nu");
+            assert!(h.hash(b"msg", b"").is_err(), "{ctx}: empty dst");
+            assert!(h.hash(b"msg", &[1u8; 256]).is_err(), "{ctx}: long dst");
+        }
+        Instance::Oprf(o) => {
+            let (pk, sk) = o.keygen(&mut rng()).unwrap();
+            let (st, bl) = o.blind(b"input", &mut rng()).unwrap();
+            let (ev, pr) = o.evaluate(&sk, &bl, &[], &mut rng()).unwrap();
+            let a = o.finalize(&st, b"input", &ev, &pr, &pk, &[]).unwrap();
+            let (st2, bl2) = o.blind(b"input", &mut rng()).unwrap();
+            let (ev2, pr2) = o.evaluate(&sk, &bl2, &[], &mut rng()).unwrap();
+            let b = o.finalize(&st2, b"input", &ev2, &pr2, &pk, &[]).unwrap();
+            assert_eq!(*a, *b, "{ctx}: blinding changed the output");
+            assert!(o.blind(b"", &mut rng()).is_err(), "{ctx}: empty input");
+        }
         Instance::Pke(p) => {
             let (pk, sk) = p.keygen(&mut rng()).unwrap();
             assert!(s.pk.unwrap().contains(pk.len()), "{ctx}: pk length");

@@ -401,6 +401,34 @@ fn ops(kind: Kind) -> Vec<Op> {
             "prng",
             "seed, out_len",
         )],
+        Kind::HashToCurve => vec![
+            op("hash", "msg: &[u8], dst: &[u8]", VEC, "h2c_hash", "msg, dst"),
+            op("encode", "msg: &[u8], dst: &[u8]", VEC, "h2c_encode", "msg, dst"),
+        ],
+        Kind::Oprf => vec![
+            op("keygen", "", PAIR, "oprf_keygen", ""),
+            op(
+                "blind",
+                "input: &[u8]",
+                "crate::Result<(::nextssl_core::Zeroizing<Vec<u8>>, Vec<u8>)>",
+                "oprf_blind",
+                "input",
+            ),
+            op(
+                "evaluate",
+                &format!("sk: {SK}, blinded: &[u8], info: &[u8]"),
+                "crate::Result<(Vec<u8>, Vec<u8>)>",
+                "oprf_evaluate",
+                "sk, blinded, info",
+            ),
+            op(
+                "finalize",
+                &format!("state: &[u8], input: &[u8], evaluated: &[u8], proof: &[u8], pk: {PK}, info: &[u8]"),
+                ZVEC,
+                "oprf_finalize",
+                "state, input, evaluated, proof, pk, info",
+            ),
+        ],
         Kind::Vdf => vec![
             op(
                 "eval",

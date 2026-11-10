@@ -351,6 +351,8 @@ fn sweep_every_algorithm_through_the_root_abi() {
                 | Kind::Threshold
                 | Kind::Pow
                 | Kind::Vdf
+                | Kind::HashToCurve
+                | Kind::Oprf
                 | Kind::He
                 | Kind::Mode => {
                     // Interactive, heavy-setup or cipher-dependent kinds: pake has its own test;

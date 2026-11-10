@@ -719,3 +719,57 @@ pub trait Prng: Send + Sync {
     /// glue zeroizes the generator state before returning.
     fn generate(&self, seed: &[u8], out: &mut [u8]) -> Result<()>;
 }
+
+// ---------------------------------------------------------------------------------------
+// HashToCurve, Oprf (added 2026-11-10). Root only, always.
+// ---------------------------------------------------------------------------------------
+
+/// Hash to an elliptic curve (RFC 9380). Root only. Output is the SEC1 compressed encoding of
+/// the point. `sizes`: `out` (encoded point length). `dst` (domain separation tag) must be 1
+/// to 255 bytes; a longer or empty tag is an error, it is never silently hashed or defaulted.
+pub trait HashToCurve: Send + Sync {
+    fn sizes(&self) -> Sizes;
+
+    /// `hash_to_curve` (random oracle, `_RO_` suite).
+    fn hash(&self, msg: &[u8], dst: &[u8]) -> Result<Vec<u8>>;
+
+    /// `encode_to_curve` (nonuniform, `_NU_` suite).
+    fn encode(&self, msg: &[u8], dst: &[u8]) -> Result<Vec<u8>>;
+}
+
+/// Oblivious PRF (RFC 9497 OPRF, VOPRF, POPRF). Root only.
+///
+/// Stateless form of the three-message protocol. `sizes`: `pk`, `sk`.
+/// Client: [`Oprf::blind`] -> (state, blinded element). The state is the blinding scalar and is
+/// secret. Server: [`Oprf::evaluate`] -> (evaluated element, proof); the proof is empty in the
+/// base mode. Client: [`Oprf::finalize`] checks the proof (verifiable modes) and returns the PRF
+/// output. A proof that does not verify is `AuthenticationFailed`.
+pub trait Oprf: Send + Sync {
+    fn sizes(&self) -> Sizes;
+
+    fn keygen(&self, rng: &mut dyn EntropySource) -> Result<(PublicKey, PrivateKey)>;
+
+    /// `input` must be 1..=65535 bytes (RFC 9497 limit).
+    fn blind(&self, input: &[u8], rng: &mut dyn EntropySource)
+        -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)>;
+
+    /// `info` is the public input of the partially oblivious mode; it must be empty in the other
+    /// modes (an error, not ignored).
+    fn evaluate(
+        &self,
+        sk: &PrivateKey,
+        blinded: &[u8],
+        info: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<(Vec<u8>, Vec<u8>)>;
+
+    fn finalize(
+        &self,
+        state: &[u8],
+        input: &[u8],
+        evaluated: &[u8],
+        proof: &[u8],
+        pk: &PublicKey,
+        info: &[u8],
+    ) -> Result<Zeroizing<Vec<u8>>>;
+}

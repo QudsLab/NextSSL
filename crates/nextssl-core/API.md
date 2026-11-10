@@ -40,6 +40,8 @@ replace the `Stub` in `glue.rs` -> add KATs -> `cargo xtask gen`. `new(&Params) 
 | threshold | `Threshold` | `max_parties`, `split(secret,t,n,rng)`, `combine(shares)`, interactive `start(session,rng)` with `ThresholdState::step` (same shape as Pake); `1 <= t <= n <= max_parties` and party ids `1..=n` are enforced (root only) | - |
 | he | `He` | `ops()`, `keygen(params,rng) -> HeKeys`, `encrypt`, `decrypt`, `eval(op, cts, evk)`; an op outside `ops()` is `Unsupported` (root only) | - |
 | prng | `Prng` | `sizes` (`seed` accepted lengths, `out` bytes per call), `generate(seed, out)`: deterministic, stateless, same seed gives the same stream and a shorter request is a prefix. NOT cryptographically secure (ISAAC, Mersenne Twister, xoshiro, splitmix64, PCG, xorshift...); root only whatever the tier, never for keys, nonces or salts | seed out |
+| h2c | `HashToCurve` | `sizes` (`out` = encoded point length), `hash(msg, dst)` (RFC 9380 `_RO_`), `encode(msg, dst)` (`_NU_`); SEC1 compressed point; `dst` must be 1..=255 bytes (root only) | out |
+| oprf | `Oprf` | `keygen(rng)`, `blind(input, rng) -> (state, blinded)`, `evaluate(sk, blinded, info, rng) -> (evaluated, proof)`, `finalize(state, input, evaluated, proof, pk, info)`; RFC 9497; state is the secret blinding scalar; a proof that fails is `AuthenticationFailed` (root only) | pk sk |
 | vdf | `Vdf` | `max_t()` (the `max_t` cap param), `eval(challenge,t) -> (output, proof)`, `verify(challenge,t,output,proof)`; `t == 0` or `t > max_t` is `ParamOutOfRange("t")` (root only) | - |
 
 ## Conventions

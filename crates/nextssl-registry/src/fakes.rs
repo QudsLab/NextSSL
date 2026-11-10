@@ -6,7 +6,7 @@ use super::*;
 use nextssl_core::keys::{Ciphertext, PrivateKey, PublicKey, Seed, SharedSecret, Signature};
 use nextssl_core::testing::FixedEntropy;
 use nextssl_core::{
-    ct_eq, HeKeys, HeOp, KeyedBlockCipher, PakeRole, PakeState, PakeStep, ParamType, Share,
+    ct_eq, EntropySource, HashToCurve, HeKeys, HeOp, KeyedBlockCipher, Oprf, PakeRole, PakeState, PakeStep, ParamType, Share,
     StatefulKey, SymmetricKey, ThresholdSession, ThresholdState, Value, Zeroizing,
 };
 
@@ -666,6 +666,56 @@ impl Prng for FPrng {
     }
 }
 
+struct FH2c;
+impl HashToCurve for FH2c {
+    fn sizes(&self) -> Sizes {
+        Sizes {
+            out: l(4),
+            ..Sizes::NONE
+        }
+    }
+    fn hash(&self, msg: &[u8], dst: &[u8]) -> Result<Vec<u8>> {
+        r(1, 255).unwrap().check("dst", dst.len())?;
+        Ok(vec![fold(msg), fold(dst), 1, 2])
+    }
+    fn encode(&self, msg: &[u8], dst: &[u8]) -> Result<Vec<u8>> {
+        r(1, 255).unwrap().check("dst", dst.len())?;
+        Ok(vec![fold(msg), fold(dst), 3, 4])
+    }
+}
+
+struct FOprf;
+impl Oprf for FOprf {
+    fn sizes(&self) -> Sizes {
+        Sizes {
+            pk: l(1),
+            sk: l(1),
+            ..Sizes::NONE
+        }
+    }
+    fn keygen(&self, rng: &mut dyn EntropySource) -> Result<(PublicKey, PrivateKey)> {
+        let mut b = [0u8; 1];
+        rng.fill(&mut b)?;
+        Ok((PublicKey::from_bytes(&b, Len::fixed(1))?, PrivateKey::from_bytes(&b, Len::fixed(1))?))
+    }
+    fn blind(&self, input: &[u8], _rng: &mut dyn EntropySource) -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)> {
+        r(1, 65535).unwrap().check("input", input.len())?;
+        Ok((Zeroizing::new(vec![7]), vec![fold(input) ^ 7]))
+    }
+    fn evaluate(&self, sk: &PrivateKey, blinded: &[u8], info: &[u8], _rng: &mut dyn EntropySource) -> Result<(Vec<u8>, Vec<u8>)> {
+        if !info.is_empty() {
+            return Err(Error::InvalidInput("info"));
+        }
+        l(1).unwrap().check("blinded", blinded.len())?;
+        Ok((vec![blinded[0] ^ sk.as_bytes()[0]], Vec::new()))
+    }
+    fn finalize(&self, state: &[u8], input: &[u8], evaluated: &[u8], _proof: &[u8], _pk: &PublicKey, _info: &[u8]) -> Result<Zeroizing<Vec<u8>>> {
+        l(1).unwrap().check("state", state.len())?;
+        l(1).unwrap().check("evaluated", evaluated.len())?;
+        Ok(Zeroizing::new(vec![evaluated[0] ^ state[0] ^ fold(input)]))
+    }
+}
+
 struct FVdf;
 impl FVdf {
     fn run(challenge: &[u8], t: u64) -> u8 {
@@ -969,11 +1019,13 @@ fn ctor_for(kind: Kind) -> (Ctor, Sizes) {
         Kind::StatefulSign => (c!(StatefulSign, FStateful), FStateful.sizes()),
         Kind::He => (c!(He, FHe), Sizes::NONE),
         Kind::Prng => (c!(Prng, FPrng), FPrng.sizes()),
+        Kind::HashToCurve => (c!(HashToCurve, FH2c), FH2c.sizes()),
+        Kind::Oprf => (c!(Oprf, FOprf), FOprf.sizes()),
     }
 }
 
 // Indexed like `Kind::ALL`. Static (not leaked) so Miri reports no leaks.
-const IDS: [&str; 26] = [
+const IDS: [&str; 28] = [
     "fake-hash",
     "fake-xof",
     "fake-mac",
@@ -1000,8 +1052,10 @@ const IDS: [&str; 26] = [
     "fake-statefulsign",
     "fake-he",
     "fake-prng",
+    "fake-h2c",
+    "fake-oprf",
 ];
-const ALIASES: [[&str; 1]; 26] = [
+const ALIASES: [[&str; 1]; 28] = [
     ["f-hash"],
     ["f-xof"],
     ["f-mac"],
@@ -1028,6 +1082,8 @@ const ALIASES: [[&str; 1]; 26] = [
     ["f-statefulsign"],
     ["f-he"],
     ["f-prng"],
+    ["f-h2c"],
+    ["f-oprf"],
 ];
 
 /// One fake per kind, ids `fake-<kind>`, alias `f-<kind>`, all at `tier`.
@@ -1364,6 +1420,8 @@ fn keyless_kinds_and_reserved_stubs() {
         Kind::StatefulSign,
         Kind::He,
         Kind::Prng,
+        Kind::HashToCurve,
+        Kind::Oprf,
     ] {
         let id = format!("fake-{}", kind.as_str());
         assert_eq!(

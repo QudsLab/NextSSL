@@ -133,7 +133,7 @@ pub fn verify(alg: &str, pk: &PublicKey, envelope: &[u8], aad: &[u8]) -> Result<
 use nextssl_core::{Ciphertext, SharedSecret, MAX_INPUT_LEN};
 use nextssl_registry::{
     new_aead_in, new_blockcipher_in, new_blockmode_in, new_checksum_in, new_kdf_in, new_kem_in,
-    new_kex_in, new_mac_in, new_pke_in, new_pwhash_in, new_sign_in, new_streamcipher_in,
+    new_hashtocurve_in, new_kex_in, new_mac_in, new_oprf_in, new_pke_in, new_pwhash_in, new_sign_in, new_streamcipher_in,
     new_prng_in, new_threshold_in, new_vdf_in, new_xof_in, new_zk_in,
 };
 
@@ -617,6 +617,102 @@ pub fn prng_with(alg: &str, params: &Params, seed: &[u8], out_len: usize) -> Res
 
 pub fn prng(alg: &str, seed: &[u8], out_len: usize) -> Result<Vec<u8>> {
     prng_with(alg, &Params::new(), seed, out_len)
+}
+
+/// RFC 9380 `hash_to_curve` (random oracle suite); SEC1 compressed point.
+pub fn h2c_hash_with(alg: &str, params: &Params, msg: &[u8], dst: &[u8]) -> Result<Vec<u8>> {
+    check_input(msg)?;
+    new_hashtocurve_in(reg(), Policy::Any, alg, params)?.hash(msg, dst)
+}
+
+pub fn h2c_hash(alg: &str, msg: &[u8], dst: &[u8]) -> Result<Vec<u8>> {
+    h2c_hash_with(alg, &Params::new(), msg, dst)
+}
+
+/// RFC 9380 `encode_to_curve` (nonuniform suite); SEC1 compressed point.
+pub fn h2c_encode_with(alg: &str, params: &Params, msg: &[u8], dst: &[u8]) -> Result<Vec<u8>> {
+    check_input(msg)?;
+    new_hashtocurve_in(reg(), Policy::Any, alg, params)?.encode(msg, dst)
+}
+
+pub fn h2c_encode(alg: &str, msg: &[u8], dst: &[u8]) -> Result<Vec<u8>> {
+    h2c_encode_with(alg, &Params::new(), msg, dst)
+}
+
+/// Oblivious PRF (RFC 9497) key pair.
+pub fn oprf_keygen_with(alg: &str, params: &Params) -> Result<(PublicKey, PrivateKey)> {
+    new_oprf_in(reg(), Policy::Any, alg, params)?.keygen(&mut *os_rng()?)
+}
+
+pub fn oprf_keygen(alg: &str) -> Result<(PublicKey, PrivateKey)> {
+    oprf_keygen_with(alg, &Params::new())
+}
+
+/// Client step 1: `(secret blinding state, blinded element)`.
+pub fn oprf_blind_with(
+    alg: &str,
+    params: &Params,
+    input: &[u8],
+) -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)> {
+    check_input(input)?;
+    new_oprf_in(reg(), Policy::Any, alg, params)?.blind(input, &mut *os_rng()?)
+}
+
+pub fn oprf_blind(alg: &str, input: &[u8]) -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)> {
+    oprf_blind_with(alg, &Params::new(), input)
+}
+
+/// Server step: `(evaluated element, proof)`; the proof is empty in the base mode.
+pub fn oprf_evaluate_with(
+    alg: &str,
+    params: &Params,
+    sk: &PrivateKey,
+    blinded: &[u8],
+    info: &[u8],
+) -> Result<(Vec<u8>, Vec<u8>)> {
+    check_input(blinded)?;
+    check_input(info)?;
+    new_oprf_in(reg(), Policy::Any, alg, params)?.evaluate(sk, blinded, info, &mut *os_rng()?)
+}
+
+pub fn oprf_evaluate(
+    alg: &str,
+    sk: &PrivateKey,
+    blinded: &[u8],
+    info: &[u8],
+) -> Result<(Vec<u8>, Vec<u8>)> {
+    oprf_evaluate_with(alg, &Params::new(), sk, blinded, info)
+}
+
+/// Client step 2: verifies the proof (verifiable modes) and returns the PRF output.
+pub fn oprf_finalize_with(
+    alg: &str,
+    params: &Params,
+    state: &[u8],
+    input: &[u8],
+    evaluated: &[u8],
+    proof: &[u8],
+    pk: &PublicKey,
+    info: &[u8],
+) -> Result<Zeroizing<Vec<u8>>> {
+    check_input(state)?;
+    check_input(input)?;
+    check_input(evaluated)?;
+    check_input(proof)?;
+    check_input(info)?;
+    new_oprf_in(reg(), Policy::Any, alg, params)?.finalize(state, input, evaluated, proof, pk, info)
+}
+
+pub fn oprf_finalize(
+    alg: &str,
+    state: &[u8],
+    input: &[u8],
+    evaluated: &[u8],
+    proof: &[u8],
+    pk: &PublicKey,
+    info: &[u8],
+) -> Result<Zeroizing<Vec<u8>>> {
+    oprf_finalize_with(alg, &Params::new(), state, input, evaluated, proof, pk, info)
 }
 
 pub fn vdf_eval_with(

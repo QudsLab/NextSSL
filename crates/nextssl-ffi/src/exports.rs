@@ -2,7 +2,7 @@
 //!
 //! Naming: `nextssl_<op>` reaches only `safe` and `standard` tiers (an explicit
 //! `NEXTSSL_ERR_TIER_NOT_ALLOWED` otherwise); `nextssl_root_<op>` reaches every tier. Kinds that
-//! are root-only by policy (pke, pake, stateful signatures, zk, threshold, he, vdf, prng) exist only
+//! are root-only by policy (pke, pake, stateful signatures, zk, threshold, he, vdf, prng, h2c, oprf) exist only
 //! as `nextssl_root_*`.
 //!
 //! Arguments: `alg` is an algorithm id or alias (NUL-terminated UTF-8). `params` is null or
@@ -1577,6 +1577,109 @@ pub unsafe extern "C" fn nextssl_root_prng(
     let (a, p, s) = (n!(alg), t!(params), i!(seed));
     // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
     unsafe { run(&[out], || ops::prng(a, p, s, want)) }
+}
+
+/// RFC 9380 `hash_to_curve` (root only): SEC1 compressed point; `dst` is 1..=255 bytes.
+#[no_mangle]
+pub unsafe extern "C" fn nextssl_root_h2c_hash(
+    alg: *const c_char,
+    params: *const c_char,
+    msg: *const NextsslIn,
+    dst: *const NextsslIn,
+    out: *mut NextsslOut,
+) -> i32 {
+    let (a, p) = (n!(alg), t!(params));
+    let msg_ = i!(msg);
+    let dst_ = i!(dst);
+    // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
+    unsafe { run(&[out], || ops::h2c_hash(a, p, msg_, dst_)) }
+}
+
+/// RFC 9380 `encode_to_curve` (root only): SEC1 compressed point; `dst` is 1..=255 bytes.
+#[no_mangle]
+pub unsafe extern "C" fn nextssl_root_h2c_encode(
+    alg: *const c_char,
+    params: *const c_char,
+    msg: *const NextsslIn,
+    dst: *const NextsslIn,
+    out: *mut NextsslOut,
+) -> i32 {
+    let (a, p) = (n!(alg), t!(params));
+    let msg_ = i!(msg);
+    let dst_ = i!(dst);
+    // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
+    unsafe { run(&[out], || ops::h2c_encode(a, p, msg_, dst_)) }
+}
+
+/// Oblivious PRF client blinding (root only): secret `state` and `blinded` element.
+#[no_mangle]
+pub unsafe extern "C" fn nextssl_root_oprf_blind(
+    alg: *const c_char,
+    params: *const c_char,
+    input: *const NextsslIn,
+    state: *mut NextsslOut,
+    blinded: *mut NextsslOut,
+) -> i32 {
+    let (a, p) = (n!(alg), t!(params));
+    let input_ = i!(input);
+    // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
+    unsafe { run(&[state, blinded], || ops::oprf_blind(a, p, input_)) }
+}
+
+/// Oblivious PRF server evaluation (root only): `evaluated` element and `proof` (empty in base mode).
+#[no_mangle]
+pub unsafe extern "C" fn nextssl_root_oprf_evaluate(
+    alg: *const c_char,
+    params: *const c_char,
+    sk: *const NextsslIn,
+    blinded: *const NextsslIn,
+    info: *const NextsslIn,
+    evaluated: *mut NextsslOut,
+    proof: *mut NextsslOut,
+) -> i32 {
+    let (a, p) = (n!(alg), t!(params));
+    let sk_ = i!(sk);
+    let blinded_ = i!(blinded);
+    let info_ = i!(info);
+    // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
+    unsafe { run(&[evaluated, proof], || ops::oprf_evaluate(a, p, sk_, blinded_, info_)) }
+}
+
+/// Oblivious PRF client finalisation (root only). A proof that does not verify is `AUTHENTICATION_FAILED`.
+#[no_mangle]
+pub unsafe extern "C" fn nextssl_root_oprf_finalize(
+    alg: *const c_char,
+    params: *const c_char,
+    state: *const NextsslIn,
+    input: *const NextsslIn,
+    evaluated: *const NextsslIn,
+    proof: *const NextsslIn,
+    pk: *const NextsslIn,
+    info: *const NextsslIn,
+    out: *mut NextsslOut,
+) -> i32 {
+    let (a, p) = (n!(alg), t!(params));
+    let state_ = i!(state);
+    let input_ = i!(input);
+    let evaluated_ = i!(evaluated);
+    let proof_ = i!(proof);
+    let pk_ = i!(pk);
+    let info_ = i!(info);
+    // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
+    unsafe { run(&[out], || ops::oprf_finalize(a, p, state_, input_, evaluated_, proof_, pk_, info_)) }
+}
+
+/// Oblivious PRF key pair (root only).
+#[no_mangle]
+pub unsafe extern "C" fn nextssl_root_oprf_keygen(
+    alg: *const c_char,
+    params: *const c_char,
+    pk: *mut NextsslOut,
+    sk: *mut NextsslOut,
+) -> i32 {
+    let (a, p) = (n!(alg), t!(params));
+    // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
+    unsafe { imp::keygen2(|| ops::oprf_keygen(a, p), pk, sk) }
 }
 
 /// Verifiable delay function evaluation (root only): `output` and `proof`.

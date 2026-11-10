@@ -36,6 +36,8 @@ pub fn ops_for(kind: Kind) -> &'static [&'static str] {
         ],
         Kind::Vdf => &["vdf_eval", "vdf_verify"],
         Kind::Prng => &["prng"],
+        Kind::HashToCurve => &["h2c_hash", "h2c_encode"],
+        Kind::Oprf => &["oprf_keygen", "oprf_blind", "oprf_evaluate", "oprf_finalize"],
         Kind::Pke => &["pke_keygen", "pke_encrypt", "pke_decrypt"],
         Kind::Pake => &["pake_start", "pake_step", "pake_free"],
         Kind::StatefulSign => &[
