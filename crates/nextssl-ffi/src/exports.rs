@@ -2,7 +2,7 @@
 //!
 //! Naming: `nextssl_<op>` reaches only `safe` and `standard` tiers (an explicit
 //! `NEXTSSL_ERR_TIER_NOT_ALLOWED` otherwise); `nextssl_root_<op>` reaches every tier. Kinds that
-//! are root-only by policy (pke, pake, stateful signatures, zk, threshold, he, vdf) exist only
+//! are root-only by policy (pke, pake, stateful signatures, zk, threshold, he, vdf, prng) exist only
 //! as `nextssl_root_*`.
 //!
 //! Arguments: `alg` is an algorithm id or alias (NUL-terminated UTF-8). `params` is null or
@@ -1562,6 +1562,21 @@ pub unsafe extern "C" fn nextssl_root_zk_verify(
     let (a, p, s, st, pr) = (n!(alg), t!(params), i!(setup), i!(statement), i!(proof));
     // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
     unsafe { run(&[], || ops::zk_verify(a, p, s, st, pr)) }
+}
+
+/// Seeded non-cryptographic pseudo-random generator (root only): exactly `want` bytes
+/// (1..=16 MiB) from `seed`. NOT a secure random source: never use it for keys or nonces.
+#[no_mangle]
+pub unsafe extern "C" fn nextssl_root_prng(
+    alg: *const c_char,
+    params: *const c_char,
+    seed: *const NextsslIn,
+    want: usize,
+    out: *mut NextsslOut,
+) -> i32 {
+    let (a, p, s) = (n!(alg), t!(params), i!(seed));
+    // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
+    unsafe { run(&[out], || ops::prng(a, p, s, want)) }
 }
 
 /// Verifiable delay function evaluation (root only): `output` and `proof`.

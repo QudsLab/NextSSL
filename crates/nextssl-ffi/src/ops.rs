@@ -700,6 +700,15 @@ pub fn zk_verify(
     flag(z_.verify(setup, statement, proof)?)
 }
 
+/// Non-cryptographic seeded generator (root only): `want` bytes from `seed`.
+pub fn prng(alg: &str, params: Option<&str>, seed: &[u8], want: usize) -> R {
+    chk(seed)?;
+    let g = make!(new_prng_in, Kind::Prng, Policy::Any, alg, params);
+    let mut out = vec![0u8; want_len("out", want)?];
+    g.generate(seed, &mut out)?;
+    one(out)
+}
+
 pub fn vdf_eval(alg: &str, params: Option<&str>, challenge: &[u8], t: u64) -> R {
     chk(challenge)?;
     let v = make!(new_vdf_in, Kind::Vdf, Policy::Any, alg, params);

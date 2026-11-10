@@ -546,6 +546,17 @@ fn stub_parts(kind: Kind) -> (&'static str, &'static str) {
     }
 "#,
         ),
+        Kind::Prng => (
+            "Error, Params, Prng, Result, Sizes",
+            r#"    fn sizes(&self) -> Sizes {
+        Sizes::NONE // TODO: seed and out ranges
+    }
+
+    fn generate(&self, _seed: &[u8], _out: &mut [u8]) -> Result<()> {
+        Err(Error::Unimplemented)
+    }
+"#,
+        ),
         Kind::Vdf => (
             "Error, Params, Result, Vdf",
             r#"    fn max_t(&self) -> u64 {
@@ -687,6 +698,7 @@ fn trait_name(kind: Kind) -> &'static str {
         Kind::Zk => "Zk",
         Kind::Threshold => "Threshold",
         Kind::Vdf => "Vdf",
+        Kind::Prng => "Prng",
         Kind::Pke => "Pke",
         Kind::Pake => "Pake",
         Kind::StatefulSign => "StatefulSign",

@@ -644,6 +644,28 @@ impl Threshold for FThreshold {
     }
 }
 
+struct FPrng;
+impl Prng for FPrng {
+    fn sizes(&self) -> Sizes {
+        Sizes {
+            seed: l(4),
+            out: r(1, 64),
+            ..Sizes::NONE
+        }
+    }
+    fn generate(&self, seed: &[u8], out: &mut [u8]) -> Result<()> {
+        let s = self.sizes();
+        s.seed.unwrap().check("seed", seed.len())?;
+        s.out.unwrap().check("out", out.len())?;
+        let mut a = fold(seed);
+        for b in out.iter_mut() {
+            a = a.wrapping_mul(5).wrapping_add(1);
+            *b = a;
+        }
+        Ok(())
+    }
+}
+
 struct FVdf;
 impl FVdf {
     fn run(challenge: &[u8], t: u64) -> u8 {
@@ -946,11 +968,12 @@ fn ctor_for(kind: Kind) -> (Ctor, Sizes) {
         Kind::Pake => (c!(Pake, FPake), FPake.sizes()),
         Kind::StatefulSign => (c!(StatefulSign, FStateful), FStateful.sizes()),
         Kind::He => (c!(He, FHe), Sizes::NONE),
+        Kind::Prng => (c!(Prng, FPrng), FPrng.sizes()),
     }
 }
 
 // Indexed like `Kind::ALL`. Static (not leaked) so Miri reports no leaks.
-const IDS: [&str; 25] = [
+const IDS: [&str; 26] = [
     "fake-hash",
     "fake-xof",
     "fake-mac",
@@ -976,8 +999,9 @@ const IDS: [&str; 25] = [
     "fake-pake",
     "fake-statefulsign",
     "fake-he",
+    "fake-prng",
 ];
-const ALIASES: [[&str; 1]; 25] = [
+const ALIASES: [[&str; 1]; 26] = [
     ["f-hash"],
     ["f-xof"],
     ["f-mac"],
@@ -1003,6 +1027,7 @@ const ALIASES: [[&str; 1]; 25] = [
     ["f-pake"],
     ["f-statefulsign"],
     ["f-he"],
+    ["f-prng"],
 ];
 
 /// One fake per kind, ids `fake-<kind>`, alias `f-<kind>`, all at `tier`.
@@ -1338,6 +1363,7 @@ fn keyless_kinds_and_reserved_stubs() {
         Kind::Pake,
         Kind::StatefulSign,
         Kind::He,
+        Kind::Prng,
     ] {
         let id = format!("fake-{}", kind.as_str());
         assert_eq!(

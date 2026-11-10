@@ -690,6 +690,14 @@ int32_t nextssl_root_pow_verify(const char *alg,
                                 const struct nextssl_in *solution,
                                 uint32_t difficulty);
 
+// Seeded non-cryptographic pseudo-random generator (root only): exactly `want` bytes
+// (1..=16 MiB) from `seed`. NOT a secure random source: never use it for keys or nonces.
+int32_t nextssl_root_prng(const char *alg,
+                          const char *params,
+                          const struct nextssl_in *seed,
+                          size_t want,
+                          struct nextssl_out *out);
+
 // Password hash as a PHC string with a fresh random salt, any tier.
 int32_t nextssl_root_pwhash(const char *alg,
                             const char *params,

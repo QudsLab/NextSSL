@@ -39,6 +39,7 @@ replace the `Stub` in `glue.rs` -> add KATs -> `cargo xtask gen`. `new(&Params) 
 | zk | `Zk` | `setup(params,rng)`, `prove(setup,statement,witness,rng)`, `verify(setup,statement,proof)` (root only) | - |
 | threshold | `Threshold` | `max_parties`, `split(secret,t,n,rng)`, `combine(shares)`, interactive `start(session,rng)` with `ThresholdState::step` (same shape as Pake); `1 <= t <= n <= max_parties` and party ids `1..=n` are enforced (root only) | - |
 | he | `He` | `ops()`, `keygen(params,rng) -> HeKeys`, `encrypt`, `decrypt`, `eval(op, cts, evk)`; an op outside `ops()` is `Unsupported` (root only) | - |
+| prng | `Prng` | `sizes` (`seed` accepted lengths, `out` bytes per call), `generate(seed, out)`: deterministic, stateless, same seed gives the same stream and a shorter request is a prefix. NOT cryptographically secure (ISAAC, Mersenne Twister, xoshiro, splitmix64, PCG, xorshift...); root only whatever the tier, never for keys, nonces or salts | seed out |
 | vdf | `Vdf` | `max_t()` (the `max_t` cap param), `eval(challenge,t) -> (output, proof)`, `verify(challenge,t,output,proof)`; `t == 0` or `t > max_t` is `ParamOutOfRange("t")` (root only) | - |
 
 ## Conventions

@@ -83,11 +83,12 @@ pub enum Kind {
     Pake,
     StatefulSign,
     He,
+    Prng,
 }
 
 impl Kind {
     /// Every kind, in a stable order.
-    pub const ALL: [Kind; 25] = [
+    pub const ALL: [Kind; 26] = [
         Kind::Hash,
         Kind::Xof,
         Kind::Mac,
@@ -113,6 +114,7 @@ impl Kind {
         Kind::Pake,
         Kind::StatefulSign,
         Kind::He,
+        Kind::Prng,
     ];
 
     /// The string used in `algo.toml` `kind = "..."`.
@@ -143,6 +145,7 @@ impl Kind {
             Kind::Pake => "pake",
             Kind::StatefulSign => "statefulsign",
             Kind::He => "he",
+            Kind::Prng => "prng",
         }
     }
 
@@ -166,6 +169,7 @@ impl Kind {
             Kind::Pake => &["key", "ss"],
             Kind::StatefulSign => &["pk", "sk", "sig", "seed"],
             Kind::Drbg => &["seed"],
+            Kind::Prng => &["seed", "out"],
             Kind::Xof
             | Kind::Mode
             | Kind::Rng
@@ -190,6 +194,7 @@ impl Kind {
                 | Kind::Threshold
                 | Kind::He
                 | Kind::Vdf
+                | Kind::Prng
         )
     }
 }
@@ -205,6 +210,7 @@ mod tests {
         }
         assert_eq!(Kind::parse("nope"), None);
         assert!(Kind::Pke.root_only() && Kind::Vdf.root_only() && !Kind::Sign.root_only());
+        assert!(Kind::Prng.root_only());
         let mut names: alloc::vec::Vec<_> = Kind::ALL.iter().map(|k| k.as_str()).collect();
         names.sort_unstable();
         names.dedup();

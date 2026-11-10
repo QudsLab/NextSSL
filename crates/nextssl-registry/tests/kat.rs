@@ -487,6 +487,36 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
         }
         Instance::Rng(_) | Instance::Drbg(_) | Instance::Encoding(_) => {}
         Instance::Mode(_) | Instance::Checksum(_) | Instance::Pow(_) => {}
+        Instance::Prng(g) => {
+            let sz = g.sizes();
+            let seed = vec![0x5Au8; pick(sz.seed, 16)];
+            let n = pick(sz.out, 40);
+            let (mut a, mut b) = (vec![0u8; n], vec![0u8; n]);
+            g.generate(&seed, &mut a).unwrap();
+            g.generate(&seed, &mut b).unwrap();
+            assert_eq!(a, b, "{ctx}: not deterministic");
+            if n > 1 {
+                let mut short = vec![0u8; n - 1];
+                g.generate(&seed, &mut short).unwrap();
+                assert_eq!(short, a[..n - 1], "{ctx}: shorter request is not a prefix");
+            }
+            let mut other_seed = seed.clone();
+            // a high bit of the last byte: generators that force low bits (PCG MCG) still see it
+            let last = other_seed.len() - 1;
+            other_seed[last] ^= 0x80;
+            let mut c = vec![0u8; n];
+            g.generate(&other_seed, &mut c).unwrap();
+            assert_ne!(a, c, "{ctx}: seed ignored");
+            assert!(g.generate(&seed, &mut []).is_err(), "{ctx}: empty output");
+            if let Some(m) = sz.seed {
+                if m.max() < 4096 {
+                    assert!(g.generate(&vec![1u8; m.max() + 1], &mut a).is_err(), "{ctx}: long seed");
+                }
+                if m.min() > 0 {
+                    assert!(g.generate(&vec![1u8; m.min() - 1], &mut a).is_err(), "{ctx}: short seed");
+                }
+            }
+        }
         Instance::Pke(p) => {
             let (pk, sk) = p.keygen(&mut rng()).unwrap();
             assert!(s.pk.unwrap().contains(pk.len()), "{ctx}: pk length");

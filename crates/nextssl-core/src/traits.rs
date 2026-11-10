@@ -690,3 +690,32 @@ pub trait Vdf: Send + Sync {
     /// `Ok(false)`: well-formed proof that does not verify. `Err`: malformed input or bad `t`.
     fn verify(&self, challenge: &[u8], t: u64, output: &[u8], proof: &[u8]) -> Result<bool>;
 }
+
+// ---------------------------------------------------------------------------------------
+// Prng (non-cryptographic and legacy generators). Root only, always.
+// ---------------------------------------------------------------------------------------
+
+/// Seedable deterministic pseudo-random generator that is NOT a cryptographically secure
+/// generator: ISAAC, Mersenne Twister, xoshiro, splitmix64, PCG, xorshift, ...
+///
+/// Reachable through the root API only, whatever tier an algorithm declares (`Kind::root_only`).
+/// It exists for reproducible simulation, test data and interoperability with legacy systems;
+/// never use its output as key material, nonce, salt or token. A real random source is
+/// [`EntropySource`], a standardised deterministic generator is [`Drbg`].
+///
+/// `sizes`: `seed` (accepted seed lengths: fixed, or a range for generators that take any
+/// number of seed words) and `out` (range: bytes one call may produce).
+///
+/// Stateless one-shot form: [`Prng::generate`] seeds a fresh generator with `seed` and returns
+/// the first `out.len()` bytes of its output stream. Word generators emit their words in
+/// little-endian byte order, a partial last word is truncated from that stream (documented in
+/// each algorithm's `algo.toml`). Same `seed` and length always give the same bytes; a longer
+/// request has the shorter one as its prefix.
+pub trait Prng: Send + Sync {
+    fn sizes(&self) -> Sizes;
+
+    /// `seed.len()` must be inside `sizes().seed` and `out.len()` inside `sizes().out`; a
+    /// wrong length is `Error::InvalidLength`, never padded, truncated or defaulted. The
+    /// glue zeroizes the generator state before returning.
+    fn generate(&self, seed: &[u8], out: &mut [u8]) -> Result<()>;
+}

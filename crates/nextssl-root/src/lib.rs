@@ -134,7 +134,7 @@ use nextssl_core::{Ciphertext, SharedSecret, MAX_INPUT_LEN};
 use nextssl_registry::{
     new_aead_in, new_blockcipher_in, new_blockmode_in, new_checksum_in, new_kdf_in, new_kem_in,
     new_kex_in, new_mac_in, new_pke_in, new_pwhash_in, new_sign_in, new_streamcipher_in,
-    new_threshold_in, new_vdf_in, new_xof_in, new_zk_in,
+    new_prng_in, new_threshold_in, new_vdf_in, new_xof_in, new_zk_in,
 };
 
 fn check_input(data: &[u8]) -> Result<()> {
@@ -602,6 +602,21 @@ pub fn zk_verify_with(
 
 pub fn zk_verify(alg: &str, setup: &[u8], statement: &[u8], proof: &[u8]) -> Result<bool> {
     zk_verify_with(alg, &Params::new(), setup, statement, proof)
+}
+
+/// Non-cryptographic seeded generator: `out_len` bytes from `seed`. NOT a secure random
+/// source; the output must never become a key, nonce, salt or token.
+pub fn prng_with(alg: &str, params: &Params, seed: &[u8], out_len: usize) -> Result<Vec<u8>> {
+    check_input(seed)?;
+    nextssl_core::check_len("out_len", out_len, 1, MAX_INPUT_LEN)?;
+    let g = new_prng_in(reg(), Policy::Any, alg, params)?;
+    let mut out = vec![0u8; out_len];
+    g.generate(seed, &mut out)?;
+    Ok(out)
+}
+
+pub fn prng(alg: &str, seed: &[u8], out_len: usize) -> Result<Vec<u8>> {
+    prng_with(alg, &Params::new(), seed, out_len)
 }
 
 pub fn vdf_eval_with(

@@ -394,6 +394,13 @@ fn ops(kind: Kind) -> Vec<Op> {
                 "setup, statement, proof",
             ),
         ],
+        Kind::Prng => vec![op(
+            "generate",
+            "seed: &[u8], out_len: usize",
+            VEC,
+            "prng",
+            "seed, out_len",
+        )],
         Kind::Vdf => vec![
             op(
                 "eval",

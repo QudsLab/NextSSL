@@ -128,6 +128,13 @@ fn sweep_every_algorithm_through_the_root_abi() {
                     let (rc, _) = grow(|o| unsafe { nextssl_root_checksum(nm, pp, &d, o) });
                     chk(rc)?;
                 }
+                Kind::Prng => {
+                    let seed = vec![0x3cu8; fixed(s.seed, 16)];
+                    let si = inp(&seed);
+                    let (rc, o) = grow(|o| unsafe { nextssl_root_prng(nm, pp, &si, 40, o) });
+                    chk(rc)?;
+                    assert_eq!(o.len(), 40);
+                }
                 Kind::Encoding => {
                     let (rc, e) = grow(|o| unsafe { nextssl_root_encode_with(nm, pp, &sh, o) });
                     chk(rc)?;

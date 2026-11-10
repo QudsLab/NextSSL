@@ -7,7 +7,7 @@
 
 use nextssl_core::{
     Aead, BlockCipher, BlockMode, Checksum, Drbg, Encoding, EntropySource, Error, Hash, He, Kdf,
-    Kem, Kex, Kind, Len, Mac, Mode, Pake, ParamSpec, Params, Pke, Pow, PwHash, Result, Sign, Sizes,
+    Kem, Kex, Kind, Len, Mac, Mode, Pake, ParamSpec, Params, Pke, Pow, Prng, PwHash, Result, Sign, Sizes,
     StatefulSign, Status, StreamCipher, Threshold, Tier, Vdf, Xof, Zk, MAX_INPUT_LEN,
 };
 
@@ -110,6 +110,7 @@ kinds! {
     Pake => Pake, new_pake_in;
     StatefulSign => StatefulSign, new_statefulsign_in;
     He => He, new_he_in;
+    Prng => Prng, new_prng_in;
 }
 
 impl Instance {
@@ -138,6 +139,7 @@ impl Instance {
             Instance::Pake(x) => x.sizes(),
             Instance::StatefulSign(x) => x.sizes(),
             Instance::Threshold(x) => x.sizes(),
+            Instance::Prng(x) => x.sizes(),
             Instance::Xof(_)
             | Instance::Mode(_)
             | Instance::Rng(_)
@@ -231,7 +233,7 @@ fn resolve<'a>(
         return Err(Error::WrongKind);
     }
     if !allowed(info.tier, policy) || (kind.root_only() && policy == Policy::Safe) {
-        // Root-only kinds (pke, pake, statefulsign, zk, threshold, he, vdf) are never reachable
+        // Root-only kinds (pke, pake, statefulsign, zk, threshold, he, vdf, prng) are never reachable
         // from the safe API, whatever tier they declare.
         return Err(Error::TierNotAllowed(info.tier));
     }
@@ -281,7 +283,8 @@ pub fn instantiate_in(
         Pke,
         Pake,
         StatefulSign,
-        He
+        He,
+        Prng
     ))
 }
 

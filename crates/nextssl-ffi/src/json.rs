@@ -35,6 +35,7 @@ pub fn ops_for(kind: Kind) -> &'static [&'static str] {
             "threshold_free",
         ],
         Kind::Vdf => &["vdf_eval", "vdf_verify"],
+        Kind::Prng => &["prng"],
         Kind::Pke => &["pke_keygen", "pke_encrypt", "pke_decrypt"],
         Kind::Pake => &["pake_start", "pake_step", "pake_free"],
         Kind::StatefulSign => &[
