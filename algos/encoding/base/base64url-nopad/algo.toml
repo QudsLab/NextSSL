@@ -1,0 +1,15 @@
+id        = "base64url-nopad"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = ["base64url-unpadded"]
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 4648 section 5", "RFC 7515 appendix C"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "data-encoding", version = "=2.11.1", license = "MIT OR Apache-2.0" }
+# `data-encoding` BASE64URL_NOPAD (RFC 4648 section 5 without padding, as used by JOSE). Wired in batch 9, not compiled or tested at wiring time; KAT file empty (published vectors not matched).
+
+[kat]
+files = ["kat/base64url-nopad.json"]

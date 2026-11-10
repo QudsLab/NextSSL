@@ -1,0 +1,15 @@
+id        = "base64-mime"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 2045 section 6.8"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "data-encoding", version = "=2.11.1", license = "MIT OR Apache-2.0" }
+# `data-encoding` BASE64_MIME (RFC 2045 base64 with 76-character CRLF lines). Wired in batch 9, not compiled or tested at wiring time; KAT file empty (published vectors not matched).
+
+[kat]
+files = ["kat/base64-mime.json"]

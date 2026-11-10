@@ -1,0 +1,15 @@
+id        = "base64-imap-mutf7"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 3501 section 5.1.3"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "base64", version = "=0.23.1", license = "MIT OR Apache-2.0" }
+# `base64` crate IMAP_MUTF7 alphabet (modified base64 of IMAP mailbox names, no padding). Wired in batch 9, not compiled or tested at wiring time; KAT file empty (published vectors not matched).
+
+[kat]
+files = ["kat/base64-imap-mutf7.json"]

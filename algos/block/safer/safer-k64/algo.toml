@@ -1,0 +1,21 @@
+id        = "safer-k64"
+kind      = "blockcipher"
+category  = "block"
+family    = "safer"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/libtom/libtomcrypt", commit = "6c6d5104de66f3ca0dfd7b68540ef86869982b07", license = "Unlicense", files = ["src/headers/tomcrypt.h", "src/headers/tomcrypt_argchk.h", "src/headers/tomcrypt_cfg.h", "src/headers/tomcrypt_cipher.h", "src/headers/tomcrypt_custom.h", "src/headers/tomcrypt_hash.h", "src/headers/tomcrypt_mac.h", "src/headers/tomcrypt_macros.h", "src/headers/tomcrypt_math.h", "src/headers/tomcrypt_misc.h", "src/headers/tomcrypt_pk.h", "src/headers/tomcrypt_pkcs.h", "src/headers/tomcrypt_private.h", "src/headers/tomcrypt_prng.h", "src/ciphers/safer/safer.c", "src/ciphers/safer/safer_tab.c", "src/misc/zeromem.c", "LICENSE"] }
+
+# Entry point wired: src/ciphers/safer/safer.c (safer_k64_setup/safer_ecb_encrypt/safer_ecb_decrypt (num_rounds=0 = default); SAFER K-64: key 8, block 8; ARGTYPE=4, LTC_NO_TEST; sources byte-identical from the pinned libtomcrypt clone 6c6d5104de). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 8
+block = 8

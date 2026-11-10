@@ -1,0 +1,18 @@
+[package]
+name = "nextssl-algo-mt19937-64"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+rand_core = { version = "=0.10.1", default-features = false }
+rand_mt = { version = "=6.1.0", default-features = false, features = ["rand-traits"] }
+
+[lints]
+workspace = true

@@ -1,0 +1,20 @@
+id        = "lea-256"
+kind      = "blockcipher"
+category  = "block"
+family    = "lea"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["KS X 3246 (LEA)", "ISO/IEC 29192-2:2019 (LEA)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "lea", version = "=0.5.4", license = "MIT" }
+# lea 0.5.4 is on cipher 0.3 (the row was skipped because the block template targets cipher 0.5); this glue uses the 0.3 API through
+# lea::cipher. One id per key size. The LEA-CCM and LEA-CTR types of the crate are not wired. Not compiled or tested at wiring time; KAT empty.
+
+[kat]
+files = ["kat/lea-256.json"]
+
+[sizes]
+key = 32
+block = 16

@@ -1,0 +1,19 @@
+id        = "crc-12-gsm"
+kind      = "checksum"
+category  = "checksum"
+family    = "crc"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["CRC catalogue (reveng) CRC-12/GSM"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "crc", version = "=3.4.0", license = "MIT OR Apache-2.0" }
+# Catalogue name CRC-12/GSM, width 12. Wired in batch 9 (catalogue sweep), not compiled or tested at wiring time. The KAT is the
+# catalogue check value of "123456789" as carried in the crate; no other vectors.
+
+[kat]
+files = ["kat/crc-12-gsm.json"]
+
+[sizes]
+out = 2

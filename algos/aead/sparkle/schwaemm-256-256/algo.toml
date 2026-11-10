@@ -1,0 +1,22 @@
+id        = "schwaemm-256-256"
+kind      = "aead"
+category  = "aead"
+family    = "sparkle"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["sparkle.c", "internal-sparkle.c", "aead-common.c", "aead-common.h", "internal-sparkle.h", "internal-util.h", "sparkle.h", "LICENSE"] }
+
+# Entry point wired: sparkle.c (schwaemm_256_256_aead_encrypt/schwaemm_256_256_aead_decrypt). Other variants not wired: other entry points of the same header are separate ids.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 32
+nonce = 32
+tag = 32

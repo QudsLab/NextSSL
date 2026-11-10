@@ -1,0 +1,20 @@
+id        = "edonr512"
+kind      = "hash"
+category  = "hash"
+family    = "edon-r"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["edonr512/EdonR.c", "edonr512/EdonR.h", "edonr512/api.h", "edonr512/byteorder.h", "edonr512/hash.c", "LICENSE"] }
+
+# Entry point wired: edonr512 (crypto_hash). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 64

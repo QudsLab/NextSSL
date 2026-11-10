@@ -1,0 +1,15 @@
+id        = "base64-binhex"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["BinHex 4.0 (RFC 1741)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "base64", version = "=0.23.1", license = "MIT OR Apache-2.0" }
+# `base64` crate BIN_HEX alphabet (BinHex 4.0, no padding). Wired in batch 9, not compiled or tested at wiring time; KAT file empty (published vectors not matched).
+
+[kat]
+files = ["kat/base64-binhex.json"]

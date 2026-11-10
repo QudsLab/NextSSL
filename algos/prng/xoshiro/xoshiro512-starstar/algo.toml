@@ -1,0 +1,22 @@
+id        = "xoshiro512-starstar"
+kind      = "prng"
+category  = "prng"
+family    = "xoshiro"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["xoshiro512** (Blackman, Vigna 2018), NOT cryptographically secure"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rand_xoshiro", version = "=0.8.1", license = "MIT OR Apache-2.0" }
+# NOT a cryptographic generator (kind prng is root only). //! All-zero seeds are refused (upstream would substitute one).
+
+# Seed 64 bytes; the stream is the upstream fill_bytes (little-endian words). Wired in batch 9, not compiled or
+# tested at wiring time (owner order); KAT file empty, no published vector was matched.
+
+[kat]
+files = ["kat/xoshiro512-starstar.json"]
+
+[sizes]
+seed = 64
+out = { min = 1, max = 268435456 }

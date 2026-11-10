@@ -1,0 +1,22 @@
+id        = "sfc32"
+kind      = "prng"
+category  = "prng"
+family    = "sfc"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["SFC32 (Doty-Humphrey, PractRand), NOT cryptographically secure"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rand_sfc", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+# NOT a cryptographic generator (kind prng is root only). //! Seed: three 32-bit words (upstream encoding).
+
+# Seed 12 bytes; the stream is the upstream fill_bytes (little-endian words). Wired in batch 9, not compiled or
+# tested at wiring time (owner order); KAT file empty, no published vector was matched.
+
+[kat]
+files = ["kat/sfc32.json"]
+
+[sizes]
+seed = 12
+out = { min = 1, max = 268435456 }

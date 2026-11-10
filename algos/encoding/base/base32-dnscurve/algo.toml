@@ -1,0 +1,15 @@
+id        = "base32-dnscurve"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["DNSCurve base32 (dnscurve.org)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "data-encoding", version = "=2.11.1", license = "MIT OR Apache-2.0" }
+# `data-encoding` BASE32_DNSCURVE (DNSCurve base32, D. J. Bernstein). Wired in batch 9, not compiled or tested at wiring time; KAT file empty (published vectors not matched).
+
+[kat]
+files = ["kat/base32-dnscurve.json"]

@@ -1,0 +1,25 @@
+id        = "sphincs-shake-128s-simple"
+kind      = "sign"
+category  = "sign"
+family    = "sphincs-plus"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/PQClean/PQClean", commit = "0586a824fc0d49df0b6b6e9179d8d15d06d0974f", license = "CC0-1.0", files = ["common/compat.h", "common/fips202.c", "common/fips202.h", "common/randombytes.h", "common/sha2.c", "common/sha2.h", "crypto_sign/sphincs-shake-128s-simple/clean/LICENSE", "crypto_sign/sphincs-shake-128s-simple/clean/address.c", "crypto_sign/sphincs-shake-128s-simple/clean/address.h", "crypto_sign/sphincs-shake-128s-simple/clean/api.h", "crypto_sign/sphincs-shake-128s-simple/clean/context.h", "crypto_sign/sphincs-shake-128s-simple/clean/context_shake.c", "crypto_sign/sphincs-shake-128s-simple/clean/fors.c", "crypto_sign/sphincs-shake-128s-simple/clean/fors.h", "crypto_sign/sphincs-shake-128s-simple/clean/hash.h", "crypto_sign/sphincs-shake-128s-simple/clean/hash_shake.c", "crypto_sign/sphincs-shake-128s-simple/clean/merkle.c", "crypto_sign/sphincs-shake-128s-simple/clean/merkle.h", "crypto_sign/sphincs-shake-128s-simple/clean/nistapi.h", "crypto_sign/sphincs-shake-128s-simple/clean/params.h", "crypto_sign/sphincs-shake-128s-simple/clean/shake_offsets.h", "crypto_sign/sphincs-shake-128s-simple/clean/sign.c", "crypto_sign/sphincs-shake-128s-simple/clean/thash.h", "crypto_sign/sphincs-shake-128s-simple/clean/thash_shake_simple.c", "crypto_sign/sphincs-shake-128s-simple/clean/utils.c", "crypto_sign/sphincs-shake-128s-simple/clean/utils.h", "crypto_sign/sphincs-shake-128s-simple/clean/utilsx1.c", "crypto_sign/sphincs-shake-128s-simple/clean/utilsx1.h", "crypto_sign/sphincs-shake-128s-simple/clean/wots.c", "crypto_sign/sphincs-shake-128s-simple/clean/wots.h", "crypto_sign/sphincs-shake-128s-simple/clean/wotsx1.c", "crypto_sign/sphincs-shake-128s-simple/clean/wotsx1.h", "LICENSE"] }
+
+# SPHINCS+ round 3.1 'simple' parameter set (not FIPS 205 SLH-DSA; those are the slh-dsa-* ids). PQClean clean implementation.
+# unverified: no published known-answer vector is replayed yet (PQClean ships only KAT hashes in
+# META.yml; the designers' .rsp files are not in the collection). Roundtrip tests only. Not compiled
+# or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 32
+sk = 64
+sig = 7856
+seed = 0
+ctx = 0

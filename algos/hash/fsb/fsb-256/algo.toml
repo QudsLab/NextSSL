@@ -1,0 +1,18 @@
+id        = "fsb-256"
+kind      = "hash"
+category  = "hash"
+family    = "fsb"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["FSB-256 (SHA-3 competition round 2 candidate)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "fsb", version = "=0.2.0", license = "MIT OR Apache-2.0" }
+# RustCrypto fsb 0.2.0. Wired in batch 9, not compiled or tested at wiring time; KAT file empty (published vectors not matched).
+
+[kat]
+files = ["kat/fsb-256.json"]
+
+[sizes]
+out = 32

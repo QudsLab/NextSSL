@@ -1,0 +1,20 @@
+id        = "orangish-hash"
+kind      = "hash"
+category  = "hash"
+family    = "orange"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["orange.c", "internal-photon256.c", "aead-common.c", "aead-common.h", "internal-photon256.h", "internal-util.h", "orange.h", "LICENSE"] }
+
+# Entry point wired: orange.c (orangish_hash). Other variants not wired: other entry points of the same header are separate ids.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

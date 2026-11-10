@@ -1,0 +1,17 @@
+[package]
+name = "nextssl-algo-hex"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+data-encoding = { version = "=2.11.1", default-features = false, features = ["alloc"] }
+
+[lints]
+workspace = true

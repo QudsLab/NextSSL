@@ -1,0 +1,15 @@
+id        = "base64-bcrypt"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["bcrypt radix-64 alphabet (OpenBSD)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "base64", version = "=0.23.1", license = "MIT OR Apache-2.0" }
+# `base64` crate BCRYPT alphabet (bcrypt radix-64, no padding). Wired in batch 9, not compiled or tested at wiring time; KAT file empty (published vectors not matched).
+
+[kat]
+files = ["kat/base64-bcrypt.json"]

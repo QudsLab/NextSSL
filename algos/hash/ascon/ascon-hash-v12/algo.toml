@@ -1,0 +1,20 @@
+id        = "ascon-hash-v12"
+kind      = "hash"
+category  = "hash"
+family    = "ascon"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["ascon-hash.c", "internal-ascon.c", "ascon128.c", "aead-common.c", "aead-common.h", "ascon128.h", "internal-ascon.h", "internal-util.h", "LICENSE"] }
+
+# Entry point wired: ascon-hash.c (ascon_hash). Other variants not wired: other entry points of the same header are separate ids.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

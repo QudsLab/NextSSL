@@ -1,0 +1,22 @@
+id        = "aes-128-eme2"
+kind      = "blockmode"
+category  = "mode"
+family    = "aes-eme2"
+aliases   = ["eme2"]
+tier      = "unverified"
+status    = "active"
+standards = ["IEEE 1619.2-2010 (EME2-AES)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "eme2", version = "=0.3.0", license = "MIT OR Apache-2.0" }
+# EME2 wide-block tweakable mode: one id per AES key size. Key = cipher key || two 16-byte mask keys (48 bytes), nonce =
+# the 16-byte tweak, data >= 16 bytes (strong PRP over the whole input, no authentication). Wired in batch 9 (was skipped
+# as "no matching trait shape": the tweak fits the BlockMode nonce). Not compiled or tested at wiring time; KAT empty.
+
+[kat]
+files = ["kat/aes-128-eme2.json"]
+
+[sizes]
+key = 48
+nonce = 16
+block = 16

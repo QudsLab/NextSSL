@@ -1,0 +1,22 @@
+id        = "isaac"
+kind      = "prng"
+category  = "prng"
+family    = "isaac"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["ISAAC (Jenkins 1996), NOT cryptographically secure for new designs"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rand_isaac", version = "=0.5.1", license = "MIT OR Apache-2.0" }
+# NOT a cryptographic generator (kind prng is root only). //! ISAAC-32; the crate seeds all 256 words from the 32-byte seed (upstream behaviour).
+
+# Seed 32 bytes; the stream is the upstream fill_bytes (little-endian words). Wired in batch 9, not compiled or
+# tested at wiring time (owner order); KAT file empty, no published vector was matched.
+
+[kat]
+files = ["kat/isaac.json"]
+
+[sizes]
+seed = 32
+out = { min = 1, max = 268435456 }

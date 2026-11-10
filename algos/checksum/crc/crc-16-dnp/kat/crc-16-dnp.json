@@ -1,0 +1,11 @@
+{
+ "algorithm": "crc-16-dnp",
+ "source": "check value of '123456789' for CRC-16/DNP from the reveng CRC catalogue, as carried in the crc-catalog 2.5.0 crate (field `check`)",
+ "vectors": [
+  {
+   "id": "catalogue-check",
+   "data_hex": "313233343536373839",
+   "out_hex": "ea82"
+  }
+ ]
+}

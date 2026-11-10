@@ -1,0 +1,20 @@
+id        = "jenkins-lookup3"
+kind      = "checksum"
+category  = "checksum"
+family    = "jenkins"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://burtleburtle.net/bob/c/lookup3.c", sha256 = "364ddc3f9f0c8415e9468458350aff46748c2b8751b359cbe34411561ca122f0", license = "LicenseRef-Public-Domain", files = ["lookup3.c", "LICENSE"] }
+
+# Entry point wired: lookup3.c (hashlittle with initval 0 (big-endian output). lookup3.c defines SELF_TEST itself and has a main(); a flag cannot undefine that, so main is renamed with -Dmain=nextssl_lookup3_unused_main and the self-test code stays unused. Gated off on MSVC (sys/param.h)). Other variants not wired: hashword, hashlittle2, hashbig.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 4

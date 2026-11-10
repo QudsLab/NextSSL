@@ -1,0 +1,22 @@
+id        = "pcg32"
+kind      = "prng"
+category  = "prng"
+family    = "pcg"
+aliases   = ["pcg-xsh-rr-64-32"]
+tier      = "unverified"
+status    = "active"
+standards = ["PCG32 (O'Neill 2014), NOT cryptographically secure"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rand_pcg", version = "=0.10.2", license = "MIT OR Apache-2.0" }
+# NOT a cryptographic generator (kind prng is root only). //! Seed: 8 bytes state, 8 bytes stream increment (upstream encoding).
+
+# Seed 16 bytes; the stream is the upstream fill_bytes (little-endian words). Wired in batch 9, not compiled or
+# tested at wiring time (owner order); KAT file empty, no published vector was matched.
+
+[kat]
+files = ["kat/pcg32.json"]
+
+[sizes]
+seed = 16
+out = { min = 1, max = 268435456 }

@@ -1,0 +1,22 @@
+id        = "pcg64-mcg"
+kind      = "prng"
+category  = "prng"
+family    = "pcg"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["PCG64 MCG (O'Neill 2014), NOT cryptographically secure"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rand_pcg", version = "=0.10.2", license = "MIT OR Apache-2.0" }
+# NOT a cryptographic generator (kind prng is root only). //! Seed: 16 bytes state; upstream forces the low bit (multiplicative generator).
+
+# Seed 16 bytes; the stream is the upstream fill_bytes (little-endian words). Wired in batch 9, not compiled or
+# tested at wiring time (owner order); KAT file empty, no published vector was matched.
+
+[kat]
+files = ["kat/pcg64-mcg.json"]
+
+[sizes]
+seed = 16
+out = { min = 1, max = 268435456 }

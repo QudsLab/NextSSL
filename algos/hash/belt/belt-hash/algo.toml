@@ -1,0 +1,18 @@
+id        = "belt-hash"
+kind      = "hash"
+category  = "hash"
+family    = "belt"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["STB 34.101.31 (BelT hash), Belarus"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "belt-hash", version = "=0.2.1", license = "MIT OR Apache-2.0" }
+# RustCrypto belt-hash 0.2.1. Wired in batch 9, not compiled or tested at wiring time; KAT file empty (published vectors not matched).
+
+[kat]
+files = ["kat/belt-hash.json"]
+
+[sizes]
+out = 32

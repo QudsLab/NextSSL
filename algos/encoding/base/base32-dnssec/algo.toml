@@ -1,0 +1,15 @@
+id        = "base32-dnssec"
+kind      = "encoding"
+category  = "encoding"
+family    = "base"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 5155 section 3.3"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "data-encoding", version = "=2.11.1", license = "MIT OR Apache-2.0" }
+# `data-encoding` BASE32_DNSSEC (base32hex lowercase without padding, RFC 5155 NSEC3). Wired in batch 9, not compiled or tested at wiring time; KAT file empty (published vectors not matched).
+
+[kat]
+files = ["kat/base32-dnssec.json"]

@@ -1,0 +1,5 @@
+{
+ "algorithm": "base32-dnssec",
+ "vectors": [],
+ "note": "no published vectors matched; never invented."
+}

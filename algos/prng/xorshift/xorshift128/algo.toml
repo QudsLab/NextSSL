@@ -1,0 +1,22 @@
+id        = "xorshift128"
+kind      = "prng"
+category  = "prng"
+family    = "xorshift"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["xorshift128 (Marsaglia 2003), NOT cryptographically secure"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rand_xorshift", version = "=0.5.0", license = "MIT OR Apache-2.0" }
+# NOT a cryptographic generator (kind prng is root only). //! All-zero seeds are refused (upstream would substitute one).
+
+# Seed 16 bytes; the stream is the upstream fill_bytes (little-endian words). Wired in batch 9, not compiled or
+# tested at wiring time (owner order); KAT file empty, no published vector was matched.
+
+[kat]
+files = ["kat/xorshift128.json"]
+
+[sizes]
+seed = 16
+out = { min = 1, max = 268435456 }

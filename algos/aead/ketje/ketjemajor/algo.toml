@@ -1,0 +1,22 @@
+id        = "ketjemajor"
+kind      = "aead"
+category  = "aead"
+family    = "ketje"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["ketjemajorv2/Keccak-f.h", "ketjemajorv2/Ketjev2.h", "ketjemajorv2/api.h", "ketjemajorv2/bitstring.h", "ketjemajorv2/monkey.h", "ketjemajorv2/padding.h", "ketjemajorv2/transformations.h", "ketjemajorv2/types.h", "ketjemajorv2/Keccak-f.cpp", "ketjemajorv2/Ketjev2.cpp", "ketjemajorv2/bitstring.cpp", "ketjemajorv2/encrypt.cpp", "ketjemajorv2/monkey.cpp", "ketjemajorv2/padding.cpp", "ketjemajorv2/transformations.cpp", "LICENSE"] }
+
+# Entry point wired: ketjemajorv2 (crypto_aead_encrypt via shim.cpp (C++ linkage upstream)). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 181
+tag = 16

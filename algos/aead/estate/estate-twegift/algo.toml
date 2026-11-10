@@ -1,0 +1,22 @@
+id        = "estate-twegift"
+kind      = "aead"
+category  = "aead"
+family    = "estate"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["estate.c", "internal-gift128.c", "aead-common.c", "aead-common.h", "estate.h", "internal-gift128-config.h", "internal-gift128.h", "internal-util.h", "LICENSE"] }
+
+# Entry point wired: estate.c (estate_twegift_aead_encrypt/estate_twegift_aead_decrypt). Other variants not wired: other entry points of the same header are separate ids.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16

@@ -1,0 +1,22 @@
+id        = "drygascon-128-k56"
+kind      = "aead"
+category  = "aead"
+family    = "drygascon"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/rweather/lightweight-crypto", commit = "fa4ec9a021b9233263de77e7dd971de8c9761495", license = "MIT", files = ["drygascon.c", "internal-drysponge.c", "aead-common.c", "aead-common.h", "drygascon.h", "drygascon128_arm_selector.h", "internal-drysponge.h", "internal-util.h", "LICENSE"] }
+
+# Entry point wired: drygascon.c (drygascon128k56_aead_encrypt/drygascon128k56_aead_decrypt). Other variants not wired: other entry points of the same header are separate ids.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 56
+nonce = 16
+tag = 16

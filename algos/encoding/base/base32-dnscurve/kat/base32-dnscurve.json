@@ -1,0 +1,5 @@
+{
+ "algorithm": "base32-dnscurve",
+ "vectors": [],
+ "note": "no published vectors matched; never invented."
+}

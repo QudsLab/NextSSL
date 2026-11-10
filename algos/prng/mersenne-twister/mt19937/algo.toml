@@ -1,0 +1,22 @@
+id        = "mt19937"
+kind      = "prng"
+category  = "prng"
+family    = "mersenne-twister"
+aliases   = ["mersenne-twister"]
+tier      = "unverified"
+status    = "active"
+standards = ["MT19937 (Matsumoto, Nishimura 1998), NOT cryptographically secure"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "rand_mt", version = "=6.1.0", license = "MIT OR Apache-2.0" }
+# NOT a cryptographic generator (kind prng is root only). //! Seed is one little-endian u32 for init_genrand.
+
+# Seed 4 bytes; the stream is the upstream fill_bytes (little-endian words). Wired in batch 9, not compiled or
+# tested at wiring time (owner order); KAT file empty, no published vector was matched.
+
+[kat]
+files = ["kat/mt19937.json"]
+
+[sizes]
+seed = 4
+out = { min = 1, max = 268435456 }

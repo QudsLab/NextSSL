@@ -1,0 +1,5 @@
+{
+ "algorithm": "aes-192-eme2",
+ "vectors": [],
+ "note": "no published vectors matched; never invented."
+}

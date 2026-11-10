@@ -1,0 +1,17 @@
+[package]
+name = "nextssl-algo-base58-ripple"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core.workspace = true
+bs58 = { version = "=0.5.1", default-features = false, features = ["alloc"] }
+
+[lints]
+workspace = true

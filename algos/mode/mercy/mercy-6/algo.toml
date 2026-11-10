@@ -1,0 +1,22 @@
+id        = "mercy-6"
+kind      = "blockmode"
+category  = "mode"
+family    = "mercy"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://www.ciphergoth.org/crypto/mercy/mercy-6.1.tar.gz", sha256 = "d15a4f983e96cd179be8c732fdbed413622b57ca8bfda5ca2f785363d672fa04", license = "LicenseRef-Public-Domain", files = ["fast-mercy.c", "mercy-6/mercy.h", "LICENSE"] }
+
+# Entry point wired: fast-mercy.c (schedule_key + crypt_block via shim_crypt (little-endian words); one global mutex serialises the upstream static key state; the pinned sha256 is that of fast-mercy.c (the row also holds the author's mercy.h from the tarball)). Other variants not wired: unix-time.c benchmark.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = { min = 1, max = 256 }
+nonce = 96
+block = 512

@@ -1,0 +1,5 @@
+{
+ "algorithm": "base64-crypt",
+ "vectors": [],
+ "note": "no published vectors matched; never invented."
+}
