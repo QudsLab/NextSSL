@@ -1,0 +1,22 @@
+id        = "joltikeq6464v13"
+kind      = "aead"
+category  = "aead"
+family    = "joltikeq6464"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["ref/api.h", "ref/crypto_aead.h", "ref/encrypt.c", "ref/joltik.c", "ref/joltik.h", "ref/tweakableBC.c", "ref/tweakableBC.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 8
+nonce = 8
+tag = 8

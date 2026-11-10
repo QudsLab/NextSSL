@@ -1,0 +1,24 @@
+id        = "mqom2cat3gf2fastr3"
+kind      = "sign"
+category  = "sign"
+family    = "mqom2cat3gf2fastr3"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["ref_memopt/KeccakHash.c", "ref_memopt/KeccakHash.h", "ref_memopt/KeccakHashtimes4.c", "ref_memopt/KeccakHashtimes4.h", "ref_memopt/KeccakP-1600-64.macros", "ref_memopt/KeccakP-1600-SnP.h", "ref_memopt/KeccakP-1600-opt64-config.h", "ref_memopt/KeccakP-1600-opt64.c", "ref_memopt/KeccakP-1600-times4-SnP.h", "ref_memopt/KeccakP-1600-times4-on1.c", "ref_memopt/KeccakP-1600-unrolling.macros", "ref_memopt/KeccakSponge.c", "ref_memopt/KeccakSponge.h", "ref_memopt/KeccakSponge.inc", "ref_memopt/KeccakSpongetimes4.c", "ref_memopt/KeccakSpongetimes4.h", "ref_memopt/KeccakSpongetimes4.inc", "ref_memopt/PlSnP-Fallback.inc", "ref_memopt/SnP-Relaned.h", "ref_memopt/align.h", "ref_memopt/api.h", "ref_memopt/benchmark.h", "ref_memopt/blc.h", "ref_memopt/blc_common.h", "ref_memopt/blc_default.c", "ref_memopt/blc_default.h", "ref_memopt/blc_memopt.c", "ref_memopt/blc_memopt.h", "ref_memopt/blc_memopt_common.h", "ref_memopt/blc_memopt_x1.c", "ref_memopt/blc_memopt_x2.c", "ref_memopt/blc_memopt_x4.c", "ref_memopt/brg_endian.h", "ref_memopt/common.h", "ref_memopt/config.h", "ref_memopt/crypto_sign.c", "ref_memopt/enc.h", "ref_memopt/enc_liboqs.h", "ref_memopt/enc_local.h", "ref_memopt/enc_mupq.h", "ref_memopt/endian_compat.h", "ref_memopt/expand_mq.c", "ref_memopt/expand_mq.h", "ref_memopt/fields.h", "ref_memopt/fields_avx2.h", "ref_memopt/fields_avx512.h", "ref_memopt/fields_bitsliced.h", "ref_memopt/fields_bitsliced_branchconst.h", "ref_memopt/fields_bitsliced_branchconst_composite.h", "ref_memopt/fields_common.h", "ref_memopt/fields_handling.h", "ref_memopt/fields_ref.h", "ref_memopt/gf256_mult_table.h", "ref_memopt/ggm_tree.c", "ref_memopt/ggm_tree.h", "ref_memopt/keygen.c", "ref_memopt/keygen.h", "ref_memopt/macros.h", "ref_memopt/mqom2_parameters.h", "ref_memopt/mqom2_parameters_cat3-gf2-fast-r3.h", "ref_memopt/parameters.h", "ref_memopt/piop.h", "ref_memopt/piop_bitslice.c", "ref_memopt/piop_bitslice.h", "ref_memopt/piop_cache.h", "ref_memopt/piop_default.c", "ref_memopt/piop_default.h", "ref_memopt/piop_memopt.c", "ref_memopt/piop_memopt.h", "ref_memopt/prg.c", "ref_memopt/prg.h", "ref_memopt/prg_cache.h", "ref_memopt/rijndael.h", "ref_memopt/rijndael_aes_ni.c", "ref_memopt/rijndael_aes_ni.h", "ref_memopt/rijndael_common.h", "ref_memopt/rijndael_ct64.c", "ref_memopt/rijndael_ct64.h", "ref_memopt/rijndael_ct64_enc.h", "ref_memopt/rijndael_external.c", "ref_memopt/rijndael_external.h", "ref_memopt/rijndael_platform.h", "ref_memopt/rijndael_ref.c", "ref_memopt/rijndael_ref.h", "ref_memopt/rijndael_table.c", "ref_memopt/rijndael_table.h", "ref_memopt/seed_commit.h", "ref_memopt/seed_commit_default.h", "ref_memopt/seed_commit_memopt.h", "ref_memopt/sign.c", "ref_memopt/sign.h", "ref_memopt/sign_memopt.c", "ref_memopt/xof.c", "ref_memopt/xof.h", "LICENSE"] }
+
+# Variant wired: ref_memopt (sign). Other variants not wired: ref_default.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 78
+sk = 108
+sig = { min = 1, max = 7576 }
+seed = 0
+ctx = 0

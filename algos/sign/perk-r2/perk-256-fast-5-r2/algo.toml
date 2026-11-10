@@ -1,0 +1,24 @@
+id        = "perk-256-fast-5-r2"
+kind      = "sign"
+category  = "sign"
+family    = "perk-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/submission-pkg/perk-submission-round2.zip", sha256 = "7f67ef9f6e5d6ab9749117168f3d2724b66c7b07ffb757f1a670d26860d8e1f8", license = "NOASSERTION", files = ["perk-256-fast-5/lib/XKCP/KeccakHash.c", "perk-256-fast-5/lib/XKCP/KeccakHash.h", "perk-256-fast-5/lib/XKCP/KeccakP-1600-SnP.h", "perk-256-fast-5/lib/XKCP/KeccakP-1600-opt64-config.h", "perk-256-fast-5/lib/XKCP/KeccakSponge.c", "perk-256-fast-5/lib/XKCP/KeccakSponge.h", "perk-256-fast-5/lib/XKCP/KeccakSponge.inc", "perk-256-fast-5/lib/XKCP/align.h", "perk-256-fast-5/lib/XKCP/brg_endian.h", "perk-256-fast-5/lib/XKCP/config.h", "perk-256-fast-5/lib/cryptocode/crypto_memset.c", "perk-256-fast-5/lib/cryptocode/crypto_memset.h", "perk-256-fast-5/lib/djbsort/djbsort.c", "perk-256-fast-5/lib/djbsort/djbsort.h", "perk-256-fast-5/lib/randombytes/rng.h", "perk-256-fast-5/src/api.h", "perk-256-fast-5/src/arithmetic.c", "perk-256-fast-5/src/arithmetic.h", "perk-256-fast-5/src/common.c", "perk-256-fast-5/src/common.h", "perk-256-fast-5/src/data_structures.h", "perk-256-fast-5/src/keygen.c", "perk-256-fast-5/src/keygen.h", "perk-256-fast-5/src/parameters.h", "perk-256-fast-5/src/parsing.c", "perk-256-fast-5/src/parsing.h", "perk-256-fast-5/src/permutation.c", "perk-256-fast-5/src/permutation.h", "perk-256-fast-5/src/sign.c", "perk-256-fast-5/src/signature.c", "perk-256-fast-5/src/signature.h", "perk-256-fast-5/src/symmetric.c", "perk-256-fast-5/src/symmetric.h", "perk-256-fast-5/src/theta_tree.c", "perk-256-fast-5/src/theta_tree.h", "perk-256-fast-5/src/verbose.c", "perk-256-fast-5/src/verbose.h", "perk-256-fast-5/src/verify.c", "perk-256-fast-5/src/verify.h", "LICENSE"] }
+
+# Variant wired: perk-256-fast-5/src (sign). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 507
+sk = 539
+sig = { min = 1, max = 31664 }
+seed = 0
+ctx = 0

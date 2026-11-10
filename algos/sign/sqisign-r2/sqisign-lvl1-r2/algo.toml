@@ -1,0 +1,24 @@
+id        = "sqisign-lvl1-r2"
+kind      = "sign"
+category  = "sign"
+family    = "sqisign-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/submission-pkg/sqisign-submission-round2.zip", sha256 = "39f91892af9bcf1feb1692174d8959ca33834b4483e99a43e8b6ed885dc85fc9", license = "NOASSERTION", files = ["include/sig.h", "include/sqisign_namespace.h", "src/nistapi/lvl1/api.c", "src/nistapi/lvl1/api.h", "LICENSE"] }
+
+# Variant wired: src/nistapi/lvl1 (sign). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 65
+sk = 353
+sig = { min = 1, max = 148 }
+seed = 0
+ctx = 0

@@ -1,0 +1,20 @@
+id        = "oprf-ristretto255-sha512"
+kind      = "oprf"
+category  = "oprf"
+family    = "oprf"
+aliases   = ["oprf"]
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 9497 OPRF mode 0x00, ristretto255-SHA512"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "voprf", version = "=0.5.0", license = "MIT OR Apache-2.0" }
+# Root only. Base mode only; VOPRF (0x01) and POPRF (0x02) need the crate's Proof encoding, not exposed (see UPSTREAM_ISSUES.md).
+# Wired in batch 10, not compiled or tested at wiring time (owner order); KAT file empty (RFC 9497 appendix A vectors are the source).
+
+[kat]
+files = ["kat/oprf-ristretto255-sha512.json"]
+
+[sizes]
+pk = 32
+sk = 32

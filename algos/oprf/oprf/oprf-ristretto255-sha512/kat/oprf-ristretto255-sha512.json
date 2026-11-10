@@ -1,0 +1,5 @@
+{
+ "algorithm": "oprf-ristretto255-sha512",
+ "vectors": [],
+ "note": "no vectors wired; never invented. Tier unverified."
+}

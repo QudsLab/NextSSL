@@ -1,0 +1,20 @@
+id        = "h2c-secp256k1-sha256-sswu"
+kind      = "h2c"
+category  = "h2c"
+family    = "secp256k1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 9380 secp256k1_XMD:SHA-256_SSWU_RO_ / _NU_"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "k256", version = "=0.14.0", license = "Apache-2.0 OR MIT" }
+# Root only. Ops: hash (random oracle suite _RO_) and encode (nonuniform suite _NU_). Output SEC1 compressed point.
+# Wired in batch 10, not compiled or tested at wiring time (owner order); KAT file empty. RFC 9380 appendix J vectors
+# exist and are the intended KAT source once the harness has a h2c format.
+
+[kat]
+files = ["kat/h2c-secp256k1-sha256-sswu.json"]
+
+[sizes]
+out = 33

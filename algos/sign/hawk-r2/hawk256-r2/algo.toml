@@ -1,0 +1,24 @@
+id        = "hawk256-r2"
+kind      = "sign"
+category  = "sign"
+family    = "hawk-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/submission-pkg/hawk-submission-round2.zip", sha256 = "770b66b1d9507a23c030846117b8e7fb328c19002db189f235f8edd20adabad8", license = "NOASSERTION", files = ["hawk256/api.c", "hawk256/api.h", "hawk256/hawk.h", "hawk256/hawk_config.h", "hawk256/hawk_inner.h", "hawk256/hawk_kgen.c", "hawk256/hawk_sign.c", "hawk256/hawk_vrfy.c", "hawk256/modq.h", "hawk256/ng_config.h", "hawk256/ng_fxp.c", "hawk256/ng_hawk.c", "hawk256/ng_inner.h", "hawk256/ng_mp31.c", "hawk256/ng_ntru.c", "hawk256/ng_poly.c", "hawk256/ng_zint31.c", "hawk256/rng.h", "hawk256/sha3.c", "hawk256/sha3.h", "LICENSE"] }
+
+# Variant wired: hawk256 (sign). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 450
+sk = 96
+sig = { min = 1, max = 249 }
+seed = 0
+ctx = 0
