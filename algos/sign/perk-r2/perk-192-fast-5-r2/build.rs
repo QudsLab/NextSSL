@@ -6,10 +6,12 @@ use std::io::Write;
 use std::path::PathBuf;
 
 const SOURCES: &[&str] = &[
+    "upstream/perk-192-fast-5/lib/XKCP/KeccakP-1600-opt64.c",
     "upstream/perk-192-fast-5/lib/XKCP/KeccakHash.c",
     "upstream/perk-192-fast-5/lib/XKCP/KeccakSponge.c",
     "upstream/perk-192-fast-5/lib/cryptocode/crypto_memset.c",
     "upstream/perk-192-fast-5/lib/djbsort/djbsort.c",
+    "upstream/perk-192-fast-5/lib/djbsort/sort.c",
     "upstream/perk-192-fast-5/src/arithmetic.c",
     "upstream/perk-192-fast-5/src/common.c",
     "upstream/perk-192-fast-5/src/keygen.c",

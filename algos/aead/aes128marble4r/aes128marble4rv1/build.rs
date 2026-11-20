@@ -17,6 +17,10 @@ const PREFIX: &str = "nextssl__aes128marble4rv1__";
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
     b.warnings(false).opt_level(2);
+    // Upstream calls free() without including <stdlib.h>; give it the real prototype.
+    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() != Ok("msvc") {
+        b.flag("-include").flag("stdlib.h");
+    }
 
     // Force-included preamble: scheme macros upstream's own build passes on the command line, plus (MSVC only) a no-op
     // `__attribute__` (GNU annotations carry no semantics for the portable C; cl.exe cannot take a function-like macro with /D).

@@ -15,7 +15,7 @@ int shim_apply(const unsigned char *key, int keylen, const unsigned char *iv, in
     ECRYPT_init();
     ECRYPT_keysetup(ctx, key, (u32)keylen * 8, (u32)ivlen * 8);
     ECRYPT_ivsetup(ctx, iv);
-    if (len > 0) ECRYPT_process_bytes(0, ctx, data, data, len);
+    if (len > 0) ECRYPT_encrypt_bytes(ctx, data, data, len);
     w = raw;
     for (i = 0; i < n; i++) w[i] = 0;
     free(raw);

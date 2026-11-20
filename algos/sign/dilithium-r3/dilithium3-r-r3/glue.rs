@@ -8,9 +8,9 @@ use nextssl_core::{
     Zeroizing,
 };
 
-const PK: usize = 1312;
-const SK: usize = 2544;
-const SIG_MAX: usize = 2420;
+const PK: usize = 1952;
+const SK: usize = 4016;
+const SIG_MAX: usize = 3293;
 const SIG_MIN: usize = 1;
 
 mod ffi {
@@ -20,9 +20,9 @@ mod ffi {
     pub type FillFn = unsafe extern "C" fn(*mut c_void, *mut u8, usize) -> c_int;
 
     extern "C" {
-        #[link_name = "nextssl__dilithium3_r_r3__crypto_sign_keypair"]
+        #[link_name = "nextssl__dilithium3_r_r3__pqcrystals_dilithium3_r_ref_keypair"]
         pub fn keypair(pk: *mut u8, sk: *mut u8) -> c_int;
-        #[link_name = "nextssl__dilithium3_r_r3__crypto_sign_signature"]
+        #[link_name = "nextssl__dilithium3_r_r3__pqcrystals_dilithium3_r_ref_signature"]
         pub fn sign(
             sig: *mut u8,
             siglen: *mut usize,
@@ -30,7 +30,7 @@ mod ffi {
             mlen: usize,
             sk: *const u8,
         ) -> c_int;
-        #[link_name = "nextssl__dilithium3_r_r3__crypto_sign_verify"]
+        #[link_name = "nextssl__dilithium3_r_r3__pqcrystals_dilithium3_r_ref_verify"]
         pub fn verify(
             sig: *const u8,
             siglen: usize,

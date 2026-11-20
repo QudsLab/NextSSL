@@ -7,9 +7,9 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/v2/ref/e/lex.c", "shim.c"];
+const SOURCES: &[&str] = &["upstream/cryptoint/uint16_optblocker.c", "upstream/cryptoint/uint32_optblocker.c", "upstream/cryptoint/uint64_optblocker.c", "upstream/v2/ref/e/lex.c", "shim.c"];
 const CPP_SOURCES: &[&str] = &[];
-const INCLUDES: &[&str] = &["upstream/v2/ref/e", "upstream", "compat"];
+const INCLUDES: &[&str] = &["upstream/cryptoint", "upstream/v2/ref/e", "upstream", "compat"];
 const DEFINES: &[(&str, &str)] = &[];
 const PREFIX: &str = "nextssl__lex__";
 

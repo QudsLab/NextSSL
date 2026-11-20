@@ -9,6 +9,7 @@ use std::path::PathBuf;
 
 const SOURCES: &[&str] = &[
     "upstream/src/ciphers/multi2.c",
+    "upstream/src/misc/compare_testvector.c",
     "upstream/src/misc/zeromem.c",
     "shim.c",
 ];

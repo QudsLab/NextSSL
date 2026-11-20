@@ -8,3 +8,10 @@
 - parameter set directory: perk-192-fast-3/src
 - copied verbatim (whole subtree incl. shared include dirs) by wire batch 10
 - license: NOASSERTION
+
+
+## Missing sources (added to fix link)
+
+lib/XKCP/KeccakP-1600-opt64.c, KeccakP-1600-64.macros, KeccakP-1600-unrolling.macros, lib/djbsort/sort.c, int32_minmax.inc
+extracted verbatim from collection/nist-addsig-r2-perk/perk-submission-round2.zip (perk/Reference_Implementation/perk-192-fast-3/lib/).
+Also lib/XKCP/SnP-Relaned.h (same zip, same directory).

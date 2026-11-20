@@ -17,6 +17,9 @@ const PREFIX: &str = "nextssl__twine80n6clocv1__";
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
     b.warnings(false).opt_level(2);
+    // GCC 14 makes implicit declarations an error; upstream calls functions defined in its own
+    // other .c files (void return) without a prototype in scope. Same behaviour as MSVC/older GCC.
+    b.flag_if_supported("-Wno-error=implicit-function-declaration");
 
     // Force-included preamble: scheme macros upstream's own build passes on the command line, plus (MSVC only) a no-op
     // `__attribute__` (GNU annotations carry no semantics for the portable C; cl.exe cannot take a function-like macro with /D).

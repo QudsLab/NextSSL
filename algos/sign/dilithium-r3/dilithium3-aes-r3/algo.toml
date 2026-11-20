@@ -17,8 +17,8 @@ upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/post-quantum-cryp
 files = ["kat/kat.json"]
 
 [sizes]
-pk = 1312
-sk = 2544
-sig = { min = 1, max = 2420 }
+pk = 1952
+sk = 4016
+sig = { min = 1, max = 3293 }
 seed = 0
 ctx = 0

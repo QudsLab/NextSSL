@@ -17,7 +17,7 @@ mod ffi {
     #![allow(unsafe_code)]
     use super::OUT;
     extern "C" {
-        #[link_name = "nextssl__jenkins-lookup3__shim_hash"]
+        #[link_name = "nextssl__jenkins_lookup3__shim_hash"]
         fn hash(data: *const u8, len: usize, out: *mut u8);
     }
 

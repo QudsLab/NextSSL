@@ -10,7 +10,7 @@ use nextssl_core::{
 
 const PK: usize = 1760;
 const SK: usize = 2688;
-const SIG_MAX: usize = 3056;
+const SIG_MAX: usize = 2912;
 const SIG_MIN: usize = 1;
 
 mod ffi {

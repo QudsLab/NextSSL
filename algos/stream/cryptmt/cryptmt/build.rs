@@ -7,9 +7,9 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/cryptmtv3/v3/e/cryptmt-v3.c", "shim.c"];
+const SOURCES: &[&str] = &["upstream/cryptoint/uint16_optblocker.c", "upstream/cryptoint/uint32_optblocker.c", "upstream/cryptoint/uint64_optblocker.c", "upstream/cryptmtv3/v3/e/cryptmt-v3.c", "shim.c"];
 const CPP_SOURCES: &[&str] = &[];
-const INCLUDES: &[&str] = &["upstream/cryptmtv3/v3/e", "upstream", "compat"];
+const INCLUDES: &[&str] = &["upstream/cryptoint", "upstream/cryptmtv3/v3/e", "upstream", "compat"];
 const DEFINES: &[(&str, &str)] = &[("SLOW_CODE", "1")];
 const PREFIX: &str = "nextssl__cryptmt__";
 

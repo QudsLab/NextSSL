@@ -8,9 +8,9 @@ use nextssl_core::{
     Zeroizing,
 };
 
-const PK: usize = 1760;
-const SK: usize = 2688;
-const SIG_MAX: usize = 3056;
+const PK: usize = 2336;
+const SK: usize = 3552;
+const SIG_MAX: usize = 3872;
 const SIG_MIN: usize = 1;
 
 mod ffi {

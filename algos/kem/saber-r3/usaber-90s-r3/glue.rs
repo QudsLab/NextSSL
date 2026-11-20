@@ -11,7 +11,7 @@ use nextssl_core::{
 
 const PK: usize = 992;
 const SK: usize = 2208;
-const CT: usize = 1056;
+const CT: usize = 1088;
 const SS: usize = 32;
 
 mod ffi {

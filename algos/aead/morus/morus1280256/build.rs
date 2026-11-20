@@ -16,6 +16,10 @@ const PREFIX: &str = "nextssl__morus1280256__";
 fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
     b.warnings(false).opt_level(2);
+    // Upstream uses C89 `inline` semantics (plain `inline` definitions must be emitted).
+    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() != Ok("msvc") {
+        b.flag("-fgnu89-inline");
+    }
     if cpp {
         b.cpp(true);
     }

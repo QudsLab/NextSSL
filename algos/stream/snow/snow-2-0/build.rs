@@ -7,9 +7,9 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/snow20/benchmarks/snow-2.0/e/snow-2.0.c", "shim.c"];
+const SOURCES: &[&str] = &["upstream/cryptoint/uint16_optblocker.c", "upstream/cryptoint/uint32_optblocker.c", "upstream/cryptoint/uint64_optblocker.c", "upstream/snow20/benchmarks/snow-2.0/e/snow-2.0.c", "shim.c"];
 const CPP_SOURCES: &[&str] = &[];
-const INCLUDES: &[&str] = &[
+const INCLUDES: &[&str] = &["upstream/cryptoint", 
     "upstream/snow20/benchmarks/snow-2.0/e",
     "upstream",
     "compat",

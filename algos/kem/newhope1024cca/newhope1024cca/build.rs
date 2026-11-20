@@ -6,6 +6,10 @@ use std::io::Write;
 use std::path::PathBuf;
 
 const SOURCES: &[&str] = &[
+    "upstream/cryptoint/int16_optblocker.c",
+    "upstream/cryptoint/uint16_optblocker.c",
+    "upstream/cryptoint/uint64_optblocker.c",
+    "upstream/cryptoint/uint8_optblocker.c",
     "upstream/ref/cpapke.c",
     "upstream/ref/fips202.c",
     "upstream/ref/kem.c",
@@ -16,7 +20,7 @@ const SOURCES: &[&str] = &[
     "upstream/ref/verify.c",
     "shim.c",
 ];
-const INCLUDES: &[&str] = &["upstream/ref", "compat"];
+const INCLUDES: &[&str] = &["upstream/cryptoint", "upstream/ref", "compat"];
 const PREFIX: &str = "nextssl__newhope1024cca__";
 
 fn base() -> cc::Build {

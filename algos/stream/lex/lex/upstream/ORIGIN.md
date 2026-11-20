@@ -11,3 +11,9 @@
 
 ## Framework headers added 2026-11-10 (batch 8)
 estream-convert-api.h, estream-functions.h, ecrypt-machine.h, ecrypt-portable.h, ecrypt-config.h copied byte-identical from the pinned SUPERCOP archive include/ (supercop-20261018.tar.xz, sha256 in the row upstream); needed by the eSTREAM ciphers api.c wrappers.
+
+
+## cryptoint (added to fix link)
+
+upstream/cryptoint/ holds verbatim files (crypto_uint16, crypto_uint32, crypto_uint64) from the same pinned SUPERCOP package
+(supercop-20261018.tar.xz, sha256 9a44c3e6...ac8288), directory cryptoint/. Public domain (LicenseRef-PD-hp).

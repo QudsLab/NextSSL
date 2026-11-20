@@ -5,8 +5,8 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/ref/hash.c"];
-const INCLUDES: &[&str] = &["upstream/ref", "compat"];
+const SOURCES: &[&str] = &["upstream/cryptoint/int64_optblocker.c", "upstream/ref/hash.c"];
+const INCLUDES: &[&str] = &["upstream/cryptoint", "upstream/ref", "compat"];
 const PREFIX: &str = "nextssl__prh42s512__";
 
 fn base() -> cc::Build {

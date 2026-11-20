@@ -25,6 +25,9 @@ const PREFIX: &str = "nextssl__keyak__";
 fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
     b.warnings(false).opt_level(2);
+    // GCC 14 makes implicit declarations an error; upstream calls functions defined in its own
+    // other .c files (void return) without a prototype in scope. Same behaviour as MSVC/older GCC.
+    b.flag_if_supported("-Wno-error=implicit-function-declaration");
     if cpp {
         b.cpp(true);
     }

@@ -68,7 +68,7 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
                 n = n.strip_prefix('_').unwrap_or(n);
             }
             let ok = !n.is_empty()
-                && !n.starts_with("__")
+                && (!n.starts_with("__") || n.len() <= 3) // upstream sbox.h defines globals __a..__d
                 && !n.starts_with("nextssl__")
                 && n != "_fltused"
                 && n.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'_')

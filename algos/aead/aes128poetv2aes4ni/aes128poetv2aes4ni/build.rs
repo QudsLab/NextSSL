@@ -12,6 +12,10 @@ const PREFIX: &str = "nextssl__aes128poetv2aes4ni__";
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
     b.warnings(false).opt_level(2);
+    // AES-NI/SSE4.1 implementation: GCC/Clang need the target features enabled explicitly.
+    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() != Ok("msvc") {
+        b.flag("-msse4.1").flag("-maes").flag("-mpclmul");
+    }
 
     // Force-included preamble: scheme macros upstream's own build passes on the command line, plus (MSVC only) a no-op
     // `__attribute__` (GNU annotations carry no semantics for the portable C; cl.exe cannot take a function-like macro with /D).
