@@ -9,6 +9,7 @@ mod composegen;
 mod rootgen;
 mod scaffold;
 mod symbols;
+mod targets;
 
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
@@ -212,6 +213,13 @@ struct Algo {
     /// upstream). The default build stays small.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     feature: Option<String>,
+    /// Targets the upstream C cannot be built for (`msvc`, `wasm32`): the algorithm crate
+    /// compiles to an empty crate there and the registry entry is absent. Never silent:
+    /// `exclude_reason` is required and is published in algo.json.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    exclude_targets: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    exclude_reason: Option<String>,
     #[serde(default, skip_serializing_if = "SizesToml::is_empty")]
     sizes: SizesToml,
     /// Composition engine, kind `hash`: crate path of the RustCrypto `Digest` type behind this
@@ -307,6 +315,14 @@ fn validate(a: &Algo, dir: &Path) -> Res<()> {
                 "feature must be a lowercase cargo feature name, not a reserved one",
             ));
         }
+    }
+    for t in &a.exclude_targets {
+        if target_cfg(t).is_none() {
+            return Err(ctx(&format!("exclude_targets: unknown target {t:?} (known: msvc, wasm32)")));
+        }
+    }
+    if a.exclude_targets.is_empty() != a.exclude_reason.as_deref().map_or(true, |r| r.trim().is_empty()) {
+        return Err(ctx("exclude_targets and a non-empty exclude_reason go together"));
     }
     match (a.smoke.as_deref(), a.smoke_reason.as_deref()) {
         (None, None) => {}
@@ -714,13 +730,42 @@ fn rustfmt(src: String) -> Res<String> {
     Ok(String::from_utf8_lossy(&out.stdout).replace("\r\n", "\n"))
 }
 
-/// `cfg(..)` predicate that gates an algorithm: `copyleft`, its heavy `feature`, or both.
+/// cfg predicate of one `exclude_targets` entry.
+pub(crate) fn target_cfg(t: &str) -> Option<&'static str> {
+    match t {
+        "msvc" => Some("target_env = \"msvc\""),
+        "wasm32" => Some("target_arch = \"wasm32\""),
+        _ => None,
+    }
+}
+
+/// `not(..)` predicate of an algorithm's excluded targets, if any.
+pub(crate) fn target_gate(a: &Algo) -> Option<String> {
+    let preds: Vec<&str> = a.exclude_targets.iter().filter_map(|t| target_cfg(t)).collect();
+    match preds.len() {
+        0 => None,
+        1 => Some(format!("not({})", preds[0])),
+        _ => Some(format!("not(any({}))", preds.join(", "))),
+    }
+}
+
+/// `cfg(..)` predicate that gates an algorithm: `copyleft`, its heavy `feature`, its excluded
+/// targets, or a combination.
 pub(crate) fn cfg_gate(a: &Algo) -> Option<String> {
-    match (a.copyleft, &a.feature) {
-        (false, None) => None,
-        (true, None) => Some("feature = \"copyleft\"".into()),
-        (false, Some(f)) => Some(format!("feature = {f:?}")),
-        (true, Some(f)) => Some(format!("all(feature = \"copyleft\", feature = {f:?})")),
+    let mut parts: Vec<String> = Vec::new();
+    if a.copyleft {
+        parts.push("feature = \"copyleft\"".into());
+    }
+    if let Some(f) = &a.feature {
+        parts.push(format!("feature = {f:?}"));
+    }
+    if let Some(t) = target_gate(a) {
+        parts.push(t);
+    }
+    match parts.len() {
+        0 => None,
+        1 => Some(parts.remove(0)),
+        _ => Some(format!("all({})", parts.join(", "))),
     }
 }
 
@@ -870,7 +915,7 @@ fn run_gen(check: bool) -> Res<()> {
     let root_lib = std::fs::read_to_string(r.join("crates/nextssl-root/src/lib.rs"))
         .map_err(|e| format!("nextssl-root lib.rs: {e}"))?
         .replace("\r\n", "\n");
-    let outputs: Vec<(PathBuf, String)> = vec![
+    let mut outputs: Vec<(PathBuf, String)> = vec![
         (
             r.join("crates/nextssl-registry/src/generated.rs"),
             rustfmt(gen_registry(&algos))?,
@@ -905,6 +950,7 @@ fn run_gen(check: bool) -> Res<()> {
             gen_header()?,
         ),
     ];
+    outputs.extend(targets::outputs(&r, &algos)?);
     let mut stale = Vec::new();
     for (p, content) in &outputs {
         let cur = std::fs::read_to_string(p)
