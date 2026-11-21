@@ -148,7 +148,8 @@ mod tests {
     #[test]
     fn roundtrip_and_lengths() {
         let c = new(&Params::new()).unwrap();
-        for kl in [8] {
+        {
+            let kl = 8;
             let kb: Vec<u8> = (0..kl as u8)
                 .map(|i| i.wrapping_mul(13).wrapping_add(1))
                 .collect();

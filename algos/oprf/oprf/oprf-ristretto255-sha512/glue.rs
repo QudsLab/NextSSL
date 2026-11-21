@@ -82,7 +82,7 @@ impl Oprf for Impl {
         if r.failed {
             return Err(Error::EntropyFailure("oprf keygen"));
         }
-        let pk = Ristretto255::base_elem() * &sk;
+        let pk = Ristretto255::base_elem() * sk;
         let skb = scalar_bytes(sk);
         let pkb = Ristretto255::serialize_elem(pk);
         Ok((

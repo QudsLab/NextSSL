@@ -43,6 +43,10 @@ fn base() -> cc::Build {
     for i in INCLUDES {
         b.include(i);
     }
+    // ref/hanmre.c includes <unistd.h> without using it; MSVC gets an empty stand-in.
+    if b.get_compiler().is_like_msvc() {
+        b.include("compat/msvc");
+    }
     for s in SOURCES {
         b.file(s);
     }

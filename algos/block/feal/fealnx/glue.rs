@@ -125,12 +125,6 @@ pub fn new(params: &Params) -> Result<Box<dyn BlockCipher>> {
 mod tests {
     use super::*;
 
-    fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2)
-            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
-            .collect()
-    }
-
     fn key(b: &[u8]) -> SymmetricKey {
         SymmetricKey::from_bytes(b, Len::range(0, usize::MAX)).unwrap()
     }
@@ -139,7 +133,8 @@ mod tests {
     fn roundtrip_and_lengths() {
         let c = new(&Params::new()).unwrap();
         assert!(new(&Params::new().with("rounds", nextssl_core::Value::U32(7))).is_err());
-        for kl in [16] {
+        {
+            let kl = 16;
             let kb: Vec<u8> = (0..kl as u8)
                 .map(|i| i.wrapping_mul(13).wrapping_add(1))
                 .collect();

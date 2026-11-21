@@ -35,7 +35,7 @@ impl Prng for Impl {
         }
         let mut s = <Xoshiro128StarStar as SeedableRng>::Seed::default();
         s.as_mut().copy_from_slice(seed);
-        let mut rng = Xoshiro128StarStar::from_seed(s.clone());
+        let mut rng = Xoshiro128StarStar::from_seed(s);
         rng.fill_bytes(out);
         s.as_mut().zeroize();
         Ok(())

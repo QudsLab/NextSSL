@@ -58,6 +58,10 @@ const PREFIX: &str = "nextssl__libecc_ecgdsa_frp256v1_sha256__";
 
 fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
+    // libecc words.h: WORDSIZE for wasm32 (it picks 64 for every platform it knows, do the same).
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32") {
+        b.define("WORDSIZE", Some("64"));
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !cpp && !b.get_compiler().is_like_msvc() {

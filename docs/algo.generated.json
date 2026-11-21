@@ -8508,10 +8508,6 @@
       "standards": [],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "msvc"
-      ],
-      "exclude_reason": "MSVC cannot build the upstream C: error C2143: syntax error: missing ';' before '{'",
       "sizes": {
         "key": 16,
         "nonce": 12,

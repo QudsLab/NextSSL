@@ -97,12 +97,13 @@ mod tests {
     #[test]
     fn known_answers() {
         let c = new(&Params::new()).unwrap();
-        for (k, n, d, o) in [(
-            "3d43c388c9581e337ff1f97eb5c1f85e",
-            "0022d8e7",
-            "00000000000000000000000000000000000000000000000000000000",
-            "a2fe3034b6b22cc4e33c7090bec345c35d25d0cbfe25ee46fa2bb2ea",
-        )] {
+        {
+            let (k, n, d, o) = (
+                "3d43c388c9581e337ff1f97eb5c1f85e",
+                "0022d8e7",
+                "00000000000000000000000000000000000000000000000000000000",
+                "a2fe3034b6b22cc4e33c7090bec345c35d25d0cbfe25ee46fa2bb2ea",
+            );
             let mut buf = unhex(d);
             c.apply_keystream(&key(&unhex(k)), &unhex(n), &mut buf)
                 .unwrap();

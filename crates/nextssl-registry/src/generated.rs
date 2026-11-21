@@ -6101,7 +6101,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_blake64::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "bleep64",
         kind: Kind::Aead,

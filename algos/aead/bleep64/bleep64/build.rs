@@ -9,6 +9,53 @@ const SOURCES: &[&str] = &["upstream/ref/encrypt.c"];
 const INCLUDES: &[&str] = &["upstream/ref", "compat"];
 const PREFIX: &str = "nextssl__bleep64__";
 
+/// upstream/ref/encrypt.c defines `crypt` as a GCC nested function, which clang and MSVC do not
+/// support. The file on disk stays verbatim; the compiled copy turns that function into a statement
+/// macro with the same body. Every call passes the literals 0/1, and the body reads and writes the
+/// enclosing function's locals exactly as the nested function did. See upstream/ORIGIN.md.
+fn portable_copy(src: &str) -> PathBuf {
+    let text = std::fs::read_to_string(src).expect("read upstream/ref/encrypt.c");
+    let head = "  inline void crypt(char odd, char assoc)";
+    assert_eq!(
+        text.matches(head).count(),
+        1,
+        "encrypt.c: nested crypt() not found"
+    );
+    let start = text.find(head).unwrap();
+    let open = start + text[start..].find('{').expect("crypt body");
+    let mut depth = 0usize;
+    let mut close = None;
+    for (i, ch) in text[open..].char_indices() {
+        match ch {
+            '{' => depth += 1,
+            '}' => {
+                depth -= 1;
+                if depth == 0 {
+                    close = Some(open + i);
+                    break;
+                }
+            }
+            _ => {}
+        }
+    }
+    let close = close.expect("crypt body end");
+    let body: Vec<&str> = text[open + 1..close]
+        .lines()
+        .map(|l| l.find("//").map_or(l, |i| &l[..i]).trim_end())
+        .collect();
+    let mac = format!(
+        "#define crypt(odd, assoc) do {{ {} }} while (0)",
+        body.join(" \\\n")
+    );
+    let out = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("bleep64_encrypt.c");
+    std::fs::write(
+        &out,
+        format!("{}{}{}", &text[..start], mac, &text[close + 1..]),
+    )
+    .expect("write bleep64_encrypt.c");
+    out
+}
+
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
@@ -42,7 +89,7 @@ fn base() -> cc::Build {
         b.include(i);
     }
     for s in SOURCES {
-        b.file(s);
+        b.file(portable_copy(s));
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")
@@ -115,12 +162,6 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 }
 
 fn main() {
-    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C: error C2143: syntax error: missing ';' before '{'
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
-        return;
-    }
-    // END TARGET GATE
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let mut probe = base();
     probe.out_dir(out.join("probe"));

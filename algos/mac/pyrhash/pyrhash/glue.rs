@@ -78,7 +78,7 @@ mod tests {
         let mut bad = t.clone();
         bad[0] ^= 1;
         assert!(!m.verify(&key, b"abc", &bad).unwrap());
-        assert!(m.tag(&key, b"abc", &mut vec![0u8; TAG + 1]).is_err());
+        assert!(m.tag(&key, b"abc", &mut [0u8; TAG + 1]).is_err());
         let short = SymmetricKey::from_bytes(&[7u8; KEY - 1], Len::fixed(KEY - 1)).unwrap();
         assert!(m.tag(&short, b"abc", &mut t).is_err());
         assert!(m.verify(&key, b"abc", &t[..TAG - 1]).is_err());

@@ -70,7 +70,7 @@ mod tests {
     #[test]
     fn involution_and_lengths() {
         let s = new(&Params::new()).unwrap();
-        let k = SymmetricKey::from_bytes(&vec![5u8; KEY], Len::range(0, usize::MAX)).unwrap();
+        let k = SymmetricKey::from_bytes(&[5u8; KEY], Len::range(0, usize::MAX)).unwrap();
         let n = vec![9u8; NONCE];
         let mut buf = b"The quick brown fox".to_vec();
         let orig = buf.clone();

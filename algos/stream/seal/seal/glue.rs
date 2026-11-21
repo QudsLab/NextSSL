@@ -79,12 +79,6 @@ pub fn new(_params: &Params) -> Result<Box<dyn StreamCipher>> {
 mod tests {
     use super::*;
 
-    fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2)
-            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
-            .collect()
-    }
-
     fn key(b: &[u8]) -> SymmetricKey {
         SymmetricKey::from_bytes(b, Len::range(0, usize::MAX)).unwrap()
     }

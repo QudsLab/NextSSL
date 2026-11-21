@@ -7886,7 +7886,6 @@ pub mod blake64 {
 }
 
 /// `bleep64` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod bleep64 {
     /// Registry id.
     pub const ID: &str = "bleep64";
@@ -64148,7 +64147,6 @@ mod generated_module_list {
             ("blake3-mac", crate::blake3_mac::INFO.id),
             ("blake32", crate::blake32::INFO.id),
             ("blake64", crate::blake64::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("bleep64", crate::bleep64::INFO.id),
             ("blowfish", crate::blowfish::INFO.id),
             (
