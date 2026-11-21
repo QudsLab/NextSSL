@@ -80,6 +80,14 @@ fn every_kat_file_exists_and_is_json() {
     }
 }
 
+/// Triage aid: KAT_ONLY=id1,id2 runs only those algorithms in the KAT and smoke loops (unset = all).
+fn selected(id: &str) -> bool {
+    match std::env::var("KAT_ONLY") {
+        Ok(only) if !only.is_empty() => only.split(',').any(|s| s == id),
+        _ => true,
+    }
+}
+
 #[test]
 fn hash_and_encoding_kats_replay_through_the_registry() {
     let root = algos_dir();
@@ -87,7 +95,7 @@ fn hash_and_encoding_kats_replay_through_the_registry() {
     // Triage aid: KAT_SKIP=id1,id2 leaves those algorithms out; KAT_TRACE=1 prints each id.
     let skip = std::env::var("KAT_SKIP").unwrap_or_default();
     for a in all().iter().filter(|a| is_hash_or_encoding(a)) {
-        if skip.split(',').any(|s| s == a.id) {
+        if skip.split(',').any(|s| s == a.id) || !selected(a.id) {
             continue;
         }
         if std::env::var_os("KAT_TRACE").is_some() {
@@ -914,7 +922,7 @@ fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
     // Triage aid: KAT_SKIP=id1,id2 leaves those algorithms out of this smoke loop (unset = none).
     let skip = std::env::var("KAT_SKIP").unwrap_or_default();
     for a in all() {
-        if skip.split(',').any(|s| s == a.id) {
+        if skip.split(',').any(|s| s == a.id) || !selected(a.id) {
             continue;
         }
         if std::env::var_os("KAT_TRACE").is_some() {
