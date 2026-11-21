@@ -1,0 +1,24 @@
+id        = "hawk512-r1"
+kind      = "sign"
+category  = "sign"
+family    = "hawk-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/hawk-submission.zip", sha256 = "97ed55f4458208dc4368420f35fe36b393a3b6cf37f0bb9296591aef09e80230", license = "NOASSERTION", files = ["hawk512/api.c", "hawk512/api.h", "hawk512/hawk.h", "hawk512/hawk_config.h", "hawk512/hawk_inner.h", "hawk512/hawk_kgen.c", "hawk512/hawk_sign.c", "hawk512/hawk_vrfy.c", "hawk512/modq.h", "hawk512/ng_config.h", "hawk512/ng_fxp.c", "hawk512/ng_hawk.c", "hawk512/ng_inner.h", "hawk512/ng_mp31.c", "hawk512/ng_ntru.c", "hawk512/ng_poly.c", "hawk512/ng_zint31.c", "hawk512/rng.h", "hawk512/sha3.c", "hawk512/sha3.h", "LICENSE"] }
+
+# Variant wired: hawk512 (sign). Other variants not wired: none.
+# published vectors: first 3 blocks of PQCsignKAT_184.rsp in kat/kat.json (verify-only); not replayed at wiring time. Sources and sha256 in kat/README.md.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1024
+sk = 184
+sig = { min = 1, max = 555 }
+seed = 0
+ctx = 0

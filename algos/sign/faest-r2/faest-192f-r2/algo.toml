@@ -1,0 +1,24 @@
+id        = "faest-192f-r2"
+kind      = "sign"
+category  = "sign"
+family    = "faest-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/submission-pkg/faest-submission-round2.zip", sha256 = "3236d91670ae2fd4e0cc1e6693005c70539e2d6c1f5cb025a1dc48b037610ed5", license = "NOASSERTION", files = ["faest_192f/aes.c", "faest_192f/aes.h", "faest_192f/api.h", "faest_192f/bavc.c", "faest_192f/bavc.h", "faest_192f/compat.c", "faest_192f/compat.h", "faest_192f/crypto_sign.c", "faest_192f/crypto_sign.h", "faest_192f/endian_compat.h", "faest_192f/faest.c", "faest_192f/faest.h", "faest_192f/faest_192f.c", "faest_192f/faest_192f.h", "faest_192f/faest_aes.c", "faest_192f/faest_aes.h", "faest_192f/faest_defines.h", "faest_192f/fields.c", "faest_192f/fields.h", "faest_192f/hash_shake.h", "faest_192f/instances.c", "faest_192f/instances.h", "faest_192f/macros.h", "faest_192f/owf.c", "faest_192f/owf.h", "faest_192f/parameters.h", "faest_192f/random_oracle.c", "faest_192f/random_oracle.h", "faest_192f/randomness.c", "faest_192f/randomness.h", "faest_192f/sha3/KeccakHash.c", "faest_192f/sha3/KeccakHash.h", "faest_192f/sha3/KeccakHashtimes4.c", "faest_192f/sha3/KeccakHashtimes4.h", "faest_192f/sha3/KeccakP-1600-64.macros", "faest_192f/sha3/KeccakP-1600-SnP.h", "faest_192f/sha3/KeccakP-1600-opt64-config.h", "faest_192f/sha3/KeccakP-1600-opt64.c", "faest_192f/sha3/KeccakP-1600-times4-SnP.h", "faest_192f/sha3/KeccakP-1600-times4-on1.c", "faest_192f/sha3/KeccakP-1600-unrolling.macros", "faest_192f/sha3/KeccakSponge.c", "faest_192f/sha3/KeccakSponge.h", "faest_192f/sha3/KeccakSponge.inc", "faest_192f/sha3/KeccakSpongetimes4.c", "faest_192f/sha3/KeccakSpongetimes4.h", "faest_192f/sha3/KeccakSpongetimes4.inc", "faest_192f/sha3/PlSnP-Fallback.inc", "faest_192f/sha3/SnP-Relaned.h", "faest_192f/sha3/align.h", "faest_192f/sha3/brg_endian.h", "faest_192f/sha3/config.h", "faest_192f/sha3/s390_cpacf.h", "faest_192f/universal_hashing.c", "faest_192f/universal_hashing.h", "faest_192f/utils.c", "faest_192f/utils.h", "faest_192f/vole.c", "faest_192f/vole.h", "LICENSE"] }
+
+# Variant wired: faest_192f (sign). Other variants not wired: none.
+# published vectors: first 3 blocks of PQCsignKAT_40.rsp in kat/kat.json (verify-only); not replayed at wiring time. Sources and sha256 in kat/README.md.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 48
+sk = 40
+sig = { min = 1, max = 14948 }
+seed = 0
+ctx = 0

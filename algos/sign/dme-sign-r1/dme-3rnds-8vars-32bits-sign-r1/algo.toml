@@ -1,0 +1,24 @@
+id        = "dme-3rnds-8vars-32bits-sign-r1"
+kind      = "sign"
+category  = "sign"
+family    = "dme-sign-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/DME-SIGN-submission.zip", sha256 = "581467f42927ed54b8e55181429e9dc55953286802703ddb84a8e11134fa8dda", license = "NOASSERTION", files = ["api.h", "dme.c", "dme.h", "rng.h", "sha3.c", "sha3.h", "sign.c", "LICENSE"] }
+
+# Variant wired: . (sign). Other variants not wired: none.
+# published vectors: first 3 blocks of PQCsignKAT_369.rsp in kat/kat.json (verify-only); not replayed at wiring time. Sources and sha256 in kat/README.md.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1449
+sk = 369
+sig = { min = 1, max = 32 }
+seed = 0
+ctx = 0

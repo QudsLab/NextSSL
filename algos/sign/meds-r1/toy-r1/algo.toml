@@ -1,0 +1,26 @@
+id        = "toy-r1"
+kind      = "sign"
+category  = "sign"
+family    = "meds-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/MEDS-submission.zip", sha256 = "1e68efd4bb5ee60dfaad8ce0b12aa3b4ab95f34f1e1eec3b578047207493385e", license = "NOASSERTION", files = ["toy/api.h", "toy/bitstream.c", "toy/bitstream.h", "toy/fips202.c", "toy/fips202.h", "toy/log.h", "toy/matrixmod.c", "toy/matrixmod.h", "toy/meds.c", "toy/meds.h", "toy/osfreq.c", "toy/params.h", "toy/randombytes.h", "toy/rng.h", "toy/seed.c", "toy/seed.h", "toy/util.c", "toy/util.h", "LICENSE"] }
+
+# Variant wired: toy (sign). Other variants not wired: none.
+# no vectors in kat/kat.json: no unique rsp (0 candidates with matching pk/sk sizes, 0 named).
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 3593
+sk = 1042
+sig = { min = 1, max = 2132 }
+seed = 0
+ctx = 0

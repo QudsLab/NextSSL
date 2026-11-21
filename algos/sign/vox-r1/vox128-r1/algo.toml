@@ -1,0 +1,26 @@
+id        = "vox128-r1"
+kind      = "sign"
+category  = "sign"
+family    = "vox-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'alloca.h': No such file or directory"
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/vox-submission.zip", sha256 = "2340d824df95de005734d9fa8755d6cf4a05291f0be580c74b6ed8a3ceaee148", license = "MIT", files = ["vox_sign/F4F5.c", "vox_sign/F4F5.h", "vox_sign/FGLM.c", "vox_sign/FGLM.h", "vox_sign/FGLM_gfq.h", "vox_sign/api.c", "vox_sign/api.h", "vox_sign/fips202/fips202.c", "vox_sign/fips202/fips202.h", "vox_sign/rng/rng.h", "vox_sign/tables/F4_6vars.h", "vox_sign/tables/F4_7vars.h", "vox_sign/tables/F4_8vars.h", "vox_sign/tables/FGLM_6vars.h", "vox_sign/tables/FGLM_7vars.h", "vox_sign/tables/FGLM_8vars.h", "vox_sign/tables/invmod_table.h", "vox_sign/tables/zetas.h", "vox_sign/vox_arith.c", "vox_sign/vox_arith.h", "vox_sign/vox_encode.c", "vox_sign/vox_encode.h", "vox_sign/vox_params.h", "vox_sign/vox_sample.c", "vox_sign/vox_sample.h", "vox_sign/vox_sign_core.c", "vox_sign/vox_sign_core.h", "LICENSE"] }
+
+# Variant wired: vox_sign (sign). Other variants not wired: none.
+# published vectors: first 3 blocks of PQCsignKAT_35120.rsp in kat/kat.json (verify-only); not replayed at wiring time. Sources and sha256 in kat/README.md.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 9104
+sk = 35120
+sig = { min = 1, max = 102 }
+seed = 0
+ctx = 0

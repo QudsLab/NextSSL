@@ -1,0 +1,26 @@
+id        = "meds41711-r1"
+kind      = "sign"
+category  = "sign"
+family    = "meds-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/MEDS-submission.zip", sha256 = "1e68efd4bb5ee60dfaad8ce0b12aa3b4ab95f34f1e1eec3b578047207493385e", license = "NOASSERTION", files = ["MEDS41711/api.h", "MEDS41711/bitstream.c", "MEDS41711/bitstream.h", "MEDS41711/fips202.c", "MEDS41711/fips202.h", "MEDS41711/log.h", "MEDS41711/matrixmod.c", "MEDS41711/matrixmod.h", "MEDS41711/meds.c", "MEDS41711/meds.h", "MEDS41711/osfreq.c", "MEDS41711/params.h", "MEDS41711/randombytes.h", "MEDS41711/rng.h", "MEDS41711/seed.c", "MEDS41711/seed.h", "MEDS41711/util.c", "MEDS41711/util.h", "LICENSE"] }
+
+# Variant wired: MEDS41711 (sign). Other variants not wired: none.
+# no vectors in kat/kat.json: no unique rsp (0 candidates with matching pk/sk sizes, 0 named).
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 41711
+sk = 4420
+sig = { min = 1, max = 41080 }
+seed = 0
+ctx = 0

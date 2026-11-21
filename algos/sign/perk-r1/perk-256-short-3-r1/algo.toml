@@ -1,0 +1,24 @@
+id        = "perk-256-short-3-r1"
+kind      = "sign"
+category  = "sign"
+family    = "perk-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/Perk-submission.zip", sha256 = "e1c8467de1b31779789a11b97624fb7abcdee090540d17651026149a33e98353", license = "NOASSERTION", files = ["perk-256-short-3/lib/XKCP/KeccakHash.c", "perk-256-short-3/lib/XKCP/KeccakHash.h", "perk-256-short-3/lib/XKCP/KeccakP-1600-64.macros", "perk-256-short-3/lib/XKCP/KeccakP-1600-SnP.h", "perk-256-short-3/lib/XKCP/KeccakP-1600-opt64-config.h", "perk-256-short-3/lib/XKCP/KeccakP-1600-opt64.c", "perk-256-short-3/lib/XKCP/KeccakP-1600-unrolling.macros", "perk-256-short-3/lib/XKCP/KeccakSponge.c", "perk-256-short-3/lib/XKCP/KeccakSponge.h", "perk-256-short-3/lib/XKCP/KeccakSponge.inc", "perk-256-short-3/lib/XKCP/SnP-Relaned.h", "perk-256-short-3/lib/XKCP/align.h", "perk-256-short-3/lib/XKCP/brg_endian.h", "perk-256-short-3/lib/XKCP/config.h", "perk-256-short-3/lib/cryptocode/crypto_memset.c", "perk-256-short-3/lib/cryptocode/crypto_memset.h", "perk-256-short-3/lib/djbsort/djbsort.c", "perk-256-short-3/lib/djbsort/djbsort.h", "perk-256-short-3/lib/djbsort/int32_minmax.inc", "perk-256-short-3/lib/djbsort/sort.c", "perk-256-short-3/lib/randombytes/rng.h", "perk-256-short-3/src/api.h", "perk-256-short-3/src/arithmetic.c", "perk-256-short-3/src/arithmetic.h", "perk-256-short-3/src/common.c", "perk-256-short-3/src/common.h", "perk-256-short-3/src/data_structures.h", "perk-256-short-3/src/keygen.c", "perk-256-short-3/src/keygen.h", "perk-256-short-3/src/parameters.h", "perk-256-short-3/src/parsing.c", "perk-256-short-3/src/parsing.h", "perk-256-short-3/src/permutation.c", "perk-256-short-3/src/permutation.h", "perk-256-short-3/src/sign.c", "perk-256-short-3/src/signature.c", "perk-256-short-3/src/signature.h", "perk-256-short-3/src/symmetric.c", "perk-256-short-3/src/symmetric.h", "perk-256-short-3/src/theta_tree.c", "perk-256-short-3/src/theta_tree.h", "perk-256-short-3/src/verbose.c", "perk-256-short-3/src/verbose.h", "perk-256-short-3/src/verify.c", "perk-256-short-3/src/verify.h", "LICENSE"] }
+
+# Variant wired: perk-256-short-3/src (sign). Other variants not wired: none.
+# published vectors: first 3 blocks of PQCsignKAT_346.rsp in kat/kat.json (verify-only); not replayed at wiring time. Sources and sha256 in kat/README.md.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 314
+sk = 346
+sig = { min = 1, max = 26407 }
+seed = 0
+ctx = 0
