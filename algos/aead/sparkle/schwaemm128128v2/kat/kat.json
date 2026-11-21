@@ -1,0 +1,33 @@
+{
+  "algorithm": "schwaemm128128v2",
+  "source": "NIST LWC lwc3_sparkle, LWC_AEAD_KAT_128_128.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "ddce77cdb748e6d053cab7e9190a8349"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "d2a4133e82b64f800b6dab2403fb094d"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "cc760a9aa376411144164997408dd7af"
+    }
+  ]
+}

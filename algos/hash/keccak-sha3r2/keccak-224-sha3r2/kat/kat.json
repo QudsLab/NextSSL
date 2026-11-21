@@ -1,0 +1,31 @@
+{
+  "algorithm": "keccak-224-sha3r2",
+  "source": "NIST SHA-3 round-2 package keccak: sha3r2-keccak/Keccak_Round2/Keccak/KAT_MCT/ShortMsgKAT_224.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "38a72b8ec93cc3860efb22a75f6e94bcea65b21d92ee525b32e85d3f"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "f4dcaabb6fb80d459effe93e5b4d5ae8d05e1a6c173fd0f0ddba2b7d"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "7a39035f164b010e3abd435eb063a378d1a027e8eed3bea91ffcca9e"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "e34a9a2be049a5632497218db9cb6f2c67e4638572ee93f429385aec"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "fbc0332c8f9ca5cd499f6ab642b36ca55ac855825a803745ea9ab0b8"
+    }
+  ]
+}

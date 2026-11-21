@@ -1,0 +1,31 @@
+{
+  "algorithm": "hamsi-224-sha3r2",
+  "source": "NIST SHA-3 round-2 package hamsi: sha3r2-hamsi/Hamsi_Round2/Hamsi/KAT_MCT/ShortMsgKAT_224.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "6f5708887722a92764a4d55527feaeba32f297f05d35a8276301d508"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "fc1c9369ac35b331eda60812a9f51e9e189b5f5a699456d8ed89539f"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "78ff46081b7b283900308332fc4ca572ce3cede00bdc7a05a6566487"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "445e8227928b0cf5cf5bc1070eca434b685e1b951d1f59b5b2373229"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "5c14088abde6725ebbd45e4e875c4e8bc6ae7803293bd25dcc227671"
+    }
+  ]
+}

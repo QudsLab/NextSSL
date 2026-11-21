@@ -1,0 +1,31 @@
+{
+  "algorithm": "fugue-384-sha3r2",
+  "source": "NIST SHA-3 round-2 package fugue: sha3r2-fugue/Fugue_Round2_Update/FugueTweak/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "466d05f6812b58b8628e53816b2a99d173b804a964de971829159c3791ac8b524eebbf5fc73ba40ea8eea446d5424a30"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "436868cd6804b803dac432ed561bb40f91f624a10f2a368702359841cfda6909115628ca4977b3f8063a3b87fc7a0984"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "faf69841ca96ec8f96657f2871c1ddf9a060e5d55cd7e196078aa920171f73e5373ecda45b4552590124d280e22d9be6"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "47fc7c9df32d8ffad51d840de2da1908dd0993340e965b425f8bbba468239973e349394bcfe288b4ee467772bfd26939"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "7092b797e08636119ea45a145c83cce0d1155b00c82306b471a90f9ca1bfa6539ea0ce3e430aaeaefd84655c7aec657a"
+    }
+  ]
+}

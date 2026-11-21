@@ -1,0 +1,33 @@
+{
+  "algorithm": "tinyjambu192v2",
+  "source": "NIST LWC lwc3_tinyjambu, LWC_AEAD_KAT_192_96.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+      "nonce_hex": "000102030405060708090a0b",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "44ca46642230f1c5"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+      "nonce_hex": "000102030405060708090a0b",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "5edc4f614e4a624e"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+      "nonce_hex": "000102030405060708090a0b",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "142c472c2980cd40"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "algorithm": "keccak-384-sha3r3",
+  "source": "NIST SHA-3 round-3 package keccak: sha3r3-keccak/Keccak_FinalRnd/Keccak_FinalRnd/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "2c23146a63a29acf99e73b88f8c24eaa7dc60aa771780ccc006afbfa8fe2479b2dd2b21362337441ac12b515911957ff"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "1b84e62a46e5a201861754af5dc95c4a1a69caf4a796ae405680161e29572641f5fa1e8641d7958336ee7b11c58f73e9"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "495cce2714cd72c8c53c3363d22c58b55960fe26be0bf3bbc7a3316dd563ad1db8410e75eefea655e39d4670ec0b1792"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "b0665c345f45e6de145b0190335ef5d5aa59e0b49fc1425d5eae7355ea442284cb8a2152d565ebdf2810eccab15af04f"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "f1850b2abb24f3fd683c701582789d9e92b6a45f9c345f9dae7f7997c8c910e88003e592e59281cf92c92d6b51a1afd1"
+    }
+  ]
+}

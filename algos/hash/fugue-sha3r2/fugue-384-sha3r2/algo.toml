@@ -1,0 +1,20 @@
+id        = "fugue-384-sha3r2"
+kind      = "hash"
+category  = "hash"
+family    = "fugue-sha3r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/20170829225940id_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/documents/Fugue_Round2_Update.zip", sha256 = "881d405b565f83feb53e290c1248e9a7109f260ac0e2b97865db826b52291804", license = "NOASSERTION", files = ["FugueTweak/Reference_Implementation/SHA3api_ref.c", "FugueTweak/Reference_Implementation/fugue.c", "FugueTweak/Reference_Implementation/SHA3api_ref.h", "FugueTweak/Reference_Implementation/fugue.h", "FugueTweak/Reference_Implementation/fugue_t.h", "LICENSE"] }
+
+# SHA-3 competition round-2 candidate fugue, 384-bit digest. Implementation wired: FugueTweak/Reference_Implementation (zip Fugue_Round2_Update.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_384.txt (sha3r2-fugue/Fugue_Round2_Update/FugueTweak/KAT_MCT/ShortMsgKAT_384.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 48

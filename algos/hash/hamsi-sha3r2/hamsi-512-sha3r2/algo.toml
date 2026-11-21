@@ -1,0 +1,20 @@
+id        = "hamsi-512-sha3r2"
+kind      = "hash"
+category  = "hash"
+family    = "hamsi-sha3r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/20170829225940id_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/documents/Hamsi_Round2.zip", sha256 = "9ab965311a9f0e7283bd5eb3abd90e2205b888de44f52096df75f0a0e38dc715", license = "NOASSERTION", files = ["Hamsi/Reference_Implementation/hamsi-exp.c", "Hamsi/Reference_Implementation/hamsi-tables.c", "Hamsi/Reference_Implementation/i.hamsi-ref.c", "Hamsi/Reference_Implementation/nist-wrapper.c", "Hamsi/Reference_Implementation/hamsi-internals.h", "Hamsi/Reference_Implementation/hamsi-tables.h", "Hamsi/Reference_Implementation/hamsi.h", "Hamsi/Reference_Implementation/nist.h", "Hamsi/Reference_Implementation/words.h", "LICENSE"] }
+
+# SHA-3 competition round-2 candidate hamsi, 512-bit digest. Implementation wired: Hamsi/Reference_Implementation (zip Hamsi_Round2.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_512.txt (sha3r2-hamsi/Hamsi_Round2/Hamsi/KAT_MCT/ShortMsgKAT_512.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 64

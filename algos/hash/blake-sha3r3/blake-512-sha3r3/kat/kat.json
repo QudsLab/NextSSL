@@ -1,0 +1,31 @@
+{
+  "algorithm": "blake-512-sha3r3",
+  "source": "NIST SHA-3 round-3 package blake: sha3r3-blake/Blake_FinalRnd/Blake_FinalRnd/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "a8cfbbd73726062df0c6864dda65defe58ef0cc52a5625090fa17601e1eecd1b628e94f396ae402a00acc9eab77b4d4c2e852aaaa25a636d80af3fc7913ef5b8"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "4f0ef594f20172d23504873f596984c64c1583c7b2abb8d8786aa2aeeae1c46c744b61893d661b0733b76d1fe19257dd68e0ef05422ca25d058dfe6c33d68709"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "20afd72afbb66a5a0efd8b4a627cc2c82a5e4b6c63b0c9a78735c188d248c7588fb4ee566b3b6fdcc235a498f7263feb7ab1411582a7055e3ce7a8c976e61fcc"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "b1211367fd8a886674f74d92716e7585f9b6e933edc5ee7f974facdccc481cfa42a0532375b94f2c0dd73d6189a815c2bafb5686d784be81fbb447b0f291272b"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "ccbcdbc1a30ebbcc4fc015fdb1caba6c0ad6719301b4bbad4b0efab1141174a15e2e8b8b8e5671c1864a0f75ecb20f76dac45159e67786d07d79a29b1827e5a4"
+    }
+  ]
+}

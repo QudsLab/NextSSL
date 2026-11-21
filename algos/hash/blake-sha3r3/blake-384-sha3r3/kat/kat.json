@@ -1,0 +1,31 @@
+{
+  "algorithm": "blake-384-sha3r3",
+  "source": "NIST SHA-3 round-3 package blake: sha3r3-blake/Blake_FinalRnd/Blake_FinalRnd/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "c6cbd89c926ab525c242e6621f2f5fa73aa4afe3d9e24aed727faaadd6af38b620bdb623dd2b4788b1c8086984af8706"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "a77e65c0c03ecb831dbcdd50a3c2bce300d55eac002a9c197095518d8514c0b578e3ecb7415291f99ede91d49197dd05"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "e80a87362c9d39e2074ac135e2514b0cdf0001bfd8c35888d7ca8bbc4e918a157386524d41579e7fcd9c3c9a4f7a991a"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "d67cfa1b09c8c050094ea018bb5ecd3ce0c02835325467a8fa79701f0ad6bbd4a34947bbaa2fc5f9379985ccd6a1dc0e"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "7a57c41d850b7ab51c6075aba299ff649fdaf08a4c37088ece73b21304b1072c21930cc34ac6b0fc5f27b95f4f389b26"
+    }
+  ]
+}

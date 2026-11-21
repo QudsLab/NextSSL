@@ -1,0 +1,22 @@
+id        = "isapa128av20-lwc3"
+kind      = "aead"
+category  = "aead"
+family    = "isap"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/finalist-round/updated-submissions/isap.zip", sha256 = "2827c7cf89cc7fa5f4173d346cd2a47d79ec1f5fa7d9838c30b549a1fc86fbde", license = "NOASSERTION", files = ["ref/Ascon-reference.c", "ref/Ascon-reference.h", "ref/api.h", "ref/brg_endian.h", "ref/crypto_aead.c", "ref/isap.c", "ref/isap.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_128.txt from the NIST package lwc3_isap (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16

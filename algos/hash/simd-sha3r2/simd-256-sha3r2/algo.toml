@@ -1,0 +1,20 @@
+id        = "simd-256-sha3r2"
+kind      = "hash"
+category  = "hash"
+family    = "simd-sha3r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/20170829225940id_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/documents/SIMD_Round2.zip", sha256 = "6a641067963e986700d658f3c7977cac8c93f4bac2c9b9fcde44cd6f1b8b6b3d", license = "NOASSERTION", files = ["SIMD/Reference_Implementation/nist.c", "SIMD/Reference_Implementation/reference.c", "SIMD/Reference_Implementation/compat.h", "SIMD/Reference_Implementation/nist.h", "SIMD/Reference_Implementation/simd_iv.h", "LICENSE"] }
+
+# SHA-3 competition round-2 candidate simd, 256-bit digest. Implementation wired: SIMD/Reference_Implementation (zip SIMD_Round2.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r2-simd/SIMD_Round2/SIMD/KAT_MCT/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

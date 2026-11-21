@@ -1,0 +1,20 @@
+id        = "blake-256-sha3r2"
+kind      = "hash"
+category  = "hash"
+family    = "blake-sha3r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/20170829225940id_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/documents/BLAKE_Round2.zip", sha256 = "5e6bc74d6f4795d6ad13b4a5167d4b923f45acbdbd5cbeb274500c7c1d9fda1f", license = "NOASSERTION", files = ["blake_aumasson/Reference_Implementation/blake_ref.c", "blake_aumasson/Reference_Implementation/blake_ref.h", "LICENSE"] }
+
+# SHA-3 competition round-2 candidate blake, 256-bit digest. Implementation wired: blake_aumasson/Reference_Implementation (zip BLAKE_Round2.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r2-blake/BLAKE_Round2/blake_aumasson/KAT_MCT/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

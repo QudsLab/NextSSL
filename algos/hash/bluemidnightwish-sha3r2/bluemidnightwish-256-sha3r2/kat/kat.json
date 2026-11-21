@@ -1,0 +1,31 @@
+{
+  "algorithm": "bluemidnightwish-256-sha3r2",
+  "source": "NIST SHA-3 round-2 package bluemidnightwish: sha3r2-bluemidnightwish/Blue_Midnight_Wish_Round2/Blue_Midnight_Wish/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "82cac4bf6f4c2b41fbcc0e0984e9d8b76d7662f8e1789cdfbd85682acc55577a"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "f71289cd66d22657801ae25f5db946f6d2cc9884d70080d84282a5ef083cb70f"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "8f7a69e19a65f1148d02de5e2bf784974e6cf3335cd2b2d07bc3b88463d2be3c"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "afc964b8ec55fc0bf5880008e484c85cc08f85f10bc9dea42249412c376eba0d"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "b4234843e79fc032eff83c144767d6c1cb37bbaba601563b0d972d2f7881e759"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "algorithm": "fugue-512-sha3r2",
+  "source": "NIST SHA-3 round-2 package fugue: sha3r2-fugue/Fugue_Round2_Update/FugueTweak/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "3124f0cbb5a1c2fb3ce747ada63ed2ab3bcd74795cef2b0e805d5319fcc360b4617b6a7eb631d66f6d106ed0724b56fa8c1110f9b8df1c6898e7ca3c2dfccf79"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "2ef4115479b060fc64a4d6f6913a39e326afc81deb4e39d71c573df5ed132200e7c784bab1804930cad16847f16cbda59a865bbd928ebc17d33689fef233c10b"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "f42d0817ef7fe50afec87cdd1b934d16bfb575df4feda7e65d09b592b0318920d9b1d1f89bdff9aa4c6ab5f058d692ab0d5d431e860f6ac6be70f47ab124abd8"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "deea1a90bf692f13974943e0ceeb551cf94903bde784278fb52a2b61750d093ab4eb662edb36ffc3c184ce753621173928e5fa58f7df7449d8888a56f238d936"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "016a26bed81a1af68dc64e4089878b89c660ac5faa61fcf9f4eda88b5fd62e4786b66e295b94992887e0bb95bf802c4c35aada89d5c2f77ecc4d6fc7546114b6"
+    }
+  ]
+}

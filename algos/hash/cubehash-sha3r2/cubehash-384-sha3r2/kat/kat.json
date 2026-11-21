@@ -1,0 +1,31 @@
+{
+  "algorithm": "cubehash-384-sha3r2",
+  "source": "NIST SHA-3 round-2 package cubehash: sha3r2-cubehash/CubeHash_Round2/CubeHash/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "98ae93ebf4e58958497f610a22c8cf60f2292319283ca6459daed1707be06e7591c5f2d84bd3339e66c770e485bfa1fb"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "5bfc77c26d6beb90b40a48c9a9eb7652916a8edb68ac368ff3e8c8b7f5ad7ba8fe15ca3874c4986ca8702c4affe5b18e"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "d121bda5a84f45d8e9724e5318c38d4d545bfc333242c4bf7fd68fcdef14fbfeb1540fb7a7e12305dd9d413af9f96543"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "886fdf35651034cc0c669f45e29b806251b09ac80db2f24cd104f6edbc41e8e074bf66df783b98908b285c2706c8d396"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "eaeb9595a50c8572c0816a90db27f8260eabb45bfbb8c2a971ea440145ffb94cedabd333f01f2573093285fe3f45eed0"
+    }
+  ]
+}

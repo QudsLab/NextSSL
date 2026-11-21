@@ -1,0 +1,31 @@
+{
+  "algorithm": "groestl-512-sha3r3",
+  "source": "NIST SHA-3 round-3 package groestl: sha3r3-groestl/Groestl_FinalRnd/Groestl_FinalRnd/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "6d3ad29d279110eef3adbd66de2a0345a77baede1557f5d099fce0c03d6dc2ba8e6d4a6633dfbd66053c20faa87d1a11f39a7fbe4a6c2f009801370308fc4ad8"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "b23eeeb675c272c6e37a6ee9ab4dc505c9d6a10020f6bed3948205d04cdd1e90b06e494d186ef4f19266d7da200c89dc009e2b1a538cdea199e773fc076f802e"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "272ba3fd8a6e392278f234e5053411e8267375a4f9b05d960afd2e664a67448f500f8bcdd5b8a68d0bddf3baf873cddde5c235943c58353ad90aed79a6c39cf3"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "413907c17d8ca9e5477de5491914dc4eb621f35c96267f8e807affc0335dd8f6781c053ced249ff3c8c5a4d4ac62fe3d9e6660b30cc09621de7162e6c271d3c7"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "4726d760203c1eaf847f6837c74c16adcef5b55ead5768a7c13e21a33d0d7b740f52de8c81356da63daba791da6680af015deb81246550201f232822bb087ce5"
+    }
+  ]
+}

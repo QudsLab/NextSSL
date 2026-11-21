@@ -1,0 +1,21 @@
+{
+  "algorithm": "esch384v2",
+  "source": "NIST LWC lwc3_sparkle, LWC_HASH_KAT_384.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "2981715e2263ebd0cb6e5c2c99d0776d5e691ee737fde05247895e75d02e7447fd6ab707e2ec8385a539777965e472ee"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "ca78366c86e82726c19ebd1dbbb1375cef93c570f856ce2ff5da0ca87140dacd65f3e1c5af5f84b3f6390b9ac1a2fa4d"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "76a4f5b45a6062de68f974824fcc7de8ce4bd9ce64ce9a8958a3409151b2481d13b5d9c1bdca1a658d31110088c54922"
+    }
+  ]
+}

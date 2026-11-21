@@ -1,0 +1,33 @@
+{
+  "algorithm": "isapa128av20-lwc3",
+  "source": "NIST LWC lwc3_isap, LWC_AEAD_KAT_128_128.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "7b94ef35ae55ab272c9c44d6c1cf0102"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "40fead6fdf1c2d6d6eae40deddff9f55"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "cfcfa290ef310e3ac17f94e5fb6a6cb5"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+id        = "skein-256-sha3r3"
+kind      = "hash"
+category  = "hash"
+family    = "skein-sha3r3"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/20170829225940id_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round3/documents/Skein_FinalRnd.zip", sha256 = "f0b2003182cf11b3beb6601419e6cabcd9c86f3dcc19df3db7864892d342277f", license = "NOASSERTION", files = ["Skein_FinalRnd/Reference_Implementation/SHA3api_ref.c", "Skein_FinalRnd/Reference_Implementation/skein.c", "Skein_FinalRnd/Reference_Implementation/skein_block.c", "Skein_FinalRnd/Reference_Implementation/skein_debug.c", "Skein_FinalRnd/Reference_Implementation/SHA3api_ref.h", "Skein_FinalRnd/Reference_Implementation/brg_types.h", "Skein_FinalRnd/Reference_Implementation/skein.h", "Skein_FinalRnd/Reference_Implementation/skein_debug.h", "Skein_FinalRnd/Reference_Implementation/skein_port.h", "LICENSE"] }
+
+# SHA-3 competition round-3 candidate skein, 256-bit digest. Implementation wired: Skein_FinalRnd/Reference_Implementation (zip Skein_FinalRnd.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r3-skein/Skein_FinalRnd/Skein_FinalRnd/KAT_MCT/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

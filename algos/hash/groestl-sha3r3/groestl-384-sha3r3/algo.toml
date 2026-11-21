@@ -1,0 +1,20 @@
+id        = "groestl-384-sha3r3"
+kind      = "hash"
+category  = "hash"
+family    = "groestl-sha3r3"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/20170829225940id_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round3/documents/Groestl_FinalRnd.zip", sha256 = "4a617dd4dc3dae4f3553e80106d6fc1cb6ef8fa83ba01d91fce03099de58dfa1", license = "NOASSERTION", files = ["Groestl_FinalRnd/Reference_Implementation/Groestl-ref.c", "Groestl_FinalRnd/Reference_Implementation/Groestl-ref.h", "Groestl_FinalRnd/Reference_Implementation/brg_types.h", "LICENSE"] }
+
+# SHA-3 competition round-3 candidate groestl, 384-bit digest. Implementation wired: Groestl_FinalRnd/Reference_Implementation (zip Groestl_FinalRnd.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_384.txt (sha3r3-groestl/Groestl_FinalRnd/Groestl_FinalRnd/KAT_MCT/ShortMsgKAT_384.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 48

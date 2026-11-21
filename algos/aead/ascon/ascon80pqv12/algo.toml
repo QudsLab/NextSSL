@@ -1,0 +1,22 @@
+id        = "ascon80pqv12"
+kind      = "aead"
+category  = "aead"
+family    = "ascon"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/finalist-round/updated-submissions/ascon.zip", sha256 = "07a2bc8432612d260cef0945e6a16ff9aa94c9279a2e83b76ae984fdbe8b1a5d", license = "NOASSERTION", files = ["ref/api.h", "ref/ascon.h", "ref/decrypt.c", "ref/encrypt.c", "ref/permutations.h", "ref/printstate.c", "ref/printstate.h", "ref/round.h", "ref/word.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_160_128.txt from the NIST package lwc3_ascon (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 20
+nonce = 16
+tag = 16

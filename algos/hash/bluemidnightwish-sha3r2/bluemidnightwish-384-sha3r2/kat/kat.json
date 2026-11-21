@@ -1,0 +1,31 @@
+{
+  "algorithm": "bluemidnightwish-384-sha3r2",
+  "source": "NIST SHA-3 round-2 package bluemidnightwish: sha3r2-bluemidnightwish/Blue_Midnight_Wish_Round2/Blue_Midnight_Wish/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "1db2643911391720e712a8c24457ee456fabfd555f479156e4b24278d6f6bcfb03fab1ec2a2626b79f2880216bc29b29"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "45d80a7a71b2437242bf0f856a02d4520ffdc3a40c7494bfad67d696f4931a8664605a92b403511208d8fbe0bafde746"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "58ff1cf0dc7af1f52766410f56bfe6cef7d0bd41285cca5991990d654eabab89eb728e3272e7551a66c609c56d6a0b8a"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "cc0e007927bb15ed4394285367a5b20c121c3a3d542611c90d6f66cdae3fac843a8ac4194852297f73ba790d73324082"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "cf9e14dacb9a76ec54a6a197adde81bf29dac7c10fb7239a594afc953c9e101ef65f0ee7dcf05782de25920d579be99d"
+    }
+  ]
+}

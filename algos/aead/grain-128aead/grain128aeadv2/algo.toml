@@ -1,0 +1,22 @@
+id        = "grain128aeadv2"
+kind      = "aead"
+category  = "aead"
+family    = "grain-128aead"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/finalist-round/updated-submissions/grain-128aead.zip", sha256 = "c1be20f4b39c4d3e5851f7b1d14c24c753c505dda7c80a7c6e557d9491216d1e", license = "NOASSERTION", files = ["ref/api.h", "ref/grain128aead-v2.c", "ref/grain128aead-v2.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_96.txt from the NIST package lwc3_grain-128aead (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 12
+tag = 8

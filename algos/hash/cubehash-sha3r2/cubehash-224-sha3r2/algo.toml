@@ -1,0 +1,20 @@
+id        = "cubehash-224-sha3r2"
+kind      = "hash"
+category  = "hash"
+family    = "cubehash-sha3r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/20170829225940id_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/documents/CubeHash_Round2.zip", sha256 = "767118aaf273d12e7aacbe3a24896a31b2163df56b17061dea9d9ed97d50ce31", license = "NOASSERTION", files = ["CubeHash/Reference_Implementation/cubehash.c", "CubeHash/Reference_Implementation/cubehash.h", "LICENSE"] }
+
+# SHA-3 competition round-2 candidate cubehash, 224-bit digest. Implementation wired: CubeHash/Reference_Implementation (zip CubeHash_Round2.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_224.txt (sha3r2-cubehash/CubeHash_Round2/CubeHash/KAT_MCT/ShortMsgKAT_224.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 28

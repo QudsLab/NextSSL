@@ -1,0 +1,31 @@
+{
+  "algorithm": "blake-256-sha3r3",
+  "source": "NIST SHA-3 round-3 package blake: sha3r3-blake/Blake_FinalRnd/Blake_FinalRnd/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "716f6e863f744b9ac22c97ec7b76ea5f5908bc5b2f67c61510bfc4751384ea7a"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "e104256a2bc501f459d03fac96b9014f593e22d30f4de525fa680c3aa189eb4f"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "8f341148be7e354fdf38b693d8c6b4e0bd57301a734f6fd35cd85b8491c3ddcd"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "bc334d1069099f10c601883ac6f3e7e9787c6aa53171f76a21923cc5ad3ab937"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "b672a16f53982bab1e77685b71c0a5f6703ffd46a1c834be69f614bd128d658e"
+    }
+  ]
+}

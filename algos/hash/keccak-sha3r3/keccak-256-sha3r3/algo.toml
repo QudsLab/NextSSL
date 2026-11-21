@@ -1,0 +1,20 @@
+id        = "keccak-256-sha3r3"
+kind      = "hash"
+category  = "hash"
+family    = "keccak-sha3r3"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/20170829225940id_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round3/documents/Keccak_FinalRnd.zip", sha256 = "c524a952a3fc1c675c46c02919656ccc4472add3a846885a8160e1b38729f3e8", license = "NOASSERTION", files = ["Keccak_FinalRnd/Reference_Implementation/KeccakDuplex.c", "Keccak_FinalRnd/Reference_Implementation/KeccakF-1600-reference.c", "Keccak_FinalRnd/Reference_Implementation/KeccakNISTInterface.c", "Keccak_FinalRnd/Reference_Implementation/KeccakSponge.c", "Keccak_FinalRnd/Reference_Implementation/displayIntermediateValues.c", "Keccak_FinalRnd/Reference_Implementation/KeccakDuplex.h", "Keccak_FinalRnd/Reference_Implementation/KeccakF-1600-int-set.h", "Keccak_FinalRnd/Reference_Implementation/KeccakF-1600-interface.h", "Keccak_FinalRnd/Reference_Implementation/KeccakNISTInterface.h", "Keccak_FinalRnd/Reference_Implementation/KeccakSponge.h", "Keccak_FinalRnd/Reference_Implementation/brg_endian.h", "Keccak_FinalRnd/Reference_Implementation/displayIntermediateValues.h", "LICENSE"] }
+
+# SHA-3 competition round-3 candidate keccak, 256-bit digest. Implementation wired: Keccak_FinalRnd/Reference_Implementation (zip Keccak_FinalRnd.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r3-keccak/Keccak_FinalRnd/Keccak_FinalRnd/KAT_MCT/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

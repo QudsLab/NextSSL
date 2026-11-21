@@ -1,0 +1,31 @@
+{
+  "algorithm": "cubehash-256-sha3r2",
+  "source": "NIST SHA-3 round-2 package cubehash: sha3r2-cubehash/CubeHash_Round2/CubeHash/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "44c6de3ac6c73c391bf0906cb7482600ec06b216c7c54a2a8688a6a42676577d"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "6c38422fb21d2c2c648b25add974f29208e02a08105b6de99d745aa79e2b8466"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "ad4a4242bd1d2385d72a46eaeae3239bfa243829f0cf3640ed852d4f6609f7df"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "10a357968ea2f1e0d64b6c4358880cfefdd97480b9bdc3491e6d6ee9cfea315e"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "aec39bd08ce304e7ce36d9bb0a09f674678a9f2f34ba26bea59beaf1d177f278"
+    }
+  ]
+}
