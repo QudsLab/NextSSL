@@ -1,0 +1,27 @@
+id        = "firesaber2"
+kind      = "kem"
+category  = "kem"
+family    = "firesaber2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["ref/SABER_indcpa.c", "ref/SABER_indcpa.h", "ref/SABER_params.h", "ref/api.h", "ref/apiorig.h", "ref/cbd.c", "ref/cbd.h", "ref/fips202.c", "ref/fips202.h", "ref/kem.c", "ref/kem.h", "ref/pack_unpack.c", "ref/pack_unpack.h", "ref/poly.c", "ref/poly.h", "ref/poly_mul.h", "ref/poly_mul.inc", "ref/verify.c", "ref/verify.h", "LICENSE"] }
+
+# Variant wired: ref (kem). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1312
+sk = 3040
+ct = 1472
+ss = 32
+seed = 0
+coins = 0
