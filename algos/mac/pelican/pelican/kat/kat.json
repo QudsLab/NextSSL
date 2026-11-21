@@ -1,0 +1,38 @@
+{
+ "algorithm": "pelican",
+ "source": "src/mac/pelican/pelican_test.c",
+ "independence": "same-author (libtomcrypt's own self-test table)",
+ "replay": "crate",
+ "vectors": [
+  {
+   "id": "ltc-pelican-0",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "msg_hex": "",
+   "tag_hex": "eb583715f834dee5a4d16ee4b9d7760e"
+  },
+  {
+   "id": "ltc-pelican-1",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "msg_hex": "000102",
+   "tag_hex": "1c9740606c58172d0394197081c43854"
+  },
+  {
+   "id": "ltc-pelican-2",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "msg_hex": "000102030405060708090a0b0c0d0e0f",
+   "tag_hex": "03cc46b8aca79c361e8c6ea67b893249"
+  },
+  {
+   "id": "ltc-pelican-3",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "msg_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+   "tag_hex": "89cc36581bdd4db578bbacf0ff8b0815"
+  },
+  {
+   "id": "ltc-pelican-4",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "msg_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202123",
+   "tag_hex": "4a7d454dcdb5da8d487816485d459599"
+  }
+ ]
+}

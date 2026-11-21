@@ -1,0 +1,14 @@
+{
+ "algorithm": "libecc-eckcdsa-brainpoolp512r1-sha512",
+ "source": "libecc src/tests/ec_self_tests_core.h (ECKCDSA-SHA512/brainpoolp512r1)",
+ "independence": "same-author (libecc's own self-test vectors); pk derived by libecc from the published private scalar",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libecc-selftest-0",
+   "pk_hex": "9029732fe22ae35443272fbbbc0264e4979b305f7b0d87a9f954122933db257085e783e8cb9f8f72a7a1951cab60b4781ebf282e5bede39e33a1856c9af0ba4e1750af0c9ed40f9a5968bd9049de60ebd686ad8c11eab8521a4ea9df3ad8d142daa545c09aa8f327a22999b8e7946c26016b897cd72c84e1a3ad1c56e986ff4a",
+   "msg_hex": "627261696e706f6f6c503531327231",
+   "sig_hex": "c00d74be190345e3d97390fccfa1271d5e8d8ffb153149f6a7c569a878637bf5cd0278f92bce8c644cd3d425c9501434fedb1ec8f6556079ce51f8a4cc2ea9e345d8cf978c1558bd11babe4197e106190d6058535ebdf40006bdf22b112c877ee44ca2dcf90afe2104bdf6d8b907aa4c75bd2e5565a3ca8faeb1107e8539e21f"
+  }
+ ]
+}

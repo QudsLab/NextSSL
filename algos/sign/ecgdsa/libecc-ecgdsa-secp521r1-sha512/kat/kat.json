@@ -1,0 +1,5 @@
+{
+ "algorithm": "libecc-ecgdsa-secp521r1-sha512",
+ "vectors": [],
+ "note": "no vectors: libecc's self-tests do not cover this scheme/curve/hash combination; never invented"
+}

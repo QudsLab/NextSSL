@@ -1,0 +1,14 @@
+{
+ "algorithm": "libecc-ecgdsa-brainpoolp384r1-sha384",
+ "source": "libecc src/tests/ec_self_tests_core.h (ECGDSA-SHA384/brainpoolp384r1)",
+ "independence": "same-author (libecc's own self-test vectors); pk derived by libecc from the published private scalar",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libecc-selftest-0",
+   "pk_hex": "20191cae43c64c5de0cd3add85bd2586c3b6c5b2d71bf531f69235281398f45e27be94991d2f3c6dc29de5e2083faabf228cba857e112f638a2d016a78b9abb9905cb2a16ded801c0ef2404c0b059fedf6c2c4dade0fd7337d35c13d6e481be7",
+   "msg_hex": "627261696e706f6f6c503338347231",
+   "sig_hex": "3b34beb7a69e076dd96f2d712afee2f272a4d7addf291ca799ed6249a9bb4ecdcbe4448831c549b78fc72ba55a3466a679a047253dad0980e13f99f3204ad97bfe2ca209dd33bed57fe0b51d521d2e61b2788140905702e51adf44849f0c4bce"
+  }
+ ]
+}

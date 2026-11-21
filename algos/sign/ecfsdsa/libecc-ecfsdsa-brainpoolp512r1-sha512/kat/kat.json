@@ -1,0 +1,14 @@
+{
+ "algorithm": "libecc-ecfsdsa-brainpoolp512r1-sha512",
+ "source": "libecc src/tests/ec_self_tests_core.h (ECFSDSA-SHA512/brainpoolp512r1)",
+ "independence": "same-author (libecc's own self-test vectors); pk derived by libecc from the published private scalar",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libecc-selftest-0",
+   "pk_hex": "4f76590381db03109511dc0f81dbea43e6cf52ad8459b573dec89c3e9829301f7ebc8b57a3e4859d6dbd923085189aa9926f271dfe0b2ebc437d6fdcd0d1943d8588fd322138cb699e1090f4447650ccb5c82ca4038f3f2baa6bc058367fdd08ff75730100ef0c5cec046f00232fd4dc9d2bc1bde0a7fa763ea4d2211156b797",
+   "msg_hex": "616263",
+   "sig_hex": "3ee90340757a19ae242ff98977b82354f37e68da32cc80f7835f1fd6f96462640fc2bb6e833e2ed629371f43d383a99b6225687fd5f99b07fb4b95305f25a54d585af595d60792a4df01f0422f39949cf98be40e9fb38b40c4aa2d4936f70f717e303ee7ba0f4428a4fd189d88e85c5e69f87bb744440a41fd79371454496bc1290a968b0d46be9c5e3e1c1ea309b30310816b0801ab8f200ef77c86fbf4fcc3eb438ff9d76ec0622ebc37a4be141226c2a440d6908ce4730c5cf3bb7bf76c7f"
+  }
+ ]
+}

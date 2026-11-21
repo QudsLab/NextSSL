@@ -1,0 +1,14 @@
+{
+ "algorithm": "libecc-ecfsdsa-secp384r1-sha384",
+ "source": "libecc src/tests/ec_self_tests_core.h (ECFSDSA-SHA384/secp384r1)",
+ "independence": "same-author (libecc's own self-test vectors); pk derived by libecc from the published private scalar",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libecc-selftest-0",
+   "pk_hex": "75e4fb35f5fbbe885ac414ba51c2f9f757d071f854a839a5840311584a0559a72cdc563e29d752ab4d5118827489f4342a693a172ec9f108be3485288695ef4e6b20971f69859e9d13044881fcd76224c6369a09b96df4154592adb3083a2005",
+   "msg_hex": "616263",
+   "sig_hex": "29b785ab7fac1f80f64ce2f2d88aba8fe6103b2565feb5ae82fb6cf58f8ce1e73f7a8d683beabd24b7ea78f6013c9f70de94fad17281f4a60aa25423e9d87122965402195239b839fcd44cdf545bf74e1300c9f57ffc830defd97b66d57e9d07d1858062c5504e2178523926423fdd8399a8ba2b85bf45853f8e04bf20441516e71a78b09c7a7ee620b7f537e6c1deee"
+  }
+ ]
+}

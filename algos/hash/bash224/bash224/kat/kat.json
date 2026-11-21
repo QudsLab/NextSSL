@@ -1,0 +1,5 @@
+{
+ "algorithm": "bash224",
+ "vectors": [],
+ "note": "no published BASH-224 vector in libecc; never invented"
+}

@@ -1,0 +1,5 @@
+{
+ "algorithm": "libecc-eckcdsa-brainpoolp320r1-sha384",
+ "vectors": [],
+ "note": "no vectors: libecc's self-tests do not cover this scheme/curve/hash combination; never invented"
+}

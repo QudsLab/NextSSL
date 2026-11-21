@@ -1,0 +1,5 @@
+{
+ "algorithm": "gost28147-89-cryptopro-c",
+ "vectors": [],
+ "note": "no vectors in the gost-engine tree for gostcrypt with this substitution block (tests use OpenSSL EVP); never invented"
+}

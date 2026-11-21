@@ -1,0 +1,22 @@
+id        = "gost28147-89-cryptopro-c"
+kind      = "blockcipher"
+category  = "block"
+family    = "gost28147"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["GOST 28147-89", "RFC 5830", "RFC 4357"]
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/gost-engine/engine", commit = "af2b7e69e855572202420ffc36bae06ccd70796b", license = "Apache-2.0", files = ["gost89.c", "gost89.h", "LICENSE"] }
+
+# Wired: gostcrypt/gostdecrypt (GOST 28147-89 byte order, not the Magma one) with Gost28147_CryptoProParamSetC; gost_init + gost_key_nomask on one key schedule.
+# gost89.c includes <openssl/crypto.h> and <openssl/rand.h> only for OPENSSL_cleanse and RAND_priv_bytes: compat/openssl/*.h (ours) provide them;
+# RAND_priv_bytes is unreachable (the masked gost_key/magma_key are never called). Upstream is Apache-2.0 (gost-engine LICENSE); gost89.c says "same license as OpenSSL".
+# No published vector for this substitution block in the gost-engine tree (its tests go through OpenSSL EVP): kat.json is empty, never invented.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 32
+block = 8

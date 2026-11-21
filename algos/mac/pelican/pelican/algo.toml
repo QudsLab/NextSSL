@@ -1,0 +1,20 @@
+id        = "pelican"
+kind      = "mac"
+category  = "mac"
+family    = "pelican"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/libtom/libtomcrypt", commit = "6c6d5104de66f3ca0dfd7b68540ef86869982b07", license = "Unlicense", files = ["src/headers/tomcrypt.h", "src/headers/tomcrypt_argchk.h", "src/headers/tomcrypt_cfg.h", "src/headers/tomcrypt_cipher.h", "src/headers/tomcrypt_custom.h", "src/headers/tomcrypt_hash.h", "src/headers/tomcrypt_mac.h", "src/headers/tomcrypt_macros.h", "src/headers/tomcrypt_math.h", "src/headers/tomcrypt_misc.h", "src/headers/tomcrypt_pk.h", "src/headers/tomcrypt_pkcs.h", "src/headers/tomcrypt_private.h", "src/headers/tomcrypt_prng.h", "src/misc/zeromem.c", "src/mac/pelican/pelican.c", "src/ciphers/aes/aes.c", "src/ciphers/aes/aes_tab.c", "src/ciphers/aes/aes_desc.c", "LICENSE"] }
+
+# Wired: pelican_init/process/done through shim_tag (AES key lengths 16, 24, 32 only: glue rejects others).
+# libtomcrypt is public domain (Unlicense); LICENSE is the verbatim upstream file. aes_tab.c is #included by pelican.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+tag = 16

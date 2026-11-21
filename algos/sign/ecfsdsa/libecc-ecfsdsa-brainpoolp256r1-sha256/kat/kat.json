@@ -1,0 +1,14 @@
+{
+ "algorithm": "libecc-ecfsdsa-brainpoolp256r1-sha256",
+ "source": "libecc src/tests/ec_self_tests_core.h (ECFSDSA-SHA256/brainpoolp256r1)",
+ "independence": "same-author (libecc's own self-test vectors); pk derived by libecc from the published private scalar",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libecc-selftest-0",
+   "pk_hex": "94abc165ba1c3e910a7da92283dce62b647b3ef412b366b9c0b0ad3a21c8516e74b8c5e66d5e1b5360ea3260b67778c0ecf989250be499b571bb02963d7d0cc9",
+   "msg_hex": "616263",
+   "sig_hex": "a7f1c8cb029f01dab8f56874572cf0db752f958bb52353d92d87ec9f5953123e5e2a30649bb8a25f8fcbe1d97fb4987d2dadd81b05dd8b94be1ac5c9140509522df79a80aaa95782ff964462ced968f511c6b51a8eb944d1f9e7bcb3d0d898c4"
+  }
+ ]
+}

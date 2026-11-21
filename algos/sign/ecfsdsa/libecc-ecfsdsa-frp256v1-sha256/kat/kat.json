@@ -1,0 +1,14 @@
+{
+ "algorithm": "libecc-ecfsdsa-frp256v1-sha256",
+ "source": "libecc src/tests/ec_self_tests_core.h (ECFSDSA-SHA256/frp256v1)",
+ "independence": "same-author (libecc's own self-test vectors); pk derived by libecc from the published private scalar",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "libecc-selftest-0",
+   "pk_hex": "24515196ae19e32d2ef7f3b229dfacf00349aaaa0821a4271db1cd68e779fa8dc767388074207c365c46e739a8055be49bc2f3b4d0bf25808cc260301b28ec87",
+   "msg_hex": "616263",
+   "sig_hex": "22b1d00dc828a5cba264319f05933ac8ede6323d69d02b314e10caa5f13b299652e2ef4e469f0863fb3cf4c518b05fc4bb1dafb7d2c4307eda41efac888f0c7d9b3ab9d5b67ff2b9aae8c5edf982d4f76d7c613656e773aa1aaba630901d56a6"
+  }
+ ]
+}
