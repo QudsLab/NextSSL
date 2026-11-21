@@ -34,6 +34,10 @@ const PREFIX: &str = "nextssl__mirath_tcith_5a_fast_r2__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // glibc-only <printf.h> is included but unused; empty stand-in for other C libraries
+    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() != Ok("gnu") {
+        b.include("compat/noglibc");
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {

@@ -9,7 +9,7 @@ standards = []
 fips      = false
 copyleft  = false
 exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2065: 'asm': undeclared identifier"
+exclude_reason  = "MSVC cannot build the upstream C: poly.c error C2057: expected constant expression (C99 variable-length array)"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/CRYSTALS-Dilithium-Round2.zip", sha256 = "f6dcf5d833cf46ac99165974e83d9e7298550b870d113d4730d8c786b600a2c3", license = "NOASSERTION", files = ["crypto_sign/dilithium1-AES/aes256ctr.c", "crypto_sign/dilithium1-AES/aes256ctr.h", "crypto_sign/dilithium1-AES/config.h", "crypto_sign/dilithium1-AES/params.h", "crypto_sign/dilithium3/api.h", "crypto_sign/dilithium3/config.h", "crypto_sign/dilithium3/fips202.c", "crypto_sign/dilithium3/fips202.h", "crypto_sign/dilithium3/ntt.c", "crypto_sign/dilithium3/ntt.h", "crypto_sign/dilithium3/packing.c", "crypto_sign/dilithium3/packing.h", "crypto_sign/dilithium3/params.h", "crypto_sign/dilithium3/poly.c", "crypto_sign/dilithium3/poly.h", "crypto_sign/dilithium3/polyvec.c", "crypto_sign/dilithium3/polyvec.h", "crypto_sign/dilithium3/randombytes.h", "crypto_sign/dilithium3/reduce.c", "crypto_sign/dilithium3/reduce.h", "crypto_sign/dilithium3/rng.h", "crypto_sign/dilithium3/rounding.c", "crypto_sign/dilithium3/rounding.h", "crypto_sign/dilithium3/sign.c", "crypto_sign/dilithium3/sign.h", "crypto_sign/dilithium3/symmetric.h", "crypto_sign/dilithium3/test/cpucycles.h", "LICENSE"] }
 
 # Variant wired: crypto_sign/dilithium3 (sign). Other variants not wired: none.

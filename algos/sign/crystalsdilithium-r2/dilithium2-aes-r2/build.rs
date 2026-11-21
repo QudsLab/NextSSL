@@ -25,6 +25,24 @@ const PREFIX: &str = "nextssl__dilithium2_aes_r2__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // test/cpucycles.h defines x86-64 rdtsc inline asm (benchmarks only, DBENCH is never set here).
+    // Elsewhere (aarch64, wasm32, MSVC) pre-define its guard and the empty DBENCH_* macros it would
+    // provide, so the header is skipped and the sources compile unchanged.
+    let x86_gnu = std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("x86_64")
+        && !b.get_compiler().is_like_msvc();
+    if !x86_gnu {
+        let h = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_nocycles.h");
+        std::fs::write(
+            &h,
+            "#define CPUCYCLES_H\n#define DBENCH_START()\n#define DBENCH_STOP(t)\n",
+        )
+        .unwrap();
+        if b.get_compiler().is_like_msvc() {
+            b.flag(format!("/FI{}", h.display()));
+        } else {
+            b.flag("-include").flag(h.to_str().unwrap());
+        }
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
@@ -126,7 +144,7 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 
 fn main() {
     // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C: error C2065: 'asm': undeclared identifier
+    // Excluded: MSVC cannot build the upstream C: poly.c error C2057: expected constant expression (C99 variable-length array)
     if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
         return;
     }

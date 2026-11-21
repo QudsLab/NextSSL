@@ -17574,7 +17574,7 @@
       "exclude_targets": [
         "msvc"
       ],
-      "exclude_reason": "MSVC cannot build the upstream C: error C2065: 'asm': undeclared identifier",
+      "exclude_reason": "MSVC cannot build the upstream C: poly.c error C2057: expected constant expression (C99 variable-length array)",
       "sizes": {
         "pk": 1472,
         "sk": 3504,
@@ -17640,7 +17640,7 @@
       "exclude_targets": [
         "msvc"
       ],
-      "exclude_reason": "MSVC cannot build the upstream C: error C2065: 'asm': undeclared identifier",
+      "exclude_reason": "MSVC cannot build the upstream C: poly.c error C2057: expected constant expression (C99 variable-length array)",
       "sizes": {
         "pk": 1472,
         "sk": 3504,
@@ -17834,7 +17834,7 @@
       "exclude_targets": [
         "msvc"
       ],
-      "exclude_reason": "MSVC cannot build the upstream C: error C2065: 'asm': undeclared identifier",
+      "exclude_reason": "MSVC cannot build the upstream C: poly.c error C2057: expected constant expression (C99 variable-length array)",
       "sizes": {
         "pk": 1472,
         "sk": 3504,
@@ -18028,7 +18028,7 @@
       "exclude_targets": [
         "msvc"
       ],
-      "exclude_reason": "MSVC cannot build the upstream C: error C2065: 'asm': undeclared identifier",
+      "exclude_reason": "MSVC cannot build the upstream C: poly.c error C2057: expected constant expression (C99 variable-length array)",
       "sizes": {
         "pk": 1472,
         "sk": 3504,
@@ -18478,7 +18478,7 @@
       "exclude_targets": [
         "msvc"
       ],
-      "exclude_reason": "MSVC cannot build the upstream C: error C2065: 'asm': undeclared identifier",
+      "exclude_reason": "MSVC cannot build the upstream C: poly.c error C2057: expected constant expression (C99 variable-length array)",
       "sizes": {
         "pk": 1472,
         "sk": 3504,
