@@ -31,7 +31,10 @@ fn base() -> cc::Build {
     let mut pre = String::from("");
     let msvc = b.get_compiler().is_like_msvc();
     // NEXTSSL-PLATFORM-BEGIN
-    match std::env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_default().as_str() {
+    match std::env::var("CARGO_CFG_TARGET_ARCH")
+        .unwrap_or_default()
+        .as_str()
+    {
         "x86_64" => pre.push_str("#ifndef _AMD64_\n#define _AMD64_\n#endif\n"),
         "aarch64" => pre.push_str("#define _ARM64_\n"),
         "x86" => pre.push_str("#define _X86_\n"),

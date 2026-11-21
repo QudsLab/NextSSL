@@ -7,7 +7,7 @@
 //! PHC form: `$gambit-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! Documented limits of gambit.h enforced here: salt exactly 16 bytes, password <= 151, output <= 168, m_cost odd and <= 17 * t_cost / 4 (m_cost = 64-bit words of memory). 'NOT a reference implementation' per the author. The 256-bit instance (PHS) only. No test vectors in the package.
 // TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
+#![cfg(not(any(target_env = "msvc", target_arch = "wasm32")))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};
@@ -222,7 +222,11 @@ pub fn new(params: &Params) -> Result<Box<dyn PwHash>> {
 }
 
 #[cfg(test)]
-#[allow(clippy::single_element_loop)]
+#[allow(
+    clippy::single_element_loop,
+    clippy::absurd_extreme_comparisons,
+    clippy::useless_vec
+)]
 mod tests {
     use super::*;
 

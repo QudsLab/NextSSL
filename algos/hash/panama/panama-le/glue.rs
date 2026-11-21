@@ -1,5 +1,7 @@
 //! Adapter: panama-le (Crypto++ panama.cpp, verbatim C++17; namespace renamed `nextssl_panama_le_CryptoPP`) -> nextssl `Hash` (32-byte output, no parameters).
 //! All lengths are checked here before the C++ call; the C++ side is a one-shot digest (shim.cpp).
+// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
+#![cfg(not(target_arch = "wasm32"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::{Error, Hash, Params, Result};

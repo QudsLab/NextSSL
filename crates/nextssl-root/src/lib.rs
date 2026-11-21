@@ -132,9 +132,10 @@ pub fn verify(alg: &str, pk: &PublicKey, envelope: &[u8], aad: &[u8]) -> Result<
 
 use nextssl_core::{Ciphertext, SharedSecret, MAX_INPUT_LEN};
 use nextssl_registry::{
-    new_aead_in, new_blockcipher_in, new_blockmode_in, new_checksum_in, new_kdf_in, new_kem_in,
-    new_hashtocurve_in, new_kex_in, new_mac_in, new_oprf_in, new_pke_in, new_pwhash_in, new_sign_in, new_streamcipher_in,
-    new_prng_in, new_threshold_in, new_vdf_in, new_xof_in, new_zk_in,
+    new_aead_in, new_blockcipher_in, new_blockmode_in, new_checksum_in, new_hashtocurve_in,
+    new_kdf_in, new_kem_in, new_kex_in, new_mac_in, new_oprf_in, new_pke_in, new_prng_in,
+    new_pwhash_in, new_sign_in, new_streamcipher_in, new_threshold_in, new_vdf_in, new_xof_in,
+    new_zk_in,
 };
 
 fn check_input(data: &[u8]) -> Result<()> {
@@ -712,7 +713,16 @@ pub fn oprf_finalize(
     pk: &PublicKey,
     info: &[u8],
 ) -> Result<Zeroizing<Vec<u8>>> {
-    oprf_finalize_with(alg, &Params::new(), state, input, evaluated, proof, pk, info)
+    oprf_finalize_with(
+        alg,
+        &Params::new(),
+        state,
+        input,
+        evaluated,
+        proof,
+        pk,
+        info,
+    )
 }
 
 pub fn vdf_eval_with(

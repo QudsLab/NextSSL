@@ -26,11 +26,7 @@ const SOURCES: &[&str] = &[
     "upstream/cryptoint/uint64_optblocker.c",
     "shim.c",
 ];
-const INCLUDES: &[&str] = &[
-    "upstream/cryptoint",
-    "upstream/ref",
-    "compat",
-];
+const INCLUDES: &[&str] = &["upstream/cryptoint", "upstream/ref", "compat"];
 const PREFIX: &str = "nextssl__smaugt1v5__";
 
 fn base() -> cc::Build {
@@ -46,8 +42,10 @@ fn base() -> cc::Build {
     }
     // NextSSL fix (fix156): non-MSVC defines/flags
     if !msvc {
-        pre.push_str("#define CRYPTO_NAMESPACE(s) nextssl__smaugt1v5__crypto_kem_##s
-");
+        pre.push_str(
+            "#define CRYPTO_NAMESPACE(s) nextssl__smaugt1v5__crypto_kem_##s
+",
+        );
     }
     if !pre.is_empty() {
         let h = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_pre.h");
@@ -159,13 +157,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

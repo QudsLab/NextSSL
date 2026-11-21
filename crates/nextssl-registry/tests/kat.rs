@@ -526,10 +526,16 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
             assert!(g.generate(&seed, &mut []).is_err(), "{ctx}: empty output");
             if let Some(m) = sz.seed {
                 if m.max() < 4096 {
-                    assert!(g.generate(&vec![1u8; m.max() + 1], &mut a).is_err(), "{ctx}: long seed");
+                    assert!(
+                        g.generate(&vec![1u8; m.max() + 1], &mut a).is_err(),
+                        "{ctx}: long seed"
+                    );
                 }
                 if m.min() > 0 {
-                    assert!(g.generate(&vec![1u8; m.min() - 1], &mut a).is_err(), "{ctx}: short seed");
+                    assert!(
+                        g.generate(&vec![1u8; m.min() - 1], &mut a).is_err(),
+                        "{ctx}: short seed"
+                    );
                 }
             }
         }

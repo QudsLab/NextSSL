@@ -6,6 +6,8 @@
 //! password 0..=1024 bytes, output 16..=64 bytes.
 //! PHC form: `$battcrypt-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! Upstream also accepts t_cost bits above 16 (upgrade loops) and m_cost up to 50; capped here at t_cost <= 6 (upgrade bits zero; time doubles every two steps) and m_cost <= 10 (memory = 16 << m_cost bytes, time about doubles per step). The package's own stdint.h/inttypes.h (Windows shims) are not copied. Output <= 64 bytes.
+// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
+#![cfg(not(target_arch = "wasm32"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};
@@ -216,7 +218,11 @@ pub fn new(params: &Params) -> Result<Box<dyn PwHash>> {
 }
 
 #[cfg(test)]
-#[allow(clippy::single_element_loop)]
+#[allow(
+    clippy::single_element_loop,
+    clippy::absurd_extreme_comparisons,
+    clippy::useless_vec
+)]
 mod tests {
     use super::*;
     use serde_json::Value as J;

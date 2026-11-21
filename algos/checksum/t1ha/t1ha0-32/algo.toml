@@ -1,0 +1,17 @@
+id        = "t1ha0-32"
+kind      = "checksum"
+category  = "checksum"
+family    = "t1ha"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["t1ha (Fast Positive Hash, Leonid Yuriev), NON-cryptographic"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "t1ha", version = "=0.1.2", license = "Zlib" }
+
+[kat]
+files = ["kat/t1ha0-32.json"]
+
+[sizes]
+out = 8

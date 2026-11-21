@@ -1762,6 +1762,10 @@ nextssl-algo-swifftx-512-sha3r1 = { path = "../../algos/hash/swifftx-sha3r1/swif
 nextssl-algo-syconaer64128v1 = { path = "../../algos/aead/sycon/syconaer64128v1" }
 nextssl-algo-syconaer96128v1 = { path = "../../algos/aead/sycon/syconaer96128v1" }
 nextssl-algo-syconhash256v1 = { path = "../../algos/hash/sycon/syconhash256v1" }
+nextssl-algo-t1ha0-32 = { path = "../../algos/checksum/t1ha/t1ha0-32" }
+nextssl-algo-t1ha1 = { path = "../../algos/checksum/t1ha/t1ha1" }
+nextssl-algo-t1ha2 = { path = "../../algos/checksum/t1ha/t1ha2" }
+nextssl-algo-t1ha2-128 = { path = "../../algos/checksum/t1ha/t1ha2-128" }
 nextssl-algo-tangle-224-sha3r1 = { path = "../../algos/hash/tangle-sha3r1/tangle-224-sha3r1" }
 nextssl-algo-tangle-256-sha3r1 = { path = "../../algos/hash/tangle-sha3r1/tangle-256-sha3r1" }
 nextssl-algo-tangle-384-sha3r1 = { path = "../../algos/hash/tangle-sha3r1/tangle-384-sha3r1" }

@@ -33,7 +33,14 @@ mod ffi {
     use core::ffi::{c_int, c_ulong};
     extern "C" {
         #[link_name = "nextssl__fealnx__shim_crypt"]
-        pub fn crypt(enc: c_int, rounds: c_int, key: *const u8, keylen: c_ulong, input: *const u8, output: *mut u8) -> c_int;
+        pub fn crypt(
+            enc: c_int,
+            rounds: c_int,
+            key: *const u8,
+            keylen: c_ulong,
+            input: *const u8,
+            output: *mut u8,
+        ) -> c_int;
     }
 }
 
@@ -119,7 +126,9 @@ mod tests {
     use super::*;
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
+            .collect()
     }
 
     fn key(b: &[u8]) -> SymmetricKey {
@@ -131,7 +140,9 @@ mod tests {
         let c = new(&Params::new()).unwrap();
         assert!(new(&Params::new().with("rounds", nextssl_core::Value::U32(7))).is_err());
         for kl in [16] {
-            let kb: Vec<u8> = (0..kl as u8).map(|i| i.wrapping_mul(13).wrapping_add(1)).collect();
+            let kb: Vec<u8> = (0..kl as u8)
+                .map(|i| i.wrapping_mul(13).wrapping_add(1))
+                .collect();
             let k = c.keyed(&key(&kb)).unwrap();
             let orig: Vec<u8> = (0..BLOCK_LEN as u8).collect();
             let mut b = orig.clone();

@@ -3,17 +3,22 @@
 //! Strict on decode: the text must decode and must re-encode to exactly the input (rejects non-canonical forms).
 //! Input is limited to 4096 bytes (encode) / 8192 characters (decode): the conversion is quadratic.
 
-
 use nextssl_core::{Encoding, Error, Params, Result};
 
 struct Impl;
 
 fn enc(data: &[u8]) -> Vec<u8> {
-    bs58::encode(data).with_alphabet(bs58::Alphabet::RIPPLE).into_string().into_bytes()
+    bs58::encode(data)
+        .with_alphabet(bs58::Alphabet::RIPPLE)
+        .into_string()
+        .into_bytes()
 }
 
 fn dec(text: &[u8]) -> core::result::Result<Vec<u8>, ()> {
-    bs58::decode(text).with_alphabet(bs58::Alphabet::RIPPLE).into_vec().map_err(|_| ())
+    bs58::decode(text)
+        .with_alphabet(bs58::Alphabet::RIPPLE)
+        .into_vec()
+        .map_err(|_| ())
 }
 
 impl Encoding for Impl {

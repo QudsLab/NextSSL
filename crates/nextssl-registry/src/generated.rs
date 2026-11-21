@@ -32,6 +32,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_3des::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "3way",
         kind: Kind::BlockCipher,
@@ -5217,6 +5218,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_bash512::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "battcrypt-phc",
         kind: Kind::PwHash,
@@ -7011,6 +7013,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_chacha8::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "cham-128",
         kind: Kind::BlockCipher,
@@ -7040,6 +7043,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_cham_128::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "cham-64",
         kind: Kind::BlockCipher,
@@ -18151,7 +18155,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_gage1h256c512r064::new),
     },
-    #[cfg(not(target_env = "msvc"))]
+    #[cfg(not(any(target_env = "msvc", target_arch = "wasm32")))]
     AlgoInfo {
         id: "gambit-phc",
         kind: Kind::PwHash,
@@ -19792,6 +19796,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_hex::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "hight",
         kind: Kind::BlockCipher,
@@ -28462,6 +28467,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_magma::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "mars",
         kind: Kind::BlockCipher,
@@ -33664,6 +33670,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_paefforkskinnyb64t192n48v1::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "panama-be",
         kind: Kind::Hash,
@@ -33692,6 +33699,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_panama_be::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "panama-le",
         kind: Kind::Hash,
@@ -33720,6 +33728,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_panama_le::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "parallel-phc",
         kind: Kind::PwHash,
@@ -41629,6 +41638,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_shabal512::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "shacal2",
         kind: Kind::BlockCipher,
@@ -41779,6 +41789,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Threshold(nextssl_algo_shamir::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "shark",
         kind: Kind::BlockCipher,
@@ -42800,6 +42811,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_simd512::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "simeck-32",
         kind: Kind::BlockCipher,
@@ -42827,6 +42839,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_simeck_32::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "simeck-64",
         kind: Kind::BlockCipher,
@@ -42854,6 +42867,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_simeck_64::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "simon-128",
         kind: Kind::BlockCipher,
@@ -42881,6 +42895,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_simon_128::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "simon-64",
         kind: Kind::BlockCipher,
@@ -49540,6 +49555,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sqisign_p664_17::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "square",
         kind: Kind::BlockCipher,
@@ -50351,6 +50367,110 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         kat: &["kat/kat.json"],
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_syconhash256v1::new),
+    },
+    AlgoInfo {
+        id: "t1ha0-32",
+        kind: Kind::Checksum,
+        category: "checksum",
+        family: "t1ha",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["t1ha (Fast Positive Hash, Leonid Yuriev), NON-cryptographic"],
+        license: "Zlib",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes {
+            out: Some(Len::fixed(8)),
+            ..Sizes::NONE
+        },
+        params: &[],
+        test_params: &[],
+        dir: "checksum/t1ha/t1ha0-32",
+        kat: &["kat/t1ha0-32.json"],
+        smoke_skip: None,
+        ctor: Ctor::Checksum(nextssl_algo_t1ha0_32::new),
+    },
+    AlgoInfo {
+        id: "t1ha1",
+        kind: Kind::Checksum,
+        category: "checksum",
+        family: "t1ha",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["t1ha (Fast Positive Hash, Leonid Yuriev), NON-cryptographic"],
+        license: "Zlib",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes {
+            out: Some(Len::fixed(8)),
+            ..Sizes::NONE
+        },
+        params: &[],
+        test_params: &[],
+        dir: "checksum/t1ha/t1ha1",
+        kat: &["kat/t1ha1.json"],
+        smoke_skip: None,
+        ctor: Ctor::Checksum(nextssl_algo_t1ha1::new),
+    },
+    AlgoInfo {
+        id: "t1ha2",
+        kind: Kind::Checksum,
+        category: "checksum",
+        family: "t1ha",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["t1ha (Fast Positive Hash, Leonid Yuriev), NON-cryptographic"],
+        license: "Zlib",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes {
+            out: Some(Len::fixed(8)),
+            ..Sizes::NONE
+        },
+        params: &[],
+        test_params: &[],
+        dir: "checksum/t1ha/t1ha2",
+        kat: &["kat/t1ha2.json"],
+        smoke_skip: None,
+        ctor: Ctor::Checksum(nextssl_algo_t1ha2::new),
+    },
+    AlgoInfo {
+        id: "t1ha2-128",
+        kind: Kind::Checksum,
+        category: "checksum",
+        family: "t1ha",
+        aliases: &[],
+        tier: Tier::Unverified,
+        status: Status::Active,
+        standards: &["t1ha (Fast Positive Hash, Leonid Yuriev), NON-cryptographic"],
+        license: "Zlib",
+        copyleft: false,
+        c_backed: false,
+        fips: false,
+        cose_alg: None,
+        oid: "",
+        sizes: Sizes {
+            out: Some(Len::fixed(16)),
+            ..Sizes::NONE
+        },
+        params: &[],
+        test_params: &[],
+        dir: "checksum/t1ha/t1ha2-128",
+        kat: &["kat/t1ha2-128.json"],
+        smoke_skip: None,
+        ctor: Ctor::Checksum(nextssl_algo_t1ha2_128::new),
     },
     AlgoInfo {
         id: "tangle-224-sha3r1",
@@ -51635,6 +51755,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_trivium::new),
     },
+    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "ttmac",
         kind: Kind::Mac,

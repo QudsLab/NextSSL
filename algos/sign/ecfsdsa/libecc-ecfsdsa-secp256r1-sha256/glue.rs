@@ -149,7 +149,9 @@ impl Sign for S {
         let mut sk = Zeroizing::new(vec![0u8; self.sk]);
         // SAFETY: sk/pk are valid for the sizes the shim itself reports.
         #[allow(unsafe_code)]
-        let rc = with_rng(rng, || unsafe { ffi::keygen(sk.as_mut_ptr(), pk.as_mut_ptr()) })?;
+        let rc = with_rng(rng, || unsafe {
+            ffi::keygen(sk.as_mut_ptr(), pk.as_mut_ptr())
+        })?;
         if rc != 0 {
             return Err(Error::Backend("key generation failed"));
         }
@@ -185,7 +187,9 @@ impl Sign for S {
             )
         })?;
         if rc != 0 {
-            return Err(Error::Backend("signing failed (invalid private key or internal error)"));
+            return Err(Error::Backend(
+                "signing failed (invalid private key or internal error)",
+            ));
         }
         Signature::from_vec(sig, Len::fixed(self.sig))
     }
@@ -247,7 +251,10 @@ mod tests {
     #[test]
     fn roundtrip_and_rejects() {
         let g = S::probe().unwrap();
-        println!("SIZES libecc-ecfsdsa-secp256r1-sha256 sk={} pk={} sig={}", g.sk, g.pk, g.sig);
+        println!(
+            "SIZES libecc-ecfsdsa-secp256r1-sha256 sk={} pk={} sig={}",
+            g.sk, g.pk, g.sig
+        );
         let mut rng = entropy();
         let (pk, sk) = g.keygen(&mut rng).unwrap();
         let sig = g.sign(&sk, b"message", b"", &mut rng).unwrap();
@@ -284,7 +291,9 @@ mod tests {
     const KATS: &[(&str, &str, &str)] = &[("acca7f0dd3ac535f489b340f6bd7f50361b0ee095ae6a2289a6ab329238123e5", "616263", "af312fbd7792125c5cdfba69e6d369900ace9a70ba653fffbd9140e00079fae8b7cec57016a0b97aa069d54e0da95e45fb50b6771fb69f53fef00fc8b00e1fec258470402304bc2db44f3b2a20c08ff2a64f566baa2eb7bf37e1619b6ae09844")];
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
+            .collect()
     }
 
     #[test]
@@ -293,7 +302,13 @@ mod tests {
         for (sk, msg, sig) in KATS.iter().copied() {
             let seed = Seed::from_bytes(&unhex(sk), Len::fixed(g.sk)).unwrap();
             let (pk, _) = g.keygen_from_seed(&seed).unwrap();
-            println!("KATPK libecc-ecfsdsa-secp256r1-sha256 {}", pk.as_bytes().iter().map(|b| format!("{b:02x}")).collect::<String>());
+            println!(
+                "KATPK libecc-ecfsdsa-secp256r1-sha256 {}",
+                pk.as_bytes()
+                    .iter()
+                    .map(|b| format!("{b:02x}"))
+                    .collect::<String>()
+            );
             let sig = Signature::from_vec(unhex(sig), Len::fixed(g.sig)).unwrap();
             assert!(g.verify(&pk, &unhex(msg), b"", &sig).unwrap());
             let mut other = unhex(msg);

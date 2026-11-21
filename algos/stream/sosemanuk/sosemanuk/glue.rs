@@ -11,7 +11,14 @@ mod ffi {
     use core::ffi::{c_int, c_ulong};
     extern "C" {
         #[link_name = "nextssl__sosemanuk__shim_apply"]
-        pub fn apply(key: *const u8, keylen: c_ulong, iv: *const u8, ivlen: c_ulong, data: *mut u8, len: c_ulong) -> c_int;
+        pub fn apply(
+            key: *const u8,
+            keylen: c_ulong,
+            iv: *const u8,
+            ivlen: c_ulong,
+            data: *mut u8,
+            len: c_ulong,
+        ) -> c_int;
     }
 }
 
@@ -59,7 +66,9 @@ mod tests {
     use super::*;
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
+            .collect()
     }
 
     fn key(b: &[u8]) -> SymmetricKey {
@@ -86,7 +95,13 @@ mod tests {
         assert_ne!(&d, b"hello stream cipher");
         c.apply_keystream(&k, &n, &mut d).unwrap();
         assert_eq!(&d, b"hello stream cipher");
-        assert!(matches!(c.apply_keystream(&key(&[1u8; 15]), &n, &mut d), Err(Error::InvalidLength { .. })));
-        assert!(matches!(c.apply_keystream(&k, &n[..8], &mut d), Err(Error::InvalidLength { .. })));
+        assert!(matches!(
+            c.apply_keystream(&key(&[1u8; 15]), &n, &mut d),
+            Err(Error::InvalidLength { .. })
+        ));
+        assert!(matches!(
+            c.apply_keystream(&k, &n[..8], &mut d),
+            Err(Error::InvalidLength { .. })
+        ));
     }
 }

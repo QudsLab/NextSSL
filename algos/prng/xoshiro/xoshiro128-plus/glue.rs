@@ -29,7 +29,9 @@ impl Prng for Impl {
         Len::range(1, MAX_OUT).check("out", out.len())?;
         if seed.iter().all(|&b| b == 0) {
             // The upstream constructor would silently replace an all-zero seed; refuse it instead.
-            return Err(Error::InvalidInput("all-zero seed is not allowed for this generator"));
+            return Err(Error::InvalidInput(
+                "all-zero seed is not allowed for this generator",
+            ));
         }
         let mut s = <Xoshiro128Plus as SeedableRng>::Seed::default();
         s.as_mut().copy_from_slice(seed);

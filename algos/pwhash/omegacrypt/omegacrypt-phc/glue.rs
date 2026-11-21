@@ -224,7 +224,11 @@ pub fn new(params: &Params) -> Result<Box<dyn PwHash>> {
 }
 
 #[cfg(test)]
-#[allow(clippy::single_element_loop)]
+#[allow(
+    clippy::single_element_loop,
+    clippy::absurd_extreme_comparisons,
+    clippy::useless_vec
+)]
 mod tests {
     use super::*;
     use serde_json::Value as J;

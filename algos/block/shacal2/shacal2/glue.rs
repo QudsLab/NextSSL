@@ -2,6 +2,8 @@
 //! Generated wiring, no crypto logic. Block 32 bytes, key length one of 16..=64 bytes (checked here, wrong
 //! lengths are `InvalidLength`). Byte order is whatever Crypto++ defines; the glue only moves bytes. The C++ side
 //! (shim.cpp) owns one key schedule per keyed cipher and Crypto++ wipes it on destruction.
+// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
+#![cfg(not(target_arch = "wasm32"))]
 
 use core::ffi::c_void;
 use nextssl_core::{
@@ -12,7 +14,11 @@ const BLOCK_LEN: usize = 32;
 const KEY_MIN: usize = 16;
 const KEY_MAX: usize = 64;
 #[allow(dead_code)]
-const KEY_LENS: &[usize] = &[16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64];
+const KEY_LENS: &[usize] = &[
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+    40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63,
+    64,
+];
 
 fn key_len() -> Len {
     Len::range(16, 64)
@@ -177,7 +183,9 @@ mod tests {
         let c = new(&Params::new()).unwrap();
         let mut n = 0;
         for v in doc["vectors"].as_array().unwrap() {
-            let k = c.keyed(&key_of(&unhex(v["key_hex"].as_str().unwrap()))).unwrap();
+            let k = c
+                .keyed(&key_of(&unhex(v["key_hex"].as_str().unwrap())))
+                .unwrap();
             let pt = unhex(v["pt_hex"].as_str().unwrap());
             let ct = unhex(v["ct_hex"].as_str().unwrap());
             let mut b = pt.clone();

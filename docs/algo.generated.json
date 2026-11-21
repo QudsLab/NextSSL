@@ -50,6 +50,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 12,
         "block": 12
@@ -5205,7 +5209,6 @@
         "files": [
           "ARIRANG/Reference Implementation/Arirang_Ref64.c",
           "ARIRANG/Reference Implementation/Arirang_Ref64.h",
-          "ARIRANG/Reference Implementation/Arirang_ref64.h",
           "ARIRANG/Reference Implementation/SHA3api_ref.c",
           "ARIRANG/Reference Implementation/SHA3api_ref.h",
           "LICENSE"
@@ -5240,7 +5243,6 @@
         "files": [
           "ARIRANG/Reference Implementation/Arirang_Ref64.c",
           "ARIRANG/Reference Implementation/Arirang_Ref64.h",
-          "ARIRANG/Reference Implementation/Arirang_ref64.h",
           "ARIRANG/Reference Implementation/SHA3api_ref.c",
           "ARIRANG/Reference Implementation/SHA3api_ref.h",
           "LICENSE"
@@ -5275,7 +5277,6 @@
         "files": [
           "ARIRANG/Reference Implementation/Arirang_Ref64.c",
           "ARIRANG/Reference Implementation/Arirang_Ref64.h",
-          "ARIRANG/Reference Implementation/Arirang_ref64.h",
           "ARIRANG/Reference Implementation/SHA3api_ref.c",
           "ARIRANG/Reference Implementation/SHA3api_ref.h",
           "LICENSE"
@@ -5310,7 +5311,6 @@
         "files": [
           "ARIRANG/Reference Implementation/Arirang_Ref64.c",
           "ARIRANG/Reference Implementation/Arirang_Ref64.h",
-          "ARIRANG/Reference Implementation/Arirang_ref64.h",
           "ARIRANG/Reference Implementation/SHA3api_ref.c",
           "ARIRANG/Reference Implementation/SHA3api_ref.h",
           "LICENSE"
@@ -7266,6 +7266,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "out": {
           "min": 16,
@@ -9662,6 +9666,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 16,
@@ -9749,6 +9757,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 8
@@ -26677,9 +26689,10 @@
       "fips": false,
       "copyleft": false,
       "exclude_targets": [
-        "msvc"
+        "msvc",
+        "wasm32"
       ],
-      "exclude_reason": "MSVC cannot build the upstream C: keccak.cpp: error C2036: 'void *': unknown size (arithmetic on void pointers)",
+      "exclude_reason": "MSVC cannot build the upstream C++: keccak.cpp: error C2036: 'void *': unknown size (arithmetic on void pointers). wasm32: the C++ upstream needs the C++ standard library (<cstddef>), which the wasi-libc toolchain does not ship",
       "sizes": {
         "out": {
           "min": 16,
@@ -29056,6 +29069,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 8
@@ -49544,6 +49561,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 16,
@@ -59152,6 +59173,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "out": 32
       },
@@ -59237,6 +59262,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "out": 32
       },
@@ -59322,6 +59351,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "out": {
           "min": 16,
@@ -73603,6 +73636,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 16,
@@ -73841,6 +73878,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 8
@@ -75384,6 +75425,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 8,
         "block": 4
@@ -75468,6 +75513,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 8
@@ -75552,6 +75601,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 16,
@@ -75639,6 +75692,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 12,
@@ -87582,6 +87639,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 16
@@ -88732,6 +88793,122 @@
         ]
       },
       "dir": "hash/sycon/syconhash256v1"
+    },
+    {
+      "id": "t1ha0-32",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "t1ha",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "t1ha (Fast Positive Hash, Leonid Yuriev), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 8
+      },
+      "upstream": {
+        "crate": "t1ha",
+        "version": "=0.1.2",
+        "license": "Zlib"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/t1ha0-32.json"
+        ]
+      },
+      "dir": "checksum/t1ha/t1ha0-32"
+    },
+    {
+      "id": "t1ha1",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "t1ha",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "t1ha (Fast Positive Hash, Leonid Yuriev), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 8
+      },
+      "upstream": {
+        "crate": "t1ha",
+        "version": "=0.1.2",
+        "license": "Zlib"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/t1ha1.json"
+        ]
+      },
+      "dir": "checksum/t1ha/t1ha1"
+    },
+    {
+      "id": "t1ha2",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "t1ha",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "t1ha (Fast Positive Hash, Leonid Yuriev), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 8
+      },
+      "upstream": {
+        "crate": "t1ha",
+        "version": "=0.1.2",
+        "license": "Zlib"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/t1ha2.json"
+        ]
+      },
+      "dir": "checksum/t1ha/t1ha2"
+    },
+    {
+      "id": "t1ha2-128",
+      "kind": "checksum",
+      "category": "checksum",
+      "family": "t1ha",
+      "aliases": [],
+      "tier": "unverified",
+      "status": "active",
+      "standards": [
+        "t1ha (Fast Positive Hash, Leonid Yuriev), NON-cryptographic"
+      ],
+      "fips": false,
+      "copyleft": false,
+      "sizes": {
+        "out": 16
+      },
+      "upstream": {
+        "crate": "t1ha",
+        "version": "=0.1.2",
+        "license": "Zlib"
+      },
+      "params": {},
+      "kat": {
+        "files": [
+          "kat/t1ha2-128.json"
+        ]
+      },
+      "dir": "checksum/t1ha/t1ha2-128"
     },
     {
       "id": "tangle-224-sha3r1",
@@ -90529,6 +90706,10 @@
       ],
       "fips": false,
       "copyleft": false,
+      "exclude_targets": [
+        "wasm32"
+      ],
+      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 20,
         "tag": 20

@@ -19160,6 +19160,38 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-t1ha0-32"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "t1ha",
+]
+
+[[package]]
+name = "nextssl-algo-t1ha1"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "t1ha",
+]
+
+[[package]]
+name = "nextssl-algo-t1ha2"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "t1ha",
+]
+
+[[package]]
+name = "nextssl-algo-t1ha2-128"
+version = "0.0.1"
+dependencies = [
+ "nextssl-core",
+ "t1ha",
+]
+
+[[package]]
 name = "nextssl-algo-tangle-224-sha3r1"
 version = "0.0.1"
 dependencies = [
@@ -22618,6 +22650,10 @@ dependencies = [
  "nextssl-algo-syconaer64128v1",
  "nextssl-algo-syconaer96128v1",
  "nextssl-algo-syconhash256v1",
+ "nextssl-algo-t1ha0-32",
+ "nextssl-algo-t1ha1",
+ "nextssl-algo-t1ha2",
+ "nextssl-algo-t1ha2-128",
  "nextssl-algo-tangle-224-sha3r1",
  "nextssl-algo-tangle-256-sha3r1",
  "nextssl-algo-tangle-384-sha3r1",
@@ -23900,6 +23936,17 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
+]
+
+[[package]]
+name = "t1ha"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "535ab0a65695e5ce520b11d91df9e34ded9215bcef973400ae4cd72d9b7c0452"
+dependencies = [
+ "cfg-if",
+ "num-traits",
+ "rustc_version",
 ]
 
 [[package]]

@@ -1,5 +1,7 @@
 //! Adapter: ttmac (Crypto++ ttmac.cpp, verbatim C++17; namespace renamed `nextssl_ttmac_CryptoPP`) -> nextssl `Mac`.
 //! Key exactly 20 bytes, tag exactly 20 bytes (no truncation). All lengths are checked here before the C++ call.
+// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
+#![cfg(not(target_arch = "wasm32"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::{Error, Len, Mac, Params, Result, Sizes, SymmetricKey};
@@ -110,7 +112,10 @@ mod tests {
         let k = key(&[1u8; KEY_LEN]);
         for bad in [0, TAG_LEN - 1, TAG_LEN + 1] {
             let mut out = vec![0xAAu8; bad];
-            assert!(matches!(m.tag(&k, b"x", &mut out), Err(Error::InvalidLength { .. })));
+            assert!(matches!(
+                m.tag(&k, b"x", &mut out),
+                Err(Error::InvalidLength { .. })
+            ));
             assert!(out.iter().all(|&b| b == 0xAA), "output written on error");
         }
         for bad in [0, KEY_LEN - 1, KEY_LEN + 1] {

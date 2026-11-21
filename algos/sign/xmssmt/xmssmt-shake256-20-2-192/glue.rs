@@ -162,9 +162,8 @@ impl StatefulSign for Alg {
         let mut sk = Zeroizing::new(vec![0u8; SK]);
         // SAFETY: pk/sk are valid for PK/SK bytes (OID + core sizes of this parameter set), seed for SEED = 3 * n bytes.
         #[allow(unsafe_code)]
-        let rc = unsafe {
-            ffi::keypair_seed(pk.as_mut_ptr(), sk.as_mut_ptr(), OID, MT, s.as_mut_ptr())
-        };
+        let rc =
+            unsafe { ffi::keypair_seed(pk.as_mut_ptr(), sk.as_mut_ptr(), OID, MT, s.as_mut_ptr()) };
         if rc != 0 {
             return Err(Error::Backend("keygen failed"));
         }

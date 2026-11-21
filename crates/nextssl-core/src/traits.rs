@@ -750,8 +750,11 @@ pub trait Oprf: Send + Sync {
     fn keygen(&self, rng: &mut dyn EntropySource) -> Result<(PublicKey, PrivateKey)>;
 
     /// `input` must be 1..=65535 bytes (RFC 9497 limit).
-    fn blind(&self, input: &[u8], rng: &mut dyn EntropySource)
-        -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)>;
+    fn blind(
+        &self,
+        input: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)>;
 
     /// `info` is the public input of the partially oblivious mode; it must be empty in the other
     /// modes (an error, not ignored).

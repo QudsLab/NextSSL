@@ -20,12 +20,7 @@ const SOURCES: &[&str] = &[
     "upstream/xkcp/SP800-185.c",
     "shim.c",
 ];
-const INCLUDES: &[&str] = &[
-    "upstream/ref",
-    "upstream/xkcp",
-    "compat/xkcp",
-    "compat",
-];
+const INCLUDES: &[&str] = &["upstream/ref", "upstream/xkcp", "compat/xkcp", "compat"];
 const PREFIX: &str = "nextssl__titaniumccatoy__";
 
 fn base() -> cc::Build {
@@ -149,13 +144,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

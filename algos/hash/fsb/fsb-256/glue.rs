@@ -1,7 +1,7 @@
 //! Adapter: RustCrypto `fsb` `Fsb256` -> nextssl `Hash` (fixed 32-byte output, no parameters).
 
-use nextssl_core::{Error, Hash, Params, Result};
 use fsb::{Digest, Fsb256};
+use nextssl_core::{Error, Hash, Params, Result};
 
 const OUT_LEN: usize = 32;
 

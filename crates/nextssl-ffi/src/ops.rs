@@ -711,13 +711,25 @@ pub fn prng(alg: &str, params: Option<&str>, seed: &[u8], want: usize) -> R {
 
 pub fn h2c_hash(alg: &str, params: Option<&str>, msg: &[u8], dst: &[u8]) -> R {
     chk(msg)?;
-    let h = make!(new_hashtocurve_in, Kind::HashToCurve, Policy::Any, alg, params);
+    let h = make!(
+        new_hashtocurve_in,
+        Kind::HashToCurve,
+        Policy::Any,
+        alg,
+        params
+    );
     one(h.hash(msg, dst)?)
 }
 
 pub fn h2c_encode(alg: &str, params: Option<&str>, msg: &[u8], dst: &[u8]) -> R {
     chk(msg)?;
-    let h = make!(new_hashtocurve_in, Kind::HashToCurve, Policy::Any, alg, params);
+    let h = make!(
+        new_hashtocurve_in,
+        Kind::HashToCurve,
+        Policy::Any,
+        alg,
+        params
+    );
     one(h.encode(msg, dst)?)
 }
 
@@ -759,7 +771,14 @@ pub fn oprf_finalize(
     chk(proof)?;
     chk(info)?;
     let o = make!(new_oprf_in, Kind::Oprf, Policy::Any, alg, params);
-    Ok(vec![o.finalize(state, input, evaluated, proof, &pubkey(pk)?, info)?])
+    Ok(vec![o.finalize(
+        state,
+        input,
+        evaluated,
+        proof,
+        &pubkey(pk)?,
+        info,
+    )?])
 }
 
 pub fn vdf_eval(alg: &str, params: Option<&str>, challenge: &[u8], t: u64) -> R {

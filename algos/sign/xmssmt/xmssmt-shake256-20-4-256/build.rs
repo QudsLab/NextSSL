@@ -24,7 +24,12 @@ const SOURCES: &[&str] = &[
     "shim.c",
 ];
 const CPP_SOURCES: &[&str] = &[];
-const INCLUDES: &[&str] = &["upstream", "upstream/liboqs/src/common", "upstream/liboqs/src/common/sha2", "compat"];
+const INCLUDES: &[&str] = &[
+    "upstream",
+    "upstream/liboqs/src/common",
+    "upstream/liboqs/src/common/sha2",
+    "compat",
+];
 const DEFINES: &[(&str, &str)] = &[];
 const PREFIX: &str = "nextssl__xmssmt_shake256_20_4_256__";
 
@@ -117,8 +122,18 @@ fn main() {
     // END TARGET GATE
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let sets = [
-        (false, SOURCES.is_empty(), "probe", "nextssl_xmssmt_shake256_20_4_256"),
-        (true, CPP_SOURCES.is_empty(), "probe_cpp", "nextssl_xmssmt_shake256_20_4_256_cpp"),
+        (
+            false,
+            SOURCES.is_empty(),
+            "probe",
+            "nextssl_xmssmt_shake256_20_4_256",
+        ),
+        (
+            true,
+            CPP_SOURCES.is_empty(),
+            "probe_cpp",
+            "nextssl_xmssmt_shake256_20_4_256_cpp",
+        ),
     ];
     let mut objs = Vec::new();
     for (cpp, empty, dir, _) in sets {
@@ -169,13 +184,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

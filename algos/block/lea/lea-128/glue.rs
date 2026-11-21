@@ -5,7 +5,9 @@
 use lea::cipher::generic_array::GenericArray;
 use lea::cipher::{BlockDecrypt, BlockEncrypt, NewBlockCipher};
 use lea::Lea128;
-use nextssl_core::{BlockCipher, Error, KeyedBlockCipher, Len, Params, Result, Sizes, SymmetricKey};
+use nextssl_core::{
+    BlockCipher, Error, KeyedBlockCipher, Len, Params, Result, Sizes, SymmetricKey,
+};
 
 const KEY_LEN: usize = 16;
 const BLOCK_LEN: usize = 16;
@@ -50,7 +52,9 @@ impl BlockCipher for Cipher {
         if key.len() != KEY_LEN {
             return Err(Error::Backend("lea key length"));
         }
-        Ok(Box::new(Keyed(Lea128::new(GenericArray::from_slice(key.as_bytes())))))
+        Ok(Box::new(Keyed(Lea128::new(GenericArray::from_slice(
+            key.as_bytes(),
+        )))))
     }
 }
 

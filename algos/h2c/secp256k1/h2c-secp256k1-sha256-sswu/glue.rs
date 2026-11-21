@@ -3,8 +3,8 @@
 //! an empty or longer tag is an error (never hashed down, never defaulted).
 
 use hash2curve::GroupDigest;
-use nextssl_core::{Error, HashToCurve, Len, Params, Result, Sizes};
 use k256::elliptic_curve::sec1::ToSec1Point;
+use nextssl_core::{Error, HashToCurve, Len, Params, Result, Sizes};
 
 const OUT: usize = 33;
 const DST: Len = Len::range(1, 255);

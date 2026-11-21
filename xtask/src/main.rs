@@ -318,11 +318,19 @@ fn validate(a: &Algo, dir: &Path) -> Res<()> {
     }
     for t in &a.exclude_targets {
         if target_cfg(t).is_none() {
-            return Err(ctx(&format!("exclude_targets: unknown target {t:?} (known: msvc, wasm32)")));
+            return Err(ctx(&format!(
+                "exclude_targets: unknown target {t:?} (known: msvc, wasm32)"
+            )));
         }
     }
-    if a.exclude_targets.is_empty() != a.exclude_reason.as_deref().map_or(true, |r| r.trim().is_empty()) {
-        return Err(ctx("exclude_targets and a non-empty exclude_reason go together"));
+    if a.exclude_targets.is_empty()
+        != a.exclude_reason
+            .as_deref()
+            .map_or(true, |r| r.trim().is_empty())
+    {
+        return Err(ctx(
+            "exclude_targets and a non-empty exclude_reason go together",
+        ));
     }
     match (a.smoke.as_deref(), a.smoke_reason.as_deref()) {
         (None, None) => {}
@@ -741,7 +749,11 @@ pub(crate) fn target_cfg(t: &str) -> Option<&'static str> {
 
 /// `not(..)` predicate of an algorithm's excluded targets, if any.
 pub(crate) fn target_gate(a: &Algo) -> Option<String> {
-    let preds: Vec<&str> = a.exclude_targets.iter().filter_map(|t| target_cfg(t)).collect();
+    let preds: Vec<&str> = a
+        .exclude_targets
+        .iter()
+        .filter_map(|t| target_cfg(t))
+        .collect();
     match preds.len() {
         0 => None,
         1 => Some(format!("not({})", preds[0])),

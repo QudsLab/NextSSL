@@ -2,6 +2,8 @@
 //! Generated wiring, no crypto logic. Block 16 bytes, key length one of 16, 24, 32 bytes (checked here, wrong
 //! lengths are `InvalidLength`). Byte order is whatever Crypto++ defines; the glue only moves bytes. The C++ side
 //! (shim.cpp) owns one key schedule per keyed cipher and Crypto++ wipes it on destruction.
+// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
+#![cfg(not(target_arch = "wasm32"))]
 
 use core::ffi::c_void;
 use nextssl_core::{
@@ -177,7 +179,9 @@ mod tests {
         let c = new(&Params::new()).unwrap();
         let mut n = 0;
         for v in doc["vectors"].as_array().unwrap() {
-            let k = c.keyed(&key_of(&unhex(v["key_hex"].as_str().unwrap()))).unwrap();
+            let k = c
+                .keyed(&key_of(&unhex(v["key_hex"].as_str().unwrap())))
+                .unwrap();
             let pt = unhex(v["pt_hex"].as_str().unwrap());
             let ct = unhex(v["ct_hex"].as_str().unwrap());
             let mut b = pt.clone();

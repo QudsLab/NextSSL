@@ -31,8 +31,25 @@ const SOURCES: &[&str] = &[
     "shim.c",
 ];
 const CPP_SOURCES: &[&str] = &[];
-const INCLUDES: &[&str] = &["upstream/src/common/pqclean_shims", "upstream/src/sig/qruov/qruov_qruov_common", "upstream/src/sig/qruov/qruov_qruov_ref", "upstream/src/common", "upstream/src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits", "upstream/src/common/sha3/xkcp_low/KeccakP-1600times4/serial", "upstream/src/common/sha3", "upstream/src/common/aes", "upstream/src/common/sha2", "upstream/src/common/rand", "compat"];
-const DEFINES: &[(&str, &str)] = &[("QRUOV_PARAM_3q31L10", ""), ("PRG_IS_AES", "0"), ("QRUOV_PRIM_OQS", ""), ("QRUOV_NAMESPACE_PREFIX", "qruov_3q31L10_shake_ref_")];
+const INCLUDES: &[&str] = &[
+    "upstream/src/common/pqclean_shims",
+    "upstream/src/sig/qruov/qruov_qruov_common",
+    "upstream/src/sig/qruov/qruov_qruov_ref",
+    "upstream/src/common",
+    "upstream/src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits",
+    "upstream/src/common/sha3/xkcp_low/KeccakP-1600times4/serial",
+    "upstream/src/common/sha3",
+    "upstream/src/common/aes",
+    "upstream/src/common/sha2",
+    "upstream/src/common/rand",
+    "compat",
+];
+const DEFINES: &[(&str, &str)] = &[
+    ("QRUOV_PARAM_3q31L10", ""),
+    ("PRG_IS_AES", "0"),
+    ("QRUOV_PRIM_OQS", ""),
+    ("QRUOV_NAMESPACE_PREFIX", "qruov_3q31L10_shake_ref_"),
+];
 const PREFIX: &str = "nextssl__qruov_3q31l10shake__";
 
 fn base(cpp: bool) -> cc::Build {
@@ -123,8 +140,18 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 fn main() {
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let sets = [
-        (false, SOURCES.is_empty(), "probe", "nextssl_qruov_3q31l10shake"),
-        (true, CPP_SOURCES.is_empty(), "probe_cpp", "nextssl_qruov_3q31l10shake_cpp"),
+        (
+            false,
+            SOURCES.is_empty(),
+            "probe",
+            "nextssl_qruov_3q31l10shake",
+        ),
+        (
+            true,
+            CPP_SOURCES.is_empty(),
+            "probe_cpp",
+            "nextssl_qruov_3q31l10shake_cpp",
+        ),
     ];
     let mut objs = Vec::new();
     for (cpp, empty, dir, _) in sets {
@@ -175,13 +202,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

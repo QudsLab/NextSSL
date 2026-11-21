@@ -15,7 +15,11 @@ const SOURCES: &[&str] = &[
 ];
 const CPP_SOURCES: &[&str] = &[];
 const INCLUDES: &[&str] = &["upstream/src", "compat"];
-const DEFINES: &[(&str, &str)] = &[("WITH_STDLIB", ""), ("WITH_LIBECC_CONFIG_OVERRIDE", ""), ("WITH_HASH_BASH224", "")];
+const DEFINES: &[(&str, &str)] = &[
+    ("WITH_STDLIB", ""),
+    ("WITH_LIBECC_CONFIG_OVERRIDE", ""),
+    ("WITH_HASH_BASH224", ""),
+];
 const PREFIX: &str = "nextssl__bash224__";
 
 fn base(cpp: bool) -> cc::Build {
@@ -107,7 +111,12 @@ fn main() {
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let sets = [
         (false, SOURCES.is_empty(), "probe", "nextssl_bash224"),
-        (true, CPP_SOURCES.is_empty(), "probe_cpp", "nextssl_bash224_cpp"),
+        (
+            true,
+            CPP_SOURCES.is_empty(),
+            "probe_cpp",
+            "nextssl_bash224_cpp",
+        ),
     ];
     let mut objs = Vec::new();
     for (cpp, empty, dir, _) in sets {
@@ -164,13 +173,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

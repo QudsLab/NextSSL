@@ -201,7 +201,17 @@ mod tests {
     #[test]
     fn roundtrip_and_rejects() {
         let g = new(&Params::new()).unwrap();
-        let mut rng = FixedEntropy::new(&{ let mut v = vec![0u8; 1 << 22]; let mut x = 0x9E37_79B9_7F4A_7C15u64; for b in v.iter_mut() { x ^= x << 13; x ^= x >> 7; x ^= x << 17; *b = x as u8; } v });
+        let mut rng = FixedEntropy::new(&{
+            let mut v = vec![0u8; 1 << 22];
+            let mut x = 0x9E37_79B9_7F4A_7C15u64;
+            for b in v.iter_mut() {
+                x ^= x << 13;
+                x ^= x >> 7;
+                x ^= x << 17;
+                *b = x as u8;
+            }
+            v
+        });
         let (pk, sk) = g.keygen(&mut rng).unwrap();
         let sig = g.sign(&sk, b"message", b"", &mut rng).unwrap();
         assert!(g.verify(&pk, b"message", b"", &sig).unwrap());

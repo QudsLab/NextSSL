@@ -9,7 +9,12 @@ use base64::engine::DecodePaddingMode;
 use base64::Engine;
 
 fn engine() -> GeneralPurpose {
-    GeneralPurpose::new(&alphabet::BCRYPT, GeneralPurposeConfig::new().with_encode_padding(false).with_decode_padding_mode(DecodePaddingMode::RequireNone))
+    GeneralPurpose::new(
+        &alphabet::BCRYPT,
+        GeneralPurposeConfig::new()
+            .with_encode_padding(false)
+            .with_decode_padding_mode(DecodePaddingMode::RequireNone),
+    )
 }
 
 use nextssl_core::{Encoding, Error, Params, Result};

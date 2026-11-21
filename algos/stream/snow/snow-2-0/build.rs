@@ -7,9 +7,16 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/cryptoint/uint16_optblocker.c", "upstream/cryptoint/uint32_optblocker.c", "upstream/cryptoint/uint64_optblocker.c", "upstream/snow20/benchmarks/snow-2.0/e/snow-2.0.c", "shim.c"];
+const SOURCES: &[&str] = &[
+    "upstream/cryptoint/uint16_optblocker.c",
+    "upstream/cryptoint/uint32_optblocker.c",
+    "upstream/cryptoint/uint64_optblocker.c",
+    "upstream/snow20/benchmarks/snow-2.0/e/snow-2.0.c",
+    "shim.c",
+];
 const CPP_SOURCES: &[&str] = &[];
-const INCLUDES: &[&str] = &["upstream/cryptoint", 
+const INCLUDES: &[&str] = &[
+    "upstream/cryptoint",
     "upstream/snow20/benchmarks/snow-2.0/e",
     "upstream",
     "compat",
@@ -168,13 +175,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

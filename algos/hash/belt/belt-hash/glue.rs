@@ -1,7 +1,7 @@
 //! Adapter: RustCrypto `belt_hash` `BeltHash` -> nextssl `Hash` (fixed 32-byte output, no parameters).
 
+use belt_hash::{BeltHash, Digest};
 use nextssl_core::{Error, Hash, Params, Result};
-use belt_hash::{Digest, BeltHash};
 
 const OUT_LEN: usize = 32;
 

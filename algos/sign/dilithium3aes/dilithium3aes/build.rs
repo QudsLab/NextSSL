@@ -21,11 +21,7 @@ const SOURCES: &[&str] = &[
     "upstream/cryptoint/uint8_optblocker.c",
     "shim.c",
 ];
-const INCLUDES: &[&str] = &[
-    "upstream/cryptoint",
-    "upstream/ref",
-    "compat",
-];
+const INCLUDES: &[&str] = &["upstream/cryptoint", "upstream/ref", "compat"];
 const PREFIX: &str = "nextssl__dilithium3aes__";
 
 fn base() -> cc::Build {
@@ -41,8 +37,10 @@ fn base() -> cc::Build {
     }
     // NextSSL fix (fix156): non-MSVC defines/flags
     if !msvc {
-        pre.push_str("#define CRYPTO_NAMESPACE(s) nextssl__dilithium3aes__crypto_sign_##s
-");
+        pre.push_str(
+            "#define CRYPTO_NAMESPACE(s) nextssl__dilithium3aes__crypto_sign_##s
+",
+        );
     }
     if !pre.is_empty() {
         let h = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_pre.h");
@@ -122,7 +120,11 @@ fn main() {
     let mut f = std::fs::File::create(&hdr).unwrap();
     for s in &syms {
         // NextSSL fix (fix156): the glue links the signed-message entry point under the name the wiring derived from sign.h
-        let short = if s == "CRYPTO_NAMESPACETOP" { "DILITHIUM_NAMESPACETOP" } else { s.as_str() };
+        let short = if s == "CRYPTO_NAMESPACETOP" {
+            "DILITHIUM_NAMESPACETOP"
+        } else {
+            s.as_str()
+        };
         writeln!(f, "#define {s} {PREFIX}{short}").unwrap();
     }
     drop(f);
@@ -156,13 +158,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

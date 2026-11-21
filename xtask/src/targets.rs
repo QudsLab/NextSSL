@@ -10,7 +10,8 @@ use crate::{target_gate, Algo};
 use std::path::PathBuf;
 
 const GLUE_MARK: &str = "// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)\n";
-const BUILD_BEGIN: &str = "    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)\n";
+const BUILD_BEGIN: &str =
+    "    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)\n";
 const BUILD_END: &str = "    // END TARGET GATE\n";
 
 fn strip_glue(s: &str) -> String {
@@ -54,7 +55,9 @@ fn build_test(a: &Algo) -> String {
         .iter()
         .map(|t| match t.as_str() {
             "msvc" => "std::env::var(\"CARGO_CFG_TARGET_ENV\").as_deref() == Ok(\"msvc\")".into(),
-            "wasm32" => "std::env::var(\"CARGO_CFG_TARGET_ARCH\").as_deref() == Ok(\"wasm32\")".into(),
+            "wasm32" => {
+                "std::env::var(\"CARGO_CFG_TARGET_ARCH\").as_deref() == Ok(\"wasm32\")".into()
+            }
             other => unreachable!("validated target {other}"),
         })
         .collect();
@@ -73,8 +76,15 @@ fn build(cur: &str, a: &Algo) -> Result<String, String> {
         .ok_or_else(|| format!("{}: build.rs has no `fn main() {{`", a.id))?
         + main.len();
     let reason = a.exclude_reason.as_deref().unwrap_or_default();
+    // rustfmt puts the opening brace of a multi-line condition on its own line; emit the same
+    // layout so `cargo fmt` and `cargo xtask gen --check` agree.
+    let open = if a.exclude_targets.len() > 1 {
+        "\n    {"
+    } else {
+        " {"
+    };
     Ok(format!(
-        "{}{BUILD_BEGIN}    // Excluded: {reason}\n    if {} {{\n        return;\n    }}\n{BUILD_END}{}",
+        "{}{BUILD_BEGIN}    // Excluded: {reason}\n    if {}{open}\n        return;\n    }}\n{BUILD_END}{}",
         &base[..i],
         build_test(a),
         &base[i..]
@@ -89,7 +99,9 @@ pub fn outputs(root: &std::path::Path, algos: &[Algo]) -> Result<Vec<(PathBuf, S
         let gate = target_gate(a);
         for (name, is_glue) in [("glue.rs", true), ("build.rs", false)] {
             let p = dir.join(name);
-            let Ok(raw) = std::fs::read_to_string(&p) else { continue };
+            let Ok(raw) = std::fs::read_to_string(&p) else {
+                continue;
+            };
             let cur = raw.replace("\r\n", "\n");
             let want = if is_glue {
                 glue(&cur, gate.as_deref())

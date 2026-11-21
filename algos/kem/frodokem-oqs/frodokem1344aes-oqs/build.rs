@@ -22,7 +22,18 @@ const SOURCES: &[&str] = &[
     "shim.c",
 ];
 const CPP_SOURCES: &[&str] = &[];
-const INCLUDES: &[&str] = &["upstream/src/kem/frodokem", "upstream/src/kem/frodokem/external/frodo", "upstream/src/common", "upstream/src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits", "upstream/src/common/sha3/xkcp_low/KeccakP-1600times4/serial", "upstream/src/common/sha3", "upstream/src/common/aes", "upstream/src/common/sha2", "upstream/src/common/rand", "compat"];
+const INCLUDES: &[&str] = &[
+    "upstream/src/kem/frodokem",
+    "upstream/src/kem/frodokem/external/frodo",
+    "upstream/src/common",
+    "upstream/src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits",
+    "upstream/src/common/sha3/xkcp_low/KeccakP-1600times4/serial",
+    "upstream/src/common/sha3",
+    "upstream/src/common/aes",
+    "upstream/src/common/sha2",
+    "upstream/src/common/rand",
+    "compat",
+];
 const DEFINES: &[(&str, &str)] = &[("OQS_ENABLE_KEM_frodokem_1344_aes", "1")];
 const PREFIX: &str = "nextssl__frodokem1344aes_oqs__";
 
@@ -109,8 +120,18 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 fn main() {
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let sets = [
-        (false, SOURCES.is_empty(), "probe", "nextssl_frodokem1344aes_oqs"),
-        (true, CPP_SOURCES.is_empty(), "probe_cpp", "nextssl_frodokem1344aes_oqs_cpp"),
+        (
+            false,
+            SOURCES.is_empty(),
+            "probe",
+            "nextssl_frodokem1344aes_oqs",
+        ),
+        (
+            true,
+            CPP_SOURCES.is_empty(),
+            "probe_cpp",
+            "nextssl_frodokem1344aes_oqs_cpp",
+        ),
     ];
     let mut objs = Vec::new();
     for (cpp, empty, dir, _) in sets {
@@ -161,13 +182,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

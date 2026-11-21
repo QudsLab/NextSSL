@@ -6,7 +6,9 @@
 use aes::Aes256;
 use eme2::cipher::KeyIvInit;
 use eme2::Eme2;
-use nextssl_core::{check_len, BlockMode, Error, Len, Params, Result, Sizes, SymmetricKey, Zeroizing, MAX_INPUT_LEN};
+use nextssl_core::{
+    check_len, BlockMode, Error, Len, Params, Result, Sizes, SymmetricKey, Zeroizing, MAX_INPUT_LEN,
+};
 
 const KEY_LEN: usize = 64;
 const TWEAK_LEN: usize = 16;
@@ -19,7 +21,8 @@ impl Mode {
         Len::fixed(KEY_LEN).check("key", key.len())?;
         Len::fixed(TWEAK_LEN).check("nonce", nonce.len())?;
         check_len("data", len, BLOCK_LEN, MAX_INPUT_LEN)?;
-        Eme2::<Aes256>::new_from_slices(key.as_bytes(), nonce).map_err(|_| Error::Backend("eme2 key setup"))
+        Eme2::<Aes256>::new_from_slices(key.as_bytes(), nonce)
+            .map_err(|_| Error::Backend("eme2 key setup"))
     }
 }
 
@@ -36,14 +39,16 @@ impl BlockMode for Mode {
     fn encrypt(&self, key: &SymmetricKey, nonce: &[u8], pt: &[u8]) -> Result<Vec<u8>> {
         let m = self.init(key, nonce, pt.len())?;
         let mut buf = pt.to_vec();
-        m.encrypt(&mut buf).map_err(|_| Error::InvalidInput("eme2: data shorter than 16 bytes"))?;
+        m.encrypt(&mut buf)
+            .map_err(|_| Error::InvalidInput("eme2: data shorter than 16 bytes"))?;
         Ok(buf)
     }
 
     fn decrypt(&self, key: &SymmetricKey, nonce: &[u8], ct: &[u8]) -> Result<Zeroizing<Vec<u8>>> {
         let m = self.init(key, nonce, ct.len())?;
         let mut buf = Zeroizing::new(ct.to_vec());
-        m.decrypt(&mut buf).map_err(|_| Error::InvalidInput("eme2: data shorter than 16 bytes"))?;
+        m.decrypt(&mut buf)
+            .map_err(|_| Error::InvalidInput("eme2: data shorter than 16 bytes"))?;
         Ok(buf)
     }
 }

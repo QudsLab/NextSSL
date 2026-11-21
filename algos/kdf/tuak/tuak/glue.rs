@@ -9,7 +9,17 @@ mod ffi {
     use core::ffi::c_int;
     extern "C" {
         #[link_name = "nextssl__tuak__shim_derive"]
-        pub fn derive(topc: *const u8, k: *const u8, klen: core::ffi::c_ulong, rnd: *const u8, res_len: core::ffi::c_ulong, ck_len: core::ffi::c_ulong, ik_len: core::ffi::c_ulong, iters: core::ffi::c_ulong, out: *mut u8) -> c_int;
+        pub fn derive(
+            topc: *const u8,
+            k: *const u8,
+            klen: core::ffi::c_ulong,
+            rnd: *const u8,
+            res_len: core::ffi::c_ulong,
+            ck_len: core::ffi::c_ulong,
+            ik_len: core::ffi::c_ulong,
+            iters: core::ffi::c_ulong,
+            out: *mut u8,
+        ) -> c_int;
     }
 }
 
@@ -37,13 +47,21 @@ impl Kdf for Impl {
     fn derive(&self, ikm: &SymmetricKey, salt: &[u8], info: &[u8], out: &mut [u8]) -> Result<()> {
         let kl = ikm.len();
         if kl != 16 && kl != 32 {
-            return Err(Error::InvalidLength { what: "ikm", got: kl, min: 16, max: 32 });
+            return Err(Error::InvalidLength {
+                what: "ikm",
+                got: kl,
+                min: 16,
+                max: 32,
+            });
         }
         Len::fixed(16).check("salt", salt.len())?;
         Len::fixed(32).check("info", info.len())?;
         let want = self.res_len + self.ck_len + self.ik_len + 6;
         if out.len() != want {
-            return Err(Error::BadOutputLen { expected: want, got: out.len() });
+            return Err(Error::BadOutputLen {
+                expected: want,
+                got: out.len(),
+            });
         }
         // SAFETY: info is valid for 32 bytes, ikm for kl (16 or 32), salt for 16 (all checked), out for exactly
         // res_len + ck_len + ik_len + 6 bytes (checked, and each length is one of the validated set); the callee keeps no pointer.
@@ -86,7 +104,12 @@ pub fn new(params: &Params) -> Result<Box<dyn Kdf>> {
     if !(1..=1024).contains(&iters) {
         return Err(Error::ParamOutOfRange("keccak_iterations"));
     }
-    Ok(Box::new(Impl { res_len, ck_len, ik_len, iters }))
+    Ok(Box::new(Impl {
+        res_len,
+        ck_len,
+        ik_len,
+        iters,
+    }))
 }
 
 #[cfg(test)]
@@ -94,7 +117,9 @@ mod tests {
     use super::*;
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
+            .collect()
     }
 
     fn key(b: &[u8]) -> SymmetricKey {
@@ -137,10 +162,14 @@ mod tests {
         assert_eq!(a, b);
         k.derive(&kk, &[0x22u8; 16], &[0x34u8; 32], &mut b).unwrap();
         assert_ne!(a, b);
-        assert!(k.derive(&key(&[0u8; 24]), &[0u8; 16], &[0u8; 32], &mut a).is_err());
+        assert!(k
+            .derive(&key(&[0u8; 24]), &[0u8; 16], &[0u8; 32], &mut a)
+            .is_err());
         assert!(k.derive(&kk, &[0u8; 15], &[0u8; 32], &mut a).is_err());
         assert!(k.derive(&kk, &[0u8; 16], &[0u8; 31], &mut a).is_err());
-        assert!(k.derive(&kk, &[0u8; 16], &[0u8; 32], &mut [0u8; MIN_OUT + 1]).is_err());
+        assert!(k
+            .derive(&kk, &[0u8; 16], &[0u8; 32], &mut [0u8; MIN_OUT + 1])
+            .is_err());
         assert!(new(&Params::new().with("res_len", nextssl_core::Value::U32(5))).is_err());
     }
 }

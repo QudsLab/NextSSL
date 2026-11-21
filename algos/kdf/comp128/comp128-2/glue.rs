@@ -51,7 +51,9 @@ mod tests {
     use super::*;
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
+            .collect()
     }
 
     fn key(b: &[u8]) -> SymmetricKey {
@@ -77,9 +79,36 @@ mod tests {
     #[test]
     fn known_answers() {
         let k = new(&Params::new()).unwrap();
-        for (ki, rnd, o) in [("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "00000000000000000000000000000000", "34b4225bf16b96e118a85800"), ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "00102030405060708090a0b0c0d0e0f0", "a892a8efd6d33e3650372c00"), ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "ffffffffffffffffffffffffffffffff", "f699f0baba87114f0350bc00"), ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "000102030405060708090a0b0c0d0e0f", "a5b4c7ca0514c4e1b25cbc00"), ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "f918fb140a2d63e10b9b3354c93d5816", "c1ad6fe372383e0d6aac7c00")] {
+        for (ki, rnd, o) in [
+            (
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "00000000000000000000000000000000",
+                "34b4225bf16b96e118a85800",
+            ),
+            (
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "00102030405060708090a0b0c0d0e0f0",
+                "a892a8efd6d33e3650372c00",
+            ),
+            (
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ffffffffffffffffffffffffffffffff",
+                "f699f0baba87114f0350bc00",
+            ),
+            (
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "000102030405060708090a0b0c0d0e0f",
+                "a5b4c7ca0514c4e1b25cbc00",
+            ),
+            (
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "f918fb140a2d63e10b9b3354c93d5816",
+                "c1ad6fe372383e0d6aac7c00",
+            ),
+        ] {
             let mut out = [0u8; 12];
-            k.derive(&key(&unhex(ki)), &unhex(rnd), &[], &mut out).unwrap();
+            k.derive(&key(&unhex(ki)), &unhex(rnd), &[], &mut out)
+                .unwrap();
             assert_eq!(out.to_vec(), unhex(o));
         }
     }

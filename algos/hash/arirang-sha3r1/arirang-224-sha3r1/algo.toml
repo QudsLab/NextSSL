@@ -8,7 +8,7 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/ARIRANGUpdate.zip", sha256 = "d351e06ebc8b81e4433f618397cffa301f2cea82aa4fadf9adaae44ac088a4cc", license = "NOASSERTION", files = ["ARIRANG/Reference Implementation/Arirang_Ref64.c", "ARIRANG/Reference Implementation/Arirang_Ref64.h", "ARIRANG/Reference Implementation/Arirang_ref64.h", "ARIRANG/Reference Implementation/SHA3api_ref.c", "ARIRANG/Reference Implementation/SHA3api_ref.h", "LICENSE"] }
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/ARIRANGUpdate.zip", sha256 = "d351e06ebc8b81e4433f618397cffa301f2cea82aa4fadf9adaae44ac088a4cc", license = "NOASSERTION", files = ["ARIRANG/Reference Implementation/Arirang_Ref64.c", "ARIRANG/Reference Implementation/Arirang_Ref64.h", "ARIRANG/Reference Implementation/SHA3api_ref.c", "ARIRANG/Reference Implementation/SHA3api_ref.h", "LICENSE"] }
 
 # SHA-3 competition round-1 candidate arirang, 224-bit digest. Implementation wired: ARIRANG/Reference Implementation (zip ARIRANGUpdate.zip). Other implementations and digest sizes not wired.
 # Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_224.txt (sha3r1-arirang/ARIRANGUpdate/ARIRANG/KAT_MCT/ShortMsgKAT_224.txt).

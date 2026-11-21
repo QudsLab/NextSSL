@@ -6,7 +6,8 @@
 //! its `Proof` without serde, see docs/UPSTREAM_ISSUES.md. `info` must be empty here; `proof` is empty.
 
 use nextssl_core::{
-    EntropySource, Error, Len, Oprf, Params, PrivateKey, PublicKey, Result, Sizes, Zeroize, Zeroizing,
+    EntropySource, Error, Len, Oprf, Params, PrivateKey, PublicKey, Result, Sizes, Zeroize,
+    Zeroizing,
 };
 use rand_core::{CryptoRng, RngCore};
 use voprf::{BlindedElement, EvaluationElement, Group, OprfClient, OprfServer, Ristretto255};
@@ -73,7 +74,10 @@ impl Oprf for Impl {
     }
 
     fn keygen(&self, rng: &mut dyn EntropySource) -> Result<(PublicKey, PrivateKey)> {
-        let mut r = Rng { src: rng, failed: false };
+        let mut r = Rng {
+            src: rng,
+            failed: false,
+        };
         let sk = Ristretto255::random_scalar(&mut r);
         if r.failed {
             return Err(Error::EntropyFailure("oprf keygen"));
@@ -87,14 +91,22 @@ impl Oprf for Impl {
         ))
     }
 
-    fn blind(&self, input: &[u8], rng: &mut dyn EntropySource) -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)> {
+    fn blind(
+        &self,
+        input: &[u8],
+        rng: &mut dyn EntropySource,
+    ) -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)> {
         input_ok(input)?;
-        let mut r = Rng { src: rng, failed: false };
+        let mut r = Rng {
+            src: rng,
+            failed: false,
+        };
         let blind = Ristretto255::random_scalar(&mut r);
         if r.failed {
             return Err(Error::EntropyFailure("oprf blind"));
         }
-        let res = OprfClient::<Ristretto255>::deterministic_blind_unchecked(input, blind).map_err(bad)?;
+        let res =
+            OprfClient::<Ristretto255>::deterministic_blind_unchecked(input, blind).map_err(bad)?;
         let blinded = Ristretto255::serialize_elem(res.message.value()).to_vec();
         Ok((scalar_bytes(blind), blinded))
     }
@@ -107,14 +119,19 @@ impl Oprf for Impl {
         _rng: &mut dyn EntropySource,
     ) -> Result<(Vec<u8>, Vec<u8>)> {
         if !info.is_empty() {
-            return Err(Error::InvalidInput("info is not used by the base OPRF mode"));
+            return Err(Error::InvalidInput(
+                "info is not used by the base OPRF mode",
+            ));
         }
         Len::fixed(SCALAR).check("sk", sk.as_bytes().len())?;
         Len::fixed(ELEM).check("blinded", blinded.len())?;
         let server = OprfServer::<Ristretto255>::new_with_key(sk.as_bytes()).map_err(bad)?;
         let el = Ristretto255::deserialize_elem(blinded).map_err(bad)?;
         let out = server.blind_evaluate(&BlindedElement::from_value_unchecked(el));
-        Ok((Ristretto255::serialize_elem(out.value()).to_vec(), Vec::new()))
+        Ok((
+            Ristretto255::serialize_elem(out.value()).to_vec(),
+            Vec::new(),
+        ))
     }
 
     fn finalize(
@@ -128,7 +145,9 @@ impl Oprf for Impl {
     ) -> Result<Zeroizing<Vec<u8>>> {
         input_ok(input)?;
         if !info.is_empty() {
-            return Err(Error::InvalidInput("info is not used by the base OPRF mode"));
+            return Err(Error::InvalidInput(
+                "info is not used by the base OPRF mode",
+            ));
         }
         if !proof.is_empty() {
             return Err(Error::InvalidInput("the base OPRF mode has no proof"));

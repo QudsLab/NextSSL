@@ -6,8 +6,9 @@ use super::*;
 use nextssl_core::keys::{Ciphertext, PrivateKey, PublicKey, Seed, SharedSecret, Signature};
 use nextssl_core::testing::FixedEntropy;
 use nextssl_core::{
-    ct_eq, EntropySource, HashToCurve, HeKeys, HeOp, KeyedBlockCipher, Oprf, PakeRole, PakeState, PakeStep, ParamType, Share,
-    StatefulKey, SymmetricKey, ThresholdSession, ThresholdState, Value, Zeroizing,
+    ct_eq, EntropySource, HashToCurve, HeKeys, HeOp, KeyedBlockCipher, Oprf, PakeRole, PakeState,
+    PakeStep, ParamType, Share, StatefulKey, SymmetricKey, ThresholdSession, ThresholdState, Value,
+    Zeroizing,
 };
 
 fn l(n: usize) -> Option<Len> {
@@ -696,20 +697,41 @@ impl Oprf for FOprf {
     fn keygen(&self, rng: &mut dyn EntropySource) -> Result<(PublicKey, PrivateKey)> {
         let mut b = [0u8; 1];
         rng.fill(&mut b)?;
-        Ok((PublicKey::from_bytes(&b, Len::fixed(1))?, PrivateKey::from_bytes(&b, Len::fixed(1))?))
+        Ok((
+            PublicKey::from_bytes(&b, Len::fixed(1))?,
+            PrivateKey::from_bytes(&b, Len::fixed(1))?,
+        ))
     }
-    fn blind(&self, input: &[u8], _rng: &mut dyn EntropySource) -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)> {
+    fn blind(
+        &self,
+        input: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<(Zeroizing<Vec<u8>>, Vec<u8>)> {
         r(1, 65535).unwrap().check("input", input.len())?;
         Ok((Zeroizing::new(vec![7]), vec![fold(input) ^ 7]))
     }
-    fn evaluate(&self, sk: &PrivateKey, blinded: &[u8], info: &[u8], _rng: &mut dyn EntropySource) -> Result<(Vec<u8>, Vec<u8>)> {
+    fn evaluate(
+        &self,
+        sk: &PrivateKey,
+        blinded: &[u8],
+        info: &[u8],
+        _rng: &mut dyn EntropySource,
+    ) -> Result<(Vec<u8>, Vec<u8>)> {
         if !info.is_empty() {
             return Err(Error::InvalidInput("info"));
         }
         l(1).unwrap().check("blinded", blinded.len())?;
         Ok((vec![blinded[0] ^ sk.as_bytes()[0]], Vec::new()))
     }
-    fn finalize(&self, state: &[u8], input: &[u8], evaluated: &[u8], _proof: &[u8], _pk: &PublicKey, _info: &[u8]) -> Result<Zeroizing<Vec<u8>>> {
+    fn finalize(
+        &self,
+        state: &[u8],
+        input: &[u8],
+        evaluated: &[u8],
+        _proof: &[u8],
+        _pk: &PublicKey,
+        _info: &[u8],
+    ) -> Result<Zeroizing<Vec<u8>>> {
         l(1).unwrap().check("state", state.len())?;
         l(1).unwrap().check("evaluated", evaluated.len())?;
         Ok(Zeroizing::new(vec![evaluated[0] ^ state[0] ^ fold(input)]))

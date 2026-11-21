@@ -36,7 +36,14 @@ impl Kdf for Impl {
         Len::fixed(OUT_LEN).check("out", out.len())?;
         // SAFETY: ikm, salt and info are valid for 16 bytes each (checked), out for OUT_LEN (checked); the callee keeps no pointer.
         #[allow(unsafe_code)]
-        let rc = unsafe { ffi::derive(ikm.as_bytes().as_ptr(), salt.as_ptr(), info.as_ptr(), out.as_mut_ptr()) };
+        let rc = unsafe {
+            ffi::derive(
+                ikm.as_bytes().as_ptr(),
+                salt.as_ptr(),
+                info.as_ptr(),
+                out.as_mut_ptr(),
+            )
+        };
         if rc != 0 {
             return Err(Error::Backend("milenage failed"));
         }
@@ -54,7 +61,9 @@ mod tests {
     use super::*;
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
+            .collect()
     }
 
     fn key(b: &[u8]) -> SymmetricKey {
@@ -81,8 +90,12 @@ mod tests {
         assert_eq!(a, b);
         k.derive(&kk, &[0x22u8; 16], &[0x34u8; 16], &mut b).unwrap();
         assert_ne!(a, b);
-        assert!(k.derive(&key(&[0u8; 17]), &[0u8; 16], &[0u8; 16], &mut a).is_err());
+        assert!(k
+            .derive(&key(&[0u8; 17]), &[0u8; 16], &[0u8; 16], &mut a)
+            .is_err());
         assert!(k.derive(&kk, &[0u8; 16], &[0u8; 15], &mut a).is_err());
-        assert!(k.derive(&kk, &[0u8; 16], &[0u8; 16], &mut [0u8; 45]).is_err());
+        assert!(k
+            .derive(&kk, &[0u8; 16], &[0u8; 16], &mut [0u8; 45])
+            .is_err());
     }
 }

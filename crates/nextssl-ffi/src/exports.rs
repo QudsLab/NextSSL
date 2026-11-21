@@ -1642,7 +1642,11 @@ pub unsafe extern "C" fn nextssl_root_oprf_evaluate(
     let blinded_ = i!(blinded);
     let info_ = i!(info);
     // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
-    unsafe { run(&[evaluated, proof], || ops::oprf_evaluate(a, p, sk_, blinded_, info_)) }
+    unsafe {
+        run(&[evaluated, proof], || {
+            ops::oprf_evaluate(a, p, sk_, blinded_, info_)
+        })
+    }
 }
 
 /// Oblivious PRF client finalisation (root only). A proof that does not verify is `AUTHENTICATION_FAILED`.
@@ -1666,7 +1670,11 @@ pub unsafe extern "C" fn nextssl_root_oprf_finalize(
     let pk_ = i!(pk);
     let info_ = i!(info);
     // SAFETY: forwarded under the pointer contract documented on this function and in the file header.
-    unsafe { run(&[out], || ops::oprf_finalize(a, p, state_, input_, evaluated_, proof_, pk_, info_)) }
+    unsafe {
+        run(&[out], || {
+            ops::oprf_finalize(a, p, state_, input_, evaluated_, proof_, pk_, info_)
+        })
+    }
 }
 
 /// Oblivious PRF key pair (root only).

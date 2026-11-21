@@ -34,7 +34,13 @@ mod ffi {
     use core::ffi::{c_int, c_ulong};
     extern "C" {
         #[link_name = "nextssl__loki89__shim_crypt"]
-        pub fn crypt(enc: c_int, key: *const u8, keylen: c_ulong, input: *const u8, output: *mut u8) -> c_int;
+        pub fn crypt(
+            enc: c_int,
+            key: *const u8,
+            keylen: c_ulong,
+            input: *const u8,
+            output: *mut u8,
+        ) -> c_int;
     }
 }
 
@@ -111,7 +117,9 @@ mod tests {
     use super::*;
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
+            .collect()
     }
 
     fn key(b: &[u8]) -> SymmetricKey {
@@ -121,7 +129,13 @@ mod tests {
     #[test]
     fn known_answers() {
         let c = new(&Params::new()).unwrap();
-        for (k, p, ct) in [("0000000000000000", "0000000000000000", "0000000000000000"), ("0000000000000000", "355550b2150e2451", "8e2a251b94704c69"), ("0000000000000000", "35a7bae825c0d73b", "8ca64de9c1b123a7"), ("0000000000000000", "8ca64de9c1b123a7", "35a7bae825c0d73b"), ("0000000000000000", "8e2a251b94704c69", "355550b2150e2451")] {
+        for (k, p, ct) in [
+            ("0000000000000000", "0000000000000000", "0000000000000000"),
+            ("0000000000000000", "355550b2150e2451", "8e2a251b94704c69"),
+            ("0000000000000000", "35a7bae825c0d73b", "8ca64de9c1b123a7"),
+            ("0000000000000000", "8ca64de9c1b123a7", "35a7bae825c0d73b"),
+            ("0000000000000000", "8e2a251b94704c69", "355550b2150e2451"),
+        ] {
             let kc = c.keyed(&key(&unhex(k))).unwrap();
             let mut b = unhex(p);
             kc.encrypt_block(&mut b).unwrap();
@@ -135,7 +149,9 @@ mod tests {
     fn roundtrip_and_lengths() {
         let c = new(&Params::new()).unwrap();
         for kl in [8] {
-            let kb: Vec<u8> = (0..kl as u8).map(|i| i.wrapping_mul(13).wrapping_add(1)).collect();
+            let kb: Vec<u8> = (0..kl as u8)
+                .map(|i| i.wrapping_mul(13).wrapping_add(1))
+                .collect();
             let k = c.keyed(&key(&kb)).unwrap();
             let orig: Vec<u8> = (0..BLOCK_LEN as u8).collect();
             let mut b = orig.clone();

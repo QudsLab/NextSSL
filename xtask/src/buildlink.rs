@@ -105,7 +105,10 @@ pub fn run(check: bool) -> Result<(), String> {
             }
         }
     }
-    println!("{total} build.rs files, {changed} {}", if check { "need rewriting" } else { "rewritten" });
+    println!(
+        "{total} build.rs files, {changed} {}",
+        if check { "need rewriting" } else { "rewritten" }
+    );
     if check && changed > 0 {
         return Err("build.rs files are not normalised (run `cargo xtask build-link`)".into());
     }
@@ -113,7 +116,9 @@ pub fn run(check: bool) -> Result<(), String> {
 }
 
 fn collect(dir: &Path, out: &mut Vec<std::path::PathBuf>) {
-    let Ok(rd) = std::fs::read_dir(dir) else { return };
+    let Ok(rd) = std::fs::read_dir(dir) else {
+        return;
+    };
     for e in rd.flatten() {
         let p = e.path();
         if p.is_dir() {

@@ -11,7 +11,13 @@ mod ffi {
     use core::ffi::{c_int, c_ulong};
     extern "C" {
         #[link_name = "nextssl__pelican__shim_tag"]
-        pub fn tag(key: *const u8, keylen: c_ulong, data: *const u8, len: c_ulong, out: *mut u8) -> c_int;
+        pub fn tag(
+            key: *const u8,
+            keylen: c_ulong,
+            data: *const u8,
+            len: c_ulong,
+            out: *mut u8,
+        ) -> c_int;
     }
 }
 
@@ -71,7 +77,9 @@ mod tests {
     use super::*;
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
+            .collect()
     }
 
     fn key(b: &[u8]) -> SymmetricKey {
@@ -81,7 +89,33 @@ mod tests {
     #[test]
     fn known_answers() {
         let m = new(&Params::new()).unwrap();
-        for (k, msg, t) in [("000102030405060708090a0b0c0d0e0f", "", "eb583715f834dee5a4d16ee4b9d7760e"), ("000102030405060708090a0b0c0d0e0f", "000102", "1c9740606c58172d0394197081c43854"), ("000102030405060708090a0b0c0d0e0f", "000102030405060708090a0b0c0d0e0f", "03cc46b8aca79c361e8c6ea67b893249"), ("000102030405060708090a0b0c0d0e0f", "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f", "89cc36581bdd4db578bbacf0ff8b0815"), ("000102030405060708090a0b0c0d0e0f", "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202123", "4a7d454dcdb5da8d487816485d459599")] {
+        for (k, msg, t) in [
+            (
+                "000102030405060708090a0b0c0d0e0f",
+                "",
+                "eb583715f834dee5a4d16ee4b9d7760e",
+            ),
+            (
+                "000102030405060708090a0b0c0d0e0f",
+                "000102",
+                "1c9740606c58172d0394197081c43854",
+            ),
+            (
+                "000102030405060708090a0b0c0d0e0f",
+                "000102030405060708090a0b0c0d0e0f",
+                "03cc46b8aca79c361e8c6ea67b893249",
+            ),
+            (
+                "000102030405060708090a0b0c0d0e0f",
+                "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+                "89cc36581bdd4db578bbacf0ff8b0815",
+            ),
+            (
+                "000102030405060708090a0b0c0d0e0f",
+                "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202123",
+                "4a7d454dcdb5da8d487816485d459599",
+            ),
+        ] {
             let mut out = [0u8; TAG_LEN];
             m.tag(&key(&unhex(k)), &unhex(msg), &mut out).unwrap();
             assert_eq!(out.to_vec(), unhex(t));
@@ -100,7 +134,13 @@ mod tests {
         assert_eq!(a, b);
         m.tag(&k, b"hellp", &mut b).unwrap();
         assert_ne!(a, b);
-        assert!(matches!(m.tag(&key(&[7u8; 20]), b"x", &mut a), Err(Error::InvalidLength { .. })));
-        assert!(matches!(m.tag(&k, b"x", &mut [0u8; 15]), Err(Error::InvalidLength { .. })));
+        assert!(matches!(
+            m.tag(&key(&[7u8; 20]), b"x", &mut a),
+            Err(Error::InvalidLength { .. })
+        ));
+        assert!(matches!(
+            m.tag(&k, b"x", &mut [0u8; 15]),
+            Err(Error::InvalidLength { .. })
+        ));
     }
 }

@@ -24,8 +24,29 @@ const SOURCES: &[&str] = &[
     "shim.c",
 ];
 const CPP_SOURCES: &[&str] = &[];
-const INCLUDES: &[&str] = &["upstream/src/sig/snova/snova_SNOVA_III_B_AES_opt", "upstream/src/common/pqclean_shims", "upstream/src/sig/snova/snova_snova_opt_16", "upstream/src/common", "upstream/src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits", "upstream/src/common/sha3/xkcp_low/KeccakP-1600times4/serial", "upstream/src/common/sha3", "upstream/src/common/aes", "upstream/src/common/sha2", "upstream/src/common/rand", "compat"];
-const DEFINES: &[(&str, &str)] = &[("SNOVA_OPT", "10"), ("SNOVA_NAME", "SNOVA_III_B_AES"), ("SNOVA_v", "38"), ("SNOVA_o", "5"), ("SNOVA_q", "16"), ("SNOVA_l", "4"), ("SNOVA_r", "6"), ("AESCTR", "")];
+const INCLUDES: &[&str] = &[
+    "upstream/src/sig/snova/snova_SNOVA_III_B_AES_opt",
+    "upstream/src/common/pqclean_shims",
+    "upstream/src/sig/snova/snova_snova_opt_16",
+    "upstream/src/common",
+    "upstream/src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits",
+    "upstream/src/common/sha3/xkcp_low/KeccakP-1600times4/serial",
+    "upstream/src/common/sha3",
+    "upstream/src/common/aes",
+    "upstream/src/common/sha2",
+    "upstream/src/common/rand",
+    "compat",
+];
+const DEFINES: &[(&str, &str)] = &[
+    ("SNOVA_OPT", "10"),
+    ("SNOVA_NAME", "SNOVA_III_B_AES"),
+    ("SNOVA_v", "38"),
+    ("SNOVA_o", "5"),
+    ("SNOVA_q", "16"),
+    ("SNOVA_l", "4"),
+    ("SNOVA_r", "6"),
+    ("AESCTR", ""),
+];
 const PREFIX: &str = "nextssl__snova_iii_b_aes__";
 
 fn base(cpp: bool) -> cc::Build {
@@ -117,8 +138,18 @@ fn main() {
     // END TARGET GATE
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let sets = [
-        (false, SOURCES.is_empty(), "probe", "nextssl_snova_iii_b_aes"),
-        (true, CPP_SOURCES.is_empty(), "probe_cpp", "nextssl_snova_iii_b_aes_cpp"),
+        (
+            false,
+            SOURCES.is_empty(),
+            "probe",
+            "nextssl_snova_iii_b_aes",
+        ),
+        (
+            true,
+            CPP_SOURCES.is_empty(),
+            "probe_cpp",
+            "nextssl_snova_iii_b_aes_cpp",
+        ),
     ];
     let mut objs = Vec::new();
     for (cpp, empty, dir, _) in sets {
@@ -169,13 +200,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

@@ -50,6 +50,19 @@ fn base() -> cc::Build {
     for i in INCLUDES {
         b.include(i);
     }
+    // Upstream SHA3api_ref.c includes "Arirang_ref64.h" but the NIST package ships "Arirang_Ref64.h";
+    // case-sensitive file systems need this one-line alias (upstream stays verbatim).
+    let alias = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("case_alias");
+    std::fs::create_dir_all(&alias).unwrap();
+    let real = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap())
+        .join("upstream/ARIRANG/Reference Implementation/Arirang_Ref64.h");
+    let real = real.display().to_string().replace('\\', "/");
+    std::fs::write(
+        alias.join("Arirang_ref64.h"),
+        format!("#include \"{real}\"\n"),
+    )
+    .unwrap();
+    b.include(&alias);
     for s in SOURCES {
         b.file(s);
     }

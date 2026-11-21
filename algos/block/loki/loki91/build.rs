@@ -7,10 +7,7 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &[
-    "upstream/loki91.c",
-    "shim.c",
-];
+const SOURCES: &[&str] = &["upstream/loki91.c", "shim.c"];
 const CPP_SOURCES: &[&str] = &[];
 const INCLUDES: &[&str] = &["upstream", "compat"];
 const DEFINES: &[(&str, &str)] = &[];
@@ -20,7 +17,14 @@ fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
     b.warnings(false).opt_level(2);
     if !b.get_compiler().is_like_msvc() {
-        for f in ["-Wno-error=implicit-int", "-Wno-error=implicit-function-declaration", "-Wno-error=int-conversion", "-Wno-error=incompatible-pointer-types", "-Wno-error=return-mismatch", "-fno-strict-aliasing"] {
+        for f in [
+            "-Wno-error=implicit-int",
+            "-Wno-error=implicit-function-declaration",
+            "-Wno-error=int-conversion",
+            "-Wno-error=incompatible-pointer-types",
+            "-Wno-error=return-mismatch",
+            "-fno-strict-aliasing",
+        ] {
             b.flag(f);
         }
     }
@@ -34,7 +38,10 @@ fn base(cpp: bool) -> cc::Build {
         b.define(k, if v.is_empty() { None } else { Some(*v) });
     }
     if b.get_compiler().is_like_msvc() {
-        b.flag(format!("/FI{}/compat/pre.h", std::env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR")));
+        b.flag(format!(
+            "/FI{}/compat/pre.h",
+            std::env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR")
+        ));
     } else {
         b.flag("-include").flag("compat/pre.h");
     }
@@ -110,7 +117,12 @@ fn main() {
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let sets = [
         (false, SOURCES.is_empty(), "probe", "nextssl_loki91"),
-        (true, CPP_SOURCES.is_empty(), "probe_cpp", "nextssl_loki91_cpp"),
+        (
+            true,
+            CPP_SOURCES.is_empty(),
+            "probe_cpp",
+            "nextssl_loki91_cpp",
+        ),
     ];
     let mut objs = Vec::new();
     for (cpp, empty, dir, _) in sets {
@@ -167,13 +179,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

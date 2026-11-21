@@ -13,7 +13,14 @@ mod ffi {
     use core::ffi::{c_int, c_ulong};
     extern "C" {
         #[link_name = "nextssl__a5_3__shim_apply"]
-        pub fn apply(key: *const u8, keylen: c_ulong, nonce: *const u8, noncelen: c_ulong, data: *mut u8, len: c_ulong) -> c_int;
+        pub fn apply(
+            key: *const u8,
+            keylen: c_ulong,
+            nonce: *const u8,
+            noncelen: c_ulong,
+            data: *mut u8,
+            len: c_ulong,
+        ) -> c_int;
     }
 }
 
@@ -78,7 +85,9 @@ mod tests {
     use super::*;
 
     fn unhex(s: &str) -> Vec<u8> {
-        (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect()
+        (0..s.len() / 2)
+            .map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap())
+            .collect()
     }
 
     fn key(b: &[u8]) -> SymmetricKey {
@@ -88,9 +97,41 @@ mod tests {
     #[test]
     fn known_answers() {
         let c = new(&Params::new()).unwrap();
-        for (k, n, d, o) in [("2bd6459f82c5bc00", "0017eaa7", "00000000000000000000000000000000000000000000000000000000", "889eeaaf9ed1ba1abbd8436232e45728d01aa89133da73c11eab68b7"), ("952c49104881ff48", "0003ed22", "00000000000000000000000000000000000000000000000000000000", "fb4d5fbcee13a33389285686e9a5c94240de38150115f15f8d9d98b9"), ("952c49104881ff48", "0003ee9d", "00000000000000000000000000000000000000000000000000000000", "ab7db38a573a325daa76e4cb800a5312d653faa7403fa25e2dedef04"), ("3451f23a43bd2c87", "000939fc", "00000000000000000000000000000000000000000000000000000000", "75f7c4c51560905dfba05e46fb54c64b254d4f37e5e7815061b7c56f"), ("caa2639be82435cf", "001f0b4d", "00000000000000000000000000000000000000000000000000000000", "301437e4d4d6565d4904c631606efc28ee1e5789934f86a0bda10d4f")] {
+        for (k, n, d, o) in [
+            (
+                "2bd6459f82c5bc00",
+                "0017eaa7",
+                "00000000000000000000000000000000000000000000000000000000",
+                "889eeaaf9ed1ba1abbd8436232e45728d01aa89133da73c11eab68b7",
+            ),
+            (
+                "952c49104881ff48",
+                "0003ed22",
+                "00000000000000000000000000000000000000000000000000000000",
+                "fb4d5fbcee13a33389285686e9a5c94240de38150115f15f8d9d98b9",
+            ),
+            (
+                "952c49104881ff48",
+                "0003ee9d",
+                "00000000000000000000000000000000000000000000000000000000",
+                "ab7db38a573a325daa76e4cb800a5312d653faa7403fa25e2dedef04",
+            ),
+            (
+                "3451f23a43bd2c87",
+                "000939fc",
+                "00000000000000000000000000000000000000000000000000000000",
+                "75f7c4c51560905dfba05e46fb54c64b254d4f37e5e7815061b7c56f",
+            ),
+            (
+                "caa2639be82435cf",
+                "001f0b4d",
+                "00000000000000000000000000000000000000000000000000000000",
+                "301437e4d4d6565d4904c631606efc28ee1e5789934f86a0bda10d4f",
+            ),
+        ] {
             let mut buf = unhex(d);
-            c.apply_keystream(&key(&unhex(k)), &unhex(n), &mut buf).unwrap();
+            c.apply_keystream(&key(&unhex(k)), &unhex(n), &mut buf)
+                .unwrap();
             assert_eq!(buf, unhex(o));
         }
     }
@@ -107,10 +148,19 @@ mod tests {
         assert_ne!(&d, b"hello stream cipher");
         c.apply_keystream(&k, &n, &mut d).unwrap();
         assert_eq!(&d, b"hello stream cipher");
-        assert!(matches!(c.apply_keystream(&key(&vec![1u8; kl - 1]), &n, &mut d), Err(Error::InvalidLength { .. })));
-        assert!(matches!(c.apply_keystream(&k, &n[..NONCE_LEN - 1], &mut d), Err(Error::InvalidLength { .. })));
+        assert!(matches!(
+            c.apply_keystream(&key(&vec![1u8; kl - 1]), &n, &mut d),
+            Err(Error::InvalidLength { .. })
+        ));
+        assert!(matches!(
+            c.apply_keystream(&k, &n[..NONCE_LEN - 1], &mut d),
+            Err(Error::InvalidLength { .. })
+        ));
         let mut big = vec![0u8; MAX_LEN + 1];
-        assert!(matches!(c.apply_keystream(&k, &n, &mut big), Err(Error::InvalidLength { .. })));
+        assert!(matches!(
+            c.apply_keystream(&k, &n, &mut big),
+            Err(Error::InvalidLength { .. })
+        ));
         assert!(big.iter().all(|b| *b == 0), "data untouched on error");
     }
 }

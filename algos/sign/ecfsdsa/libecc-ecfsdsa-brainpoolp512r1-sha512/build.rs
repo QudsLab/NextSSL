@@ -45,7 +45,16 @@ const SOURCES: &[&str] = &[
 ];
 const CPP_SOURCES: &[&str] = &[];
 const INCLUDES: &[&str] = &["upstream/src", "compat"];
-const DEFINES: &[(&str, &str)] = &[("WITH_STDLIB", ""), ("WITH_LIBECC_CONFIG_OVERRIDE", ""), ("WITH_CURVE_BRAINPOOLP512R1", ""), ("WITH_HASH_SHA512", ""), ("WITH_SIG_ECFSDSA", ""), ("NS_SIG", "ECFSDSA"), ("NS_CURVE", "BRAINPOOLP512R1"), ("NS_HASH", "SHA512")];
+const DEFINES: &[(&str, &str)] = &[
+    ("WITH_STDLIB", ""),
+    ("WITH_LIBECC_CONFIG_OVERRIDE", ""),
+    ("WITH_CURVE_BRAINPOOLP512R1", ""),
+    ("WITH_HASH_SHA512", ""),
+    ("WITH_SIG_ECFSDSA", ""),
+    ("NS_SIG", "ECFSDSA"),
+    ("NS_CURVE", "BRAINPOOLP512R1"),
+    ("NS_HASH", "SHA512"),
+];
 const PREFIX: &str = "nextssl__libecc_ecfsdsa_brainpoolp512r1_sha512__";
 
 fn base(cpp: bool) -> cc::Build {
@@ -136,8 +145,18 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 fn main() {
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let sets = [
-        (false, SOURCES.is_empty(), "probe", "nextssl_libecc_ecfsdsa_brainpoolp512r1_sha512"),
-        (true, CPP_SOURCES.is_empty(), "probe_cpp", "nextssl_libecc_ecfsdsa_brainpoolp512r1_sha512_cpp"),
+        (
+            false,
+            SOURCES.is_empty(),
+            "probe",
+            "nextssl_libecc_ecfsdsa_brainpoolp512r1_sha512",
+        ),
+        (
+            true,
+            CPP_SOURCES.is_empty(),
+            "probe_cpp",
+            "nextssl_libecc_ecfsdsa_brainpoolp512r1_sha512_cpp",
+        ),
     ];
     let mut objs = Vec::new();
     for (cpp, empty, dir, _) in sets {
@@ -194,13 +213,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");

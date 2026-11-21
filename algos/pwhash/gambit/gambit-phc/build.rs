@@ -4,8 +4,10 @@
 //! `nextssl__gambit_phc__derive`. `NEXTSSL_C_SANITIZE=1` adds ASan/UBSan(trap).
 fn main() {
     // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C: keccak.cpp: error C2036: 'void *': unknown size (arithmetic on void pointers)
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
+    // Excluded: MSVC cannot build the upstream C++: keccak.cpp: error C2036: 'void *': unknown size (arithmetic on void pointers). wasm32: the C++ upstream needs the C++ standard library (<cstddef>), which the wasi-libc toolchain does not ship
+    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc")
+        || std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32")
+    {
         return;
     }
     // END TARGET GATE
@@ -15,7 +17,6 @@ fn main() {
     if !msvc {
         b.flag("-std=c++11");
     }
-    if !msvc {}
     b.file("shim.cpp");
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")
@@ -48,13 +49,16 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir
-        .parent()
-        .expect("build dir")
-        .join("nextssl-c-libs");
+    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
-    let file = |n: &str| if msvc { format!("{n}.lib") } else { format!("lib{n}.a") };
+    let file = |n: &str| {
+        if msvc {
+            format!("{n}.lib")
+        } else {
+            format!("lib{n}.a")
+        }
+    };
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");
