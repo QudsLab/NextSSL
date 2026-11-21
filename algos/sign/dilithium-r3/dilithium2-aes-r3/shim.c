@@ -18,12 +18,12 @@ static NS_TLS int ns_fail;
 void nextssl__dilithium2_aes_r3__rng_set(ns_fill_fn f, void *ctx) { ns_fill = f; ns_ctx = ctx; ns_fail = 0; }
 int nextssl__dilithium2_aes_r3__rng_failed(void) { return ns_fail; }
 
-int randombytes(unsigned char *output, unsigned long long n) {
-    if (n == 0) return 0;
-    if (ns_fill == NULL || ns_fill(ns_ctx, output, n) != 0) {
-        memset(output, 0, n);
+/* Exact prototype of the upstream declaration the compiled sources see (a mismatch is UB and
+ * traps on wasm32). Failure is reported through ns_fail, which the glue checks. */
+void randombytes(uint8_t *output, size_t n) {
+    if (n == 0) return;
+    if (ns_fill == NULL || ns_fill(ns_ctx, (unsigned char *)output, (size_t)n) != 0) {
+        memset(output, 0, (size_t)n);
         ns_fail = 1;
-        return -1;
     }
-    return 0;
 }
