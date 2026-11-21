@@ -2240,6 +2240,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-acorn128v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-acorn128v3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-adler32"
 version = "0.0.1"
 dependencies = [
@@ -2258,12 +2278,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-aegis128x2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-aegis256"
 version = "0.0.1"
 dependencies = [
  "aegis",
  "nextssl-core",
  "serde_json",
+]
+
+[[package]]
+name = "nextssl-algo-aegis256x2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -2777,7 +2817,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-aes128n12t8clocv2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-aes128n12t8clocv3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aes128n12t8silcv2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -2847,7 +2907,47 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-aes128otrpv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aes128otrpv2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-aes128otrpv3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aes128otrsv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aes128otrsv2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -2907,7 +3007,47 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-aes256otrpv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aes256otrpv2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-aes256otrpv3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aes256otrsv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aes256otrsv2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -2927,7 +3067,57 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-aesjambuv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-aesjambuv2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aezv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aezv3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aezv4"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-aezv5"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -3289,6 +3479,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-ascon128av11"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-ascon128av12"
 version = "0.0.1"
 dependencies = [
@@ -3300,6 +3500,26 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-ascon128bi32v12"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ascon128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ascon128v11"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -3718,6 +3938,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-bike-l1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-bike-l3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-bike-l5"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-blake-224-sha3r1"
 version = "0.0.1"
 dependencies = [
@@ -3818,6 +4068,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-blake256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-blake2b-512"
 version = "0.0.1"
 dependencies = [
@@ -3883,6 +4143,16 @@ dependencies = [
  "blake3",
  "nextssl-core",
  "serde_json",
+]
+
+[[package]]
+name = "nextssl-algo-blake32"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -4427,6 +4697,56 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-clxhash"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-cmcc22v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-cmcc24v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-cmcc42v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-cmcc44v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-cmcc84v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -5954,7 +6274,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-deoxyseq128128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-deoxyseq128128v13"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-deoxyseq256128v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -6014,7 +6354,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-deoxysii256v141"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-deoxysneq128128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-deoxysneq128128v13"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-deoxysneq256128v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -6644,6 +7014,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-echo256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-echo512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-ed25519"
 version = "0.0.1"
 dependencies = [
@@ -6743,6 +7133,66 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-edonr512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-efrodokem1344aes-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-efrodokem1344shake-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-efrodokem640aes-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-efrodokem640shake-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-efrodokem976aes-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-efrodokem976shake-oqs"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -7452,7 +7902,67 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-frodokem1344aes-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-frodokem1344shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-frodokem1344shake-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-frodokem640aes-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-frodokem640shake-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-frodokem976aes-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-frodokem976shake-oqs"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -7583,6 +8093,26 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-fugue2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-fugue256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-fugue512"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -8053,6 +8583,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-haetae2v4"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-haetae2v5"
 version = "0.0.1"
 dependencies = [
@@ -8134,6 +8674,16 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-hamsi-512-sha3r2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-hanmre"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -8417,6 +8967,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-hmacsha512256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-hpke-p256-sha256-aes128gcm"
 version = "0.0.1"
 dependencies = [
@@ -8454,7 +9014,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-hqc-128-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-hqc-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-hqc-192-oqs"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -8474,6 +9054,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-hqc-256-oqs"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-hs1sivhiv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-hs1sivhiv2"
 version = "0.0.1"
 dependencies = [
@@ -8484,7 +9084,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-hs1sivlov1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-hs1sivlov2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-hs1sivv2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -8552,7 +9172,47 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-icepole128av1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-icepole128av2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-icepole256a"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-icepole256av1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-icepole256av2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -8582,6 +9242,16 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-ifeedaes128n104"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ifeedaes128n104v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -8767,6 +9437,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-isapxv20"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-iscream"
 version = "0.0.1"
 dependencies = [
@@ -8788,6 +9468,26 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-iscream14"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-iscream14v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-iscream14v2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -8975,6 +9675,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-joltikeq12864v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-joltikeq12864v13"
 version = "0.0.1"
 dependencies = [
@@ -9015,6 +9725,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-joltikeq9696v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-joltikeq9696v13"
 version = "0.0.1"
 dependencies = [
@@ -9025,7 +9745,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-joltikneq12864v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-joltikneq12864v13"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-joltikneq6464v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -9056,6 +9796,16 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-joltikneq8048v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-joltikneq9696v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -9360,6 +10110,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-ketjejrv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-ketjemajor"
 version = "0.0.1"
 dependencies = [
@@ -9381,6 +10141,16 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-ketjesr"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ketjesrv1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -9471,6 +10241,16 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-kiasuneq128"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-kiasuneq128v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -9953,6 +10733,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-lacv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-lanarea-phc"
 version = "0.0.1"
 dependencies = [
@@ -10049,6 +10839,16 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-led80n6silcv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-led80n6t4silcv2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -10992,7 +11792,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-mayo-1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-mayo-1-r2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-mayo-2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -11012,7 +11832,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-mayo-3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-mayo-3-r2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-mayo-5"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -11123,6 +11963,16 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-mceliece-8192128f"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-mceliece8192128pcf"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -11613,6 +12463,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-morus1280128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-morus1280128v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-morus1280256"
 version = "0.0.1"
 dependencies = [
@@ -11706,6 +12576,26 @@ version = "0.0.1"
 dependencies = [
  "nextssl-core",
  "simplehash",
+]
+
+[[package]]
+name = "nextssl-algo-nasha256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-nasha512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -11879,7 +12769,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-norx3241v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-norx3241v3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-norx3261v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -11899,6 +12809,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-norx6441v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-norx6441v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-norx6441v3"
 version = "0.0.1"
 dependencies = [
@@ -11909,7 +12839,47 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-norx6444v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-norx6444v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-norx6444v3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-norx6461v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-norx6461v2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -12087,6 +13057,186 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-omdsha256k128n96tau128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k128n96tau128v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k128n96tau64v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k128n96tau64v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k128n96tau96v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k128n96tau96v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k192n104tau128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k192n104tau128v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k256n104tau160v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k256n104tau160v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k256n248tau256v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha256k256n248tau256v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha512k128n128tau128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha512k128n128tau128v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha512k256n256tau256v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha512k256n256tau256v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha512k512n256tau256v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-omdsha512k512n256tau256v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-omegacrypt-phc"
 version = "0.0.1"
 dependencies = [
@@ -12224,6 +13374,126 @@ dependencies = [
  "getrandom 0.4.3",
  "nextssl-core",
  "serde_json",
+]
+
+[[package]]
+name = "nextssl-algo-ov-iii"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-iii-pkc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-iii-pkc-skc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-ip"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-ip-pkc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-ip-pkc-skc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-is"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-is-pkc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-is-pkc-skc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-v"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-v-pkc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-ov-v-pkc-skc"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -12580,6 +13850,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-pflash1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-photon-beetle"
 version = "0.0.1"
 dependencies = [
@@ -12670,7 +13950,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-ppaev11"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-present80n6silcv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-present80n6t4silcv2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -12792,6 +14092,316 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-pyjamask96aeadv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-pyrhash"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q127l10aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q127l10shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q127l3aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q127l3shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q31l10aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q31l10shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q31l3aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q31l3shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q7l10aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-1q7l10shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q127l10aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q127l10shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q127l3aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q127l3shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q31l10aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q31l10shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q31l3aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q31l3shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q7l10aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-3q7l10shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q127l10aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q127l10shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q127l3aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q127l3shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q31l10aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q31l10shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q31l3aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q31l3shake"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q7l10aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-qruov-5q7l10shake"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -13529,6 +15139,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-saeaes128a120t128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-saeaes128a120t64"
 version = "0.0.1"
 dependencies = [
@@ -13539,7 +15159,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-saeaes128a120t64v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-saeaes128a64t128"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-saeaes128a64t128v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -13569,7 +15209,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-saeaes192a120t128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-saeaes192a64t128"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-saeaes192a64t128v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -13589,7 +15249,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-saeaes192a64t64v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-saeaes256a120t128"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-saeaes256a120t128v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -13609,7 +15289,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-saeaes256a64t128v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-saeaes256a64t64"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-saeaes256a64t64v1"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -13997,6 +15697,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-scream10v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-scream10v3"
 version = "0.0.1"
 dependencies = [
@@ -14017,12 +15727,162 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-scream12v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-scream12v2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-scream12v3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-scrypt"
 version = "0.0.1"
 dependencies = [
  "nextssl-core",
  "scrypt",
  "serde_json",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l1-gf2-fast"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l1-gf2-fast-cipherpow"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l1-gf2-short"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l1-gf2-short-cipherpow"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l3-gf2-fast"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l3-gf2-fast-cipherpow"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l3-gf2-short"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l3-gf2-short-cipherpow"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l5-gf2-fast"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l5-gf2-fast-cipherpow"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l5-gf2-short"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sdith-l5-gf2-short-cipherpow"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -15527,7 +17387,207 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-snova-i-b"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-i-b-aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-i-k"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-i-k-aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-i-s"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-i-s-aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-iii-b"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-iii-b-aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-iii-k"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-iii-k-aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-iii-s"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-iii-s-aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-v-b"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-v-b-aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-v-k"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-v-k-aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-v-s"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-snova-v-s-aes"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-snow-2-0"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sntrup653"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sntrup761"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -16775,6 +18835,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-sqisign-p324-3"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sqisign-p500-27"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-sqisign-p664-17"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-square"
 version = "0.0.1"
 dependencies = [
@@ -17267,6 +19357,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-tiaoxinv2"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-tib3-224-sha3r1"
 version = "0.0.1"
 dependencies = [
@@ -17456,6 +19556,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nextssl-algo-trivia0v1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
 name = "nextssl-algo-trivia0v2"
 version = "0.0.1"
 dependencies = [
@@ -17565,6 +19675,16 @@ dependencies = [
 
 [[package]]
 name = "nextssl-algo-twine80n6clocv1"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-twine80n6t4clocv2"
 version = "0.0.1"
 dependencies = [
  "cc",
@@ -17854,6 +19974,496 @@ dependencies = [
  "chacha20poly1305",
  "nextssl-core",
  "serde_json",
+]
+
+[[package]]
+name = "nextssl-algo-xmss-sha2-10-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmss-sha2-10-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmss-sha2-10-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmss-shake-10-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmss-shake-10-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmss-shake256-10-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmss-shake256-10-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-20-2-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-20-2-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-20-2-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-20-4-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-20-4-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-20-4-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-40-4-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-40-4-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-40-4-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-40-8-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-40-8-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-40-8-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-60-12-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-60-12-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-60-12-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-60-6-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-60-6-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-sha2-60-6-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-20-2-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-20-2-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-20-4-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-20-4-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-40-4-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-40-4-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-40-8-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-40-8-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-60-12-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-60-12-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-60-6-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake-60-6-512"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-20-2-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-20-2-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-20-4-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-20-4-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-40-4-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-40-4-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-40-8-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-40-8-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-60-12-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-60-12-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-60-6-192"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
+]
+
+[[package]]
+name = "nextssl-algo-xmssmt-shake256-60-6-256"
+version = "0.0.1"
+dependencies = [
+ "cc",
+ "nextssl-core",
+ "object",
+ "zeroize",
 ]
 
 [[package]]
@@ -18272,9 +20882,13 @@ dependencies = [
  "nextssl-algo-acehash256v1",
  "nextssl-algo-acehash256v1-lwc1",
  "nextssl-algo-acorn",
+ "nextssl-algo-acorn128v2",
+ "nextssl-algo-acorn128v3",
  "nextssl-algo-adler32",
  "nextssl-algo-aegis128l",
+ "nextssl-algo-aegis128x2",
  "nextssl-algo-aegis256",
+ "nextssl-algo-aegis256x2",
  "nextssl-algo-aes-128",
  "nextssl-algo-aes-128-cbc",
  "nextssl-algo-aes-128-ccm",
@@ -18327,22 +20941,37 @@ dependencies = [
  "nextssl-algo-aes128marble4rv1",
  "nextssl-algo-aes128n12clocv1",
  "nextssl-algo-aes128n12silcv1",
+ "nextssl-algo-aes128n12t8clocv2",
  "nextssl-algo-aes128n12t8clocv3",
+ "nextssl-algo-aes128n12t8silcv2",
  "nextssl-algo-aes128n12t8silcv3",
  "nextssl-algo-aes128n8clocv1",
  "nextssl-algo-aes128n8silcv1",
  "nextssl-algo-aes128n8t8clocv2",
  "nextssl-algo-aes128n8t8silcv2",
  "nextssl-algo-aes128otrcv3",
+ "nextssl-algo-aes128otrpv1",
+ "nextssl-algo-aes128otrpv2",
  "nextssl-algo-aes128otrpv3",
+ "nextssl-algo-aes128otrsv1",
+ "nextssl-algo-aes128otrsv2",
  "nextssl-algo-aes128otrsv3",
  "nextssl-algo-aes128poetv2aes128ni",
  "nextssl-algo-aes128poetv2aes4ni",
  "nextssl-algo-aes256cpfbv1",
  "nextssl-algo-aes256otrcv3",
+ "nextssl-algo-aes256otrpv1",
+ "nextssl-algo-aes256otrpv2",
  "nextssl-algo-aes256otrpv3",
+ "nextssl-algo-aes256otrsv1",
+ "nextssl-algo-aes256otrsv2",
  "nextssl-algo-aes256otrsv3",
+ "nextssl-algo-aesjambuv1",
  "nextssl-algo-aesjambuv2",
+ "nextssl-algo-aezv1",
+ "nextssl-algo-aezv3",
+ "nextssl-algo-aezv4",
+ "nextssl-algo-aezv5",
  "nextssl-algo-aimer-l1-param1-r1",
  "nextssl-algo-aimer-l1-param2-r1",
  "nextssl-algo-aimer-l1-param3-r1",
@@ -18379,8 +21008,11 @@ dependencies = [
  "nextssl-algo-ascon-mac",
  "nextssl-algo-ascon-prf",
  "nextssl-algo-ascon128abi32v12",
+ "nextssl-algo-ascon128av11",
  "nextssl-algo-ascon128av12",
  "nextssl-algo-ascon128bi32v12",
+ "nextssl-algo-ascon128v1",
+ "nextssl-algo-ascon128v11",
  "nextssl-algo-ascon128v12",
  "nextssl-algo-ascon80pqv12",
  "nextssl-algo-ascon96v1",
@@ -18426,6 +21058,9 @@ dependencies = [
  "nextssl-algo-bech32m",
  "nextssl-algo-belt",
  "nextssl-algo-belt-hash",
+ "nextssl-algo-bike-l1",
+ "nextssl-algo-bike-l3",
+ "nextssl-algo-bike-l5",
  "nextssl-algo-blake-224-sha3r1",
  "nextssl-algo-blake-224-sha3r2",
  "nextssl-algo-blake-224-sha3r3",
@@ -18436,6 +21071,7 @@ dependencies = [
  "nextssl-algo-blake-384-sha3r3",
  "nextssl-algo-blake-512-sha3r1",
  "nextssl-algo-blake-512-sha3r3",
+ "nextssl-algo-blake256",
  "nextssl-algo-blake2b-512",
  "nextssl-algo-blake2b-mac",
  "nextssl-algo-blake2bp",
@@ -18444,6 +21080,7 @@ dependencies = [
  "nextssl-algo-blake2sp",
  "nextssl-algo-blake3",
  "nextssl-algo-blake3-mac",
+ "nextssl-algo-blake32",
  "nextssl-algo-blake64",
  "nextssl-algo-bleep64",
  "nextssl-algo-blowfish",
@@ -18500,6 +21137,11 @@ dependencies = [
  "nextssl-algo-clx256h",
  "nextssl-algo-clx256q",
  "nextssl-algo-clxhash",
+ "nextssl-algo-cmcc22v1",
+ "nextssl-algo-cmcc24v1",
+ "nextssl-algo-cmcc42v1",
+ "nextssl-algo-cmcc44v1",
+ "nextssl-algo-cmcc84v1",
  "nextssl-algo-comet-128-cham",
  "nextssl-algo-comet-64-cham",
  "nextssl-algo-comet-64-speck",
@@ -18674,13 +21316,18 @@ dependencies = [
  "nextssl-algo-dch-384-sha3r1",
  "nextssl-algo-dch-512-sha3r1",
  "nextssl-algo-deoxys-ii",
+ "nextssl-algo-deoxyseq128128v1",
  "nextssl-algo-deoxyseq128128v13",
+ "nextssl-algo-deoxyseq256128v1",
  "nextssl-algo-deoxyseq256128v13",
  "nextssl-algo-deoxysi128v141",
  "nextssl-algo-deoxysi256v141",
  "nextssl-algo-deoxysii128v141",
  "nextssl-algo-deoxysii256",
+ "nextssl-algo-deoxysii256v141",
+ "nextssl-algo-deoxysneq128128v1",
  "nextssl-algo-deoxysneq128128v13",
+ "nextssl-algo-deoxysneq256128v1",
  "nextssl-algo-deoxysneq256128v13",
  "nextssl-algo-des",
  "nextssl-algo-des-mac",
@@ -18743,6 +21390,8 @@ dependencies = [
  "nextssl-algo-echo-256-sha3r1",
  "nextssl-algo-echo-384-sha3r1",
  "nextssl-algo-echo-512-sha3r1",
+ "nextssl-algo-echo256",
+ "nextssl-algo-echo512",
  "nextssl-algo-ed25519",
  "nextssl-algo-ed448",
  "nextssl-algo-ed448goldilocks",
@@ -18754,6 +21403,12 @@ dependencies = [
  "nextssl-algo-edonr-512-sha3r1",
  "nextssl-algo-edonr256",
  "nextssl-algo-edonr512",
+ "nextssl-algo-efrodokem1344aes-oqs",
+ "nextssl-algo-efrodokem1344shake-oqs",
+ "nextssl-algo-efrodokem640aes-oqs",
+ "nextssl-algo-efrodokem640shake-oqs",
+ "nextssl-algo-efrodokem976aes-oqs",
+ "nextssl-algo-efrodokem976shake-oqs",
  "nextssl-algo-elephant-delirium",
  "nextssl-algo-elephant-dumbo",
  "nextssl-algo-elephant-jumbo",
@@ -18825,7 +21480,13 @@ dependencies = [
  "nextssl-algo-forkae-saef-128-256",
  "nextssl-algo-fountain",
  "nextssl-algo-fountain128v1",
+ "nextssl-algo-frodokem1344aes-oqs",
  "nextssl-algo-frodokem1344shake",
+ "nextssl-algo-frodokem1344shake-oqs",
+ "nextssl-algo-frodokem640aes-oqs",
+ "nextssl-algo-frodokem640shake-oqs",
+ "nextssl-algo-frodokem976aes-oqs",
+ "nextssl-algo-frodokem976shake-oqs",
  "nextssl-algo-fsb-160",
  "nextssl-algo-fsb-224",
  "nextssl-algo-fsb-224-sha3r1",
@@ -18840,6 +21501,8 @@ dependencies = [
  "nextssl-algo-fugue-384-sha3r2",
  "nextssl-algo-fugue-512-sha3r2",
  "nextssl-algo-fugue2",
+ "nextssl-algo-fugue256",
+ "nextssl-algo-fugue512",
  "nextssl-algo-gage1h256c224r008",
  "nextssl-algo-gage1h256c224r016",
  "nextssl-algo-gage1h256c224r032",
@@ -18887,6 +21550,7 @@ dependencies = [
  "nextssl-algo-h2c-p384-sha384-sswu",
  "nextssl-algo-h2c-p521-sha512-sswu",
  "nextssl-algo-h2c-secp256k1-sha256-sswu",
+ "nextssl-algo-haetae2v4",
  "nextssl-algo-haetae2v5",
  "nextssl-algo-hamsi-224-sha3r1",
  "nextssl-algo-hamsi-224-sha3r2",
@@ -18896,6 +21560,7 @@ dependencies = [
  "nextssl-algo-hamsi-384-sha3r2",
  "nextssl-algo-hamsi-512-sha3r1",
  "nextssl-algo-hamsi-512-sha3r2",
+ "nextssl-algo-hanmre",
  "nextssl-algo-has160",
  "nextssl-algo-hawk1024-r1",
  "nextssl-algo-hawk1024-r2",
@@ -18923,24 +21588,36 @@ dependencies = [
  "nextssl-algo-hmac-sha3-384",
  "nextssl-algo-hmac-sha3-512",
  "nextssl-algo-hmac-sha512",
+ "nextssl-algo-hmacsha512256",
  "nextssl-algo-hpke-p256-sha256-aes128gcm",
  "nextssl-algo-hpke-x25519-sha256-aes128gcm",
  "nextssl-algo-hpke-x25519-sha256-chacha20poly1305",
  "nextssl-algo-hqc-128",
+ "nextssl-algo-hqc-128-oqs",
  "nextssl-algo-hqc-192",
+ "nextssl-algo-hqc-192-oqs",
  "nextssl-algo-hqc-256",
+ "nextssl-algo-hqc-256-oqs",
+ "nextssl-algo-hs1sivhiv1",
  "nextssl-algo-hs1sivhiv2",
+ "nextssl-algo-hs1sivlov1",
  "nextssl-algo-hs1sivlov2",
+ "nextssl-algo-hs1sivv2",
  "nextssl-algo-hss-sha256-h5-h5-w4",
  "nextssl-algo-hyena-v1",
  "nextssl-algo-hyena-v2",
  "nextssl-algo-ice",
  "nextssl-algo-ice-2",
  "nextssl-algo-icepole128a",
+ "nextssl-algo-icepole128av1",
+ "nextssl-algo-icepole128av2",
  "nextssl-algo-icepole256a",
+ "nextssl-algo-icepole256av1",
+ "nextssl-algo-icepole256av2",
  "nextssl-algo-idea",
  "nextssl-algo-ifeed",
  "nextssl-algo-ifeedaes128n104",
+ "nextssl-algo-ifeedaes128n104v1",
  "nextssl-algo-ifeedaes128n96v1",
  "nextssl-algo-ingage1k128n096c224r008",
  "nextssl-algo-ingage1k128n096c224r016",
@@ -18959,9 +21636,12 @@ dependencies = [
  "nextssl-algo-isapk128av20",
  "nextssl-algo-isapk128av20-lwc3",
  "nextssl-algo-isapk128v20",
+ "nextssl-algo-isapxv20",
  "nextssl-algo-iscream",
  "nextssl-algo-iscream12v2",
  "nextssl-algo-iscream14",
+ "nextssl-algo-iscream14v1",
+ "nextssl-algo-iscream14v2",
  "nextssl-algo-jambuaes128v2",
  "nextssl-algo-jambusimon128v2",
  "nextssl-algo-jambusimon64v2",
@@ -18980,15 +21660,20 @@ dependencies = [
  "nextssl-algo-jh256",
  "nextssl-algo-jh384",
  "nextssl-algo-jh512",
+ "nextssl-algo-joltikeq12864v1",
  "nextssl-algo-joltikeq12864v13",
  "nextssl-algo-joltikeq6464v13",
  "nextssl-algo-joltikeq80112v13",
  "nextssl-algo-joltikeq8048v1",
+ "nextssl-algo-joltikeq9696v1",
  "nextssl-algo-joltikeq9696v13",
+ "nextssl-algo-joltikneq12864v1",
  "nextssl-algo-joltikneq12864v13",
+ "nextssl-algo-joltikneq6464v1",
  "nextssl-algo-joltikneq6464v13",
  "nextssl-algo-joltikneq80112v13",
  "nextssl-algo-joltikneq8048v1",
+ "nextssl-algo-joltikneq9696v1",
  "nextssl-algo-joltikneq9696v13",
  "nextssl-algo-kalyna",
  "nextssl-algo-kalyna-128-256",
@@ -19019,9 +21704,11 @@ dependencies = [
  "nextssl-algo-keccakc512treed2",
  "nextssl-algo-keccakc768",
  "nextssl-algo-ketje",
+ "nextssl-algo-ketjejrv1",
  "nextssl-algo-ketjemajor",
  "nextssl-algo-ketjeminor",
  "nextssl-algo-ketjesr",
+ "nextssl-algo-ketjesrv1",
  "nextssl-algo-keyak",
  "nextssl-algo-khazad",
  "nextssl-algo-khichidi1-224-sha3r1",
@@ -19031,6 +21718,7 @@ dependencies = [
  "nextssl-algo-kiasu",
  "nextssl-algo-kiasueq128v1",
  "nextssl-algo-kiasuneq128",
+ "nextssl-algo-kiasuneq128v1",
  "nextssl-algo-kindi256342",
  "nextssl-algo-kindi256522",
  "nextssl-algo-kindi512222",
@@ -19079,6 +21767,7 @@ dependencies = [
  "nextssl-algo-kyber768-r3",
  "nextssl-algo-kyber90s512",
  "nextssl-algo-kyber90s768",
+ "nextssl-algo-lacv1",
  "nextssl-algo-lanarea-phc",
  "nextssl-algo-lane-224-sha3r1",
  "nextssl-algo-lane-256-sha3r1",
@@ -19090,6 +21779,7 @@ dependencies = [
  "nextssl-algo-lea-192",
  "nextssl-algo-lea-256",
  "nextssl-algo-led80n6silcv1",
+ "nextssl-algo-led80n6t4silcv2",
  "nextssl-algo-led80n6t4silcv3",
  "nextssl-algo-lesamnta-224-sha3r1",
  "nextssl-algo-lesamnta-256-sha3r1",
@@ -19184,9 +21874,13 @@ dependencies = [
  "nextssl-algo-lyra2-phc",
  "nextssl-algo-magma",
  "nextssl-algo-mars",
+ "nextssl-algo-mayo-1",
  "nextssl-algo-mayo-1-r2",
+ "nextssl-algo-mayo-2",
  "nextssl-algo-mayo-2-r2",
+ "nextssl-algo-mayo-3",
  "nextssl-algo-mayo-3-r2",
+ "nextssl-algo-mayo-5",
  "nextssl-algo-mayo-5-r2",
  "nextssl-algo-mceliece-348864",
  "nextssl-algo-mceliece-348864f",
@@ -19198,6 +21892,7 @@ dependencies = [
  "nextssl-algo-mceliece-6960119f",
  "nextssl-algo-mceliece-8192128",
  "nextssl-algo-mceliece-8192128f",
+ "nextssl-algo-mceliece8192128pcf",
  "nextssl-algo-mcssha4",
  "nextssl-algo-mcssha5",
  "nextssl-algo-mcssha6",
@@ -19247,6 +21942,8 @@ dependencies = [
  "nextssl-algo-ml-kem-768",
  "nextssl-algo-morus",
  "nextssl-algo-morus1280128",
+ "nextssl-algo-morus1280128v1",
+ "nextssl-algo-morus1280128v2",
  "nextssl-algo-morus1280256",
  "nextssl-algo-morus640128v2",
  "nextssl-algo-mqdss-48-r2",
@@ -19257,6 +21954,8 @@ dependencies = [
  "nextssl-algo-mt19937-64",
  "nextssl-algo-multi2",
  "nextssl-algo-murmurhash3",
+ "nextssl-algo-nasha256",
+ "nextssl-algo-nasha512",
  "nextssl-algo-nccsign1",
  "nextssl-algo-nccsign1aes",
  "nextssl-algo-nccsign3",
@@ -19274,10 +21973,18 @@ dependencies = [
  "nextssl-algo-newhope512cpa-r2",
  "nextssl-algo-noekeon",
  "nextssl-algo-norx",
+ "nextssl-algo-norx3241v1",
  "nextssl-algo-norx3241v3",
+ "nextssl-algo-norx3261v1",
  "nextssl-algo-norx3261v3",
+ "nextssl-algo-norx6441v1",
+ "nextssl-algo-norx6441v2",
  "nextssl-algo-norx6441v3",
+ "nextssl-algo-norx6444v1",
+ "nextssl-algo-norx6444v2",
  "nextssl-algo-norx6444v3",
+ "nextssl-algo-norx6461v1",
+ "nextssl-algo-norx6461v2",
  "nextssl-algo-norx6461v3",
  "nextssl-algo-nt-hash",
  "nextssl-algo-ntru-hps2048509-r2",
@@ -19295,6 +22002,24 @@ dependencies = [
  "nextssl-algo-ntruplus576",
  "nextssl-algo-ntruplus768",
  "nextssl-algo-ntruplus864",
+ "nextssl-algo-omdsha256k128n96tau128v1",
+ "nextssl-algo-omdsha256k128n96tau128v2",
+ "nextssl-algo-omdsha256k128n96tau64v1",
+ "nextssl-algo-omdsha256k128n96tau64v2",
+ "nextssl-algo-omdsha256k128n96tau96v1",
+ "nextssl-algo-omdsha256k128n96tau96v2",
+ "nextssl-algo-omdsha256k192n104tau128v1",
+ "nextssl-algo-omdsha256k192n104tau128v2",
+ "nextssl-algo-omdsha256k256n104tau160v1",
+ "nextssl-algo-omdsha256k256n104tau160v2",
+ "nextssl-algo-omdsha256k256n248tau256v1",
+ "nextssl-algo-omdsha256k256n248tau256v2",
+ "nextssl-algo-omdsha512k128n128tau128v1",
+ "nextssl-algo-omdsha512k128n128tau128v2",
+ "nextssl-algo-omdsha512k256n256tau256v1",
+ "nextssl-algo-omdsha512k256n256tau256v2",
+ "nextssl-algo-omdsha512k512n256tau256v1",
+ "nextssl-algo-omdsha512k512n256tau256v2",
  "nextssl-algo-omegacrypt-phc",
  "nextssl-algo-opaque-ristretto255-sha512",
  "nextssl-algo-oprf-ristretto255-sha512",
@@ -19309,6 +22034,18 @@ dependencies = [
  "nextssl-algo-oribatida256v11",
  "nextssl-algo-oribatida256v12",
  "nextssl-algo-os-entropy",
+ "nextssl-algo-ov-iii",
+ "nextssl-algo-ov-iii-pkc",
+ "nextssl-algo-ov-iii-pkc-skc",
+ "nextssl-algo-ov-ip",
+ "nextssl-algo-ov-ip-pkc",
+ "nextssl-algo-ov-ip-pkc-skc",
+ "nextssl-algo-ov-is",
+ "nextssl-algo-ov-is-pkc",
+ "nextssl-algo-ov-is-pkc-skc",
+ "nextssl-algo-ov-v",
+ "nextssl-algo-ov-v-pkc",
+ "nextssl-algo-ov-v-pkc-skc",
  "nextssl-algo-paefforkskinnyb128t192n48v1",
  "nextssl-algo-paefforkskinnyb128t256n112v1",
  "nextssl-algo-paefforkskinnyb128t288n104v1",
@@ -19345,6 +22082,7 @@ dependencies = [
  "nextssl-algo-perk-256-fast-5-r2",
  "nextssl-algo-perk-256-short-3-r1",
  "nextssl-algo-perk-256-short-5-r1",
+ "nextssl-algo-pflash1",
  "nextssl-algo-photon-beetle",
  "nextssl-algo-photon-beetle-hash",
  "nextssl-algo-photonbeetleaead128rate128v1",
@@ -19354,7 +22092,9 @@ dependencies = [
  "nextssl-algo-photonbeetlehash256rate32v1",
  "nextssl-algo-poly1305",
  "nextssl-algo-pomelo-phc",
+ "nextssl-algo-ppaev11",
  "nextssl-algo-present80n6silcv1",
+ "nextssl-algo-present80n6t4silcv2",
  "nextssl-algo-present80n6t4silcv3",
  "nextssl-algo-prh42s1024",
  "nextssl-algo-prh42s256",
@@ -19367,6 +22107,37 @@ dependencies = [
  "nextssl-algo-pyjamask-96",
  "nextssl-algo-pyjamask128aeadv1",
  "nextssl-algo-pyjamask96aeadv1",
+ "nextssl-algo-pyrhash",
+ "nextssl-algo-qruov-1q127l10aes",
+ "nextssl-algo-qruov-1q127l10shake",
+ "nextssl-algo-qruov-1q127l3aes",
+ "nextssl-algo-qruov-1q127l3shake",
+ "nextssl-algo-qruov-1q31l10aes",
+ "nextssl-algo-qruov-1q31l10shake",
+ "nextssl-algo-qruov-1q31l3aes",
+ "nextssl-algo-qruov-1q31l3shake",
+ "nextssl-algo-qruov-1q7l10aes",
+ "nextssl-algo-qruov-1q7l10shake",
+ "nextssl-algo-qruov-3q127l10aes",
+ "nextssl-algo-qruov-3q127l10shake",
+ "nextssl-algo-qruov-3q127l3aes",
+ "nextssl-algo-qruov-3q127l3shake",
+ "nextssl-algo-qruov-3q31l10aes",
+ "nextssl-algo-qruov-3q31l10shake",
+ "nextssl-algo-qruov-3q31l3aes",
+ "nextssl-algo-qruov-3q31l3shake",
+ "nextssl-algo-qruov-3q7l10aes",
+ "nextssl-algo-qruov-3q7l10shake",
+ "nextssl-algo-qruov-5q127l10aes",
+ "nextssl-algo-qruov-5q127l10shake",
+ "nextssl-algo-qruov-5q127l3aes",
+ "nextssl-algo-qruov-5q127l3shake",
+ "nextssl-algo-qruov-5q31l10aes",
+ "nextssl-algo-qruov-5q31l10shake",
+ "nextssl-algo-qruov-5q31l3aes",
+ "nextssl-algo-qruov-5q31l3shake",
+ "nextssl-algo-qruov-5q7l10aes",
+ "nextssl-algo-qruov-5q7l10shake",
  "nextssl-algo-qtesla-i-r2",
  "nextssl-algo-qtesla-i-s-r2",
  "nextssl-algo-qtesla-iii-r2",
@@ -19441,15 +22212,24 @@ dependencies = [
  "nextssl-algo-sablier",
  "nextssl-algo-saeaes",
  "nextssl-algo-saeaes128a120t128",
+ "nextssl-algo-saeaes128a120t128v1",
  "nextssl-algo-saeaes128a120t64",
+ "nextssl-algo-saeaes128a120t64v1",
  "nextssl-algo-saeaes128a64t128",
+ "nextssl-algo-saeaes128a64t128v1",
  "nextssl-algo-saeaes128a64t64v1",
  "nextssl-algo-saeaes192a120t128",
+ "nextssl-algo-saeaes192a120t128v1",
  "nextssl-algo-saeaes192a64t128",
+ "nextssl-algo-saeaes192a64t128v1",
  "nextssl-algo-saeaes192a64t64",
+ "nextssl-algo-saeaes192a64t64v1",
  "nextssl-algo-saeaes256a120t128",
+ "nextssl-algo-saeaes256a120t128v1",
  "nextssl-algo-saeaes256a64t128",
+ "nextssl-algo-saeaes256a64t128v1",
  "nextssl-algo-saeaes256a64t64",
+ "nextssl-algo-saeaes256a64t64v1",
  "nextssl-algo-saefforkskinnyb128t192n56v1",
  "nextssl-algo-saefforkskinnyb128t256n120v1",
  "nextssl-algo-safer-k128",
@@ -19488,9 +22268,25 @@ dependencies = [
  "nextssl-algo-schwaemm256256v1",
  "nextssl-algo-schwaemm256256v2",
  "nextssl-algo-scream",
+ "nextssl-algo-scream10v2",
  "nextssl-algo-scream10v3",
  "nextssl-algo-scream12",
+ "nextssl-algo-scream12v1",
+ "nextssl-algo-scream12v2",
+ "nextssl-algo-scream12v3",
  "nextssl-algo-scrypt",
+ "nextssl-algo-sdith-l1-gf2-fast",
+ "nextssl-algo-sdith-l1-gf2-fast-cipherpow",
+ "nextssl-algo-sdith-l1-gf2-short",
+ "nextssl-algo-sdith-l1-gf2-short-cipherpow",
+ "nextssl-algo-sdith-l3-gf2-fast",
+ "nextssl-algo-sdith-l3-gf2-fast-cipherpow",
+ "nextssl-algo-sdith-l3-gf2-short",
+ "nextssl-algo-sdith-l3-gf2-short-cipherpow",
+ "nextssl-algo-sdith-l5-gf2-fast",
+ "nextssl-algo-sdith-l5-gf2-fast-cipherpow",
+ "nextssl-algo-sdith-l5-gf2-short",
+ "nextssl-algo-sdith-l5-gf2-short-cipherpow",
  "nextssl-algo-seal",
  "nextssl-algo-seed",
  "nextssl-algo-serpent-128",
@@ -19644,7 +22440,27 @@ dependencies = [
  "nextssl-algo-sneiken256",
  "nextssl-algo-sneikha256",
  "nextssl-algo-sneikha384",
+ "nextssl-algo-snova-i-b",
+ "nextssl-algo-snova-i-b-aes",
+ "nextssl-algo-snova-i-k",
+ "nextssl-algo-snova-i-k-aes",
+ "nextssl-algo-snova-i-s",
+ "nextssl-algo-snova-i-s-aes",
+ "nextssl-algo-snova-iii-b",
+ "nextssl-algo-snova-iii-b-aes",
+ "nextssl-algo-snova-iii-k",
+ "nextssl-algo-snova-iii-k-aes",
+ "nextssl-algo-snova-iii-s",
+ "nextssl-algo-snova-iii-s-aes",
+ "nextssl-algo-snova-v-b",
+ "nextssl-algo-snova-v-b-aes",
+ "nextssl-algo-snova-v-k",
+ "nextssl-algo-snova-v-k-aes",
+ "nextssl-algo-snova-v-s",
+ "nextssl-algo-snova-v-s-aes",
  "nextssl-algo-snow-2-0",
+ "nextssl-algo-sntrup653",
+ "nextssl-algo-sntrup761",
  "nextssl-algo-sober-128",
  "nextssl-algo-sosemanuk",
  "nextssl-algo-spake2-ed25519",
@@ -19769,6 +22585,9 @@ dependencies = [
  "nextssl-algo-spook128su512v1",
  "nextssl-algo-spook128su512v2",
  "nextssl-algo-spookyhash",
+ "nextssl-algo-sqisign-p324-3",
+ "nextssl-algo-sqisign-p500-27",
+ "nextssl-algo-sqisign-p664-17",
  "nextssl-algo-square",
  "nextssl-algo-srp-6a-2048-sha256",
  "nextssl-algo-streamhash-224-sha3r1",
@@ -19819,6 +22638,7 @@ dependencies = [
  "nextssl-algo-threefish-1024",
  "nextssl-algo-threefish-256",
  "nextssl-algo-threefish-512",
+ "nextssl-algo-tiaoxinv2",
  "nextssl-algo-tib3-224-sha3r1",
  "nextssl-algo-tib3-256-sha3r1",
  "nextssl-algo-tib3-384-sha3r1",
@@ -19838,6 +22658,7 @@ dependencies = [
  "nextssl-algo-triadaev1",
  "nextssl-algo-triadhashv1",
  "nextssl-algo-triflev1",
+ "nextssl-algo-trivia0v1",
  "nextssl-algo-trivia0v2",
  "nextssl-algo-trivia128v2",
  "nextssl-algo-trivium",
@@ -19850,6 +22671,7 @@ dependencies = [
  "nextssl-algo-twine-128",
  "nextssl-algo-twine-80",
  "nextssl-algo-twine80n6clocv1",
+ "nextssl-algo-twine80n6t4clocv2",
  "nextssl-algo-twine80n6t4clocv3",
  "nextssl-algo-twofish",
  "nextssl-algo-usaber-90s-r3",
@@ -19879,6 +22701,55 @@ dependencies = [
  "nextssl-algo-x448",
  "nextssl-algo-xchacha20",
  "nextssl-algo-xchacha20-poly1305",
+ "nextssl-algo-xmss-sha2-10-192",
+ "nextssl-algo-xmss-sha2-10-256",
+ "nextssl-algo-xmss-sha2-10-512",
+ "nextssl-algo-xmss-shake-10-256",
+ "nextssl-algo-xmss-shake-10-512",
+ "nextssl-algo-xmss-shake256-10-192",
+ "nextssl-algo-xmss-shake256-10-256",
+ "nextssl-algo-xmssmt-sha2-20-2-192",
+ "nextssl-algo-xmssmt-sha2-20-2-256",
+ "nextssl-algo-xmssmt-sha2-20-2-512",
+ "nextssl-algo-xmssmt-sha2-20-4-192",
+ "nextssl-algo-xmssmt-sha2-20-4-256",
+ "nextssl-algo-xmssmt-sha2-20-4-512",
+ "nextssl-algo-xmssmt-sha2-40-4-192",
+ "nextssl-algo-xmssmt-sha2-40-4-256",
+ "nextssl-algo-xmssmt-sha2-40-4-512",
+ "nextssl-algo-xmssmt-sha2-40-8-192",
+ "nextssl-algo-xmssmt-sha2-40-8-256",
+ "nextssl-algo-xmssmt-sha2-40-8-512",
+ "nextssl-algo-xmssmt-sha2-60-12-192",
+ "nextssl-algo-xmssmt-sha2-60-12-256",
+ "nextssl-algo-xmssmt-sha2-60-12-512",
+ "nextssl-algo-xmssmt-sha2-60-6-192",
+ "nextssl-algo-xmssmt-sha2-60-6-256",
+ "nextssl-algo-xmssmt-sha2-60-6-512",
+ "nextssl-algo-xmssmt-shake-20-2-256",
+ "nextssl-algo-xmssmt-shake-20-2-512",
+ "nextssl-algo-xmssmt-shake-20-4-256",
+ "nextssl-algo-xmssmt-shake-20-4-512",
+ "nextssl-algo-xmssmt-shake-40-4-256",
+ "nextssl-algo-xmssmt-shake-40-4-512",
+ "nextssl-algo-xmssmt-shake-40-8-256",
+ "nextssl-algo-xmssmt-shake-40-8-512",
+ "nextssl-algo-xmssmt-shake-60-12-256",
+ "nextssl-algo-xmssmt-shake-60-12-512",
+ "nextssl-algo-xmssmt-shake-60-6-256",
+ "nextssl-algo-xmssmt-shake-60-6-512",
+ "nextssl-algo-xmssmt-shake256-20-2-192",
+ "nextssl-algo-xmssmt-shake256-20-2-256",
+ "nextssl-algo-xmssmt-shake256-20-4-192",
+ "nextssl-algo-xmssmt-shake256-20-4-256",
+ "nextssl-algo-xmssmt-shake256-40-4-192",
+ "nextssl-algo-xmssmt-shake256-40-4-256",
+ "nextssl-algo-xmssmt-shake256-40-8-192",
+ "nextssl-algo-xmssmt-shake256-40-8-256",
+ "nextssl-algo-xmssmt-shake256-60-12-192",
+ "nextssl-algo-xmssmt-shake256-60-12-256",
+ "nextssl-algo-xmssmt-shake256-60-6-192",
+ "nextssl-algo-xmssmt-shake256-60-6-256",
  "nextssl-algo-xoodyak",
  "nextssl-algo-xoodyak-hash",
  "nextssl-algo-xoodyakround3",
