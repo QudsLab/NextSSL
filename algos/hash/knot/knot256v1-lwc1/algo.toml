@@ -1,0 +1,22 @@
+id        = "knot256v1-lwc1"
+kind      = "hash"
+category  = "hash"
+family    = "knot"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression (C99 variable-length array)"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Lightweight-Cryptography/documents/round-1/submissions/knot.zip", sha256 = "1797a3326620d83ab0840a062ea383a5f99a6929e20e934fc314b77c03475af3", license = "NOASSERTION", files = ["ref/api.h", "ref/hash.c", "LICENSE"] }
+
+# Variant wired: ref (hash). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_HASH_KAT_256.txt from the NIST package nist-lwc-r1-knot (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

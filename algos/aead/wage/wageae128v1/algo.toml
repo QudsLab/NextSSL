@@ -1,0 +1,22 @@
+id        = "wageae128v1"
+kind      = "aead"
+category  = "aead"
+family    = "wage"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/round-2/submissions-rnd2/wage.zip", sha256 = "940b4cdcd21781570e0b1969de51466f7dbcdb63ed8bcb71df8206b89d7dd496", license = "NOASSERTION", files = ["ref/api.h", "ref/crypto_aead.h", "ref/encrypt.c", "ref/wage.c", "ref/wage.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_128.txt from the NIST package nist-lwc-r2-wage (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 16

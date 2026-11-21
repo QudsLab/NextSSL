@@ -1,0 +1,5 @@
+{
+  "algorithm": "isapa128av20",
+  "vectors": [],
+  "note": "no KAT file for this variant in the package; empty vectors file, nothing fabricated."
+}

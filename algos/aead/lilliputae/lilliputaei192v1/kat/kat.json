@@ -1,0 +1,33 @@
+{
+  "algorithm": "lilliputaei192v1",
+  "source": "NIST LWC nist-lwc-r1-lilliputae, LWC_AEAD_KAT_192_120.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+      "nonce_hex": "000102030405060708090a0b0c0d0e",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "dbf3f60863c830b62a9f5c49090fb7b1"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+      "nonce_hex": "000102030405060708090a0b0c0d0e",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "428ba46ca8a6bbc302c0ea04acbfb685"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f1011121314151617",
+      "nonce_hex": "000102030405060708090a0b0c0d0e",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "2779e0ab3aac6a2ba9e8b57bf782bd56"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+id        = "lilliputaei256v1"
+kind      = "aead"
+category  = "aead"
+family    = "lilliputae"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression (C99 variable-length array)"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Lightweight-Cryptography/documents/round-1/submissions/lilliput-ae.zip", sha256 = "df168eb9b82979ae49269b84251a04e5dc4710d821846ef361e7115d757c52a4", license = "NOASSERTION", files = ["ref/api.h", "ref/cipher.c", "ref/cipher.h", "ref/constants.h", "ref/encrypt.c", "ref/lilliput-ae-utils.h", "ref/lilliput-ae.h", "ref/lilliput-i.c", "ref/parameters.h", "ref/tweakey.c", "ref/tweakey.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_256_120.txt from the NIST package nist-lwc-r1-lilliputae (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 32
+nonce = 15
+tag = 16

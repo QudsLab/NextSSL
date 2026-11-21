@@ -1,0 +1,20 @@
+id        = "acehash256v1"
+kind      = "hash"
+category  = "hash"
+family    = "ace"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/round-2/submissions-rnd2/ace.zip", sha256 = "3fab248e0bb6f6029209f95e76e771fc8cd647e3ade198d2b67608db1450b360", license = "NOASSERTION", files = ["ref/ace.c", "ref/ace.h", "ref/api.h", "ref/crypto_hash.h", "ref/hash.c", "LICENSE"] }
+
+# Variant wired: ref (hash). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_HASH_KAT_256.txt from the NIST package nist-lwc-r2-ace (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

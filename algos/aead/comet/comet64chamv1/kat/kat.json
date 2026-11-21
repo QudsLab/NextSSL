@@ -1,0 +1,33 @@
+{
+  "algorithm": "comet64chamv1",
+  "source": "NIST LWC nist-lwc-r2-comet, LWC_AEAD_KAT_128_120.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "e1123a4a8615d94a"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "9155fd4256f9fd88"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "cf999e648f2d3a81"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "algorithm": "drygascon256-lwc1",
+  "source": "NIST LWC nist-lwc-r1-drygascon, LWC_HASH_KAT_512.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "6896590a319fde1f3b18ebae1df1e5e8fb0756a878ee9e2165b085ff3aed6805f8f73d5714c75960a6a8095dae5ef9c00d3f055490d4cf45d4a26b37fd7b5441"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "dab16b97c37160586b647b0dca689794365480324e539cd63f87b119b0c46668dcde5163a170e06da9361b05f7ce7645ef68bdc99b3b813b8b1583c5c62d4e4a"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "d1982bc43d8c42dcd94c1c7e9611951374dc8bf5e6fc407e8a8dc423f4f0f45909a4aeaa1000b35a8081862e797508807e8763f611aef1d3c06ecaedb5229980"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+id        = "spook128mu384v1-lwc1"
+kind      = "aead"
+category  = "aead"
+family    = "spook"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Lightweight-Cryptography/documents/round-1/submissions/spook.zip", sha256 = "e55068df4344abd3131a533d743d2698b291741589b79ed0afc013e9ea6531f1", license = "NOASSERTION", files = ["ref/api.h", "ref/encrypt.c", "ref/parameters.h", "ref/primitives.c", "ref/primitives.h", "ref/s1p.c", "ref/s1p.h", "ref/utils.c", "ref/utils.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_256_128.txt from the NIST package nist-lwc-r1-spook (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 32
+nonce = 16
+tag = 16

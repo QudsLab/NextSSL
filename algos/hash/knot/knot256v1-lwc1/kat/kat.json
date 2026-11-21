@@ -1,0 +1,21 @@
+{
+  "algorithm": "knot256v1-lwc1",
+  "source": "NIST LWC nist-lwc-r1-knot, LWC_HASH_KAT_256.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "0000000000000000000000000000000071d12ab54fae16d14db674be6c4151ec"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "dbc6d3c3ef6667e2ffabfb886116e78798fb46f35afaabcd0eebbb30a1090b40"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "a30d9701ae19cdde3cf66a4d1a39e4b11f41c54aee9f11d453f20c8a52684666"
+    }
+  ]
+}

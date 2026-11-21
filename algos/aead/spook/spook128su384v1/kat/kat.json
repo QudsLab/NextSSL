@@ -1,0 +1,33 @@
+{
+  "algorithm": "spook128su384v1",
+  "source": "NIST LWC nist-lwc-r2-spook, LWC_AEAD_KAT_128_128.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "fc48e447519b6b75d2bcbf63040f5a18"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "00b0214e9f2a7fbe2ce22ebe42337867"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "a8fd45375cb38f22610715c36228e13f"
+    }
+  ]
+}

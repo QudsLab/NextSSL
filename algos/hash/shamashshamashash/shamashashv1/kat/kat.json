@@ -1,0 +1,21 @@
+{
+  "algorithm": "shamashashv1",
+  "source": "NIST LWC nist-lwc-r1-shamashshamashash, LWC_HASH_KAT_256.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "fe419d36641e969be0bf48f012ff6df56417aff87f790116b80d632c8910e53b"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "9b45c31d48fba4da7286f08866cc329eb1287242554b3f45ca139cd5be5b9f6b"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "e752ced334375901daa61b15b7634c9f95b78763cd3d40501c609839e1ce03c2"
+    }
+  ]
+}

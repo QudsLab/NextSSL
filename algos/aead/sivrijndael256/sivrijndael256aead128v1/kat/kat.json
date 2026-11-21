@@ -1,0 +1,33 @@
+{
+  "algorithm": "sivrijndael256aead128v1",
+  "source": "NIST LWC nist-lwc-r1-sivrijndael256, LWC_AEAD_KAT_128_128.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "3a551f616c074b55cb43d9917c7cc6f958bc3359bcf4d46ae01a1e0b187b274b"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "baa2fe89fddea221ce8553540dabc83a22ec4a30c60a4186ff1867b5d54ce85f"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "45f5d04dc6b429782a3a0a21faae4a1b7bebbf5b228f1b5fc29f7f19d8f8b6d1"
+    }
+  ]
+}

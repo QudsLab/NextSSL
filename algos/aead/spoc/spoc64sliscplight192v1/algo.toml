@@ -1,0 +1,22 @@
+id        = "spoc64sliscplight192v1"
+kind      = "aead"
+category  = "aead"
+family    = "spoc"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/round-2/submissions-rnd2/spoc.zip", sha256 = "efbc4b82f6ba9be68ae2c985635dd09f8acf4e79c4247d0dd501f9c49042e280", license = "NOASSERTION", files = ["ref/api.h", "ref/crypto_aead.h", "ref/encrypt.c", "ref/sliscp_light192.c", "ref/sliscp_light192.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_128.txt from the NIST package nist-lwc-r2-spoc (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 8

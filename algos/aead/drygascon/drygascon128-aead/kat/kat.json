@@ -1,0 +1,33 @@
+{
+  "algorithm": "drygascon128-aead",
+  "source": "NIST LWC nist-lwc-r2-drygascon, LWC_AEAD_KAT_128_128.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "bb857cc1cb30bd12f67fbbcc00206053"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "fed9825ceae6ccd64cf6042fcb18628b"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b0c0d0e0f",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "be195f79cf604f0e7da5957c47d60635"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "algorithm": "sivtemphotonhashv1",
+  "source": "NIST LWC nist-lwc-r1-sivtemphoton, LWC_HASH_KAT_256.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "93acc7c88a1ddabcb2a3563cb5c43ce32ea3569c02616e007880b49d9ad7287d"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "191b3e698da81d89a6989eb523090e7f1af1d1e836b499730c65eb60bb436fee"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "c3f5264a85f2412e1d49e493abb90f8a927e8d1eb8fae0e53b53e4e2555a296f"
+    }
+  ]
+}

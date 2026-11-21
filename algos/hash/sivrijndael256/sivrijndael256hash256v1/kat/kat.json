@@ -1,0 +1,21 @@
+{
+  "algorithm": "sivrijndael256hash256v1",
+  "source": "NIST LWC nist-lwc-r1-sivrijndael256, LWC_HASH_KAT_256.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "8351d3351878041847eb8d35357ebdac442b1282eb8e157a396835952831aedc"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "e55fa80ff0c308f27da58baa383f6f83e18e1be3c0cf74af4e0ffb9a5041e3cf"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "25c205975e21e6cd68ca193793673fa3bae2f239a25a0d01e6db546b18598bc8"
+    }
+  ]
+}

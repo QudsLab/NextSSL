@@ -1,0 +1,25 @@
+id        = "saefforkskinnyb128t256n120v1"
+kind      = "aead"
+category  = "aead"
+family    = "forkae"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression (C99 variable-length array)"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/round-2/submissions-rnd2/forkae.zip", sha256 = "885d42e935b38cef0ff75c460e23068ab076a8eda2a9b8bebe2bdb5d94a6b928", license = "NOASSERTION", files = ["ref/api.h", "ref/encrypt.c", "ref/extra_api.h", "ref/forkskinny.c", "ref/forkskinny.h", "ref/helpers.c", "ref/helpers.h", "ref/saef.c", "ref/saef.h", "ref/skinny_round.c", "ref/skinny_round.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_120.txt from the NIST package nist-lwc-r2-forkae (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+# Identical source in: round 1 (nist-lwc-r1-forkae),round 2 (nist-lwc-r2-forkae).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 15
+tag = 16

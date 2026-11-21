@@ -1,0 +1,21 @@
+{
+  "algorithm": "saturninhashv2",
+  "source": "NIST LWC nist-lwc-r2-saturnin, LWC_HASH_KAT_256.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "83b15641b09569b04c606108fc8ae268ac0dc9288741b5735d8612d69c0afdfe"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "e6b4434e7cd8ca452a28435c0c29a748af906b827edd7a7c714461a4eee4cacb"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "ed9a67306e55ac23d8a5ff664daf0ac2695bee8cd210ae5f01ed3f419344aecf"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+id        = "tinyjambu128"
+kind      = "aead"
+category  = "aead"
+family    = "tinyjambu"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/round-2/submissions-rnd2/tinyjambu.zip", sha256 = "84a1cae13e6ed7633e3407ce617d35f12ac521ee39d9d5a9fbf774adde8470f1", license = "NOASSERTION", files = ["ref/api.h", "ref/encrypt.c", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_96.txt from the NIST package nist-lwc-r2-tinyjambu (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+# Identical source in: round 1 (nist-lwc-r1-tinyjambu),round 2 (nist-lwc-r2-tinyjambu).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 12
+tag = 8

@@ -1,0 +1,22 @@
+id        = "sivrijndael256aead128v1"
+kind      = "aead"
+category  = "aead"
+family    = "sivrijndael256"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Lightweight-Cryptography/documents/round-1/submissions/siv-rijndael256.zip", sha256 = "060c0f64b45875d92da7e402362309e2ffbe3eb04969c3322e8739dda07cfd9c", license = "NOASSERTION", files = ["ref/api.h", "ref/boxes-ref.dat", "ref/encrypt.c", "ref/rijndael-alg-ref.c", "ref/rijndael-alg-ref.h", "ref/rijndael256.c", "ref/rijndael256.h", "ref/siv.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_128.txt from the NIST package nist-lwc-r1-sivrijndael256 (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 32

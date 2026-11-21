@@ -1,0 +1,23 @@
+id        = "comet64speckv1"
+kind      = "aead"
+category  = "aead"
+family    = "comet"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/round-2/submissions-rnd2/comet.zip", sha256 = "ab11a3e909d7d77576e1315d195f32ba23c004c8d6a71b822bc058213284e374", license = "NOASSERTION", files = ["ref/api.h", "ref/blockcipher.h", "ref/comet.h", "ref/comet_64-128_and_128-128.c", "ref/crypto_aead.h", "ref/encrypt.c", "ref/options.h", "ref/speck_64-128_and_128-128.c", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_120.txt from the NIST package nist-lwc-r2-comet (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+# Identical source in: round 1 (nist-lwc-r1-comet),round 2 (nist-lwc-r2-comet).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 15
+tag = 8

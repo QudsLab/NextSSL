@@ -1,0 +1,21 @@
+{
+  "algorithm": "subterraneanv1-hash",
+  "source": "NIST LWC nist-lwc-r2-subterranean, LWC_HASH_KAT_256.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "4de2b673c183d1031bbba5fb63cc15270daafbbe1f77fa7fbeaf1d17cf694feb"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "91e6735eb598b7fad5ea99eea59dc9524c1bdd1ff864108cb5011c28e6572afb"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "7e59e39b3addce9632836d7ea47bbdf28b37566ff7307ba5f235737d8d71d908"
+    }
+  ]
+}

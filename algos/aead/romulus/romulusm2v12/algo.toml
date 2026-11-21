@@ -1,0 +1,22 @@
+id        = "romulusm2v12"
+kind      = "aead"
+category  = "aead"
+family    = "romulus"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/round-2/submissions-rnd2/romulus.zip", sha256 = "c2dde07c262e03f8fbc2d888f68c2454df7fbd050c710d2e889a30e001bdb81c", license = "NOASSERTION", files = ["ref/api.h", "ref/encrypt.c", "ref/skinny.h", "ref/skinny_reference.c", "ref/variant.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_96.txt from the NIST package nist-lwc-r2-romulus (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 12
+tag = 16

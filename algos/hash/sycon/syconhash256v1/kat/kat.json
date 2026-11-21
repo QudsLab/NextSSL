@@ -1,0 +1,21 @@
+{
+  "algorithm": "syconhash256v1",
+  "source": "NIST LWC nist-lwc-r1-sycon, LWC_HASH_KAT_256.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "683d2737fc1d59204deeba4bc310dd88567ec571e6220a0b0e85dc75fe38c38f"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "b21f180779ef95c670c03de9de4f71316651d578e6e62c07a0d19d0c4e8416f5"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "b4692ea253206d47ac452e97094c5cbb13a0f7d7e0ada512debf028d9e65fb80"
+    }
+  ]
+}

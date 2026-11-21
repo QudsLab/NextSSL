@@ -1,0 +1,33 @@
+{
+  "algorithm": "paefforkskinnyb64t192n48v1",
+  "source": "NIST LWC nist-lwc-r2-forkae, LWC_AEAD_KAT_128_48.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "f4daf150d3026cb6"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "8556ad2b8bfc98e1"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "d782950167d2ab1d"
+    }
+  ]
+}

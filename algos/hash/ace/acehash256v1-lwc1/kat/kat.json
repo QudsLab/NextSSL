@@ -1,0 +1,21 @@
+{
+  "algorithm": "acehash256v1-lwc1",
+  "source": "NIST LWC nist-lwc-r1-ace, LWC_HASH_KAT_256.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "7bb64c8e459cb184fc9a82c508828529ae6a2fa6e74d1cbd017dc3cff54e4a76"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "c3e37ec01e3623a41eba5532b162dc1234c005770686b8507d102f00da683578"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "8da8c99f288b165677d06e34b70fcfaf423a935f39b4e20642220a64cedfa1bc"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+id        = "sivtemphotonaeadv1"
+kind      = "aead"
+category  = "aead"
+family    = "sivtemphoton"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Lightweight-Cryptography/documents/round-1/submissions/siv-tem-photon.zip", sha256 = "85ee9d2459b9bb7004d7abcff2c4ee5c4fe60b4300d1144c5ce76b478423684f", license = "NOASSERTION", files = ["ref/api.h", "ref/encrypt.c", "ref/photon.c", "ref/photon.h", "ref/siv.h", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_AEAD_KAT_128_128.txt from the NIST package nist-lwc-r1-sivtemphoton (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 16
+tag = 32

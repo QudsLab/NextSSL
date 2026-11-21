@@ -1,0 +1,33 @@
+{
+  "algorithm": "romulusm2v1",
+  "source": "NIST LWC nist-lwc-r1-romulus, LWC_AEAD_KAT_128_96.txt, ct = ciphertext || tag",
+  "independence": "designers' submission KAT shipped in the same package as the copied code (not independently cross-checked)",
+  "gen": "kat1",
+  "replay": "registry",
+  "vectors": [
+    {
+      "id": "lwc-count-1",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b",
+      "aad_hex": "",
+      "pt_hex": "",
+      "ct_hex": "c90f619ff363b13d980ea3b28d620baa"
+    },
+    {
+      "id": "lwc-count-2",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b",
+      "aad_hex": "00",
+      "pt_hex": "",
+      "ct_hex": "3a971d74fd7d8966300a5ec5c6a4443d"
+    },
+    {
+      "id": "lwc-count-3",
+      "key_hex": "000102030405060708090a0b0c0d0e0f",
+      "nonce_hex": "000102030405060708090a0b",
+      "aad_hex": "0001",
+      "pt_hex": "",
+      "ct_hex": "03d3d92ef92f2d640a4403d6818860e7"
+    }
+  ]
+}

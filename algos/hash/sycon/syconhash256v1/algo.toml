@@ -1,0 +1,20 @@
+id        = "syconhash256v1"
+kind      = "hash"
+category  = "hash"
+family    = "sycon"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Lightweight-Cryptography/documents/round-1/submissions/sycon.zip", sha256 = "043959adb6784b57c1ef08ee30c1ddd2720bfbbf41ce91819b7bb6a79e176ff4", license = "NOASSERTION", files = ["ref/api.h", "ref/crypto_hash.h", "ref/hash.c", "ref/sycon.c", "ref/sycon.h", "LICENSE"] }
+
+# Variant wired: ref (hash). Other variants not wired: none.
+# KAT: first 3 vectors of LWC_HASH_KAT_256.txt from the NIST package nist-lwc-r1-sycon (designers' own KAT; replayed through this glue in Docker/Linux at wiring time, seal+open or digest, all pass). Tier unverified.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

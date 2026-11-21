@@ -1,0 +1,21 @@
+{
+  "algorithm": "xoodyakv1-hash",
+  "source": "NIST LWC nist-lwc-r2-xoodyak, LWC_HASH_KAT_256.txt",
+  "vectors": [
+    {
+      "id": "count-1",
+      "msg_hex": "",
+      "out_hex": "ea152f2b47bce24efb66c479d4adf17bd324d806e85ff75ee369ee50dc8f8bd1"
+    },
+    {
+      "id": "count-2",
+      "msg_hex": "00",
+      "out_hex": "27921f8ddf392894460b70b3ed6c091e6421b7d2147dcd6031d7efebad3030cc"
+    },
+    {
+      "id": "count-3",
+      "msg_hex": "0001",
+      "out_hex": "dd3f12e89db41c61d3c05779705fa946a8c69c79eefdc1b4a966a5f1ab35073d"
+    }
+  ]
+}
