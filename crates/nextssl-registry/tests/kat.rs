@@ -80,7 +80,7 @@ fn every_kat_file_exists_and_is_json() {
     }
 }
 
-/// Triage aid: KAT_ONLY=id1,id2 runs only those algorithms in the KAT and smoke loops (unset = all).
+/// Triage aid: KAT_ONLY=id1,id2 runs only those algorithms in the KAT replay and smoke loops (unset = all).
 fn selected(id: &str) -> bool {
     match std::env::var("KAT_ONLY") {
         Ok(only) if !only.is_empty() => only.split(',').any(|s| s == id),
@@ -1053,7 +1053,7 @@ fn published_kats_replay_through_the_registry() {
     let mut ran = 0usize;
     let mut files = 0usize;
     let mut failures: Vec<String> = Vec::new();
-    for a in all() {
+    for a in all().iter().filter(|a| selected(a.id)) {
         #[cfg(miri)]
         if a.c_backed {
             continue;
@@ -1114,7 +1114,10 @@ fn published_kats_replay_through_the_registry() {
         "published KATs: {files} files, {ran} vectors replayed, {} failed",
         failures.len()
     );
-    assert!(files >= 20, "suspiciously few published KAT files: {files}");
+    // The floor guards the full catalog; a KAT_ONLY subset may legitimately have fewer files.
+    if std::env::var("KAT_ONLY").map_or(true, |v| v.is_empty()) {
+        assert!(files >= 20, "suspiciously few published KAT files: {files}");
+    }
     assert!(
         failures.is_empty(),
         "{} published KAT vectors failed",
