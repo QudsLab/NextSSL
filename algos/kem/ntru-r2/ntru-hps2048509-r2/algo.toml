@@ -1,0 +1,25 @@
+id        = "ntru-hps2048509-r2"
+kind      = "kem"
+category  = "kem"
+family    = "ntru-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/NTRU-Round2.zip", sha256 = "35f653f18615be472e01ca67b33634404a91b6a6bdbeb8e8566818ec97f3ed64", license = "NOASSERTION", files = ["crypto_kem/ntru-hps2048509/api.h", "crypto_kem/ntru-hps2048509/crypto_sort.c", "crypto_kem/ntru-hps2048509/crypto_sort.h", "crypto_kem/ntru-hps2048509/fips202.c", "crypto_kem/ntru-hps2048509/fips202.h", "crypto_kem/ntru-hps2048509/kem.c", "crypto_kem/ntru-hps2048509/kem.h", "crypto_kem/ntru-hps2048509/owcpa.c", "crypto_kem/ntru-hps2048509/owcpa.h", "crypto_kem/ntru-hps2048509/pack3.c", "crypto_kem/ntru-hps2048509/packq.c", "crypto_kem/ntru-hps2048509/params.h", "crypto_kem/ntru-hps2048509/poly.c", "crypto_kem/ntru-hps2048509/poly.h", "crypto_kem/ntru-hps2048509/rng.h", "crypto_kem/ntru-hps2048509/sample.c", "crypto_kem/ntru-hps2048509/sample.h", "crypto_kem/ntru-hps2048509/verify.c", "crypto_kem/ntru-hps2048509/verify.h", "LICENSE"] }
+
+# Variant wired: crypto_kem/ntru-hps2048509 (kem). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 699
+sk = 935
+ct = 699
+ss = 32
+seed = 0
+coins = 0

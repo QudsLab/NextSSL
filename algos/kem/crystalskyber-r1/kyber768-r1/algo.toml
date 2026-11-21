@@ -1,0 +1,27 @@
+id        = "kyber768-r1"
+kind      = "kem"
+category  = "kem"
+family    = "crystalskyber-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/CRYSTALS_Kyber.zip", sha256 = "a357712bc0f15336080a339ee278f6b472e1bd556ee9f29f919a09538e0c0e7d", license = "NOASSERTION", files = ["crypto_kem/kyber768/api.h", "crypto_kem/kyber768/cbd.c", "crypto_kem/kyber768/cbd.h", "crypto_kem/kyber768/fips202.c", "crypto_kem/kyber768/fips202.h", "crypto_kem/kyber768/indcpa.c", "crypto_kem/kyber768/indcpa.h", "crypto_kem/kyber768/kem.c", "crypto_kem/kyber768/ntt.c", "crypto_kem/kyber768/ntt.h", "crypto_kem/kyber768/params.h", "crypto_kem/kyber768/poly.c", "crypto_kem/kyber768/poly.h", "crypto_kem/kyber768/polyvec.c", "crypto_kem/kyber768/polyvec.h", "crypto_kem/kyber768/precomp.c", "crypto_kem/kyber768/reduce.c", "crypto_kem/kyber768/reduce.h", "crypto_kem/kyber768/rng.h", "crypto_kem/kyber768/verify.c", "crypto_kem/kyber768/verify.h", "LICENSE"] }
+
+# Variant wired: crypto_kem/kyber768 (kem). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1088
+sk = 2400
+ct = 1152
+ss = 32
+seed = 0
+coins = 0

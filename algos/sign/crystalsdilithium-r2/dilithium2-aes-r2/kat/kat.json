@@ -1,0 +1,5 @@
+{
+ "algorithm": "dilithium2-aes-r2",
+ "vectors": [],
+ "note": "no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row. Ambiguous: 2 .rsp files match the sizes (Dilithium/KAT/dilithium3/PQCsignKAT_3504.rsp, Dilithium/KAT/dilithium3-AES/PQCsignKAT_3504.rsp); no vectors taken."
+}

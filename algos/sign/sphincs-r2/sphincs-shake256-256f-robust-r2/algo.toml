@@ -1,0 +1,26 @@
+id        = "sphincs-shake256-256f-robust-r2"
+kind      = "sign"
+category  = "sign"
+family    = "sphincs-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/SPHINCS-Round2.zip", sha256 = "dc5f2631d2145371a5c2b2cd013f333b96eb21ea9dbd9abc2e2f071bbcfba083", license = "NOASSERTION", files = ["crypto_sign/sphincs-shake256-256f-robust/address.c", "crypto_sign/sphincs-shake256-256f-robust/address.h", "crypto_sign/sphincs-shake256-256f-robust/api.h", "crypto_sign/sphincs-shake256-256f-robust/fips202.c", "crypto_sign/sphincs-shake256-256f-robust/fips202.h", "crypto_sign/sphincs-shake256-256f-robust/fors.c", "crypto_sign/sphincs-shake256-256f-robust/fors.h", "crypto_sign/sphincs-shake256-256f-robust/hash.h", "crypto_sign/sphincs-shake256-256f-robust/hash_shake256.c", "crypto_sign/sphincs-shake256-256f-robust/params.h", "crypto_sign/sphincs-shake256-256f-robust/rng.h", "crypto_sign/sphincs-shake256-256f-robust/sign.c", "crypto_sign/sphincs-shake256-256f-robust/thash.h", "crypto_sign/sphincs-shake256-256f-robust/thash_shake256_robust.c", "crypto_sign/sphincs-shake256-256f-robust/utils.c", "crypto_sign/sphincs-shake256-256f-robust/utils.h", "crypto_sign/sphincs-shake256-256f-robust/wots.c", "crypto_sign/sphincs-shake256-256f-robust/wots.h", "LICENSE"] }
+
+# Variant wired: crypto_sign/sphincs-shake256-256f-robust (sign). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 64
+sk = 128
+sig = { min = 1, max = 49216 }
+seed = 0
+ctx = 0

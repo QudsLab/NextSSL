@@ -1,0 +1,26 @@
+id        = "sphincs-haraka-128s-r1"
+kind      = "sign"
+category  = "sign"
+family    = "sphincsplus-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/SPHINCS_Plus.zip", sha256 = "6711703e84d5ea18871f983b17499a75158b698725278d358281d26c9089e62f", license = "NOASSERTION", files = ["crypto_sign/sphincs-haraka-128s/api.h", "crypto_sign/sphincs-haraka-128s/fors.c", "crypto_sign/sphincs-haraka-128s/fors.h", "crypto_sign/sphincs-haraka-128s/haraka.c", "crypto_sign/sphincs-haraka-128s/haraka.h", "crypto_sign/sphincs-haraka-128s/hash.h", "crypto_sign/sphincs-haraka-128s/hash_address.c", "crypto_sign/sphincs-haraka-128s/hash_address.h", "crypto_sign/sphincs-haraka-128s/hash_haraka.c", "crypto_sign/sphincs-haraka-128s/params.h", "crypto_sign/sphincs-haraka-128s/rng.h", "crypto_sign/sphincs-haraka-128s/sign.c", "crypto_sign/sphincs-haraka-128s/utils.c", "crypto_sign/sphincs-haraka-128s/utils.h", "crypto_sign/sphincs-haraka-128s/wots.c", "crypto_sign/sphincs-haraka-128s/wots.h", "LICENSE"] }
+
+# Variant wired: crypto_sign/sphincs-haraka-128s (sign). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 32
+sk = 64
+sig = { min = 1, max = 8080 }
+seed = 0
+ctx = 0

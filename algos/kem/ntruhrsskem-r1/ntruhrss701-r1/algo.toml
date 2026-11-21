@@ -1,0 +1,25 @@
+id        = "ntruhrss701-r1"
+kind      = "kem"
+category  = "kem"
+family    = "ntruhrsskem-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/NTRU_HRSS_KEM.zip", sha256 = "96a44c1bbb53361ada71e9aa0c7d5b49dd0d14ffab14d71fa27d0a7c6a7777dd", license = "NOASSERTION", files = ["crypto_kem/ntruhrss701/api.h", "crypto_kem/ntruhrss701/cbd.c", "crypto_kem/ntruhrss701/cbd.h", "crypto_kem/ntruhrss701/fips202.c", "crypto_kem/ntruhrss701/fips202.h", "crypto_kem/ntruhrss701/ntrukem.c", "crypto_kem/ntruhrss701/owcpa.c", "crypto_kem/ntruhrss701/owcpa.h", "crypto_kem/ntruhrss701/params.h", "crypto_kem/ntruhrss701/poly.c", "crypto_kem/ntruhrss701/poly.h", "crypto_kem/ntruhrss701/rng.h", "crypto_kem/ntruhrss701/verify.c", "crypto_kem/ntruhrss701/verify.h", "LICENSE"] }
+
+# Variant wired: crypto_kem/ntruhrss701 (kem). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1138
+sk = 1418
+ct = 1278
+ss = 32
+seed = 0
+coins = 0

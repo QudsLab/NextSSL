@@ -1,0 +1,24 @@
+id        = "qtesla-i-r2"
+kind      = "sign"
+category  = "sign"
+family    = "qtesla-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/qTESLA-Round2.zip", sha256 = "f6f0849d02ea62681e1749a31cd5733c5504259b2b91705f7efebd71f04020d8", license = "NOASSERTION", files = ["qTesla_I/CDT32.h", "qTesla_I/CDT64.h", "qTesla_I/api.h", "qTesla_I/config.h", "qTesla_I/consts.c", "qTesla_I/gauss.c", "qTesla_I/gauss.h", "qTesla_I/pack.c", "qTesla_I/pack.h", "qTesla_I/params.h", "qTesla_I/poly.c", "qTesla_I/poly.h", "qTesla_I/random/random.h", "qTesla_I/sample.c", "qTesla_I/sample.h", "qTesla_I/sha3/fips202.c", "qTesla_I/sha3/fips202.h", "qTesla_I/sign.c", "LICENSE"] }
+
+# Variant wired: qTesla_I (sign). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1504
+sk = 1216
+sig = { min = 1, max = 1376 }
+seed = 0
+ctx = 0

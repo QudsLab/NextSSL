@@ -1,0 +1,24 @@
+id        = "mqdss-48-r2"
+kind      = "sign"
+category  = "sign"
+family    = "mqdss-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/MQDSS-Round2.zip", sha256 = "d9a7048d1e898d9b1906ec657204f0270acde37424b88244bccc6f1187011351", license = "NOASSERTION", files = ["crypto_sign/mqdss-48/api.h", "crypto_sign/mqdss-48/fips202.c", "crypto_sign/mqdss-48/fips202.h", "crypto_sign/mqdss-48/gf31.c", "crypto_sign/mqdss-48/gf31.h", "crypto_sign/mqdss-48/mq.c", "crypto_sign/mqdss-48/mq.h", "crypto_sign/mqdss-48/params.h", "crypto_sign/mqdss-48/rng.h", "crypto_sign/mqdss-48/sign.c", "LICENSE"] }
+
+# Variant wired: crypto_sign/mqdss-48 (sign). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 46
+sk = 16
+sig = { min = 1, max = 20854 }
+seed = 0
+ctx = 0

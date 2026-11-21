@@ -1,0 +1,27 @@
+id        = "fire-saber-r1"
+kind      = "kem"
+category  = "kem"
+family    = "saber-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/SABER.zip", sha256 = "245184d4f79ad3157cc1c1cb7199b971fdab4c714cb041a54dcb2f6560ce7fef", license = "NOASSERTION", files = ["fire_saber/SABER_indcpa.c", "fire_saber/SABER_indcpa.h", "fire_saber/SABER_params.h", "fire_saber/api.h", "fire_saber/cbd.c", "fire_saber/cbd.h", "fire_saber/cpucycles.h", "fire_saber/fips202.c", "fire_saber/fips202.h", "fire_saber/kem.c", "fire_saber/kem.h", "fire_saber/pack_unpack.c", "fire_saber/pack_unpack.h", "fire_saber/poly.c", "fire_saber/poly.h", "fire_saber/poly_mul.c", "fire_saber/poly_mul.h", "fire_saber/recon.c", "fire_saber/recon.h", "fire_saber/recon_FireSaber.c", "fire_saber/recon_LightSaber.c", "fire_saber/recon_Saber.c", "fire_saber/rng.h", "fire_saber/verify.c", "fire_saber/verify.h", "LICENSE"] }
+
+# Variant wired: fire_saber (kem). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1312
+sk = 3040
+ct = 1472
+ss = 32
+seed = 0
+coins = 0

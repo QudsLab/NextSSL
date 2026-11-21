@@ -1,0 +1,26 @@
+id        = "dilithium1-r2"
+kind      = "sign"
+category  = "sign"
+family    = "crystalsdilithium-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2065: 'asm': undeclared identifier"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/CRYSTALS-Dilithium-Round2.zip", sha256 = "f6dcf5d833cf46ac99165974e83d9e7298550b870d113d4730d8c786b600a2c3", license = "NOASSERTION", files = ["crypto_sign/dilithium1-AES/aes256ctr.c", "crypto_sign/dilithium1-AES/aes256ctr.h", "crypto_sign/dilithium1-AES/config.h", "crypto_sign/dilithium1-AES/params.h", "crypto_sign/dilithium1/api.h", "crypto_sign/dilithium1/config.h", "crypto_sign/dilithium1/fips202.c", "crypto_sign/dilithium1/fips202.h", "crypto_sign/dilithium1/ntt.c", "crypto_sign/dilithium1/ntt.h", "crypto_sign/dilithium1/packing.c", "crypto_sign/dilithium1/packing.h", "crypto_sign/dilithium1/params.h", "crypto_sign/dilithium1/poly.c", "crypto_sign/dilithium1/poly.h", "crypto_sign/dilithium1/polyvec.c", "crypto_sign/dilithium1/polyvec.h", "crypto_sign/dilithium1/randombytes.h", "crypto_sign/dilithium1/reduce.c", "crypto_sign/dilithium1/reduce.h", "crypto_sign/dilithium1/rng.h", "crypto_sign/dilithium1/rounding.c", "crypto_sign/dilithium1/rounding.h", "crypto_sign/dilithium1/sign.c", "crypto_sign/dilithium1/sign.h", "crypto_sign/dilithium1/symmetric.h", "crypto_sign/dilithium1/test/cpucycles.h", "LICENSE"] }
+
+# Variant wired: crypto_sign/dilithium1 (sign). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1472
+sk = 3504
+sig = { min = 1, max = 2701 }
+seed = 0
+ctx = 0

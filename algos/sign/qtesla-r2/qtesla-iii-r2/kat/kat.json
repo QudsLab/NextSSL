@@ -1,0 +1,5 @@
+{
+ "algorithm": "qtesla-iii-r2",
+ "vectors": [],
+ "note": "no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row. Ambiguous: 3 .rsp files match the sizes (NIST_submission_round2_Mar2019/KAT/avx2/KAT64/PQCsignKAT_qTesla-III.rsp, NIST_submission_round2_Mar2019/KAT/ref/KAT32/PQCsignKAT_qTesla-III.rsp, NIST_submission_round2_Mar2019/KAT/ref/KAT64/PQCsignKAT_qTesla-III.rsp); no vectors taken."
+}

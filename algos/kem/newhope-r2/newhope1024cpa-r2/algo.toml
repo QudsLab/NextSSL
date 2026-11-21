@@ -1,0 +1,25 @@
+id        = "newhope1024cpa-r2"
+kind      = "kem"
+category  = "kem"
+family    = "newhope-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/NewHope-Round2.zip", sha256 = "05b295140b9935391c7718e491cb5b21cdf0d2ecade523bec6081e96683705c2", license = "NOASSERTION", files = ["crypto_kem/newhope1024cpa/api.h", "crypto_kem/newhope1024cpa/cpapke.c", "crypto_kem/newhope1024cpa/cpapke.h", "crypto_kem/newhope1024cpa/fips202.c", "crypto_kem/newhope1024cpa/fips202.h", "crypto_kem/newhope1024cpa/kem.c", "crypto_kem/newhope1024cpa/ntt.c", "crypto_kem/newhope1024cpa/ntt.h", "crypto_kem/newhope1024cpa/params.h", "crypto_kem/newhope1024cpa/poly.c", "crypto_kem/newhope1024cpa/poly.h", "crypto_kem/newhope1024cpa/precomp.c", "crypto_kem/newhope1024cpa/reduce.c", "crypto_kem/newhope1024cpa/reduce.h", "crypto_kem/newhope1024cpa/rng.h", "crypto_kem/newhope1024cpa/verify.c", "crypto_kem/newhope1024cpa/verify.h", "LICENSE"] }
+
+# Variant wired: crypto_kem/newhope1024cpa (kem). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1824
+sk = 1792
+ct = 2176
+ss = 32
+seed = 0
+coins = 0

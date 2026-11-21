@@ -1,0 +1,26 @@
+id        = "dilithium-weak-r1"
+kind      = "sign"
+category  = "sign"
+family    = "crystalsdilithium-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/CRYSTALS_Dilithium.zip", sha256 = "aa99744764a3f410bee2ded21a736e65791ee6f99b1748a3e13e10106da55bea", license = "NOASSERTION", files = ["Dilithium_weak/api.h", "Dilithium_weak/fips202.c", "Dilithium_weak/fips202.h", "Dilithium_weak/ntt.c", "Dilithium_weak/ntt.h", "Dilithium_weak/packing.c", "Dilithium_weak/packing.h", "Dilithium_weak/params.h", "Dilithium_weak/poly.c", "Dilithium_weak/poly.h", "Dilithium_weak/polyvec.c", "Dilithium_weak/polyvec.h", "Dilithium_weak/randombytes.h", "Dilithium_weak/reduce.c", "Dilithium_weak/reduce.h", "Dilithium_weak/rng.h", "Dilithium_weak/rounding.c", "Dilithium_weak/rounding.h", "Dilithium_weak/sign.c", "Dilithium_weak/sign.h", "LICENSE"] }
+
+# Variant wired: Dilithium_weak (sign). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 896
+sk = 2096
+sig = { min = 1, max = 1487 }
+seed = 0
+ctx = 0

@@ -1,0 +1,5 @@
+{
+ "algorithm": "compact-lwe-public-key-enc-r1",
+ "vectors": [],
+ "note": "no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row. Ambiguous: 3 .rsp files match the sizes (Compact-LWE-Public-Key-Enc/KAT/PQCencryptKAT_232.rsp, Compact-LWE-Public-Key-Enc/Optimized_Implementation/PQCencryptKAT_232.rsp, Compact-LWE-Public-Key-Enc/Reference_Implementation/PQCencryptKAT_232.rsp); no vectors taken."
+}

@@ -1,0 +1,26 @@
+id        = "dilithium-very-high-r1"
+kind      = "sign"
+category  = "sign"
+family    = "crystalsdilithium-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory"
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/CRYSTALS_Dilithium.zip", sha256 = "aa99744764a3f410bee2ded21a736e65791ee6f99b1748a3e13e10106da55bea", license = "NOASSERTION", files = ["Dilithium_very_high/api.h", "Dilithium_very_high/fips202.c", "Dilithium_very_high/fips202.h", "Dilithium_very_high/ntt.c", "Dilithium_very_high/ntt.h", "Dilithium_very_high/packing.c", "Dilithium_very_high/packing.h", "Dilithium_very_high/params.h", "Dilithium_very_high/poly.c", "Dilithium_very_high/poly.h", "Dilithium_very_high/polyvec.c", "Dilithium_very_high/polyvec.h", "Dilithium_very_high/randombytes.h", "Dilithium_very_high/reduce.c", "Dilithium_very_high/reduce.h", "Dilithium_very_high/rng.h", "Dilithium_very_high/rounding.c", "Dilithium_very_high/rounding.h", "Dilithium_very_high/sign.c", "Dilithium_very_high/sign.h", "LICENSE"] }
+
+# Variant wired: Dilithium_very_high (sign). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1760
+sk = 3856
+sig = { min = 1, max = 3366 }
+seed = 0
+ctx = 0

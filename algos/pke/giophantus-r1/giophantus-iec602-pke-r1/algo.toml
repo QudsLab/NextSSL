@@ -1,0 +1,24 @@
+id        = "giophantus-iec602-pke-r1"
+kind      = "pke"
+category  = "pke"
+family    = "giophantus-r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/Giophantus.zip", sha256 = "3924faa8d777eb89b3dde7cd469e3d49509f782c80d2eeafe93c5bcb1a89b8e6", license = "NOASSERTION", files = ["encrypt/IEC602/aes256.c", "encrypt/IEC602/api.h", "encrypt/IEC602/genrand.c", "encrypt/IEC602/genrand.h", "encrypt/IEC602/iec.c", "encrypt/IEC602/iec.h", "encrypt/IEC602/intermediate-iec.c", "encrypt/IEC602/parameter.h", "encrypt/IEC602/poly.c", "encrypt/IEC602/polyopt.c", "encrypt/IEC602/rng.h", "encrypt/IEC602/seedexpand.c", "encrypt/IEC602/seedexpand.h", "encrypt/IEC602/sha3.c", "encrypt/IEC602/sha3.h", "LICENSE"] }
+
+# Variant wired: encrypt/IEC602 (pke). Other variants not wired: none.
+# no vectors replayed by the build check (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 14412
+sk = 15014
+ct = { min = 1, max = 32124 }
+out = { min = 0, max = 3300 }
+ctx = 0
