@@ -1,0 +1,33 @@
+{
+ "algorithm": "simon-64",
+ "source": "Crypto++ TestVectors/simon.txt (pinned clone). SAME-SOURCE: the library's own test data",
+ "independence": "same-source (Crypto++ test data; published spec vectors it cites are not re-fetched)",
+ "gen": "wire12-cppgaps",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "key_hex": "0001020308090a0b10111213",
+   "pt_hex": "636c696e6720726f",
+   "ct_hex": "c88f1a117fe2a25c"
+  },
+  {
+   "id": "cryptopp-1",
+   "key_hex": "c04ddd70d26730fd7fe0b451",
+   "pt_hex": "fd7e2ee54b1ebef8",
+   "ct_hex": "570b1682a037e68d"
+  },
+  {
+   "id": "cryptopp-2",
+   "key_hex": "0001020308090a0b1011121318191a1b",
+   "pt_hex": "756e64206c696b65",
+   "ct_hex": "7aa0dfb920fcc844"
+  },
+  {
+   "id": "cryptopp-3",
+   "key_hex": "435ccae27799f6117c08652eb81e0ebe",
+   "pt_hex": "ef4a99d6e0d6992c",
+   "ct_hex": "b172958be0f28647"
+  }
+ ]
+}

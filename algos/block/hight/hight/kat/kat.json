@@ -1,0 +1,39 @@
+{
+ "algorithm": "hight",
+ "source": "Crypto++ TestVectors/hight.txt (pinned clone). SAME-SOURCE: the library's own test data",
+ "independence": "same-source (Crypto++ test data; published spec vectors it cites are not re-fetched)",
+ "gen": "wire12-cppgaps",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "key_hex": "88e34f8f081779f1e9f394370ad40589",
+   "pt_hex": "d76d0d18327ec562",
+   "ct_hex": "e4bc2e312277e4dd"
+  },
+  {
+   "id": "cryptopp-1",
+   "key_hex": "2923be84e16cd6ae529049f1f1bbe9eb",
+   "pt_hex": "b3a6db3c870c3e99",
+   "ct_hex": "23cad1a3cddf7eab"
+  },
+  {
+   "id": "cryptopp-2",
+   "key_hex": "245e0d1c06b747deb3124dc843bb8ba6",
+   "pt_hex": "1f035a7d0938251f",
+   "ct_hex": "52bd91bb26f8ed99"
+  },
+  {
+   "id": "cryptopp-3",
+   "key_hex": "5dd4cbfc96f5453b130d890a1cdbae32",
+   "pt_hex": "209a50ee407836fd",
+   "ct_hex": "9502b46d87b44167"
+  },
+  {
+   "id": "cryptopp-4",
+   "key_hex": "124932f69e7d49dcad4f14f2444066d0",
+   "pt_hex": "6bc430b7323ba122",
+   "ct_hex": "20cbcf416524e5a6"
+  }
+ ]
+}

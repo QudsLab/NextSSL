@@ -1,0 +1,16 @@
+{
+ "algorithm": "panama-le",
+ "source": "Crypto++ TestVectors/panama.txt (pinned clone), first vectors only (the 1,000,000-byte repeat vector is not included)",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "msg_hex": "",
+   "out_hex": "aa0cc954d757d7ac7779ca3342334ca471abd47d5952ac91ed837ecd5b16922b"
+  },
+  {
+   "id": "cryptopp-1",
+   "msg_hex": "54686520717569636b2062726f776e20666f78206a756d7073206f76657220746865206c617a7920646f67",
+   "out_hex": "5f5ca355b90ac622b0aa7e654ef5f27e9e75111415b48b8afe3add1c6b89cba1"
+  }
+ ]
+}

@@ -1,0 +1,39 @@
+{
+ "algorithm": "simeck-32",
+ "source": "Crypto++ TestVectors/simeck.txt (pinned clone). SAME-SOURCE: the library's own test data",
+ "independence": "same-source (Crypto++ test data; published spec vectors it cites are not re-fetched)",
+ "gen": "wire12-cppgaps",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "key_hex": "1918111009080100",
+   "pt_hex": "65656877",
+   "ct_hex": "770d2c76"
+  },
+  {
+   "id": "cryptopp-1",
+   "key_hex": "3d6c4ae1678418be",
+   "pt_hex": "48230029",
+   "ct_hex": "65359de9"
+  },
+  {
+   "id": "cryptopp-2",
+   "key_hex": "6df116495f906952",
+   "pt_hex": "72ae2cd6",
+   "ct_hex": "0ab073ca"
+  },
+  {
+   "id": "cryptopp-3",
+   "key_hex": "2ea60bb301eb26e9",
+   "pt_hex": "41bb5af1",
+   "ct_hex": "6ed0bc2e"
+  },
+  {
+   "id": "cryptopp-4",
+   "key_hex": "00990f3e390c7e87",
+   "pt_hex": "153c12db",
+   "ct_hex": "76374119"
+  }
+ ]
+}

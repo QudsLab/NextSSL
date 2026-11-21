@@ -1,0 +1,33 @@
+{
+ "algorithm": "cham-128",
+ "source": "Crypto++ TestVectors/cham.txt (pinned clone). SAME-SOURCE: the library's own test data",
+ "independence": "same-source (Crypto++ test data; published spec vectors it cites are not re-fetched)",
+ "gen": "wire12-cppgaps",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "key_hex": "03020100070605040b0a09080f0e0d0c",
+   "pt_hex": "3322110077665544bbaa9988ffeeddcc",
+   "ct_hex": "c3746034b55700c58d64ec32489332f7"
+  },
+  {
+   "id": "cryptopp-1",
+   "key_hex": "a37beb0115c49898906f6f1c73f68cf3",
+   "pt_hex": "463e4b34efe3faa8d8b74450967f34d1",
+   "ct_hex": "30269e994d70c5de7b0bc631a96a1458"
+  },
+  {
+   "id": "cryptopp-2",
+   "key_hex": "03020100070605040b0a09080f0e0d0cf3f2f1f0f7f6f5f4fbfaf9f8fffefdfc",
+   "pt_hex": "3322110077665544bbaa9988ffeeddcc",
+   "ct_hex": "a899c8a0c929d55cab670d380c4f7ac8"
+  },
+  {
+   "id": "cryptopp-3",
+   "key_hex": "4031c29153a387998e0a6bad6098a6c4e4a852f87daf676e873c3524e1527db8",
+   "pt_hex": "aac76bc0ec99e00e9648a9391a37c8db",
+   "ct_hex": "c993c6821545b60c456af36cb97628e7"
+  }
+ ]
+}

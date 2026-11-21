@@ -1,0 +1,45 @@
+{
+ "algorithm": "mars",
+ "source": "Crypto++ TestVectors/mars.txt (pinned clone). SAME-SOURCE: the library's own test data",
+ "independence": "same-source (Crypto++ test data; published spec vectors it cites are not re-fetched)",
+ "gen": "wire12-cppgaps",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "key_hex": "80000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "b3e2ad5608ac1b6733a7cb4fdf8f9952"
+  },
+  {
+   "id": "cryptopp-1",
+   "key_hex": "00000000000000000000000000000000",
+   "pt_hex": "00000000000000000000000000000000",
+   "ct_hex": "dcc07b8dfb0738d6e30a22dfcf27e886"
+  },
+  {
+   "id": "cryptopp-2",
+   "key_hex": "000000000000000000000000000000000000000000000000",
+   "pt_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "ct_hex": "97778747d60e425c2b4202599db856fb"
+  },
+  {
+   "id": "cryptopp-3",
+   "key_hex": "d158860838874d9500000000000000000000000000000000",
+   "pt_hex": "93a953a82c10411dd158860838874d95",
+   "ct_hex": "4fa0e5f64893131712f01408d233e9f7"
+  },
+  {
+   "id": "cryptopp-4",
+   "key_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+   "pt_hex": "62e45b4cf3477f1dd65063729d9aba8f",
+   "ct_hex": "0f4b897ea014d21fbc20f1054a42f719"
+  },
+  {
+   "id": "cryptopp-5",
+   "key_hex": "fba167983e7aef22317ce28c02aae1a3e8e5cc3cedbea82a99dbc39ad65e7227",
+   "pt_hex": "1344aba4d3c44708a8a72116d4f49384",
+   "ct_hex": "458335d95ea42a9f4dccd41aecc2390d"
+  }
+ ]
+}

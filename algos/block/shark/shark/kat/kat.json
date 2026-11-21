@@ -1,0 +1,39 @@
+{
+ "algorithm": "shark",
+ "source": "Crypto++ TestData/sharkval.dat (pinned clone). SAME-SOURCE: the library's own test data",
+ "independence": "same-source (Crypto++ test data; published spec vectors it cites are not re-fetched)",
+ "gen": "wire12-cppgaps",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "key_hex": "00000000000000000000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "214bcf4e7716420a"
+  },
+  {
+   "id": "cryptopp-1",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "c76c696289898137"
+  },
+  {
+   "id": "cryptopp-2",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "pt_hex": "c76c696289898137",
+   "ct_hex": "077a4a59faeeea4d"
+  },
+  {
+   "id": "cryptopp-3",
+   "key_hex": "915f4619be41b2516355a50110a9ce91",
+   "pt_hex": "21a5dbee154b8f6d",
+   "ct_hex": "6ff33b98f448e95a"
+  },
+  {
+   "id": "cryptopp-4",
+   "key_hex": "783348e75aeb0f2fd7b169bb8dc16787",
+   "pt_hex": "f7c013ac5b2b8952",
+   "ct_hex": "e5e554abe9ced2d2"
+  }
+ ]
+}

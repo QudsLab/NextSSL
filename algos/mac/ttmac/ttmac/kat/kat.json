@@ -1,0 +1,48 @@
+{
+ "algorithm": "ttmac",
+ "source": "Crypto++ TestVectors/ttmac.txt (pinned clone)",
+ "vectors": [
+  {
+   "id": "cryptopp-0",
+   "key_hex": "00112233445566778899aabbccddeeff01234567",
+   "data_hex": "",
+   "tag_hex": "2dec8ed4a0fd712ed9fbf2ab466ec2df21215e4a"
+  },
+  {
+   "id": "cryptopp-1",
+   "key_hex": "00112233445566778899aabbccddeeff01234567",
+   "data_hex": "61",
+   "tag_hex": "5893e3e6e306704dd77ad6e6ed432cde321a7756"
+  },
+  {
+   "id": "cryptopp-2",
+   "key_hex": "00112233445566778899aabbccddeeff01234567",
+   "data_hex": "616263",
+   "tag_hex": "70bfd1029797a5c16da5b557a1f0b2779b78497e"
+  },
+  {
+   "id": "cryptopp-3",
+   "key_hex": "00112233445566778899aabbccddeeff01234567",
+   "data_hex": "6d65737361676520646967657374",
+   "tag_hex": "8289f4f19ffe4f2af737de4bd71c829d93a972fa"
+  },
+  {
+   "id": "cryptopp-4",
+   "key_hex": "00112233445566778899aabbccddeeff01234567",
+   "data_hex": "6162636465666768696a6b6c6d6e6f707172737475767778797a",
+   "tag_hex": "2186ca09c5533198b7371f245273504ca92bae60"
+  },
+  {
+   "id": "cryptopp-5",
+   "key_hex": "00112233445566778899aabbccddeeff01234567",
+   "data_hex": "6162636462636465636465666465666765666768666768696768696a68696a6b696a6b6c6a6b6c6d6b6c6d6e6c6d6e6f6d6e6f706e6f7071",
+   "tag_hex": "8a7bf77aef62a2578497a27c0d6518a429e7c14d"
+  },
+  {
+   "id": "cryptopp-6",
+   "key_hex": "00112233445566778899aabbccddeeff01234567",
+   "data_hex": "4142434445464748494a4b4c4d4e4f505152535455565758595a6162636465666768696a6b6c6d6e6f707172737475767778797a30313233343536373839",
+   "tag_hex": "54bac392a886806d169556fcbb6789b54fb364fb"
+  }
+ ]
+}
