@@ -88,6 +88,12 @@ fn selected(id: &str) -> bool {
     }
 }
 
+/// True unless KAT_ONLY selects a subset; catalog-wide floors (vector, file and kind counts) only
+/// make sense for the full run.
+fn full_catalog() -> bool {
+    std::env::var("KAT_ONLY").map_or(true, |v| v.is_empty())
+}
+
 #[test]
 fn hash_and_encoding_kats_replay_through_the_registry() {
     let root = algos_dir();
@@ -155,7 +161,9 @@ fn hash_and_encoding_kats_replay_through_the_registry() {
             }
         }
     }
-    assert!(total >= 15, "suspiciously few vectors ran: {total}");
+    if full_catalog() {
+        assert!(total >= 15, "suspiciously few vectors ran: {total}");
+    }
 }
 
 /// Test-only deterministic, NON-constant entropy (splitmix64 counter expansion). A constant
@@ -957,7 +965,9 @@ fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
     );
     // Every kind that has a registered algorithm was instantiated; print for the test log.
     println!("kinds exercised: {kinds:?}");
-    assert!(kinds.len() >= 10, "too few kinds registered: {kinds:?}");
+    if full_catalog() {
+        assert!(kinds.len() >= 10, "too few kinds registered: {kinds:?}");
+    }
 }
 
 /// Replays the published-vector files that carry `"replay": "registry"` (AEAD, block cipher,
@@ -1115,7 +1125,7 @@ fn published_kats_replay_through_the_registry() {
         failures.len()
     );
     // The floor guards the full catalog; a KAT_ONLY subset may legitimately have fewer files.
-    if std::env::var("KAT_ONLY").map_or(true, |v| v.is_empty()) {
+    if full_catalog() {
         assert!(files >= 20, "suspiciously few published KAT files: {files}");
     }
     assert!(
