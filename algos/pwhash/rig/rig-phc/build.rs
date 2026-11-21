@@ -128,8 +128,12 @@ fn main() {
         println!("cargo:rustc-link-lib=m");
     }
     println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
-    println!("cargo:rerun-if-changed=upstream");
-    println!("cargo:rerun-if-changed=shim.c");
+    if std::path::Path::new("upstream").exists() {
+        println!("cargo:rerun-if-changed=upstream");
+    }
+    if std::path::Path::new("shim.c").exists() {
+        println!("cargo:rerun-if-changed=shim.c");
+    }
     println!("cargo:rerun-if-changed=build.rs");
 }
 

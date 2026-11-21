@@ -20,8 +20,12 @@ fn main() {
     }
     link_shared(&mut b, "nextssl_battcrypt_phc", true);
     println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
-    println!("cargo:rerun-if-changed=upstream");
-    println!("cargo:rerun-if-changed=shim.cpp");
+    if std::path::Path::new("upstream").exists() {
+        println!("cargo:rerun-if-changed=upstream");
+    }
+    if std::path::Path::new("shim.cpp").exists() {
+        println!("cargo:rerun-if-changed=shim.cpp");
+    }
     println!("cargo:rerun-if-changed=build.rs");
 }
 
