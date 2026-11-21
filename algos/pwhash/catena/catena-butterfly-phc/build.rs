@@ -16,7 +16,7 @@ const SOURCES: &[&str] = &[
 const INCLUDES: &[&str] = &["upstream", "upstream/blake2-ref"];
 const DEFINES: &[(&str, &str)] = &[("FAST", "")];
 const PREFIX: &str = "nextssl__catena_butterfly_phc__";
-const PRE: &str = "#include <stddef.h>\n#include <stdint.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <emmintrin.h>\n#define __attribute__(x)\n";
+const PRE: &str = "#include <stddef.h>\n#include <stdint.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#if defined(__SSE2__)\n#include <emmintrin.h>\n#endif\n#define __attribute__(x)\n";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();

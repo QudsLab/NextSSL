@@ -38,6 +38,17 @@ const PREFIX: &str = "nextssl__faest_em_192f_r1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // faest_*.c calls memcpy/memset without <string.h> (x86 builds got it through the intrinsics
+    // headers); include it for every non-MSVC target.
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-include").flag("string.h");
+    }
+    // FAEST randomness.c: take the NIST/SUPERCOP `randombytes` path (served by shim.c from the
+    // caller's EntropySource) instead of reading the OS generator (getrandom, /dev/urandom, ...).
+    b.define("HAVE_RANDOMBYTES", None);
+    // Static library: without FAEST_STATIC faest_defines.h marks the API __declspec(dllimport) on
+    // Windows and the MSVC link fails.
+    b.define("FAEST_STATIC", None);
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
