@@ -1,0 +1,24 @@
+id        = "ov-ip"
+kind      = "sign"
+category  = "sign"
+family    = "uov"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/open-quantum-safe/liboqs", commit = "7bf154f197696f5bf04be2ea4c576db86bb6a238", license = "Apache-2.0", files = ["src/common/aes/aes.c", "src/common/aes/aes.h", "src/common/aes/aes_c.c", "src/common/aes/aes_impl.c", "src/common/aes/aes_local.h", "src/common/aes/aes_ops.h", "src/common/common.c", "src/common/common.h", "src/common/ossl_functions.h", "src/common/ossl_helpers.h", "src/common/pqclean_shims/aes.h", "src/common/pqclean_shims/fips202.c", "src/common/pqclean_shims/fips202.h", "src/common/pqclean_shims/randombytes.h", "src/common/rand/rand.h", "src/common/sha3/sha3.c", "src/common/sha3/sha3.h", "src/common/sha3/sha3_ops.h", "src/common/sha3/sha3x4.c", "src/common/sha3/sha3x4.h", "src/common/sha3/sha3x4_ops.h", "src/common/sha3/xkcp_dispatch.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-64.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-SnP.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64-config.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64.c", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-unrolling.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/SnP-Relaned.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/brg_endian.h", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/KeccakP-1600-times4-on1.c", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/PlSnP-Fallback.inc", "src/common/sha3/xkcp_sha3.c", "src/common/sha3/xkcp_sha3x4.c", "src/common/x86_64_helpers.h", "src/kem/kem.h", "src/sig/sig.h", "src/sig/uov/pqov_ov_Ip_ref/api.h", "src/sig/uov/pqov_ov_Ip_ref/blas.h", "src/sig/uov/pqov_ov_Ip_ref/blas_comm.h", "src/sig/uov/pqov_ov_Ip_ref/blas_matrix.c", "src/sig/uov/pqov_ov_Ip_ref/blas_matrix.h", "src/sig/uov/pqov_ov_Ip_ref/blas_matrix_ref.c", "src/sig/uov/pqov_ov_Ip_ref/blas_matrix_ref.h", "src/sig/uov/pqov_ov_Ip_ref/blas_u32.h", "src/sig/uov/pqov_ov_Ip_ref/config.h", "src/sig/uov/pqov_ov_Ip_ref/gf16.h", "src/sig/uov/pqov_ov_Ip_ref/ov.c", "src/sig/uov/pqov_ov_Ip_ref/ov.h", "src/sig/uov/pqov_ov_Ip_ref/ov_blas.h", "src/sig/uov/pqov_ov_Ip_ref/ov_keypair.c", "src/sig/uov/pqov_ov_Ip_ref/ov_keypair.h", "src/sig/uov/pqov_ov_Ip_ref/ov_keypair_computation.c", "src/sig/uov/pqov_ov_Ip_ref/ov_keypair_computation.h", "src/sig/uov/pqov_ov_Ip_ref/ov_publicmap.c", "src/sig/uov/pqov_ov_Ip_ref/parallel_matrix_op.c", "src/sig/uov/pqov_ov_Ip_ref/parallel_matrix_op.h", "src/sig/uov/pqov_ov_Ip_ref/params.h", "src/sig/uov/pqov_ov_Ip_ref/sign.c", "src/sig/uov/pqov_ov_Ip_ref/utils_hash.c", "src/sig/uov/pqov_ov_Ip_ref/utils_hash.h", "src/sig/uov/pqov_ov_Ip_ref/utils_malloc.h", "src/sig/uov/pqov_ov_Ip_ref/utils_prng.c", "src/sig/uov/pqov_ov_Ip_ref/utils_prng.h", "src/sig/uov/pqov_ov_Ip_ref/utils_randombytes.c", "src/sig/uov/pqov_ov_Ip_ref/utils_randombytes.h", "src/sig/uov/sig_uov.h", "LICENSE"] }
+
+# UOV (pqov) via liboqs. Upstream license is stated as `CC0 OR Apache-2.0`; Apache-2.0 recorded (the Apache-2.0 option). liboqs's own SHA3/AES (plain C) are used.
+# Round-trip test only: UOV KAT vectors need the NIST DRBG (not wired).
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 321300
+sk = 278087
+sig = 135
+seed = 0
+ctx = 0

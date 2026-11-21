@@ -1,0 +1,26 @@
+id        = "sdith-l5-gf2-short-cipherpow"
+kind      = "sign"
+category  = "sign"
+family    = "sdith"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason = "MSVC cannot build the upstream C: error C2061: syntax error: identifier '__attribute__'"
+upstream  = { repo = "https://github.com/open-quantum-safe/liboqs", commit = "7bf154f197696f5bf04be2ea4c576db86bb6a238", license = "Apache-2.0", files = ["src/common/aes/aes.c", "src/common/aes/aes.h", "src/common/aes/aes_c.c", "src/common/aes/aes_impl.c", "src/common/aes/aes_local.h", "src/common/aes/aes_ops.h", "src/common/common.c", "src/common/common.h", "src/common/ossl_functions.h", "src/common/ossl_helpers.h", "src/common/pqclean_shims/fips202.c", "src/common/pqclean_shims/fips202.h", "src/common/rand/rand.h", "src/common/sha3/sha3.c", "src/common/sha3/sha3.h", "src/common/sha3/sha3_ops.h", "src/common/sha3/sha3x4.c", "src/common/sha3/sha3x4.h", "src/common/sha3/sha3x4_ops.h", "src/common/sha3/xkcp_dispatch.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-64.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-SnP.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64-config.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64.c", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-unrolling.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/SnP-Relaned.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/brg_endian.h", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/KeccakP-1600-times4-on1.c", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/PlSnP-Fallback.inc", "src/common/sha3/xkcp_sha3.c", "src/common/sha3/xkcp_sha3x4.c", "src/common/x86_64_helpers.h", "src/kem/kem.h", "src/sig/sdith/sdith_l5_gf2_short_cipherpow_ref/api.c", "src/sig/sdith/sdith_l5_gf2_short_cipherpow_ref/api.h", "src/sig/sdith/sdith_l5_gf2_short_cipherpow_ref/params.h", "src/sig/sdith/sdith_sdith_common/aes128_ctrle.h", "src/sig/sdith/sdith_sdith_common/aes128_ctrle_special_ref.c", "src/sig/sdith/sdith_sdith_common/aes_ansi_ref.h", "src/sig/sdith/sdith_sdith_common/aes_glue.c", "src/sig/sdith/sdith_sdith_common/commons.c", "src/sig/sdith/sdith_sdith_common/commons.h", "src/sig/sdith/sdith_sdith_common/ct_utils.c", "src/sig/sdith/sdith_sdith_common/fips202_glue.h", "src/sig/sdith/sdith_sdith_common/fips202x4_glue.h", "src/sig/sdith/sdith_sdith_common/gf128.c", "src/sig/sdith/sdith_sdith_common/gf192.c", "src/sig/sdith/sdith_sdith_common/gf256.c", "src/sig/sdith/sdith_sdith_common/ggm.c", "src/sig/sdith/sdith_sdith_common/ggm.h", "src/sig/sdith/sdith_sdith_common/matrix_transpose_f2.c", "src/sig/sdith/sdith_sdith_common/matrix_vector_products_f2.c", "src/sig/sdith/sdith_sdith_common/piop_circuit.c", "src/sig/sdith/sdith_sdith_common/rijndael256.c", "src/sig/sdith/sdith_sdith_common/rijndael256.h", "src/sig/sdith/sdith_sdith_common/rijndael256_ctrle.h", "src/sig/sdith/sdith_sdith_common/rijndael256_ctrle_special_ref.c", "src/sig/sdith/sdith_sdith_common/rsd.c", "src/sig/sdith/sdith_sdith_common/sdith_algebra.h", "src/sig/sdith/sdith_sdith_common/sdith_arithmetic.h", "src/sig/sdith/sdith_sdith_common/sdith_ct_utils.h", "src/sig/sdith/sdith_sdith_common/sdith_inline.h", "src/sig/sdith/sdith_sdith_common/sdith_namespace.h", "src/sig/sdith/sdith_sdith_common/sdith_piop_circuits.h", "src/sig/sdith/sdith_sdith_common/sdith_prng.c", "src/sig/sdith/sdith_sdith_common/sdith_prng.h", "src/sig/sdith/sdith_sdith_common/sdith_prng_private.h", "src/sig/sdith/sdith_sdith_common/sdith_rsd.h", "src/sig/sdith/sdith_sdith_common/sdith_signature.c", "src/sig/sdith/sdith_sdith_common/sdith_signature.h", "src/sig/sdith/sdith_sdith_common/sdith_signature_parameters.c", "src/sig/sdith/sdith_sdith_common/sdith_vole_to_piop.h", "src/sig/sdith/sdith_sdith_common/vole_expansion.c", "src/sig/sdith/sdith_sdith_common/vole_generation.h", "src/sig/sdith/sdith_sdith_common/vole_parameters.c", "src/sig/sdith/sdith_sdith_common/vole_parameters.h", "src/sig/sdith/sdith_sdith_common/vole_private.h", "src/sig/sdith/sdith_sdith_common/vole_to_piop.c", "src/sig/sdith/sdith_sdith_common_headers/commons.h", "src/sig/sdith/sdith_sdith_common_headers/sdith_namespace.h", "src/sig/sdith/sdith_sdith_common_headers/sdith_signature.h", "src/sig/sdith/sig_sdith.h", "src/sig/sig.h", "LICENSE"] }
+
+# SDitH (threshold-computation-in-the-head) via liboqs, ref implementation (portable C; upstream common code + liboqs SHA3/AES).
+# Round-trip test only: the NIST KAT needs the NIST DRBG (not wired).
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 132
+sk = 275
+sig = 15147
+seed = 0
+ctx = 0

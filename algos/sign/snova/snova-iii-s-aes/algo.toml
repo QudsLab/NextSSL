@@ -1,0 +1,26 @@
+id        = "snova-iii-s-aes"
+kind      = "sign"
+category  = "sign"
+family    = "snova"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason = "MSVC cannot build the upstream C: error C2146: syntax error: missing ';' before identifier"
+upstream  = { repo = "https://github.com/open-quantum-safe/liboqs", commit = "7bf154f197696f5bf04be2ea4c576db86bb6a238", license = "MIT", files = ["src/common/aes/aes.c", "src/common/aes/aes.h", "src/common/aes/aes_c.c", "src/common/aes/aes_impl.c", "src/common/aes/aes_local.h", "src/common/aes/aes_ops.h", "src/common/common.c", "src/common/common.h", "src/common/ossl_functions.h", "src/common/ossl_helpers.h", "src/common/pqclean_shims/aes.h", "src/common/pqclean_shims/fips202.c", "src/common/pqclean_shims/fips202.h", "src/common/rand/rand.h", "src/common/sha3/sha3.c", "src/common/sha3/sha3.h", "src/common/sha3/sha3_ops.h", "src/common/sha3/sha3x4.c", "src/common/sha3/sha3x4.h", "src/common/sha3/sha3x4_ops.h", "src/common/sha3/xkcp_dispatch.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-64.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-SnP.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64-config.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64.c", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-unrolling.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/SnP-Relaned.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/brg_endian.h", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/KeccakP-1600-times4-on1.c", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/PlSnP-Fallback.inc", "src/common/sha3/xkcp_sha3.c", "src/common/sha3/xkcp_sha3x4.c", "src/common/x86_64_helpers.h", "src/kem/kem.h", "src/sig/sig.h", "src/sig/snova/sig_snova.h", "src/sig/snova/snova_snova_opt_16/snova.h", "src/sig/snova/snova_snova_opt_16/snova_opt_16.c", "src/sig/snova/snova_snova_opt_16/snova_oqs.c", "src/sig/snova/snova_snova_opt_16/symmetric.h", "LICENSE"] }
+
+# SNOVA via liboqs, opt (portable C) implementation of the NIST additional-signature submission.
+# Round-trip test only: the NIST KAT needs the NIST DRBG (not wired).
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 2032
+sk = 96
+sig = 456
+seed = 0
+ctx = 0

@@ -1,0 +1,27 @@
+id        = "bike-l3"
+kind      = "kem"
+category  = "kem"
+family    = "bike"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason = "MSVC cannot build the upstream C: error C2143: syntax error: missing ')' before '*'"
+upstream  = { repo = "https://github.com/open-quantum-safe/liboqs", commit = "7bf154f197696f5bf04be2ea4c576db86bb6a238", license = "Apache-2.0", files = ["src/common/common.c", "src/common/common.h", "src/common/ossl_functions.h", "src/common/ossl_helpers.h", "src/common/rand/rand.h", "src/common/sha3/sha3.c", "src/common/sha3/sha3.h", "src/common/sha3/sha3_ops.h", "src/common/sha3/sha3x4.c", "src/common/sha3/sha3x4.h", "src/common/sha3/sha3x4_ops.h", "src/common/sha3/xkcp_dispatch.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-64.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-SnP.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64-config.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64.c", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-unrolling.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/SnP-Relaned.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/brg_endian.h", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/KeccakP-1600-times4-on1.c", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/PlSnP-Fallback.inc", "src/common/sha3/xkcp_sha3.c", "src/common/sha3/xkcp_sha3x4.c", "src/common/x86_64_helpers.h", "src/kem/bike/additional_r4/bike_defs.h", "src/kem/bike/additional_r4/cleanup.h", "src/kem/bike/additional_r4/cpu_features.h", "src/kem/bike/additional_r4/decode.c", "src/kem/bike/additional_r4/decode.h", "src/kem/bike/additional_r4/decode_internal.h", "src/kem/bike/additional_r4/decode_portable.c", "src/kem/bike/additional_r4/defs.h", "src/kem/bike/additional_r4/error.c", "src/kem/bike/additional_r4/error.h", "src/kem/bike/additional_r4/gf2x.h", "src/kem/bike/additional_r4/gf2x_internal.h", "src/kem/bike/additional_r4/gf2x_inv.c", "src/kem/bike/additional_r4/gf2x_ksqr_portable.c", "src/kem/bike/additional_r4/gf2x_mul.c", "src/kem/bike/additional_r4/gf2x_mul_base_portable.c", "src/kem/bike/additional_r4/gf2x_mul_portable.c", "src/kem/bike/additional_r4/kem.c", "src/kem/bike/additional_r4/prf_internal.h", "src/kem/bike/additional_r4/sampling.c", "src/kem/bike/additional_r4/sampling.h", "src/kem/bike/additional_r4/sampling_internal.h", "src/kem/bike/additional_r4/sampling_portable.c", "src/kem/bike/additional_r4/sha.h", "src/kem/bike/additional_r4/shake_prf.c", "src/kem/bike/additional_r4/types.h", "src/kem/bike/additional_r4/utilities.c", "src/kem/bike/additional_r4/utilities.h", "src/kem/bike/additional_r4/x86_64_intrinsic.h", "src/kem/bike/functions_renaming.h", "src/kem/bike/kem_bike.h", "src/kem/kem.h", "src/sig/sig.h", "LICENSE"] }
+
+# BIKE via liboqs additional_r4 (portable C: decode_portable, gf2x_*_portable, sampling_portable; no AVX2/AVX512/PCLMUL). LEVEL and FUNC_PREFIX are the cmake definitions liboqs passes.
+# Implicit-rejection KEM: round trip + sizes only (KAT needs NIST DRBG).
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 3083
+sk = 10105
+ct = 3115
+ss = 32
+seed = 0
+coins = 0

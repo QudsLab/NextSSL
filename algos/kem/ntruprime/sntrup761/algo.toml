@@ -1,0 +1,25 @@
+id        = "sntrup761"
+kind      = "kem"
+category  = "kem"
+family    = "ntruprime"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/open-quantum-safe/liboqs", commit = "7bf154f197696f5bf04be2ea4c576db86bb6a238", license = "LicenseRef-Public-Domain", files = ["src/common/common.c", "src/common/common.h", "src/common/ossl_functions.h", "src/common/ossl_helpers.h", "src/common/rand/rand.h", "src/common/sha2/sha2.c", "src/common/sha2/sha2.h", "src/common/sha2/sha2_c.c", "src/common/sha2/sha2_impl.c", "src/common/sha2/sha2_local.h", "src/common/sha2/sha2_ops.h", "src/common/sha3/sha3.c", "src/common/sha3/sha3.h", "src/common/sha3/sha3_ops.h", "src/common/sha3/sha3x4.c", "src/common/sha3/sha3x4.h", "src/common/sha3/sha3x4_ops.h", "src/common/sha3/xkcp_dispatch.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-64.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-SnP.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64-config.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64.c", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-unrolling.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/SnP-Relaned.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/brg_endian.h", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/KeccakP-1600-times4-on1.c", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/PlSnP-Fallback.inc", "src/common/sha3/xkcp_sha3.c", "src/common/sha3/xkcp_sha3x4.c", "src/common/x86_64_helpers.h", "src/kem/kem.h", "src/kem/ntruprime/kem_ntruprime.h", "src/kem/ntruprime/sntrup761_openssh/crypto_api.h", "src/kem/ntruprime/sntrup761_openssh/includes.h", "src/kem/ntruprime/sntrup761_openssh/sntrup761.c", "src/kem/ntruprime/sntrup761_openssh/sntrup761.h", "src/sig/sig.h", "LICENSE"] }
+
+# Streamlined NTRU Prime sntrup761 as shipped in OpenSSH (Public domain per liboqs docs; SPDX has no id, recorded as LicenseRef-Public-Domain).
+# Implicit-rejection KEM: round trip + sizes only.
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1158
+sk = 1763
+ct = 1039
+ss = 32
+seed = 0
+coins = 0

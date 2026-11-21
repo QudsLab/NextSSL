@@ -1,0 +1,26 @@
+id        = "hqc-256-oqs"
+kind      = "kem"
+category  = "kem"
+family    = "hqc-oqs"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/open-quantum-safe/liboqs", commit = "7bf154f197696f5bf04be2ea4c576db86bb6a238", license = "LicenseRef-Public-Domain", files = ["src/common/common.c", "src/common/common.h", "src/common/ossl_functions.h", "src/common/ossl_helpers.h", "src/common/pqclean_shims/fips202.c", "src/common/pqclean_shims/fips202.h", "src/common/rand/rand.h", "src/common/sha3/sha3.c", "src/common/sha3/sha3.h", "src/common/sha3/sha3_ops.h", "src/common/sha3/sha3x4.c", "src/common/sha3/sha3x4.h", "src/common/sha3/sha3x4_ops.h", "src/common/sha3/xkcp_dispatch.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-64.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-SnP.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64-config.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64.c", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-unrolling.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/SnP-Relaned.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/brg_endian.h", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/KeccakP-1600-times4-on1.c", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/PlSnP-Fallback.inc", "src/common/sha3/xkcp_sha3.c", "src/common/sha3/xkcp_sha3x4.c", "src/common/x86_64_helpers.h", "src/kem/hqc/kem_hqc.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/api.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/code.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/code.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/crypto_memset.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/crypto_memset.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/data_structures.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/fft.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/fft.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/gf.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/gf.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/gf2x.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/gf2x.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/hqc.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/hqc.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/kem.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/namespace.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/parameters.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/parsing.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/parsing.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/reed_muller.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/reed_muller.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/reed_solomon.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/reed_solomon.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/symmetric.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/symmetric.h", "src/kem/hqc/pqc-hqc_hqc-5_ref/vector.c", "src/kem/hqc/pqc-hqc_hqc-5_ref/vector.h", "src/kem/kem.h", "src/sig/sig.h", "LICENSE"] }
+
+# HQC as vendored by liboqs (gitlab.com/pqc-hqc/hqc @161cd4f, 2025 spec, ss 32 bytes), a different version from the PQClean-based ids `hqc-128/192/256` (ss 64).
+# License: liboqs docs state Public domain for the HQC upstream (SPDX has no id; same LicenseRef as the existing hqc ids).
+# Round-trip + sizes only (NIST KAT needs the NIST DRBG).
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 7237
+sk = 7333
+ct = 14421
+ss = 32
+seed = 0
+coins = 0

@@ -1,0 +1,25 @@
+id        = "frodokem1344shake-oqs"
+kind      = "kem"
+category  = "kem"
+family    = "frodokem-oqs"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { repo = "https://github.com/open-quantum-safe/liboqs", commit = "7bf154f197696f5bf04be2ea4c576db86bb6a238", license = "MIT", files = ["src/common/aes/aes.h", "src/common/aes/aes_ops.h", "src/common/common.c", "src/common/common.h", "src/common/ossl_functions.h", "src/common/ossl_helpers.h", "src/common/rand/rand.h", "src/common/sha3/sha3.c", "src/common/sha3/sha3.h", "src/common/sha3/sha3_ops.h", "src/common/sha3/sha3x4.c", "src/common/sha3/sha3x4.h", "src/common/sha3/sha3x4_ops.h", "src/common/sha3/xkcp_dispatch.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-64.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-SnP.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64-config.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-opt64.c", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/KeccakP-1600-unrolling.macros", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/SnP-Relaned.h", "src/common/sha3/xkcp_low/KeccakP-1600/plain-64bits/brg_endian.h", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/KeccakP-1600-times4-on1.c", "src/common/sha3/xkcp_low/KeccakP-1600times4/serial/PlSnP-Fallback.inc", "src/common/sha3/xkcp_sha3.c", "src/common/sha3/xkcp_sha3x4.c", "src/common/x86_64_helpers.h", "src/kem/frodokem/external/frodo/frodo1344shake.c", "src/kem/frodokem/external/frodo/frodo1344shake_params.h", "src/kem/frodokem/external/frodo/kem.c", "src/kem/frodokem/external/frodo_internal.h", "src/kem/frodokem/external/frodo_macrify_as_plus_e.c", "src/kem/frodokem/external/frodo_macrify_optimized.c", "src/kem/frodokem/external/frodo_macrify_shake_portable.c", "src/kem/frodokem/external/noise.c", "src/kem/frodokem/external/util.c", "src/kem/frodokem/kem_frodokem.h", "src/kem/kem.h", "src/sig/sig.h", "LICENSE"] }
+
+# liboqs FrodoKEM (salted ISO/NIST-round-3+ version, not the older SUPERCOP/Microsoft id `frodokem1344shake`). liboqs AES (aes_c.c) and SHA3 (XKCP plain-64bits) are used; no OpenSSL.
+# NO deterministic seed exposed; KEM KAT: sizes + round trip only.
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 21520
+sk = 43088
+ct = 21696
+ss = 32
+seed = 0
+coins = 0

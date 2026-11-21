@@ -1,0 +1,5 @@
+{
+ "algorithm": "xmssmt-sha2-60-12-192",
+ "vectors": [],
+ "note": "xmss-reference ships no KAT vectors; never invented"
+}

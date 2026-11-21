@@ -1,0 +1,28 @@
+id        = "xmssmt-shake256-40-8-192"
+kind      = "statefulsign"
+category  = "sign"
+family    = "xmssmt"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 8391", "NIST SP 800-208"]
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason = "MSVC cannot build the upstream C: error C2057: expected constant expression"
+upstream  = { repo = "https://github.com/XMSS/xmss-reference", commit = "171ccbd26f098542a67eb5d2b128281c80bd71a6", license = "CC0-1.0", files = ["params.c", "hash.c", "fips202.c", "hash_address.c", "wots.c", "xmss.c", "xmss_core.c", "xmss_commons.c", "utils.c", "params.h", "hash.h", "fips202.h", "hash_address.h", "randombytes.h", "wots.h", "xmss.h", "xmss_core.h", "xmss_commons.h", "utils.h", "LICENSE"] }
+
+# XMSSMT-SHAKE256_40/8_192, OID 0x00000035, reference implementation (xmss_core.c, full secret state, no BDS traversal).
+# Stateful: sk is the whole serialized state including the index; `sign` hands the advanced state to `persist` before releasing the signature.
+# The reference never signs with its last leaf, so max_signatures = 2^h - 1. Only tree heights <= 10 per tree are wired (keygen computes every leaf of the top tree).
+# SHA256()/SHA512() (OpenSSL in the reference's hash.c) are provided by shim.c over liboqs' plain C SHA-2, copied verbatim under upstream/liboqs/
+# (liboqs @ 7bf154f197696f5bf04be2ea4c576db86bb6a238, MIT; see upstream/liboqs/ORIGIN.md). The `files` list above names xmss-reference files only (one pinned repo per upstream entry).
+# No published KAT is shipped with xmss-reference (test/vectors.c prints intermediate hashes only); round-trip + state tests only.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 52
+sk = 105
+sig = 10781
+seed = 72
