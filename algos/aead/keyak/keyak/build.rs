@@ -59,8 +59,22 @@ fn base(cpp: bool) -> cc::Build {
 /// global (including upstream names that start with `__`) gets the per-algorithm prefix.
 fn toolchain_name(n: &str) -> bool {
     const P: &[&str] = &[
-        "__asan", "__odr_asan", "__ubsan", "__sancov", "__llvm", "__prof", "__covrec", "__gcov",
-        "__imp_", "__start_", "__stop_", "__cxa", "__gxx", "__clang", "__emutls", "__tls",
+        "__asan",
+        "__odr_asan",
+        "__ubsan",
+        "__sancov",
+        "__llvm",
+        "__prof",
+        "__covrec",
+        "__gcov",
+        "__imp_",
+        "__start_",
+        "__stop_",
+        "__cxa",
+        "__gxx",
+        "__clang",
+        "__emutls",
+        "__tls",
     ];
     P.iter().any(|p| n.starts_with(p))
 }
@@ -96,9 +110,13 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
                     .iter()
                     .find_map(|p| r.strip_prefix(p))
                     .or_else(|| {
-                        r.strip_prefix("Th").or_else(|| r.strip_prefix("Tv")).map(|t| {
-                            t.trim_start_matches(|c: char| c == 'n' || c == '_' || c.is_ascii_digit())
-                        })
+                        r.strip_prefix("Th")
+                            .or_else(|| r.strip_prefix("Tv"))
+                            .map(|t| {
+                                t.trim_start_matches(|c: char| {
+                                    c == 'n' || c == '_' || c.is_ascii_digit()
+                                })
+                            })
                     })
                     .unwrap_or(r);
                 r.strip_prefix('N')

@@ -75,8 +75,22 @@ fn base() -> cc::Build {
 /// global (including upstream names that start with `__`) gets the per-algorithm prefix.
 fn toolchain_name(n: &str) -> bool {
     const P: &[&str] = &[
-        "__asan", "__odr_asan", "__ubsan", "__sancov", "__llvm", "__prof", "__covrec", "__gcov",
-        "__imp_", "__start_", "__stop_", "__cxa", "__gxx", "__clang", "__emutls", "__tls",
+        "__asan",
+        "__odr_asan",
+        "__ubsan",
+        "__sancov",
+        "__llvm",
+        "__prof",
+        "__covrec",
+        "__gcov",
+        "__imp_",
+        "__start_",
+        "__stop_",
+        "__cxa",
+        "__gxx",
+        "__clang",
+        "__emutls",
+        "__tls",
     ];
     P.iter().any(|p| n.starts_with(p))
 }
