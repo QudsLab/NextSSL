@@ -69,8 +69,8 @@ int crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk
     uint16_t B[PARAMS_N*PARAMS_NBAR] = {0};
     uint16_t V[PARAMS_NBAR*PARAMS_NBAR]= {0};                 // contains secret data
     uint16_t C[PARAMS_NBAR*PARAMS_NBAR] = {0};
-    ALIGN_HEADER(32) uint16_t Bp[PARAMS_N*PARAMS_NBAR] ALIGN_FOOTER(32) = {0};
-    ALIGN_HEADER(32) uint16_t Sp[(2*PARAMS_N+PARAMS_NBAR)*PARAMS_NBAR] ALIGN_FOOTER(32) = {0};  // contains secret data
+    uint16_t Bp[PARAMS_N*PARAMS_NBAR] = {0};
+    uint16_t Sp[(2*PARAMS_N+PARAMS_NBAR)*PARAMS_NBAR] = {0};  // contains secret data
     uint16_t *Ep = (uint16_t *)&Sp[PARAMS_N*PARAMS_NBAR];     // contains secret data
     uint16_t *Epp = (uint16_t *)&Sp[2*PARAMS_N*PARAMS_NBAR];  // contains secret data
     uint8_t G2in[BYTES_PKHASH + BYTES_MU];                    // contains secret data via mu
@@ -133,8 +133,8 @@ int crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned ch
     uint16_t W[PARAMS_NBAR*PARAMS_NBAR] = {0};                // contains secret data
     uint16_t C[PARAMS_NBAR*PARAMS_NBAR] = {0};
     uint16_t CC[PARAMS_NBAR*PARAMS_NBAR] = {0};
-    ALIGN_HEADER(32) uint16_t BBp[PARAMS_N*PARAMS_NBAR] ALIGN_FOOTER(32) = {0};
-    ALIGN_HEADER(32) uint16_t Sp[(2*PARAMS_N+PARAMS_NBAR)*PARAMS_NBAR] ALIGN_FOOTER(32) = {0};  // contains secret data
+    uint16_t BBp[PARAMS_N*PARAMS_NBAR] = {0};
+    uint16_t Sp[(2*PARAMS_N+PARAMS_NBAR)*PARAMS_NBAR] = {0};  // contains secret data
     uint16_t *Ep = (uint16_t *)&Sp[PARAMS_N*PARAMS_NBAR];     // contains secret data
     uint16_t *Epp = (uint16_t *)&Sp[2*PARAMS_N*PARAMS_NBAR];  // contains secret data
     const uint8_t *ct_c1 = &ct[0];

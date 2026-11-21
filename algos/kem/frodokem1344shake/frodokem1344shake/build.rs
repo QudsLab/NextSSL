@@ -6,14 +6,12 @@ use std::io::Write;
 use std::path::PathBuf;
 
 const SOURCES: &[&str] = &[
-    "upstream/x64/KeccakP-1600-times4-SIMD256.c",
-    "upstream/x64/fips202.c",
-    "upstream/x64/fips202x4.c",
-    "upstream/x64/frodo1344.c",
-    "upstream/x64/util.c",
+    "upstream/optimized/fips202.c",
+    "upstream/optimized/frodo1344.c",
+    "upstream/optimized/util.c",
     "shim.c",
 ];
-const INCLUDES: &[&str] = &["upstream/x64", "compat"];
+const INCLUDES: &[&str] = &["upstream/optimized", "compat"];
 const PREFIX: &str = "nextssl__frodokem1344shake__";
 
 fn base() -> cc::Build {
@@ -122,12 +120,6 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 }
 
 fn main() {
-    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C: fatal error C1003: error count exceeds 100; stopping compilation
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
-        return;
-    }
-    // END TARGET GATE
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let mut probe = base();
     probe.out_dir(out.join("probe"));

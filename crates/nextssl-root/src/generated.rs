@@ -18815,7 +18815,6 @@ pub mod frodokem1344aes_oqs {
 }
 
 /// `frodokem1344shake` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod frodokem1344shake {
     /// Registry id.
     pub const ID: &str = "frodokem1344shake";
@@ -64673,7 +64672,6 @@ mod generated_module_list {
             ("fountain", crate::fountain::INFO.id),
             ("fountain128v1", crate::fountain128v1::INFO.id),
             ("frodokem1344aes-oqs", crate::frodokem1344aes_oqs::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("frodokem1344shake", crate::frodokem1344shake::INFO.id),
             (
                 "frodokem1344shake-oqs",

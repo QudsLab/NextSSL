@@ -17287,7 +17287,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_frodokem1344aes_oqs::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "frodokem1344shake",
         kind: Kind::Kem,
