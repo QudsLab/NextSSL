@@ -1,0 +1,31 @@
+{
+  "algorithm": "lane-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package lane: sha3r1-lane/LANE/LANE/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "39d0a057848d3b41a1539a9d1fb843d95c7cac409bdd2597655542584eda637b"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "ad2ac7823d217e2f6ece5003728c8fad7e9d467c50b0058eb74428947891a139"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "e5172709063d0a1c1ad21da72a2b425fa4d57118220676df756db7f72855dc31"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "71d16c409973706433bc2b88782a92a34d346e79febe4772e73e321f70d96673"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "dcaa27b8c58124a9237942005ea21ad2e81f2c04fc25bde756c91dcf4982f2cb"
+    }
+  ]
+}

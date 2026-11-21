@@ -1,0 +1,31 @@
+{
+  "algorithm": "boole-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package boole: sha3r1-boole/BOOLE/BOOLE/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "49a6890944236938936b052fe03b70b13e0b1e2332c3a0233689c252bf1974cc"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "db40556c09fc9510c77645e24d6366c605dad866d39d8bcea72d81059e2e799c"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "839c58599baacfd0c11919935d8525a9bb535050123b903ac7eb74f833464e12"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "bb9347dfbd11a2b64a9799261b9b23c895705b471d53f0f92315511adf62bc31"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "507c6588ac7834123ff7cc375c34793f80e21d373f3173113ccb9d62d79e9993"
+    }
+  ]
+}

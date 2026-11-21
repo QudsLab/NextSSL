@@ -1,0 +1,31 @@
+{
+  "algorithm": "md6-224-sha3r1",
+  "source": "NIST SHA-3 round-1 package md6: sha3r1-md6/MD6Update/MD6/KAT_MCT/ShortMsgKAT_224.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "ec48592a90d3005767cdbd818d77b8512014fec5d39dbfc7b964f37b"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "1d09eedc187af3c3b521d6cf9ba8aa5710794de86c139ec3cd06058d"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "461a8cae3428629fb26a23183d6ff3bcffeb5b20ae96b49233b56c4b"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "e72cb74954155f737e4114a3b9ca589384eb194b9c51724914d930b3"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "ba1cf68b3dd33ad196841222f08e4c512353b7108762afec63abb514"
+    }
+  ]
+}

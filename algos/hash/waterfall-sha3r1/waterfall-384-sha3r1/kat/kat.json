@@ -1,0 +1,31 @@
+{
+  "algorithm": "waterfall-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package waterfall: sha3r1-waterfall/Waterfall/Waterfall/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "489e9ffbab80463e01a6957800a0922834fe188c165bc096bae3a121532d6f4bee1cfcbfc4eac96f6903e4db56629cdb"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "cff70d69f273d55309345bd6b54e8160de6c52b3d080b7d34327c1c1d88c34f717a5b58b228d221047c88b55af2828c6"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "1565a7fd1afd131dcec244261a6094b19f02efd6e02617395b2c03bebe1a6a6805cc1a8d6ba954e65462f2a56a7fe98c"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "8836c5814d73bb3dece7c56a56600da7e530012e2430f25671fbf13b271d8f7a74329fa5ff810208c26e26881c3b9509"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "044112c08376aa74b26f88fe13058fd506ea928f84ea9af3c2f1cd012ee66ffded2502afe1b1fdb070e3c09199298d50"
+    }
+  ]
+}

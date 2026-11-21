@@ -1,0 +1,20 @@
+id        = "chi-384-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "chi-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/CHIUpdate.zip", sha256 = "25818ca6e993731244fc9d1ce6ec70cdd3ef386da345166add28a5739b57954b", license = "NOASSERTION", files = ["CHI/Reference_Implementation/chi-common.c", "CHI/Reference_Implementation/chi.c", "CHI/Reference_Implementation/chi.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate chi, 384-bit digest. Implementation wired: CHI/Reference_Implementation (zip CHIUpdate.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_384.txt (sha3r1-chi/CHIUpdate/CHI/KAT_MCT/ShortMsgKAT_384.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 48

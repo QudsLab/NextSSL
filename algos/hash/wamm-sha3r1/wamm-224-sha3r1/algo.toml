@@ -1,0 +1,20 @@
+id        = "wamm-224-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "wamm-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/WaMM.zip", sha256 = "4e05a5730c6be851ee259c0f3f0fc886d1b287e10f0a524c6a8edc69988070ab", license = "NOASSERTION", files = ["WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/BitArray.c", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/BitArray.h", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/ReverseBits.c", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/ReverseBits.h", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/SHA3API.c", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/SHA3API.h", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMM.c", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMM.h", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMMConstants.h", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMMErrorMessage.c", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMMErrorMessage.h", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMMOperator.c", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMMOperator.h", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMMTappingPrimes.c", "WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMMTappingPrimes.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate wamm, 224-bit digest. Implementation wired: WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref (zip WaMM.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_224.txt (sha3r1-wamm/WaMM/WaMM/KAT_MCT/ShortMsgKAT_224.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 28

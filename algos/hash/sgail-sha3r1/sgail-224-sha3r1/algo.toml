@@ -1,0 +1,20 @@
+id        = "sgail-224-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "sgail-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/sgail.zip", sha256 = "338e9e1e6f972cfdaa851c6f05532b4821298e8f8e42ca308cdbaee7327f8347", license = "NOASSERTION", files = ["sgail/Reference_Implementation/nist_v3.c", "sgail/Reference_Implementation/nist_v3.h", "sgail/Reference_Implementation/nist_v3__tables.c", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate sgail, 224-bit digest. Implementation wired: sgail/Reference_Implementation (zip sgail.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_224.txt (sha3r1-sgail/sgail/sgail/KAT_MCT/ShortMsgKAT_224.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 28

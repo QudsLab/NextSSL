@@ -1,0 +1,31 @@
+{
+  "algorithm": "crunch-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package crunch: sha3r1-crunch/CRUNCHUpdate/CRUNCH/kat_mct/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "695261f36b662a7b2223187b0d7583e335d2bbd250cda043a8d31487ab84c33a"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "a819196d71e8cdfabea307a61a59302dd3fb71fce0e0d84b0bf656e8fa36d180"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "fda3f4de5b884a63ead5d253338cff50f475e5995a1096f6295ed38167dddeb3"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "ba080647b29260ea93d1636a086527ae12e105bfecb9c0f3caf65b248e01e9d9"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "3cfdd943cde42c2a42cf7d9120677275785232d68e3aac8b1dae1e99da499278"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "algorithm": "shavite3-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package shavite3: sha3r1-shavite3/SHAvite3Update/SHAvite3/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "ac40319f6ebdb57a820d2dbc29218f9c58a319df0651d2550cda83a6778a57620aeb53762a677d8df6fda419f1d9a349"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "a3d90bbd6edce1f5040d80e433f3955efac96e5d140a8f156e6f5a4839f17f96367471a967b95de9a5d71b5da42b6fdb"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "bdfd790a1283fd6586b18897b760ad3f65c69c9d90e2d780e39e4412a7bacbb61725d338382d140cf56599a964f493b4"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "410ef9331b90f31373b7ea0ec7281d3a0be87e724a47ae3d65fc6f1d5e2600d2a735b0dcb4043744613fa8c87e6cc7c5"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "b61918b3455c8e6abff1067da30bbc62c8163da7cd5111aec2bec06faff1796f55144a1f2dfc08bbf9357a286ab7270d"
+    }
+  ]
+}

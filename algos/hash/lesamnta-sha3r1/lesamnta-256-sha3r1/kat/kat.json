@@ -1,0 +1,31 @@
+{
+  "algorithm": "lesamnta-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package lesamnta: sha3r1-lesamnta/Lesamnta/Nist_submission_Lesamnta_October2008/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "860f46f4442fa068fca207244b45bd70cef2323bf162fa78cebac75a60508a38"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "821282a58fd4ab9a639c638f08131ca496f744845b658f46adb851c6d32691c9"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "4472202d094edb18e78ef562a51f71b66c382512ac35944cc608b00e10512196"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "bb7a671216dbbfba3a8fc43cbc99dbe3c7ca59fa494b2dc11bd1464c8a8f0f43"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "bfe1d757f6d7adcd4e5994171dbfce86dcefe1e50ecd16240e6edfa7b94120cc"
+    }
+  ]
+}

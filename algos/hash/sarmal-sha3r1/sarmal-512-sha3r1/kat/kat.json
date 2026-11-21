@@ -1,0 +1,31 @@
+{
+  "algorithm": "sarmal-512-sha3r1",
+  "source": "NIST SHA-3 round-1 package sarmal: sha3r1-sarmal/Sarmal/Sarmal/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "e25fcac17d4d9683f28665fbdf6dfb4700f6b1a15036846f940cc05bc033bd7b84c2673c46fb86e75cdfcba86e4ccf986821f1ddec4afbb19d99a510527d31a3"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "3e723382241696d42ec5c7b0ac394f007e48a437ae2e081441048b8df57fe93ff8b577acab9bb54f9c54a5102347f26477352d39aa72d056a523016cb787f17d"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "ae77f53e5a9ecae52fa7a851432b0c3b7d6c61f548b62c441e6a2a7fe3c9b883e539e39bee0c738bbc34923e3430a642e6b0780d2f742d6569b5543bce5b662b"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "c22546dc9a39f93693bde763b42c19773bbc86645fec7b39d5b18a3199bab641eea89761ac503bd81e90a0dc2f127793e5483907331afa0a35be6889c86792e5"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "f4f6c206f55e7cb02a707f832fff4904a0b1154121493cc31af05b21dddfa6dddcce10c7a6001399f588a7fd413ddc0d424c00fd4959e5a923134ac14c648503"
+    }
+  ]
+}

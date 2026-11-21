@@ -1,0 +1,31 @@
+{
+  "algorithm": "crunch-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package crunch: sha3r1-crunch/CRUNCHUpdate/CRUNCH/kat_mct/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "b46ab54cb3a814bcf6dbb282a4e5b39aa2d252cefd10a3dc74c402bbc8ae4fc255957d11e1ac69d19580ed8b0c033eb1"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "4218d5c0473b668a0b80f29fc72487d48caa19a23c4531a066697a1aaca01043209b3f8bee45a0a6b17768f601b21fc2"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "424b69f593ef28df5daadf4f81fc5cf7beed996c689973881392c9eebaa1abff3a941b9eec165f7417fbbd620a9aeb2e"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "650cbb706708fd0edcd2582a9e12585a93a127907004be83c751fa4c81c0bcd26aab6fc59fe45a3313ab26ba6e5f14e0"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "5c5dffd83b200a9218847777f7027282a42a56bffad28e26d437da40b93518b9cb7a95a29d31996211a87921781de55a"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "algorithm": "enrupt-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package enrupt: sha3r1-enrupt/EnRUPT/EnRUPT/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "2ccfaa182c721034ae11a7f81a80b31e4d908faa9bb4a7737157e2c5770fe3c6df38d026a171f35dae5e458c4fab32fc"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "0428aa2ff64e98a56287a87b8b13171769abfed260fd7e2f7a43d21b1eb118fc550ba23244014e7ab4eedecb59d04771"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "3a744595d230053cb143f1244c782bab8f7b72a5502b56bfcff58b3a57c01177211fac7771b0c3ae840216e89b67229a"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "6338b4d47c3931cf53298ba3d7348ebc9720e810e97edac0816d38d51b28f5219e619b3735e96f750284860cdc7b8b9b"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "80b177c62e60b74cb5a6bd6b82febfea9f32d0df65f0eef5314eab64e00d9ef9e24edaf7fb1979567eba7413bccf95fb"
+    }
+  ]
+}

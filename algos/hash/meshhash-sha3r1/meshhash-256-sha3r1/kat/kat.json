@@ -1,0 +1,31 @@
+{
+  "algorithm": "meshhash-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package meshhash: sha3r1-meshhash/MeshHash/MeshHash/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "6f7876515ab36a202624e40851901727f8aaafcfd71a3da8ed27dbd7ca6e2b0f"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "e86b5f555eb67a113126ccbfd40dbba43abc665aa63334cf85bef4f462573461"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "04ba9924fcd8902ede60ec86dab81534791b275960ae2e9232a281d147775d25"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "a924fa324ad7660d06e9abbc493f5a3966acf001c4287f38c42a74eb0784b61a"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "47a22407a00e8dcad6e7294a119aaaf1ce2fe6f1e1421e313d1e907bf21f217f"
+    }
+  ]
+}

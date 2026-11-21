@@ -1,0 +1,20 @@
+id        = "shabal-256-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "shabal-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/Shabal.zip", sha256 = "9f003c8eb7a19fc07a65587b7c72ef5a1455190dce02e01b3c969a46cf0f09a7", license = "NOASSERTION", files = ["Shabal/Reference_Implementation/shabal.c", "Shabal/Reference_Implementation/shabal.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate shabal, 256-bit digest. Implementation wired: Shabal/Reference_Implementation (zip Shabal.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r1-shabal/Shabal/Shabal/KAT_MCT/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

@@ -1,0 +1,20 @@
+id        = "lesamnta-256-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "lesamnta-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/Lesamnta.zip", sha256 = "6f12e4265b52ade992a6df359aafd0de9206fe483ad4e7aa962add7281f2db26", license = "NOASSERTION", files = ["Nist_submission_Lesamnta_October2008/Reference Implementation/lesamnta_refer.c", "Nist_submission_Lesamnta_October2008/Reference Implementation/lesamnta_refer.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate lesamnta, 256-bit digest. Implementation wired: Nist_submission_Lesamnta_October2008/Reference Implementation (zip Lesamnta.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r1-lesamnta/Lesamnta/Nist_submission_Lesamnta_October2008/KAT_MCT/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

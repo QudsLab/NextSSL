@@ -1,0 +1,31 @@
+{
+  "algorithm": "sandstorm-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package sandstorm: sha3r1-sandstorm/SANDstorm/SANDstorm/SANDstorm/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "7325f39f1c05fe934064afd4513e0ce649ffb671f0c809836f65921dd36b2399"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "3aba12c2fc8263dd129d41e44995568617b409ec983f1a13dc61fed56419452f"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "7843bbd366f2edb8b9b6ecfd4b0237f8f72721fe5b6e3323475009219de89d28"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "a1753c109a7cecce1c43e2e3cf69d25b1fd927136523005e6c3c23a11394e64b"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "38be8a4c4acdc75edd4894000cd4635118379e6090cb9774005aad1e6256191a"
+    }
+  ]
+}

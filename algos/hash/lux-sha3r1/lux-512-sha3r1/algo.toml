@@ -1,0 +1,20 @@
+id        = "lux-512-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "lux-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/LUX.zip", sha256 = "fec6aaa8a041e36d38f8ce16a2c560c3bf52fe67b781a86fe26866067cc1a421", license = "NOASSERTION", files = ["LUX-CD/Reference_Implementation/LUX.c", "LUX-CD/Reference_Implementation/LUX.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate lux, 512-bit digest. Implementation wired: LUX-CD/Reference_Implementation (zip LUX.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_512.txt (sha3r1-lux/LUX/LUX-CD/KAT_MCT/ShortMsgKAT_512.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 64

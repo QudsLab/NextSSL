@@ -1,0 +1,31 @@
+{
+  "algorithm": "arirang-224-sha3r1",
+  "source": "NIST SHA-3 round-1 package arirang: sha3r1-arirang/ARIRANGUpdate/ARIRANG/KAT_MCT/ShortMsgKAT_224.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "1937aa37e0f3262a0d539de60f1a9c5947aea2ba8cc51b7b2d468c23"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "cc1532d9dcc0129313b3cc11d92e3386d5ea1ae2fc2a99b6f0ecc9fb"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "35867ab725303385fd6c0ba16b1e522ca05fea0bdb44d75134057aea"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "8541cce298616dfad91d09bad7be2cb77640ba4b19df76a9a2dcb322"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "a6b6fe0cdc6ec53819749e5652154f1d62cf8ddb7485c06978623174"
+    }
+  ]
+}

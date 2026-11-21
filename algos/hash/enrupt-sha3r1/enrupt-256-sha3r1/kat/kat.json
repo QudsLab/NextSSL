@@ -1,0 +1,31 @@
+{
+  "algorithm": "enrupt-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package enrupt: sha3r1-enrupt/EnRUPT/EnRUPT/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "1d16904f8f0ec26aef3575317eef8cb06eb764c92e89b433e16f9f8709501620"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "371c81b6e22bb898e0a7e19432dbd6504fdedda85535af288fe6ec5d70487e83"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "846409fea97871fc8392c0f698124565f86bb0dedba1a91f882134b523e346f8"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "d54bba4d0c82d080b3c76ac05acef0f42be115714fa09fc16843cc6e73c7135b"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "0cc7c22d70ae3d65ae2cdb7872b9998cafdc016859ae6754c6d3317512f7ba7f"
+    }
+  ]
+}

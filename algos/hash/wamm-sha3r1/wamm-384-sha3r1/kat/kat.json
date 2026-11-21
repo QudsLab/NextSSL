@@ -1,0 +1,31 @@
+{
+  "algorithm": "wamm-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package wamm: sha3r1-wamm/WaMM/WaMM/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "41a21c4d402e57136b2259d0744fbce4d87d1d8b18337c76dadf67006b04b98ab90b85194367560802c6b1243914b4f8"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "b9e1037db0f392d92f764b07ed8d396c25c6bfcc0fb337bd4b317bf292587a72039abcda78e3b4054a96bdd5cd6d1596"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "62057436c6e95c27279fd53878ebb3f8085873472254fdb1966db21b57a7db84141786efafef549215afa2ea1184f5aa"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "fd81271e7bfb7c1f15297c14a676accc1232ba4bbb1d7f2f0c800d23c32d5f6e81ef95bb62a4544ffeaed3b95b2bb468"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "57e31d679b0c73791079bedafe798fe374578045dfa3e196c4b29b979db4c69a5df832d7e162294ce24210c7bd385785"
+    }
+  ]
+}

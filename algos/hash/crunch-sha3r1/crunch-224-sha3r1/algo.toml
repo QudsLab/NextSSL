@@ -1,0 +1,20 @@
+id        = "crunch-224-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "crunch-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/CRUNCHUpdate.zip", sha256 = "9821ca90ca67f3a7999c8f03429f79fe960aecab5bb2d07a7db9dddd0d68b1b4", license = "NOASSERTION", files = ["CRUNCH/Reference_implementation/const_32.c", "CRUNCH/Reference_implementation/const_64.c", "CRUNCH/Reference_implementation/crunch.h", "CRUNCH/Reference_implementation/crunch_224.c", "CRUNCH/Reference_implementation/crunch_224.h", "CRUNCH/Reference_implementation/crunch_256.c", "CRUNCH/Reference_implementation/crunch_256.h", "CRUNCH/Reference_implementation/crunch_384.c", "CRUNCH/Reference_implementation/crunch_384.h", "CRUNCH/Reference_implementation/crunch_512.c", "CRUNCH/Reference_implementation/crunch_512.h", "CRUNCH/Reference_implementation/crunch_main.c", "CRUNCH/Reference_implementation/crunch_type.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate crunch, 224-bit digest. Implementation wired: CRUNCH/Reference_implementation (zip CRUNCHUpdate.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_224.txt (sha3r1-crunch/CRUNCH/CRUNCH/KAT_MCT/ShortMsgKAT_224.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 28

@@ -1,0 +1,31 @@
+{
+  "algorithm": "lux-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package lux: sha3r1-lux/LUX/LUX-CD/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "702afdb22d0cbe3c3618807dfe3e602fdf4bd06ebe0150d05d5c15389554478b004189cdf805810c72bb2db87a4bf080"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "0ceacc7ca682fedda01ffa045f6a78cfb6da4bb30b7ce5446c5d6450e2c35df197d2f0258f75a71edefd63e4e87176f7"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "2ea9767e3db841d087fc0da5134333f7dfe257d51287302a126b6a148366ddf3dea5260875ebd697e361c14e05feb505"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "ef50969ef9235b40d6d5b866b74acf5925a95cebac944ab679b3cd2a69626875e838a6f18e0c9446c6488f207845ddd1"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "db6da5e3d775286a167102788a74222122741517e198e1350fb755c2eacc26fe244e02057561311db30231901e801f93"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+id        = "bluemidnightwish-224-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "bluemidnightwish-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/Blue_Midnight_Wish.zip", sha256 = "74ce187246bfd0416a641dad9e96634b900269e2745bef0dfd108f4838e835bc", license = "NOASSERTION", files = ["Blue_Midnight_Wish/Reference_Implementation/BlueMidnightWish_ref.c", "Blue_Midnight_Wish/Reference_Implementation/SHA3api_ref.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate bluemidnightwish, 224-bit digest. Implementation wired: Blue_Midnight_Wish/Reference_Implementation (zip Blue_Midnight_Wish.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_224.txt (sha3r1-bluemidnightwish/Blue_Midnight_Wish/Blue_Midnight_Wish/KAT_MCT/ShortMsgKAT_224.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 28

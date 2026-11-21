@@ -1,0 +1,31 @@
+{
+  "algorithm": "dch-224-sha3r1",
+  "source": "NIST SHA-3 round-1 package dch: sha3r1-dch/DCH/DCH/KAT_MCT/ShortMsgKAT_224.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "49432ef52b4b024e44317da3d021e9a6af1096b83d5c3019289fd037"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "9d4c87f1b9a6dcb41e60ae3526daf54ae0ce624c102c742513a23cb6"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "211e0b6738e3e8fb05fe5d5018597cf3fb8f26bbcae296b99deca44a"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "3f0ad2da76e12fb53d5c29afd9ecd3d352cd14448c22136326d4e2ab"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "351c1531627d56abf9f557428d036064f9f49e5b8428ad48318a6312"
+    }
+  ]
+}

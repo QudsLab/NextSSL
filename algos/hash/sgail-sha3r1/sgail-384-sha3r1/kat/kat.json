@@ -1,0 +1,31 @@
+{
+  "algorithm": "sgail-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package sgail: sha3r1-sgail/sgail/sgail/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "5f1629c054cd986d07d14a5bf051b110bda8c8e2141a82e636b0c3ab408a97ce08d9f9ffd6b9aec08cf3b0fcd7ce3291"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "8bd441d5f4a0ac10ea9fc4fa7115b085a526b1a43fd190b84b2c2507ae7dcae23b709333b054270b75313b8fa4d2243a"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "5664b295709c189cbe2fc55600b34edda5d4bac72f249e5fe185187c9ebc33e4e90ab69fe7d2400ac7e01385bd8a1147"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "3430de6191a2b746fc19706bada84b18e7f4193de7503f54ab03e53bef9ff930e451e75a8c1bb02816ca46fe418e3908"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "a7531367e2e06c0cbd123a1bfbfa8a69c28a311ad7277d155982714ea3e2e1ce46a4106e7eb34ce1b9edad7c805d83b4"
+    }
+  ]
+}

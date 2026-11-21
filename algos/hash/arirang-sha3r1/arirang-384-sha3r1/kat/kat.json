@@ -1,0 +1,31 @@
+{
+  "algorithm": "arirang-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package arirang: sha3r1-arirang/ARIRANGUpdate/ARIRANG/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "e413208d8dfd0ceb37cccc149e5afc16c458fdffe6ee8213bc2f69c5f617da26d84aec6123a2f6549aa6441fba165f5f"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "8a3191b8ec08b81da287c9890fbb5fe25057b8c8b3f16ee0f548c4b1e69d7c59076710c81ad7ae58f5bde0eec4d01141"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "0065dea3c0c415713b80fe992743d33a7bbbeaf7de12ce5f12e3126fd1d5abf2bdc33ad574180d719212ca0ecb11c22b"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "f14b0d89a9f3916b25b5cbadbcd08b6009d7bbb6c388b8c4553215bba78a738662f686c65b2f6baa9e2686fa3f2f7921"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "782307dffd9ae53ea53023f6082c7ac21ed5bbcf1b77ee6f02275cecf65a8400602e0ffff172d19242f55dd5798b84e9"
+    }
+  ]
+}

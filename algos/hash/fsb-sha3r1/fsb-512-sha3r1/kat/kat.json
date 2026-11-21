@@ -1,0 +1,31 @@
+{
+  "algorithm": "fsb-512-sha3r1",
+  "source": "NIST SHA-3 round-1 package fsb: sha3r1-fsb/FSB/FSB/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "a60c6ba0e439d4a2137252e34623e1b1a0a35bff1d3893c11b0a31db8d9063990bee6c3084b24aea384c3ea08866d643fadeb679959778636a950b95da5c93f9"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "2ff360c4194adaa7ad822d283fc805eae06419b81b30542474d54dc6c120fd748468784e78cf056fb33b53453d9e5fed7d40221ca30545346afd3615f2e28541"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "2beacc758b8574e289017314a6d235ba344a4a4c2bba66253db78583c279db0479bcbe8df76e6d2bcf0db5c4fe2057cb5f087245d00a09a301c3eba74d7085f2"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "ae8f948618eeab77c9aa83a2294d581659a563a53390679a497cc3afdaf80c98e97aa33f395600e18692975991bd6b68d01b9648be4192894b3b5b765e292214"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "1cf1899257c09af358501cc5aa744bdbb5f317562b0fced05e08f1c3c3679722bf9d7e0de7daf299455ada2546724d4c074dea4126497673848a892d57a0d295"
+    }
+  ]
+}

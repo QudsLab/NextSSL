@@ -1,0 +1,31 @@
+{
+  "algorithm": "abacus-512-sha3r1",
+  "source": "NIST SHA-3 round-1 package abacus: sha3r1-abacus/Abacus/Abacus/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "93cd4958a9dc5f6d9f85c954318b1c2c1b260bf0681aa19df7a2273da564015e324ecea46f79f7fc17162216ea64a7d6f55dd5493b7798688d5f975b1f4bde6e"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "d5b3041b931293104d498b85e6437b23a3d5b74f605736f6c92886b20674ae2c41c741f923d84f3fdeebaa79bce281513cc339e296dbff858c91617386bbf8f0"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "b294836a8bb03e774e9289962331e5a950efe12fe30f5e44d28099f1527707512c4587cece9288e8e9371caac6539d6e7e8f84388b037786d5f7b3ae91f52642"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "463d660f4f5125e5be6c1a42f9a8b5ce22a5428493cd61ab690f83384c9cd5179a54f98ab11d4d2dd05b2fa5ff67b406dcec0b88d978e863769508c0cd709ffc"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "98c59b24cae942562ec132c569f4def026a4fdc77c910e93cea3f91542c478f3d0ca4f94558f2fbc1e7839aaf4b4d54227702ddbcad8afc74780745a08b5bda4"
+    }
+  ]
+}

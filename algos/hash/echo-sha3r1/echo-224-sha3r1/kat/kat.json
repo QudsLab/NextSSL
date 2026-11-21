@@ -1,0 +1,31 @@
+{
+  "algorithm": "echo-224-sha3r1",
+  "source": "NIST SHA-3 round-1 package echo: sha3r1-echo/ECHO/ECHO/KAT_MCT/KAT_Tests/ShortMsgKAT_224.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "17da087595166f733fff7cdb0bca6438f303d0e00c48b5e7a3075905"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "34d81c434b63c8fbcf023b6417af87d906942ebd7b56c1d7b08baddc"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "63f315e0cc161aa98749d9783866ec2c2bf70cd033431e97eb8c6963"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "ed7a2952cbc3068c58ff4c870ab850afa0a499fe64fb2e943655ab88"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "6ed24b67ec06a8f6e9b4d707244e3f61859c855c9fa17b1b60792b8f"
+    }
+  ]
+}

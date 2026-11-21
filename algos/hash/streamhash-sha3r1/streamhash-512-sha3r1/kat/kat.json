@@ -1,0 +1,31 @@
+{
+  "algorithm": "streamhash-512-sha3r1",
+  "source": "NIST SHA-3 round-1 package streamhash: sha3r1-streamhash/StreamHash/StreamHash/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "08708372ac17ae14b75a6e15e25ed44c92a4a6f3a1998c5ec86f12e2fcc3b79605bdcd0fa735033eef9866f5c9c01bfbd0c8960b17fe79c29f11a6c1a1fb270b"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "77e21b8bfdf3d5b17a05d72641d3cfe15bda02f41f247fc2484f95079217764b55bc4d7a79d476b066ef258278a14da5b1440227f1720041d69dcc6566ccf5a1"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "e903df42ba680a90a9d7b132ff1f19976a4aa61d1876e8a6ebf379c4b23ea2ca5ef36a96c16bdb4624b0cb0d2d8245fcb877582e7f2adb4c75d4a9a85cb4a628"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "1e8d7790ec69a21a1cafd2eaeb24a341609e6d90490ab5e1f1dcfc4003c14c3e939b2f7c04b4e54eeabf15b7f21172c7581d01d2dc663add3818397186749881"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "894eb57c3d5e1e2fb6cbdf62c3e9de00d328afc2e019336e3c98d9ebb022d2e55894cd8141a760cac441b1d00be9fa442c19f8c09944af1c59400bb6b961b5aa"
+    }
+  ]
+}

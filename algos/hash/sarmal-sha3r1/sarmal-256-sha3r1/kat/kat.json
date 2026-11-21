@@ -1,0 +1,31 @@
+{
+  "algorithm": "sarmal-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package sarmal: sha3r1-sarmal/Sarmal/Sarmal/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "7586abec5e1ea80ac6059f7317090f6141f7034527586d73406833d28ca76c46"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "ef13d62f9013d3647ce2e5e16f85802ba1a9acdb13d51c9a5d66672dc925f573"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "45bf3a2fb91b8529dbf5dedbbeaf678eb2546d697e995ec967659e1441b2f91a"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "5809ee10d0d169d706abe3749568d980ea8a1d7ed49f79177768e5f125717994"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "bbf42ed9f99e15bb7a59e8c5259041bc3de252dc6078cb249d87f3bfd518f938"
+    }
+  ]
+}

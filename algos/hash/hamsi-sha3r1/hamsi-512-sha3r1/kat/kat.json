@@ -1,0 +1,31 @@
+{
+  "algorithm": "hamsi-512-sha3r1",
+  "source": "NIST SHA-3 round-1 package hamsi: sha3r1-hamsi/HamsiUpdate/Hamsi/KAT_MCT/KAT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "d9bd390844eab0e08ebc8e687fc09e2d22fbf023ebed5c667b6f760fd2e9164e03846ed3df52bd323ab0b748b57575c2d85fece5fc0e99a90f786d14f6d443b3"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "ba5ed1a8562938177f48ada9a25717145274e64cd0c2b469075380ca939eafefdb6329a5ca40f5794a332d95153297e79e4a4a71071f1d5301dcc91853adf513"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "f6a8e9806d343ce07f4425a444e6b4d86796de109cb49b91600dea6694d598be0449eed24e87cbdc98d545f7fb152d0b4cef8755915c79bfddb7b66633c0870e"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "1ab5ffcc370bf3e6e7b9091bdfd2140e51bacd28e321a4000c9dc360600ed033161894eaba0afe50ad647f98053ec8600ac29fe740e847d91829cb8fac087280"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "0edaf84d2504eea24b6af8b2d788d820e9776230889debadebacbf3b2d9bf27aef7893256bef62c70e343b097ae2dd7b2ea1eb384ca14cf52870f53b7012c420"
+    }
+  ]
+}

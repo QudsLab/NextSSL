@@ -1,0 +1,31 @@
+{
+  "algorithm": "abacus-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package abacus: sha3r1-abacus/Abacus/Abacus/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "8740006a59e57ce233e5445c3dd8b5d17ed6c8dbeb76dd32358bc5abff819c62"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "cd70e14c2e2ffdb554c718a66ae69c01b9a8ff11c2ef1c60a2e35294294d4a98"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "b5648d0e638911215cd9ae5da9c4dbf1f698957844bd7ecbd2ca4a226cd42daa"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "6b9846f338c2f84b24ce1255a689df1ed35ae5934e48f108de39fe896dac860b"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "d9751d63d1449add206a7ad7b71f2865140ad44dd200cbf2b65bef51bb38f8d8"
+    }
+  ]
+}

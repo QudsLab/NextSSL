@@ -1,0 +1,31 @@
+{
+  "algorithm": "chi-224-sha3r1",
+  "source": "NIST SHA-3 round-1 package chi: sha3r1-chi/CHIUpdate/CHI/KAT_MCT/ShortMsgKAT_224.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "532af150697beba8ac038c53fac985a367701991a34f5c6502cfb7f0"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "e9e0228a225d099cc290102a1e9e240a3e2b07bdedd5a22058bcc042"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "789bc2300cf8a26165afbcf807019bd9c8cfd1a533104936a2da3d34"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "d8d7a730f7169daa48d6ae1b3af283cbd31850d76ff79b526eb06ee2"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "7b39bc18404bf29ececbd5e91e67d79be47ac547b78265c20287b014"
+    }
+  ]
+}

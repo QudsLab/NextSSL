@@ -1,0 +1,31 @@
+{
+  "algorithm": "streamhash-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package streamhash: sha3r1-streamhash/StreamHash/StreamHash/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "abfe2a9e7868ecf79ca652611ba188072c40f2671cb8c6fd5b94c297fbc5aff0"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "adb480107b9712caf5afa589d0cdbad9b3b4608b0822f91f980947e1c178501c"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "ab03318f26bb441cbfb9bf2bcc39cd02ccaaf458e5af3b08f701620511c05748"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "6bd1e2ae32c27a599b791906b689570ffe3a3ac7b1731411c723cc79f9b980b0"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "b78bb2440606fda1f490ce78101c972d390c64eb937904c20ef846968cccaa6a"
+    }
+  ]
+}

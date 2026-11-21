@@ -1,0 +1,31 @@
+{
+  "algorithm": "tangle-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package tangle: sha3r1-tangle/Tangle/Tangle/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "5084e4a76e762fcfe7004b4a7217dc8270f0effb7c1cf27b7aeed401fb03c0538961bbb2c06b966a8c85032de031f94d"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "0b5285c3c8328b41094865ab1c3fbf217de772214e78bd66a7679a7e32247dc14e506b8bf8a543135f6702982bce0a81"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "d6707151132effc53d3e255a9b7675196ce0f2192547151cbd1fe709d01bf80d438ab97e1ab91ee18977690f7dc2f986"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "c08be13cb4d54ff9dbcde4e39d9d22a6812d67df6db1ca8ad058ca01653076be4893ed3625980ec268c006d587faa223"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "2e2ca7538af89173f1c1f096d7024a15f1d632700cd9ffab099716456e1c47e9dfbb16b196502b0301d405d92a37000b"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "algorithm": "tib3-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package tib3: sha3r1-tib3/TIB3/TIB3/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "40f1d4b6a4751d322286845e6d12c0be4ff67d136ac1b81169b584ebd04f082c"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "9b506babd175f81744af2077c49387bb62d0650ab7579070b6e4e5e208449996"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "f9516fbfc1171ba4ad1463ce4c9ba89ffc4937d13d07fb4b1765443d40f8e86d"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "21beacd388e791dc7ff4961f127aed3a8b2f40863f87ad297bb16b469eebf633"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "848d820d72a3a69c48910e291dbf172a2f0a72bdd6bbe600011182b7410a49eb"
+    }
+  ]
+}

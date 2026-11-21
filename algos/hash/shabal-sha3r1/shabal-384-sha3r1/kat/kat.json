@@ -1,0 +1,31 @@
+{
+  "algorithm": "shabal-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package shabal: sha3r1-shabal/Shabal/Shabal/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "ff093d67d22b06a674b5f384719150d617e0ff9c8923569a2ab60cda886df63c91a25f33cd71cc22c9eebc5cd6aee52a"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "da6e116f4fc2740abb1308089251582e516c1b0da5e56492126e3aa8fe4be1a9ce5d58514cf32a5c1bd9211b535acfb5"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "f3b641253750a156b84750a9ff6beaf19b96426f0189df0a749f792a1a78543cbd419b324bb24d999ebbd188f9cfb62f"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "796411d75fb36c8025a2f69c1ca0c10f0d88902291c4cec14375ce73194defc91e98a54c09b1e86f10a9641fac57b916"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "1f4c7ddce5089de154ceba5def970903195ca1c45cbda93a0860e387e65915f9946bfa625065d5c64ecdd3d2d6282042"
+    }
+  ]
+}

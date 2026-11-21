@@ -1,0 +1,20 @@
+id        = "simd-224-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "simd-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/SIMDUpdate.zip", sha256 = "b6e05486686a0b7eaece684006890f94f02c8263d79cc6c2cec22a43db8d2e56", license = "MIT", files = ["SIMD/Reference_Implementation/compat.h", "SIMD/Reference_Implementation/nist.c", "SIMD/Reference_Implementation/nist.h", "SIMD/Reference_Implementation/reference.c", "SIMD/Reference_Implementation/tables.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate simd, 224-bit digest. Implementation wired: SIMD/Reference_Implementation (zip SIMDUpdate.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_224.txt (sha3r1-simd/SIMDUpdate/SIMD/KAT_MCT/ShortMsgKAT_224.txt).
+# License file kept in upstream/.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 28

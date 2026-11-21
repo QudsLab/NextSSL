@@ -1,0 +1,31 @@
+{
+  "algorithm": "sandstorm-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package sandstorm: sha3r1-sandstorm/SANDstorm/SANDstorm/SANDstorm/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "2a8469e051340868aca6ff9a9ce7ec9ee9074cfb1ab7c0d78b87ca51589897b06f33cf8bd40b42044b2fecb3ee8bcba2"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "8c0af191b0bc0739a65440d6eca8a4df1d5129664d37d76b461b807a0acfc8c402deb6159653296b294f359a25e13680"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "32581a653175a904ee53a253a9ab41ccf0963792a6106312186435e18feaff171b8100842368cd3882268609cdefd4c5"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "318651a0de643412001f33bee3e1c72e8df85202fd87ff372556b8b4e9a50c12403add066e9d1752687a4772da58907e"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "fe055ec34d9b69c1b08c6c270612ee41d8ffbbbd9349be52aa485105a305611b6ccb5dbcff0758d948ecec9f02082f6a"
+    }
+  ]
+}

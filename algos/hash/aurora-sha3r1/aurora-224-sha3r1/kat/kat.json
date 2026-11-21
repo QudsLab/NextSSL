@@ -1,0 +1,31 @@
+{
+  "algorithm": "aurora-224-sha3r1",
+  "source": "NIST SHA-3 round-1 package aurora: sha3r1-aurora/AURORA/AURORA/KAT_MCT/ShortMsgKAT_224.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "ece7e61a12614974214b7031d7214724de1808823a94bfc878f1d4aa"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "848108c25c2ae77c3ff5f5f5e8b7095570ad8f6133a64faf04cd1708"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "18d10d3abe6af3c96707e14ece5d49292898d7f5ed770176f7314e83"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "9964fc1d51698c0342dbf780a7ea0d4c56d66a2fc9701f8c30d0ff40"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "545739228dea5cb4a5d3261a2d6e59cfda787875b71af28ad2eb4099"
+    }
+  ]
+}

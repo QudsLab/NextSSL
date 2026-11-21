@@ -1,0 +1,20 @@
+id        = "khichidi1-224-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "khichidi1-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/Khichidi-1.zip", sha256 = "a2ebd8182cc82c21e0fe735eba2857ccde181426296b29c724f2847dbb28740b", license = "NOASSERTION", files = ["Khichidi-1/Reference Implementation/Khichidi-1/common.h", "Khichidi-1/Reference Implementation/Khichidi-1/khichidi.c", "Khichidi-1/Reference Implementation/Khichidi-1/khichidi.h", "Khichidi-1/Reference Implementation/Khichidi-1/khichidi_core.c", "Khichidi-1/Reference Implementation/Khichidi-1/khichidi_core.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate khichidi1, 224-bit digest. Implementation wired: Khichidi-1/Reference Implementation/Khichidi-1 (zip Khichidi-1.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_224.txt (sha3r1-khichidi1/Khichidi-1/Khichidi-1/KAT_MCT/KAT/Khichidi-1_224/ShortMsgKAT_224.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 28

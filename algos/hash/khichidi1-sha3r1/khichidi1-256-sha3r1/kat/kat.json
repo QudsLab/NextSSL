@@ -1,0 +1,31 @@
+{
+  "algorithm": "khichidi1-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package khichidi1: sha3r1-khichidi1/Khichidi-1/Khichidi-1/KAT_MCT/KAT/Khichidi-1_256/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "33bd038ed2d9fb65cf2f4f0811e49957207809aad5f17b57c59cdfd5a268b609"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "5def3223152c8200a7ee43056c8e6c0b04f44f87444bf7df7c5cc9dd35874268"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "519ee1353ea75fab396647e3473766a501b43519554ba7a5d2a0f0927dd83936"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "bcfcc082a1d8bd1011a37e6e08417e7130d4271c3cf3cc88f06e7161c5780457"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "47b265d342d1006dfcf5faf02663e7a7cf76742cd6ec28edea267821c201b0e7"
+    }
+  ]
+}

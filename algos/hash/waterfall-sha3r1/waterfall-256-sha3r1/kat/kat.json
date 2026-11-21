@@ -1,0 +1,31 @@
+{
+  "algorithm": "waterfall-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package waterfall: sha3r1-waterfall/Waterfall/Waterfall/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "3a9659246e3c9a44ccfcceea81969fab9c99269eac6b01833088c20189fcde33"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "3a5417b258cdee1ce8ffa544d4d5192893756305b797d415d92a4f5d638a40ac"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "09aa24e542c5e4accd58b5392900546f9a5ffd16347d3fe14d50e6eca7885c1f"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "52e2aacdfd6d5cb2765e4c1bacf818531ac4f34a187e71ed3d0f92d6ae026c38"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "9feca9d620b145a02e00b8051ca76016d3a3658426204ee9b72e3b89f87cf053"
+    }
+  ]
+}

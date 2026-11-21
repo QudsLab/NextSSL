@@ -1,0 +1,20 @@
+id        = "md6-256-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "md6-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/MD6Update.zip", sha256 = "dbeadf8a33e12e06a79683b8298e74a172fcf87d1a6d068679bda139d6b59ed6", license = "NOASSERTION", files = ["MD6/Reference_Implementation/md6.h", "MD6/Reference_Implementation/md6_compress.c", "MD6/Reference_Implementation/md6_mode.c", "MD6/Reference_Implementation/md6_nist.c", "MD6/Reference_Implementation/md6_nist.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate md6, 256-bit digest. Implementation wired: MD6/Reference_Implementation (zip MD6Update.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r1-md6/MD6Update/MD6/KAT_MCT/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

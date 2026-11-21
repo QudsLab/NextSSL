@@ -1,0 +1,31 @@
+{
+  "algorithm": "edonr-512-sha3r1",
+  "source": "NIST SHA-3 round-1 package edonr: sha3r1-edonr/Edon-RUpdate/Edon-R/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "82b9bbd33e030f90bb02b94050194657863d3d5b6dbc0be14f1aec90746b726a7fe949bcce8caa4829af79917fa12c83830de02aa6b45cbf886db236fbffdee1"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "5193f8af4ac4fe4ded397e2b7973363c6473bb486c059ffa6bf3b27422974237b22dfdd05a3dbaa0dff36378bbc09575eb8f992c3670f439acdca3b9e4014c17"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "1f08ac56c5e899ce78a76fe3c908abef1a9344418ee32a58fe36fd27d5ab6ce055c773ebaab734bee36e019c98145a9b392764659f5451a6090f4ce058433d2c"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "7e68512737d22eee1d7cac00253a3159a035abf365e2bc6c8eb9623bfbae9d7f58920f4384d8b55a3ab28b42f0c87627ac12373b9ecf4ed721bc40b794c5d4f2"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "5f1d3d20892a2d24b66905e1f3af4b78b66d584407ad13bd0c2b91a3f517a7b1bb699146bd509f28c1759cb3015a7644e35e0868c181b14293493d60dff003f2"
+    }
+  ]
+}

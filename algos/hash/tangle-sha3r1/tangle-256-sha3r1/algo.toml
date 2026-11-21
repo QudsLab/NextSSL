@@ -1,0 +1,20 @@
+id        = "tangle-256-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "tangle-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/Tangle.zip", sha256 = "26e7a0b30ba11b2a55a4120f562ccc30f71ffa2a52abfc535e8053e08f572964", license = "NOASSERTION", files = ["Tangle/Reference_Implementation/tangle-ref.c", "Tangle/Reference_Implementation/tangle.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate tangle, 256-bit digest. Implementation wired: Tangle/Reference_Implementation (zip Tangle.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r1-tangle/Tangle/Tangle/KAT_MCT/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

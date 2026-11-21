@@ -1,0 +1,31 @@
+{
+  "algorithm": "tib3-512-sha3r1",
+  "source": "NIST SHA-3 round-1 package tib3: sha3r1-tib3/TIB3/TIB3/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "c3250f7b9b43dca239a6a29078f68fcb7104fef9ab70f8e85adac74a8eb44f51bce5105a01517cea14a0eeda76e820e4009f15554b03f84833cf417e9857756a"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "406466fdd8b22d074e8c027406f269550c3f0876728120e680d6925805e125525331883433ba2b7b4d290cb285c3036f2407aadd0d29628c38df76c4ef530206"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "86bbcbd68c17525c0ebe64dc50d04847deea5669e4bd398a87d8bbadd75ed6066ee623375a7a3c1385a4dfce57c45a2997def2ae1ec2a140b3d2da576ec4cd26"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "3399e757f219c9a14d735ccc444827863491f2d1f714f85dc9bfb0388635702491ae5f6403e2c9e86ba754cb5720ac885483415de60cce7f75b5af5846831683"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "aad2f615179572f0415d26ab61c3507003409a49ff4206487ead274b4f46af52834191fd419202c3cc009f6cce9dd1f115046e01fac5c96353713592b52e7797"
+    }
+  ]
+}

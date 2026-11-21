@@ -1,0 +1,20 @@
+id        = "cheetah-512-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "cheetah-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/Cheetah.zip", sha256 = "d22ee1de07ccf2cf839d38412c59e9fef1a2a7cd73583e583b147604a3d7e90c", license = "NOASSERTION", files = ["Cheetah/Reference_Implementation/Cheetah.c", "Cheetah/Reference_Implementation/Cheetah.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate cheetah, 512-bit digest. Implementation wired: Cheetah/Reference_Implementation (zip Cheetah.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_512.txt (sha3r1-cheetah/Cheetah/Cheetah/KAT_MCT/ShortMsgKAT_512.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 64

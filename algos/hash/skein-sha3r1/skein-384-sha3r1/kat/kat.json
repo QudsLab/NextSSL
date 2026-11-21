@@ -1,0 +1,31 @@
+{
+  "algorithm": "skein-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package skein: sha3r1-skein/SkeinUpdate/Skein/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "fa35c62fad08435e2727361228a0da5a72b14c2d7da222dc1f5142ae91f5da6c85c441f96888fccf518be2084cc495f4"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "8b30555ba6ad149995be7efd292bdeda78a0a1563e46051d27ae947bf5c8afc5b10437e6950233a8ae752dce62649f97"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "55664f54401ebef379244aed5e6c640fcbb7cd2ce59a95999470c1b882e07a62889bb169c08ecdacb17098496c67e60b"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "19d9c9375c757c855ceb47156b837358248f67cb09bec14e8e52b86802340e08e8324efbda479caeb628ec7acd0935be"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "f874d447af76cd3e4fb48ff9e23d3f3a7dc36f0816dabfc612ca08f6a354fb235d64754f6c3dbf764d6ac57a9cc9bba6"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "algorithm": "grostl-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package grostl: sha3r1-grostl/Grostl/Grostl/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "6c462dc6861c19dbc6fa818f3da84bccf6eab703db10a9781eec6633ea9e8b7b"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "610625e17d75d344764b6f021e0cd925bd5f047dac74c069c7dd15c73a1c159c"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "043fb145881d77f78bcf7e2033eb46f1642e76f55a1a2310608de11168cef741"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "3b20460c536655ed697de8f76e1c9d946e5cddcd3b84299b5b9a8e5c305e866a"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "c10b190a3168dffa8af33952c1f350b5856b735f47b605425b410fc0468ba7c1"
+    }
+  ]
+}

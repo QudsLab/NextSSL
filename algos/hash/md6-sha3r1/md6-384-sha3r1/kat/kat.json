@@ -1,0 +1,31 @@
+{
+  "algorithm": "md6-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package md6: sha3r1-md6/MD6Update/MD6/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "ffcbbc3f85c8e2895f486815bdbb68e1f3cd2592ef6002e2fbf4a5633251d7e323aeb4fa61b2ec6a28c1a764ec903e17"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "052094388afce7b0b4049f2591099860df3a99e3ce404db96ee463d217e5bb27086aa711a2a59323427667529505a1a1"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "f3823240e1caa2a59cd4986082f2a48df4fe458f6f07e8f1e07ed8f27a27aff0afda9eb166ac223caaaae2fc197c2aad"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "4fffd90b418743e54f4d42ed3930ded1dbfcc75b2a68f3bd06cc1fc9f54956c6add3d0699e8dad1301a08933a9e6fa26"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "dc5c8c10ecc9dbf6bb21a2804fce97be541d6eb602a785859c661c482a9cf1347e7723e4c3eea3b1bfcec0f5200e33fd"
+    }
+  ]
+}

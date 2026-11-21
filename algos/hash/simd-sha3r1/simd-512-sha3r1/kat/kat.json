@@ -1,0 +1,31 @@
+{
+  "algorithm": "simd-512-sha3r1",
+  "source": "NIST SHA-3 round-1 package simd: sha3r1-simd/SIMDUpdate/SIMD/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "426ab39fe63816339e65d100e34ddd593038852edc60e5eb166f3173b35a5124587c1d8bcc29b0cbb0930cf6eccac44a40f21895bb1bb7dd89c67e1f77010243"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "99d14afd418a146121a969d8e2406252693ea8ead03a50d3b7bef393d47ab95642b2426cc3e470c482150213d8c01cfcc3c4d41bcf3362daa37fa1521a489f52"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "24a62d5754610496f450aaa50c886fa51af3848d87dfd15912fd448de4a1630f2763cddd1c41368c6c39322b803455439613a03f093239d504b7900c06853fc6"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "fe975946db5a59a658316aa3761a56cbe24618369b2031fa60131f3a321f60f28625feb68db7747abc55a75a9fdd34c7c6d96a2b2671c3317361833758d01ce7"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "c4fb1811bcc856fc53a02ec60bc262634035d080ad0748b4407505a54a092a364ab1d5a9977855da79ae97c1fa8082798d58671a3cac2d45a71cb1d1297eae59"
+    }
+  ]
+}

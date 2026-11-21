@@ -1,0 +1,20 @@
+id        = "streamhash-256-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "streamhash-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/StreamHash.zip", sha256 = "46174f60df421b64df191ef3895a409add84b577fdbecc4313985c480e1ba3b7", license = "NOASSERTION", files = ["StreamHash/Reference_Implementation/sbox32.h", "StreamHash/Reference_Implementation/streamhash_reference.c", "StreamHash/Reference_Implementation/streamhash_reference.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate streamhash, 256-bit digest. Implementation wired: StreamHash/Reference_Implementation (zip StreamHash.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r1-streamhash/StreamHash/StreamHash/KAT_MCT/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

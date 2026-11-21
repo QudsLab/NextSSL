@@ -1,0 +1,20 @@
+id        = "swifftx-512-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "swifftx-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/SWIFFTX.zip", sha256 = "e3344393d4d721e01cb51acb5cd242f3304502f8aa248985fb7586ea40674433", license = "NOASSERTION", files = ["SWIFFTX/Reference Implementation/ProduceRandomIV.c", "SWIFFTX/Reference Implementation/ProduceRandomSBox.c", "SWIFFTX/Reference Implementation/SHA3.c", "SWIFFTX/Reference Implementation/SHA3.h", "SWIFFTX/Reference Implementation/SWIFFTX.c", "SWIFFTX/Reference Implementation/SWIFFTX.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate swifftx, 512-bit digest. Implementation wired: SWIFFTX/Reference Implementation (zip SWIFFTX.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_512.txt (sha3r1-swifftx/SWIFFTX/SWIFFTX/KAT_MCT/ShortMsgKAT_512.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 64

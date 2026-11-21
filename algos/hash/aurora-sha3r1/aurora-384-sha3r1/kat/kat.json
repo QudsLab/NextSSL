@@ -1,0 +1,31 @@
+{
+  "algorithm": "aurora-384-sha3r1",
+  "source": "NIST SHA-3 round-1 package aurora: sha3r1-aurora/AURORA/AURORA/KAT_MCT/ShortMsgKAT_384.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "d0de9e1e3691b7646d4911fe1f3102dd4546d1a2b5fc1541a9fad624c04ab90e90c5b90b713cf0c5770ad1fcc6c1ee28"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "b2a3f603519d48bbb8d0d9f57f5abea8f839284f4853224c801905fc6082bbdc8196b6e51fe5ced6a7ab41d08fd82710"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "f0f1244b49b3901a8a9ae8105fe8b519c92d12ae807f51de5131914a3099408119bcf352fd6630b45d86ef1a52b18a05"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "545020022696baf1484ddd744eee762623d02ba01124eb4a41a7440facf884a8d19d6f27e1f55faaa778adc64755e551"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "3aee1ccc6f33c625c3561740ff5a6c291a83565a09dafc3d021832a6de8c7b585f8ab3341df8e95530243921b467eb80"
+    }
+  ]
+}

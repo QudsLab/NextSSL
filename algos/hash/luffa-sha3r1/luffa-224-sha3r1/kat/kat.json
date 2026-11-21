@@ -1,0 +1,31 @@
+{
+  "algorithm": "luffa-224-sha3r1",
+  "source": "NIST SHA-3 round-1 package luffa: sha3r1-luffa/Luffa/Luffa/KAT_MCT/ShortMsgKAT_224.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "d69dcfd468dc331d5159c5c40cd1877e9b8ea2a50e6a7245630286ed"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "f8c83f6331583046aa969373d06b0ef4b01b91559a385b63a0bea35a"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "5f2d16744fbc4ead2b313f839915563249df94b4b80ecd9870eec6e2"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "91f4489f49a2588e8b3ad9fcd54d6e54154ae2476978c8df81e052c4"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "6abf39dc39e4a6cdd802bcdf05cb80b38a4e1a6b71183caa34a84647"
+    }
+  ]
+}

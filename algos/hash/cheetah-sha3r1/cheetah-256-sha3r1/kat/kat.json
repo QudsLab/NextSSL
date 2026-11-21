@@ -1,0 +1,31 @@
+{
+  "algorithm": "cheetah-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package cheetah: sha3r1-cheetah/Cheetah/Cheetah/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "878481456b210863740fce9d5f3dee7d62ac4970197e101a5d6799676a175429"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "25e387d678caa700015fd54eb6afcd089c8c099d85271d6d5e4f09bcb52de4dd"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "7022ad37729750eb0bf67d9d3c06ba4d10161e9a31c60f214f550683ab011c04"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "c5c53d2fc103bf9bf86289c715044e72ab2c5ac91345d689b7f95791765dea6d"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "1181c9f2a3d4144cd40b80e359225c990909ae2d977b73e99bee4fea0550efd7"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+id        = "echo-256-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "echo-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/ECHO.zip", sha256 = "e4b726f41a26bc46f3bf80d23d383ed1ae3e253541fb34550670785d60c33019", license = "NOASSERTION", files = ["ECHO/Reference_Implementation/echo.h", "ECHO/Reference_Implementation/echo_ref.c", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate echo, 256-bit digest. Implementation wired: ECHO/Reference_Implementation (zip ECHO.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_256.txt (sha3r1-echo/ECHO/ECHO/KAT_MCT/KAT_Tests/ShortMsgKAT_256.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 32

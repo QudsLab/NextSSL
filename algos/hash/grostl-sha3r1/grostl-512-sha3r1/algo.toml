@@ -1,0 +1,20 @@
+id        = "grostl-512-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "grostl-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/Grostl.zip", sha256 = "921c53eee574828175755f6c8d63abc8a28f980ce8c50a17d0f35d5563d68aab", license = "NOASSERTION", files = ["Grostl/Reference_Implementation/Groestl-ref.c", "Grostl/Reference_Implementation/Groestl-ref.h", "Grostl/Reference_Implementation/brg_types.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate grostl, 512-bit digest. Implementation wired: Grostl/Reference_Implementation (zip Grostl.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_512.txt (sha3r1-grostl/Grostl/Grostl/KAT_MCT/ShortMsgKAT_512.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 64

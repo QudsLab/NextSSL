@@ -1,0 +1,31 @@
+{
+  "algorithm": "simd-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package simd: sha3r1-simd/SIMDUpdate/SIMD/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "1a53c82220377d3e9a783b106210995a0f3931b6d002f99c243accd15dac587d"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "193710048c43fc0c326eb870d9c3e48fffb25e8034e2cceb2da71cf1c8cf3bbf"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "4b2e3dc0ec189e92aaef638bd5e0e0138c480533e9a3e8bcb5961a63e6b93e69"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "8053be251ade6abc214873855a8fd8cb6eb1a65a3f3bbde4ad368bb43f064432"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "7a93d3ed48d2fac5f8aa058812c6ab04f3c2c0bf413b02b26f00e3edec5f69a2"
+    }
+  ]
+}

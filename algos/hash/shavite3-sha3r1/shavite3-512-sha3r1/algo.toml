@@ -1,0 +1,20 @@
+id        = "shavite3-512-sha3r1"
+kind      = "hash"
+category  = "hash"
+family    = "shavite3-sha3r1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://web.archive.org/web/2012if_/http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/SHAvite3Update.zip", sha256 = "46d42ae86e88860688a7d6ab775ac9c8e51863c49287fac99e111c2fe6fe529f", license = "NOASSERTION", files = ["SHAvite3/Reference_Implementation/AESround.h", "SHAvite3/Reference_Implementation/SHA3api_ref.h", "SHAvite3/Reference_Implementation/SHAvite3-256.h", "SHAvite3/Reference_Implementation/SHAvite3-512.h", "SHAvite3/Reference_Implementation/SHAvite3.c", "SHAvite3/Reference_Implementation/portable.h", "LICENSE"] }
+
+# SHA-3 competition round-1 candidate shavite3, 512-bit digest. Implementation wired: SHAvite3/Reference_Implementation (zip SHAvite3Update.zip). Other implementations and digest sizes not wired.
+# Vectors: first 5 byte-aligned entries of the designers' ShortMsgKAT_512.txt (sha3r1-shavite3/SHAvite3Update/SHAvite3/KAT_MCT/ShortMsgKAT_512.txt).
+# NO license file in the NIST package: upstream/LICENSE is a NextSSL placeholder naming the manifest license (unknown); owner must add the real terms (rule 8).
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+out = 64

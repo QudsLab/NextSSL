@@ -1,0 +1,31 @@
+{
+  "algorithm": "wamm-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package wamm: sha3r1-wamm/WaMM/WaMM/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "22a17fc565b2dcf7d400e8693b00c47cf6130de1236514146810d97bf861abeb"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "11d460c48bcd0fcf315b3cf11ab1019d38d96ed1f37a8a6dca2fba9a2a600c6c"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "0d24a5fb6c411968ff69b5ff29bd9d6a1d27b540c249208498b93220ced6f7d6"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "f1beeb6aa6b0b89097a02cd88fbcfe858e1f843bd4a7a92b0e75820df04ec57d"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "9908a238bf803c1b52aa658dd6173ba6c8791dd6cb6a2d382b99d8700841338d"
+    }
+  ]
+}

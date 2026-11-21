@@ -1,0 +1,31 @@
+{
+  "algorithm": "meshhash-512-sha3r1",
+  "source": "NIST SHA-3 round-1 package meshhash: sha3r1-meshhash/MeshHash/MeshHash/KAT_MCT/ShortMsgKAT_512.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "935f374c4f40acd47f6b07a02d2b1769aca9289a33baa8f36f4bc1bdf25bf567c5c4c80d9fa0dff513005ff603cf42ad7e45fc38499ea183955fa787f7a26b2f"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "1ea97e3ea342c3af9c1d74e8b3a291445495e96b76c61bbeed5f1d1f58561f5412b3e0ed7ad302753debfc539ca80570c3337679cbcbac0888aa19801e03670e"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "5fe123243d9dff0eeb3b7b99fe32f93b846fadaa4c63a273ccdfef2785a482101283a81647338cace23e29c28de23520e66f9473292539f08ea389bf4ad4fa13"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "5e1aa12e5ba17542f3801487addc92a30f7303bfa90b66b54edd2d7a4605a369ef549c3f746e21aca1f705ca763357d4830daf7d33d935b03a54388fbeeba6ae"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "a34fd2c1f003b8524cfc6ecc9e4266691ea08ffeaf90b226466506bfe736117225471bece89bcce1c48d3e4c1b265c6399f19ca5604be65a7060177f0a62cde6"
+    }
+  ]
+}

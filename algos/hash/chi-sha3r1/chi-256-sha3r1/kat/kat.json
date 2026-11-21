@@ -1,0 +1,31 @@
+{
+  "algorithm": "chi-256-sha3r1",
+  "source": "NIST SHA-3 round-1 package chi: sha3r1-chi/CHIUpdate/CHI/KAT_MCT/ShortMsgKAT_256.txt",
+  "vectors": [
+    {
+      "id": "shortmsg-len0",
+      "msg_hex": "",
+      "out_hex": "fa11172a4a65e8efe6ec9c5ddafac765935fab6be89604edb17902b507302270"
+    },
+    {
+      "id": "shortmsg-len8",
+      "msg_hex": "cc",
+      "out_hex": "0962f6330a48794ed16d1672b1f593ccc54ba51aed366f2d564401c56e69f071"
+    },
+    {
+      "id": "shortmsg-len16",
+      "msg_hex": "41fb",
+      "out_hex": "0ea027f114639cf0afba2b6cdf8e7e7f7768d6c86c8fb788f4e87b81bcf4219d"
+    },
+    {
+      "id": "shortmsg-len24",
+      "msg_hex": "1f877c",
+      "out_hex": "bdd2d82eb72b8045e2250301773360c8d8b93097e605a295e9ab70fb26375e04"
+    },
+    {
+      "id": "shortmsg-len32",
+      "msg_hex": "c1ecfdfc",
+      "out_hex": "7f2dbf0ffe98a3ba7d613664518e970238d1ee1eae04500bafd1d13420960322"
+    }
+  ]
+}
