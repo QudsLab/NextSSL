@@ -50,10 +50,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 12,
         "block": 12
@@ -7266,10 +7262,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "out": {
           "min": 16,
@@ -9666,10 +9658,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 16,
@@ -9757,10 +9745,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 8
@@ -26688,11 +26672,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "msvc",
-        "wasm32"
-      ],
-      "exclude_reason": "MSVC cannot build the upstream C++: keccak.cpp: error C2036: 'void *': unknown size (arithmetic on void pointers). wasm32: the C++ upstream needs the C++ standard library (<cstddef>), which the wasi-libc toolchain does not ship",
       "sizes": {
         "out": {
           "min": 16,
@@ -29069,10 +29048,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 8
@@ -49561,10 +49536,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 16,
@@ -59173,10 +59144,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "out": 32
       },
@@ -59262,10 +59229,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "out": 32
       },
@@ -59351,10 +59314,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "out": {
           "min": 16,
@@ -73636,10 +73595,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 16,
@@ -73878,10 +73833,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 8
@@ -75425,10 +75376,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 8,
         "block": 4
@@ -75513,10 +75460,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 8
@@ -75601,10 +75544,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 16,
@@ -75692,10 +75631,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": {
           "min": 12,
@@ -87639,10 +87574,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 16,
         "block": 16
@@ -90706,10 +90637,6 @@
       ],
       "fips": false,
       "copyleft": false,
-      "exclude_targets": [
-        "wasm32"
-      ],
-      "exclude_reason": "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship",
       "sizes": {
         "key": 20,
         "tag": 20

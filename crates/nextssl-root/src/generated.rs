@@ -37,7 +37,6 @@ pub mod a_3des {
 }
 
 /// `3way` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod a_3way {
     /// Registry id.
     pub const ID: &str = "3way";
@@ -7192,7 +7191,6 @@ pub mod bash512 {
 }
 
 /// `battcrypt-phc` (pwhash, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod battcrypt_phc {
     /// Registry id.
     pub const ID: &str = "battcrypt-phc";
@@ -8737,7 +8735,6 @@ pub mod chacha8 {
 }
 
 /// `cham-128` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod cham_128 {
     /// Registry id.
     pub const ID: &str = "cham-128";
@@ -8773,7 +8770,6 @@ pub mod cham_128 {
 }
 
 /// `cham-64` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod cham_64 {
     /// Registry id.
     pub const ID: &str = "cham-64";
@@ -19457,7 +19453,6 @@ pub mod gage1h256c512r064 {
 }
 
 /// `gambit-phc` (pwhash, tier unverified).
-#[cfg(not(any(target_env = "msvc", target_arch = "wasm32")))]
 pub mod gambit_phc {
     /// Registry id.
     pub const ID: &str = "gambit-phc";
@@ -21127,7 +21122,6 @@ pub mod hex {
 }
 
 /// `hight` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod hight {
     /// Registry id.
     pub const ID: &str = "hight";
@@ -32113,7 +32107,6 @@ pub mod magma {
 }
 
 /// `mars` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod mars {
     /// Registry id.
     pub const ID: &str = "mars";
@@ -38885,7 +38878,6 @@ pub mod paefforkskinnyb64t192n48v1 {
 }
 
 /// `panama-be` (hash, tier broken).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod panama_be {
     /// Registry id.
     pub const ID: &str = "panama-be";
@@ -38901,7 +38893,6 @@ pub mod panama_be {
 }
 
 /// `panama-le` (hash, tier broken).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod panama_le {
     /// Registry id.
     pub const ID: &str = "panama-le";
@@ -38917,7 +38908,6 @@ pub mod panama_le {
 }
 
 /// `parallel-phc` (pwhash, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod parallel_phc {
     /// Registry id.
     pub const ID: &str = "parallel-phc";
@@ -48898,7 +48888,6 @@ pub mod shabal512 {
 }
 
 /// `shacal2` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod shacal2 {
     /// Registry id.
     pub const ID: &str = "shacal2";
@@ -49075,7 +49064,6 @@ pub mod shamir {
 }
 
 /// `shark` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod shark {
     /// Registry id.
     pub const ID: &str = "shark";
@@ -50273,7 +50261,6 @@ pub mod simd512 {
 }
 
 /// `simeck-32` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod simeck_32 {
     /// Registry id.
     pub const ID: &str = "simeck-32";
@@ -50309,7 +50296,6 @@ pub mod simeck_32 {
 }
 
 /// `simeck-64` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod simeck_64 {
     /// Registry id.
     pub const ID: &str = "simeck-64";
@@ -50345,7 +50331,6 @@ pub mod simeck_64 {
 }
 
 /// `simon-128` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod simon_128 {
     /// Registry id.
     pub const ID: &str = "simon-128";
@@ -50381,7 +50366,6 @@ pub mod simon_128 {
 }
 
 /// `simon-64` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod simon_64 {
     /// Registry id.
     pub const ID: &str = "simon-64";
@@ -58106,7 +58090,6 @@ pub mod sqisign_p664_17 {
 }
 
 /// `square` (blockcipher, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod square {
     /// Registry id.
     pub const ID: &str = "square";
@@ -61019,7 +61002,6 @@ pub mod trivium {
 }
 
 /// `ttmac` (mac, tier unverified).
-#[cfg(not(target_arch = "wasm32"))]
 pub mod ttmac {
     /// Registry id.
     pub const ID: &str = "ttmac";
@@ -63938,7 +63920,6 @@ mod generated_module_list {
     fn modules() -> Vec<(&'static str, &'static str)> {
         vec![
             ("3des", crate::a_3des::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("3way", crate::a_3way::INFO.id),
             #[cfg(feature = "copyleft")]
             ("a5-1", crate::a5_1::INFO.id),
@@ -64133,7 +64114,6 @@ mod generated_module_list {
             ("bash256", crate::bash256::INFO.id),
             ("bash384", crate::bash384::INFO.id),
             ("bash512", crate::bash512::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("battcrypt-phc", crate::battcrypt_phc::INFO.id),
             ("bblake256", crate::bblake256::INFO.id),
             ("bcrypt", crate::bcrypt::INFO.id),
@@ -64227,9 +64207,7 @@ mod generated_module_list {
             ("chacha20", crate::chacha20::INFO.id),
             ("chacha20-poly1305", crate::chacha20_poly1305::INFO.id),
             ("chacha8", crate::chacha8::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("cham-128", crate::cham_128::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("cham-64", crate::cham_64::INFO.id),
             ("chaskey", crate::chaskey::INFO.id),
             ("cheetah-224-sha3r1", crate::cheetah_224_sha3r1::INFO.id),
@@ -64733,7 +64711,6 @@ mod generated_module_list {
             ("gage1h256c256r128", crate::gage1h256c256r128::INFO.id),
             ("gage1h256c512r032", crate::gage1h256c512r032::INFO.id),
             ("gage1h256c512r064", crate::gage1h256c512r064::INFO.id),
-            #[cfg(not(any(target_env = "msvc", target_arch = "wasm32")))]
             ("gambit-phc", crate::gambit_phc::INFO.id),
             #[cfg(feature = "copyleft")]
             ("gea1", crate::gea1::INFO.id),
@@ -64818,7 +64795,6 @@ mod generated_module_list {
             ("hern128v1", crate::hern128v1::INFO.id),
             ("heron256v1", crate::heron256v1::INFO.id),
             ("hex", crate::hex::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("hight", crate::hight::INFO.id),
             ("hila5-r1", crate::hila5_r1::INFO.id),
             ("hitag2", crate::hitag2::INFO.id),
@@ -65332,7 +65308,6 @@ mod generated_module_list {
             ("lux-512-sha3r1", crate::lux_512_sha3r1::INFO.id),
             ("lyra2-phc", crate::lyra2_phc::INFO.id),
             ("magma", crate::magma::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("mars", crate::mars::INFO.id),
             #[cfg(not(target_env = "msvc"))]
             ("mayo-1", crate::mayo_1::INFO.id),
@@ -65652,11 +65627,8 @@ mod generated_module_list {
                 "paefforkskinnyb64t192n48v1",
                 crate::paefforkskinnyb64t192n48v1::INFO.id,
             ),
-            #[cfg(not(target_arch = "wasm32"))]
             ("panama-be", crate::panama_be::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("panama-le", crate::panama_le::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("parallel-phc", crate::parallel_phc::INFO.id),
             ("parallelhash128", crate::parallelhash128::INFO.id),
             ("parallelhash256", crate::parallelhash256::INFO.id),
@@ -66013,14 +65985,12 @@ mod generated_module_list {
             ("shabal-512-sha3r1", crate::shabal_512_sha3r1::INFO.id),
             ("shabal256", crate::shabal256::INFO.id),
             ("shabal512", crate::shabal512::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("shacal2", crate::shacal2::INFO.id),
             ("shake128", crate::shake128::INFO.id),
             ("shake256", crate::shake256::INFO.id),
             ("shamashashv1", crate::shamashashv1::INFO.id),
             ("shamashv1", crate::shamashv1::INFO.id),
             ("shamir", crate::shamir::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("shark", crate::shark::INFO.id),
             ("shavite3-224-sha3r1", crate::shavite3_224_sha3r1::INFO.id),
             ("shavite3-224-sha3r2", crate::shavite3_224_sha3r2::INFO.id),
@@ -66072,13 +66042,9 @@ mod generated_module_list {
             ("simd-512-sha3r2", crate::simd_512_sha3r2::INFO.id),
             ("simd256", crate::simd256::INFO.id),
             ("simd512", crate::simd512::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("simeck-32", crate::simeck_32::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("simeck-64", crate::simeck_64::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("simon-128", crate::simon_128::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("simon-64", crate::simon_64::INFO.id),
             ("simonjambu128v2", crate::simonjambu128v2::INFO.id),
             ("simonjambu64v2", crate::simonjambu64v2::INFO.id),
@@ -66721,7 +66687,6 @@ mod generated_module_list {
             ("sqisign-p500-27", crate::sqisign_p500_27::INFO.id),
             #[cfg(not(target_env = "msvc"))]
             ("sqisign-p664-17", crate::sqisign_p664_17::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("square", crate::square::INFO.id),
             ("srp-6a-2048-sha256", crate::srp_6a_2048_sha256::INFO.id),
             (
@@ -66819,7 +66784,6 @@ mod generated_module_list {
             ("trivia0v2", crate::trivia0v2::INFO.id),
             ("trivia128v2", crate::trivia128v2::INFO.id),
             ("trivium", crate::trivium::INFO.id),
-            #[cfg(not(target_arch = "wasm32"))]
             ("ttmac", crate::ttmac::INFO.id),
             #[cfg(feature = "copyleft")]
             ("tuak", crate::tuak::INFO.id),

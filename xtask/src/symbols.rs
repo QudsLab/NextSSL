@@ -20,6 +20,8 @@ use std::process::{Command, Stdio};
 pub struct Sym {
     pub member: Option<String>,
     pub name: String,
+    /// nm type letter (`T`, `D`, `W`, `V`, `u`, ...).
+    pub kind: char,
 }
 
 /// Parses default-format `nm` output (`addr type name`), including archive member headers
@@ -55,6 +57,7 @@ pub fn parse_nm(out: &str) -> Vec<Sym> {
         syms.push(Sym {
             member: member.clone(),
             name: name.to_string(),
+            kind: c,
         });
     }
     syms
@@ -126,12 +129,54 @@ pub fn bad_exports(exports: &[Sym]) -> Vec<String> {
         .collect()
 }
 
-/// Pure rule for the C prefixes: every symbol must start with one of `prefixes`.
+/// C++ upstreams cannot carry a plain prefix: their names are Itanium-mangled. They are made
+/// private either by renaming the outermost identifier with the C prefix (the build.rs rename
+/// pass gives `_ZN27nextssl__ketjesr__BitString..`) or by a private namespace named after the
+/// algorithm (`nextssl_<id>`, e.g. `nextssl_mars_CryptoPP`, `nextssl_gambit_phc`). A mangled
+/// name passes when it contains one of those tokens; the namespace token must end at a name
+/// boundary so `nextssl_sha3` does not cover `nextssl_sha3_256`.
+fn cxx_private(n: &str, prefix: &str) -> bool {
+    if !n.starts_with("_Z") {
+        return false;
+    }
+    if n.contains(prefix) {
+        return true;
+    }
+    // prefix is `nextssl__<id>__`; the namespace token is `nextssl_<id>`.
+    let id = &prefix["nextssl__".len()..prefix.len() - 2];
+    let token = format!("nextssl_{id}");
+    n.match_indices(&token).any(|(i, _)| {
+        let rest = &n.as_bytes()[i + token.len()..];
+        match rest {
+            [] => true,
+            [b'_', next, ..] => next.is_ascii_uppercase(),
+            [c, ..] => !c.is_ascii_lowercase() && *c != b'_',
+        }
+    })
+}
+
+/// Weak / COMDAT / unique C++ definitions (`W`, `V`, `u`) of mangled names are template and
+/// inline instantiations (std::vector<..>, std::string helpers). Every copy is identical and the
+/// linker keeps one, so they cannot clash; they are not part of any API.
+fn cxx_shared_instance(s: &Sym, n: &str) -> bool {
+    n.starts_with("_Z") && matches!(s.kind, 'W' | 'V' | 'u')
+}
+
+fn c_symbol_ok(s: &Sym, prefixes: &[String]) -> bool {
+    let n = norm(&s.name);
+    prefixes
+        .iter()
+        .any(|p| n.starts_with(p.as_str()) || cxx_private(n, p))
+        || cxx_shared_instance(s, n)
+        || is_toolchain_symbol(n)
+}
+
+/// Pure rule for the C prefixes: every symbol must start with one of `prefixes` (C++: see
+/// `cxx_private` and `cxx_shared_instance`).
 pub fn bad_c_symbols(syms: &[Sym], prefixes: &[String]) -> Vec<String> {
     syms.iter()
-        .map(|s| norm(&s.name))
-        .filter(|n| !prefixes.iter().any(|p| n.starts_with(p.as_str())))
-        .map(str::to_string)
+        .filter(|s| !c_symbol_ok(s, prefixes))
+        .map(|s| norm(&s.name).to_string())
         .collect()
 }
 
@@ -183,10 +228,17 @@ pub fn bad_staticlib(
     let mut bad = Vec::new();
     for s in syms {
         let n = norm(&s.name);
+        let member = s.member.as_deref().unwrap_or("");
+        // C++ upstream objects: `_ZN..` is also the Rust legacy mangling, so decide by member first.
+        if c_members.contains(member) {
+            if !c_symbol_ok(s, c_prefixes) {
+                bad.push(format!("{n}  (in {member})"));
+            }
+            continue;
+        }
         if is_rust_mangled(n) {
             continue;
         }
-        let member = s.member.as_deref().unwrap_or("");
         let krate = crate_of(member);
         let ours = krate == "nextssl" || krate.starts_with("nextssl_");
         // `anon.<hash>.<n>.llvm.<id>` are rustc/LLVM-generated anonymous constants (string and
@@ -194,8 +246,6 @@ pub fn bad_staticlib(
         let rust_anon = is_rust_member(member) && n.starts_with("anon.");
         let ok = if rust_anon {
             true
-        } else if c_members.contains(member) {
-            c_prefixes.iter().any(|p| n.starts_with(p.as_str()))
         } else if is_rust_member(member) && ours {
             n.starts_with("nextssl_") || is_toolchain_symbol(n)
         } else if is_rust_member(member) && SYSROOT_CRATES.contains(&krate) {
@@ -479,10 +529,55 @@ mod tests {
     use super::*;
 
     fn s(member: Option<&str>, name: &str) -> Sym {
+        sk(member, name, 'T')
+    }
+
+    fn sk(member: Option<&str>, name: &str, kind: char) -> Sym {
         Sym {
             member: member.map(str::to_string),
             name: name.to_string(),
+            kind,
         }
+    }
+
+    #[test]
+    fn cxx_upstream_rules() {
+        let mars = vec!["nextssl__mars__".to_string()];
+        let ok = [
+            // private namespace (Crypto++ renamed by -D CryptoPP=nextssl_mars_CryptoPP)
+            s(None, "_ZN21nextssl_mars_CryptoPP4MARS4Base12UncheckedSetEPKhjRKNS_14NameValuePairsE"),
+            s(None, "_ZTIN21nextssl_mars_CryptoPP9ExceptionE"),
+            // outermost class renamed by the build.rs pass
+            s(None, "_ZN19nextssl__mars__Block4sizeEv"),
+            // weak std instantiation, identical in every copy
+            sk(None, "_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_", 'W'),
+            s(None, "DW.ref.__gxx_personality_v0"),
+            s(None, "nextssl__mars__derive"),
+        ];
+        assert!(
+            bad_c_symbols(&ok, &mars).is_empty(),
+            "{:?}",
+            bad_c_symbols(&ok, &mars)
+        );
+        let bad = [
+            // strong C++ definition outside any private namespace
+            s(None, "_ZN11KeccakPStarC1Ejj"),
+            // strong std-looking definition is not exempt
+            s(
+                None,
+                "_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_S9_",
+            ),
+            // weak C (non-mangled) symbols still need the prefix
+            sk(None, "helper", 'W'),
+        ];
+        assert_eq!(bad_c_symbols(&bad, &mars).len(), 3);
+        // namespace token must end at a name boundary: nextssl_sha3 does not cover nextssl_sha3_256
+        let sha3 = vec!["nextssl__sha3__".to_string()];
+        assert_eq!(
+            bad_c_symbols(&[s(None, "_ZN20nextssl_sha3_256_ns1fEv")], &sha3).len(),
+            1
+        );
+        assert!(bad_c_symbols(&[s(None, "_ZN19nextssl_sha3_CryptoPP1fEv")], &sha3).is_empty());
     }
 
     #[test]
@@ -493,7 +588,7 @@ mod tests {
             v,
             vec![
                 s(Some("foo.o"), "nextssl__x__f"),
-                s(Some("foo.o"), "nextssl_v")
+                sk(Some("foo.o"), "nextssl_v", 'D')
             ]
         );
     }

@@ -35,7 +35,7 @@ fn base() -> cc::Build {
     // Force-included preamble: scheme macros upstream's own build passes on the command line, plus (MSVC only) a no-op
     // `__attribute__` (GNU annotations carry no semantics for the portable C; cl.exe cannot take a function-like macro with /D).
     let mut pre = String::from(
-        "#define CRYPTO_NAMESPACE(s) s
+        "#define CRYPTO_NAMESPACE(s) nextssl__sntrup653__##s
 ",
     );
     let msvc = b.get_compiler().is_like_msvc();
@@ -67,6 +67,16 @@ fn base() -> cc::Build {
     b
 }
 
+/// Names the compiler, sanitizers or linker define in an object; never renamed. Every other
+/// global (including upstream names that start with `__`) gets the per-algorithm prefix.
+fn toolchain_name(n: &str) -> bool {
+    const P: &[&str] = &[
+        "__asan", "__odr_asan", "__ubsan", "__sancov", "__llvm", "__prof", "__covrec", "__gcov",
+        "__imp_", "__start_", "__stop_", "__cxa", "__gxx", "__clang", "__emutls", "__tls",
+    ];
+    P.iter().any(|p| n.starts_with(p))
+}
+
 fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
     use object::{Architecture, BinaryFormat, Object, ObjectSymbol, SymbolKind};
     let mut out = BTreeSet::new();
@@ -81,7 +91,7 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
             }
             if !matches!(
                 s.kind(),
-                SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown
+                SymbolKind::Text | SymbolKind::Data | SymbolKind::Tls | SymbolKind::Unknown
             ) {
                 continue;
             }
@@ -90,7 +100,7 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
                 n = n.strip_prefix('_').unwrap_or(n);
             }
             let ok = !n.is_empty()
-                && !n.starts_with("__")
+                && !toolchain_name(n)
                 && !n.starts_with("nextssl__")
                 && n != "_fltused"
                 && n.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'_')

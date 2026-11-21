@@ -32,7 +32,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_3des::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "3way",
         kind: Kind::BlockCipher,
@@ -5218,7 +5217,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_bash512::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "battcrypt-phc",
         kind: Kind::PwHash,
@@ -7013,7 +7011,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_chacha8::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "cham-128",
         kind: Kind::BlockCipher,
@@ -7043,7 +7040,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_cham_128::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "cham-64",
         kind: Kind::BlockCipher,
@@ -18155,7 +18151,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_gage1h256c512r064::new),
     },
-    #[cfg(not(any(target_env = "msvc", target_arch = "wasm32")))]
     AlgoInfo {
         id: "gambit-phc",
         kind: Kind::PwHash,
@@ -19796,7 +19791,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_hex::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "hight",
         kind: Kind::BlockCipher,
@@ -28467,7 +28461,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_magma::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "mars",
         kind: Kind::BlockCipher,
@@ -33670,7 +33663,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_paefforkskinnyb64t192n48v1::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "panama-be",
         kind: Kind::Hash,
@@ -33699,7 +33691,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_panama_be::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "panama-le",
         kind: Kind::Hash,
@@ -33728,7 +33719,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_panama_le::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "parallel-phc",
         kind: Kind::PwHash,
@@ -41638,7 +41628,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_shabal512::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "shacal2",
         kind: Kind::BlockCipher,
@@ -41789,7 +41778,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Threshold(nextssl_algo_shamir::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "shark",
         kind: Kind::BlockCipher,
@@ -42811,7 +42799,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_simd512::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "simeck-32",
         kind: Kind::BlockCipher,
@@ -42839,7 +42826,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_simeck_32::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "simeck-64",
         kind: Kind::BlockCipher,
@@ -42867,7 +42853,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_simeck_64::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "simon-128",
         kind: Kind::BlockCipher,
@@ -42895,7 +42880,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_simon_128::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "simon-64",
         kind: Kind::BlockCipher,
@@ -49555,7 +49539,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sqisign_p664_17::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "square",
         kind: Kind::BlockCipher,
@@ -51755,7 +51738,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StreamCipher(nextssl_algo_trivium::new),
     },
-    #[cfg(not(target_arch = "wasm32"))]
     AlgoInfo {
         id: "ttmac",
         kind: Kind::Mac,

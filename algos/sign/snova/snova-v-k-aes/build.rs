@@ -84,6 +84,16 @@ fn base(cpp: bool) -> cc::Build {
     b
 }
 
+/// Names the compiler, sanitizers or linker define in an object; never renamed. Every other
+/// global (including upstream names that start with `__`) gets the per-algorithm prefix.
+fn toolchain_name(n: &str) -> bool {
+    const P: &[&str] = &[
+        "__asan", "__odr_asan", "__ubsan", "__sancov", "__llvm", "__prof", "__covrec", "__gcov",
+        "__imp_", "__start_", "__stop_", "__cxa", "__gxx", "__clang", "__emutls", "__tls",
+    ];
+    P.iter().any(|p| n.starts_with(p))
+}
+
 fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
     use object::{Architecture, BinaryFormat, Object, ObjectSymbol, SymbolKind};
     let mut out = BTreeSet::new();
@@ -98,7 +108,7 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
             }
             if !matches!(
                 s.kind(),
-                SymbolKind::Text | SymbolKind::Data | SymbolKind::Unknown
+                SymbolKind::Text | SymbolKind::Data | SymbolKind::Tls | SymbolKind::Unknown
             ) {
                 continue;
             }
@@ -106,17 +116,34 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
             if strip {
                 n = n.strip_prefix('_').unwrap_or(n);
             }
-            // Itanium-mangled free function `_Z<len><name>...`: rename the plain identifier.
-            if let Some(r) = n
-                .strip_prefix("_Z")
-                .filter(|r| r.as_bytes().first().is_some_and(|c| c.is_ascii_digit()))
-            {
+            // Itanium-mangled C++ name: rename the outermost identifier, i.e. a free function
+            // (`_Z<len><name>`) or the class of a member, vtable, typeinfo or thunk
+            // (`_ZN[rVK]<len><class>`, `_ZTV/_ZTI/_ZTS<len><class>`, `_ZTh/_ZTv<offsets>_N..`).
+            // std names (`_ZNSt..`, `_ZSt..`) have no length digit there and are left alone.
+            if let Some(r) = n.strip_prefix("_Z").map(|r| {
+                let r = ["TV", "TI", "TS"]
+                    .iter()
+                    .find_map(|p| r.strip_prefix(p))
+                    .or_else(|| {
+                        r.strip_prefix("Th").or_else(|| r.strip_prefix("Tv")).map(|t| {
+                            t.trim_start_matches(|c: char| c == 'n' || c == '_' || c.is_ascii_digit())
+                        })
+                    })
+                    .unwrap_or(r);
+                r.strip_prefix('N')
+                    .map(|t| t.trim_start_matches(['r', 'V', 'K']))
+                    .unwrap_or(r)
+            }) {
+                if !r.as_bytes().first().is_some_and(|c| c.is_ascii_digit()) {
+                    continue;
+                }
                 let digits: String = r.chars().take_while(|c| c.is_ascii_digit()).collect();
                 let len: usize = digits.parse().unwrap_or(0);
                 let rest = &r[digits.len()..];
                 if len > 0 && rest.len() >= len {
                     let id = &rest[..len];
-                    if !id.starts_with("__")
+                    if !toolchain_name(id)
+                        && !id.starts_with("nextssl__")
                         && !id.as_bytes()[0].is_ascii_digit()
                         && id.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'_')
                     {
@@ -126,7 +153,7 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
                 continue;
             }
             let ok = !n.is_empty()
-                && !n.starts_with("__")
+                && !toolchain_name(n)
                 && !n.starts_with("nextssl__")
                 && n != "_fltused"
                 && n.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'_')
