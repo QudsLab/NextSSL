@@ -36,6 +36,17 @@ const PREFIX: &str = "nextssl__aimer_l1_param3_r1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // portable_endian.h lists OSes, not wasi; on wasm32 take its Linux branch: pre-define its guard
+    // and force-include <endian.h> (musl/wasi-libc names the byte-swap helpers under _BSD_SOURCE).
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32") {
+        let h = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_wasi_endian.h");
+        std::fs::write(
+            &h,
+            "#define _BSD_SOURCE\n#include <endian.h>\n#define PORTABLE_ENDIAN_H__\n",
+        )
+        .unwrap();
+        b.flag("-include").flag(h.to_str().unwrap());
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {

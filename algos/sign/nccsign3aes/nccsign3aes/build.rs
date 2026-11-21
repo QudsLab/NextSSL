@@ -26,6 +26,13 @@ const PREFIX: &str = "nextssl__nccsign3aes__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // ref/*.h include <immintrin.h> for an unused __m256i declaration; off x86 a type-only stand-in.
+    if !matches!(
+        std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
+        Ok("x86_64") | Ok("x86")
+    ) {
+        b.include("compat/nox86");
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
