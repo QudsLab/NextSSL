@@ -18,12 +18,14 @@ static NS_TLS int ns_fail;
 void nextssl__ed448goldilocks__rng_set(ns_fill_fn f, void *ctx) { ns_fill = f; ns_ctx = ctx; ns_fail = 0; }
 int nextssl__ed448goldilocks__rng_failed(void) { return ns_fail; }
 
+/* Called by goldilocks_keygen (build.rs copy of goldilocks.c) for the key seed. On failure the seed
+ * is zeroed and ns_fail is set, but 0 is returned: upstream sign.c abort()s when keygen fails, and the
+ * glue turns ns_fail into an EntropyFailure error and discards the key, which is the explicit path. */
 int randombytes(unsigned char *output, unsigned long long n) {
     if (n == 0) return 0;
     if (ns_fill == NULL || ns_fill(ns_ctx, output, n) != 0) {
         memset(output, 0, n);
         ns_fail = 1;
-        return -1;
     }
     return 0;
 }

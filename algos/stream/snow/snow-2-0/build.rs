@@ -26,6 +26,13 @@ const PREFIX: &str = "nextssl__snow_2_0__";
 
 fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
+    // eSTREAM ecrypt-config.h guesses the byte order from a CPU list without aarch64 or wasm32;
+    // pass the order cargo reports (identical to its own choice on the CPUs it lists).
+    if std::env::var("CARGO_CFG_TARGET_ENDIAN").as_deref() == Ok("big") {
+        b.define("ECRYPT_BIG_ENDIAN", Some(""));
+    } else {
+        b.define("ECRYPT_LITTLE_ENDIAN", Some(""));
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !cpp && !b.get_compiler().is_like_msvc() {

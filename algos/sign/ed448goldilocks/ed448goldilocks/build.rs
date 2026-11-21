@@ -20,6 +20,44 @@ const SOURCES: &[&str] = &[
 const INCLUDES: &[&str] = &["upstream/32", "compat"];
 const PREFIX: &str = "nextssl__ed448goldilocks__";
 
+/// upstream/32/goldilocks.c seeds a process-global generator from /dev/urandom in goldilocks_init()
+/// and draws every key seed from it in goldilocks_keygen(), so the caller's EntropySource was never
+/// used (and on targets without /dev/urandom, e.g. wasm32, init failed). The file on disk stays
+/// verbatim; the compiled copy makes two exact replacements:
+/// 1. keygen takes its seed from `randombytes` (shim.c, backed by the EntropySource; a failure
+///    returns an error, the glue reports it);
+/// 2. init seeds the now unused global generator from a constant instead of opening a file.
+///    The global generator has no other use in the library (sign and verify are deterministic).
+fn entropy_copy(src: &str) -> PathBuf {
+    let text = std::fs::read_to_string(src).expect("read upstream/32/goldilocks.c");
+    let reps: [(&str, &str); 3] = [
+        (
+            "#include \"intrinsics.h\"\n",
+            "#include \"intrinsics.h\"\nint randombytes(unsigned char *output, unsigned long long n);\n",
+        ),
+        (
+            "    int criff_res = crandom_init_from_file(&goldilocks_global.rand,\n        GOLDILOCKS_RANDOM_INIT_FILE,\n        GOLDILOCKS_RANDOM_RESEED_INTERVAL,\n        GOLDILOCKS_RANDOM_RESEEDS_MANDATORY);\n",
+            "    crandom_init_from_buffer(&goldilocks_global.rand, \"nextssl: key seeds come from the EntropySource\");\n    int criff_res = 0;\n",
+        ),
+        (
+            "    int ret = crandom_generate(&goldilocks_global.rand, proto, sizeof(proto));\n",
+            "    int ret = randombytes(proto, sizeof(proto));\n",
+        ),
+    ];
+    let mut out = text.replace("\r\n", "\n");
+    for (from, to) in reps {
+        assert_eq!(
+            out.matches(from).count(),
+            1,
+            "goldilocks.c: expected one `{from}`"
+        );
+        out = out.replace(from, to);
+    }
+    let p = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("goldilocks_entropy.c");
+    std::fs::write(&p, out).expect("write goldilocks_entropy.c");
+    p
+}
+
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
@@ -48,8 +86,16 @@ fn base() -> cc::Build {
     for i in INCLUDES {
         b.include(i);
     }
+    // intrinsics.h/word.h use the BSD type u_int64_t; wasi-libc (musl) declares it only with _BSD_SOURCE.
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32") {
+        b.define("_BSD_SOURCE", None);
+    }
     for s in SOURCES {
-        b.file(s);
+        if *s == "upstream/32/goldilocks.c" {
+            b.file(entropy_copy(s));
+        } else {
+            b.file(s);
+        }
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")
