@@ -1,0 +1,24 @@
+id        = "haetae2v4"
+kind      = "sign"
+category  = "sign"
+family    = "haetae2v4"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["cryptoint/crypto_int32.h", "cryptoint/crypto_int64.h", "cryptoint/crypto_int8.h", "cryptoint/crypto_uint32.h", "cryptoint/crypto_uint64.h", "cryptoint/crypto_uint8.h", "cryptoint/int32_optblocker.c", "cryptoint/int64_optblocker.c", "cryptoint/int8_optblocker.c", "cryptoint/uint32_optblocker.c", "cryptoint/uint64_optblocker.c", "cryptoint/uint8_optblocker.c", "ref/api.h", "ref/common.h", "ref/config.h", "ref/decompose.c", "ref/decompose.h", "ref/encoding.c", "ref/encoding.h", "ref/fft.c", "ref/fft.h", "ref/fips202.c", "ref/fips202.h", "ref/fixpoint.c", "ref/fixpoint.h", "ref/ntt.c", "ref/ntt.h", "ref/packing.c", "ref/packing.h", "ref/params.h", "ref/poly.c", "ref/poly.h", "ref/polyfix.c", "ref/polyfix.h", "ref/polymat.c", "ref/polymat.h", "ref/polyvec.c", "ref/polyvec.h", "ref/rans_byte.h", "ref/reduce.c", "ref/reduce.h", "ref/sampler.c", "ref/sampler.h", "ref/sign.c", "ref/symmetric-shake.c", "ref/symmetric.h", "LICENSE"] }
+
+# Variant wired: ref (sign). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 992
+sk = 1408
+sig = { min = 1, max = 1474 }
+seed = 0
+ctx = 0

@@ -1,0 +1,22 @@
+id        = "aegis256x2"
+kind      = "aead"
+category  = "aead"
+family    = "aegis256x2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["bitsliced32/aes-bs8x2.h", "bitsliced32/api.h", "bitsliced32/common.h", "bitsliced32/encrypt.c", "cryptoint/crypto_int16.h", "cryptoint/int16_optblocker.c", "support/verify_16/api.h", "support/verify_16/verify.c", "support/verify_32/api.h", "support/verify_32/verify.c", "LICENSE"] }
+
+# Variant wired: bitsliced32 (aead). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 32
+nonce = 32
+tag = 32

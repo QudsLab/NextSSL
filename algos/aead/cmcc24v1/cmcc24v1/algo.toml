@@ -1,0 +1,22 @@
+id        = "cmcc24v1"
+kind      = "aead"
+category  = "aead"
+family    = "cmcc24v1"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["cryptoint/crypto_int16.h", "cryptoint/crypto_int64.h", "cryptoint/int16_optblocker.c", "cryptoint/int64_optblocker.c", "ref/api.h", "ref/encrypt.c", "support/core_aes128encrypt/api.h", "support/core_aes128encrypt/core.c", "support/verify_16/api.h", "support/verify_16/verify.c", "LICENSE"] }
+
+# Variant wired: ref (aead). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 80
+nonce = 4
+tag = 2

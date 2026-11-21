@@ -1,0 +1,5 @@
+{
+  "algorithm": "omdsha256k256n104tau160v1",
+  "vectors": [],
+  "note": "no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row."
+}

@@ -1,0 +1,25 @@
+id        = "mceliece8192128pcf"
+kind      = "kem"
+category  = "kem"
+family    = "mceliece8192128pcf"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["cryptoint/crypto_int16.h", "cryptoint/crypto_int32.h", "cryptoint/crypto_int64.h", "cryptoint/crypto_int8.h", "cryptoint/crypto_uint16.h", "cryptoint/crypto_uint32.h", "cryptoint/crypto_uint64.h", "cryptoint/crypto_uint8.h", "cryptoint/int16_optblocker.c", "cryptoint/int32_optblocker.c", "cryptoint/int64_optblocker.c", "cryptoint/int8_optblocker.c", "cryptoint/uint16_optblocker.c", "cryptoint/uint32_optblocker.c", "cryptoint/uint64_optblocker.c", "cryptoint/uint8_optblocker.c", "ref/api.h", "ref/benes.c", "ref/benes.h", "ref/bm.c", "ref/bm.h", "ref/controlbits.c", "ref/controlbits.h", "ref/decrypt.c", "ref/decrypt.h", "ref/encrypt.c", "ref/encrypt.h", "ref/gf.c", "ref/gf.h", "ref/hash.h", "ref/kem_dec.c", "ref/kem_enc.c", "ref/kem_keypair.c", "ref/operations.h", "ref/params.h", "ref/pk_gen.c", "ref/pk_gen.h", "ref/root.c", "ref/root.h", "ref/sk_gen.c", "ref/sk_gen.h", "ref/synd.c", "ref/synd.h", "ref/transpose.c", "ref/transpose.h", "ref/util.c", "ref/util.h", "ref/wrap_dec.c", "ref/wrap_enc.c", "ref/wrap_keypair.c", "support/sort_int32/api.h", "support/sort_int32/sort.c", "support/sort_int64/api.h", "support/sort_int64/sort.c", "support/xof_shake256/api.h", "support/xof_shake256/capability.h", "support/xof_shake256/cbmc.h", "support/xof_shake256/common.h", "support/xof_shake256/context.h", "support/xof_shake256/fips202.c", "support/xof_shake256/fips202.h", "support/xof_shake256/keccakf1600.c", "support/xof_shake256/keccakf1600.h", "support/xof_shake256/mlkem_native_config.h", "support/xof_shake256/params.h", "support/xof_shake256/sys.h", "support/xof_shake256/verify.h", "support/xof_shake256/wrapper.c", "LICENSE"] }
+
+# Variant wired: ref (kem). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# License file kept in upstream/. Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 1357824
+sk = 14120
+ct = 240
+ss = 32
+seed = 0
+coins = 0
