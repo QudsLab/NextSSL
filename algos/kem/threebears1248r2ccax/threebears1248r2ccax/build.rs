@@ -30,6 +30,9 @@ const PREFIX: &str = "nextssl__threebears1248r2ccax__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // shake.h picks VECLEN from CPU flags (NEON -> 2, AVX2 -> 4, ...) but only the sequential
+    // KeccakP-1600 (VECLEN 1, what x86-64 baseline selects) is wired; fix it so every target matches.
+    b.define("VECLEN", Some("1"));
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {

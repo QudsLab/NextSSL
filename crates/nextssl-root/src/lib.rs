@@ -686,6 +686,8 @@ pub fn oprf_evaluate(
 }
 
 /// Client step 2: verifies the proof (verifiable modes) and returns the PRF output.
+// The OPRF finalize step takes the client state, the server's reply and its proof inputs by design.
+#[allow(clippy::too_many_arguments)]
 pub fn oprf_finalize_with(
     alg: &str,
     params: &Params,

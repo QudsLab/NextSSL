@@ -11,6 +11,11 @@ const PREFIX: &str = "nextssl__ascon128v11__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // The upstream uses C99 variable-length arrays (and GNU C), which cl.exe cannot compile. On MSVC
+    // targets it is compiled with clang-cl instead: same ABI and object format, linked by link.exe.
+    if b.get_compiler().is_like_msvc() {
+        b.compiler(clang_cl());
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
@@ -134,6 +139,29 @@ fn main() {
     println!("cargo:rerun-if-changed=upstream");
     println!("cargo:rerun-if-changed=shim.c");
     println!("cargo:rerun-if-changed=build.rs");
+}
+
+/// clang-cl for MSVC targets: `NEXTSSL_CLANG_CL`, then PATH, then the LLVM installer's default
+/// directory. There is no fallback to cl.exe (it cannot compile this upstream).
+fn clang_cl() -> PathBuf {
+    println!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
+    if let Some(p) = std::env::var_os("NEXTSSL_CLANG_CL") {
+        return PathBuf::from(p);
+    }
+    let mut dirs: Vec<PathBuf> = std::env::var_os("PATH")
+        .map(|p| std::env::split_paths(&p).collect())
+        .unwrap_or_default();
+    dirs.push(PathBuf::from(r"C:\Program Files\LLVM\bin"));
+    for d in dirs {
+        let c = d.join("clang-cl.exe");
+        if c.is_file() {
+            return c;
+        }
+    }
+    panic!(
+        "this algorithm's C upstream needs clang-cl on MSVC targets (C99 variable-length arrays): \
+         install LLVM or set NEXTSSL_CLANG_CL to clang-cl.exe"
+    );
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)

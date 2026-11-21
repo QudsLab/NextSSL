@@ -73,11 +73,11 @@ mod tests {
     #[test]
     fn known_answers() {
         let k = new(&Params::new()).unwrap();
-        for (kk, rnd, opc, o) in [("000102030405060708090a0b0c0d0e0f", "00000000000000000000000000000000", "000102030405060708090a0b0c0d0e0f", "e9fc88ccc8a353817200a184d8f2c758fbdf87900ddbf27512cb2dd3e0ec8378f6fc1d606c619f47ec9320c2c230")] {
-            let mut out = [0u8; OUT_LEN];
-            k.derive(&key(&unhex(kk)), &unhex(rnd), &unhex(opc), &mut out).unwrap();
-            assert_eq!(out.to_vec(), unhex(o));
-        }
+        let (kk, rnd, opc, o) = ("000102030405060708090a0b0c0d0e0f", "00000000000000000000000000000000", "000102030405060708090a0b0c0d0e0f", "e9fc88ccc8a353817200a184d8f2c758fbdf87900ddbf27512cb2dd3e0ec8378f6fc1d606c619f47ec9320c2c230");
+        let mut out = [0u8; OUT_LEN];
+        k.derive(&key(&unhex(kk)), &unhex(rnd), &unhex(opc), &mut out)
+            .unwrap();
+        assert_eq!(out.to_vec(), unhex(o));
     }
 
     #[test]

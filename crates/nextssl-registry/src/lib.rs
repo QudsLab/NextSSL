@@ -396,6 +396,11 @@ mod tests {
                 "{}: [sizes] incomplete",
                 a.id
             );
+            // Miri cannot run foreign code; C-backed constructors call into C (e.g. size queries).
+            // They are instantiated by the same test natively, under ASan/UBSan and in wasmtime.
+            if cfg!(miri) && a.c_backed {
+                continue;
+            }
             let inst = instantiate_in(all(), Policy::Any, a.id, &a.smoke_params())
                 .unwrap_or_else(|e| panic!("{}: {e}", a.id));
             check_sizes(a, &inst).unwrap_or_else(|e| panic!("{e}"));
