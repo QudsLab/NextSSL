@@ -1,0 +1,26 @@
+id        = "comp128-1"
+kind      = "kdf"
+category  = "kdf"
+family    = "comp128"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = true
+upstream  = { repo = "https://github.com/osmocom/libosmocore", commit = "1b72c0288c3f6fcec916cc439623af1c1c4b5d4c", license = "GPL-2.0-or-later", files = ["include/osmocom/core/defs.h", "include/osmocom/gsm/comp128.h", "src/gsm/comp128.c", "LICENSE"] }
+# Wired: comp128v1() from libosmocore src/gsm/comp128.c (GSM A3/A8 authentication, leaked/reverse-engineered algorithm, not published by 3GPP).
+# Kind kdf is the honest closest fit: ikm = Ki (16 bytes), salt = RAND (16 bytes), info = none (non-empty is an error), out = SRES (4) || Kc (8) = exactly 12 bytes.
+# COMP128v1 is broken (partitioning attack recovers Ki from a few thousand challenges).
+# GPL-2.0-or-later upstream: copyleft = true.
+# KAT: none in libosmocore for v1 (tests/comp128/comp128_test.c only has v2/v3); never invented.
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+salt = 16
+info = 0
+out = 12

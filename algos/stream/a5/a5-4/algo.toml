@@ -1,0 +1,25 @@
+id        = "a5-4"
+kind      = "streamcipher"
+category  = "stream"
+family    = "a5"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = ["GSM 03.20", "3GPP TS 55.216"]
+fips      = false
+copyleft  = true
+upstream  = { repo = "https://github.com/osmocom/libosmocore", commit = "1b72c0288c3f6fcec916cc439623af1c1c4b5d4c", license = "GPL-2.0-or-later", files = ["include/osmocom/core/defs.h", "include/osmocom/core/bits.h", "include/osmocom/core/bitXXgen.h.tpl", "include/osmocom/gsm/a5.h", "include/osmocom/gsm/kasumi.h", "src/core/bits.c", "src/gsm/kasumi.c", "src/gsm/a5.c", "LICENSE"] }
+# Wired: osmo_a5(4, ...) from libosmocore src/gsm/a5.c (the KASUMI KGCORE of src/gsm/kasumi.c); one GSM frame per call.
+# Nonce encoding (ours, shim.c + glue.rs): 4 bytes, big endian, the real GSM frame number FN in 0..2715647 (26*51*2048); upstream converts it to the 22-bit COUNT. A larger value is an error.
+# Keystream encoding: the 114-bit downlink burst, then the 114-bit uplink burst (228 bits, packed MSB first). Data length is limited to 28 bytes (224 bits); longer is an error, never a truncation.
+# GPL-2.0-or-later upstream: copyleft = true (cargo feature copyleft). Key is exactly 16 bytes.
+# compat/ replaces libosmocore's generated and plugin headers (bit16gen.h, crypt/auth.h, core/utils.h); osmo_c4 in shim.c is a verbatim excerpt of src/gsm/auth_core.c.
+# KAT: 3GPP TS 55.217/55.218 vectors from tests/a5/a5_test.c; only COUNT values that are a valid (FN mod 26, FN mod 51) pair are reachable through the frame-number nonce, the others are skipped.
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+nonce = 4

@@ -1,0 +1,24 @@
+id        = "loki89"
+kind      = "blockcipher"
+category  = "block"
+family    = "loki"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://ftp.nic.funet.fi/pub/crypt/cryptography/symmetric/loki/loki-3.0.tar.gz", sha256 = "199c9c07299e9029030143f04eeded2aa9b309ca5e6ffb92d8463f4e58926d8f", license = "NOASSERTION", files = ["loki.h", "loki.i", "loki89.c", "LICENSE"] }
+# Wired: enloki/deloki/setlokikey from loki89.c (Lawrie Brown and Matthew Kwan, UNSW/ADFA, loki-3.0 of the funet archive): the original LOKI89 (DES-like, 64-bit key and block).
+# Key exactly 8 bytes, block exactly 8 bytes. The upstream keeps its key state in statics (lokikey): the glue serialises every call with a process-wide Mutex and wipes it after each call.
+# Historic K&R C with a 32-bit `long`: compat/pre.h (ours) redefines `long` to `int` for the upstream sources and sets LITTLE_ENDIAN; the build also demotes gcc/clang implicit-int and implicit-declaration errors to warnings. The upstream files are unchanged.
+# License: copyright 1989 Lawrie Brown and UNSW, 'may not be sold or used as inducement to buy a product without the written permission of the author' (file header); no license file in the package: license NOASSERTION, placeholder in upstream/LICENSE, owner must review this restriction.
+# KAT: the first 5 certification triples (key, plaintext, ciphertext) of triple89 in the package (the cipher's validation suite, same-author); the package's single89.log trace agrees with triple1 of that suite.
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 8
+block = 8

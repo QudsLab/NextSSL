@@ -1,0 +1,29 @@
+{
+ "algorithm": "gea1",
+ "source": "gea-c/gea12_test.c",
+ "independence": "same-author (the library's own test table)",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "p1sec-gea1-test0",
+   "key_hex": "0000000000000000",
+   "nonce_hex": "0000000000",
+   "data_hex": "000000000000000000000000000000000000",
+   "out_hex": "1fa198ab2114c38a9ebccb63ad4813a740c1"
+  },
+  {
+   "id": "p1sec-gea1-test1",
+   "key_hex": "55e303eb7d55b685",
+   "nonce_hex": "da637a8301",
+   "data_hex": "6e00cfe7b7fb974892b8cde5e43363397d85",
+   "out_hex": "58dad06457b9fe1015da0776ed19907b7888"
+  },
+  {
+   "id": "p1sec-gea1-test2",
+   "key_hex": "a7265d1932a0d618",
+   "nonce_hex": "0e9b8adf00",
+   "data_hex": "96e7b1d92b1ea8fcdda41233c63294055383",
+   "out_hex": "d72197f65d4d67b14d2cee812cb0b9bea0c9"
+  }
+ ]
+}

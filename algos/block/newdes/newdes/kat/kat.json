@@ -1,0 +1,8 @@
+{
+ "algorithm": "newdes",
+ "source": "none",
+ "independence": "n/a",
+ "replay": "registry",
+ "vectors": [],
+ "note": "no vectors in the funet package; never invented"
+}

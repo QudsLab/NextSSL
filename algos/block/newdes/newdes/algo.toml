@@ -1,0 +1,24 @@
+id        = "newdes"
+kind      = "blockcipher"
+category  = "block"
+family    = "newdes"
+aliases   = []
+tier      = "legacy"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://ftp.nic.funet.fi/pub/crypt/cryptography/symmetric/newdes/scott-newdes-c.zip", sha256 = "0e5beef3a82c50eb9db7daf2d533ccb02041279b47165e1053a61f5382b90287", license = "NOASSERTION", files = ["NEWDES2.C", "NEWDES2P.H", "LICENSE"] }
+# Wired: newdes_set_key_encipher/newdes_set_key_decipher/newdes_block from NEWDES2.C (Mark Riordan, 1990, after Robert Scott's NEWDES, Cryptologia 1985): original NEWDES, 15-byte key (expanded by repetition), 8-byte block.
+# NEWDES is weak against related-key attacks (Scott's own 1996 revision, newdes.txt, replaces the key expansion; NOT implemented here). Key exactly 15 bytes, block exactly 8 bytes.
+# The unravelled key is a static array: process-wide Mutex around every call, wiped after each call. The upstream's `#include "newdes2p.h"` (lower case) is satisfied by compat/newdes2p.h (ours) on case-sensitive systems.
+# License: none stated in the files (license NOASSERTION, placeholder in upstream/LICENSE).
+# No test vectors in the package: kat.json is empty, never invented.
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 15
+block = 8

@@ -1,0 +1,25 @@
+id        = "gea2"
+kind      = "streamcipher"
+category  = "stream"
+family    = "gea"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = true
+upstream  = { repo = "https://github.com/P1sec/gea-implementation", commit = "e86208e94642f36b8747195a73290b8e951452c5", license = "AGPL-3.0-or-later", files = ["gea-c/gea12.c", "gea-c/gea12.h", "LICENSE"] }
+# Wired: gea2() from P1sec gea12.c (Benoit Michau, P1Sec; written from the GEA-1/GEA-2 description in eprint 2021/819). The author's own README says: do not use for anything serious.
+# GEA-2 has published attacks (eprint 2022/424) and this implementation is the author's educational one: tier unverified.
+# Nonce encoding (ours, shim.c + glue.rs): 5 bytes = GEAInput.iv (4 bytes, as upstream stores it) followed by GEAInput.dir (0 or 1; anything else is an error). Key is exactly 8 bytes.
+# Data length is limited to 1523 bytes (GSM 04.64 maximum block); longer is an error.
+# License: AGPL-3.0-or-later (the file headers; LICENSE.txt is the AGPL v3 text, copied verbatim): copyleft = true (cargo feature copyleft). Owner decides the policy for AGPL.
+# KAT: the 3 vectors of gea-c/gea12_test.c (plaintext xor keystream = ciphertext; data_hex = the test plaintext, out_hex = the test ciphertext), same-author.
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 8
+nonce = 5

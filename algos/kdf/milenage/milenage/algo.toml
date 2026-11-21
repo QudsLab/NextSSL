@@ -1,0 +1,29 @@
+id        = "milenage"
+kind      = "kdf"
+category  = "kdf"
+family    = "milenage"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["3GPP TS 35.205", "3GPP TS 35.206"]
+fips      = false
+copyleft  = true
+exclude_targets = ["msvc"]
+exclude_reason = "MSVC cannot build the upstream C: error C2010 '.' unexpected in macro parameter list (GNU named variadic macros in common.h)"
+upstream  = { repo = "https://github.com/osmocom/libosmocore", commit = "1b72c0288c3f6fcec916cc439623af1c1c4b5d4c", license = "GPL-2.0-or-later", files = ["src/gsm/milenage/aes-encblock.c", "src/gsm/milenage/aes-internal-enc.c", "src/gsm/milenage/aes-internal.c", "src/gsm/milenage/aes.h", "src/gsm/milenage/aes_i.h", "src/gsm/milenage/aes_wrap.h", "src/gsm/milenage/common.h", "src/gsm/milenage/crypto.h", "src/gsm/milenage/includes.h", "src/gsm/milenage/milenage.c", "src/gsm/milenage/milenage.h", "LICENSE"] }
+# Wired: milenage_f2345() from libosmocore src/gsm/milenage (3GPP TS 35.206, wpa_supplicant-derived code, GPL-2.0 or BSD-3-Clause per file; the GPL-2.0-or-later libosmocore terms are recorded).
+# Kind kdf is the closest honest fit: ikm = K (16 bytes), salt = RAND (16 bytes), info = OPc (16 bytes, the already derived operator code), out = RES (8) || CK (16) || IK (16) || AK (6) = exactly 46 bytes.
+# Only f2/f3/f4/f5 are exposed; f1 (MAC-A) and the AUTS functions need SQN/AMF inputs that do not fit the Kdf shape and are not wired.
+# osmo_auth_c2/c3 in shim.c are verbatim excerpts of src/gsm/auth_core.c (milenage.c's gsm_milenage references them; they are not reachable from the wired entry point).
+# KAT: one vector from tests/auth/milenage_test.ok (K = OPc = 000102..0f, RAND = 0, SQN 34). AK is not printed there: it is AUTN[0..6] xor SQN, computed at generation time from the printed AUTN.
+# GPL-2.0-or-later upstream: copyleft = true.
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+salt = 16
+info = 16
+out = 46

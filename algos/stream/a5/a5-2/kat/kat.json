@@ -1,0 +1,15 @@
+{
+ "algorithm": "a5-2",
+ "source": "tests/a5/a5_test.c",
+ "independence": "same-author (libosmocore's own test table; the values are the 3GPP/ETSI published vectors where the source says so)",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "osmo-a5-2-fn123456",
+   "key_hex": "0123456789abcdef",
+   "nonce_hex": "0001e240",
+   "data_hex": "00000000000000000000000000000000000000000000000000000000",
+   "out_hex": "459c88c382b7ffb398d2f96e0f14bc0eab37b8d6d799602eaaf01649"
+  }
+ ]
+}

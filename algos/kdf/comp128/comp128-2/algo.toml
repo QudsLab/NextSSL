@@ -1,0 +1,26 @@
+id        = "comp128-2"
+kind      = "kdf"
+category  = "kdf"
+family    = "comp128"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = true
+upstream  = { repo = "https://github.com/osmocom/libosmocore", commit = "1b72c0288c3f6fcec916cc439623af1c1c4b5d4c", license = "GPL-2.0-or-later", files = ["include/osmocom/core/defs.h", "include/osmocom/gsm/comp128v23.h", "src/gsm/comp128v23.c", "LICENSE"] }
+# Wired: comp128v2() from libosmocore src/gsm/comp128v23.c (GSM A3/A8 authentication, leaked/reverse-engineered algorithm, not published by 3GPP).
+# Kind kdf is the honest closest fit: ikm = Ki (16 bytes), salt = RAND (16 bytes), info = none (non-empty is an error), out = SRES (4) || Kc (8) = exactly 12 bytes.
+# COMP128v2: secret GSM operator algorithm, only known through leaks and libosmocore; tier unverified.
+# GPL-2.0-or-later upstream: copyleft = true.
+# KAT: the 1024 vectors of tests/comp128/comp128_test.c (Ki = 16 x 0xAA, same-author; the .c tests v2 through osmo_auth_gen_vec).
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+salt = 16
+info = 0
+out = 12

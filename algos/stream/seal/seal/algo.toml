@@ -1,0 +1,25 @@
+id        = "seal"
+kind      = "streamcipher"
+category  = "stream"
+family    = "seal"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://ftp.nic.funet.fi/pub/crypt/cryptography/symmetric/seal/seal.c", sha256 = "081ed1ccbb6f8eec5d28232a6f6a617ecbbfa2d87bcd82445a6685ab212481ac", license = "NOASSERTION", files = ["seal.c", "LICENSE"] }
+# Wired: seal_init() + seal() from seal.c (SEAL, Rogaway and Coppersmith's software-optimised stream cipher, SHA-1 based tables; first SEAL, 160-bit key; funet archive). SEAL 1.0 has known distinguishing/weakness results.
+# Nonce encoding (ours, shim.c + glue.rs): 4 bytes = the 32-bit position index n, big endian. Keystream = the 1024 words seal() returns for that n, each serialised little endian (the upstream stores host words; the byte order is not specified by the file).
+# Data length is limited to 4096 bytes (one n); longer is an error, never a wrap or truncation. Key exactly 20 bytes.
+# Old C with a 32-bit `long`: compat/pre.h (ours) maps `long` to `int`; implicit-declaration errors are demoted to warnings (seal.c calls calloc without a header). seal.c is unchanged.
+# License: none stated in the file (license NOASSERTION, placeholder in upstream/LICENSE).
+# No test vectors in the package: kat.json is empty, never invented. Byte-order choice is unverified against the SEAL paper's test vector.
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 20
+nonce = 4

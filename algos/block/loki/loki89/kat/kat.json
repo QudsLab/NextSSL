@@ -1,0 +1,38 @@
+{
+ "algorithm": "loki89",
+ "source": "triple89 (loki-3.0 validation suite)",
+ "independence": "same-author (the designers' own certification triples)",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "loki89-cert-0",
+   "key_hex": "0000000000000000",
+   "pt_hex": "0000000000000000",
+   "ct_hex": "0000000000000000"
+  },
+  {
+   "id": "loki89-cert-1",
+   "key_hex": "0000000000000000",
+   "pt_hex": "355550b2150e2451",
+   "ct_hex": "8e2a251b94704c69"
+  },
+  {
+   "id": "loki89-cert-2",
+   "key_hex": "0000000000000000",
+   "pt_hex": "35a7bae825c0d73b",
+   "ct_hex": "8ca64de9c1b123a7"
+  },
+  {
+   "id": "loki89-cert-3",
+   "key_hex": "0000000000000000",
+   "pt_hex": "8ca64de9c1b123a7",
+   "ct_hex": "35a7bae825c0d73b"
+  },
+  {
+   "id": "loki89-cert-4",
+   "key_hex": "0000000000000000",
+   "pt_hex": "8e2a251b94704c69",
+   "ct_hex": "355550b2150e2451"
+  }
+ ]
+}

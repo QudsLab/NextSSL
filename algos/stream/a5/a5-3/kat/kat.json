@@ -1,0 +1,43 @@
+{
+ "algorithm": "a5-3",
+ "source": "tests/a5/a5_test.c",
+ "independence": "same-author (libosmocore's own test table; the values are the 3GPP/ETSI published vectors where the source says so)",
+ "replay": "registry",
+ "vectors": [
+  {
+   "id": "3gpp-ts55217-a5-3-count24f20f",
+   "key_hex": "2bd6459f82c5bc00",
+   "nonce_hex": "0017eaa7",
+   "data_hex": "00000000000000000000000000000000000000000000000000000000",
+   "out_hex": "889eeaaf9ed1ba1abbd8436232e45728d01aa89133da73c11eab68b7"
+  },
+  {
+   "id": "3gpp-ts55217-a5-3-count061272",
+   "key_hex": "952c49104881ff48",
+   "nonce_hex": "0003ed22",
+   "data_hex": "00000000000000000000000000000000000000000000000000000000",
+   "out_hex": "fb4d5fbcee13a33389285686e9a5c94240de38150115f15f8d9d98b9"
+  },
+  {
+   "id": "3gpp-ts55217-a5-3-count061527",
+   "key_hex": "952c49104881ff48",
+   "nonce_hex": "0003ee9d",
+   "data_hex": "00000000000000000000000000000000000000000000000000000000",
+   "out_hex": "ab7db38a573a325daa76e4cb800a5312d653faa7403fa25e2dedef04"
+  },
+  {
+   "id": "3gpp-ts55217-a5-3-count0e418c",
+   "key_hex": "3451f23a43bd2c87",
+   "nonce_hex": "000939fc",
+   "data_hex": "00000000000000000000000000000000000000000000000000000000",
+   "out_hex": "75f7c4c51560905dfba05e46fb54c64b254d4f37e5e7815061b7c56f"
+  },
+  {
+   "id": "3gpp-ts55217-a5-3-count2ff229",
+   "key_hex": "caa2639be82435cf",
+   "nonce_hex": "001f0b4d",
+   "data_hex": "00000000000000000000000000000000000000000000000000000000",
+   "out_hex": "301437e4d4d6565d4904c631606efc28ee1e5789934f86a0bda10d4f"
+  }
+ ]
+}

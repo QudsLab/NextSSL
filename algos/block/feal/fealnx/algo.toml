@@ -1,0 +1,31 @@
+id        = "fealnx"
+kind      = "blockcipher"
+category  = "block"
+family    = "feal"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://ftp.nic.funet.fi/pub/crypt/cryptography/symmetric/feal/fealnx.tar.gz", sha256 = "b798d9a8668feec3723e13471fdd2dc49fc6ce56afe39203fbf92f8b5de3f024", license = "NOASSERTION", files = ["fealnx.h", "fealnx.c", "LICENSE"] }
+# Wired: NewKeySchedule/Encrypt/Decrypt from fealnx.c (FEAL-NX, N rounds, 128-bit key, 64-bit block; Peter Pearson, version of 92 Dec 28, funet archive).
+# [params] rounds = N (even, 4..=64, default 32): an odd value is an error. With N = 32 this is the same cipher as the existing id `feal` (a different, independent implementation: a possible cross-check).
+# Key exactly 16 bytes, block 8 bytes. F() and Xor4() use static result buffers: process-wide Mutex around every call, key schedule freed (and wiped) after each call.
+# fealnx.c includes Borland <alloc.h> and <mem.h> (movmem): compat/alloc.h and compat/mem.h (ours) map them to the C standard headers. The build demotes gcc/clang implicit-int errors (`static First = 1`) to warnings.
+# License: none stated in the files (license NOASSERTION, placeholder in upstream/LICENSE).
+# No test vectors in the package: kat.json is empty, never invented.
+
+[params.rounds]
+type = "u32"
+min = 4
+max = 64
+default = 32
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 16
+block = 8

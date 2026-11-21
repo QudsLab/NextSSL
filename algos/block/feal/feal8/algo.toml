@@ -1,0 +1,24 @@
+id        = "feal8"
+kind      = "blockcipher"
+category  = "block"
+family    = "feal"
+aliases   = []
+tier      = "broken"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+upstream  = { url = "https://ftp.nic.funet.fi/pub/crypt/cryptography/symmetric/feal/feal8.tar.gz", sha256 = "8acee50e66b87c1403260bd9d602223dde4a89ff0edfc0f4de5b827b3569e361", license = "NOASSERTION", files = ["feal8.h", "feal8.c", "LICENSE"] }
+# Wired: SetKey/Encrypt/Decrypt from feal8.c (NTT's FEAL-8, 8-byte key, 64-bit block, version of 11 Sep 1989 in the funet archive). FEAL-8 is broken (differential and linear attacks with few chosen plaintexts).
+# Key exactly 8 bytes, block exactly 8 bytes. The key schedule is static state: process-wide Mutex around every call, schedule wiped after each call.
+# Old C with a 32-bit `long` and byte-order-dependent unions: compat/pre.h (ours) maps `long` to `int`; the code reads union members in little-endian layout, so only little-endian targets are supported (all current ones).
+# License: none stated in the files (license NOASSERTION, placeholder in upstream/LICENSE).
+# No test vectors in the package: kat.json is empty, never invented. Distinct from the existing id `feal` (FEAL-NX with 32 rounds, 128-bit key).
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = 8
+block = 8

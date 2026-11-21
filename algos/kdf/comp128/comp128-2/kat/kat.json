@@ -1,0 +1,43 @@
+{
+ "algorithm": "comp128-2",
+ "source": "tests/comp128/comp128_test.c",
+ "independence": "same-author (libosmocore's own test table)",
+ "replay": "glue",
+ "vectors": [
+  {
+   "id": "osmo-comp128v2-0",
+   "key_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "salt_hex": "00000000000000000000000000000000",
+   "info_hex": "",
+   "out_hex": "34b4225bf16b96e118a85800"
+  },
+  {
+   "id": "osmo-comp128v2-1",
+   "key_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "salt_hex": "00102030405060708090a0b0c0d0e0f0",
+   "info_hex": "",
+   "out_hex": "a892a8efd6d33e3650372c00"
+  },
+  {
+   "id": "osmo-comp128v2-2",
+   "key_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "salt_hex": "ffffffffffffffffffffffffffffffff",
+   "info_hex": "",
+   "out_hex": "f699f0baba87114f0350bc00"
+  },
+  {
+   "id": "osmo-comp128v2-3",
+   "key_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "salt_hex": "000102030405060708090a0b0c0d0e0f",
+   "info_hex": "",
+   "out_hex": "a5b4c7ca0514c4e1b25cbc00"
+  },
+  {
+   "id": "osmo-comp128v2-4",
+   "key_hex": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "salt_hex": "f918fb140a2d63e10b9b3354c93d5816",
+   "info_hex": "",
+   "out_hex": "c1ad6fe372383e0d6aac7c00"
+  }
+ ]
+}

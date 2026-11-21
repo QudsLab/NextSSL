@@ -1,0 +1,52 @@
+id        = "tuak"
+kind      = "kdf"
+category  = "kdf"
+family    = "tuak"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["3GPP TS 35.231", "3GPP TS 35.232"]
+fips      = false
+copyleft  = true
+upstream  = { repo = "https://github.com/osmocom/libosmocore", commit = "1b72c0288c3f6fcec916cc439623af1c1c4b5d4c", license = "GPL-2.0-or-later", files = ["src/gsm/tuak/KeccakP-1600-3gpp.c", "src/gsm/tuak/KeccakP-1600-3gpp.h", "src/gsm/tuak/tuak.c", "src/gsm/tuak/tuak.h", "LICENSE"] }
+# Wired: tuak_f2345() from libosmocore src/gsm/tuak (3GPP TS 35.231/35.232, Keccak-f[1600] based; KeccakP-1600-3gpp.c is the 3GPP-supplied permutation).
+# Kind kdf, honest fit: ikm = K (16 or 32 bytes), salt = RAND (16 bytes), info = TOPc (32 bytes: the operator code already processed by TUAK, tuak_opc_gen), out = RES || CK || IK || AK(6).
+# Output lengths come from [params] res_len (4/8/16/32), ck_len (16/32), ik_len (16/32) and keccak_iterations; out.len() must equal res_len + ck_len + ik_len + 6 exactly, else an error. Defaults give 42 bytes.
+# The upstream global tuak_set_keccak_iterations() state is not used: tuak_f2345 takes the iteration count as an argument, so instances stay immutable and thread-safe.
+# Only f2/f3/f4/f5 are exposed; f1, f1*, f5* and AUTS need SQN/AMF inputs that do not fit the Kdf shape.
+# KAT: the 6 test sets of tests/auth/tuak_test.c (3GPP TS 35.233 sections 6.3-6.8), with TOPc as given there; same-author table.
+# GPL-2.0-or-later upstream: copyleft = true.
+
+[params.res_len]
+type = "u32"
+min = 4
+max = 32
+default = 4
+
+[params.ck_len]
+type = "u32"
+min = 16
+max = 32
+default = 16
+
+[params.ik_len]
+type = "u32"
+min = 16
+max = 32
+default = 16
+
+[params.keccak_iterations]
+type = "u32"
+min = 1
+max = 1024
+default = 1
+
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+key = { min = 16, max = 32 }
+salt = 16
+info = 32
+out = { min = 42, max = 102 }

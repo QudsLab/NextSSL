@@ -1,0 +1,15 @@
+{
+ "algorithm": "milenage",
+ "source": "tests/auth/milenage_test.ok",
+ "independence": "same-author (libosmocore's own test expectation; algorithm per 3GPP TS 35.206)",
+ "replay": "glue",
+ "vectors": [
+  {
+   "id": "osmo-milenage-k000102-rand0",
+   "key_hex": "000102030405060708090a0b0c0d0e0f",
+   "salt_hex": "00000000000000000000000000000000",
+   "info_hex": "000102030405060708090a0b0c0d0e0f",
+   "out_hex": "e9fc88ccc8a353817200a184d8f2c758fbdf87900ddbf27512cb2dd3e0ec8378f6fc1d606c619f47ec9320c2c230"
+  }
+ ]
+}

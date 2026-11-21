@@ -1,0 +1,8 @@
+{
+ "algorithm": "comp128-1",
+ "source": "none",
+ "independence": "same-author (libosmocore's own test table)",
+ "replay": "glue",
+ "vectors": [],
+ "note": "no vector for COMP128v1 in the libosmocore tree; never invented"
+}
