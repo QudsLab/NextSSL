@@ -1,0 +1,39 @@
+id       = "parallel-phc"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "parallel"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
+fips      = false
+copyleft  = false
+upstream  = { url = "https://password-hashing.net/submissions/Parallel-v1.tar.gz", sha256 = "0d1bddbd340689533c26cc8566edc92c8b6f6a36ff92efe7d7fb820fefab9e21", license = "MIT", files = ["parallel.cpp", "parallel.h", "sha512.cpp", "sha512.h", "common.h", "architecture.h", "LICENSE"] }
+# Upstream ignores m_cost entirely, so it is pinned to 0 (explicit error otherwise, no silent ignore). t_cost low 16 bits = parallel loops, high bits = sequential loops (zero here; upstream allows up to 106 / 126). The package's stdint.h/inttypes.h are not copied. KAT uses the 'parallel-SHA512' rows.
+# license file copied verbatim from the package (Parallel-v1/parallel/code/LICENSE). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
+# first 5 in-policy vectors of the package's own test-vector file (39 parsed, 32 inside the wired parameter bounds)
+
+[params.t_cost]
+type     = "u32"
+min      = 0
+max      = 16
+default  = 0
+
+[params.m_cost]
+type     = "u32"
+min      = 0
+max      = 0
+default  = 0
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 64
+default  = 32
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+salt = { min = 0, max = 64 }
+out = { min = 16, max = 64 }

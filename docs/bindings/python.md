@@ -7,8 +7,8 @@ function reference, error codes and buffer rules; this page shows how they look 
 ## Build the library
 
 ```
-cargo build -p nextssl-ffi --release                       # 367 algorithms
-cargo build -p nextssl-ffi --release --features everything # all 386 (copyleft and heavy algorithms)
+cargo build -p nextssl-ffi --release # default features (count: see the runtime list call)
+cargo build -p nextssl-ffi --release --features everything # everything, with copyleft and heavy algorithms (count: see the runtime list call)
 ```
 
 This produces `target/release/libnextssl_ffi.so` (Linux), `libnextssl_ffi.dylib` (macOS) or `nextssl_ffi.dll`

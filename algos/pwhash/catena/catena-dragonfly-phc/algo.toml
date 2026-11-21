@@ -1,0 +1,41 @@
+id       = "catena-dragonfly-phc"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "catena"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason = "MSVC cannot build the upstream C: catena.c: fatal error C1083: Cannot open include file: 'byteswap.h'"
+upstream  = { url = "https://password-hashing.net/submissions/Catena-v5.tar.gz", sha256 = "f9726334d10ac4fe8b382bc0d5fcb441736bf08a19e8531bf2fe0379742b3747", license = "MIT", files = ["catena.c", "catena.h", "catena-helpers.c", "catena-helpers.h", "catena-blake2b-ref.c", "hash.h", "catena-BRG.c", "blake2-ref/blake2-impl.h", "blake2-ref/blake2.h", "blake2-ref/blake2b-ref.c", "LICENSE"] }
+# Makefile defaults: -DFAST, reference BLAKE2b, instance Dragonfly (catena-BRG.c). PHS maps t_cost to lambda and m_cost to garlic (= min_garlic). The FAST hash keeps a static state, so calls are serialized. Uses <endian.h>/<byteswap.h> (POSIX).
+# license file copied verbatim from the package (Catena-v5/reference_implementation/LICENSE). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
+# no vectors replayed (untested, tier unverified). The package ships no test vector for this PHS entry point.
+
+[params.t_cost]
+type     = "u32"
+min      = 1
+max      = 4
+default  = 1
+
+[params.m_cost]
+type     = "u32"
+min      = 1
+max      = 18
+default  = 8
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 64
+default  = 32
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+salt = { min = 0, max = 64 }
+out = { min = 16, max = 64 }

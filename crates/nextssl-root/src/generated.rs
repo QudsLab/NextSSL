@@ -93,6 +93,150 @@ pub mod ace {
     }
 }
 
+/// `aceae128v1` (aead, tier unverified).
+pub mod aceae128v1 {
+    /// Registry id.
+    pub const ID: &str = "aceae128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `aceae128v1-lwc1` (aead, tier unverified).
+pub mod aceae128v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "aceae128v1-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `acehash256v1` (hash, tier unverified).
+pub mod acehash256v1 {
+    /// Registry id.
+    pub const ID: &str = "acehash256v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `acehash256v1-lwc1` (hash, tier unverified).
+pub mod acehash256v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "acehash256v1-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `acorn` (aead, tier unverified).
 pub mod acorn {
     /// Registry id.
@@ -3268,492 +3412,6 @@ pub mod aes256otrsv3 {
     }
 }
 
-/// `aescopa` (aead, tier unverified).
-pub mod aescopa {
-    /// Registry id.
-    pub const ID: &str = "aescopa";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `aesjambuv2` (aead, tier unverified).
-pub mod aesjambuv2 {
-    /// Registry id.
-    pub const ID: &str = "aesjambuv2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `aimer128fv3` (sign, tier unverified).
-pub mod aimer128fv3 {
-    /// Registry id.
-    pub const ID: &str = "aimer128fv3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer128fv3new` (sign, tier unverified).
-pub mod aimer128fv3new {
-    /// Registry id.
-    pub const ID: &str = "aimer128fv3new";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer128sv3` (sign, tier unverified).
-pub mod aimer128sv3 {
-    /// Registry id.
-    pub const ID: &str = "aimer128sv3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer128sv3new` (sign, tier unverified).
-pub mod aimer128sv3new {
-    /// Registry id.
-    pub const ID: &str = "aimer128sv3new";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer192fv3` (sign, tier unverified).
-pub mod aimer192fv3 {
-    /// Registry id.
-    pub const ID: &str = "aimer192fv3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer192fv3new` (sign, tier unverified).
-pub mod aimer192fv3new {
-    /// Registry id.
-    pub const ID: &str = "aimer192fv3new";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer192sv3` (sign, tier unverified).
-pub mod aimer192sv3 {
-    /// Registry id.
-    pub const ID: &str = "aimer192sv3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer192sv3new` (sign, tier unverified).
-pub mod aimer192sv3new {
-    /// Registry id.
-    pub const ID: &str = "aimer192sv3new";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer256fv3` (sign, tier unverified).
-pub mod aimer256fv3 {
-    /// Registry id.
-    pub const ID: &str = "aimer256fv3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer256fv3new` (sign, tier unverified).
-pub mod aimer256fv3new {
-    /// Registry id.
-    pub const ID: &str = "aimer256fv3new";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer256sv3` (sign, tier unverified).
-pub mod aimer256sv3 {
-    /// Registry id.
-    pub const ID: &str = "aimer256sv3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `aimer256sv3new` (sign, tier unverified).
-pub mod aimer256sv3new {
-    /// Registry id.
-    pub const ID: &str = "aimer256sv3new";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
 /// `anubis` (blockcipher, tier unverified).
 pub mod anubis {
     /// Registry id.
@@ -4581,6 +4239,64 @@ pub mod ascon128v12 {
     }
 }
 
+/// `ascon96v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod ascon96v1 {
+    /// Registry id.
+    pub const ID: &str = "ascon96v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `asconhashabi32v12` (hash, tier unverified).
 pub mod asconhashabi32v12 {
     /// Registry id.
@@ -5189,6 +4905,56 @@ pub mod bash512 {
     }
     pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
         crate::hash_with(ID, params, data)
+    }
+}
+
+/// `battcrypt-phc` (pwhash, tier unverified).
+pub mod battcrypt_phc {
+    /// Registry id.
+    pub const ID: &str = "battcrypt-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
     }
 }
 
@@ -5877,6 +5643,108 @@ pub mod cast6 {
     }
 }
 
+/// `catena-butterfly-phc` (pwhash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod catena_butterfly_phc {
+    /// Registry id.
+    pub const ID: &str = "catena-butterfly-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
+    }
+}
+
+/// `catena-dragonfly-phc` (pwhash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod catena_dragonfly_phc {
+    /// Registry id.
+    pub const ID: &str = "catena-dragonfly-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
+    }
+}
+
 /// `cbc-mac` (mac, tier legacy).
 pub mod cbc_mac {
     /// Registry id.
@@ -6074,234 +5942,6 @@ pub mod chaskey {
     }
 }
 
-/// `cilipadi128v1extrahot` (aead, tier unverified).
-pub mod cilipadi128v1extrahot {
-    /// Registry id.
-    pub const ID: &str = "cilipadi128v1extrahot";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `cilipadi128v1hot` (aead, tier unverified).
-pub mod cilipadi128v1hot {
-    /// Registry id.
-    pub const ID: &str = "cilipadi128v1hot";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `cilipadi128v1medium` (aead, tier unverified).
-pub mod cilipadi128v1medium {
-    /// Registry id.
-    pub const ID: &str = "cilipadi128v1medium";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `cilipadi128v1mild` (aead, tier unverified).
-pub mod cilipadi128v1mild {
-    /// Registry id.
-    pub const ID: &str = "cilipadi128v1mild";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
 /// `cityhash` (checksum, tier unverified).
 pub mod cityhash {
     /// Registry id.
@@ -6314,63 +5954,6 @@ pub mod cityhash {
     }
     pub fn checksum_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
         crate::checksum_with(ID, params, data)
-    }
-}
-
-/// `clae128v1` (aead, tier unverified).
-pub mod clae128v1 {
-    /// Registry id.
-    pub const ID: &str = "clae128v1";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
     }
 }
 
@@ -7125,6 +6708,177 @@ pub mod comet_64_speck {
 pub mod comet128aesv1 {
     /// Registry id.
     pub const ID: &str = "comet128aesv1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `comet128chamv1` (aead, tier unverified).
+pub mod comet128chamv1 {
+    /// Registry id.
+    pub const ID: &str = "comet128chamv1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `comet64chamv1` (aead, tier unverified).
+pub mod comet64chamv1 {
+    /// Registry id.
+    pub const ID: &str = "comet64chamv1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `comet64speckv1` (aead, tier unverified).
+pub mod comet64speckv1 {
+    /// Registry id.
+    pub const ID: &str = "comet64speckv1";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -10701,30 +10455,6 @@ pub mod dme_sign {
     }
 }
 
-/// `dragon` (streamcipher, tier unverified).
-pub mod dragon {
-    /// Registry id.
-    pub const ID: &str = "dragon";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn apply_keystream(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        data: &mut [u8],
-    ) -> crate::Result<()> {
-        crate::stream_apply(ID, key, nonce, data)
-    }
-    pub fn apply_keystream_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        data: &mut [u8],
-    ) -> crate::Result<()> {
-        crate::stream_apply_with(ID, params, key, nonce, data)
-    }
-}
-
 /// `drygascon` (aead, tier research).
 pub mod drygascon {
     /// Registry id.
@@ -10794,120 +10524,6 @@ pub mod drygascon_128_hash {
     }
     pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
         crate::hash_with(ID, params, data)
-    }
-}
-
-/// `drygascon-128-k32` (aead, tier unverified).
-pub mod drygascon_128_k32 {
-    /// Registry id.
-    pub const ID: &str = "drygascon-128-k32";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `drygascon-128-k56` (aead, tier unverified).
-pub mod drygascon_128_k56 {
-    /// Registry id.
-    pub const ID: &str = "drygascon-128-k56";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
     }
 }
 
@@ -10998,6 +10614,120 @@ pub mod drygascon128 {
     }
 }
 
+/// `drygascon128-aead` (aead, tier unverified).
+pub mod drygascon128_aead {
+    /// Registry id.
+    pub const ID: &str = "drygascon128-aead";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `drygascon128-aead-lwc1` (aead, tier unverified).
+pub mod drygascon128_aead_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "drygascon128-aead-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `drygascon128k16` (aead, tier unverified).
 pub mod drygascon128k16 {
     /// Registry id.
@@ -11055,6 +10785,36 @@ pub mod drygascon128k16 {
     }
 }
 
+/// `drygascon256` (hash, tier unverified).
+pub mod drygascon256 {
+    /// Registry id.
+    pub const ID: &str = "drygascon256";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `drygascon256-lwc1` (hash, tier unverified).
+pub mod drygascon256_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "drygascon256-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `drygascon256k32` (aead, tier unverified).
 pub mod drygascon256k32 {
     /// Registry id.
@@ -11109,6 +10869,56 @@ pub mod drygascon256k32 {
         aad: &[u8],
     ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
         crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `earworm-phc` (pwhash, tier unverified).
+pub mod earworm_phc {
+    /// Registry id.
+    pub const ID: &str = "earworm-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
     }
 }
 
@@ -11403,6 +11213,38 @@ pub mod ed448 {
     }
 }
 
+/// `ed448goldilocks` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod ed448goldilocks {
+    /// Registry id.
+    pub const ID: &str = "ed448goldilocks";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
 /// `ed448ph` (sign, tier unverified).
 pub mod ed448ph {
     /// Registry id.
@@ -11650,6 +11492,63 @@ pub mod elephant_jumbo {
     }
 }
 
+/// `elephant160v1` (aead, tier unverified).
+pub mod elephant160v1 {
+    /// Registry id.
+    pub const ID: &str = "elephant160v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `elephant160v2` (aead, tier unverified).
 pub mod elephant160v2 {
     /// Registry id.
@@ -11707,10 +11606,124 @@ pub mod elephant160v2 {
     }
 }
 
+/// `elephant176v1` (aead, tier unverified).
+pub mod elephant176v1 {
+    /// Registry id.
+    pub const ID: &str = "elephant176v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `elephant176v2` (aead, tier unverified).
 pub mod elephant176v2 {
     /// Registry id.
     pub const ID: &str = "elephant176v2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `elephant200v1` (aead, tier unverified).
+pub mod elephant200v1 {
+    /// Registry id.
+    pub const ID: &str = "elephant200v1";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -11836,10 +11849,104 @@ pub mod esch_384 {
     }
 }
 
+/// `esch256v1` (hash, tier unverified).
+pub mod esch256v1 {
+    /// Registry id.
+    pub const ID: &str = "esch256v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `esch256v2` (hash, tier unverified).
 pub mod esch256v2 {
     /// Registry id.
     pub const ID: &str = "esch256v2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `esch384v1` (hash, tier unverified).
+pub mod esch384v1 {
+    /// Registry id.
+    pub const ID: &str = "esch384v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `essence224` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod essence224 {
+    /// Registry id.
+    pub const ID: &str = "essence224";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `essence256` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod essence256 {
+    /// Registry id.
+    pub const ID: &str = "essence256";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `essence384` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod essence384 {
+    /// Registry id.
+    pub const ID: &str = "essence384";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `essence512` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod essence512 {
+    /// Registry id.
+    pub const ID: &str = "essence512";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -12202,6 +12309,48 @@ pub mod ff70 {
     }
 }
 
+/// `firesaber2` (kem, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod firesaber2 {
+    /// Registry id.
+    pub const ID: &str = "firesaber2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen_with(ID, params)
+    }
+    pub fn encapsulate(
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate(ID, pk)
+    }
+    pub fn encapsulate_with(
+        params: &::nextssl_core::Params,
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate_with(ID, params, pk)
+    }
+    pub fn decapsulate(
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate(ID, sk, ct)
+    }
+    pub fn decapsulate_with(
+        params: &::nextssl_core::Params,
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate_with(ID, params, sk, ct)
+    }
+}
+
 /// `fletcher16` (checksum, tier standard).
 pub mod fletcher16 {
     /// Registry id.
@@ -12229,234 +12378,6 @@ pub mod fletcher32 {
     }
     pub fn checksum_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
         crate::checksum_with(ID, params, data)
-    }
-}
-
-/// `flexaead128b064v12` (aead, tier unverified).
-pub mod flexaead128b064v12 {
-    /// Registry id.
-    pub const ID: &str = "flexaead128b064v12";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `flexaead128b128v12` (aead, tier unverified).
-pub mod flexaead128b128v12 {
-    /// Registry id.
-    pub const ID: &str = "flexaead128b128v12";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `flexaead256b128v12` (aead, tier unverified).
-pub mod flexaead256b128v12 {
-    /// Registry id.
-    pub const ID: &str = "flexaead256b128v12";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `flexaead256b256v12` (aead, tier unverified).
-pub mod flexaead256b256v12 {
-    /// Registry id.
-    pub const ID: &str = "flexaead256b256v12";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
     }
 }
 
@@ -13248,6 +13169,57 @@ pub mod gage1h256c512r064 {
     }
 }
 
+/// `gambit-phc` (pwhash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod gambit_phc {
+    /// Registry id.
+    pub const ID: &str = "gambit-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
+    }
+}
+
 /// `ghash` (mac, tier research).
 pub mod ghash {
     /// Registry id.
@@ -13483,6 +13455,63 @@ pub mod gimli24v1 {
     }
 }
 
+/// `gimli24v1-aead` (aead, tier unverified).
+pub mod gimli24v1_aead {
+    /// Registry id.
+    pub const ID: &str = "gimli24v1-aead";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `gost-r-34-11-94` (hash, tier legacy).
 pub mod gost_r_34_11_94 {
     /// Registry id.
@@ -13698,99 +13727,6 @@ pub mod has160 {
     }
     pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
         crate::hash_with(ID, params, data)
-    }
-}
-
-/// `hawk1024-r2` (sign, tier unverified).
-pub mod hawk1024_r2 {
-    /// Registry id.
-    pub const ID: &str = "hawk1024-r2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `hawk256-r2` (sign, tier unverified).
-pub mod hawk256_r2 {
-    /// Registry id.
-    pub const ID: &str = "hawk256-r2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `hawk512-r2` (sign, tier unverified).
-pub mod hawk512_r2 {
-    /// Registry id.
-    pub const ID: &str = "hawk512-r2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
     }
 }
 
@@ -15724,10 +15660,124 @@ pub mod isap_k_128a {
     }
 }
 
+/// `isapa128av20` (aead, tier unverified).
+pub mod isapa128av20 {
+    /// Registry id.
+    pub const ID: &str = "isapa128av20";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `isapa128v20` (aead, tier unverified).
 pub mod isapa128v20 {
     /// Registry id.
     pub const ID: &str = "isapa128v20";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `isapk128av20` (aead, tier unverified).
+pub mod isapk128av20 {
+    /// Registry id.
+    pub const ID: &str = "isapk128av20";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -15956,234 +16006,6 @@ pub mod iscream12v2 {
 pub mod iscream14 {
     /// Registry id.
     pub const ID: &str = "iscream14";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `jambuaes128v2` (aead, tier unverified).
-pub mod jambuaes128v2 {
-    /// Registry id.
-    pub const ID: &str = "jambuaes128v2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `jambusimon128v2` (aead, tier unverified).
-pub mod jambusimon128v2 {
-    /// Registry id.
-    pub const ID: &str = "jambusimon128v2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `jambusimon64v2` (aead, tier unverified).
-pub mod jambusimon64v2 {
-    /// Registry id.
-    pub const ID: &str = "jambusimon64v2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `jambusimon96v2` (aead, tier unverified).
-pub mod jambusimon96v2 {
-    /// Registry id.
-    pub const ID: &str = "jambusimon96v2";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -17724,6 +17546,216 @@ pub mod kiasuneq128 {
     }
 }
 
+/// `kindi256342` (kem, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod kindi256342 {
+    /// Registry id.
+    pub const ID: &str = "kindi256342";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen_with(ID, params)
+    }
+    pub fn encapsulate(
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate(ID, pk)
+    }
+    pub fn encapsulate_with(
+        params: &::nextssl_core::Params,
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate_with(ID, params, pk)
+    }
+    pub fn decapsulate(
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate(ID, sk, ct)
+    }
+    pub fn decapsulate_with(
+        params: &::nextssl_core::Params,
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate_with(ID, params, sk, ct)
+    }
+}
+
+/// `kindi256522` (kem, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod kindi256522 {
+    /// Registry id.
+    pub const ID: &str = "kindi256522";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen_with(ID, params)
+    }
+    pub fn encapsulate(
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate(ID, pk)
+    }
+    pub fn encapsulate_with(
+        params: &::nextssl_core::Params,
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate_with(ID, params, pk)
+    }
+    pub fn decapsulate(
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate(ID, sk, ct)
+    }
+    pub fn decapsulate_with(
+        params: &::nextssl_core::Params,
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate_with(ID, params, sk, ct)
+    }
+}
+
+/// `kindi512222` (kem, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod kindi512222 {
+    /// Registry id.
+    pub const ID: &str = "kindi512222";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen_with(ID, params)
+    }
+    pub fn encapsulate(
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate(ID, pk)
+    }
+    pub fn encapsulate_with(
+        params: &::nextssl_core::Params,
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate_with(ID, params, pk)
+    }
+    pub fn decapsulate(
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate(ID, sk, ct)
+    }
+    pub fn decapsulate_with(
+        params: &::nextssl_core::Params,
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate_with(ID, params, sk, ct)
+    }
+}
+
+/// `kindi512241` (kem, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod kindi512241 {
+    /// Registry id.
+    pub const ID: &str = "kindi512241";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen_with(ID, params)
+    }
+    pub fn encapsulate(
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate(ID, pk)
+    }
+    pub fn encapsulate_with(
+        params: &::nextssl_core::Params,
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate_with(ID, params, pk)
+    }
+    pub fn decapsulate(
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate(ID, sk, ct)
+    }
+    pub fn decapsulate_with(
+        params: &::nextssl_core::Params,
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate_with(ID, params, sk, ct)
+    }
+}
+
+/// `kindi512321` (kem, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod kindi512321 {
+    /// Registry id.
+    pub const ID: &str = "kindi512321";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen_with(ID, params)
+    }
+    pub fn encapsulate(
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate(ID, pk)
+    }
+    pub fn encapsulate_with(
+        params: &::nextssl_core::Params,
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate_with(ID, params, pk)
+    }
+    pub fn decapsulate(
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate(ID, sk, ct)
+    }
+    pub fn decapsulate_with(
+        params: &::nextssl_core::Params,
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate_with(ID, params, sk, ct)
+    }
+}
+
 /// `kmac128` (mac, tier standard).
 pub mod kmac128 {
     /// Registry id.
@@ -18148,6 +18180,376 @@ pub mod knot_hash_512_512 {
     }
 }
 
+/// `knot128v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot128v1 {
+    /// Registry id.
+    pub const ID: &str = "knot128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `knot128v1-lwc1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot128v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "knot128v1-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `knot128v2` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot128v2 {
+    /// Registry id.
+    pub const ID: &str = "knot128v2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `knot192` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot192 {
+    /// Registry id.
+    pub const ID: &str = "knot192";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `knot256` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot256 {
+    /// Registry id.
+    pub const ID: &str = "knot256";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `knot256v1` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot256v1 {
+    /// Registry id.
+    pub const ID: &str = "knot256v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `knot256v1-lwc1` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot256v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "knot256v1-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `knot256v2` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot256v2 {
+    /// Registry id.
+    pub const ID: &str = "knot256v2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `knot384` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot384 {
+    /// Registry id.
+    pub const ID: &str = "knot384";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `knot512` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod knot512 {
+    /// Registry id.
+    pub const ID: &str = "knot512";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `kupyna` (hash, tier unverified).
 pub mod kupyna {
     /// Registry id.
@@ -18444,174 +18846,54 @@ pub mod kyber768_r3 {
     }
 }
 
-/// `laemsimon128v1` (aead, tier unverified).
-pub mod laemsimon128v1 {
+/// `lanarea-phc` (pwhash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lanarea_phc {
     /// Registry id.
-    pub const ID: &str = "laemsimon128v1";
+    pub const ID: &str = "lanarea-phc";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
     }
-    pub fn seal_with(
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
         params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
     }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
     }
-    pub fn open_with(
+    pub fn verify_with(
         params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
     ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+        crate::password_derive(ID, password, salt, out_len)
     }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `laemsimon192v1` (aead, tier unverified).
-pub mod laemsimon192v1 {
-    /// Registry id.
-    pub const ID: &str = "laemsimon192v1";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
+    pub fn derive_with(
         params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
     ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `laemsimon256v1` (aead, tier unverified).
-pub mod laemsimon256v1 {
-    /// Registry id.
-    pub const ID: &str = "laemsimon256v1";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
+        crate::password_derive_with(ID, params, password, salt, out_len)
     }
 }
 
@@ -18885,6 +19167,744 @@ pub mod lex {
         data: &mut [u8],
     ) -> crate::Result<()> {
         crate::stream_apply_with(ID, params, key, nonce, data)
+    }
+}
+
+/// `lightsaber2` (kem, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lightsaber2 {
+    /// Registry id.
+    pub const ID: &str = "lightsaber2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen_with(ID, params)
+    }
+    pub fn encapsulate(
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate(ID, pk)
+    }
+    pub fn encapsulate_with(
+        params: &::nextssl_core::Params,
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate_with(ID, params, pk)
+    }
+    pub fn decapsulate(
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate(ID, sk, ct)
+    }
+    pub fn decapsulate_with(
+        params: &::nextssl_core::Params,
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate_with(ID, params, sk, ct)
+    }
+}
+
+/// `lilliputaei128v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaei128v1 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaei128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaei128v11` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaei128v11 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaei128v11";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaei192v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaei192v1 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaei192v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaei192v11` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaei192v11 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaei192v11";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaei256v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaei256v1 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaei256v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaei256v11` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaei256v11 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaei256v11";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaeii128v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaeii128v1 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaeii128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaeii128v11` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaeii128v11 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaeii128v11";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaeii192v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaeii192v1 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaeii192v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaeii192v11` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaeii192v11 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaeii192v11";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaeii256v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaeii256v1 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaeii256v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `lilliputaeii256v11` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod lilliputaeii256v11 {
+    /// Registry id.
+    pub const ID: &str = "lilliputaeii256v11";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
     }
 }
 
@@ -19238,6 +20258,56 @@ pub mod luffa512 {
     }
     pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
         crate::hash_with(ID, params, data)
+    }
+}
+
+/// `lyra2-phc` (pwhash, tier unverified).
+pub mod lyra2_phc {
+    /// Registry id.
+    pub const ID: &str = "lyra2-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
     }
 }
 
@@ -19901,45 +20971,6 @@ pub mod md6d512 {
     }
 }
 
-/// `mercy-6` (blockmode, tier unverified).
-pub mod mercy_6 {
-    /// Registry id.
-    pub const ID: &str = "mercy-6";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        data: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::blockmode_encrypt(ID, key, nonce, data)
-    }
-    pub fn encrypt_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        data: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::blockmode_encrypt_with(ID, params, key, nonce, data)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        data: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::blockmode_decrypt(ID, key, nonce, data)
-    }
-    pub fn decrypt_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        data: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::blockmode_decrypt_with(ID, params, key, nonce, data)
-    }
-}
-
 /// `metrohash` (checksum, tier unverified).
 pub mod metrohash {
     /// Registry id.
@@ -20342,63 +21373,6 @@ pub mod morus1280256 {
     }
 }
 
-/// `morus640128v2` (aead, tier unverified).
-pub mod morus640128v2 {
-    /// Registry id.
-    pub const ID: &str = "morus640128v2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
 /// `mqdss48` (sign, tier unverified).
 pub mod mqdss48 {
     /// Registry id.
@@ -20434,750 +21408,6 @@ pub mod mqdss48 {
 pub mod mqdss64 {
     /// Registry id.
     pub const ID: &str = "mqdss64";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat1gf16fastr3` (sign, tier unverified).
-pub mod mqom2cat1gf16fastr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat1gf16fastr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat1gf16fastr5` (sign, tier unverified).
-pub mod mqom2cat1gf16fastr5 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat1gf16fastr5";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat1gf16shortr3` (sign, tier unverified).
-pub mod mqom2cat1gf16shortr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat1gf16shortr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat1gf16shortr5` (sign, tier unverified).
-pub mod mqom2cat1gf16shortr5 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat1gf16shortr5";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat1gf256fastr3` (sign, tier unverified).
-pub mod mqom2cat1gf256fastr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat1gf256fastr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat1gf256shortr3` (sign, tier unverified).
-pub mod mqom2cat1gf256shortr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat1gf256shortr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat1gf2fastr3` (sign, tier unverified).
-pub mod mqom2cat1gf2fastr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat1gf2fastr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat1gf2shortr3` (sign, tier unverified).
-pub mod mqom2cat1gf2shortr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat1gf2shortr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat3gf16fastr3` (sign, tier unverified).
-pub mod mqom2cat3gf16fastr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat3gf16fastr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat3gf16fastr5` (sign, tier unverified).
-pub mod mqom2cat3gf16fastr5 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat3gf16fastr5";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat3gf16shortr3` (sign, tier unverified).
-pub mod mqom2cat3gf16shortr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat3gf16shortr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat3gf16shortr5` (sign, tier unverified).
-pub mod mqom2cat3gf16shortr5 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat3gf16shortr5";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat3gf256fastr3` (sign, tier unverified).
-pub mod mqom2cat3gf256fastr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat3gf256fastr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat3gf256shortr3` (sign, tier unverified).
-pub mod mqom2cat3gf256shortr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat3gf256shortr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat3gf2fastr3` (sign, tier unverified).
-pub mod mqom2cat3gf2fastr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat3gf2fastr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat3gf2shortr3` (sign, tier unverified).
-pub mod mqom2cat3gf2shortr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat3gf2shortr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat5gf16fastr3` (sign, tier unverified).
-pub mod mqom2cat5gf16fastr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat5gf16fastr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat5gf16fastr5` (sign, tier unverified).
-pub mod mqom2cat5gf16fastr5 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat5gf16fastr5";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat5gf16shortr3` (sign, tier unverified).
-pub mod mqom2cat5gf16shortr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat5gf16shortr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat5gf16shortr5` (sign, tier unverified).
-pub mod mqom2cat5gf16shortr5 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat5gf16shortr5";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat5gf256fastr3` (sign, tier unverified).
-pub mod mqom2cat5gf256fastr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat5gf256fastr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat5gf256shortr3` (sign, tier unverified).
-pub mod mqom2cat5gf256shortr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat5gf256shortr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat5gf2fastr3` (sign, tier unverified).
-pub mod mqom2cat5gf2fastr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat5gf2fastr3";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `mqom2cat5gf2shortr3` (sign, tier unverified).
-pub mod mqom2cat5gf2shortr3 {
-    /// Registry id.
-    pub const ID: &str = "mqom2cat5gf2shortr3";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -22363,6 +22593,57 @@ pub mod ntruplus864 {
     }
 }
 
+/// `omegacrypt-phc` (pwhash, tier unverified).
+#[cfg(feature = "copyleft")]
+pub mod omegacrypt_phc {
+    /// Registry id.
+    pub const ID: &str = "omegacrypt-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
+    }
+}
+
 /// `opaque-ristretto255-sha512` (pake, tier unverified).
 #[cfg(feature = "opaque-ke")]
 pub mod opaque_ristretto255_sha512 {
@@ -22693,6 +22974,234 @@ pub mod oribatida_256 {
     }
 }
 
+/// `oribatida192v11` (aead, tier unverified).
+pub mod oribatida192v11 {
+    /// Registry id.
+    pub const ID: &str = "oribatida192v11";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `oribatida192v12` (aead, tier unverified).
+pub mod oribatida192v12 {
+    /// Registry id.
+    pub const ID: &str = "oribatida192v12";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `oribatida256v11` (aead, tier unverified).
+pub mod oribatida256v11 {
+    /// Registry id.
+    pub const ID: &str = "oribatida256v11";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `oribatida256v12` (aead, tier unverified).
+pub mod oribatida256v12 {
+    /// Registry id.
+    pub const ID: &str = "oribatida256v12";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `os-entropy` (rng, tier safe).
 pub mod os_entropy {
     /// Registry id.
@@ -22700,6 +23209,288 @@ pub mod os_entropy {
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+}
+
+/// `paefforkskinnyb128t192n48v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod paefforkskinnyb128t192n48v1 {
+    /// Registry id.
+    pub const ID: &str = "paefforkskinnyb128t192n48v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `paefforkskinnyb128t256n112v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod paefforkskinnyb128t256n112v1 {
+    /// Registry id.
+    pub const ID: &str = "paefforkskinnyb128t256n112v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `paefforkskinnyb128t288n104v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod paefforkskinnyb128t288n104v1 {
+    /// Registry id.
+    pub const ID: &str = "paefforkskinnyb128t288n104v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `paefforkskinnyb64t192n48v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod paefforkskinnyb64t192n48v1 {
+    /// Registry id.
+    pub const ID: &str = "paefforkskinnyb64t192n48v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `parallel-phc` (pwhash, tier unverified).
+pub mod parallel_phc {
+    /// Registry id.
+    pub const ID: &str = "parallel-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
+    }
 }
 
 /// `parallelhash128` (hash, tier standard).
@@ -23266,6 +24057,120 @@ pub mod photon_beetle_hash {
     }
 }
 
+/// `photonbeetleaead128rate128v1` (aead, tier unverified).
+pub mod photonbeetleaead128rate128v1 {
+    /// Registry id.
+    pub const ID: &str = "photonbeetleaead128rate128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `photonbeetleaead128rate32v1` (aead, tier unverified).
+pub mod photonbeetleaead128rate32v1 {
+    /// Registry id.
+    pub const ID: &str = "photonbeetleaead128rate32v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `photonbeetlehash256rate32v1` (hash, tier unverified).
 pub mod photonbeetlehash256rate32v1 {
     /// Registry id.
@@ -23312,6 +24217,56 @@ pub mod poly1305 {
         tag: &[u8],
     ) -> crate::Result<bool> {
         crate::mac_verify_with(ID, params, key, data, tag)
+    }
+}
+
+/// `pomelo-phc` (pwhash, tier unverified).
+pub mod pomelo_phc {
+    /// Registry id.
+    pub const ID: &str = "pomelo-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
     }
 }
 
@@ -23555,120 +24510,6 @@ pub mod pride {
     }
 }
 
-/// `proest128apev1` (aead, tier unverified).
-pub mod proest128apev1 {
-    /// Registry id.
-    pub const ID: &str = "proest128apev1";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `proest256apev1` (aead, tier unverified).
-pub mod proest256apev1 {
-    /// Registry id.
-    pub const ID: &str = "proest256apev1";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
 /// `pyjamask` (aead, tier research).
 pub mod pyjamask {
     /// Registry id.
@@ -23897,345 +24738,163 @@ pub mod pyjamask96aeadv1 {
     }
 }
 
-/// `qameleon128128128tcgpv1` (aead, tier unverified).
-pub mod qameleon128128128tcgpv1 {
+/// `qtesla1` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod qtesla1 {
     /// Registry id.
-    pub const ID: &str = "qameleon128128128tcgpv1";
+    pub const ID: &str = "qtesla1";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
     }
-    pub fn seal_with(
+    pub fn keygen_with(
         params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
     }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
         aad: &[u8],
     ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
+        crate::sign(ID, sk, message, aad)
     }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
         envelope: &[u8],
         aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
     }
 }
 
-/// `qameleon12812864gpv1` (aead, tier unverified).
-pub mod qameleon12812864gpv1 {
+/// `qtesla1p` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod qtesla1p {
     /// Registry id.
-    pub const ID: &str = "qameleon12812864gpv1";
+    pub const ID: &str = "qtesla1p";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
     }
-    pub fn seal_with(
+    pub fn keygen_with(
         params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
     }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
         aad: &[u8],
     ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
+        crate::sign(ID, sk, message, aad)
     }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
         envelope: &[u8],
         aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
     }
 }
 
-/// `qameleon12812896gpv1` (aead, tier unverified).
-pub mod qameleon12812896gpv1 {
+/// `qtesla3f` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod qtesla3f {
     /// Registry id.
-    pub const ID: &str = "qameleon12812896gpv1";
+    pub const ID: &str = "qtesla3f";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
     }
-    pub fn seal_with(
+    pub fn keygen_with(
         params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
     }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
         aad: &[u8],
     ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
+        crate::sign(ID, sk, message, aad)
     }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
         envelope: &[u8],
         aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
     }
 }
 
-/// `qameleon1286464mev1` (aead, tier unverified).
-pub mod qameleon1286464mev1 {
+/// `qtesla3p` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod qtesla3p {
     /// Registry id.
-    pub const ID: &str = "qameleon1286464mev1";
+    pub const ID: &str = "qtesla3p";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
     }
-    pub fn seal_with(
+    pub fn keygen_with(
         params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
     }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
         aad: &[u8],
     ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
+        crate::sign(ID, sk, message, aad)
     }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
         envelope: &[u8],
         aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
     }
 }
 
-/// `qameleon6464nnmev1` (aead, tier unverified).
-pub mod qameleon6464nnmev1 {
+/// `qtesla3s` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod qtesla3s {
     /// Registry id.
-    pub const ID: &str = "qameleon6464nnmev1";
+    pub const ID: &str = "qtesla3s";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
     }
-    pub fn seal_with(
+    pub fn keygen_with(
         params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
     }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
         aad: &[u8],
     ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
+        crate::sign(ID, sk, message, aad)
     }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
         envelope: &[u8],
         aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `qameleon6464tcmev1` (aead, tier unverified).
-pub mod qameleon6464tcmev1 {
-    /// Registry id.
-    pub const ID: &str = "qameleon6464tcmev1";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
     ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
+        crate::verify(ID, pk, envelope, aad)
     }
 }
 
@@ -24806,6 +25465,57 @@ pub mod remusn3v1 {
     }
 }
 
+/// `rig-phc` (pwhash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod rig_phc {
+    /// Registry id.
+    pub const ID: &str = "rig-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
+    }
+}
+
 /// `ripemd128` (hash, tier legacy).
 pub mod ripemd128 {
     /// Registry id.
@@ -25223,10 +25933,368 @@ pub mod romulus_n3 {
     }
 }
 
+/// `romulush` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod romulush {
+    /// Registry id.
+    pub const ID: &str = "romulush";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `romulusm` (aead, tier unverified).
 pub mod romulusm {
     /// Registry id.
     pub const ID: &str = "romulusm";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusm1v1` (aead, tier unverified).
+pub mod romulusm1v1 {
+    /// Registry id.
+    pub const ID: &str = "romulusm1v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusm1v12` (aead, tier unverified).
+pub mod romulusm1v12 {
+    /// Registry id.
+    pub const ID: &str = "romulusm1v12";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusm2v1` (aead, tier unverified).
+pub mod romulusm2v1 {
+    /// Registry id.
+    pub const ID: &str = "romulusm2v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusm2v12` (aead, tier unverified).
+pub mod romulusm2v12 {
+    /// Registry id.
+    pub const ID: &str = "romulusm2v12";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusm3v1` (aead, tier unverified).
+pub mod romulusm3v1 {
+    /// Registry id.
+    pub const ID: &str = "romulusm3v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusm3v12` (aead, tier unverified).
+pub mod romulusm3v12 {
+    /// Registry id.
+    pub const ID: &str = "romulusm3v12";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -25341,6 +26409,291 @@ pub mod romulusn {
 pub mod romulusn1v1 {
     /// Registry id.
     pub const ID: &str = "romulusn1v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusn1v12` (aead, tier unverified).
+pub mod romulusn1v12 {
+    /// Registry id.
+    pub const ID: &str = "romulusn1v12";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusn2v1` (aead, tier unverified).
+pub mod romulusn2v1 {
+    /// Registry id.
+    pub const ID: &str = "romulusn2v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusn2v12` (aead, tier unverified).
+pub mod romulusn2v12 {
+    /// Registry id.
+    pub const ID: &str = "romulusn2v12";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusn3v1` (aead, tier unverified).
+pub mod romulusn3v1 {
+    /// Registry id.
+    pub const ID: &str = "romulusn3v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `romulusn3v12` (aead, tier unverified).
+pub mod romulusn3v12 {
+    /// Registry id.
+    pub const ID: &str = "romulusn3v12";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -25766,6 +27119,48 @@ pub mod rsa_pkcs1v15_enc_4096 {
         label: &[u8],
     ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
         crate::pke_decrypt_with(ID, params, sk, ct, label)
+    }
+}
+
+/// `saber2` (kem, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod saber2 {
+    /// Registry id.
+    pub const ID: &str = "saber2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::kem_keygen_with(ID, params)
+    }
+    pub fn encapsulate(
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate(ID, pk)
+    }
+    pub fn encapsulate_with(
+        params: &::nextssl_core::Params,
+        pk: &::nextssl_core::PublicKey,
+    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
+        crate::kem_encapsulate_with(ID, params, pk)
+    }
+    pub fn decapsulate(
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate(ID, sk, ct)
+    }
+    pub fn decapsulate_with(
+        params: &::nextssl_core::Params,
+        sk: &::nextssl_core::PrivateKey,
+        ct: &::nextssl_core::Ciphertext,
+    ) -> crate::Result<::nextssl_core::SharedSecret> {
+        crate::kem_decapsulate_with(ID, params, sk, ct)
     }
 }
 
@@ -26453,6 +27848,122 @@ pub mod saeaes256a64t64 {
     }
 }
 
+/// `saefforkskinnyb128t192n56v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod saefforkskinnyb128t192n56v1 {
+    /// Registry id.
+    pub const ID: &str = "saefforkskinnyb128t192n56v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `saefforkskinnyb128t256n120v1` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod saefforkskinnyb128t256n120v1 {
+    /// Registry id.
+    pub const ID: &str = "saefforkskinnyb128t256n120v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `safer-k128` (blockcipher, tier unverified).
 pub mod safer_k128 {
     /// Registry id.
@@ -26859,6 +28370,21 @@ pub mod saturninctrcascadev2 {
     }
 }
 
+/// `saturninhashv2` (hash, tier unverified).
+pub mod saturninhashv2 {
+    /// Registry id.
+    pub const ID: &str = "saturninhashv2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `schnorr-bip340` (sign, tier standard).
 pub mod schnorr_bip340 {
     /// Registry id.
@@ -26887,6 +28413,56 @@ pub mod schnorr_bip340 {
         aad: &[u8],
     ) -> crate::Result<Vec<u8>> {
         crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `schvrch-phc` (pwhash, tier unverified).
+pub mod schvrch_phc {
+    /// Registry id.
+    pub const ID: &str = "schvrch-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
     }
 }
 
@@ -27061,10 +28637,238 @@ pub mod schwaemm_256_256 {
     }
 }
 
+/// `schwaemm128128v1` (aead, tier unverified).
+pub mod schwaemm128128v1 {
+    /// Registry id.
+    pub const ID: &str = "schwaemm128128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `schwaemm192192v1` (aead, tier unverified).
+pub mod schwaemm192192v1 {
+    /// Registry id.
+    pub const ID: &str = "schwaemm192192v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `schwaemm256128v1` (aead, tier unverified).
+pub mod schwaemm256128v1 {
+    /// Registry id.
+    pub const ID: &str = "schwaemm256128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `schwaemm256128v2` (aead, tier unverified).
 pub mod schwaemm256128v2 {
     /// Registry id.
     pub const ID: &str = "schwaemm256128v2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `schwaemm256256v1` (aead, tier unverified).
+pub mod schwaemm256256v1 {
+    /// Registry id.
+    pub const ID: &str = "schwaemm256256v1";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -27952,6 +29756,21 @@ pub mod shake256 {
     }
 }
 
+/// `shamashashv1` (hash, tier unverified).
+pub mod shamashashv1 {
+    /// Registry id.
+    pub const ID: &str = "shamashashv1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `shamashv1` (aead, tier unverified).
 pub mod shamashv1 {
     /// Registry id.
@@ -28070,10 +29889,11 @@ pub mod shavite3512 {
     }
 }
 
-/// `shellaes128v2d4n64` (aead, tier unverified).
-pub mod shellaes128v2d4n64 {
+/// `shellaes128v1d4n64` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d4n64 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d4n64";
+    pub const ID: &str = "shellaes128v1d4n64";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28127,10 +29947,11 @@ pub mod shellaes128v2d4n64 {
     }
 }
 
-/// `shellaes128v2d4n80` (aead, tier unverified).
-pub mod shellaes128v2d4n80 {
+/// `shellaes128v1d4n80` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d4n80 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d4n80";
+    pub const ID: &str = "shellaes128v1d4n80";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28184,10 +30005,11 @@ pub mod shellaes128v2d4n80 {
     }
 }
 
-/// `shellaes128v2d5n64` (aead, tier unverified).
-pub mod shellaes128v2d5n64 {
+/// `shellaes128v1d5n64` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d5n64 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d5n64";
+    pub const ID: &str = "shellaes128v1d5n64";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28241,10 +30063,11 @@ pub mod shellaes128v2d5n64 {
     }
 }
 
-/// `shellaes128v2d5n80` (aead, tier unverified).
-pub mod shellaes128v2d5n80 {
+/// `shellaes128v1d5n80` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d5n80 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d5n80";
+    pub const ID: &str = "shellaes128v1d5n80";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28298,10 +30121,11 @@ pub mod shellaes128v2d5n80 {
     }
 }
 
-/// `shellaes128v2d6n64` (aead, tier unverified).
-pub mod shellaes128v2d6n64 {
+/// `shellaes128v1d6n64` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d6n64 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d6n64";
+    pub const ID: &str = "shellaes128v1d6n64";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28355,10 +30179,11 @@ pub mod shellaes128v2d6n64 {
     }
 }
 
-/// `shellaes128v2d6n80` (aead, tier unverified).
-pub mod shellaes128v2d6n80 {
+/// `shellaes128v1d6n80` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d6n80 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d6n80";
+    pub const ID: &str = "shellaes128v1d6n80";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28412,10 +30237,11 @@ pub mod shellaes128v2d6n80 {
     }
 }
 
-/// `shellaes128v2d7n64` (aead, tier unverified).
-pub mod shellaes128v2d7n64 {
+/// `shellaes128v1d7n64` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d7n64 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d7n64";
+    pub const ID: &str = "shellaes128v1d7n64";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28469,10 +30295,11 @@ pub mod shellaes128v2d7n64 {
     }
 }
 
-/// `shellaes128v2d7n80` (aead, tier unverified).
-pub mod shellaes128v2d7n80 {
+/// `shellaes128v1d7n80` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d7n80 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d7n80";
+    pub const ID: &str = "shellaes128v1d7n80";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28526,10 +30353,11 @@ pub mod shellaes128v2d7n80 {
     }
 }
 
-/// `shellaes128v2d8n64` (aead, tier unverified).
-pub mod shellaes128v2d8n64 {
+/// `shellaes128v1d8n64` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d8n64 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d8n64";
+    pub const ID: &str = "shellaes128v1d8n64";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28583,10 +30411,11 @@ pub mod shellaes128v2d8n64 {
     }
 }
 
-/// `shellaes128v2d8n80` (aead, tier unverified).
-pub mod shellaes128v2d8n80 {
+/// `shellaes128v1d8n80` (aead, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod shellaes128v1d8n80 {
     /// Registry id.
-    pub const ID: &str = "shellaes128v2d8n80";
+    pub const ID: &str = "shellaes128v1d8n80";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -28781,177 +30610,6 @@ pub mod simd512 {
     }
     pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
         crate::hash_with(ID, params, data)
-    }
-}
-
-/// `simonjambu128v2` (aead, tier unverified).
-pub mod simonjambu128v2 {
-    /// Registry id.
-    pub const ID: &str = "simonjambu128v2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `simonjambu64v2` (aead, tier unverified).
-pub mod simonjambu64v2 {
-    /// Registry id.
-    pub const ID: &str = "simonjambu64v2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `simonjambu96v2` (aead, tier unverified).
-pub mod simonjambu96v2 {
-    /// Registry id.
-    pub const ID: &str = "simonjambu96v2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
     }
 }
 
@@ -29365,6 +31023,150 @@ pub mod siphash_4_8 {
     }
 }
 
+/// `sivrijndael256aead128v1` (aead, tier unverified).
+pub mod sivrijndael256aead128v1 {
+    /// Registry id.
+    pub const ID: &str = "sivrijndael256aead128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `sivrijndael256hash256v1` (hash, tier unverified).
+pub mod sivrijndael256hash256v1 {
+    /// Registry id.
+    pub const ID: &str = "sivrijndael256hash256v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `sivtemphotonaeadv1` (aead, tier unverified).
+pub mod sivtemphotonaeadv1 {
+    /// Registry id.
+    pub const ID: &str = "sivtemphotonaeadv1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `sivtemphotonhashv1` (hash, tier unverified).
+pub mod sivtemphotonhashv1 {
+    /// Registry id.
+    pub const ID: &str = "sivtemphotonhashv1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `skein1024` (hash, tier legacy).
 pub mod skein1024 {
     /// Registry id.
@@ -29399,6 +31201,38 @@ pub mod skein256 {
 pub mod skein512 {
     /// Registry id.
     pub const ID: &str = "skein512";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `skein512256` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod skein512256 {
+    /// Registry id.
+    pub const ID: &str = "skein512256";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `skein512512` (hash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod skein512512 {
+    /// Registry id.
+    pub const ID: &str = "skein512512";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -31346,10 +33180,1276 @@ pub mod sphincs_shake_256s_simple {
     }
 }
 
+/// `sphincsf128harakarobust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf128harakarobust {
+    /// Registry id.
+    pub const ID: &str = "sphincsf128harakarobust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf128harakasimple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf128harakasimple {
+    /// Registry id.
+    pub const ID: &str = "sphincsf128harakasimple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf128sha256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf128sha256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincsf128sha256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf128sha256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf128sha256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincsf128sha256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf128shake256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf128shake256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincsf128shake256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf128shake256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf128shake256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincsf128shake256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf192harakarobust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf192harakarobust {
+    /// Registry id.
+    pub const ID: &str = "sphincsf192harakarobust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf192harakasimple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf192harakasimple {
+    /// Registry id.
+    pub const ID: &str = "sphincsf192harakasimple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf192sha256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf192sha256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincsf192sha256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf192sha256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf192sha256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincsf192sha256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf192shake256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf192shake256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincsf192shake256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf192shake256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf192shake256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincsf192shake256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf256harakarobust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf256harakarobust {
+    /// Registry id.
+    pub const ID: &str = "sphincsf256harakarobust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf256harakasimple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf256harakasimple {
+    /// Registry id.
+    pub const ID: &str = "sphincsf256harakasimple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf256sha256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf256sha256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincsf256sha256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf256sha256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf256sha256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincsf256sha256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf256shake256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf256shake256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincsf256shake256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincsf256shake256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincsf256shake256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincsf256shake256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss128harakarobust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss128harakarobust {
+    /// Registry id.
+    pub const ID: &str = "sphincss128harakarobust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss128harakasimple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss128harakasimple {
+    /// Registry id.
+    pub const ID: &str = "sphincss128harakasimple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss128sha256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss128sha256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincss128sha256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss128sha256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss128sha256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincss128sha256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss128shake256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss128shake256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincss128shake256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss128shake256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss128shake256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincss128shake256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss192harakarobust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss192harakarobust {
+    /// Registry id.
+    pub const ID: &str = "sphincss192harakarobust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss192harakasimple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss192harakasimple {
+    /// Registry id.
+    pub const ID: &str = "sphincss192harakasimple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss192sha256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss192sha256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincss192sha256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss192sha256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss192sha256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincss192sha256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss192shake256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss192shake256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincss192shake256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss192shake256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss192shake256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincss192shake256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss256harakarobust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss256harakarobust {
+    /// Registry id.
+    pub const ID: &str = "sphincss256harakarobust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss256harakasimple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss256harakasimple {
+    /// Registry id.
+    pub const ID: &str = "sphincss256harakasimple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss256sha256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss256sha256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincss256sha256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss256sha256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss256sha256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincss256sha256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss256shake256robust` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss256shake256robust {
+    /// Registry id.
+    pub const ID: &str = "sphincss256shake256robust";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
+/// `sphincss256shake256simple` (sign, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod sphincss256shake256simple {
+    /// Registry id.
+    pub const ID: &str = "sphincss256shake256simple";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen(ID)
+    }
+    pub fn keygen_with(
+        params: &::nextssl_core::Params,
+    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
+        crate::sign_keygen_with(ID, params)
+    }
+    pub fn sign(
+        sk: &::nextssl_core::PrivateKey,
+        message: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::sign(ID, sk, message, aad)
+    }
+    pub fn verify(
+        pk: &::nextssl_core::PublicKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::verify(ID, pk, envelope, aad)
+    }
+}
+
 /// `spix` (aead, tier research).
 pub mod spix {
     /// Registry id.
     pub const ID: &str = "spix";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `spix128v1` (aead, tier unverified).
+pub mod spix128v1 {
+    /// Registry id.
+    pub const ID: &str = "spix128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `spix128v1-lwc1` (aead, tier unverified).
+pub mod spix128v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "spix128v1-lwc1";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -31536,6 +34636,234 @@ pub mod spoc_64 {
     }
 }
 
+/// `spoc128sliscplight256v1` (aead, tier unverified).
+pub mod spoc128sliscplight256v1 {
+    /// Registry id.
+    pub const ID: &str = "spoc128sliscplight256v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `spoc128sliscplight256v1-lwc1` (aead, tier unverified).
+pub mod spoc128sliscplight256v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "spoc128sliscplight256v1-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `spoc64sliscplight192v1` (aead, tier unverified).
+pub mod spoc64sliscplight192v1 {
+    /// Registry id.
+    pub const ID: &str = "spoc64sliscplight192v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `spoc64sliscplight192v1-lwc1` (aead, tier unverified).
+pub mod spoc64sliscplight192v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "spoc64sliscplight192v1-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `spook` (aead, tier research).
 pub mod spook {
     /// Registry id.
@@ -31650,10 +34978,181 @@ pub mod spook_su {
     }
 }
 
+/// `spook128mu384v1` (aead, tier unverified).
+pub mod spook128mu384v1 {
+    /// Registry id.
+    pub const ID: &str = "spook128mu384v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `spook128mu384v1-lwc1` (aead, tier unverified).
+pub mod spook128mu384v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "spook128mu384v1-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `spook128mu384v2` (aead, tier unverified).
 pub mod spook128mu384v2 {
     /// Registry id.
     pub const ID: &str = "spook128mu384v2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `spook128mu512v1` (aead, tier unverified).
+pub mod spook128mu512v1 {
+    /// Registry id.
+    pub const ID: &str = "spook128mu512v1";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -31764,10 +35263,181 @@ pub mod spook128mu512v2 {
     }
 }
 
+/// `spook128su384v1` (aead, tier unverified).
+pub mod spook128su384v1 {
+    /// Registry id.
+    pub const ID: &str = "spook128su384v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `spook128su384v1-lwc1` (aead, tier unverified).
+pub mod spook128su384v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "spook128su384v1-lwc1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `spook128su384v2` (aead, tier unverified).
 pub mod spook128su384v2 {
     /// Registry id.
     pub const ID: &str = "spook128su384v2";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `spook128su512v1` (aead, tier unverified).
+pub mod spook128su512v1 {
+    /// Registry id.
+    pub const ID: &str = "spook128su512v1";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -31890,99 +35560,6 @@ pub mod spookyhash {
     }
     pub fn checksum_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
         crate::checksum_with(ID, params, data)
-    }
-}
-
-/// `sqisign-lvl1-r2` (sign, tier unverified).
-pub mod sqisign_lvl1_r2 {
-    /// Registry id.
-    pub const ID: &str = "sqisign-lvl1-r2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `sqisign-lvl3-r2` (sign, tier unverified).
-pub mod sqisign_lvl3_r2 {
-    /// Registry id.
-    pub const ID: &str = "sqisign-lvl3-r2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
-    }
-}
-
-/// `sqisign-lvl5-r2` (sign, tier unverified).
-pub mod sqisign_lvl5_r2 {
-    /// Registry id.
-    pub const ID: &str = "sqisign-lvl5-r2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::sign_keygen_with(ID, params)
-    }
-    pub fn sign(
-        sk: &::nextssl_core::PrivateKey,
-        message: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::sign(ID, sk, message, aad)
-    }
-    pub fn verify(
-        pk: &::nextssl_core::PublicKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::verify(ID, pk, envelope, aad)
     }
 }
 
@@ -32257,6 +35834,78 @@ pub mod subterranean {
 pub mod subterranean_hash {
     /// Registry id.
     pub const ID: &str = "subterranean-hash";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
+/// `subterraneanv1` (aead, tier unverified).
+pub mod subterraneanv1 {
+    /// Registry id.
+    pub const ID: &str = "subterraneanv1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `subterraneanv1-hash` (hash, tier unverified).
+pub mod subterraneanv1_hash {
+    /// Registry id.
+    pub const ID: &str = "subterraneanv1-hash";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -32724,6 +36373,135 @@ pub mod sundaegift96v1 {
     }
 }
 
+/// `syconaer64128v1` (aead, tier unverified).
+pub mod syconaer64128v1 {
+    /// Registry id.
+    pub const ID: &str = "syconaer64128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `syconaer96128v1` (aead, tier unverified).
+pub mod syconaer96128v1 {
+    /// Registry id.
+    pub const ID: &str = "syconaer96128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `syconhash256v1` (hash, tier unverified).
+pub mod syconhash256v1 {
+    /// Registry id.
+    pub const ID: &str = "syconhash256v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `tango642` (streamcipher, tier unverified).
 pub mod tango642 {
     /// Registry id.
@@ -33087,47 +36865,6 @@ pub mod threebears1248r2cca {
     }
 }
 
-/// `threebears1248r2cpa` (kem, tier unverified).
-pub mod threebears1248r2cpa {
-    /// Registry id.
-    pub const ID: &str = "threebears1248r2cpa";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::kem_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::kem_keygen_with(ID, params)
-    }
-    pub fn encapsulate(
-        pk: &::nextssl_core::PublicKey,
-    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
-        crate::kem_encapsulate(ID, pk)
-    }
-    pub fn encapsulate_with(
-        params: &::nextssl_core::Params,
-        pk: &::nextssl_core::PublicKey,
-    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
-        crate::kem_encapsulate_with(ID, params, pk)
-    }
-    pub fn decapsulate(
-        sk: &::nextssl_core::PrivateKey,
-        ct: &::nextssl_core::Ciphertext,
-    ) -> crate::Result<::nextssl_core::SharedSecret> {
-        crate::kem_decapsulate(ID, sk, ct)
-    }
-    pub fn decapsulate_with(
-        params: &::nextssl_core::Params,
-        sk: &::nextssl_core::PrivateKey,
-        ct: &::nextssl_core::Ciphertext,
-    ) -> crate::Result<::nextssl_core::SharedSecret> {
-        crate::kem_decapsulate_with(ID, params, sk, ct)
-    }
-}
-
 /// `threebears624r2cca` (kem, tier unverified).
 pub mod threebears624r2cca {
     /// Registry id.
@@ -33169,92 +36906,10 @@ pub mod threebears624r2cca {
     }
 }
 
-/// `threebears624r2cpa` (kem, tier unverified).
-pub mod threebears624r2cpa {
-    /// Registry id.
-    pub const ID: &str = "threebears624r2cpa";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::kem_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::kem_keygen_with(ID, params)
-    }
-    pub fn encapsulate(
-        pk: &::nextssl_core::PublicKey,
-    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
-        crate::kem_encapsulate(ID, pk)
-    }
-    pub fn encapsulate_with(
-        params: &::nextssl_core::Params,
-        pk: &::nextssl_core::PublicKey,
-    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
-        crate::kem_encapsulate_with(ID, params, pk)
-    }
-    pub fn decapsulate(
-        sk: &::nextssl_core::PrivateKey,
-        ct: &::nextssl_core::Ciphertext,
-    ) -> crate::Result<::nextssl_core::SharedSecret> {
-        crate::kem_decapsulate(ID, sk, ct)
-    }
-    pub fn decapsulate_with(
-        params: &::nextssl_core::Params,
-        sk: &::nextssl_core::PrivateKey,
-        ct: &::nextssl_core::Ciphertext,
-    ) -> crate::Result<::nextssl_core::SharedSecret> {
-        crate::kem_decapsulate_with(ID, params, sk, ct)
-    }
-}
-
 /// `threebears936r2cca` (kem, tier unverified).
 pub mod threebears936r2cca {
     /// Registry id.
     pub const ID: &str = "threebears936r2cca";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn keygen() -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::kem_keygen(ID)
-    }
-    pub fn keygen_with(
-        params: &::nextssl_core::Params,
-    ) -> crate::Result<(::nextssl_core::PublicKey, ::nextssl_core::PrivateKey)> {
-        crate::kem_keygen_with(ID, params)
-    }
-    pub fn encapsulate(
-        pk: &::nextssl_core::PublicKey,
-    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
-        crate::kem_encapsulate(ID, pk)
-    }
-    pub fn encapsulate_with(
-        params: &::nextssl_core::Params,
-        pk: &::nextssl_core::PublicKey,
-    ) -> crate::Result<(::nextssl_core::Ciphertext, ::nextssl_core::SharedSecret)> {
-        crate::kem_encapsulate_with(ID, params, pk)
-    }
-    pub fn decapsulate(
-        sk: &::nextssl_core::PrivateKey,
-        ct: &::nextssl_core::Ciphertext,
-    ) -> crate::Result<::nextssl_core::SharedSecret> {
-        crate::kem_decapsulate(ID, sk, ct)
-    }
-    pub fn decapsulate_with(
-        params: &::nextssl_core::Params,
-        sk: &::nextssl_core::PrivateKey,
-        ct: &::nextssl_core::Ciphertext,
-    ) -> crate::Result<::nextssl_core::SharedSecret> {
-        crate::kem_decapsulate_with(ID, params, sk, ct)
-    }
-}
-
-/// `threebears936r2cpa` (kem, tier unverified).
-pub mod threebears936r2cpa {
-    /// Registry id.
-    pub const ID: &str = "threebears936r2cpa";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -33583,6 +37238,63 @@ pub mod tinyjambu_256 {
     }
 }
 
+/// `tinyjambu128` (aead, tier unverified).
+pub mod tinyjambu128 {
+    /// Registry id.
+    pub const ID: &str = "tinyjambu128";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
 /// `tinyjambu128v2` (aead, tier unverified).
 pub mod tinyjambu128v2 {
     /// Registry id.
@@ -33637,6 +37349,57 @@ pub mod tinyjambu128v2 {
         aad: &[u8],
     ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
         crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `tortuga-phc` (pwhash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod tortuga_phc {
+    /// Registry id.
+    pub const ID: &str = "tortuga-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
     }
 }
 
@@ -33773,63 +37536,6 @@ pub mod triflev1 {
 pub mod trivia0v2 {
     /// Registry id.
     pub const ID: &str = "trivia0v2";
-    /// Registry entry: metadata, sizes and parameter schema.
-    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
-        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
-    pub fn seal(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal(ID, key, nonce, aad, pt)
-    }
-    pub fn seal_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        pt: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
-    }
-    pub fn open(
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open(ID, key, nonce, aad, ct)
-    }
-    pub fn open_with(
-        params: &::nextssl_core::Params,
-        key: &::nextssl_core::SymmetricKey,
-        nonce: &[u8],
-        aad: &[u8],
-        ct: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::aead_open_with(ID, params, key, nonce, aad, ct)
-    }
-    pub fn encrypt(
-        key: &::nextssl_core::SymmetricKey,
-        plaintext: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<Vec<u8>> {
-        crate::encrypt_with_key(ID, key, plaintext, aad)
-    }
-    pub fn decrypt(
-        key: &::nextssl_core::SymmetricKey,
-        envelope: &[u8],
-        aad: &[u8],
-    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
-        crate::decrypt_as(ID, key, envelope, aad)
-    }
-}
-
-/// `trivia128v2` (aead, tier unverified).
-pub mod trivia128v2 {
-    /// Registry id.
-    pub const ID: &str = "trivia128v2";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -34323,6 +38029,120 @@ pub mod usaber_90s_r3 {
 pub mod wage {
     /// Registry id.
     pub const ID: &str = "wage";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `wageae128v1` (aead, tier unverified).
+pub mod wageae128v1 {
+    /// Registry id.
+    pub const ID: &str = "wageae128v1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `wageae128v1-lwc1` (aead, tier unverified).
+pub mod wageae128v1_lwc1 {
+    /// Registry id.
+    pub const ID: &str = "wageae128v1-lwc1";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -34961,6 +38781,78 @@ pub mod xoodyakround3 {
     }
 }
 
+/// `xoodyakv1` (aead, tier unverified).
+pub mod xoodyakv1 {
+    /// Registry id.
+    pub const ID: &str = "xoodyakv1";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn seal(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal(ID, key, nonce, aad, pt)
+    }
+    pub fn seal_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        pt: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::aead_seal_with(ID, params, key, nonce, aad, pt)
+    }
+    pub fn open(
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open(ID, key, nonce, aad, ct)
+    }
+    pub fn open_with(
+        params: &::nextssl_core::Params,
+        key: &::nextssl_core::SymmetricKey,
+        nonce: &[u8],
+        aad: &[u8],
+        ct: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::aead_open_with(ID, params, key, nonce, aad, ct)
+    }
+    pub fn encrypt(
+        key: &::nextssl_core::SymmetricKey,
+        plaintext: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<Vec<u8>> {
+        crate::encrypt_with_key(ID, key, plaintext, aad)
+    }
+    pub fn decrypt(
+        key: &::nextssl_core::SymmetricKey,
+        envelope: &[u8],
+        aad: &[u8],
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::decrypt_as(ID, key, envelope, aad)
+    }
+}
+
+/// `xoodyakv1-hash` (hash, tier unverified).
+pub mod xoodyakv1_hash {
+    /// Registry id.
+    pub const ID: &str = "xoodyakv1-hash";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash(ID, data)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, data: &[u8]) -> crate::Result<Vec<u8>> {
+        crate::hash_with(ID, params, data)
+    }
+}
+
 /// `xoroshiro128-plus` (prng, tier unverified).
 pub mod xoroshiro128_plus {
     /// Registry id.
@@ -35536,10 +39428,112 @@ pub mod yarara128v1 {
     }
 }
 
+/// `yarn-phc` (pwhash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod yarn_phc {
+    /// Registry id.
+    pub const ID: &str = "yarn-phc";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
+    }
+}
+
 /// `yescrypt` (pwhash, tier standard).
 pub mod yescrypt {
     /// Registry id.
     pub const ID: &str = "yescrypt";
+    /// Registry entry: metadata, sizes and parameter schema.
+    pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
+        ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
+    pub fn hash(password: &[u8]) -> crate::Result<String> {
+        crate::password_hash(ID, password)
+    }
+    pub fn hash_with(params: &::nextssl_core::Params, password: &[u8]) -> crate::Result<String> {
+        crate::password_hash_with(ID, params, password)
+    }
+    pub fn hash_salted(password: &[u8], salt: &[u8]) -> crate::Result<String> {
+        crate::password_hash_salted(ID, password, salt)
+    }
+    pub fn hash_salted_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+    ) -> crate::Result<String> {
+        crate::password_hash_salted_with(ID, params, password, salt)
+    }
+    pub fn verify(password: &[u8], phc: &str) -> crate::Result<bool> {
+        crate::password_verify(ID, password, phc)
+    }
+    pub fn verify_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        phc: &str,
+    ) -> crate::Result<bool> {
+        crate::password_verify_with(ID, params, password, phc)
+    }
+    pub fn derive(
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive(ID, password, salt, out_len)
+    }
+    pub fn derive_with(
+        params: &::nextssl_core::Params,
+        password: &[u8],
+        salt: &[u8],
+        out_len: usize,
+    ) -> crate::Result<::nextssl_core::Zeroizing<Vec<u8>>> {
+        crate::password_derive_with(ID, params, password, salt, out_len)
+    }
+}
+
+/// `yescrypt-phc` (pwhash, tier unverified).
+#[cfg(not(target_env = "msvc"))]
+pub mod yescrypt_phc {
+    /// Registry id.
+    pub const ID: &str = "yescrypt-phc";
     /// Registry entry: metadata, sizes and parameter schema.
     pub static INFO: ::std::sync::LazyLock<&'static ::nextssl_registry::AlgoInfo> =
         ::std::sync::LazyLock::new(|| ::nextssl_registry::lookup(ID).expect("registered id"));
@@ -35683,6 +39677,10 @@ mod generated_module_list {
         vec![
             ("3des", crate::a_3des::INFO.id),
             ("ace", crate::ace::INFO.id),
+            ("aceae128v1", crate::aceae128v1::INFO.id),
+            ("aceae128v1-lwc1", crate::aceae128v1_lwc1::INFO.id),
+            ("acehash256v1", crate::acehash256v1::INFO.id),
+            ("acehash256v1-lwc1", crate::acehash256v1_lwc1::INFO.id),
             ("acorn", crate::acorn::INFO.id),
             ("adler32", crate::adler32::INFO.id),
             ("aegis128l", crate::aegis128l::INFO.id),
@@ -35752,20 +39750,6 @@ mod generated_module_list {
             ("aes256otrcv3", crate::aes256otrcv3::INFO.id),
             ("aes256otrpv3", crate::aes256otrpv3::INFO.id),
             ("aes256otrsv3", crate::aes256otrsv3::INFO.id),
-            ("aescopa", crate::aescopa::INFO.id),
-            ("aesjambuv2", crate::aesjambuv2::INFO.id),
-            ("aimer128fv3", crate::aimer128fv3::INFO.id),
-            ("aimer128fv3new", crate::aimer128fv3new::INFO.id),
-            ("aimer128sv3", crate::aimer128sv3::INFO.id),
-            ("aimer128sv3new", crate::aimer128sv3new::INFO.id),
-            ("aimer192fv3", crate::aimer192fv3::INFO.id),
-            ("aimer192fv3new", crate::aimer192fv3new::INFO.id),
-            ("aimer192sv3", crate::aimer192sv3::INFO.id),
-            ("aimer192sv3new", crate::aimer192sv3new::INFO.id),
-            ("aimer256fv3", crate::aimer256fv3::INFO.id),
-            ("aimer256fv3new", crate::aimer256fv3new::INFO.id),
-            ("aimer256sv3", crate::aimer256sv3::INFO.id),
-            ("aimer256sv3new", crate::aimer256sv3new::INFO.id),
             ("anubis", crate::anubis::INFO.id),
             ("argon2d", crate::argon2d::INFO.id),
             ("argon2i", crate::argon2i::INFO.id),
@@ -35786,6 +39770,8 @@ mod generated_module_list {
             ("ascon128av12", crate::ascon128av12::INFO.id),
             ("ascon128bi32v12", crate::ascon128bi32v12::INFO.id),
             ("ascon128v12", crate::ascon128v12::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("ascon96v1", crate::ascon96v1::INFO.id),
             ("asconhashabi32v12", crate::asconhashabi32v12::INFO.id),
             ("asconhashav12", crate::asconhashav12::INFO.id),
             ("asconhashbi32v12", crate::asconhashbi32v12::INFO.id),
@@ -35816,6 +39802,7 @@ mod generated_module_list {
             ("bash256", crate::bash256::INFO.id),
             ("bash384", crate::bash384::INFO.id),
             ("bash512", crate::bash512::INFO.id),
+            ("battcrypt-phc", crate::battcrypt_phc::INFO.id),
             ("bblake256", crate::bblake256::INFO.id),
             ("bcrypt", crate::bcrypt::INFO.id),
             ("bech32", crate::bech32::INFO.id),
@@ -35843,21 +39830,17 @@ mod generated_module_list {
             ("camellia-256", crate::camellia_256::INFO.id),
             ("cast5", crate::cast5::INFO.id),
             ("cast6", crate::cast6::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("catena-butterfly-phc", crate::catena_butterfly_phc::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("catena-dragonfly-phc", crate::catena_dragonfly_phc::INFO.id),
             ("cbc-mac", crate::cbc_mac::INFO.id),
             ("chacha12", crate::chacha12::INFO.id),
             ("chacha20", crate::chacha20::INFO.id),
             ("chacha20-poly1305", crate::chacha20_poly1305::INFO.id),
             ("chacha8", crate::chacha8::INFO.id),
             ("chaskey", crate::chaskey::INFO.id),
-            (
-                "cilipadi128v1extrahot",
-                crate::cilipadi128v1extrahot::INFO.id,
-            ),
-            ("cilipadi128v1hot", crate::cilipadi128v1hot::INFO.id),
-            ("cilipadi128v1medium", crate::cilipadi128v1medium::INFO.id),
-            ("cilipadi128v1mild", crate::cilipadi128v1mild::INFO.id),
             ("cityhash", crate::cityhash::INFO.id),
-            ("clae128v1", crate::clae128v1::INFO.id),
             ("clefia-128", crate::clefia_128::INFO.id),
             ("clefia-192", crate::clefia_192::INFO.id),
             ("clefia-256", crate::clefia_256::INFO.id),
@@ -35874,6 +39857,9 @@ mod generated_module_list {
             ("comet-64-cham", crate::comet_64_cham::INFO.id),
             ("comet-64-speck", crate::comet_64_speck::INFO.id),
             ("comet128aesv1", crate::comet128aesv1::INFO.id),
+            ("comet128chamv1", crate::comet128chamv1::INFO.id),
+            ("comet64chamv1", crate::comet64chamv1::INFO.id),
+            ("comet64speckv1", crate::comet64speckv1::INFO.id),
             ("concat-kdf", crate::concat_kdf::INFO.id),
             ("coral256v1", crate::coral256v1::INFO.id),
             ("crc-10-atm", crate::crc_10_atm::INFO.id),
@@ -36078,16 +40064,21 @@ mod generated_module_list {
             ("dilithium5-r-r3", crate::dilithium5_r_r3::INFO.id),
             ("dilithium5-r3", crate::dilithium5_r3::INFO.id),
             ("dme-sign", crate::dme_sign::INFO.id),
-            ("dragon", crate::dragon::INFO.id),
             ("drygascon", crate::drygascon::INFO.id),
             ("drygascon-128-hash", crate::drygascon_128_hash::INFO.id),
-            ("drygascon-128-k32", crate::drygascon_128_k32::INFO.id),
-            ("drygascon-128-k56", crate::drygascon_128_k56::INFO.id),
             ("drygascon-256", crate::drygascon_256::INFO.id),
             ("drygascon-256-hash", crate::drygascon_256_hash::INFO.id),
             ("drygascon128", crate::drygascon128::INFO.id),
+            ("drygascon128-aead", crate::drygascon128_aead::INFO.id),
+            (
+                "drygascon128-aead-lwc1",
+                crate::drygascon128_aead_lwc1::INFO.id,
+            ),
             ("drygascon128k16", crate::drygascon128k16::INFO.id),
+            ("drygascon256", crate::drygascon256::INFO.id),
+            ("drygascon256-lwc1", crate::drygascon256_lwc1::INFO.id),
             ("drygascon256k32", crate::drygascon256k32::INFO.id),
+            ("earworm-phc", crate::earworm_phc::INFO.id),
             ("ecdh-p256", crate::ecdh_p256::INFO.id),
             ("ecdh-p384", crate::ecdh_p384::INFO.id),
             ("ecdh-p521", crate::ecdh_p521::INFO.id),
@@ -36098,6 +40089,8 @@ mod generated_module_list {
             ("echo", crate::echo::INFO.id),
             ("ed25519", crate::ed25519::INFO.id),
             ("ed448", crate::ed448::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("ed448goldilocks", crate::ed448goldilocks::INFO.id),
             ("ed448ph", crate::ed448ph::INFO.id),
             ("edon-r", crate::edon_r::INFO.id),
             ("edonr256", crate::edonr256::INFO.id),
@@ -36105,11 +40098,24 @@ mod generated_module_list {
             ("elephant-delirium", crate::elephant_delirium::INFO.id),
             ("elephant-dumbo", crate::elephant_dumbo::INFO.id),
             ("elephant-jumbo", crate::elephant_jumbo::INFO.id),
+            ("elephant160v1", crate::elephant160v1::INFO.id),
             ("elephant160v2", crate::elephant160v2::INFO.id),
+            ("elephant176v1", crate::elephant176v1::INFO.id),
             ("elephant176v2", crate::elephant176v2::INFO.id),
+            ("elephant200v1", crate::elephant200v1::INFO.id),
             ("elephant200v2", crate::elephant200v2::INFO.id),
             ("esch-384", crate::esch_384::INFO.id),
+            ("esch256v1", crate::esch256v1::INFO.id),
             ("esch256v2", crate::esch256v2::INFO.id),
+            ("esch384v1", crate::esch384v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("essence224", crate::essence224::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("essence256", crate::essence256::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("essence384", crate::essence384::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("essence512", crate::essence512::INFO.id),
             ("estate-twegift", crate::estate_twegift::INFO.id),
             ("estatetweaes128v1", crate::estatetweaes128v1::INFO.id),
             ("estatetwegift128v1", crate::estatetwegift128v1::INFO.id),
@@ -36119,12 +40125,10 @@ mod generated_module_list {
             ("falcon-padded-512", crate::falcon_padded_512::INFO.id),
             ("feal", crate::feal::INFO.id),
             ("ff70", crate::ff70::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("firesaber2", crate::firesaber2::INFO.id),
             ("fletcher16", crate::fletcher16::INFO.id),
             ("fletcher32", crate::fletcher32::INFO.id),
-            ("flexaead128b064v12", crate::flexaead128b064v12::INFO.id),
-            ("flexaead128b128v12", crate::flexaead128b128v12::INFO.id),
-            ("flexaead256b128v12", crate::flexaead256b128v12::INFO.id),
-            ("flexaead256b256v12", crate::flexaead256b256v12::INFO.id),
             ("fn-dsa-1024", crate::fn_dsa_1024::INFO.id),
             ("fn-dsa-512", crate::fn_dsa_512::INFO.id),
             ("fnv-1", crate::fnv_1::INFO.id),
@@ -36153,12 +40157,15 @@ mod generated_module_list {
             ("gage1h256c256r128", crate::gage1h256c256r128::INFO.id),
             ("gage1h256c512r032", crate::gage1h256c512r032::INFO.id),
             ("gage1h256c512r064", crate::gage1h256c512r064::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("gambit-phc", crate::gambit_phc::INFO.id),
             ("ghash", crate::ghash::INFO.id),
             ("gift-cofb", crate::gift_cofb::INFO.id),
             ("giftcofb128v1", crate::giftcofb128v1::INFO.id),
             ("gimli", crate::gimli::INFO.id),
             ("gimli24-hash", crate::gimli24_hash::INFO.id),
             ("gimli24v1", crate::gimli24v1::INFO.id),
+            ("gimli24v1-aead", crate::gimli24v1_aead::INFO.id),
             ("gost-r-34-11-94", crate::gost_r_34_11_94::INFO.id),
             ("grain-128aead", crate::grain_128aead::INFO.id),
             ("groestl", crate::groestl::INFO.id),
@@ -36170,9 +40177,6 @@ mod generated_module_list {
                 crate::h2c_secp256k1_sha256_sswu::INFO.id,
             ),
             ("has160", crate::has160::INFO.id),
-            ("hawk1024-r2", crate::hawk1024_r2::INFO.id),
-            ("hawk256-r2", crate::hawk256_r2::INFO.id),
-            ("hawk512-r2", crate::hawk512_r2::INFO.id),
             ("hc256", crate::hc256::INFO.id),
             ("hern128v1", crate::hern128v1::INFO.id),
             ("heron256v1", crate::heron256v1::INFO.id),
@@ -36252,15 +40256,13 @@ mod generated_module_list {
             ("isaac64", crate::isaac64::INFO.id),
             ("isap-a-128a", crate::isap_a_128a::INFO.id),
             ("isap-k-128a", crate::isap_k_128a::INFO.id),
+            ("isapa128av20", crate::isapa128av20::INFO.id),
             ("isapa128v20", crate::isapa128v20::INFO.id),
+            ("isapk128av20", crate::isapk128av20::INFO.id),
             ("isapk128v20", crate::isapk128v20::INFO.id),
             ("iscream", crate::iscream::INFO.id),
             ("iscream12v2", crate::iscream12v2::INFO.id),
             ("iscream14", crate::iscream14::INFO.id),
-            ("jambuaes128v2", crate::jambuaes128v2::INFO.id),
-            ("jambusimon128v2", crate::jambusimon128v2::INFO.id),
-            ("jambusimon64v2", crate::jambusimon64v2::INFO.id),
-            ("jambusimon96v2", crate::jambusimon96v2::INFO.id),
             ("jenkins-lookup3", crate::jenkins_lookup3::INFO.id),
             ("jh", crate::jh::INFO.id),
             ("jh224", crate::jh224::INFO.id),
@@ -36302,6 +40304,16 @@ mod generated_module_list {
             ("kiasueq128v1", crate::kiasueq128v1::INFO.id),
             #[cfg(feature = "copyleft")]
             ("kiasuneq128", crate::kiasuneq128::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("kindi256342", crate::kindi256342::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("kindi256522", crate::kindi256522::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("kindi512222", crate::kindi512222::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("kindi512241", crate::kindi512241::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("kindi512321", crate::kindi512321::INFO.id),
             ("kmac128", crate::kmac128::INFO.id),
             ("kmac256", crate::kmac256::INFO.id),
             ("kmacxof128", crate::kmacxof128::INFO.id),
@@ -36314,6 +40326,26 @@ mod generated_module_list {
             ("knot-hash-256-384", crate::knot_hash_256_384::INFO.id),
             ("knot-hash-384-384", crate::knot_hash_384_384::INFO.id),
             ("knot-hash-512-512", crate::knot_hash_512_512::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot128v1", crate::knot128v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot128v1-lwc1", crate::knot128v1_lwc1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot128v2", crate::knot128v2::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot192", crate::knot192::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot256", crate::knot256::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot256v1", crate::knot256v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot256v1-lwc1", crate::knot256v1_lwc1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot256v2", crate::knot256v2::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot384", crate::knot384::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("knot512", crate::knot512::INFO.id),
             ("kupyna", crate::kupyna::INFO.id),
             ("kuznyechik", crate::kuznyechik::INFO.id),
             ("kyber1024-90s-r3", crate::kyber1024_90s_r3::INFO.id),
@@ -36322,9 +40354,8 @@ mod generated_module_list {
             ("kyber512-r3", crate::kyber512_r3::INFO.id),
             ("kyber768-90s-r3", crate::kyber768_90s_r3::INFO.id),
             ("kyber768-r3", crate::kyber768_r3::INFO.id),
-            ("laemsimon128v1", crate::laemsimon128v1::INFO.id),
-            ("laemsimon192v1", crate::laemsimon192v1::INFO.id),
-            ("laemsimon256v1", crate::laemsimon256v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lanarea-phc", crate::lanarea_phc::INFO.id),
             ("lane256", crate::lane256::INFO.id),
             ("lane512", crate::lane512::INFO.id),
             ("lea-128", crate::lea_128::INFO.id),
@@ -36333,6 +40364,32 @@ mod generated_module_list {
             ("led80n6silcv1", crate::led80n6silcv1::INFO.id),
             ("led80n6t4silcv3", crate::led80n6t4silcv3::INFO.id),
             ("lex", crate::lex::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lightsaber2", crate::lightsaber2::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaei128v1", crate::lilliputaei128v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaei128v11", crate::lilliputaei128v11::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaei192v1", crate::lilliputaei192v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaei192v11", crate::lilliputaei192v11::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaei256v1", crate::lilliputaei256v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaei256v11", crate::lilliputaei256v11::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaeii128v1", crate::lilliputaeii128v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaeii128v11", crate::lilliputaeii128v11::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaeii192v1", crate::lilliputaeii192v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaeii192v11", crate::lilliputaeii192v11::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaeii256v1", crate::lilliputaeii256v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("lilliputaeii256v11", crate::lilliputaeii256v11::INFO.id),
             ("limdolen128v1", crate::limdolen128v1::INFO.id),
             ("limdolen256v1", crate::limdolen256v1::INFO.id),
             ("lm-hash", crate::lm_hash::INFO.id),
@@ -36348,6 +40405,7 @@ mod generated_module_list {
             ("luffa256", crate::luffa256::INFO.id),
             ("luffa384", crate::luffa384::INFO.id),
             ("luffa512", crate::luffa512::INFO.id),
+            ("lyra2-phc", crate::lyra2_phc::INFO.id),
             ("magma", crate::magma::INFO.id),
             ("mceliece-348864", crate::mceliece_348864::INFO.id),
             ("mceliece-348864f", crate::mceliece_348864f::INFO.id),
@@ -36371,7 +40429,6 @@ mod generated_module_list {
             ("md6d256", crate::md6d256::INFO.id),
             ("md6d384", crate::md6d384::INFO.id),
             ("md6d512", crate::md6d512::INFO.id),
-            ("mercy-6", crate::mercy_6::INFO.id),
             ("metrohash", crate::metrohash::INFO.id),
             ("ml-dsa-44", crate::ml_dsa_44::INFO.id),
             ("ml-dsa-65", crate::ml_dsa_65::INFO.id),
@@ -36382,42 +40439,8 @@ mod generated_module_list {
             ("morus", crate::morus::INFO.id),
             ("morus1280128", crate::morus1280128::INFO.id),
             ("morus1280256", crate::morus1280256::INFO.id),
-            ("morus640128v2", crate::morus640128v2::INFO.id),
             ("mqdss48", crate::mqdss48::INFO.id),
             ("mqdss64", crate::mqdss64::INFO.id),
-            ("mqom2cat1gf16fastr3", crate::mqom2cat1gf16fastr3::INFO.id),
-            ("mqom2cat1gf16fastr5", crate::mqom2cat1gf16fastr5::INFO.id),
-            ("mqom2cat1gf16shortr3", crate::mqom2cat1gf16shortr3::INFO.id),
-            ("mqom2cat1gf16shortr5", crate::mqom2cat1gf16shortr5::INFO.id),
-            ("mqom2cat1gf256fastr3", crate::mqom2cat1gf256fastr3::INFO.id),
-            (
-                "mqom2cat1gf256shortr3",
-                crate::mqom2cat1gf256shortr3::INFO.id,
-            ),
-            ("mqom2cat1gf2fastr3", crate::mqom2cat1gf2fastr3::INFO.id),
-            ("mqom2cat1gf2shortr3", crate::mqom2cat1gf2shortr3::INFO.id),
-            ("mqom2cat3gf16fastr3", crate::mqom2cat3gf16fastr3::INFO.id),
-            ("mqom2cat3gf16fastr5", crate::mqom2cat3gf16fastr5::INFO.id),
-            ("mqom2cat3gf16shortr3", crate::mqom2cat3gf16shortr3::INFO.id),
-            ("mqom2cat3gf16shortr5", crate::mqom2cat3gf16shortr5::INFO.id),
-            ("mqom2cat3gf256fastr3", crate::mqom2cat3gf256fastr3::INFO.id),
-            (
-                "mqom2cat3gf256shortr3",
-                crate::mqom2cat3gf256shortr3::INFO.id,
-            ),
-            ("mqom2cat3gf2fastr3", crate::mqom2cat3gf2fastr3::INFO.id),
-            ("mqom2cat3gf2shortr3", crate::mqom2cat3gf2shortr3::INFO.id),
-            ("mqom2cat5gf16fastr3", crate::mqom2cat5gf16fastr3::INFO.id),
-            ("mqom2cat5gf16fastr5", crate::mqom2cat5gf16fastr5::INFO.id),
-            ("mqom2cat5gf16shortr3", crate::mqom2cat5gf16shortr3::INFO.id),
-            ("mqom2cat5gf16shortr5", crate::mqom2cat5gf16shortr5::INFO.id),
-            ("mqom2cat5gf256fastr3", crate::mqom2cat5gf256fastr3::INFO.id),
-            (
-                "mqom2cat5gf256shortr3",
-                crate::mqom2cat5gf256shortr3::INFO.id,
-            ),
-            ("mqom2cat5gf2fastr3", crate::mqom2cat5gf2fastr3::INFO.id),
-            ("mqom2cat5gf2shortr3", crate::mqom2cat5gf2shortr3::INFO.id),
             ("mt19937", crate::mt19937::INFO.id),
             ("mt19937-64", crate::mt19937_64::INFO.id),
             ("multi2", crate::multi2::INFO.id),
@@ -36448,6 +40471,8 @@ mod generated_module_list {
             ("ntruplus576", crate::ntruplus576::INFO.id),
             ("ntruplus768", crate::ntruplus768::INFO.id),
             ("ntruplus864", crate::ntruplus864::INFO.id),
+            #[cfg(feature = "copyleft")]
+            ("omegacrypt-phc", crate::omegacrypt_phc::INFO.id),
             #[cfg(feature = "opaque-ke")]
             (
                 "opaque-ristretto255-sha512",
@@ -36463,7 +40488,32 @@ mod generated_module_list {
             ("orangishv1", crate::orangishv1::INFO.id),
             ("oribatida-192", crate::oribatida_192::INFO.id),
             ("oribatida-256", crate::oribatida_256::INFO.id),
+            ("oribatida192v11", crate::oribatida192v11::INFO.id),
+            ("oribatida192v12", crate::oribatida192v12::INFO.id),
+            ("oribatida256v11", crate::oribatida256v11::INFO.id),
+            ("oribatida256v12", crate::oribatida256v12::INFO.id),
             ("os-entropy", crate::os_entropy::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "paefforkskinnyb128t192n48v1",
+                crate::paefforkskinnyb128t192n48v1::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "paefforkskinnyb128t256n112v1",
+                crate::paefforkskinnyb128t256n112v1::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "paefforkskinnyb128t288n104v1",
+                crate::paefforkskinnyb128t288n104v1::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "paefforkskinnyb64t192n48v1",
+                crate::paefforkskinnyb64t192n48v1::INFO.id,
+            ),
+            ("parallel-phc", crate::parallel_phc::INFO.id),
             ("parallelhash128", crate::parallelhash128::INFO.id),
             ("parallelhash256", crate::parallelhash256::INFO.id),
             ("pbkdf2", crate::pbkdf2::INFO.id),
@@ -36483,10 +40533,19 @@ mod generated_module_list {
             ("photon-beetle", crate::photon_beetle::INFO.id),
             ("photon-beetle-hash", crate::photon_beetle_hash::INFO.id),
             (
+                "photonbeetleaead128rate128v1",
+                crate::photonbeetleaead128rate128v1::INFO.id,
+            ),
+            (
+                "photonbeetleaead128rate32v1",
+                crate::photonbeetleaead128rate32v1::INFO.id,
+            ),
+            (
                 "photonbeetlehash256rate32v1",
                 crate::photonbeetlehash256rate32v1::INFO.id,
             ),
             ("poly1305", crate::poly1305::INFO.id),
+            ("pomelo-phc", crate::pomelo_phc::INFO.id),
             ("present80n6silcv1", crate::present80n6silcv1::INFO.id),
             ("present80n6t4silcv3", crate::present80n6t4silcv3::INFO.id),
             ("prh42s1024", crate::prh42s1024::INFO.id),
@@ -36497,21 +40556,20 @@ mod generated_module_list {
             ("prh64s512", crate::prh64s512::INFO.id),
             #[cfg(feature = "copyleft")]
             ("pride", crate::pride::INFO.id),
-            ("proest128apev1", crate::proest128apev1::INFO.id),
-            ("proest256apev1", crate::proest256apev1::INFO.id),
             ("pyjamask", crate::pyjamask::INFO.id),
             ("pyjamask-96", crate::pyjamask_96::INFO.id),
             ("pyjamask128aeadv1", crate::pyjamask128aeadv1::INFO.id),
             ("pyjamask96aeadv1", crate::pyjamask96aeadv1::INFO.id),
-            (
-                "qameleon128128128tcgpv1",
-                crate::qameleon128128128tcgpv1::INFO.id,
-            ),
-            ("qameleon12812864gpv1", crate::qameleon12812864gpv1::INFO.id),
-            ("qameleon12812896gpv1", crate::qameleon12812896gpv1::INFO.id),
-            ("qameleon1286464mev1", crate::qameleon1286464mev1::INFO.id),
-            ("qameleon6464nnmev1", crate::qameleon6464nnmev1::INFO.id),
-            ("qameleon6464tcmev1", crate::qameleon6464tcmev1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("qtesla1", crate::qtesla1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("qtesla1p", crate::qtesla1p::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("qtesla3f", crate::qtesla3f::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("qtesla3p", crate::qtesla3p::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("qtesla3s", crate::qtesla3s::INFO.id),
             ("quartet128v1", crate::quartet128v1::INFO.id),
             ("rabbit", crate::rabbit::INFO.id),
             ("rapidhash", crate::rapidhash::INFO.id),
@@ -36525,6 +40583,8 @@ mod generated_module_list {
             ("remusn1v1", crate::remusn1v1::INFO.id),
             ("remusn2v1", crate::remusn2v1::INFO.id),
             ("remusn3v1", crate::remusn3v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("rig-phc", crate::rig_phc::INFO.id),
             ("ripemd128", crate::ripemd128::INFO.id),
             ("ripemd160", crate::ripemd160::INFO.id),
             ("ripemd256", crate::ripemd256::INFO.id),
@@ -36536,9 +40596,22 @@ mod generated_module_list {
             ("romulus-m3", crate::romulus_m3::INFO.id),
             ("romulus-n2", crate::romulus_n2::INFO.id),
             ("romulus-n3", crate::romulus_n3::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("romulush", crate::romulush::INFO.id),
             ("romulusm", crate::romulusm::INFO.id),
+            ("romulusm1v1", crate::romulusm1v1::INFO.id),
+            ("romulusm1v12", crate::romulusm1v12::INFO.id),
+            ("romulusm2v1", crate::romulusm2v1::INFO.id),
+            ("romulusm2v12", crate::romulusm2v12::INFO.id),
+            ("romulusm3v1", crate::romulusm3v1::INFO.id),
+            ("romulusm3v12", crate::romulusm3v12::INFO.id),
             ("romulusn", crate::romulusn::INFO.id),
             ("romulusn1v1", crate::romulusn1v1::INFO.id),
+            ("romulusn1v12", crate::romulusn1v12::INFO.id),
+            ("romulusn2v1", crate::romulusn2v1::INFO.id),
+            ("romulusn2v12", crate::romulusn2v12::INFO.id),
+            ("romulusn3v1", crate::romulusn3v1::INFO.id),
+            ("romulusn3v12", crate::romulusn3v12::INFO.id),
             ("romulust", crate::romulust::INFO.id),
             ("round3jh256", crate::round3jh256::INFO.id),
             ("round3jh512", crate::round3jh512::INFO.id),
@@ -36563,6 +40636,8 @@ mod generated_module_list {
                 "rsa-pkcs1v15-enc-4096",
                 crate::rsa_pkcs1v15_enc_4096::INFO.id,
             ),
+            #[cfg(not(target_env = "msvc"))]
+            ("saber2", crate::saber2::INFO.id),
             ("sablier", crate::sablier::INFO.id),
             ("saeaes", crate::saeaes::INFO.id),
             ("saeaes128a120t128", crate::saeaes128a120t128::INFO.id),
@@ -36575,6 +40650,16 @@ mod generated_module_list {
             ("saeaes256a120t128", crate::saeaes256a120t128::INFO.id),
             ("saeaes256a64t128", crate::saeaes256a64t128::INFO.id),
             ("saeaes256a64t64", crate::saeaes256a64t64::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "saefforkskinnyb128t192n56v1",
+                crate::saefforkskinnyb128t192n56v1::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "saefforkskinnyb128t256n120v1",
+                crate::saefforkskinnyb128t256n120v1::INFO.id,
+            ),
             ("safer-k128", crate::safer_k128::INFO.id),
             ("safer-k64", crate::safer_k64::INFO.id),
             ("safer-plus", crate::safer_plus::INFO.id),
@@ -36588,11 +40673,17 @@ mod generated_module_list {
             ("saturnin", crate::saturnin::INFO.id),
             ("saturnin-hash", crate::saturnin_hash::INFO.id),
             ("saturninctrcascadev2", crate::saturninctrcascadev2::INFO.id),
+            ("saturninhashv2", crate::saturninhashv2::INFO.id),
             ("schnorr-bip340", crate::schnorr_bip340::INFO.id),
+            ("schvrch-phc", crate::schvrch_phc::INFO.id),
             ("schwaemm-128-128", crate::schwaemm_128_128::INFO.id),
             ("schwaemm-192-192", crate::schwaemm_192_192::INFO.id),
             ("schwaemm-256-256", crate::schwaemm_256_256::INFO.id),
+            ("schwaemm128128v1", crate::schwaemm128128v1::INFO.id),
+            ("schwaemm192192v1", crate::schwaemm192192v1::INFO.id),
+            ("schwaemm256128v1", crate::schwaemm256128v1::INFO.id),
             ("schwaemm256128v2", crate::schwaemm256128v2::INFO.id),
+            ("schwaemm256256v1", crate::schwaemm256256v1::INFO.id),
             ("scream", crate::scream::INFO.id),
             ("scream10v3", crate::scream10v3::INFO.id),
             ("scream12", crate::scream12::INFO.id),
@@ -36624,27 +40715,35 @@ mod generated_module_list {
             ("shabal512", crate::shabal512::INFO.id),
             ("shake128", crate::shake128::INFO.id),
             ("shake256", crate::shake256::INFO.id),
+            ("shamashashv1", crate::shamashashv1::INFO.id),
             ("shamashv1", crate::shamashv1::INFO.id),
             ("shamir", crate::shamir::INFO.id),
             ("shavite3256", crate::shavite3256::INFO.id),
             ("shavite3512", crate::shavite3512::INFO.id),
-            ("shellaes128v2d4n64", crate::shellaes128v2d4n64::INFO.id),
-            ("shellaes128v2d4n80", crate::shellaes128v2d4n80::INFO.id),
-            ("shellaes128v2d5n64", crate::shellaes128v2d5n64::INFO.id),
-            ("shellaes128v2d5n80", crate::shellaes128v2d5n80::INFO.id),
-            ("shellaes128v2d6n64", crate::shellaes128v2d6n64::INFO.id),
-            ("shellaes128v2d6n80", crate::shellaes128v2d6n80::INFO.id),
-            ("shellaes128v2d7n64", crate::shellaes128v2d7n64::INFO.id),
-            ("shellaes128v2d7n80", crate::shellaes128v2d7n80::INFO.id),
-            ("shellaes128v2d8n64", crate::shellaes128v2d8n64::INFO.id),
-            ("shellaes128v2d8n80", crate::shellaes128v2d8n80::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d4n64", crate::shellaes128v1d4n64::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d4n80", crate::shellaes128v1d4n80::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d5n64", crate::shellaes128v1d5n64::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d5n80", crate::shellaes128v1d5n80::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d6n64", crate::shellaes128v1d6n64::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d6n80", crate::shellaes128v1d6n80::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d7n64", crate::shellaes128v1d7n64::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d7n80", crate::shellaes128v1d7n80::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d8n64", crate::shellaes128v1d8n64::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("shellaes128v1d8n80", crate::shellaes128v1d8n80::INFO.id),
             ("silc", crate::silc::INFO.id),
             ("silverv1", crate::silverv1::INFO.id),
             ("simd256", crate::simd256::INFO.id),
             ("simd512", crate::simd512::INFO.id),
-            ("simonjambu128v2", crate::simonjambu128v2::INFO.id),
-            ("simonjambu64v2", crate::simonjambu64v2::INFO.id),
-            ("simonjambu96v2", crate::simonjambu96v2::INFO.id),
             ("simple128aes10", crate::simple128aes10::INFO.id),
             ("simple128gift", crate::simple128gift::INFO.id),
             ("simple128speck", crate::simple128speck::INFO.id),
@@ -36653,9 +40752,23 @@ mod generated_module_list {
             ("simple64speck", crate::simple64speck::INFO.id),
             ("siphash-2-4", crate::siphash_2_4::INFO.id),
             ("siphash-4-8", crate::siphash_4_8::INFO.id),
+            (
+                "sivrijndael256aead128v1",
+                crate::sivrijndael256aead128v1::INFO.id,
+            ),
+            (
+                "sivrijndael256hash256v1",
+                crate::sivrijndael256hash256v1::INFO.id,
+            ),
+            ("sivtemphotonaeadv1", crate::sivtemphotonaeadv1::INFO.id),
+            ("sivtemphotonhashv1", crate::sivtemphotonhashv1::INFO.id),
             ("skein1024", crate::skein1024::INFO.id),
             ("skein256", crate::skein256::INFO.id),
             ("skein512", crate::skein512::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("skein512256", crate::skein512256::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("skein512512", crate::skein512512::INFO.id),
             ("skinny-aead-m1", crate::skinny_aead_m1::INFO.id),
             ("skinny-aead-m2", crate::skinny_aead_m2::INFO.id),
             ("skinny-aead-m3", crate::skinny_aead_m3::INFO.id),
@@ -36751,20 +40864,221 @@ mod generated_module_list {
                 "sphincs-shake-256s-simple",
                 crate::sphincs_shake_256s_simple::INFO.id,
             ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf128harakarobust",
+                crate::sphincsf128harakarobust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf128harakasimple",
+                crate::sphincsf128harakasimple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf128sha256robust",
+                crate::sphincsf128sha256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf128sha256simple",
+                crate::sphincsf128sha256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf128shake256robust",
+                crate::sphincsf128shake256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf128shake256simple",
+                crate::sphincsf128shake256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf192harakarobust",
+                crate::sphincsf192harakarobust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf192harakasimple",
+                crate::sphincsf192harakasimple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf192sha256robust",
+                crate::sphincsf192sha256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf192sha256simple",
+                crate::sphincsf192sha256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf192shake256robust",
+                crate::sphincsf192shake256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf192shake256simple",
+                crate::sphincsf192shake256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf256harakarobust",
+                crate::sphincsf256harakarobust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf256harakasimple",
+                crate::sphincsf256harakasimple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf256sha256robust",
+                crate::sphincsf256sha256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf256sha256simple",
+                crate::sphincsf256sha256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf256shake256robust",
+                crate::sphincsf256shake256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincsf256shake256simple",
+                crate::sphincsf256shake256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss128harakarobust",
+                crate::sphincss128harakarobust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss128harakasimple",
+                crate::sphincss128harakasimple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss128sha256robust",
+                crate::sphincss128sha256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss128sha256simple",
+                crate::sphincss128sha256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss128shake256robust",
+                crate::sphincss128shake256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss128shake256simple",
+                crate::sphincss128shake256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss192harakarobust",
+                crate::sphincss192harakarobust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss192harakasimple",
+                crate::sphincss192harakasimple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss192sha256robust",
+                crate::sphincss192sha256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss192sha256simple",
+                crate::sphincss192sha256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss192shake256robust",
+                crate::sphincss192shake256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss192shake256simple",
+                crate::sphincss192shake256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss256harakarobust",
+                crate::sphincss256harakarobust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss256harakasimple",
+                crate::sphincss256harakasimple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss256sha256robust",
+                crate::sphincss256sha256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss256sha256simple",
+                crate::sphincss256sha256simple::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss256shake256robust",
+                crate::sphincss256shake256robust::INFO.id,
+            ),
+            #[cfg(not(target_env = "msvc"))]
+            (
+                "sphincss256shake256simple",
+                crate::sphincss256shake256simple::INFO.id,
+            ),
             ("spix", crate::spix::INFO.id),
+            ("spix128v1", crate::spix128v1::INFO.id),
+            ("spix128v1-lwc1", crate::spix128v1_lwc1::INFO.id),
             ("splitmix64", crate::splitmix64::INFO.id),
             ("spoc-128", crate::spoc_128::INFO.id),
             ("spoc-64", crate::spoc_64::INFO.id),
+            (
+                "spoc128sliscplight256v1",
+                crate::spoc128sliscplight256v1::INFO.id,
+            ),
+            (
+                "spoc128sliscplight256v1-lwc1",
+                crate::spoc128sliscplight256v1_lwc1::INFO.id,
+            ),
+            (
+                "spoc64sliscplight192v1",
+                crate::spoc64sliscplight192v1::INFO.id,
+            ),
+            (
+                "spoc64sliscplight192v1-lwc1",
+                crate::spoc64sliscplight192v1_lwc1::INFO.id,
+            ),
             ("spook", crate::spook::INFO.id),
             ("spook-su", crate::spook_su::INFO.id),
+            ("spook128mu384v1", crate::spook128mu384v1::INFO.id),
+            ("spook128mu384v1-lwc1", crate::spook128mu384v1_lwc1::INFO.id),
             ("spook128mu384v2", crate::spook128mu384v2::INFO.id),
+            ("spook128mu512v1", crate::spook128mu512v1::INFO.id),
             ("spook128mu512v2", crate::spook128mu512v2::INFO.id),
+            ("spook128su384v1", crate::spook128su384v1::INFO.id),
+            ("spook128su384v1-lwc1", crate::spook128su384v1_lwc1::INFO.id),
             ("spook128su384v2", crate::spook128su384v2::INFO.id),
+            ("spook128su512v1", crate::spook128su512v1::INFO.id),
             ("spook128su512v2", crate::spook128su512v2::INFO.id),
             ("spookyhash", crate::spookyhash::INFO.id),
-            ("sqisign-lvl1-r2", crate::sqisign_lvl1_r2::INFO.id),
-            ("sqisign-lvl3-r2", crate::sqisign_lvl3_r2::INFO.id),
-            ("sqisign-lvl5-r2", crate::sqisign_lvl5_r2::INFO.id),
             ("srp-6a-2048-sha256", crate::srp_6a_2048_sha256::INFO.id),
             ("streebog256", crate::streebog256::INFO.id),
             ("streebog512", crate::streebog512::INFO.id),
@@ -36773,6 +41087,8 @@ mod generated_module_list {
             ("stribob192r2", crate::stribob192r2::INFO.id),
             ("subterranean", crate::subterranean::INFO.id),
             ("subterranean-hash", crate::subterranean_hash::INFO.id),
+            ("subterraneanv1", crate::subterraneanv1::INFO.id),
+            ("subterraneanv1-hash", crate::subterraneanv1_hash::INFO.id),
             ("sundae", crate::sundae::INFO.id),
             ("sundae-0", crate::sundae_0::INFO.id),
             ("sundae-128", crate::sundae_128::INFO.id),
@@ -36781,6 +41097,9 @@ mod generated_module_list {
             ("sundaegift128v1", crate::sundaegift128v1::INFO.id),
             ("sundaegift64v1", crate::sundaegift64v1::INFO.id),
             ("sundaegift96v1", crate::sundaegift96v1::INFO.id),
+            ("syconaer64128v1", crate::syconaer64128v1::INFO.id),
+            ("syconaer96128v1", crate::syconaer96128v1::INFO.id),
+            ("syconhash256v1", crate::syconhash256v1::INFO.id),
             ("tango642", crate::tango642::INFO.id),
             ("tea", crate::tea::INFO.id),
             ("tgifm1128v1", crate::tgifm1128v1::INFO.id),
@@ -36789,11 +41108,8 @@ mod generated_module_list {
             ("tgifn2128v1", crate::tgifn2128v1::INFO.id),
             ("thin-ice", crate::thin_ice::INFO.id),
             ("threebears1248r2cca", crate::threebears1248r2cca::INFO.id),
-            ("threebears1248r2cpa", crate::threebears1248r2cpa::INFO.id),
             ("threebears624r2cca", crate::threebears624r2cca::INFO.id),
-            ("threebears624r2cpa", crate::threebears624r2cpa::INFO.id),
             ("threebears936r2cca", crate::threebears936r2cca::INFO.id),
-            ("threebears936r2cpa", crate::threebears936r2cpa::INFO.id),
             ("threefish-1024", crate::threefish_1024::INFO.id),
             ("threefish-256", crate::threefish_256::INFO.id),
             ("threefish-512", crate::threefish_512::INFO.id),
@@ -36801,12 +41117,14 @@ mod generated_module_list {
             ("tinyjambu", crate::tinyjambu::INFO.id),
             ("tinyjambu-192", crate::tinyjambu_192::INFO.id),
             ("tinyjambu-256", crate::tinyjambu_256::INFO.id),
+            ("tinyjambu128", crate::tinyjambu128::INFO.id),
             ("tinyjambu128v2", crate::tinyjambu128v2::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("tortuga-phc", crate::tortuga_phc::INFO.id),
             ("triadaev1", crate::triadaev1::INFO.id),
             ("triadhashv1", crate::triadhashv1::INFO.id),
             ("triflev1", crate::triflev1::INFO.id),
             ("trivia0v2", crate::trivia0v2::INFO.id),
-            ("trivia128v2", crate::trivia128v2::INFO.id),
             ("trivium", crate::trivium::INFO.id),
             ("turboshake128", crate::turboshake128::INFO.id),
             ("turboshake256", crate::turboshake256::INFO.id),
@@ -36819,6 +41137,8 @@ mod generated_module_list {
             ("twofish", crate::twofish::INFO.id),
             ("usaber-90s-r3", crate::usaber_90s_r3::INFO.id),
             ("wage", crate::wage::INFO.id),
+            ("wageae128v1", crate::wageae128v1::INFO.id),
+            ("wageae128v1-lwc1", crate::wageae128v1_lwc1::INFO.id),
             ("wheesht", crate::wheesht::INFO.id),
             ("wheeshtv1mr3fr1t128", crate::wheeshtv1mr3fr1t128::INFO.id),
             ("wheeshtv1mr3fr1t256", crate::wheeshtv1mr3fr1t256::INFO.id),
@@ -36833,6 +41153,8 @@ mod generated_module_list {
             ("xoodyak", crate::xoodyak::INFO.id),
             ("xoodyak-hash", crate::xoodyak_hash::INFO.id),
             ("xoodyakround3", crate::xoodyakround3::INFO.id),
+            ("xoodyakv1", crate::xoodyakv1::INFO.id),
+            ("xoodyakv1-hash", crate::xoodyakv1_hash::INFO.id),
             ("xoroshiro128-plus", crate::xoroshiro128_plus::INFO.id),
             (
                 "xoroshiro128-plusplus",
@@ -36863,7 +41185,11 @@ mod generated_module_list {
             ("yaes", crate::yaes::INFO.id),
             ("yaes128v2", crate::yaes128v2::INFO.id),
             ("yarara128v1", crate::yarara128v1::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("yarn-phc", crate::yarn_phc::INFO.id),
             ("yescrypt", crate::yescrypt::INFO.id),
+            #[cfg(not(target_env = "msvc"))]
+            ("yescrypt-phc", crate::yescrypt_phc::INFO.id),
             ("z-base-32", crate::z_base_32::INFO.id),
             ("z85", crate::z85::INFO.id),
             ("zuc", crate::zuc::INFO.id),

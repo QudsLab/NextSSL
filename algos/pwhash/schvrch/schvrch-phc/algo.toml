@@ -1,0 +1,39 @@
+id       = "schvrch-phc"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "schvrch"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
+fips      = false
+copyleft  = false
+upstream  = { url = "https://password-hashing.net/submissions/Schvrch-v0.tar.gz", sha256 = "bbbc171e5b0c9ebf0436a3aafee7d4c0f3088a4519c497107602ad47bfb1dba3", license = "NOASSERTION", files = ["schvrch.h", "LICENSE"] }
+# The package ships only schvrch.h (functions defined in the header, PHS included); shim.c includes it. Upstream copies password and salt into a fixed 256-word state with no length check, so the password (<= 1024) and salt (<= 64) are bounded here. Memory = (m_cost + 1) * 2 KiB.
+# NO license file in the package: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
+# no vectors replayed (untested, tier unverified). The package ships no test vector for this PHS entry point.
+
+[params.t_cost]
+type     = "u32"
+min      = 0
+max      = 1024
+default  = 1
+
+[params.m_cost]
+type     = "u32"
+min      = 0
+max      = 1024
+default  = 0
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 256
+default  = 32
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+salt = { min = 0, max = 64 }
+out = { min = 16, max = 256 }

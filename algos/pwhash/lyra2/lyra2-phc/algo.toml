@@ -1,0 +1,39 @@
+id       = "lyra2-phc"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "lyra2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
+fips      = false
+copyleft  = false
+upstream  = { url = "https://password-hashing.net/submissions/Lyra2-v3.tar.gz", sha256 = "9c1e5a516c70bbd28b87a5720fc4dd1a8969dbdff475d746401ff6fba37b78be", license = "LicenseRef-PD", files = ["Lyra2.c", "Lyra2.h", "Sponge.c", "Sponge.h", "sse/Lyra2.h", "LICENSE"] }
+# Makefile defaults (nCols 256, nRoundsSponge 1, bSponge 12, sponge 0 = Blake2b) except nThreads: nPARALLEL = 1 (sequential Lyra2, no OpenMP); the default nThreads = 2 needs OpenMP and gives a different function. m_cost = rows (24 KiB per row). Sources state 'hereby placed in the public domain' (no license file).
+# NO license file in the package: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
+# no vectors replayed (untested, tier unverified). The package ships no test vector for this PHS entry point.
+
+[params.t_cost]
+type     = "u32"
+min      = 1
+max      = 16
+default  = 1
+
+[params.m_cost]
+type     = "u32"
+min      = 8
+max      = 512
+default  = 16
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 128
+default  = 32
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+salt = { min = 8, max = 64 }
+out = { min = 16, max = 128 }

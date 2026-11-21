@@ -1,0 +1,39 @@
+id       = "omegacrypt-phc"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "omegacrypt"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
+fips      = false
+copyleft  = true
+upstream  = { url = "https://password-hashing.net/submissions/OmegaCrypt-v0.tar.gz", sha256 = "a5ac76ec55d35091e88b74c103e220be2183c7d8a6d4dd81ce8e82be7461fbd8", license = "LGPL-2.1-or-later", files = ["ocrypt.c", "ocrypt.h", "phs.h", "chacha-wrapper.c", "chacha-wrapper.h", "cubehash.c", "cubehash.h", "nettle-chacha/chacha-core-internal.c", "nettle-chacha/chacha-crypt.c", "nettle-chacha/chacha-init.c", "nettle-chacha/chacha.h", "nettle-chacha/macros.h", "nettle-chacha/memxor.c", "nettle-chacha/memxor.h", "nettle-chacha/nettle-types.h", "LICENSE"] }
+# ocrypt accepts output lengths 16, 20, 28, 32, 48 and 64 only (checked here); its own range is t_cost/m_cost 0..=14 (m_cost 0 = 1 MiB, doubling per step) and is capped here at 4. The key input of ocrypt is not exposed (PHS passes none). nettle-chacha/ is LGPL-2.1-or-later (from Nettle), ocrypt itself is public domain: copyleft = true.
+# NO license file in the package: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
+# first 5 in-policy vectors of the package's own test-vector file (594 parsed, 555 inside the wired parameter bounds)
+
+[params.t_cost]
+type     = "u32"
+min      = 0
+max      = 4
+default  = 0
+
+[params.m_cost]
+type     = "u32"
+min      = 0
+max      = 4
+default  = 0
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 64
+default  = 32
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+salt = { min = 0, max = 255 }
+out = { min = 16, max = 64 }

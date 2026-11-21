@@ -1,0 +1,51 @@
+{
+ "algorithm": "omegacrypt-phc",
+ "vectors": [
+  {
+   "id": "kat-0",
+   "password_hex": "",
+   "salt_hex": "",
+   "t_cost": 0,
+   "m_cost": 0,
+   "out_len": 16,
+   "out_hex": "e96cc767df0ab84a926235e938e33512"
+  },
+  {
+   "id": "kat-1",
+   "password_hex": "",
+   "salt_hex": "",
+   "t_cost": 0,
+   "m_cost": 0,
+   "out_len": 32,
+   "out_hex": "a0a5f9f5ce1891f4828e06697b80b2c7fb911042b5a061b511437bc1af751909"
+  },
+  {
+   "id": "kat-2",
+   "password_hex": "",
+   "salt_hex": "",
+   "t_cost": 0,
+   "m_cost": 0,
+   "out_len": 64,
+   "out_hex": "ff1e23fec63c48ff1bb8d3a8ed4956af7595e6ae176a6fd270b87b8794e0a439479437b2dd972554260830895e98a9eb581edae313e9a4f771576f1bf3926b6a"
+  },
+  {
+   "id": "kat-531",
+   "password_hex": "",
+   "salt_hex": "",
+   "t_cost": 0,
+   "m_cost": 1,
+   "out_len": 64,
+   "out_hex": "1ff392cc6b7e066b30ae6222ed72fbfbc84a1185fcdfc555f2b57d9b35baca024bd459f425ed895ee83db85a944a6c7b7afaed19d8369a207f4c4c30b61e91c0"
+  },
+  {
+   "id": "kat-532",
+   "password_hex": "",
+   "salt_hex": "",
+   "t_cost": 0,
+   "m_cost": 2,
+   "out_len": 64,
+   "out_hex": "12cf4508bcb8e641059210915381fc2b6f4eb229e77692fc553bf13dedc5fe336f954830b95e9866d7291c7f6cd646785d4e6c0a67e66b42ef2d17886ff18d76"
+  }
+ ],
+ "note": "first 5 in-policy vectors of the package's own test-vector file (594 parsed, 555 inside the wired parameter bounds)"
+}

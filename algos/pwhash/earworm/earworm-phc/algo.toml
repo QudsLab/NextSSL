@@ -1,0 +1,39 @@
+id       = "earworm-phc"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "earworm"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
+fips      = false
+copyleft  = false
+upstream  = { url = "https://password-hashing.net/submissions/EARWORM-v0.tar.gz", sha256 = "b63b2388972680acb5633dc77c257e22635b634ad492106d44ad431f53350dc5", license = "CC0-1.0", files = ["aes.c", "aes.h", "core.h", "core-ref.c", "phc.c", "phc.h", "sha256.c", "sha256.h", "util.h", "util-ref.h", "util-opt.h", "LICENSE"] }
+# Built as the Makefile's FLAGS_REF (-DEARWORM_BUILD_REF; -DNDEBUG added so the asserts do not abort). PHS keeps a process-global arena (malloc'd, grown on demand), so calls are serialized. Memory = 4 KiB * 2^m_cost.
+# license file copied verbatim from the package (EARWORM-v0/earworm/COPYING). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
+# no vectors replayed (untested, tier unverified). The package ships no test vector for this PHS entry point.
+
+[params.t_cost]
+type     = "u32"
+min      = 1
+max      = 64
+default  = 1
+
+[params.m_cost]
+type     = "u32"
+min      = 0
+max      = 12
+default  = 2
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 1024
+default  = 32
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+salt = { min = 0, max = 32 }
+out = { min = 16, max = 1024 }

@@ -1,0 +1,51 @@
+{
+ "algorithm": "battcrypt-phc",
+ "vectors": [
+  {
+   "id": "kat-0",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 0,
+   "m_cost": 0,
+   "out_len": 64,
+   "out_hex": "e22441865a5405c2bbe84a4d6e025133595042886125989fafcf409493638d660803f13cc0fff9e902b3a017cb5b7bceb52ac404be77828dac531f01a25d17da"
+  },
+  {
+   "id": "kat-1",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 0,
+   "m_cost": 0,
+   "out_len": 32,
+   "out_hex": "e22441865a5405c2bbe84a4d6e025133595042886125989fafcf409493638d66"
+  },
+  {
+   "id": "kat-2",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 1,
+   "m_cost": 0,
+   "out_len": 64,
+   "out_hex": "a6ddd44ec442a4efa2b040ecdfe55faba23a868b62f975bab4231ab6055e4012b6a067bab54da6473514d662f3323a22778570a0a7734ac151dd4d1f80c39bbb"
+  },
+  {
+   "id": "kat-3",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 0,
+   "m_cost": 1,
+   "out_len": 64,
+   "out_hex": "c1ac3c9cc59f300122a8bc423fd75bde203f67a5ed6d318edfb4f8ab9c193d55ae6efa907dcc73838452c85adf393e9687f80a67d8ef199ec1b8b6b1513744c0"
+  },
+  {
+   "id": "kat-4",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 1,
+   "m_cost": 1,
+   "out_len": 64,
+   "out_hex": "fd23460ecf2280bdf10405f025ec98a3ac393375a8ba6c62105cf8c90e19f2b37e479a5871fe1049301462359d3334acb67a3cef51fb087312fbe58787ae5e0b"
+  }
+ ],
+ "note": "first 5 in-policy vectors of the package's own test-vector file (45 parsed, 38 inside the wired parameter bounds)"
+}

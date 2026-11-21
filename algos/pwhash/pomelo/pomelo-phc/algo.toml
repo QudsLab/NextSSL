@@ -1,0 +1,39 @@
+id       = "pomelo-phc"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "pomelo"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
+fips      = false
+copyleft  = false
+upstream  = { url = "https://password-hashing.net/submissions/POMELO-v3.tar.gz", sha256 = "fd578f394220b67268d927f1beadee1a85bd58e9122ca4a1b1196c4d26454071", license = "NOASSERTION", files = ["pomelo_x64.c", "LICENSE"] }
+# pomelo_x64.c (little-endian 64-bit portable C; the SSE2/AVX2 variants are not wired). Memory = 2^(13 + m_cost) bytes, time about 2^(8 + m_cost + t_cost) steps; upstream allows 0..=25 each, capped here at m_cost 12 and t_cost 4 (about 2 s worst case). Upstream rejects password > 256, salt > 64, output > 256.
+# NO license file in the package: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
+# first 5 in-policy vectors of the package's own test-vector file (1024 parsed, 1024 inside the wired parameter bounds)
+
+[params.t_cost]
+type     = "u32"
+min      = 0
+max      = 4
+default  = 0
+
+[params.m_cost]
+type     = "u32"
+min      = 0
+max      = 12
+default  = 0
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 256
+default  = 32
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+salt = { min = 0, max = 64 }
+out = { min = 16, max = 256 }

@@ -1,0 +1,51 @@
+{
+ "algorithm": "parallel-phc",
+ "vectors": [
+  {
+   "id": "kat-0",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 0,
+   "m_cost": 0,
+   "out_len": 64,
+   "out_hex": "6ee2fc021128a12b421606081687c7a5f17079400895a810ba4dffce1c5e4952a2c6ee370d7955bf9e479087405525dbdc62901e2851fd78ef4c42a8e2b8842d"
+  },
+  {
+   "id": "kat-1",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 0,
+   "m_cost": 0,
+   "out_len": 16,
+   "out_hex": "6ee2fc021128a12b421606081687c7a5"
+  },
+  {
+   "id": "kat-2",
+   "password_hex": "70617373776f726470617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 1,
+   "m_cost": 0,
+   "out_len": 64,
+   "out_hex": "f4d585e997d8de0b30585e4e268c4a1f67527b70d51447720232027307fd082d928d722cc4f5bef566b75bdb3ea741df9e9bf57256e3a87ab7a6e7472549fa57"
+  },
+  {
+   "id": "kat-5",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 2,
+   "m_cost": 0,
+   "out_len": 64,
+   "out_hex": "e1085b1a23f7f8d174ebd3d650e783d6a2b5880890cef82817b69ee5e82dbe3a9aec46925d26b4eab45fa3a3b6034e9c7a6669772d71259737d5f0bad5060113"
+  },
+  {
+   "id": "kat-6",
+   "password_hex": "70617373776f7264",
+   "salt_hex": "73616c74",
+   "t_cost": 3,
+   "m_cost": 0,
+   "out_len": 64,
+   "out_hex": "e210bcdc45b17f4a3751358f5f7b23fe0e70124e49b3a6be7204a047c7afba45febd59848e16dd4899043b9d40fe387865412c167dfb955d0a08c026ba424416"
+  }
+ ],
+ "note": "first 5 in-policy vectors of the package's own test-vector file (39 parsed, 32 inside the wired parameter bounds)"
+}

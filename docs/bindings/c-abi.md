@@ -199,8 +199,8 @@ checksum pow zk threshold vdf pke pake statefulsign he`.
 ## Building
 
 ```
-cargo build -p nextssl-ffi --release                      # 367 algorithms: no copyleft, no heavy dependencies
-cargo build -p nextssl-ffi --release --features everything   # all 386 (adds copyleft and the heavy algorithms)
+cargo build -p nextssl-ffi --release # default features: no copyleft, no heavy dependencies (list them with the runtime list call)
+cargo build -p nextssl-ffi --release --features everything # everything: adds copyleft and the heavy algorithms (list them with the runtime list call)
 ```
 
 Features: `copyleft` (GPL/LGPL algorithms), `bulletproofs`, `hbs-lms`, `hpke`, `opaque-ke`, `rsa`, `all-heavy`

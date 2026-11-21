@@ -8,8 +8,8 @@ sign and rng. No header, module map or Swift package is needed. Function referen
 ## Build the library
 
 ```
-cargo build -p nextssl-ffi --release                       # 367 algorithms
-cargo build -p nextssl-ffi --release --features everything # all 386
+cargo build -p nextssl-ffi --release # default features (count: see the runtime list call)
+cargo build -p nextssl-ffi --release --features everything # everything (count: see the runtime list call)
 ```
 
 The example looks for `target/release/libnextssl_ffi.so` (`libnextssl_ffi.dylib` on macOS), then `target/debug`,

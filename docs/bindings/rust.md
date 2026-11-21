@@ -21,14 +21,14 @@ The example uses the registry directly because `Policy::Safe` and `Policy::Any` 
 
 ```
 cd examples/rust
-cargo run --release -- --list                 # 367 algorithms (default features)
+cargo run --release -- --list # default features (count: see the runtime list call)
 cargo run --release -- --list kem
 cargo run --release -- sha256                 # demo (safe policy)
 cargo run --release -- ml-kem-768
 cargo run --release -- --root md5             # other tiers need --root
 cargo run --release -- --params hash=sha512 hmac
 cargo run --release -- --info ml-dsa-65
-cargo run --release --features everything -- --list    # 386: copyleft and heavy algorithms too
+cargo run --release --features everything -- --list # copyleft and heavy algorithms too (count: see the runtime list call)
 ```
 
 The package has its own `[workspace]` and `Cargo.lock` (copied from the main lock so versions match), like `fuzz/`.

@@ -10,8 +10,8 @@ Panama is final in Java 22. On older JDKs use JNA or JNI instead; this binding d
 ## Build the library
 
 ```
-cargo build -p nextssl-ffi --release                       # 367 algorithms
-cargo build -p nextssl-ffi --release --features everything # all 386
+cargo build -p nextssl-ffi --release # default features (count: see the runtime list call)
+cargo build -p nextssl-ffi --release --features everything # everything (count: see the runtime list call)
 ```
 
 The example looks for `target/release/libnextssl_ffi.so` (`.dylib` / `nextssl_ffi.dll`), then `target/debug`,

@@ -1,0 +1,41 @@
+id       = "rig-phc"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "rig"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason = "MSVC cannot build the upstream C: rig.c: error C2057: expected constant expression (variable-length arrays)"
+upstream  = { url = "https://password-hashing.net/submissions/RIG-v2.tar.gz", sha256 = "2f28ba5d5f59f988ac917e5cd4ecacb41cf970cf426ba7f2eace5b57c55aa4fd", license = "MIT", files = ["rig.c", "rig.h", "blake_impl.c", "blake_impl.h", "constants.h", "BLAKE/blake2-impl.h", "BLAKE/blake2.h", "BLAKE/blake2b-ref.c", "LICENSE"] }
+# Rig_v2-ref with the file's default HASH_BLAKE_PERM (the 'Rig v2.0' variant; the original Rig v1.1 variant needs a source edit and is not wired). Memory about 16 KiB * 2^m_cost (upstream m_cost 1..=31, capped at 10). Uses <malloc.h>.
+# license file copied verbatim from the package (RIG-v2/RIG/Rig-master/LICENSE). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
+# no vectors replayed (untested, tier unverified). The package ships no test vector for this PHS entry point.
+
+[params.t_cost]
+type     = "u32"
+min      = 1
+max      = 8
+default  = 1
+
+[params.m_cost]
+type     = "u32"
+min      = 1
+max      = 10
+default  = 4
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 64
+default  = 32
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+salt = { min = 0, max = 64 }
+out = { min = 16, max = 64 }

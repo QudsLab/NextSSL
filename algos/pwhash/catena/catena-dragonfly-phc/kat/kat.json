@@ -1,0 +1,5 @@
+{
+ "algorithm": "catena-dragonfly-phc",
+ "vectors": [],
+ "note": "no vectors replayed (untested, tier unverified). The package ships no test vector for this PHS entry point."
+}

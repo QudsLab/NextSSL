@@ -1,0 +1,41 @@
+id       = "yarn-phc"
+kind      = "pwhash"
+category  = "pwhash"
+family    = "yarn"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason = "MSVC cannot build the upstream C: yarn.c: error C2036: 'void *': unknown size (arithmetic on void pointers)"
+upstream  = { url = "https://password-hashing.net/submissions/Yarn-v2.tar.gz", sha256 = "0d4b77bc6fbe462fa4b08dd359b12a61f2188b08c0ccb1b7cbe37e5c4a83f666", license = "NOASSERTION", files = ["yarn.c", "yarn.h", "LICENSE"] }
+# PHS runs yarn() with par = 6, initrnd = 10, m_step = 72, no personalization; yarn() returns 1 on success (the shim maps that to 0). Memory = 16 << m_cost bytes. The package's test-vectors.txt uses other par/initrnd/m_step values, so no vector matches PHS: empty KAT.
+# NO license file in the package: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
+# no vectors replayed (untested, tier unverified). The package ships no test vector for this PHS entry point.
+
+[params.t_cost]
+type     = "u32"
+min      = 0
+max      = 1048576
+default  = 64
+
+[params.m_cost]
+type     = "u32"
+min      = 0
+max      = 20
+default  = 0
+
+[params.out_len]
+type     = "u32"
+min      = 16
+max      = 64
+default  = 32
+
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+salt = { min = 0, max = 16 }
+out = { min = 16, max = 64 }
