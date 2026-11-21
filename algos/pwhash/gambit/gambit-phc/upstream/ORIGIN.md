@@ -8,3 +8,4 @@
 - license: NOASSERTION
 - NO license file in the package: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8)
 - wired by wire batch 11 (group phc)
+- build-time portability rewrite (owner review pending, rule 1): keccak.cpp is compiled from a copy made by build.rs in which the four `void *` steps of buffer_xor (`target += 8;`, `source += 8;`, `target += 1;`, `source += 1;`) are written through `char *`. Same semantics as GCC's void-pointer extension; clang and MSVC reject the original in C++. The file in upstream/ is unchanged.

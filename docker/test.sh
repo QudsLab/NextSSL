@@ -84,6 +84,11 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ]; then
   export CFLAGS_wasm32_unknown_unknown="--target=wasm32-wasip1 -isystem /usr/include/wasm32-wasi"
   export CC_wasm32_wasip1=clang AR_wasm32_wasip1=llvm-ar
   export CFLAGS_wasm32_wasip1="-isystem /usr/include/wasm32-wasi"
+  # C++ upstreams (Crypto++, PHC entries) use the Debian wasi libc++ (libc++-dev-wasm32); the C++
+  # headers must come before the C ones. Each C++ build.rs links static c++ and c++abi on wasm32.
+  export CXX_wasm32_unknown_unknown=clang++ CXX_wasm32_wasip1=clang++
+  export CXXFLAGS_wasm32_unknown_unknown="--target=wasm32-wasip1 -isystem /usr/include/wasm32-wasi/c++/v1 -isystem /usr/include/wasm32-wasi"
+  export CXXFLAGS_wasm32_wasip1="-isystem /usr/include/wasm32-wasi/c++/v1 -isystem /usr/include/wasm32-wasi"
   # Many C upstreams call malloc/calloc/free/assert/errno, and wasm32-unknown-unknown has no libc, so the
   # Debian wasi-libc archive is linked in. The module then carries WASI imports: this step is a link
   # check of the whole catalog, not a ready-to-ship browser module. getrandom 0.4 needs its wasm_js
@@ -93,7 +98,7 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ]; then
   ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm"
   # KAT + unit tests inside wasmtime (/src preopened so the KAT json files are readable).
   # The default 1 MiB wasm stack overflows in the larger code-based schemes (CROSS, McEliece).
-  CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864" \
+  CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864 -C link-arg=-L/usr/lib/wasm32-wasi" \
   CARGO_TARGET_WASM32_WASIP1_RUNNER="wasmtime run --dir=/src" \
     cargo test --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm
 fi

@@ -54,6 +54,11 @@ const PREFIX: &str = "nextssl__ov_is__";
 
 fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
+    // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
+    // K&R-era upstreams. gnu17 is the dialect these sources were written against.
+    if !cpp && !b.get_compiler().is_like_msvc() {
+        b.flag("-std=gnu17");
+    }
     b.warnings(false).opt_level(2);
     if cpp {
         b.cpp(true);
@@ -63,6 +68,11 @@ fn base(cpp: bool) -> cc::Build {
     }
     for (k, v) in DEFINES {
         b.define(k, if v.is_empty() { None } else { Some(*v) });
+    }
+    // liboqs' own CMake defines OQS_HAVE_POSIX_MEMALIGN wherever posix_memalign exists (every
+    // non-Windows target, wasi-libc too); without it common.c includes <malloc.h>, which macOS lacks.
+    if std::env::var("CARGO_CFG_TARGET_OS").as_deref() != Ok("windows") {
+        b.define("OQS_HAVE_POSIX_MEMALIGN", None);
     }
     for s in if cpp { CPP_SOURCES } else { SOURCES } {
         b.file(s);

@@ -42,6 +42,11 @@ fn main() {
             .flag("-g")
             .opt_level(1);
     }
+    // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
+    // K&R-era upstreams. gnu17 is the dialect these sources were written against.
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-std=gnu17");
+    }
     link_shared(&mut b, "nextssl_cubehash", false);
     println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
     if std::path::Path::new("upstream").exists() {

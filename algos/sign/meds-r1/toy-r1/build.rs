@@ -10,7 +10,6 @@ const SOURCES: &[&str] = &[
     "upstream/toy/fips202.c",
     "upstream/toy/matrixmod.c",
     "upstream/toy/meds.c",
-    "upstream/toy/osfreq.c",
     "upstream/toy/seed.c",
     "upstream/toy/util.c",
     "shim.c",
@@ -20,6 +19,11 @@ const PREFIX: &str = "nextssl__toy_r1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
+    // K&R-era upstreams. gnu17 is the dialect these sources were written against.
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-std=gnu17");
+    }
     b.warnings(false).opt_level(2);
 
     // Force-included preamble: scheme macros upstream's own build passes on the command line, plus (MSVC only) a no-op

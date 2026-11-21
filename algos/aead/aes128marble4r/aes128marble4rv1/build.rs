@@ -16,6 +16,11 @@ const PREFIX: &str = "nextssl__aes128marble4rv1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
+    // K&R-era upstreams. gnu17 is the dialect these sources were written against.
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-std=gnu17");
+    }
     b.warnings(false).opt_level(2);
     // Upstream calls free() without including <stdlib.h>; give it the real prototype.
     if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() != Ok("msvc") {

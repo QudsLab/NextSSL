@@ -11,6 +11,11 @@ const PREFIX: &str = "nextssl__morus__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
+    // K&R-era upstreams. gnu17 is the dialect these sources were written against.
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-std=gnu17");
+    }
     b.warnings(false).opt_level(2);
     // supercop's `inline` functions rely on GNU89 semantics (C99 inline emits no out-of-line copy: undefined symbol on Linux).
     b.flag_if_supported("-fgnu89-inline");

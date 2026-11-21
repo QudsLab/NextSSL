@@ -34,6 +34,10 @@ fn base() -> cc::Build {
     for i in INCLUDES {
         b.include(i);
     }
+    // glibc-only headers the upstream includes; macOS gets small stand-ins (compat/apple).
+    if std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("macos") {
+        b.include("compat/apple");
+    }
     for (k, v) in DEFINES {
         b.define(
             k,

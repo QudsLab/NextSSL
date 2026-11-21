@@ -26,6 +26,11 @@ const PREFIX: &str = "nextssl__vox128_r1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
+    // K&R-era upstreams. gnu17 is the dialect these sources were written against.
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-std=gnu17");
+    }
     b.warnings(false).opt_level(2);
     b.define("PARAM_SET_VOX128", None);
     // Force-included preamble: scheme macros upstream's own build passes on the command line, plus (MSVC only) a no-op
@@ -46,6 +51,10 @@ fn base() -> cc::Build {
     }
     for i in INCLUDES {
         b.include(i);
+    }
+    // glibc-only headers the upstream includes; macOS gets small stand-ins (compat/apple).
+    if std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("macos") {
+        b.include("compat/apple");
     }
     for s in SOURCES {
         b.file(s);

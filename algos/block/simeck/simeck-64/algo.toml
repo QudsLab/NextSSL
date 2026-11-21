@@ -9,8 +9,6 @@ standards = ["SIMECK64/128 (Yang et al., CHES 2015), Crypto++ implementation"]
 fips      = false
 copyleft  = false
 upstream  = { repo = "https://github.com/weidai11/cryptopp", commit = "5873a73a231c95771f5bbf3466a484952fb22780", license = "BSL-1.0", files = ["aes.h", "algparam.cpp", "algparam.h", "allocate.cpp", "allocate.h", "argnames.h", "config.h", "config_align.h", "config_asm.h", "config_cpu.h", "config_cxx.h", "config_dll.h", "config_int.h", "config_misc.h", "config_ns.h", "config_os.h", "config_ver.h", "cpu.h", "cryptlib.cpp", "cryptlib.h", "filters.cpp", "filters.h", "fips140.cpp", "fips140.h", "fltrimpl.h", "hkdf.h", "hmac.h", "integer.h", "iterhash.h", "misc.cpp", "misc.h", "mqueue.cpp", "mqueue.h", "osrng.h", "pch.h", "queue.cpp", "queue.h", "randpool.h", "rijndael.h", "rng.h", "secblock.h", "secblockfwd.h", "seckey.h", "sha.h", "simeck.cpp", "simeck.h", "simple.h", "smartptr.h", "stdcpp.h", "trap.h", "words.h", "LICENSE"] }
-exclude_targets = ["wasm32"]
-exclude_reason = "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship"
 # Crypto++ is compiled verbatim as C++17 (portable: CRYPTOPP_DISABLE_ASM, CRYPTOPP_DISABLE_SSE2, CRYPTOPP_NO_ASSIGN_TO_INTEGER) with the namespace CryptoPP renamed by a -D define per id; shim.cpp is ours.
 # License: the library is Boost Software License 1.0 (upstream/LICENSE is Crypto++ License.txt, verbatim; it also lists individual files placed in the public domain by their authors).
 # Link support in shim.cpp (not crypto): IntToString<word64> copied from integer.cpp (big-integer code is not compiled) and explicit instantiations of AlgorithmParametersTemplate (dll.cpp is not compiled).

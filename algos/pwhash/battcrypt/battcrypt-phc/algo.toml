@@ -9,8 +9,6 @@ standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()
 fips      = false
 copyleft  = false
 upstream  = { url = "https://password-hashing.net/submissions/battcrypt-v0.tar.gz", sha256 = "6549a2b7d0fd83a850cd74ea080a35135b25af384d2216ea2d17a9ab7cc2108a", license = "MIT", files = ["battcrypt.cpp", "battcrypt.h", "blowfish.cpp", "blowfish.h", "sha512.cpp", "sha512.h", "common.h", "architecture.h", "LICENSE"] }
-exclude_targets = ["wasm32"]
-exclude_reason = "wasm32: the C++ upstream needs the C++ standard library, which the wasi-libc toolchain in the test image does not ship"
 # Upstream also accepts t_cost bits above 16 (upgrade loops) and m_cost up to 50; capped here at t_cost <= 6 (upgrade bits zero; time doubles every two steps) and m_cost <= 10 (memory = 16 << m_cost bytes, time about doubles per step). The package's own stdint.h/inttypes.h (Windows shims) are not copied. Output <= 64 bytes.
 # license file copied verbatim from the package (battcrypt-v0/battcrypt/code/LICENSE). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.
 # first 5 in-policy vectors of the package's own test-vector file (45 parsed, 38 inside the wired parameter bounds)

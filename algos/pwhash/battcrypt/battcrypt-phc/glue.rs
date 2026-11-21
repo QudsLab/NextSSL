@@ -6,8 +6,6 @@
 //! password 0..=1024 bytes, output 16..=64 bytes.
 //! PHC form: `$battcrypt-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! Upstream also accepts t_cost bits above 16 (upgrade loops) and m_cost up to 50; capped here at t_cost <= 6 (upgrade bits zero; time doubles every two steps) and m_cost <= 10 (memory = 16 << m_cost bytes, time about doubles per step). The package's own stdint.h/inttypes.h (Windows shims) are not copied. Output <= 64 bytes.
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_arch = "wasm32"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};

@@ -3,20 +3,38 @@
 //! statics) can collide with another upstream. The only exported symbol is the `extern "C"`
 //! `nextssl__gambit_phc__derive`. `NEXTSSL_C_SANITIZE=1` adds ASan/UBSan(trap).
 fn main() {
-    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C++: keccak.cpp: error C2036: 'void *': unknown size (arithmetic on void pointers). wasm32: the C++ upstream needs the C++ standard library (<cstddef>), which the wasi-libc toolchain does not ship
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc")
-        || std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32")
-    {
-        return;
-    }
-    // END TARGET GATE
     let mut b = cc::Build::new();
     b.cpp(true).warnings(false).opt_level(2);
     let msvc = b.get_compiler().is_like_msvc();
     if !msvc {
         b.flag("-std=c++11");
     }
+    // upstream/keccak.cpp advances `void *` pointers in buffer_xor (a GNU extension that clang and
+    // MSVC reject in C++). The file on disk stays verbatim; the compiled copy spells the same four
+    // steps through `char *`, which is exactly what GCC does. See upstream/ORIGIN.md.
+    let src = std::fs::read_to_string("upstream/keccak.cpp").expect("read upstream/keccak.cpp");
+    let mut fixed = src.clone();
+    for (from, to) in [
+        ("target += 8;", "target = (char *)target + 8;"),
+        ("source += 8;", "source = (const char *)source + 8;"),
+        ("target += 1;", "target = (char *)target + 1;"),
+        ("source += 1;", "source = (const char *)source + 1;"),
+    ] {
+        assert_eq!(
+            fixed.matches(from).count(),
+            1,
+            "keccak.cpp: expected one `{from}`"
+        );
+        fixed = fixed.replace(from, to);
+    }
+    let out = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap());
+    let kc = out.join("keccak_portable.cpp");
+    std::fs::write(&kc, fixed).expect("write keccak_portable.cpp");
+    b.include("upstream");
+    b.define(
+        "NEXTSSL_GAMBIT_KECCAK",
+        Some(format!("\"{}\"", kc.display().to_string().replace('\\', "/")).as_str()),
+    );
     b.file("shim.cpp");
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")
@@ -41,6 +59,13 @@ fn main() {
 // algorithm (see xtask/src/buildlink.rs). The library is renamed `<lib>_<hash>` so names stay unique.
 fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
     let out = std::path::PathBuf::from(std::env::var("OUT_DIR").expect("OUT_DIR"));
+    let wasm = std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32");
+    if cpp && wasm {
+        // wasi libc++ has no threads: give it the single-threaded std::mutex C++ upstreams expect.
+        let h = out.join("nextssl_wasi_cxx.h");
+        std::fs::write(&h, "/* NextSSL compat (not upstream), force-included only for C++ upstreams on wasm32.\n * 1. The wasi libc++ is built with _LIBCPP_HAS_NO_THREADS, so <mutex> declares no std::mutex, while\n *    upstreams such as Crypto++ guard lazy singletons with one. A wasm32 module without the threads\n *    proposal runs on one thread, so a lock that does nothing is exact.\n * 2. The wasi libc++abi has no exception support (__cxa_throw is missing). The glue validates every\n *    length and parameter before calling the upstream, so a throw is not expected; if one happens the\n *    module stops loudly (abort) instead of continuing. Weak, so the C++ libraries can link together. */\n#ifndef NEXTSSL_WASI_CXX_H\n#define NEXTSSL_WASI_CXX_H\n#include <cstddef>\n#include <cstdio>\n#include <cstdlib>\n#include <mutex>\n#include <typeinfo>\n#if defined(_LIBCPP_HAS_NO_THREADS)\nnamespace std {\nclass mutex {\npublic:\n    constexpr mutex() noexcept = default;\n    mutex(const mutex &) = delete;\n    mutex &operator=(const mutex &) = delete;\n    void lock() noexcept {}\n    bool try_lock() noexcept { return true; }\n    void unlock() noexcept {}\n};\n} // namespace std\n#endif\nextern \"C\" {\n__attribute__((weak)) void *__cxa_allocate_exception(std::size_t n) noexcept {\n    void *p = std::malloc(n);\n    if (!p) std::abort();\n    return p;\n}\n__attribute__((weak, noreturn)) void __cxa_throw(void *, std::type_info *, void (*)(void *)) {\n    std::fputs(\"nextssl: C++ exception thrown in a wasm32 build (no exception support), aborting\\n\", stderr);\n    std::abort();\n}\n}\n#endif\n").expect("write nextssl_wasi_cxx.h");
+        b.flag("-include").flag(h.to_str().expect("utf-8 OUT_DIR"));
+    }
     b.cargo_metadata(false).compile(lib);
     let msvc = b.get_compiler().is_like_msvc();
     let pkg_dir = out.parent().expect("OUT_DIR has a parent");
@@ -78,7 +103,11 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
             }
             .to_string()
         });
-        if !std_lib.is_empty() {
+        if wasm {
+            // wasm32 (wasi libc++): the C++ library and its ABI runtime; the toolchain supplies -L (docker/test.sh).
+            println!("cargo:rustc-link-lib=c++");
+            println!("cargo:rustc-link-lib=c++abi");
+        } else if !std_lib.is_empty() {
             println!("cargo:rustc-link-lib={std_lib}");
         }
     }

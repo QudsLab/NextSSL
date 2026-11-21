@@ -17,6 +17,11 @@ const PRE: &str = "#include <stddef.h>\n#include <stdint.h>\n#include <stdio.h>\
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
+    // K&R-era upstreams. gnu17 is the dialect these sources were written against.
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-std=gnu17");
+    }
     b.warnings(false).opt_level(2);
     let msvc = b.get_compiler().is_like_msvc();
     if !PRE.is_empty() {

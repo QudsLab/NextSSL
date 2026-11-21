@@ -16,6 +16,11 @@ const PREFIX: &str = "nextssl__twine80n6clocv1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
+    // K&R-era upstreams. gnu17 is the dialect these sources were written against.
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-std=gnu17");
+    }
     b.warnings(false).opt_level(2);
     // GCC 14 makes implicit declarations an error; upstream calls functions defined in its own
     // other .c files (void return) without a prototype in scope. Same behaviour as MSVC/older GCC.

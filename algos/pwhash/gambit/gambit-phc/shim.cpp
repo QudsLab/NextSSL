@@ -8,7 +8,7 @@
 #include <cassert>
 
 namespace nextssl_gambit_phc {
-#include "upstream/keccak.cpp"
+#include NEXTSSL_GAMBIT_KECCAK /* upstream/keccak.cpp with buffer_xor's void* steps via char* (build.rs) */
 #include "upstream/gambit.cpp"
 }  // namespace nextssl_gambit_phc
 

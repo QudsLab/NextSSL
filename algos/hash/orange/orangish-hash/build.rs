@@ -19,6 +19,11 @@ const PREFIX: &str = "nextssl__orangish_hash__";
 
 fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
+    // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
+    // K&R-era upstreams. gnu17 is the dialect these sources were written against.
+    if !cpp && !b.get_compiler().is_like_msvc() {
+        b.flag("-std=gnu17");
+    }
     b.warnings(false).opt_level(2);
     if cpp {
         b.cpp(true);

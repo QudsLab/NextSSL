@@ -6,8 +6,6 @@
 //! password 0..=1024 bytes, output 16..=64 bytes.
 //! PHC form: `$parallel-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! Upstream ignores m_cost entirely, so it is pinned to 0 (explicit error otherwise, no silent ignore). t_cost low 16 bits = parallel loops, high bits = sequential loops (zero here; upstream allows up to 106 / 126). The package's stdint.h/inttypes.h are not copied. KAT uses the 'parallel-SHA512' rows.
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_arch = "wasm32"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};
