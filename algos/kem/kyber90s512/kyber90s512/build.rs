@@ -183,7 +183,13 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
         .and_then(|n| n.to_str())
         .and_then(|n| n.rsplit('-').next())
         .unwrap_or("0");
-    let shared = pkg_dir.parent().expect("build dir").join("nextssl-c-libs");
+    // One directory for every crate, next to the per-crate build dirs: build/<pkg>-<hash>/out
+    // (classic layout) or build/<pkg>/<hash>/out (cargo build-dir layout used by nightly).
+    let build_dir = out
+        .ancestors()
+        .find(|p| p.file_name().is_some_and(|n| n == "build"))
+        .expect("OUT_DIR is inside a `build` directory");
+    let shared = build_dir.join("nextssl-c-libs");
     std::fs::create_dir_all(&shared).expect("create shared lib dir");
     let uniq = format!("{lib}_{tag}");
     let file = |n: &str| {
