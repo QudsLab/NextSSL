@@ -1,0 +1,27 @@
+id        = "sikep610comp"
+kind      = "kem"
+category  = "kem"
+family    = "sikep610comp"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'P610_compressed_api.h': No such file or directory"
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["amd64/P610_compressed_api.h", "arm/P610_compressed.c", "arm/P610_compressed_dlog_tables.inc", "arm/P610_compressed_pair_tables.inc", "arm/P610_internal.h", "arm/api.h", "arm/config.h", "arm/dlog.inc", "arm/ec_isogeny.inc", "arm/fips202.c", "arm/fips202.h", "arm/fp_generic.c", "arm/fpx.inc", "arm/internal.h", "arm/pairing.inc", "arm/sidh_compressed.inc", "arm/sike_compressed.inc", "arm/torsion_basis.inc", "LICENSE"] }
+
+# Variant wired: arm (kem). Other variants not wired: x86.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 274
+sk = 491
+ct = 336
+ss = 24
+seed = 0
+coins = 0

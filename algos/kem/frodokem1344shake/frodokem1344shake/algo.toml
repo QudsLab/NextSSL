@@ -1,0 +1,27 @@
+id        = "frodokem1344shake"
+kind      = "kem"
+category  = "kem"
+family    = "frodokem1344shake"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: fatal error C1003: error count exceeds 100; stopping compilation"
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["x64/KeccakP-1600-times4-SIMD256.c", "x64/KeccakP-1600-times4-SnP.h", "x64/KeccakP-1600-unrolling.macros", "x64/SIMD256-config.h", "x64/align.h", "x64/api.h", "x64/apiorig.h", "x64/brg_endian.h", "x64/config.h", "x64/fips202.c", "x64/fips202.h", "x64/fips202x4.c", "x64/fips202x4.h", "x64/frodo1344.c", "x64/frodo_macrify.h", "x64/frodo_macrify.inc", "x64/kem.inc", "x64/noise.inc", "x64/util.c", "LICENSE"] }
+
+# Variant wired: x64 (kem). Other variants not wired: optimized.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 21520
+sk = 43088
+ct = 21632
+ss = 32
+seed = 0
+coins = 0

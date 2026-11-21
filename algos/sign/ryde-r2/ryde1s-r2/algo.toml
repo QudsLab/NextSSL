@@ -1,0 +1,26 @@
+id        = "ryde1s-r2"
+kind      = "sign"
+category  = "sign"
+family    = "ryde-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'KeccakP-1600-SnP.h': No such file or directory"
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/submission-pkg/ryde-submission-round2.zip", sha256 = "c40b9b01b3882a7da83a439a4c251a7dab67cd97c46d71f2b27b2af9978f02a9", license = "NOASSERTION", files = ["ryde1s/lib/XKCP/KeccakHash.c", "ryde1s/lib/XKCP/KeccakHash.h", "ryde1s/lib/XKCP/KeccakHashtimes4.c", "ryde1s/lib/XKCP/KeccakHashtimes4.h", "ryde1s/lib/XKCP/KeccakSponge.c", "ryde1s/lib/XKCP/KeccakSponge.h", "ryde1s/lib/XKCP/KeccakSponge.inc", "ryde1s/lib/XKCP/KeccakSpongetimes4.c", "ryde1s/lib/XKCP/KeccakSpongetimes4.h", "ryde1s/lib/XKCP/KeccakSpongetimes4.inc", "ryde1s/lib/XKCP/SimpleFIPS202.c", "ryde1s/lib/XKCP/SimpleFIPS202.h", "ryde1s/lib/XKCP/align.h", "ryde1s/lib/XKCP/avx2/KeccakP-1600-SnP.h", "ryde1s/lib/XKCP/avx2/KeccakP-1600-times4-SnP.h", "ryde1s/lib/XKCP/avx2/SIMD256-config.h", "ryde1s/lib/XKCP/config.h", "ryde1s/lib/randombytes/randombytes.h", "ryde1s/src/api.h", "ryde1s/src/ggm_tree.c", "ryde1s/src/ggm_tree.h", "ryde1s/src/keypair.c", "ryde1s/src/keypair.h", "ryde1s/src/parameters.h", "ryde1s/src/parsing.c", "ryde1s/src/parsing.h", "ryde1s/src/rbc-53/rbc_53.h", "ryde1s/src/rbc-53/rbc_53_elt.c", "ryde1s/src/rbc-53/rbc_53_elt.h", "ryde1s/src/rbc-53/rbc_53_mat.c", "ryde1s/src/rbc-53/rbc_53_mat.h", "ryde1s/src/rbc-53/rbc_53_mat_fq.c", "ryde1s/src/rbc-53/rbc_53_mat_fq.h", "ryde1s/src/rbc-53/rbc_53_vec.c", "ryde1s/src/rbc-53/rbc_53_vec.h", "ryde1s/src/rbc-53/rbc_53_vspace.c", "ryde1s/src/rbc-53/rbc_53_vspace.h", "ryde1s/src/rijndael_avx.h", "ryde1s/src/rijndael_ref.h", "ryde1s/src/seed_expand_functions_avx.h", "ryde1s/src/seed_expand_functions_ref.h", "ryde1s/src/sign.c", "ryde1s/src/signature.c", "ryde1s/src/signature.h", "ryde1s/src/tcith.c", "ryde1s/src/tcith.h", "ryde1s/src/verification.c", "ryde1s/src/verification.h", "ryde1s/src/wrapper/hash_fips202.h", "ryde1s/src/wrapper/seedexpander_shake.h", "LICENSE"] }
+
+# Variant wired: ryde1s/src (sign). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 69
+sk = 32
+sig = { min = 1, max = 2988 }
+seed = 0
+ctx = 0

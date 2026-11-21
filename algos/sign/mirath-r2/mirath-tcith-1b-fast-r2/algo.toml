@@ -1,0 +1,26 @@
+id        = "mirath-tcith-1b-fast-r2"
+kind      = "sign"
+category  = "sign"
+family    = "mirath-r2"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = []
+fips      = false
+copyleft  = false
+exclude_targets = ["msvc"]
+exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
+upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/submission-pkg/mirath-submission-round2.zip", sha256 = "13efd6c28c38f9233074119192def715e62d80e888b216cb71b28d8a5a766d39", license = "NOASSERTION", files = ["mirath_tcith/mirath_tcith_1b_fast/api.h", "mirath_tcith/mirath_tcith_1b_fast/arith/mirath_arith.h", "mirath_tcith/mirath_tcith_1b_fast/arith/q_2/data_type.h", "mirath_tcith/mirath_tcith_1b_fast/arith/q_2/ff.h", "mirath_tcith/mirath_tcith_1b_fast/arith/q_2/matrix_ff_arith.h", "mirath_tcith/mirath_tcith_1b_fast/arith/q_2/matrix_ff_mu.h", "mirath_tcith/mirath_tcith_1b_fast/arith/q_2/mu_8/ff_mu.h", "mirath_tcith/mirath_tcith_1b_fast/arith/q_2/vector_ff_arith.h", "mirath_tcith/mirath_tcith_1b_fast/arith/q_2/vector_ff_mu.h", "mirath_tcith/mirath_tcith_1b_fast/common/KeccakHash.c", "mirath_tcith/mirath_tcith_1b_fast/common/KeccakHash.h", "mirath_tcith/mirath_tcith_1b_fast/common/KeccakSponge.inc", "mirath_tcith/mirath_tcith_1b_fast/common/fips202.c", "mirath_tcith/mirath_tcith_1b_fast/common/fips202.h", "mirath_tcith/mirath_tcith_1b_fast/common/hash.c", "mirath_tcith/mirath_tcith_1b_fast/common/hash.h", "mirath_tcith/mirath_tcith_1b_fast/common/prng.c", "mirath_tcith/mirath_tcith_1b_fast/common/prng.h", "mirath_tcith/mirath_tcith_1b_fast/common/random.h", "mirath_tcith/mirath_tcith_1b_fast/common/rijndael/rijndael_ref.h", "mirath_tcith/mirath_tcith_1b_fast/common/rijndael/seed_expand_functions_ref.h", "mirath_tcith/mirath_tcith_1b_fast/mirath_ggm_tree.c", "mirath_tcith/mirath_tcith_1b_fast/mirath_ggm_tree.h", "mirath_tcith/mirath_tcith_1b_fast/mirath_keygen.c", "mirath_tcith/mirath_tcith_1b_fast/mirath_keygen.h", "mirath_tcith/mirath_tcith_1b_fast/mirath_matrix_ff.c", "mirath_tcith/mirath_tcith_1b_fast/mirath_matrix_ff.h", "mirath_tcith/mirath_tcith_1b_fast/mirath_parameters.h", "mirath_tcith/mirath_tcith_1b_fast/mirath_parsing.c", "mirath_tcith/mirath_tcith_1b_fast/mirath_parsing.h", "mirath_tcith/mirath_tcith_1b_fast/mirath_sign.c", "mirath_tcith/mirath_tcith_1b_fast/mirath_sign.h", "mirath_tcith/mirath_tcith_1b_fast/mirath_tcith.c", "mirath_tcith/mirath_tcith_1b_fast/mirath_tcith.h", "mirath_tcith/mirath_tcith_1b_fast/mirath_verify.c", "mirath_tcith/mirath_tcith_1b_fast/mirath_verify.h", "mirath_tcith/mirath_tcith_1b_fast/parameters/mirath_param_128b.h", "mirath_tcith/mirath_tcith_1b_fast/rng.h", "mirath_tcith/mirath_tcith_1b_fast/sign.c", "LICENSE"] }
+
+# Variant wired: mirath_tcith/mirath_tcith_1b_fast (sign). Other variants not wired: none.
+# no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.
+# NO license file in the collected upstream tree: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Not compiled or tested at wiring time (owner order 2026-11-08). Upstream rng.c is not compiled; randombytes is supplied by shim.c.
+[kat]
+files = ["kat/kat.json"]
+
+[sizes]
+pk = 57
+sk = 32
+sig = { min = 1, max = 3456 }
+seed = 0
+ctx = 0
