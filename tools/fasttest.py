@@ -156,6 +156,9 @@ def main():
         if t == 'linux':
             # the same commands as CI's build job: clippy, then the test binaries' codegen
             log = in_docker(f'cargo clippy --keep-going --all-targets {sel} -- -D warnings 2>&1; echo "__EXIT__ $?"; '
+                            # link every test binary with --keep-going first: `cargo test --no-run` stops scheduling
+                            # after the first failed crate, so it alone shows one link error per run
+                            f'cargo build --tests --keep-going {sel} 2>&1; echo "__EXIT__ $?"; '
                             f'cargo test --no-run --no-fail-fast {sel} 2>&1; echo "__EXIT__ $?"', 'nsl-target', files)
         elif t == 'wasm':
             if sel == '--workspace':
@@ -174,7 +177,11 @@ def main():
             log = on_host(['cargo', 'clippy', '--keep-going', '--all-targets'] + sel.split() + ['--', '-D', 'warnings'])
             log += f'\n__EXIT__ {0 if "could not compile" not in log and "error:" not in log else 1}\n'
             # then the test binaries, as CI's build (windows) job does (links nextssl-ffi with every algorithm)
-            tlog = on_host(['cargo', 'test', '--no-run', '--no-fail-fast'] + sel.split())
+            # every test binary linked with --keep-going first (`cargo test --no-run` stops after the first
+            # failed crate, so alone it shows one link error per run), then CI's exact command
+            tlog = on_host(['cargo', 'build', '--tests', '--keep-going'] + sel.split())
+            tlog += f'\n__EXIT__ {0 if "could not compile" not in tlog and "error:" not in tlog else 1}\n'
+            tlog += on_host(['cargo', 'test', '--no-run', '--no-fail-fast'] + sel.split())
             log += tlog + f'\n__EXIT__ {0 if "could not compile" not in tlog and "error:" not in tlog else 1}\n'
         else:
             raise SystemExit(f'unknown target {t}')
