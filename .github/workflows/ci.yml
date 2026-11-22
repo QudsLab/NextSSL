@@ -36,7 +36,7 @@ jobs:
       # --keep-going: report every crate that does not build, not just the first one.
       - run: cargo clippy --workspace --all-targets --keep-going -- -D warnings
       # Compile (not run) the test binaries too, so stage 2 starts from a complete build.
-      - run: cargo test --workspace --no-run --keep-going
+      - run: cargo test --workspace --no-run --no-fail-fast
 
   build-wasm:
     name: build (wasm)

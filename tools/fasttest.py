@@ -82,9 +82,12 @@ def build_failures(log):
                 first.setdefault(crate_of(d), 'build.rs panicked: ' + lines[i + 1].strip()[:140])
     failed = set(re.findall(r'failed to run custom build command for `([a-z0-9-]+)', log))
     failed |= set(re.findall(r"could not compile `([a-z0-9-]+)`", log))
-    if not failed and re.search(r'^error', log, re.M) and 'Finished' not in log:
-        return ['(no crate named; see log)']
-    return [f'{c}: {first.get(c, "(see log)")}' for c in sorted(failed)]
+    rows = [f'{c}: {first.get(c, "(see log)")}' for c in sorted(failed)]
+    bad_exit = [e for e in re.findall(r'^__EXIT__ (\d+)$', log, re.M) if e != '0']
+    if bad_exit and not rows:
+        errs = [l for l in lines if l.startswith('error')][:2]
+        rows.append('command failed: ' + (' | '.join(errs)[:160] if errs else 'see log'))
+    return rows
 
 
 def smoke_failures(log):
@@ -148,16 +151,28 @@ def main():
 
     def build(t):
         t0 = time.time()
+        # Every command's exit status is printed as `__EXIT__ <n>`; a non-zero status fails the target even
+        # when no crate can be named (e.g. a bad cargo flag), so nothing hides behind an earlier "Finished".
         if t == 'linux':
-            # clippy (the CI gate) plus the test binaries' codegen, so stage 2 only links and runs.
-            log = in_docker(f'cargo clippy --keep-going --all-targets {sel} -- -D warnings 2>&1; '
-                            f'cargo test --no-run --keep-going {sel} 2>&1', 'nsl-target', files)
+            # the same commands as CI's build job: clippy, then the test binaries' codegen
+            log = in_docker(f'cargo clippy --keep-going --all-targets {sel} -- -D warnings 2>&1; echo "__EXIT__ $?"; '
+                            f'cargo test --no-run --no-fail-fast {sel} 2>&1; echo "__EXIT__ $?"', 'nsl-target', files)
         elif t == 'wasm':
-            excl = ' --exclude xtask --exclude nextssl-wasm' if sel == '--workspace' else ''
-            log = in_docker(WASM_ENV + f'cargo build --target wasm32-wasip1 --keep-going {sel}{excl} 2>&1',
-                            'nsl-wasm-target', files)
+            if sel == '--workspace':
+                # exactly CI's build (wasm) job: both wasm targets via docker/test.sh
+                log = in_docker('NEXTSSL_SKIP_BASE=1 NEXTSSL_WASM_BUILD=1 sh docker/test.sh 2>&1; echo "__EXIT__ $?"',
+                                'nsl-wasm-target', files)
+            else:
+                log = in_docker(WASM_ENV + f'cargo build --target wasm32-wasip1 --keep-going {sel} 2>&1; echo "__EXIT__ $?"; '
+                                'export CC_wasm32_unknown_unknown=clang AR_wasm32_unknown_unknown=llvm-ar '
+                                'CFLAGS_wasm32_unknown_unknown="--target=wasm32-wasip1 -isystem /usr/include/wasm32-wasi" '
+                                'CXX_wasm32_unknown_unknown=clang++ CXXFLAGS_wasm32_unknown_unknown="--target=wasm32-wasip1 '
+                                '-isystem /usr/include/wasm32-wasi/c++/v1 -isystem /usr/include/wasm32-wasi"; '
+                                f'cargo build --target wasm32-unknown-unknown --keep-going {sel} 2>&1; echo "__EXIT__ $?"',
+                                'nsl-wasm-target', files)
         elif t == 'msvc':
             log = on_host(['cargo', 'clippy', '--keep-going', '--all-targets'] + sel.split() + ['--', '-D', 'warnings'])
+            log += f'\n__EXIT__ {0 if "could not compile" not in log and "error:" not in log else 1}\n'
         else:
             raise SystemExit(f'unknown target {t}')
         (out / f'fasttest-{t}.log').write_text(log, errors='replace')

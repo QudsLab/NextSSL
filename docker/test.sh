@@ -96,14 +96,18 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   # Debian wasi-libc archive is linked in. The module then carries WASI imports: this step is a link
   # check of the whole catalog, not a ready-to-ship browser module. getrandom 0.4 needs its wasm_js
   # backend cfg (see crates/nextssl-wasm/Cargo.toml); this env var replaces .cargo/config.toml rustflags.
+  # Both wasm builds always run (--keep-going, failures collected) so one pass reports every crate.
+  WASM_FAIL=0
   CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_RUSTFLAGS='--cfg getrandom_backend="wasm_js" -C link-arg=-L/usr/lib/wasm32-wasi -C link-arg=-lc' \
-    cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release
-  ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm"
+    cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release --keep-going || WASM_FAIL=1
+  ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm" || WASM_FAIL=1
   # KAT + unit tests inside wasmtime (/src preopened so the KAT json files are readable).
   # The default 1 MiB wasm stack overflows in the larger code-based schemes (CROSS, McEliece).
   WASM_NO_RUN=""
   if [ "${NEXTSSL_WASM:-0}" != "1" ]; then WASM_NO_RUN="--no-run"; fi
   CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864 -C link-arg=-L/usr/lib/wasm32-wasi" \
   CARGO_TARGET_WASM32_WASIP1_RUNNER="wasmtime run --dir=/src" \
-    cargo test --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm $WASM_NO_RUN
+    cargo test --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm --no-fail-fast $WASM_NO_RUN \
+    || WASM_FAIL=1
+  if [ "$WASM_FAIL" != "0" ]; then echo "wasm: FAILED"; exit 1; fi
 fi
