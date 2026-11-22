@@ -21,6 +21,12 @@ const PREFIX: &str = "nextssl__sphincsf192sha256simple__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // A header has a tentative definition (`uint8_t state_seeded[40];`). wasm32 clang makes it a common
+    // symbol, which wasm-ld cannot place (undefined state_seeded at link); -fno-common gives the same
+    // single definition the other targets get. wasm32 only.
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32") {
+        b.flag("-fno-common");
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {

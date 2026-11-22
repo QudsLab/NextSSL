@@ -17,17 +17,29 @@ const SOURCES: &[&str] = &[
     "shim.c",
 ];
 const INCLUDES: &[&str] = &["upstream/crypto_sign/sphincs-sha256-256f-simple"];
+// Sources another source already #includes (left out of the wasm32 unity file).
+const UNITY_SKIP: &[&str] = &[];
 const PREFIX: &str = "nextssl__sphincs_sha256_256f_simple_r2__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // A header has a tentative definition (`uint8_t state_seeded[40];`). wasm32 clang makes it a common
+    // symbol, which wasm-ld cannot place (undefined state_seeded at link); -fno-common gives the same
+    // single definition the other targets get. wasm32 only.
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32") {
+        b.flag("-fno-common");
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
         b.flag("-std=gnu17");
     }
     b.warnings(false).opt_level(2);
-    if !b.get_compiler().is_like_msvc() {
+    // -fcommon merges the headers' tentative definitions across files; wasm has no common symbols
+    // (there the sources are one translation unit instead, see below).
+    if !b.get_compiler().is_like_msvc()
+        && std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() != Ok("wasm32")
+    {
         b.flag("-fcommon");
     }
 
@@ -50,8 +62,28 @@ fn base() -> cc::Build {
     for i in INCLUDES {
         b.include(i);
     }
-    for s in SOURCES {
-        b.file(s);
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32") {
+        // Headers here hold tentative definitions (built with -fcommon elsewhere). wasm has no common
+        // symbols and wasm-ld rejects duplicates, so on wasm32 only the sources are compiled as one
+        // translation unit, where C merges the tentative definitions into one.
+        let root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
+        let unity: String = SOURCES
+            .iter()
+            .filter(|s| !UNITY_SKIP.contains(s))
+            .map(|s| {
+                format!(
+                    "#include \"{}\"\n",
+                    root.join(s).display().to_string().replace('\\', "/")
+                )
+            })
+            .collect();
+        let u = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_unity.c");
+        std::fs::write(&u, unity).unwrap();
+        b.file(u);
+    } else {
+        for s in SOURCES {
+            b.file(s);
+        }
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")

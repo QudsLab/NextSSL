@@ -22,6 +22,12 @@ fn base() -> cc::Build {
     let mut b = cc::Build::new();
     b.warnings(false).opt_level(2);
     let msvc = b.get_compiler().is_like_msvc();
+    // Sponge.c defines its functions `inline void f(...)` with plain extern declarations in Sponge.h; C99
+    // then emits external definitions, MSVC does not (unresolved squeeze, initState, ...). On MSVC only,
+    // `inline` is defined away, so they are ordinary functions (`inline static` becomes `static`).
+    if msvc {
+        b.define("inline", Some(""));
+    }
     if !PRE.is_empty() {
         // Force-included preamble: no-op `__attribute__` (the old BLAKE2 headers combine #pragma pack with
         // aligned typedefs, which current compilers reject; the attribute carries no semantics for portable C).

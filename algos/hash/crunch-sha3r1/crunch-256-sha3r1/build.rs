@@ -49,12 +49,54 @@ fn base() -> cc::Build {
     b.flag_if_supported("-Wno-error=incompatible-pointer-types");
     b.flag_if_supported("-Wno-error=return-mismatch");
     b.flag_if_supported("-Wno-error=declaration-missing-parameter-type");
-    b.flag_if_supported("-fcommon");
+    // -fcommon merges the headers' tentative definitions across files; wasm has no common symbols
+    // (there the sources are one translation unit instead, see below).
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() != Ok("wasm32") {
+        b.flag_if_supported("-fcommon");
+    }
     for i in INCLUDES {
         b.include(i);
     }
+    let wasm = std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("wasm32");
     for s in SOURCES {
-        b.file(s);
+        let variant = s
+            .rsplit("/")
+            .next()
+            .and_then(|n| n.strip_prefix("crunch_"))
+            .and_then(|n| n.strip_suffix(".c"))
+            .filter(|v| v.bytes().all(|c| c.is_ascii_digit()));
+        match (wasm, variant) {
+            // crunch_224/256/384/512.c each define LeftData, SizeLeft, BitInLastByte, PrevHash and
+            // TotalInputSizeInBit; elsewhere -fcommon merges them, wasm has no common symbols. On wasm32
+            // each variant file is compiled through a wrapper that gives its globals file-own names
+            // (each hash call only touches its own variant"s state and initialises it first).
+            (true, Some(v)) => {
+                let root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
+                let mut w = String::new();
+                for n in [
+                    "LeftData",
+                    "SizeLeft",
+                    "BitInLastByte",
+                    "PrevHash",
+                    "TotalInputSizeInBit",
+                ]
+                .iter()
+                {
+                    w.push_str(&format!("#define {n} nextssl_crunch{v}_{n}\n"));
+                }
+                w.push_str(&format!(
+                    "#include \"{}\"\n",
+                    root.join(s).display().to_string().replace('\\', "/")
+                ));
+                let p = PathBuf::from(std::env::var("OUT_DIR").unwrap())
+                    .join(format!("crunch_{v}_wasm.c"));
+                std::fs::write(&p, w).unwrap();
+                b.file(p);
+            }
+            _ => {
+                b.file(s);
+            }
+        }
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")

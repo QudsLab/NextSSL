@@ -173,6 +173,9 @@ def main():
         elif t == 'msvc':
             log = on_host(['cargo', 'clippy', '--keep-going', '--all-targets'] + sel.split() + ['--', '-D', 'warnings'])
             log += f'\n__EXIT__ {0 if "could not compile" not in log and "error:" not in log else 1}\n'
+            # then the test binaries, as CI's build (windows) job does (links nextssl-ffi with every algorithm)
+            tlog = on_host(['cargo', 'test', '--no-run', '--no-fail-fast'] + sel.split())
+            log += tlog + f'\n__EXIT__ {0 if "could not compile" not in tlog and "error:" not in tlog else 1}\n'
         else:
             raise SystemExit(f'unknown target {t}')
         (out / f'fasttest-{t}.log').write_text(log, errors='replace')
@@ -213,5 +216,21 @@ def main():
     return 1 if summary else 0
 
 
+def cleanup():
+    """Owner rule: after every run give memory and CPU back. Stops this tool's containers (if a run was
+    interrupted) and drops the Docker VM's page cache, which otherwise keeps several GB of RAM in vmmem."""
+    ids = subprocess.run(['docker', 'ps', '-q', '--filter', f'ancestor={IMAGE}'], capture_output=True,
+                         text=True).stdout.split()
+    if ids:
+        subprocess.run(['docker', 'stop'] + ids, capture_output=True)
+    subprocess.run(['docker', 'run', '--rm', '--privileged', '--pid=host', IMAGE, 'sh', '-c',
+                    'sync; echo 3 > /proc/sys/vm/drop_caches'], capture_output=True)
+    print('cleanup: containers stopped, Docker VM page cache dropped', flush=True)
+
+
 if __name__ == '__main__':
-    sys.exit(main())
+    try:
+        rc = main()
+    finally:
+        cleanup()
+    sys.exit(rc)
