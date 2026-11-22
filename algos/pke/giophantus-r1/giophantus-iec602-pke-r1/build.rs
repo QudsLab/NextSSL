@@ -9,7 +9,6 @@ const SOURCES: &[&str] = &[
     "upstream/encrypt/IEC602/aes256.c",
     "upstream/encrypt/IEC602/genrand.c",
     "upstream/encrypt/IEC602/iec.c",
-    "upstream/encrypt/IEC602/intermediate-iec.c",
     "upstream/encrypt/IEC602/poly.c",
     "upstream/encrypt/IEC602/polyopt.c",
     "upstream/encrypt/IEC602/seedexpand.c",
