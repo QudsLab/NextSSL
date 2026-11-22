@@ -41,6 +41,11 @@ fn base() -> cc::Build {
     let msvc = b.get_compiler().is_like_msvc();
     if msvc {
         pre.push_str("#define __attribute__(x)\n");
+        // SignScheme.c names a static array `_MT`, which the MSVC toolchain predefines for /MD and
+        // /MT. Include the CRT headers the upstream uses first (they may test _MT), then give the
+        // identifier back to the upstream under a private name.
+        pre.push_str("#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n");
+        pre.push_str("#undef _MT\n#define _MT nextssl__pflash1__static_MT\n");
     }
     if !pre.is_empty() {
         let h = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_pre.h");

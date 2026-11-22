@@ -76948,8 +76948,19 @@
         "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
         "license": "NOASSERTION",
         "files": [
-          "mmx/api.h",
-          "mmx/hash.c",
+          "opt/SHA3api_ref.c",
+          "opt/SHA3api_ref.h",
+          "opt/api.h",
+          "opt/brg_types.h",
+          "opt/hash.c",
+          "opt/implementors",
+          "opt/skein.c",
+          "opt/skein.h",
+          "opt/skein_block.c",
+          "opt/skein_debug.c",
+          "opt/skein_debug.h",
+          "opt/skein_iv.h",
+          "opt/skein_port.h",
           "LICENSE"
         ]
       },
@@ -76984,8 +76995,19 @@
         "sha256": "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288",
         "license": "NOASSERTION",
         "files": [
-          "mmx/api.h",
-          "mmx/hash.c",
+          "opt/SHA3api_ref.c",
+          "opt/SHA3api_ref.h",
+          "opt/api.h",
+          "opt/brg_types.h",
+          "opt/hash.c",
+          "opt/implementors",
+          "opt/skein.c",
+          "opt/skein.h",
+          "opt/skein_block.c",
+          "opt/skein_debug.c",
+          "opt/skein_debug.h",
+          "opt/skein_iv.h",
+          "opt/skein_port.h",
           "LICENSE"
         ]
       },

@@ -321,7 +321,7 @@ mod tests {
     #[test]
     fn exhausted_key_and_seed_keygen() {
         let a = new(&Params::new()).unwrap();
-        let seed = Seed::from_bytes(&vec![7u8; SEED], Len::fixed(SEED)).unwrap();
+        let seed = Seed::from_bytes(&[7u8; SEED], Len::fixed(SEED)).unwrap();
         let (pk1, sk1) = a.keygen_from_seed(&seed).unwrap();
         let (pk2, _) = a.keygen_from_seed(&seed).unwrap();
         assert_eq!(pk1.as_bytes(), pk2.as_bytes());
@@ -342,7 +342,7 @@ mod tests {
             Err(Error::KeyExhausted)
         ));
         assert!(!called);
-        let bad_seed = Seed::from_bytes(&vec![7u8; SEED - 1], Len::fixed(SEED - 1)).unwrap();
+        let bad_seed = Seed::from_bytes(&[7u8; SEED - 1], Len::fixed(SEED - 1)).unwrap();
         assert!(a.keygen_from_seed(&bad_seed).is_err());
     }
 }

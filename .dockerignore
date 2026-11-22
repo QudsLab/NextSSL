@@ -1,8 +1,8 @@
-.git
-legacy
-target
-fuzz/target
-fuzz/corpus
-fuzz/artifacts
-assets
-*.html
+# Docker build context for docker/Dockerfile.test: sources only.
+target/
+algos_parked/
+algos_untrusted/
+.git/
+collection/
+docs/p2/
+fuzz/target/
