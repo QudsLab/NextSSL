@@ -3,15 +3,25 @@ on:
   push:
     branches: [main]
   pull_request:
+
+# A newer push to the same branch cancels the older run instead of queueing behind it.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Two stages (owner rule):
+#   1. build: every algorithm must build on all four platforms (Linux, Windows, macOS, wasm).
+#   2. test: unit tests, KATs and the slow layers run only when stage 1 is green everywhere.
 jobs:
-  test:
+  build:
+    name: build (${{ matrix.os }})
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
@@ -20,16 +30,51 @@ jobs:
       # Formatting does not depend on the OS. On Windows `cargo fmt --all` passes every crate's
       # source paths to one rustfmt process and, with the whole catalog, overflows the 32 KiB
       # CreateProcess command line ("filename or extension is too long"), so the check runs on
-      # Linux and macOS only. Excluded: Windows formatting check.
+      # Linux and macOS only.
       - run: cargo fmt --all --check
         if: runner.os != 'Windows'
-      - run: cargo clippy --workspace --all-targets -- -D warnings
+      # --keep-going: report every crate that does not build, not just the first one.
+      - run: cargo clippy --workspace --all-targets --keep-going -- -D warnings
+      # Compile (not run) the test binaries too, so stage 2 starts from a complete build.
+      - run: cargo test --workspace --no-run --keep-going
+
+  build-wasm:
+    name: build (wasm)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - name: Build test image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile.test
+          tags: nextssl-test
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Build every algorithm for wasm32 (nothing run)
+        run: docker run --rm -e NEXTSSL_SKIP_BASE=1 -e NEXTSSL_WASM_BUILD=1 nextssl-test
+
+  test:
+    name: test (${{ matrix.os }})
+    needs: [build, build-wasm]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
       - run: cargo test --workspace
 
   # The slow layers run inside the same Docker image the owner uses locally
   # (docker/Dockerfile.test); docker/test.sh selects the layer from the env flag.
   layers:
     name: ${{ matrix.layer }}
+    needs: [build, build-wasm]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -46,10 +91,10 @@ jobs:
           - layer: wasm
             env: NEXTSSL_WASM=1
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
       - name: Build test image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: docker/Dockerfile.test

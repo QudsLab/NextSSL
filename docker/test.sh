@@ -9,6 +9,7 @@
 #   NEXTSSL_FUZZ_BUILD=1  only build the fuzz targets
 #   NEXTSSL_ASAN=1        nightly -Zsanitizer=address + C compiled with ASan/UBSan, -Zbuild-std
 #   NEXTSSL_WASM=1        wasm32-unknown-unknown build + wasm32-wasip1 tests under wasmtime
+#   NEXTSSL_WASM_BUILD=1  the same builds (incl. wasip1 test binaries), nothing run (CI build stage)
 #   NEXTSSL_FFI_SWEEP=1   one round trip per registered algorithm through the C ABI (native, about 4 minutes)
 #   NEXTSSL_ALL=1         all of the above (fuzz seconds default 60)
 set -euxo pipefail
@@ -76,7 +77,9 @@ if [ -n "${NEXTSSL_FUZZ_SECS:-}" ]; then
   set -x
 fi
 
-if [ "${NEXTSSL_WASM:-0}" = "1" ]; then
+if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
+  # NEXTSSL_WASM_BUILD=1 (CI build stage): build everything for both wasm targets, run nothing.
+  # NEXTSSL_WASM=1 (CI test stage): the same, then the tests in wasmtime.
   # The C upstreams are compiled with clang for wasm, against the Debian wasi-libc headers.
   # The wasi headers refuse the bare unknown-unknown target, so the C objects are compiled with
   # --target=wasm32-wasip1.
@@ -98,7 +101,9 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ]; then
   ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm"
   # KAT + unit tests inside wasmtime (/src preopened so the KAT json files are readable).
   # The default 1 MiB wasm stack overflows in the larger code-based schemes (CROSS, McEliece).
+  WASM_NO_RUN=""
+  if [ "${NEXTSSL_WASM:-0}" != "1" ]; then WASM_NO_RUN="--no-run"; fi
   CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864 -C link-arg=-L/usr/lib/wasm32-wasi" \
   CARGO_TARGET_WASM32_WASIP1_RUNNER="wasmtime run --dir=/src" \
-    cargo test --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm
+    cargo test --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm $WASM_NO_RUN
 fi
