@@ -58,6 +58,34 @@ fn entropy_copy(src: &str) -> PathBuf {
     p
 }
 
+/// macOS on aarch64 only: word.h's `#ifdef __APPLE__` block assumes an Intel Mac and byte-swaps with x86
+/// `bswapq` inline asm. On that target the sources are compiled from a copy of upstream/32 (OUT_DIR) whose
+/// word.h has `x = __builtin_bswap64(x);` instead (same result). Every other target compiles upstream/32.
+fn apple_arm_tree() -> Option<PathBuf> {
+    let mac = std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("macos");
+    let x86 = matches!(
+        std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
+        Ok("x86_64") | Ok("x86")
+    );
+    if !mac || x86 {
+        return None;
+    }
+    let dst = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("upstream32_apple_arm");
+    std::fs::create_dir_all(&dst).expect("create copy dir");
+    for e in std::fs::read_dir("upstream/32").expect("read upstream/32") {
+        let p = e.expect("dir entry").path();
+        if p.is_file() {
+            std::fs::copy(&p, dst.join(p.file_name().unwrap())).expect("copy upstream file");
+        }
+    }
+    let w = dst.join("word.h");
+    let text = std::fs::read_to_string(&w).expect("read word.h");
+    let asm = "    __asm__ (\"bswapq %0\" : \"+r\"(x));\n";
+    assert_eq!(text.matches(asm).count(), 1, "word.h: expected one bswapq");
+    std::fs::write(&w, text.replace(asm, "    x = __builtin_bswap64(x);\n")).expect("write word.h");
+    Some(dst)
+}
+
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
@@ -83,6 +111,10 @@ fn base() -> cc::Build {
             b.flag("-include").flag(h.to_str().unwrap());
         }
     }
+    let tree = apple_arm_tree();
+    if let Some(t) = &tree {
+        b.include(t);
+    }
     for i in INCLUDES {
         b.include(i);
     }
@@ -91,10 +123,15 @@ fn base() -> cc::Build {
         b.define("_BSD_SOURCE", None);
     }
     for s in SOURCES {
+        // On aarch64 macOS the upstream/32 files come from the patched copy (see apple_arm_tree).
+        let src = match (&tree, s.strip_prefix("upstream/32/")) {
+            (Some(t), Some(name)) => t.join(name).to_string_lossy().into_owned(),
+            _ => s.to_string(),
+        };
         if *s == "upstream/32/goldilocks.c" {
-            b.file(entropy_copy(s));
+            b.file(entropy_copy(&src));
         } else {
-            b.file(s);
+            b.file(&src);
         }
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
