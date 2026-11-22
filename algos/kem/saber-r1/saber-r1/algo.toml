@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/SABER.zip", sha256 = "245184d4f79ad3157cc1c1cb7199b971fdab4c714cb041a54dcb2f6560ce7fef", license = "NOASSERTION", files = ["saber/SABER_indcpa.c", "saber/SABER_indcpa.h", "saber/SABER_params.h", "saber/api.h", "saber/cbd.c", "saber/cbd.h", "saber/cpucycles.h", "saber/fips202.c", "saber/fips202.h", "saber/kem.c", "saber/kem.h", "saber/pack_unpack.c", "saber/pack_unpack.h", "saber/poly.c", "saber/poly.h", "saber/poly_mul.c", "saber/poly_mul.h", "saber/recon.c", "saber/recon.h", "saber/recon_FireSaber.c", "saber/recon_LightSaber.c", "saber/recon_Saber.c", "saber/rng.h", "saber/verify.c", "saber/verify.h", "LICENSE"] }
 
 # Variant wired: saber (kem). Other variants not wired: none.

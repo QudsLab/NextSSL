@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["ref/address.c", "ref/address.h", "ref/api.h", "ref/apiorig.h", "ref/fips202.c", "ref/fips202.h", "ref/fors.c", "ref/fors.h", "ref/hash.h", "ref/hash_shake256.c", "ref/params.h", "ref/sign.c", "ref/thash.h", "ref/thash_shake256_simple.c", "ref/utils.c", "ref/utils.h", "ref/wots.c", "ref/wots.h", "LICENSE"] }
 
 # Variant wired: ref (sign). Other variants not wired: none.

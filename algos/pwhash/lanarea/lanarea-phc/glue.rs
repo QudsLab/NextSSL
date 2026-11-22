@@ -6,8 +6,6 @@
 //! password 1..=1024 bytes, output 32..=128 bytes.
 //! PHC form: `$lanarea-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! Upstream wants outlen a multiple of 32 and a non-empty password and salt (checked here). License text is libb2's COPYING (CC0); Lanarea itself states none. The lanarea.h PHS is a static inline wrapper.
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};

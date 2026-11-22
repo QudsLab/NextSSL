@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: fatal error C1003: error count exceeds 100; stopping compilation"
 upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["opt/SHA3api_ref.c", "opt/SHA3api_ref.h", "opt/api.h", "opt/brg_types.h", "opt/hash.c", "opt/implementors", "opt/skein.c", "opt/skein.h", "opt/skein_block.c", "opt/skein_debug.c", "opt/skein_debug.h", "opt/skein_iv.h", "opt/skein_port.h", "LICENSE"] }
 
 # Variant wired: mmx (hash). Other variants not wired: sandy, little, simple, sphlib, sphlib-small, opt.

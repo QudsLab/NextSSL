@@ -2,8 +2,6 @@
 //! Generated wiring, no crypto logic. UNTESTED (not yet compiled). Randomness comes only from the
 //! caller's EntropySource; there is no deterministic seed (`seed = 0`) and no context string
 //! (`ctx = 0`: a non-empty ctx is an error, never ignored).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{
     EntropySource, Error, Len, Params, PrivateKey, PublicKey, Result, Seed, Sign, Signature, Sizes,

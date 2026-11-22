@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2143: syntax error: missing ')' before ':'"
 upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/Wave-submission.zip", sha256 = "ae15297d825650d045a9d3544ea38c571ed17b54e62927f249e16a0bdafbd359", license = "MIT", files = ["Wave1644/NIST-kat/rng.h", "Wave1644/api.c", "Wave1644/api.h", "Wave1644/cpucycles.h", "Wave1644/fq_arithmetic/mf3.c", "Wave1644/fq_arithmetic/mf3.h", "Wave1644/fq_arithmetic/types_f3.h", "Wave1644/fq_arithmetic/vf2.c", "Wave1644/fq_arithmetic/vf2.h", "Wave1644/fq_arithmetic/vf3.c", "Wave1644/fq_arithmetic/vf3.h", "Wave1644/keygen.c", "Wave1644/keygen.h", "Wave1644/params.h", "Wave1644/prng/fips202.c", "Wave1644/prng/fips202.h", "Wave1644/prng/prng.c", "Wave1644/prng/prng.h", "Wave1644/sign.c", "Wave1644/sign.h", "Wave1644/types.h", "Wave1644/util/bitstream.c", "Wave1644/util/bitstream.h", "Wave1644/util/compress.c", "Wave1644/util/compress.h", "Wave1644/util/djbsort.h", "Wave1644/util/djbsort_portable.c", "Wave1644/util/gauss.c", "Wave1644/util/gauss.h", "Wave1644/util/hash.c", "Wave1644/util/hash.h", "Wave1644/util/mf3permut.c", "Wave1644/util/mf3permut.h", "Wave1644/util/popcount.h", "Wave1644/util/tritstream.c", "Wave1644/util/tritstream.h", "Wave1644/verify.c", "Wave1644/verify.h", "Wave1644/wave/decode.c", "Wave1644/wave/decode.h", "Wave1644/wave/distrib.h", "Wave1644/wave/randperm.c", "Wave1644/wave/randperm.h", "Wave1644/wave/reject.c", "Wave1644/wave/reject.h", "Wave1644/wave/sample.c", "Wave1644/wave/sample.h", "LICENSE"] }
 
 # Variant wired: Wave1644 (sign). Other variants not wired: none.

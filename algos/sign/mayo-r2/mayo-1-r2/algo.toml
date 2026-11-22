@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'echelon_form.h': No such file or directory"
 upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/submission-pkg/mayo-submission-round2.tar.gz", sha256 = "6f7e0680716ace69b06dd2dcff39ba0bce998229546b63ed6ab579a325159333", license = "NOASSERTION", files = ["include/mayo.h", "include/mem.h", "include/randombytes.h", "src/AVX2/arithmetic_common.h", "src/AVX2/echelon_form.h", "src/AVX2/echelon_form_loop.h", "src/AVX2/shuffle_arithmetic.h", "src/arithmetic.c", "src/arithmetic.h", "src/common/aes_ctr.h", "src/common/fips202.c", "src/common/fips202.h", "src/common/mem.c", "src/generic/arithmetic_dynamic.h", "src/generic/arithmetic_fixed.h", "src/generic/generic_arithmetic.h", "src/mayo.c", "src/mayo_1/api.c", "src/mayo_1/api.h", "src/simple_arithmetic.h", "LICENSE"] }
 
 # Variant wired: src/mayo_1 (sign). Other variants not wired: none.

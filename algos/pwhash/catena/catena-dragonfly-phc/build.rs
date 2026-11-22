@@ -20,6 +20,29 @@ const PRE: &str = "#include <stddef.h>\n#include <stdint.h>\n#include <stdio.h>\
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // catena.c includes <sys/param.h>; MSVC targets get an empty stand-in (compat/msvc).
+    if b.get_compiler().is_like_msvc() {
+        b.include("compat/msvc");
+    }
+    // POSIX/glibc headers the upstream includes; MSVC targets get stand-ins (compat/msvc).
+    if b.get_compiler().is_like_msvc() {
+        b.include("compat/msvc");
+    }
+    // The upstream uses C99 variable-length arrays (and GNU C), which cl.exe cannot compile. On MSVC
+    // targets it is compiled with clang-cl instead: same ABI and object format, linked by link.exe.
+    if b.get_compiler().is_like_msvc() {
+        b.compiler(clang_cl());
+        // cl.exe merges C tentative definitions (common symbols); clang-cl defaults to -fno-common.
+        // Same single definition as cl.exe and GCC -fcommon builds; link.exe merges COFF commons.
+        b.flag("/clang:-fcommon");
+    }
+    // The upstream marks its cross-file helpers (__Hash1.., gamma, initmem) plain `inline`. clang-cl
+    // (MSVC semantics) emits an inline function only where it is used, so the callers in other files
+    // stay unresolved at link. The headers hold only prototypes and `static inline` bodies, so an empty
+    // `inline` gives exactly one external definition of each helper. clang-cl (MSVC targets) only.
+    if b.get_compiler().is_like_clang_cl() {
+        b.define("inline", Some(""));
+    }
     b.warnings(false).opt_level(2);
     let msvc = b.get_compiler().is_like_msvc();
     if !PRE.is_empty() {
@@ -130,12 +153,6 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 }
 
 fn main() {
-    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C: catena.c: fatal error C1083: Cannot open include file: 'byteswap.h'
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
-        return;
-    }
-    // END TARGET GATE
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let mut probe = base();
     probe.out_dir(out.join("probe"));
@@ -163,6 +180,29 @@ fn main() {
         println!("cargo:rerun-if-changed=shim.c");
     }
     println!("cargo:rerun-if-changed=build.rs");
+}
+
+/// clang-cl for MSVC targets: `NEXTSSL_CLANG_CL`, then PATH, then the LLVM installer's default
+/// directory. There is no fallback to cl.exe (it cannot compile this upstream).
+fn clang_cl() -> PathBuf {
+    println!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
+    if let Some(p) = std::env::var_os("NEXTSSL_CLANG_CL") {
+        return PathBuf::from(p);
+    }
+    let mut dirs: Vec<PathBuf> = std::env::var_os("PATH")
+        .map(|p| std::env::split_paths(&p).collect())
+        .unwrap_or_default();
+    dirs.push(PathBuf::from(r"C:\Program Files\LLVM\bin"));
+    for d in dirs {
+        let c = d.join("clang-cl.exe");
+        if c.is_file() {
+            return c;
+        }
+    }
+    panic!(
+        "this algorithm's C upstream needs clang-cl on MSVC targets (C99 variable-length arrays): \
+         install LLVM or set NEXTSSL_CLANG_CL to clang-cl.exe"
+    );
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)

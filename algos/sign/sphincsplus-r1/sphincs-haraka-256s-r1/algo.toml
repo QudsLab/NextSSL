@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/SPHINCS_Plus.zip", sha256 = "6711703e84d5ea18871f983b17499a75158b698725278d358281d26c9089e62f", license = "NOASSERTION", files = ["crypto_sign/sphincs-haraka-256s/api.h", "crypto_sign/sphincs-haraka-256s/fors.c", "crypto_sign/sphincs-haraka-256s/fors.h", "crypto_sign/sphincs-haraka-256s/haraka.c", "crypto_sign/sphincs-haraka-256s/haraka.h", "crypto_sign/sphincs-haraka-256s/hash.h", "crypto_sign/sphincs-haraka-256s/hash_address.c", "crypto_sign/sphincs-haraka-256s/hash_address.h", "crypto_sign/sphincs-haraka-256s/hash_haraka.c", "crypto_sign/sphincs-haraka-256s/params.h", "crypto_sign/sphincs-haraka-256s/rng.h", "crypto_sign/sphincs-haraka-256s/sign.c", "crypto_sign/sphincs-haraka-256s/utils.c", "crypto_sign/sphincs-haraka-256s/utils.h", "crypto_sign/sphincs-haraka-256s/wots.c", "crypto_sign/sphincs-haraka-256s/wots.h", "LICENSE"] }
 
 # Variant wired: crypto_sign/sphincs-haraka-256s (sign). Other variants not wired: none.

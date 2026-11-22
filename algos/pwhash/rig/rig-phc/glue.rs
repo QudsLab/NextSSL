@@ -6,8 +6,6 @@
 //! password 0..=1024 bytes, output 16..=64 bytes.
 //! PHC form: `$rig-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! Rig_v2-ref with the file's default HASH_BLAKE_PERM (the 'Rig v2.0' variant; the original Rig v1.1 variant needs a source edit and is not wired). Memory about 16 KiB * 2^m_cost (upstream m_cost 1..=31, capped at 10). Uses <malloc.h>.
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};

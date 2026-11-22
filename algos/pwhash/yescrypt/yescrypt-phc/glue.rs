@@ -6,8 +6,6 @@
 //! password 0..=MAX_INPUT_LEN bytes, output 16..=1024 bytes.
 //! PHC form: `$yescrypt-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! PHC submission version 0.8.1 (distinct from the 1.x 'yescrypt'): phc.c PHS = yescrypt_kdf with YESCRYPT_RW, N = 8 << m_cost, r = 8, p = 1, t = t_cost. Portable yescrypt-ref.c core (no OpenMP, no SIMD). Sources carry a short 'redistribution and use ... are permitted' notice (no SPDX id, no license file).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};

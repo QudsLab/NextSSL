@@ -3,8 +3,6 @@
 //! caller's EntropySource; there is no deterministic seed (`seed = 0`, `coins = 0`).
 //! Decapsulation: the scheme uses implicit rejection, so a nonzero C return code still carries the
 //! pseudorandom rejection secret and is not an error (see upstream kem.c).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{
     Ciphertext, EntropySource, Error, Kem, Len, Params, PrivateKey, PublicKey, Result, Seed,

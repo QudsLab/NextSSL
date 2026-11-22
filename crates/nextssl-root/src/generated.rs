@@ -2867,7 +2867,6 @@ pub mod aes_siv_cmac_512 {
 }
 
 /// `aes128cpfbv1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod aes128cpfbv1 {
     /// Registry id.
     pub const ID: &str = "aes128cpfbv1";
@@ -4065,7 +4064,6 @@ pub mod aes128poetv2aes4ni {
 }
 
 /// `aes256cpfbv1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod aes256cpfbv1 {
     /// Registry id.
     pub const ID: &str = "aes256cpfbv1";
@@ -4864,7 +4862,6 @@ pub mod aezv5 {
 }
 
 /// `aimer-l1-param1-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod aimer_l1_param1_r1 {
     /// Registry id.
     pub const ID: &str = "aimer-l1-param1-r1";
@@ -4896,7 +4893,6 @@ pub mod aimer_l1_param1_r1 {
 }
 
 /// `aimer-l1-param2-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod aimer_l1_param2_r1 {
     /// Registry id.
     pub const ID: &str = "aimer-l1-param2-r1";
@@ -4928,7 +4924,6 @@ pub mod aimer_l1_param2_r1 {
 }
 
 /// `aimer-l1-param3-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod aimer_l1_param3_r1 {
     /// Registry id.
     pub const ID: &str = "aimer-l1-param3-r1";
@@ -6447,7 +6442,6 @@ pub mod ascon80pqv12 {
 }
 
 /// `ascon96v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod ascon96v1 {
     /// Registry id.
     pub const ID: &str = "ascon96v1";
@@ -7388,7 +7382,6 @@ pub mod belt_hash {
 }
 
 /// `bike-l1` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod bike_l1 {
     /// Registry id.
     pub const ID: &str = "bike-l1";
@@ -7430,7 +7423,6 @@ pub mod bike_l1 {
 }
 
 /// `bike-l3` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod bike_l3 {
     /// Registry id.
     pub const ID: &str = "bike-l3";
@@ -7472,7 +7464,6 @@ pub mod bike_l3 {
 }
 
 /// `bike-l5` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod bike_l5 {
     /// Registry id.
     pub const ID: &str = "bike-l5";
@@ -8469,7 +8460,6 @@ pub mod cast6 {
 }
 
 /// `catena-butterfly-phc` (pwhash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod catena_butterfly_phc {
     /// Registry id.
     pub const ID: &str = "catena-butterfly-phc";
@@ -8520,7 +8510,6 @@ pub mod catena_butterfly_phc {
 }
 
 /// `catena-dragonfly-phc` (pwhash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod catena_dragonfly_phc {
     /// Registry id.
     pub const ID: &str = "catena-dragonfly-phc";
@@ -10314,7 +10303,6 @@ pub mod comp128_3 {
 }
 
 /// `compact-lwe-public-key-enc-r1` (pke, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod compact_lwe_public_key_enc_r1 {
     /// Registry id.
     pub const ID: &str = "compact-lwe-public-key-enc-r1";
@@ -12898,7 +12886,6 @@ pub mod cubehash162 {
 }
 
 /// `cubehash1632` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod cubehash1632 {
     /// Registry id.
     pub const ID: &str = "cubehash1632";
@@ -12944,7 +12931,6 @@ pub mod cubehash168 {
 }
 
 /// `cubehash512` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod cubehash512 {
     /// Registry id.
     pub const ID: &str = "cubehash512";
@@ -13979,7 +13965,6 @@ pub mod des_mac {
 }
 
 /// `dilithium-medium-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium_medium_r1 {
     /// Registry id.
     pub const ID: &str = "dilithium-medium-r1";
@@ -14011,7 +13996,6 @@ pub mod dilithium_medium_r1 {
 }
 
 /// `dilithium-recommended-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium_recommended_r1 {
     /// Registry id.
     pub const ID: &str = "dilithium-recommended-r1";
@@ -14043,7 +14027,6 @@ pub mod dilithium_recommended_r1 {
 }
 
 /// `dilithium-very-high-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium_very_high_r1 {
     /// Registry id.
     pub const ID: &str = "dilithium-very-high-r1";
@@ -14075,7 +14058,6 @@ pub mod dilithium_very_high_r1 {
 }
 
 /// `dilithium-weak-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium_weak_r1 {
     /// Registry id.
     pub const ID: &str = "dilithium-weak-r1";
@@ -14107,7 +14089,6 @@ pub mod dilithium_weak_r1 {
 }
 
 /// `dilithium1-aes-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium1_aes_r2 {
     /// Registry id.
     pub const ID: &str = "dilithium1-aes-r2";
@@ -14139,7 +14120,6 @@ pub mod dilithium1_aes_r2 {
 }
 
 /// `dilithium1-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium1_r2 {
     /// Registry id.
     pub const ID: &str = "dilithium1-r2";
@@ -14171,7 +14151,6 @@ pub mod dilithium1_r2 {
 }
 
 /// `dilithium2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium2 {
     /// Registry id.
     pub const ID: &str = "dilithium2";
@@ -14234,7 +14213,6 @@ pub mod dilithium2_aes_r_r3 {
 }
 
 /// `dilithium2-aes-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium2_aes_r2 {
     /// Registry id.
     pub const ID: &str = "dilithium2-aes-r2";
@@ -14328,7 +14306,6 @@ pub mod dilithium2_r_r3 {
 }
 
 /// `dilithium2-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium2_r2 {
     /// Registry id.
     pub const ID: &str = "dilithium2-r2";
@@ -14391,7 +14368,6 @@ pub mod dilithium2_r3 {
 }
 
 /// `dilithium2aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium2aes {
     /// Registry id.
     pub const ID: &str = "dilithium2aes";
@@ -14423,7 +14399,6 @@ pub mod dilithium2aes {
 }
 
 /// `dilithium3` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium3 {
     /// Registry id.
     pub const ID: &str = "dilithium3";
@@ -14548,7 +14523,6 @@ pub mod dilithium3_r_r3 {
 }
 
 /// `dilithium3-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium3_r2 {
     /// Registry id.
     pub const ID: &str = "dilithium3-r2";
@@ -14611,7 +14585,6 @@ pub mod dilithium3_r3 {
 }
 
 /// `dilithium3aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium3aes {
     /// Registry id.
     pub const ID: &str = "dilithium3aes";
@@ -14643,7 +14616,6 @@ pub mod dilithium3aes {
 }
 
 /// `dilithium5` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium5 {
     /// Registry id.
     pub const ID: &str = "dilithium5";
@@ -14799,7 +14771,6 @@ pub mod dilithium5_r3 {
 }
 
 /// `dilithium5aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod dilithium5aes {
     /// Registry id.
     pub const ID: &str = "dilithium5aes";
@@ -15856,7 +15827,6 @@ pub mod ed448 {
 }
 
 /// `ed448goldilocks` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod ed448goldilocks {
     /// Registry id.
     pub const ID: &str = "ed448goldilocks";
@@ -16783,7 +16753,6 @@ pub mod elephant200v2 {
 }
 
 /// `enchilada256v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod enchilada256v1 {
     /// Registry id.
     pub const ID: &str = "enchilada256v1";
@@ -16976,7 +16945,6 @@ pub mod esch384v2 {
 }
 
 /// `essence224` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod essence224 {
     /// Registry id.
     pub const ID: &str = "essence224";
@@ -16992,7 +16960,6 @@ pub mod essence224 {
 }
 
 /// `essence256` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod essence256 {
     /// Registry id.
     pub const ID: &str = "essence256";
@@ -17008,7 +16975,6 @@ pub mod essence256 {
 }
 
 /// `essence384` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod essence384 {
     /// Registry id.
     pub const ID: &str = "essence384";
@@ -17024,7 +16990,6 @@ pub mod essence384 {
 }
 
 /// `essence512` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod essence512 {
     /// Registry id.
     pub const ID: &str = "essence512";
@@ -18112,7 +18077,6 @@ pub mod ff70 {
 }
 
 /// `fire-saber-r1` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod fire_saber_r1 {
     /// Registry id.
     pub const ID: &str = "fire-saber-r1";
@@ -18154,7 +18118,6 @@ pub mod fire_saber_r1 {
 }
 
 /// `firesaber2` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod firesaber2 {
     /// Registry id.
     pub const ID: &str = "firesaber2";
@@ -20354,7 +20317,6 @@ pub mod groestl_512_sha3r3 {
 }
 
 /// `groestl256` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod groestl256 {
     /// Registry id.
     pub const ID: &str = "groestl256";
@@ -20370,7 +20332,6 @@ pub mod groestl256 {
 }
 
 /// `groestl512` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod groestl512 {
     /// Registry id.
     pub const ID: &str = "groestl512";
@@ -20593,7 +20554,6 @@ pub mod haetae2v4 {
 }
 
 /// `haetae2v5` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod haetae2v5 {
     /// Registry id.
     pub const ID: &str = "haetae2v5";
@@ -26068,7 +26028,6 @@ pub mod keccakc256 {
 }
 
 /// `keccakc256treed2` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod keccakc256treed2 {
     /// Registry id.
     pub const ID: &str = "keccakc256treed2";
@@ -26114,7 +26073,6 @@ pub mod keccakc512 {
 }
 
 /// `keccakc512treed2` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod keccakc512treed2 {
     /// Registry id.
     pub const ID: &str = "keccakc512treed2";
@@ -26869,7 +26827,6 @@ pub mod kiasuneq128v1 {
 }
 
 /// `kindi256342` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kindi256342 {
     /// Registry id.
     pub const ID: &str = "kindi256342";
@@ -26911,7 +26868,6 @@ pub mod kindi256342 {
 }
 
 /// `kindi256522` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kindi256522 {
     /// Registry id.
     pub const ID: &str = "kindi256522";
@@ -26953,7 +26909,6 @@ pub mod kindi256522 {
 }
 
 /// `kindi512222` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kindi512222 {
     /// Registry id.
     pub const ID: &str = "kindi512222";
@@ -26995,7 +26950,6 @@ pub mod kindi512222 {
 }
 
 /// `kindi512241` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kindi512241 {
     /// Registry id.
     pub const ID: &str = "kindi512241";
@@ -27037,7 +26991,6 @@ pub mod kindi512241 {
 }
 
 /// `kindi512321` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kindi512321 {
     /// Registry id.
     pub const ID: &str = "kindi512321";
@@ -27503,7 +27456,6 @@ pub mod knot_hash_512_512 {
 }
 
 /// `knot128v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot128v1 {
     /// Registry id.
     pub const ID: &str = "knot128v1";
@@ -27561,7 +27513,6 @@ pub mod knot128v1 {
 }
 
 /// `knot128v1-lwc1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot128v1_lwc1 {
     /// Registry id.
     pub const ID: &str = "knot128v1-lwc1";
@@ -27619,7 +27570,6 @@ pub mod knot128v1_lwc1 {
 }
 
 /// `knot128v2` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot128v2 {
     /// Registry id.
     pub const ID: &str = "knot128v2";
@@ -27677,7 +27627,6 @@ pub mod knot128v2 {
 }
 
 /// `knot192` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot192 {
     /// Registry id.
     pub const ID: &str = "knot192";
@@ -27735,7 +27684,6 @@ pub mod knot192 {
 }
 
 /// `knot256` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot256 {
     /// Registry id.
     pub const ID: &str = "knot256";
@@ -27793,7 +27741,6 @@ pub mod knot256 {
 }
 
 /// `knot256v1` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot256v1 {
     /// Registry id.
     pub const ID: &str = "knot256v1";
@@ -27809,7 +27756,6 @@ pub mod knot256v1 {
 }
 
 /// `knot256v1-lwc1` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot256v1_lwc1 {
     /// Registry id.
     pub const ID: &str = "knot256v1-lwc1";
@@ -27825,7 +27771,6 @@ pub mod knot256v1_lwc1 {
 }
 
 /// `knot256v2` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot256v2 {
     /// Registry id.
     pub const ID: &str = "knot256v2";
@@ -27841,7 +27786,6 @@ pub mod knot256v2 {
 }
 
 /// `knot384` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot384 {
     /// Registry id.
     pub const ID: &str = "knot384";
@@ -27857,7 +27801,6 @@ pub mod knot384 {
 }
 
 /// `knot512` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod knot512 {
     /// Registry id.
     pub const ID: &str = "knot512";
@@ -27923,7 +27866,6 @@ pub mod kuznyechik {
 }
 
 /// `kyber1024-90s-r2` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber1024_90s_r2 {
     /// Registry id.
     pub const ID: &str = "kyber1024-90s-r2";
@@ -28006,7 +27948,6 @@ pub mod kyber1024_90s_r3 {
 }
 
 /// `kyber1024-r1` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber1024_r1 {
     /// Registry id.
     pub const ID: &str = "kyber1024-r1";
@@ -28048,7 +27989,6 @@ pub mod kyber1024_r1 {
 }
 
 /// `kyber1024-r2` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber1024_r2 {
     /// Registry id.
     pub const ID: &str = "kyber1024-r2";
@@ -28131,7 +28071,6 @@ pub mod kyber1024_r3 {
 }
 
 /// `kyber512` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber512 {
     /// Registry id.
     pub const ID: &str = "kyber512";
@@ -28173,7 +28112,6 @@ pub mod kyber512 {
 }
 
 /// `kyber512-90s-r2` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber512_90s_r2 {
     /// Registry id.
     pub const ID: &str = "kyber512-90s-r2";
@@ -28256,7 +28194,6 @@ pub mod kyber512_90s_r3 {
 }
 
 /// `kyber512-r1` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber512_r1 {
     /// Registry id.
     pub const ID: &str = "kyber512-r1";
@@ -28298,7 +28235,6 @@ pub mod kyber512_r1 {
 }
 
 /// `kyber512-r2` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber512_r2 {
     /// Registry id.
     pub const ID: &str = "kyber512-r2";
@@ -28381,7 +28317,6 @@ pub mod kyber512_r3 {
 }
 
 /// `kyber768` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber768 {
     /// Registry id.
     pub const ID: &str = "kyber768";
@@ -28423,7 +28358,6 @@ pub mod kyber768 {
 }
 
 /// `kyber768-90s-r2` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber768_90s_r2 {
     /// Registry id.
     pub const ID: &str = "kyber768-90s-r2";
@@ -28506,7 +28440,6 @@ pub mod kyber768_90s_r3 {
 }
 
 /// `kyber768-r1` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber768_r1 {
     /// Registry id.
     pub const ID: &str = "kyber768-r1";
@@ -28548,7 +28481,6 @@ pub mod kyber768_r1 {
 }
 
 /// `kyber768-r2` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber768_r2 {
     /// Registry id.
     pub const ID: &str = "kyber768-r2";
@@ -28631,7 +28563,6 @@ pub mod kyber768_r3 {
 }
 
 /// `kyber90s512` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber90s512 {
     /// Registry id.
     pub const ID: &str = "kyber90s512";
@@ -28673,7 +28604,6 @@ pub mod kyber90s512 {
 }
 
 /// `kyber90s768` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod kyber90s768 {
     /// Registry id.
     pub const ID: &str = "kyber90s768";
@@ -28772,7 +28702,6 @@ pub mod lacv1 {
 }
 
 /// `lanarea-phc` (pwhash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lanarea_phc {
     /// Registry id.
     pub const ID: &str = "lanarea-phc";
@@ -30637,7 +30566,6 @@ pub mod libecc_ecsdsa_secp521r1_sha512 {
 }
 
 /// `light-saber-r1` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod light_saber_r1 {
     /// Registry id.
     pub const ID: &str = "light-saber-r1";
@@ -30679,7 +30607,6 @@ pub mod light_saber_r1 {
 }
 
 /// `lightsaber2` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lightsaber2 {
     /// Registry id.
     pub const ID: &str = "lightsaber2";
@@ -30721,7 +30648,6 @@ pub mod lightsaber2 {
 }
 
 /// `lilliputaei128v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaei128v1 {
     /// Registry id.
     pub const ID: &str = "lilliputaei128v1";
@@ -30779,7 +30705,6 @@ pub mod lilliputaei128v1 {
 }
 
 /// `lilliputaei128v11` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaei128v11 {
     /// Registry id.
     pub const ID: &str = "lilliputaei128v11";
@@ -30837,7 +30762,6 @@ pub mod lilliputaei128v11 {
 }
 
 /// `lilliputaei192v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaei192v1 {
     /// Registry id.
     pub const ID: &str = "lilliputaei192v1";
@@ -30895,7 +30819,6 @@ pub mod lilliputaei192v1 {
 }
 
 /// `lilliputaei192v11` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaei192v11 {
     /// Registry id.
     pub const ID: &str = "lilliputaei192v11";
@@ -30953,7 +30876,6 @@ pub mod lilliputaei192v11 {
 }
 
 /// `lilliputaei256v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaei256v1 {
     /// Registry id.
     pub const ID: &str = "lilliputaei256v1";
@@ -31011,7 +30933,6 @@ pub mod lilliputaei256v1 {
 }
 
 /// `lilliputaei256v11` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaei256v11 {
     /// Registry id.
     pub const ID: &str = "lilliputaei256v11";
@@ -31069,7 +30990,6 @@ pub mod lilliputaei256v11 {
 }
 
 /// `lilliputaeii128v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaeii128v1 {
     /// Registry id.
     pub const ID: &str = "lilliputaeii128v1";
@@ -31127,7 +31047,6 @@ pub mod lilliputaeii128v1 {
 }
 
 /// `lilliputaeii128v11` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaeii128v11 {
     /// Registry id.
     pub const ID: &str = "lilliputaeii128v11";
@@ -31185,7 +31104,6 @@ pub mod lilliputaeii128v11 {
 }
 
 /// `lilliputaeii192v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaeii192v1 {
     /// Registry id.
     pub const ID: &str = "lilliputaeii192v1";
@@ -31243,7 +31161,6 @@ pub mod lilliputaeii192v1 {
 }
 
 /// `lilliputaeii192v11` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaeii192v11 {
     /// Registry id.
     pub const ID: &str = "lilliputaeii192v11";
@@ -31301,7 +31218,6 @@ pub mod lilliputaeii192v11 {
 }
 
 /// `lilliputaeii256v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaeii256v1 {
     /// Registry id.
     pub const ID: &str = "lilliputaeii256v1";
@@ -31359,7 +31275,6 @@ pub mod lilliputaeii256v1 {
 }
 
 /// `lilliputaeii256v11` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod lilliputaeii256v11 {
     /// Registry id.
     pub const ID: &str = "lilliputaeii256v11";
@@ -32140,7 +32055,6 @@ pub mod mars {
 }
 
 /// `mayo-1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mayo_1 {
     /// Registry id.
     pub const ID: &str = "mayo-1";
@@ -32172,7 +32086,6 @@ pub mod mayo_1 {
 }
 
 /// `mayo-1-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mayo_1_r2 {
     /// Registry id.
     pub const ID: &str = "mayo-1-r2";
@@ -32204,7 +32117,6 @@ pub mod mayo_1_r2 {
 }
 
 /// `mayo-2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mayo_2 {
     /// Registry id.
     pub const ID: &str = "mayo-2";
@@ -32236,7 +32148,6 @@ pub mod mayo_2 {
 }
 
 /// `mayo-2-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mayo_2_r2 {
     /// Registry id.
     pub const ID: &str = "mayo-2-r2";
@@ -32268,7 +32179,6 @@ pub mod mayo_2_r2 {
 }
 
 /// `mayo-3` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mayo_3 {
     /// Registry id.
     pub const ID: &str = "mayo-3";
@@ -32300,7 +32210,6 @@ pub mod mayo_3 {
 }
 
 /// `mayo-3-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mayo_3_r2 {
     /// Registry id.
     pub const ID: &str = "mayo-3-r2";
@@ -32332,7 +32241,6 @@ pub mod mayo_3_r2 {
 }
 
 /// `mayo-5` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mayo_5 {
     /// Registry id.
     pub const ID: &str = "mayo-5";
@@ -32364,7 +32272,6 @@ pub mod mayo_5 {
 }
 
 /// `mayo-5-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mayo_5_r2 {
     /// Registry id.
     pub const ID: &str = "mayo-5-r2";
@@ -33122,7 +33029,6 @@ pub mod md6d512 {
 }
 
 /// `meds13220-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod meds13220_r1 {
     /// Registry id.
     pub const ID: &str = "meds13220-r1";
@@ -33154,7 +33060,6 @@ pub mod meds13220_r1 {
 }
 
 /// `meds134180-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod meds134180_r1 {
     /// Registry id.
     pub const ID: &str = "meds134180-r1";
@@ -33186,7 +33091,6 @@ pub mod meds134180_r1 {
 }
 
 /// `meds167717-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod meds167717_r1 {
     /// Registry id.
     pub const ID: &str = "meds167717-r1";
@@ -33218,7 +33122,6 @@ pub mod meds167717_r1 {
 }
 
 /// `meds41711-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod meds41711_r1 {
     /// Registry id.
     pub const ID: &str = "meds41711-r1";
@@ -33250,7 +33153,6 @@ pub mod meds41711_r1 {
 }
 
 /// `meds55604-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod meds55604_r1 {
     /// Registry id.
     pub const ID: &str = "meds55604-r1";
@@ -33282,7 +33184,6 @@ pub mod meds55604_r1 {
 }
 
 /// `meds9923-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod meds9923_r1 {
     /// Registry id.
     pub const ID: &str = "meds9923-r1";
@@ -33389,7 +33290,6 @@ pub mod metrohash {
 }
 
 /// `mgrostl256` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mgrostl256 {
     /// Registry id.
     pub const ID: &str = "mgrostl256";
@@ -33405,7 +33305,7 @@ pub mod mgrostl256 {
 }
 
 /// `milenage` (kdf, tier unverified).
-#[cfg(all(feature = "copyleft", not(target_env = "msvc")))]
+#[cfg(feature = "copyleft")]
 pub mod milenage {
     /// Registry id.
     pub const ID: &str = "milenage";
@@ -33432,7 +33332,6 @@ pub mod milenage {
 }
 
 /// `mirath-tcith-1a-fast-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_1a_fast_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-1a-fast-r2";
@@ -33464,7 +33363,6 @@ pub mod mirath_tcith_1a_fast_r2 {
 }
 
 /// `mirath-tcith-1a-short-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_1a_short_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-1a-short-r2";
@@ -33496,7 +33394,6 @@ pub mod mirath_tcith_1a_short_r2 {
 }
 
 /// `mirath-tcith-1b-fast-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_1b_fast_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-1b-fast-r2";
@@ -33528,7 +33425,6 @@ pub mod mirath_tcith_1b_fast_r2 {
 }
 
 /// `mirath-tcith-1b-short-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_1b_short_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-1b-short-r2";
@@ -33560,7 +33456,6 @@ pub mod mirath_tcith_1b_short_r2 {
 }
 
 /// `mirath-tcith-3a-fast-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_3a_fast_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-3a-fast-r2";
@@ -33592,7 +33487,6 @@ pub mod mirath_tcith_3a_fast_r2 {
 }
 
 /// `mirath-tcith-3a-short-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_3a_short_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-3a-short-r2";
@@ -33624,7 +33518,6 @@ pub mod mirath_tcith_3a_short_r2 {
 }
 
 /// `mirath-tcith-3b-fast-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_3b_fast_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-3b-fast-r2";
@@ -33656,7 +33549,6 @@ pub mod mirath_tcith_3b_fast_r2 {
 }
 
 /// `mirath-tcith-3b-short-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_3b_short_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-3b-short-r2";
@@ -33688,7 +33580,6 @@ pub mod mirath_tcith_3b_short_r2 {
 }
 
 /// `mirath-tcith-5a-fast-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_5a_fast_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-5a-fast-r2";
@@ -33720,7 +33611,6 @@ pub mod mirath_tcith_5a_fast_r2 {
 }
 
 /// `mirath-tcith-5a-short-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_5a_short_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-5a-short-r2";
@@ -33752,7 +33642,6 @@ pub mod mirath_tcith_5a_short_r2 {
 }
 
 /// `mirath-tcith-5b-fast-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_5b_fast_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-5b-fast-r2";
@@ -33784,7 +33673,6 @@ pub mod mirath_tcith_5b_fast_r2 {
 }
 
 /// `mirath-tcith-5b-short-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod mirath_tcith_5b_short_r2 {
     /// Registry id.
     pub const ID: &str = "mirath-tcith-5b-short-r2";
@@ -38644,7 +38532,6 @@ pub mod ov_v_pkc_skc {
 }
 
 /// `paefforkskinnyb128t192n48v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod paefforkskinnyb128t192n48v1 {
     /// Registry id.
     pub const ID: &str = "paefforkskinnyb128t192n48v1";
@@ -38702,7 +38589,6 @@ pub mod paefforkskinnyb128t192n48v1 {
 }
 
 /// `paefforkskinnyb128t256n112v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod paefforkskinnyb128t256n112v1 {
     /// Registry id.
     pub const ID: &str = "paefforkskinnyb128t256n112v1";
@@ -38760,7 +38646,6 @@ pub mod paefforkskinnyb128t256n112v1 {
 }
 
 /// `paefforkskinnyb128t288n104v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod paefforkskinnyb128t288n104v1 {
     /// Registry id.
     pub const ID: &str = "paefforkskinnyb128t288n104v1";
@@ -38818,7 +38703,6 @@ pub mod paefforkskinnyb128t288n104v1 {
 }
 
 /// `paefforkskinnyb64t192n48v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod paefforkskinnyb64t192n48v1 {
     /// Registry id.
     pub const ID: &str = "paefforkskinnyb64t192n48v1";
@@ -42016,7 +41900,6 @@ pub mod qtesla_v_s_r2 {
 }
 
 /// `qtesla1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod qtesla1 {
     /// Registry id.
     pub const ID: &str = "qtesla1";
@@ -42048,7 +41931,6 @@ pub mod qtesla1 {
 }
 
 /// `qtesla128` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod qtesla128 {
     /// Registry id.
     pub const ID: &str = "qtesla128";
@@ -42080,7 +41962,6 @@ pub mod qtesla128 {
 }
 
 /// `qtesla192` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod qtesla192 {
     /// Registry id.
     pub const ID: &str = "qtesla192";
@@ -42112,7 +41993,6 @@ pub mod qtesla192 {
 }
 
 /// `qtesla1p` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod qtesla1p {
     /// Registry id.
     pub const ID: &str = "qtesla1p";
@@ -42144,7 +42024,6 @@ pub mod qtesla1p {
 }
 
 /// `qtesla256` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod qtesla256 {
     /// Registry id.
     pub const ID: &str = "qtesla256";
@@ -42176,7 +42055,6 @@ pub mod qtesla256 {
 }
 
 /// `qtesla3f` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod qtesla3f {
     /// Registry id.
     pub const ID: &str = "qtesla3f";
@@ -42208,7 +42086,6 @@ pub mod qtesla3f {
 }
 
 /// `qtesla3p` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod qtesla3p {
     /// Registry id.
     pub const ID: &str = "qtesla3p";
@@ -42240,7 +42117,6 @@ pub mod qtesla3p {
 }
 
 /// `qtesla3s` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod qtesla3s {
     /// Registry id.
     pub const ID: &str = "qtesla3s";
@@ -42839,7 +42715,6 @@ pub mod remusn3v1 {
 }
 
 /// `rig-phc` (pwhash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod rig_phc {
     /// Registry id.
     pub const ID: &str = "rig-phc";
@@ -43307,7 +43182,6 @@ pub mod romulus_n3 {
 }
 
 /// `romulush` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod romulush {
     /// Registry id.
     pub const ID: &str = "romulush";
@@ -44496,7 +44370,6 @@ pub mod rsa_pkcs1v15_enc_4096 {
 }
 
 /// `ryde1f-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod ryde1f_r2 {
     /// Registry id.
     pub const ID: &str = "ryde1f-r2";
@@ -44528,7 +44401,6 @@ pub mod ryde1f_r2 {
 }
 
 /// `ryde1s-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod ryde1s_r2 {
     /// Registry id.
     pub const ID: &str = "ryde1s-r2";
@@ -44560,7 +44432,6 @@ pub mod ryde1s_r2 {
 }
 
 /// `ryde3f-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod ryde3f_r2 {
     /// Registry id.
     pub const ID: &str = "ryde3f-r2";
@@ -44592,7 +44463,6 @@ pub mod ryde3f_r2 {
 }
 
 /// `ryde3s-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod ryde3s_r2 {
     /// Registry id.
     pub const ID: &str = "ryde3s-r2";
@@ -44624,7 +44494,6 @@ pub mod ryde3s_r2 {
 }
 
 /// `ryde5f-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod ryde5f_r2 {
     /// Registry id.
     pub const ID: &str = "ryde5f-r2";
@@ -44656,7 +44525,6 @@ pub mod ryde5f_r2 {
 }
 
 /// `ryde5s-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod ryde5s_r2 {
     /// Registry id.
     pub const ID: &str = "ryde5s-r2";
@@ -44688,7 +44556,6 @@ pub mod ryde5s_r2 {
 }
 
 /// `saber-r1` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod saber_r1 {
     /// Registry id.
     pub const ID: &str = "saber-r1";
@@ -44730,7 +44597,6 @@ pub mod saber_r1 {
 }
 
 /// `saber2` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod saber2 {
     /// Registry id.
     pub const ID: &str = "saber2";
@@ -45969,7 +45835,6 @@ pub mod saeaes256a64t64v1 {
 }
 
 /// `saefforkskinnyb128t192n56v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod saefforkskinnyb128t192n56v1 {
     /// Registry id.
     pub const ID: &str = "saefforkskinnyb128t192n56v1";
@@ -46027,7 +45892,6 @@ pub mod saefforkskinnyb128t192n56v1 {
 }
 
 /// `saefforkskinnyb128t256n120v1` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod saefforkskinnyb128t256n120v1 {
     /// Registry id.
     pub const ID: &str = "saefforkskinnyb128t256n120v1";
@@ -47783,7 +47647,6 @@ pub mod scrypt {
 }
 
 /// `sdith-l1-gf2-fast` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l1_gf2_fast {
     /// Registry id.
     pub const ID: &str = "sdith-l1-gf2-fast";
@@ -47815,7 +47678,6 @@ pub mod sdith_l1_gf2_fast {
 }
 
 /// `sdith-l1-gf2-fast-cipherpow` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l1_gf2_fast_cipherpow {
     /// Registry id.
     pub const ID: &str = "sdith-l1-gf2-fast-cipherpow";
@@ -47847,7 +47709,6 @@ pub mod sdith_l1_gf2_fast_cipherpow {
 }
 
 /// `sdith-l1-gf2-short` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l1_gf2_short {
     /// Registry id.
     pub const ID: &str = "sdith-l1-gf2-short";
@@ -47879,7 +47740,6 @@ pub mod sdith_l1_gf2_short {
 }
 
 /// `sdith-l1-gf2-short-cipherpow` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l1_gf2_short_cipherpow {
     /// Registry id.
     pub const ID: &str = "sdith-l1-gf2-short-cipherpow";
@@ -47911,7 +47771,6 @@ pub mod sdith_l1_gf2_short_cipherpow {
 }
 
 /// `sdith-l3-gf2-fast` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l3_gf2_fast {
     /// Registry id.
     pub const ID: &str = "sdith-l3-gf2-fast";
@@ -47943,7 +47802,6 @@ pub mod sdith_l3_gf2_fast {
 }
 
 /// `sdith-l3-gf2-fast-cipherpow` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l3_gf2_fast_cipherpow {
     /// Registry id.
     pub const ID: &str = "sdith-l3-gf2-fast-cipherpow";
@@ -47975,7 +47833,6 @@ pub mod sdith_l3_gf2_fast_cipherpow {
 }
 
 /// `sdith-l3-gf2-short` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l3_gf2_short {
     /// Registry id.
     pub const ID: &str = "sdith-l3-gf2-short";
@@ -48007,7 +47864,6 @@ pub mod sdith_l3_gf2_short {
 }
 
 /// `sdith-l3-gf2-short-cipherpow` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l3_gf2_short_cipherpow {
     /// Registry id.
     pub const ID: &str = "sdith-l3-gf2-short-cipherpow";
@@ -48039,7 +47895,6 @@ pub mod sdith_l3_gf2_short_cipherpow {
 }
 
 /// `sdith-l5-gf2-fast` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l5_gf2_fast {
     /// Registry id.
     pub const ID: &str = "sdith-l5-gf2-fast";
@@ -48071,7 +47926,6 @@ pub mod sdith_l5_gf2_fast {
 }
 
 /// `sdith-l5-gf2-fast-cipherpow` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l5_gf2_fast_cipherpow {
     /// Registry id.
     pub const ID: &str = "sdith-l5-gf2-fast-cipherpow";
@@ -48103,7 +47957,6 @@ pub mod sdith_l5_gf2_fast_cipherpow {
 }
 
 /// `sdith-l5-gf2-short` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l5_gf2_short {
     /// Registry id.
     pub const ID: &str = "sdith-l5-gf2-short";
@@ -48135,7 +47988,6 @@ pub mod sdith_l5_gf2_short {
 }
 
 /// `sdith-l5-gf2-short-cipherpow` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sdith_l5_gf2_short_cipherpow {
     /// Registry id.
     pub const ID: &str = "sdith-l5-gf2-short-cipherpow";
@@ -49247,7 +49099,6 @@ pub mod shavite3512 {
 }
 
 /// `shellaes128v1d4n64` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d4n64 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d4n64";
@@ -49305,7 +49156,6 @@ pub mod shellaes128v1d4n64 {
 }
 
 /// `shellaes128v1d4n80` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d4n80 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d4n80";
@@ -49363,7 +49213,6 @@ pub mod shellaes128v1d4n80 {
 }
 
 /// `shellaes128v1d5n64` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d5n64 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d5n64";
@@ -49421,7 +49270,6 @@ pub mod shellaes128v1d5n64 {
 }
 
 /// `shellaes128v1d5n80` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d5n80 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d5n80";
@@ -49479,7 +49327,6 @@ pub mod shellaes128v1d5n80 {
 }
 
 /// `shellaes128v1d6n64` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d6n64 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d6n64";
@@ -49537,7 +49384,6 @@ pub mod shellaes128v1d6n64 {
 }
 
 /// `shellaes128v1d6n80` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d6n80 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d6n80";
@@ -49595,7 +49441,6 @@ pub mod shellaes128v1d6n80 {
 }
 
 /// `shellaes128v1d7n64` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d7n64 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d7n64";
@@ -49653,7 +49498,6 @@ pub mod shellaes128v1d7n64 {
 }
 
 /// `shellaes128v1d7n80` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d7n80 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d7n80";
@@ -49711,7 +49555,6 @@ pub mod shellaes128v1d7n80 {
 }
 
 /// `shellaes128v1d8n64` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d8n64 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d8n64";
@@ -49769,7 +49612,6 @@ pub mod shellaes128v1d8n64 {
 }
 
 /// `shellaes128v1d8n80` (aead, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod shellaes128v1d8n80 {
     /// Registry id.
     pub const ID: &str = "shellaes128v1d8n80";
@@ -49827,7 +49669,6 @@ pub mod shellaes128v1d8n80 {
 }
 
 /// `sikep434comp` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sikep434comp {
     /// Registry id.
     pub const ID: &str = "sikep434comp";
@@ -49869,7 +49710,6 @@ pub mod sikep434comp {
 }
 
 /// `sikep503comp` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sikep503comp {
     /// Registry id.
     pub const ID: &str = "sikep503comp";
@@ -49911,7 +49751,6 @@ pub mod sikep503comp {
 }
 
 /// `sikep610comp` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sikep610comp {
     /// Registry id.
     pub const ID: &str = "sikep610comp";
@@ -49953,7 +49792,6 @@ pub mod sikep610comp {
 }
 
 /// `sikep751comp` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sikep751comp {
     /// Registry id.
     pub const ID: &str = "sikep751comp";
@@ -51319,7 +51157,6 @@ pub mod skein1024 {
 }
 
 /// `skein10241024` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod skein10241024 {
     /// Registry id.
     pub const ID: &str = "skein10241024";
@@ -51350,7 +51187,6 @@ pub mod skein256 {
 }
 
 /// `skein256256` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod skein256256 {
     /// Registry id.
     pub const ID: &str = "skein256256";
@@ -51381,7 +51217,6 @@ pub mod skein512 {
 }
 
 /// `skein512256` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod skein512256 {
     /// Registry id.
     pub const ID: &str = "skein512256";
@@ -51397,7 +51232,6 @@ pub mod skein512256 {
 }
 
 /// `skein512512` (hash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod skein512512 {
     /// Registry id.
     pub const ID: &str = "skein512512";
@@ -52645,7 +52479,6 @@ pub mod sm4 {
 }
 
 /// `smaugt1v5` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod smaugt1v5 {
     /// Registry id.
     pub const ID: &str = "smaugt1v5";
@@ -52888,7 +52721,6 @@ pub mod sneikha384 {
 }
 
 /// `snova-i-b` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_i_b {
     /// Registry id.
     pub const ID: &str = "snova-i-b";
@@ -52920,7 +52752,6 @@ pub mod snova_i_b {
 }
 
 /// `snova-i-b-aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_i_b_aes {
     /// Registry id.
     pub const ID: &str = "snova-i-b-aes";
@@ -52952,7 +52783,6 @@ pub mod snova_i_b_aes {
 }
 
 /// `snova-i-k` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_i_k {
     /// Registry id.
     pub const ID: &str = "snova-i-k";
@@ -52984,7 +52814,6 @@ pub mod snova_i_k {
 }
 
 /// `snova-i-k-aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_i_k_aes {
     /// Registry id.
     pub const ID: &str = "snova-i-k-aes";
@@ -53016,7 +52845,6 @@ pub mod snova_i_k_aes {
 }
 
 /// `snova-i-s` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_i_s {
     /// Registry id.
     pub const ID: &str = "snova-i-s";
@@ -53048,7 +52876,6 @@ pub mod snova_i_s {
 }
 
 /// `snova-i-s-aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_i_s_aes {
     /// Registry id.
     pub const ID: &str = "snova-i-s-aes";
@@ -53080,7 +52907,6 @@ pub mod snova_i_s_aes {
 }
 
 /// `snova-iii-b` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_iii_b {
     /// Registry id.
     pub const ID: &str = "snova-iii-b";
@@ -53112,7 +52938,6 @@ pub mod snova_iii_b {
 }
 
 /// `snova-iii-b-aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_iii_b_aes {
     /// Registry id.
     pub const ID: &str = "snova-iii-b-aes";
@@ -53144,7 +52969,6 @@ pub mod snova_iii_b_aes {
 }
 
 /// `snova-iii-k` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_iii_k {
     /// Registry id.
     pub const ID: &str = "snova-iii-k";
@@ -53176,7 +53000,6 @@ pub mod snova_iii_k {
 }
 
 /// `snova-iii-k-aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_iii_k_aes {
     /// Registry id.
     pub const ID: &str = "snova-iii-k-aes";
@@ -53208,7 +53031,6 @@ pub mod snova_iii_k_aes {
 }
 
 /// `snova-iii-s` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_iii_s {
     /// Registry id.
     pub const ID: &str = "snova-iii-s";
@@ -53240,7 +53062,6 @@ pub mod snova_iii_s {
 }
 
 /// `snova-iii-s-aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_iii_s_aes {
     /// Registry id.
     pub const ID: &str = "snova-iii-s-aes";
@@ -53272,7 +53093,6 @@ pub mod snova_iii_s_aes {
 }
 
 /// `snova-v-b` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_v_b {
     /// Registry id.
     pub const ID: &str = "snova-v-b";
@@ -53304,7 +53124,6 @@ pub mod snova_v_b {
 }
 
 /// `snova-v-b-aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_v_b_aes {
     /// Registry id.
     pub const ID: &str = "snova-v-b-aes";
@@ -53336,7 +53155,6 @@ pub mod snova_v_b_aes {
 }
 
 /// `snova-v-k` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_v_k {
     /// Registry id.
     pub const ID: &str = "snova-v-k";
@@ -53368,7 +53186,6 @@ pub mod snova_v_k {
 }
 
 /// `snova-v-k-aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_v_k_aes {
     /// Registry id.
     pub const ID: &str = "snova-v-k-aes";
@@ -53400,7 +53217,6 @@ pub mod snova_v_k_aes {
 }
 
 /// `snova-v-s` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_v_s {
     /// Registry id.
     pub const ID: &str = "snova-v-s";
@@ -53432,7 +53248,6 @@ pub mod snova_v_s {
 }
 
 /// `snova-v-s-aes` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod snova_v_s_aes {
     /// Registry id.
     pub const ID: &str = "snova-v-s-aes";
@@ -53701,7 +53516,6 @@ pub mod sparkle_schwaemm {
 }
 
 /// `sphincs-haraka-128f-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_128f_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-128f-r1";
@@ -53733,7 +53547,6 @@ pub mod sphincs_haraka_128f_r1 {
 }
 
 /// `sphincs-haraka-128f-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_128f_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-128f-robust-r2";
@@ -53765,7 +53578,6 @@ pub mod sphincs_haraka_128f_robust_r2 {
 }
 
 /// `sphincs-haraka-128f-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_128f_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-128f-simple-r2";
@@ -53797,7 +53609,6 @@ pub mod sphincs_haraka_128f_simple_r2 {
 }
 
 /// `sphincs-haraka-128s-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_128s_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-128s-r1";
@@ -53829,7 +53640,6 @@ pub mod sphincs_haraka_128s_r1 {
 }
 
 /// `sphincs-haraka-128s-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_128s_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-128s-robust-r2";
@@ -53861,7 +53671,6 @@ pub mod sphincs_haraka_128s_robust_r2 {
 }
 
 /// `sphincs-haraka-128s-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_128s_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-128s-simple-r2";
@@ -53893,7 +53702,6 @@ pub mod sphincs_haraka_128s_simple_r2 {
 }
 
 /// `sphincs-haraka-192f-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_192f_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-192f-r1";
@@ -53925,7 +53733,6 @@ pub mod sphincs_haraka_192f_r1 {
 }
 
 /// `sphincs-haraka-192f-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_192f_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-192f-robust-r2";
@@ -53957,7 +53764,6 @@ pub mod sphincs_haraka_192f_robust_r2 {
 }
 
 /// `sphincs-haraka-192f-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_192f_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-192f-simple-r2";
@@ -53989,7 +53795,6 @@ pub mod sphincs_haraka_192f_simple_r2 {
 }
 
 /// `sphincs-haraka-192s-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_192s_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-192s-r1";
@@ -54021,7 +53826,6 @@ pub mod sphincs_haraka_192s_r1 {
 }
 
 /// `sphincs-haraka-192s-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_192s_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-192s-robust-r2";
@@ -54053,7 +53857,6 @@ pub mod sphincs_haraka_192s_robust_r2 {
 }
 
 /// `sphincs-haraka-192s-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_192s_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-192s-simple-r2";
@@ -54085,7 +53888,6 @@ pub mod sphincs_haraka_192s_simple_r2 {
 }
 
 /// `sphincs-haraka-256f-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_256f_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-256f-r1";
@@ -54117,7 +53919,6 @@ pub mod sphincs_haraka_256f_r1 {
 }
 
 /// `sphincs-haraka-256f-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_256f_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-256f-robust-r2";
@@ -54149,7 +53950,6 @@ pub mod sphincs_haraka_256f_robust_r2 {
 }
 
 /// `sphincs-haraka-256f-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_256f_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-256f-simple-r2";
@@ -54181,7 +53981,6 @@ pub mod sphincs_haraka_256f_simple_r2 {
 }
 
 /// `sphincs-haraka-256s-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_256s_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-256s-r1";
@@ -54213,7 +54012,6 @@ pub mod sphincs_haraka_256s_r1 {
 }
 
 /// `sphincs-haraka-256s-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_256s_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-256s-robust-r2";
@@ -54245,7 +54043,6 @@ pub mod sphincs_haraka_256s_robust_r2 {
 }
 
 /// `sphincs-haraka-256s-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_haraka_256s_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-haraka-256s-simple-r2";
@@ -54463,7 +54260,6 @@ pub mod sphincs_sha2_256s_simple {
 }
 
 /// `sphincs-sha256-128f-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_128f_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-128f-robust-r2";
@@ -54495,7 +54291,6 @@ pub mod sphincs_sha256_128f_robust_r2 {
 }
 
 /// `sphincs-sha256-128f-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_128f_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-128f-simple-r2";
@@ -54527,7 +54322,6 @@ pub mod sphincs_sha256_128f_simple_r2 {
 }
 
 /// `sphincs-sha256-128s-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_128s_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-128s-robust-r2";
@@ -54559,7 +54353,6 @@ pub mod sphincs_sha256_128s_robust_r2 {
 }
 
 /// `sphincs-sha256-128s-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_128s_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-128s-simple-r2";
@@ -54591,7 +54384,6 @@ pub mod sphincs_sha256_128s_simple_r2 {
 }
 
 /// `sphincs-sha256-192f-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_192f_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-192f-robust-r2";
@@ -54623,7 +54415,6 @@ pub mod sphincs_sha256_192f_robust_r2 {
 }
 
 /// `sphincs-sha256-192f-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_192f_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-192f-simple-r2";
@@ -54655,7 +54446,6 @@ pub mod sphincs_sha256_192f_simple_r2 {
 }
 
 /// `sphincs-sha256-192s-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_192s_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-192s-robust-r2";
@@ -54687,7 +54477,6 @@ pub mod sphincs_sha256_192s_robust_r2 {
 }
 
 /// `sphincs-sha256-192s-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_192s_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-192s-simple-r2";
@@ -54719,7 +54508,6 @@ pub mod sphincs_sha256_192s_simple_r2 {
 }
 
 /// `sphincs-sha256-256f-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_256f_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-256f-robust-r2";
@@ -54751,7 +54539,6 @@ pub mod sphincs_sha256_256f_robust_r2 {
 }
 
 /// `sphincs-sha256-256f-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_256f_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-256f-simple-r2";
@@ -54783,7 +54570,6 @@ pub mod sphincs_sha256_256f_simple_r2 {
 }
 
 /// `sphincs-sha256-256s-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_256s_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-256s-robust-r2";
@@ -54815,7 +54601,6 @@ pub mod sphincs_sha256_256s_robust_r2 {
 }
 
 /// `sphincs-sha256-256s-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_sha256_256s_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-sha256-256s-simple-r2";
@@ -55033,7 +54818,6 @@ pub mod sphincs_shake_256s_simple {
 }
 
 /// `sphincs-shake256-128f-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_128f_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-128f-r1";
@@ -55065,7 +54849,6 @@ pub mod sphincs_shake256_128f_r1 {
 }
 
 /// `sphincs-shake256-128f-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_128f_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-128f-robust-r2";
@@ -55097,7 +54880,6 @@ pub mod sphincs_shake256_128f_robust_r2 {
 }
 
 /// `sphincs-shake256-128f-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_128f_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-128f-simple-r2";
@@ -55129,7 +54911,6 @@ pub mod sphincs_shake256_128f_simple_r2 {
 }
 
 /// `sphincs-shake256-128s-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_128s_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-128s-r1";
@@ -55161,7 +54942,6 @@ pub mod sphincs_shake256_128s_r1 {
 }
 
 /// `sphincs-shake256-128s-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_128s_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-128s-robust-r2";
@@ -55193,7 +54973,6 @@ pub mod sphincs_shake256_128s_robust_r2 {
 }
 
 /// `sphincs-shake256-128s-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_128s_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-128s-simple-r2";
@@ -55225,7 +55004,6 @@ pub mod sphincs_shake256_128s_simple_r2 {
 }
 
 /// `sphincs-shake256-192f-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_192f_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-192f-r1";
@@ -55257,7 +55035,6 @@ pub mod sphincs_shake256_192f_r1 {
 }
 
 /// `sphincs-shake256-192f-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_192f_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-192f-robust-r2";
@@ -55289,7 +55066,6 @@ pub mod sphincs_shake256_192f_robust_r2 {
 }
 
 /// `sphincs-shake256-192f-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_192f_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-192f-simple-r2";
@@ -55321,7 +55097,6 @@ pub mod sphincs_shake256_192f_simple_r2 {
 }
 
 /// `sphincs-shake256-192s-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_192s_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-192s-r1";
@@ -55353,7 +55128,6 @@ pub mod sphincs_shake256_192s_r1 {
 }
 
 /// `sphincs-shake256-192s-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_192s_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-192s-robust-r2";
@@ -55385,7 +55159,6 @@ pub mod sphincs_shake256_192s_robust_r2 {
 }
 
 /// `sphincs-shake256-192s-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_192s_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-192s-simple-r2";
@@ -55417,7 +55190,6 @@ pub mod sphincs_shake256_192s_simple_r2 {
 }
 
 /// `sphincs-shake256-256f-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_256f_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-256f-r1";
@@ -55449,7 +55221,6 @@ pub mod sphincs_shake256_256f_r1 {
 }
 
 /// `sphincs-shake256-256f-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_256f_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-256f-robust-r2";
@@ -55481,7 +55252,6 @@ pub mod sphincs_shake256_256f_robust_r2 {
 }
 
 /// `sphincs-shake256-256f-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_256f_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-256f-simple-r2";
@@ -55513,7 +55283,6 @@ pub mod sphincs_shake256_256f_simple_r2 {
 }
 
 /// `sphincs-shake256-256s-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_256s_r1 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-256s-r1";
@@ -55545,7 +55314,6 @@ pub mod sphincs_shake256_256s_r1 {
 }
 
 /// `sphincs-shake256-256s-robust-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_256s_robust_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-256s-robust-r2";
@@ -55577,7 +55345,6 @@ pub mod sphincs_shake256_256s_robust_r2 {
 }
 
 /// `sphincs-shake256-256s-simple-r2` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincs_shake256_256s_simple_r2 {
     /// Registry id.
     pub const ID: &str = "sphincs-shake256-256s-simple-r2";
@@ -55609,7 +55376,6 @@ pub mod sphincs_shake256_256s_simple_r2 {
 }
 
 /// `sphincsf128harakarobust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf128harakarobust {
     /// Registry id.
     pub const ID: &str = "sphincsf128harakarobust";
@@ -55641,7 +55407,6 @@ pub mod sphincsf128harakarobust {
 }
 
 /// `sphincsf128harakasimple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf128harakasimple {
     /// Registry id.
     pub const ID: &str = "sphincsf128harakasimple";
@@ -55673,7 +55438,6 @@ pub mod sphincsf128harakasimple {
 }
 
 /// `sphincsf128sha256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf128sha256robust {
     /// Registry id.
     pub const ID: &str = "sphincsf128sha256robust";
@@ -55705,7 +55469,6 @@ pub mod sphincsf128sha256robust {
 }
 
 /// `sphincsf128sha256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf128sha256simple {
     /// Registry id.
     pub const ID: &str = "sphincsf128sha256simple";
@@ -55737,7 +55500,6 @@ pub mod sphincsf128sha256simple {
 }
 
 /// `sphincsf128shake256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf128shake256robust {
     /// Registry id.
     pub const ID: &str = "sphincsf128shake256robust";
@@ -55769,7 +55531,6 @@ pub mod sphincsf128shake256robust {
 }
 
 /// `sphincsf128shake256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf128shake256simple {
     /// Registry id.
     pub const ID: &str = "sphincsf128shake256simple";
@@ -55801,7 +55562,6 @@ pub mod sphincsf128shake256simple {
 }
 
 /// `sphincsf192harakarobust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf192harakarobust {
     /// Registry id.
     pub const ID: &str = "sphincsf192harakarobust";
@@ -55833,7 +55593,6 @@ pub mod sphincsf192harakarobust {
 }
 
 /// `sphincsf192harakasimple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf192harakasimple {
     /// Registry id.
     pub const ID: &str = "sphincsf192harakasimple";
@@ -55865,7 +55624,6 @@ pub mod sphincsf192harakasimple {
 }
 
 /// `sphincsf192sha256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf192sha256robust {
     /// Registry id.
     pub const ID: &str = "sphincsf192sha256robust";
@@ -55897,7 +55655,6 @@ pub mod sphincsf192sha256robust {
 }
 
 /// `sphincsf192sha256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf192sha256simple {
     /// Registry id.
     pub const ID: &str = "sphincsf192sha256simple";
@@ -55929,7 +55686,6 @@ pub mod sphincsf192sha256simple {
 }
 
 /// `sphincsf192shake256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf192shake256robust {
     /// Registry id.
     pub const ID: &str = "sphincsf192shake256robust";
@@ -55961,7 +55717,6 @@ pub mod sphincsf192shake256robust {
 }
 
 /// `sphincsf192shake256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf192shake256simple {
     /// Registry id.
     pub const ID: &str = "sphincsf192shake256simple";
@@ -55993,7 +55748,6 @@ pub mod sphincsf192shake256simple {
 }
 
 /// `sphincsf256harakarobust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf256harakarobust {
     /// Registry id.
     pub const ID: &str = "sphincsf256harakarobust";
@@ -56025,7 +55779,6 @@ pub mod sphincsf256harakarobust {
 }
 
 /// `sphincsf256harakasimple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf256harakasimple {
     /// Registry id.
     pub const ID: &str = "sphincsf256harakasimple";
@@ -56057,7 +55810,6 @@ pub mod sphincsf256harakasimple {
 }
 
 /// `sphincsf256sha256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf256sha256robust {
     /// Registry id.
     pub const ID: &str = "sphincsf256sha256robust";
@@ -56089,7 +55841,6 @@ pub mod sphincsf256sha256robust {
 }
 
 /// `sphincsf256sha256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf256sha256simple {
     /// Registry id.
     pub const ID: &str = "sphincsf256sha256simple";
@@ -56121,7 +55872,6 @@ pub mod sphincsf256sha256simple {
 }
 
 /// `sphincsf256shake256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf256shake256robust {
     /// Registry id.
     pub const ID: &str = "sphincsf256shake256robust";
@@ -56153,7 +55903,6 @@ pub mod sphincsf256shake256robust {
 }
 
 /// `sphincsf256shake256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincsf256shake256simple {
     /// Registry id.
     pub const ID: &str = "sphincsf256shake256simple";
@@ -56185,7 +55934,6 @@ pub mod sphincsf256shake256simple {
 }
 
 /// `sphincss128harakarobust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss128harakarobust {
     /// Registry id.
     pub const ID: &str = "sphincss128harakarobust";
@@ -56217,7 +55965,6 @@ pub mod sphincss128harakarobust {
 }
 
 /// `sphincss128harakasimple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss128harakasimple {
     /// Registry id.
     pub const ID: &str = "sphincss128harakasimple";
@@ -56249,7 +55996,6 @@ pub mod sphincss128harakasimple {
 }
 
 /// `sphincss128sha256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss128sha256robust {
     /// Registry id.
     pub const ID: &str = "sphincss128sha256robust";
@@ -56281,7 +56027,6 @@ pub mod sphincss128sha256robust {
 }
 
 /// `sphincss128sha256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss128sha256simple {
     /// Registry id.
     pub const ID: &str = "sphincss128sha256simple";
@@ -56313,7 +56058,6 @@ pub mod sphincss128sha256simple {
 }
 
 /// `sphincss128shake256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss128shake256robust {
     /// Registry id.
     pub const ID: &str = "sphincss128shake256robust";
@@ -56345,7 +56089,6 @@ pub mod sphincss128shake256robust {
 }
 
 /// `sphincss128shake256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss128shake256simple {
     /// Registry id.
     pub const ID: &str = "sphincss128shake256simple";
@@ -56377,7 +56120,6 @@ pub mod sphincss128shake256simple {
 }
 
 /// `sphincss192harakarobust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss192harakarobust {
     /// Registry id.
     pub const ID: &str = "sphincss192harakarobust";
@@ -56409,7 +56151,6 @@ pub mod sphincss192harakarobust {
 }
 
 /// `sphincss192harakasimple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss192harakasimple {
     /// Registry id.
     pub const ID: &str = "sphincss192harakasimple";
@@ -56441,7 +56182,6 @@ pub mod sphincss192harakasimple {
 }
 
 /// `sphincss192sha256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss192sha256robust {
     /// Registry id.
     pub const ID: &str = "sphincss192sha256robust";
@@ -56473,7 +56213,6 @@ pub mod sphincss192sha256robust {
 }
 
 /// `sphincss192sha256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss192sha256simple {
     /// Registry id.
     pub const ID: &str = "sphincss192sha256simple";
@@ -56505,7 +56244,6 @@ pub mod sphincss192sha256simple {
 }
 
 /// `sphincss192shake256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss192shake256robust {
     /// Registry id.
     pub const ID: &str = "sphincss192shake256robust";
@@ -56537,7 +56275,6 @@ pub mod sphincss192shake256robust {
 }
 
 /// `sphincss192shake256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss192shake256simple {
     /// Registry id.
     pub const ID: &str = "sphincss192shake256simple";
@@ -56569,7 +56306,6 @@ pub mod sphincss192shake256simple {
 }
 
 /// `sphincss256harakarobust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss256harakarobust {
     /// Registry id.
     pub const ID: &str = "sphincss256harakarobust";
@@ -56601,7 +56337,6 @@ pub mod sphincss256harakarobust {
 }
 
 /// `sphincss256harakasimple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss256harakasimple {
     /// Registry id.
     pub const ID: &str = "sphincss256harakasimple";
@@ -56633,7 +56368,6 @@ pub mod sphincss256harakasimple {
 }
 
 /// `sphincss256sha256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss256sha256robust {
     /// Registry id.
     pub const ID: &str = "sphincss256sha256robust";
@@ -56665,7 +56399,6 @@ pub mod sphincss256sha256robust {
 }
 
 /// `sphincss256sha256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss256sha256simple {
     /// Registry id.
     pub const ID: &str = "sphincss256sha256simple";
@@ -56697,7 +56430,6 @@ pub mod sphincss256sha256simple {
 }
 
 /// `sphincss256shake256robust` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss256shake256robust {
     /// Registry id.
     pub const ID: &str = "sphincss256shake256robust";
@@ -56729,7 +56461,6 @@ pub mod sphincss256shake256robust {
 }
 
 /// `sphincss256shake256simple` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sphincss256shake256simple {
     /// Registry id.
     pub const ID: &str = "sphincss256shake256simple";
@@ -57992,7 +57723,6 @@ pub mod spookyhash {
 }
 
 /// `sqisign-p324-3` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sqisign_p324_3 {
     /// Registry id.
     pub const ID: &str = "sqisign-p324-3";
@@ -58024,7 +57754,6 @@ pub mod sqisign_p324_3 {
 }
 
 /// `sqisign-p500-27` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sqisign_p500_27 {
     /// Registry id.
     pub const ID: &str = "sqisign-p500-27";
@@ -58056,7 +57785,6 @@ pub mod sqisign_p500_27 {
 }
 
 /// `sqisign-p664-17` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod sqisign_p664_17 {
     /// Registry id.
     pub const ID: &str = "sqisign-p664-17";
@@ -59665,7 +59393,6 @@ pub mod threebears1248r2cca {
 }
 
 /// `threebears1248r2ccax` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod threebears1248r2ccax {
     /// Registry id.
     pub const ID: &str = "threebears1248r2ccax";
@@ -59748,7 +59475,6 @@ pub mod threebears624r2cca {
 }
 
 /// `threebears624r2ccax` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod threebears624r2ccax {
     /// Registry id.
     pub const ID: &str = "threebears624r2ccax";
@@ -59831,7 +59557,6 @@ pub mod threebears936r2cca {
 }
 
 /// `threebears936r2ccax` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod threebears936r2ccax {
     /// Registry id.
     pub const ID: &str = "threebears936r2ccax";
@@ -60110,7 +59835,6 @@ pub mod tiger {
 }
 
 /// `timerv5` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod timerv5 {
     /// Registry id.
     pub const ID: &str = "timerv5";
@@ -60551,7 +60275,6 @@ pub mod tinyjambu256v2 {
 }
 
 /// `titaniumccatoy` (kem, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod titaniumccatoy {
     /// Registry id.
     pub const ID: &str = "titaniumccatoy";
@@ -60593,7 +60316,6 @@ pub mod titaniumccatoy {
 }
 
 /// `tortuga-phc` (pwhash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod tortuga_phc {
     /// Registry id.
     pub const ID: &str = "tortuga-phc";
@@ -60644,7 +60366,6 @@ pub mod tortuga_phc {
 }
 
 /// `toy-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod toy_r1 {
     /// Registry id.
     pub const ID: &str = "toy-r1";
@@ -61530,7 +61251,6 @@ pub mod usaber_90s_r3 {
 }
 
 /// `vox128-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod vox128_r1 {
     /// Registry id.
     pub const ID: &str = "vox128-r1";
@@ -61853,7 +61573,6 @@ pub mod waterfall_512_sha3r1 {
 }
 
 /// `wave1249-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod wave1249_r1 {
     /// Registry id.
     pub const ID: &str = "wave1249-r1";
@@ -61885,7 +61604,6 @@ pub mod wave1249_r1 {
 }
 
 /// `wave1644-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod wave1644_r1 {
     /// Registry id.
     pub const ID: &str = "wave1644-r1";
@@ -61917,7 +61635,6 @@ pub mod wave1644_r1 {
 }
 
 /// `wave822-r1` (sign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod wave822_r1 {
     /// Registry id.
     pub const ID: &str = "wave822-r1";
@@ -62405,7 +62122,6 @@ pub mod xchacha20_poly1305 {
 }
 
 /// `xmss-sha2-10-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmss_sha2_10_192 {
     /// Registry id.
     pub const ID: &str = "xmss-sha2-10-192";
@@ -62415,7 +62131,6 @@ pub mod xmss_sha2_10_192 {
 }
 
 /// `xmss-sha2-10-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmss_sha2_10_256 {
     /// Registry id.
     pub const ID: &str = "xmss-sha2-10-256";
@@ -62425,7 +62140,6 @@ pub mod xmss_sha2_10_256 {
 }
 
 /// `xmss-sha2-10-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmss_sha2_10_512 {
     /// Registry id.
     pub const ID: &str = "xmss-sha2-10-512";
@@ -62435,7 +62149,6 @@ pub mod xmss_sha2_10_512 {
 }
 
 /// `xmss-shake-10-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmss_shake_10_256 {
     /// Registry id.
     pub const ID: &str = "xmss-shake-10-256";
@@ -62445,7 +62158,6 @@ pub mod xmss_shake_10_256 {
 }
 
 /// `xmss-shake-10-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmss_shake_10_512 {
     /// Registry id.
     pub const ID: &str = "xmss-shake-10-512";
@@ -62455,7 +62167,6 @@ pub mod xmss_shake_10_512 {
 }
 
 /// `xmss-shake256-10-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmss_shake256_10_192 {
     /// Registry id.
     pub const ID: &str = "xmss-shake256-10-192";
@@ -62465,7 +62176,6 @@ pub mod xmss_shake256_10_192 {
 }
 
 /// `xmss-shake256-10-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmss_shake256_10_256 {
     /// Registry id.
     pub const ID: &str = "xmss-shake256-10-256";
@@ -62475,7 +62185,6 @@ pub mod xmss_shake256_10_256 {
 }
 
 /// `xmssmt-sha2-20-2-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_20_2_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-20-2-192";
@@ -62485,7 +62194,6 @@ pub mod xmssmt_sha2_20_2_192 {
 }
 
 /// `xmssmt-sha2-20-2-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_20_2_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-20-2-256";
@@ -62495,7 +62203,6 @@ pub mod xmssmt_sha2_20_2_256 {
 }
 
 /// `xmssmt-sha2-20-2-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_20_2_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-20-2-512";
@@ -62505,7 +62212,6 @@ pub mod xmssmt_sha2_20_2_512 {
 }
 
 /// `xmssmt-sha2-20-4-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_20_4_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-20-4-192";
@@ -62515,7 +62221,6 @@ pub mod xmssmt_sha2_20_4_192 {
 }
 
 /// `xmssmt-sha2-20-4-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_20_4_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-20-4-256";
@@ -62525,7 +62230,6 @@ pub mod xmssmt_sha2_20_4_256 {
 }
 
 /// `xmssmt-sha2-20-4-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_20_4_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-20-4-512";
@@ -62535,7 +62239,6 @@ pub mod xmssmt_sha2_20_4_512 {
 }
 
 /// `xmssmt-sha2-40-4-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_40_4_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-40-4-192";
@@ -62545,7 +62248,6 @@ pub mod xmssmt_sha2_40_4_192 {
 }
 
 /// `xmssmt-sha2-40-4-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_40_4_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-40-4-256";
@@ -62555,7 +62257,6 @@ pub mod xmssmt_sha2_40_4_256 {
 }
 
 /// `xmssmt-sha2-40-4-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_40_4_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-40-4-512";
@@ -62565,7 +62266,6 @@ pub mod xmssmt_sha2_40_4_512 {
 }
 
 /// `xmssmt-sha2-40-8-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_40_8_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-40-8-192";
@@ -62575,7 +62275,6 @@ pub mod xmssmt_sha2_40_8_192 {
 }
 
 /// `xmssmt-sha2-40-8-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_40_8_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-40-8-256";
@@ -62585,7 +62284,6 @@ pub mod xmssmt_sha2_40_8_256 {
 }
 
 /// `xmssmt-sha2-40-8-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_40_8_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-40-8-512";
@@ -62595,7 +62293,6 @@ pub mod xmssmt_sha2_40_8_512 {
 }
 
 /// `xmssmt-sha2-60-12-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_60_12_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-60-12-192";
@@ -62605,7 +62302,6 @@ pub mod xmssmt_sha2_60_12_192 {
 }
 
 /// `xmssmt-sha2-60-12-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_60_12_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-60-12-256";
@@ -62615,7 +62311,6 @@ pub mod xmssmt_sha2_60_12_256 {
 }
 
 /// `xmssmt-sha2-60-12-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_60_12_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-60-12-512";
@@ -62625,7 +62320,6 @@ pub mod xmssmt_sha2_60_12_512 {
 }
 
 /// `xmssmt-sha2-60-6-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_60_6_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-60-6-192";
@@ -62635,7 +62329,6 @@ pub mod xmssmt_sha2_60_6_192 {
 }
 
 /// `xmssmt-sha2-60-6-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_60_6_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-60-6-256";
@@ -62645,7 +62338,6 @@ pub mod xmssmt_sha2_60_6_256 {
 }
 
 /// `xmssmt-sha2-60-6-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_sha2_60_6_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-sha2-60-6-512";
@@ -62655,7 +62347,6 @@ pub mod xmssmt_sha2_60_6_512 {
 }
 
 /// `xmssmt-shake-20-2-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_20_2_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-20-2-256";
@@ -62665,7 +62356,6 @@ pub mod xmssmt_shake_20_2_256 {
 }
 
 /// `xmssmt-shake-20-2-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_20_2_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-20-2-512";
@@ -62675,7 +62365,6 @@ pub mod xmssmt_shake_20_2_512 {
 }
 
 /// `xmssmt-shake-20-4-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_20_4_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-20-4-256";
@@ -62685,7 +62374,6 @@ pub mod xmssmt_shake_20_4_256 {
 }
 
 /// `xmssmt-shake-20-4-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_20_4_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-20-4-512";
@@ -62695,7 +62383,6 @@ pub mod xmssmt_shake_20_4_512 {
 }
 
 /// `xmssmt-shake-40-4-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_40_4_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-40-4-256";
@@ -62705,7 +62392,6 @@ pub mod xmssmt_shake_40_4_256 {
 }
 
 /// `xmssmt-shake-40-4-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_40_4_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-40-4-512";
@@ -62715,7 +62401,6 @@ pub mod xmssmt_shake_40_4_512 {
 }
 
 /// `xmssmt-shake-40-8-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_40_8_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-40-8-256";
@@ -62725,7 +62410,6 @@ pub mod xmssmt_shake_40_8_256 {
 }
 
 /// `xmssmt-shake-40-8-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_40_8_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-40-8-512";
@@ -62735,7 +62419,6 @@ pub mod xmssmt_shake_40_8_512 {
 }
 
 /// `xmssmt-shake-60-12-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_60_12_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-60-12-256";
@@ -62745,7 +62428,6 @@ pub mod xmssmt_shake_60_12_256 {
 }
 
 /// `xmssmt-shake-60-12-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_60_12_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-60-12-512";
@@ -62755,7 +62437,6 @@ pub mod xmssmt_shake_60_12_512 {
 }
 
 /// `xmssmt-shake-60-6-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_60_6_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-60-6-256";
@@ -62765,7 +62446,6 @@ pub mod xmssmt_shake_60_6_256 {
 }
 
 /// `xmssmt-shake-60-6-512` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake_60_6_512 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake-60-6-512";
@@ -62775,7 +62455,6 @@ pub mod xmssmt_shake_60_6_512 {
 }
 
 /// `xmssmt-shake256-20-2-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_20_2_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-20-2-192";
@@ -62785,7 +62464,6 @@ pub mod xmssmt_shake256_20_2_192 {
 }
 
 /// `xmssmt-shake256-20-2-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_20_2_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-20-2-256";
@@ -62795,7 +62473,6 @@ pub mod xmssmt_shake256_20_2_256 {
 }
 
 /// `xmssmt-shake256-20-4-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_20_4_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-20-4-192";
@@ -62805,7 +62482,6 @@ pub mod xmssmt_shake256_20_4_192 {
 }
 
 /// `xmssmt-shake256-20-4-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_20_4_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-20-4-256";
@@ -62815,7 +62491,6 @@ pub mod xmssmt_shake256_20_4_256 {
 }
 
 /// `xmssmt-shake256-40-4-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_40_4_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-40-4-192";
@@ -62825,7 +62500,6 @@ pub mod xmssmt_shake256_40_4_192 {
 }
 
 /// `xmssmt-shake256-40-4-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_40_4_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-40-4-256";
@@ -62835,7 +62509,6 @@ pub mod xmssmt_shake256_40_4_256 {
 }
 
 /// `xmssmt-shake256-40-8-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_40_8_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-40-8-192";
@@ -62845,7 +62518,6 @@ pub mod xmssmt_shake256_40_8_192 {
 }
 
 /// `xmssmt-shake256-40-8-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_40_8_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-40-8-256";
@@ -62855,7 +62527,6 @@ pub mod xmssmt_shake256_40_8_256 {
 }
 
 /// `xmssmt-shake256-60-12-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_60_12_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-60-12-192";
@@ -62865,7 +62536,6 @@ pub mod xmssmt_shake256_60_12_192 {
 }
 
 /// `xmssmt-shake256-60-12-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_60_12_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-60-12-256";
@@ -62875,7 +62545,6 @@ pub mod xmssmt_shake256_60_12_256 {
 }
 
 /// `xmssmt-shake256-60-6-192` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_60_6_192 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-60-6-192";
@@ -62885,7 +62554,6 @@ pub mod xmssmt_shake256_60_6_192 {
 }
 
 /// `xmssmt-shake256-60-6-256` (statefulsign, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod xmssmt_shake256_60_6_256 {
     /// Registry id.
     pub const ID: &str = "xmssmt-shake256-60-6-256";
@@ -63671,7 +63339,6 @@ pub mod yarara128v1 {
 }
 
 /// `yarn-phc` (pwhash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod yarn_phc {
     /// Registry id.
     pub const ID: &str = "yarn-phc";
@@ -63772,7 +63439,6 @@ pub mod yescrypt {
 }
 
 /// `yescrypt-phc` (pwhash, tier unverified).
-#[cfg(not(target_env = "msvc"))]
 pub mod yescrypt_phc {
     /// Registry id.
     pub const ID: &str = "yescrypt-phc";
@@ -63992,7 +63658,6 @@ mod generated_module_list {
             ("aes-pmac", crate::aes_pmac::INFO.id),
             ("aes-siv-cmac-256", crate::aes_siv_cmac_256::INFO.id),
             ("aes-siv-cmac-512", crate::aes_siv_cmac_512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("aes128cpfbv1", crate::aes128cpfbv1::INFO.id),
             ("aes128marble4rv1", crate::aes128marble4rv1::INFO.id),
             ("aes128n12clocv1", crate::aes128n12clocv1::INFO.id),
@@ -64014,7 +63679,6 @@ mod generated_module_list {
             ("aes128otrsv3", crate::aes128otrsv3::INFO.id),
             ("aes128poetv2aes128ni", crate::aes128poetv2aes128ni::INFO.id),
             ("aes128poetv2aes4ni", crate::aes128poetv2aes4ni::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("aes256cpfbv1", crate::aes256cpfbv1::INFO.id),
             ("aes256otrcv3", crate::aes256otrcv3::INFO.id),
             ("aes256otrpv1", crate::aes256otrpv1::INFO.id),
@@ -64029,11 +63693,8 @@ mod generated_module_list {
             ("aezv3", crate::aezv3::INFO.id),
             ("aezv4", crate::aezv4::INFO.id),
             ("aezv5", crate::aezv5::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("aimer-l1-param1-r1", crate::aimer_l1_param1_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("aimer-l1-param2-r1", crate::aimer_l1_param2_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("aimer-l1-param3-r1", crate::aimer_l1_param3_r1::INFO.id),
             ("aimer128fv3", crate::aimer128fv3::INFO.id),
             ("aimer128fv3new", crate::aimer128fv3new::INFO.id),
@@ -64075,7 +63736,6 @@ mod generated_module_list {
             ("ascon128v11", crate::ascon128v11::INFO.id),
             ("ascon128v12", crate::ascon128v12::INFO.id),
             ("ascon80pqv12", crate::ascon80pqv12::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("ascon96v1", crate::ascon96v1::INFO.id),
             ("asconhashabi32v12", crate::asconhashabi32v12::INFO.id),
             ("asconhashav12", crate::asconhashav12::INFO.id),
@@ -64119,11 +63779,8 @@ mod generated_module_list {
             ("bech32m", crate::bech32m::INFO.id),
             ("belt", crate::belt::INFO.id),
             ("belt-hash", crate::belt_hash::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("bike-l1", crate::bike_l1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("bike-l3", crate::bike_l3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("bike-l5", crate::bike_l5::INFO.id),
             ("blake-224-sha3r1", crate::blake_224_sha3r1::INFO.id),
             ("blake-224-sha3r2", crate::blake_224_sha3r2::INFO.id),
@@ -64195,9 +63852,7 @@ mod generated_module_list {
             ("camellia-256", crate::camellia_256::INFO.id),
             ("cast5", crate::cast5::INFO.id),
             ("cast6", crate::cast6::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("catena-butterfly-phc", crate::catena_butterfly_phc::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("catena-dragonfly-phc", crate::catena_dragonfly_phc::INFO.id),
             ("cbc-mac", crate::cbc_mac::INFO.id),
             ("chacha12", crate::chacha12::INFO.id),
@@ -64246,7 +63901,6 @@ mod generated_module_list {
             ("comp128-2", crate::comp128_2::INFO.id),
             #[cfg(feature = "copyleft")]
             ("comp128-3", crate::comp128_3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "compact-lwe-public-key-enc-r1",
                 crate::compact_lwe_public_key_enc_r1::INFO.id,
@@ -64429,11 +64083,9 @@ mod generated_module_list {
             ("cubehash161", crate::cubehash161::INFO.id),
             ("cubehash1616", crate::cubehash1616::INFO.id),
             ("cubehash162", crate::cubehash162::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("cubehash1632", crate::cubehash1632::INFO.id),
             ("cubehash164", crate::cubehash164::INFO.id),
             ("cubehash168", crate::cubehash168::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("cubehash512", crate::cubehash512::INFO.id),
             ("cubehash81", crate::cubehash81::INFO.id),
             ("cubehash816", crate::cubehash816::INFO.id),
@@ -64463,53 +64115,38 @@ mod generated_module_list {
             ("deoxysneq256128v13", crate::deoxysneq256128v13::INFO.id),
             ("des", crate::des::INFO.id),
             ("des-mac", crate::des_mac::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium-medium-r1", crate::dilithium_medium_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "dilithium-recommended-r1",
                 crate::dilithium_recommended_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "dilithium-very-high-r1",
                 crate::dilithium_very_high_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium-weak-r1", crate::dilithium_weak_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium1-aes-r2", crate::dilithium1_aes_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium1-r2", crate::dilithium1_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium2", crate::dilithium2::INFO.id),
             ("dilithium2-aes-r-r3", crate::dilithium2_aes_r_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium2-aes-r2", crate::dilithium2_aes_r2::INFO.id),
             ("dilithium2-aes-r3", crate::dilithium2_aes_r3::INFO.id),
             ("dilithium2-r-r3", crate::dilithium2_r_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium2-r2", crate::dilithium2_r2::INFO.id),
             ("dilithium2-r3", crate::dilithium2_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium2aes", crate::dilithium2aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium3", crate::dilithium3::INFO.id),
             ("dilithium3-aes-r-r3", crate::dilithium3_aes_r_r3::INFO.id),
             ("dilithium3-aes-r3", crate::dilithium3_aes_r3::INFO.id),
             ("dilithium3-r-r3", crate::dilithium3_r_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium3-r2", crate::dilithium3_r2::INFO.id),
             ("dilithium3-r3", crate::dilithium3_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium3aes", crate::dilithium3aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium5", crate::dilithium5::INFO.id),
             ("dilithium5-aes-r-r3", crate::dilithium5_aes_r_r3::INFO.id),
             ("dilithium5-aes-r3", crate::dilithium5_aes_r3::INFO.id),
             ("dilithium5-r-r3", crate::dilithium5_r_r3::INFO.id),
             ("dilithium5-r3", crate::dilithium5_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("dilithium5aes", crate::dilithium5aes::INFO.id),
             (
                 "dme-3rnds-8vars-32bits-sign-r1",
@@ -64568,7 +64205,6 @@ mod generated_module_list {
             ("echo512", crate::echo512::INFO.id),
             ("ed25519", crate::ed25519::INFO.id),
             ("ed448", crate::ed448::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("ed448goldilocks", crate::ed448goldilocks::INFO.id),
             ("ed448ph", crate::ed448ph::INFO.id),
             ("edon-r", crate::edon_r::INFO.id),
@@ -64602,7 +64238,6 @@ mod generated_module_list {
             ("elephant176v2", crate::elephant176v2::INFO.id),
             ("elephant200v1", crate::elephant200v1::INFO.id),
             ("elephant200v2", crate::elephant200v2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("enchilada256v1", crate::enchilada256v1::INFO.id),
             ("enrupt-224-sha3r1", crate::enrupt_224_sha3r1::INFO.id),
             ("enrupt-256-sha3r1", crate::enrupt_256_sha3r1::INFO.id),
@@ -64613,13 +64248,9 @@ mod generated_module_list {
             ("esch256v2", crate::esch256v2::INFO.id),
             ("esch384v1", crate::esch384v1::INFO.id),
             ("esch384v2", crate::esch384v2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("essence224", crate::essence224::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("essence256", crate::essence256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("essence384", crate::essence384::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("essence512", crate::essence512::INFO.id),
             ("estate-twegift", crate::estate_twegift::INFO.id),
             ("estatetweaes128v1", crate::estatetweaes128v1::INFO.id),
@@ -64653,9 +64284,7 @@ mod generated_module_list {
             ("feal8", crate::feal8::INFO.id),
             ("fealnx", crate::fealnx::INFO.id),
             ("ff70", crate::ff70::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("fire-saber-r1", crate::fire_saber_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("firesaber2", crate::firesaber2::INFO.id),
             ("fletcher16", crate::fletcher16::INFO.id),
             ("fletcher32", crate::fletcher32::INFO.id),
@@ -64753,9 +64382,7 @@ mod generated_module_list {
             ("groestl-256-sha3r3", crate::groestl_256_sha3r3::INFO.id),
             ("groestl-384-sha3r3", crate::groestl_384_sha3r3::INFO.id),
             ("groestl-512-sha3r3", crate::groestl_512_sha3r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("groestl256", crate::groestl256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("groestl512", crate::groestl512::INFO.id),
             ("grostl-224-sha3r1", crate::grostl_224_sha3r1::INFO.id),
             ("grostl-256-sha3r1", crate::grostl_256_sha3r1::INFO.id),
@@ -64769,7 +64396,6 @@ mod generated_module_list {
                 crate::h2c_secp256k1_sha256_sswu::INFO.id,
             ),
             ("haetae2v4", crate::haetae2v4::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("haetae2v5", crate::haetae2v5::INFO.id),
             ("hamsi-224-sha3r1", crate::hamsi_224_sha3r1::INFO.id),
             ("hamsi-224-sha3r2", crate::hamsi_224_sha3r2::INFO.id),
@@ -64948,11 +64574,9 @@ mod generated_module_list {
             ("keccak512", crate::keccak512::INFO.id),
             ("keccakc1024", crate::keccakc1024::INFO.id),
             ("keccakc256", crate::keccakc256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("keccakc256treed2", crate::keccakc256treed2::INFO.id),
             ("keccakc448", crate::keccakc448::INFO.id),
             ("keccakc512", crate::keccakc512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("keccakc512treed2", crate::keccakc512treed2::INFO.id),
             ("keccakc768", crate::keccakc768::INFO.id),
             ("ketje", crate::ketje::INFO.id),
@@ -64973,15 +64597,10 @@ mod generated_module_list {
             #[cfg(feature = "copyleft")]
             ("kiasuneq128", crate::kiasuneq128::INFO.id),
             ("kiasuneq128v1", crate::kiasuneq128v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kindi256342", crate::kindi256342::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kindi256522", crate::kindi256522::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kindi512222", crate::kindi512222::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kindi512241", crate::kindi512241::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kindi512321", crate::kindi512321::INFO.id),
             ("kmac128", crate::kmac128::INFO.id),
             ("kmac256", crate::kmac256::INFO.id),
@@ -64995,62 +64614,38 @@ mod generated_module_list {
             ("knot-hash-256-384", crate::knot_hash_256_384::INFO.id),
             ("knot-hash-384-384", crate::knot_hash_384_384::INFO.id),
             ("knot-hash-512-512", crate::knot_hash_512_512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot128v1", crate::knot128v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot128v1-lwc1", crate::knot128v1_lwc1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot128v2", crate::knot128v2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot192", crate::knot192::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot256", crate::knot256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot256v1", crate::knot256v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot256v1-lwc1", crate::knot256v1_lwc1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot256v2", crate::knot256v2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot384", crate::knot384::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("knot512", crate::knot512::INFO.id),
             ("kupyna", crate::kupyna::INFO.id),
             ("kuznyechik", crate::kuznyechik::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber1024-90s-r2", crate::kyber1024_90s_r2::INFO.id),
             ("kyber1024-90s-r3", crate::kyber1024_90s_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber1024-r1", crate::kyber1024_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber1024-r2", crate::kyber1024_r2::INFO.id),
             ("kyber1024-r3", crate::kyber1024_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber512", crate::kyber512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber512-90s-r2", crate::kyber512_90s_r2::INFO.id),
             ("kyber512-90s-r3", crate::kyber512_90s_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber512-r1", crate::kyber512_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber512-r2", crate::kyber512_r2::INFO.id),
             ("kyber512-r3", crate::kyber512_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber768", crate::kyber768::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber768-90s-r2", crate::kyber768_90s_r2::INFO.id),
             ("kyber768-90s-r3", crate::kyber768_90s_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber768-r1", crate::kyber768_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber768-r2", crate::kyber768_r2::INFO.id),
             ("kyber768-r3", crate::kyber768_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber90s512", crate::kyber90s512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("kyber90s768", crate::kyber90s768::INFO.id),
             ("lacv1", crate::lacv1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lanarea-phc", crate::lanarea_phc::INFO.id),
             ("lane-224-sha3r1", crate::lane_224_sha3r1::INFO.id),
             ("lane-256-sha3r1", crate::lane_256_sha3r1::INFO.id),
@@ -65245,33 +64840,19 @@ mod generated_module_list {
                 "libecc-ecsdsa-secp521r1-sha512",
                 crate::libecc_ecsdsa_secp521r1_sha512::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             ("light-saber-r1", crate::light_saber_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lightsaber2", crate::lightsaber2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaei128v1", crate::lilliputaei128v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaei128v11", crate::lilliputaei128v11::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaei192v1", crate::lilliputaei192v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaei192v11", crate::lilliputaei192v11::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaei256v1", crate::lilliputaei256v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaei256v11", crate::lilliputaei256v11::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaeii128v1", crate::lilliputaeii128v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaeii128v11", crate::lilliputaeii128v11::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaeii192v1", crate::lilliputaeii192v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaeii192v11", crate::lilliputaeii192v11::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaeii256v1", crate::lilliputaeii256v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("lilliputaeii256v11", crate::lilliputaeii256v11::INFO.id),
             ("limdolen128v1", crate::limdolen128v1::INFO.id),
             ("limdolen256v1", crate::limdolen256v1::INFO.id),
@@ -65305,21 +64886,13 @@ mod generated_module_list {
             ("lyra2-phc", crate::lyra2_phc::INFO.id),
             ("magma", crate::magma::INFO.id),
             ("mars", crate::mars::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("mayo-1", crate::mayo_1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("mayo-1-r2", crate::mayo_1_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("mayo-2", crate::mayo_2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("mayo-2-r2", crate::mayo_2_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("mayo-3", crate::mayo_3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("mayo-3-r2", crate::mayo_3_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("mayo-5", crate::mayo_5::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("mayo-5-r2", crate::mayo_5_r2::INFO.id),
             ("mceliece-348864", crate::mceliece_348864::INFO.id),
             ("mceliece-348864f", crate::mceliece_348864f::INFO.id),
@@ -65348,83 +64921,64 @@ mod generated_module_list {
             ("md6d256", crate::md6d256::INFO.id),
             ("md6d384", crate::md6d384::INFO.id),
             ("md6d512", crate::md6d512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("meds13220-r1", crate::meds13220_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("meds134180-r1", crate::meds134180_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("meds167717-r1", crate::meds167717_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("meds41711-r1", crate::meds41711_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("meds55604-r1", crate::meds55604_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("meds9923-r1", crate::meds9923_r1::INFO.id),
             ("meshhash-224-sha3r1", crate::meshhash_224_sha3r1::INFO.id),
             ("meshhash-256-sha3r1", crate::meshhash_256_sha3r1::INFO.id),
             ("meshhash-384-sha3r1", crate::meshhash_384_sha3r1::INFO.id),
             ("meshhash-512-sha3r1", crate::meshhash_512_sha3r1::INFO.id),
             ("metrohash", crate::metrohash::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("mgrostl256", crate::mgrostl256::INFO.id),
-            #[cfg(all(feature = "copyleft", not(target_env = "msvc")))]
+            #[cfg(feature = "copyleft")]
             ("milenage", crate::milenage::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-1a-fast-r2",
                 crate::mirath_tcith_1a_fast_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-1a-short-r2",
                 crate::mirath_tcith_1a_short_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-1b-fast-r2",
                 crate::mirath_tcith_1b_fast_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-1b-short-r2",
                 crate::mirath_tcith_1b_short_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-3a-fast-r2",
                 crate::mirath_tcith_3a_fast_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-3a-short-r2",
                 crate::mirath_tcith_3a_short_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-3b-fast-r2",
                 crate::mirath_tcith_3b_fast_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-3b-short-r2",
                 crate::mirath_tcith_3b_short_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-5a-fast-r2",
                 crate::mirath_tcith_5a_fast_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-5a-short-r2",
                 crate::mirath_tcith_5a_short_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-5b-fast-r2",
                 crate::mirath_tcith_5b_fast_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "mirath-tcith-5b-short-r2",
                 crate::mirath_tcith_5b_short_r2::INFO.id,
@@ -65603,22 +65157,18 @@ mod generated_module_list {
             ("ov-v", crate::ov_v::INFO.id),
             ("ov-v-pkc", crate::ov_v_pkc::INFO.id),
             ("ov-v-pkc-skc", crate::ov_v_pkc_skc::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "paefforkskinnyb128t192n48v1",
                 crate::paefforkskinnyb128t192n48v1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "paefforkskinnyb128t256n112v1",
                 crate::paefforkskinnyb128t256n112v1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "paefforkskinnyb128t288n104v1",
                 crate::paefforkskinnyb128t288n104v1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "paefforkskinnyb64t192n48v1",
                 crate::paefforkskinnyb64t192n48v1::INFO.id,
@@ -65733,21 +65283,13 @@ mod generated_module_list {
             ("qtesla-iii-s-r2", crate::qtesla_iii_s_r2::INFO.id),
             ("qtesla-v-r2", crate::qtesla_v_r2::INFO.id),
             ("qtesla-v-s-r2", crate::qtesla_v_s_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("qtesla1", crate::qtesla1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("qtesla128", crate::qtesla128::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("qtesla192", crate::qtesla192::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("qtesla1p", crate::qtesla1p::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("qtesla256", crate::qtesla256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("qtesla3f", crate::qtesla3f::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("qtesla3p", crate::qtesla3p::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("qtesla3s", crate::qtesla3s::INFO.id),
             ("quartet128v1", crate::quartet128v1::INFO.id),
             ("rabbit", crate::rabbit::INFO.id),
@@ -65762,7 +65304,6 @@ mod generated_module_list {
             ("remusn1v1", crate::remusn1v1::INFO.id),
             ("remusn2v1", crate::remusn2v1::INFO.id),
             ("remusn3v1", crate::remusn3v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("rig-phc", crate::rig_phc::INFO.id),
             ("ripemd128", crate::ripemd128::INFO.id),
             ("ripemd160", crate::ripemd160::INFO.id),
@@ -65775,7 +65316,6 @@ mod generated_module_list {
             ("romulus-m3", crate::romulus_m3::INFO.id),
             ("romulus-n2", crate::romulus_n2::INFO.id),
             ("romulus-n3", crate::romulus_n3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("romulush", crate::romulush::INFO.id),
             ("romulusm", crate::romulusm::INFO.id),
             ("romulusm1v1", crate::romulusm1v1::INFO.id),
@@ -65815,21 +65355,13 @@ mod generated_module_list {
                 "rsa-pkcs1v15-enc-4096",
                 crate::rsa_pkcs1v15_enc_4096::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             ("ryde1f-r2", crate::ryde1f_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("ryde1s-r2", crate::ryde1s_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("ryde3f-r2", crate::ryde3f_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("ryde3s-r2", crate::ryde3s_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("ryde5f-r2", crate::ryde5f_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("ryde5s-r2", crate::ryde5s_r2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("saber-r1", crate::saber_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("saber2", crate::saber2::INFO.id),
             ("sablier", crate::sablier::INFO.id),
             ("saeaes", crate::saeaes::INFO.id),
@@ -65852,12 +65384,10 @@ mod generated_module_list {
             ("saeaes256a64t128v1", crate::saeaes256a64t128v1::INFO.id),
             ("saeaes256a64t64", crate::saeaes256a64t64::INFO.id),
             ("saeaes256a64t64v1", crate::saeaes256a64t64v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "saefforkskinnyb128t192n56v1",
                 crate::saefforkskinnyb128t192n56v1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "saefforkskinnyb128t256n120v1",
                 crate::saefforkskinnyb128t256n120v1::INFO.id,
@@ -65905,44 +65435,32 @@ mod generated_module_list {
             ("scream12v2", crate::scream12v2::INFO.id),
             ("scream12v3", crate::scream12v3::INFO.id),
             ("scrypt", crate::scrypt::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("sdith-l1-gf2-fast", crate::sdith_l1_gf2_fast::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sdith-l1-gf2-fast-cipherpow",
                 crate::sdith_l1_gf2_fast_cipherpow::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             ("sdith-l1-gf2-short", crate::sdith_l1_gf2_short::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sdith-l1-gf2-short-cipherpow",
                 crate::sdith_l1_gf2_short_cipherpow::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             ("sdith-l3-gf2-fast", crate::sdith_l3_gf2_fast::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sdith-l3-gf2-fast-cipherpow",
                 crate::sdith_l3_gf2_fast_cipherpow::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             ("sdith-l3-gf2-short", crate::sdith_l3_gf2_short::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sdith-l3-gf2-short-cipherpow",
                 crate::sdith_l3_gf2_short_cipherpow::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             ("sdith-l5-gf2-fast", crate::sdith_l5_gf2_fast::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sdith-l5-gf2-fast-cipherpow",
                 crate::sdith_l5_gf2_fast_cipherpow::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             ("sdith-l5-gf2-short", crate::sdith_l5_gf2_short::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sdith-l5-gf2-short-cipherpow",
                 crate::sdith_l5_gf2_short_cipherpow::INFO.id,
@@ -65998,33 +65516,19 @@ mod generated_module_list {
             ("shavite3-512-sha3r2", crate::shavite3_512_sha3r2::INFO.id),
             ("shavite3256", crate::shavite3256::INFO.id),
             ("shavite3512", crate::shavite3512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d4n64", crate::shellaes128v1d4n64::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d4n80", crate::shellaes128v1d4n80::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d5n64", crate::shellaes128v1d5n64::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d5n80", crate::shellaes128v1d5n80::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d6n64", crate::shellaes128v1d6n64::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d6n80", crate::shellaes128v1d6n80::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d7n64", crate::shellaes128v1d7n64::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d7n80", crate::shellaes128v1d7n80::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d8n64", crate::shellaes128v1d8n64::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("shellaes128v1d8n80", crate::shellaes128v1d8n80::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("sikep434comp", crate::sikep434comp::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("sikep503comp", crate::sikep503comp::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("sikep610comp", crate::sikep610comp::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("sikep751comp", crate::sikep751comp::INFO.id),
             ("silc", crate::silc::INFO.id),
             ("silverv1", crate::silverv1::INFO.id),
@@ -66076,15 +65580,11 @@ mod generated_module_list {
             ("skein-512-sha3r2", crate::skein_512_sha3r2::INFO.id),
             ("skein-512-sha3r3", crate::skein_512_sha3r3::INFO.id),
             ("skein1024", crate::skein1024::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("skein10241024", crate::skein10241024::INFO.id),
             ("skein256", crate::skein256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("skein256256", crate::skein256256::INFO.id),
             ("skein512", crate::skein512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("skein512256", crate::skein512256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("skein512512", crate::skein512512::INFO.id),
             ("skinny-aead-m1", crate::skinny_aead_m1::INFO.id),
             ("skinny-aead-m2", crate::skinny_aead_m2::INFO.id),
@@ -66121,48 +65621,29 @@ mod generated_module_list {
             ("sm2-sign", crate::sm2_sign::INFO.id),
             ("sm3", crate::sm3::INFO.id),
             ("sm4", crate::sm4::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("smaugt1v5", crate::smaugt1v5::INFO.id),
             ("sneiken128", crate::sneiken128::INFO.id),
             ("sneiken192", crate::sneiken192::INFO.id),
             ("sneiken256", crate::sneiken256::INFO.id),
             ("sneikha256", crate::sneikha256::INFO.id),
             ("sneikha384", crate::sneikha384::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-i-b", crate::snova_i_b::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-i-b-aes", crate::snova_i_b_aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-i-k", crate::snova_i_k::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-i-k-aes", crate::snova_i_k_aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-i-s", crate::snova_i_s::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-i-s-aes", crate::snova_i_s_aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-iii-b", crate::snova_iii_b::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-iii-b-aes", crate::snova_iii_b_aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-iii-k", crate::snova_iii_k::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-iii-k-aes", crate::snova_iii_k_aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-iii-s", crate::snova_iii_s::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-iii-s-aes", crate::snova_iii_s_aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-v-b", crate::snova_v_b::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-v-b-aes", crate::snova_v_b_aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-v-k", crate::snova_v_k::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-v-k-aes", crate::snova_v_k_aes::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-v-s", crate::snova_v_s::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("snova-v-s-aes", crate::snova_v_s_aes::INFO.id),
             ("snow-2-0", crate::snow_2_0::INFO.id),
             ("sntrup653", crate::sntrup653::INFO.id),
@@ -66174,92 +65655,74 @@ mod generated_module_list {
             ("sparkle-esch", crate::sparkle_esch::INFO.id),
             #[cfg(feature = "copyleft")]
             ("sparkle-schwaemm", crate::sparkle_schwaemm::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-128f-r1",
                 crate::sphincs_haraka_128f_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-128f-robust-r2",
                 crate::sphincs_haraka_128f_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-128f-simple-r2",
                 crate::sphincs_haraka_128f_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-128s-r1",
                 crate::sphincs_haraka_128s_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-128s-robust-r2",
                 crate::sphincs_haraka_128s_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-128s-simple-r2",
                 crate::sphincs_haraka_128s_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-192f-r1",
                 crate::sphincs_haraka_192f_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-192f-robust-r2",
                 crate::sphincs_haraka_192f_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-192f-simple-r2",
                 crate::sphincs_haraka_192f_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-192s-r1",
                 crate::sphincs_haraka_192s_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-192s-robust-r2",
                 crate::sphincs_haraka_192s_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-192s-simple-r2",
                 crate::sphincs_haraka_192s_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-256f-r1",
                 crate::sphincs_haraka_256f_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-256f-robust-r2",
                 crate::sphincs_haraka_256f_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-256f-simple-r2",
                 crate::sphincs_haraka_256f_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-256s-r1",
                 crate::sphincs_haraka_256s_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-256s-robust-r2",
                 crate::sphincs_haraka_256s_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-haraka-256s-simple-r2",
                 crate::sphincs_haraka_256s_simple_r2::INFO.id,
@@ -66288,62 +65751,50 @@ mod generated_module_list {
                 "sphincs-sha2-256s-simple",
                 crate::sphincs_sha2_256s_simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-128f-robust-r2",
                 crate::sphincs_sha256_128f_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-128f-simple-r2",
                 crate::sphincs_sha256_128f_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-128s-robust-r2",
                 crate::sphincs_sha256_128s_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-128s-simple-r2",
                 crate::sphincs_sha256_128s_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-192f-robust-r2",
                 crate::sphincs_sha256_192f_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-192f-simple-r2",
                 crate::sphincs_sha256_192f_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-192s-robust-r2",
                 crate::sphincs_sha256_192s_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-192s-simple-r2",
                 crate::sphincs_sha256_192s_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-256f-robust-r2",
                 crate::sphincs_sha256_256f_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-256f-simple-r2",
                 crate::sphincs_sha256_256f_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-256s-robust-r2",
                 crate::sphincs_sha256_256s_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-sha256-256s-simple-r2",
                 crate::sphincs_sha256_256s_simple_r2::INFO.id,
@@ -66372,272 +65823,218 @@ mod generated_module_list {
                 "sphincs-shake-256s-simple",
                 crate::sphincs_shake_256s_simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-128f-r1",
                 crate::sphincs_shake256_128f_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-128f-robust-r2",
                 crate::sphincs_shake256_128f_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-128f-simple-r2",
                 crate::sphincs_shake256_128f_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-128s-r1",
                 crate::sphincs_shake256_128s_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-128s-robust-r2",
                 crate::sphincs_shake256_128s_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-128s-simple-r2",
                 crate::sphincs_shake256_128s_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-192f-r1",
                 crate::sphincs_shake256_192f_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-192f-robust-r2",
                 crate::sphincs_shake256_192f_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-192f-simple-r2",
                 crate::sphincs_shake256_192f_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-192s-r1",
                 crate::sphincs_shake256_192s_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-192s-robust-r2",
                 crate::sphincs_shake256_192s_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-192s-simple-r2",
                 crate::sphincs_shake256_192s_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-256f-r1",
                 crate::sphincs_shake256_256f_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-256f-robust-r2",
                 crate::sphincs_shake256_256f_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-256f-simple-r2",
                 crate::sphincs_shake256_256f_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-256s-r1",
                 crate::sphincs_shake256_256s_r1::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-256s-robust-r2",
                 crate::sphincs_shake256_256s_robust_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincs-shake256-256s-simple-r2",
                 crate::sphincs_shake256_256s_simple_r2::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf128harakarobust",
                 crate::sphincsf128harakarobust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf128harakasimple",
                 crate::sphincsf128harakasimple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf128sha256robust",
                 crate::sphincsf128sha256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf128sha256simple",
                 crate::sphincsf128sha256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf128shake256robust",
                 crate::sphincsf128shake256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf128shake256simple",
                 crate::sphincsf128shake256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf192harakarobust",
                 crate::sphincsf192harakarobust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf192harakasimple",
                 crate::sphincsf192harakasimple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf192sha256robust",
                 crate::sphincsf192sha256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf192sha256simple",
                 crate::sphincsf192sha256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf192shake256robust",
                 crate::sphincsf192shake256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf192shake256simple",
                 crate::sphincsf192shake256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf256harakarobust",
                 crate::sphincsf256harakarobust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf256harakasimple",
                 crate::sphincsf256harakasimple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf256sha256robust",
                 crate::sphincsf256sha256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf256sha256simple",
                 crate::sphincsf256sha256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf256shake256robust",
                 crate::sphincsf256shake256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincsf256shake256simple",
                 crate::sphincsf256shake256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss128harakarobust",
                 crate::sphincss128harakarobust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss128harakasimple",
                 crate::sphincss128harakasimple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss128sha256robust",
                 crate::sphincss128sha256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss128sha256simple",
                 crate::sphincss128sha256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss128shake256robust",
                 crate::sphincss128shake256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss128shake256simple",
                 crate::sphincss128shake256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss192harakarobust",
                 crate::sphincss192harakarobust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss192harakasimple",
                 crate::sphincss192harakasimple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss192sha256robust",
                 crate::sphincss192sha256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss192sha256simple",
                 crate::sphincss192sha256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss192shake256robust",
                 crate::sphincss192shake256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss192shake256simple",
                 crate::sphincss192shake256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss256harakarobust",
                 crate::sphincss256harakarobust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss256harakasimple",
                 crate::sphincss256harakasimple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss256sha256robust",
                 crate::sphincss256sha256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss256sha256simple",
                 crate::sphincss256sha256simple::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss256shake256robust",
                 crate::sphincss256shake256robust::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "sphincss256shake256simple",
                 crate::sphincss256shake256simple::INFO.id,
@@ -66677,11 +66074,8 @@ mod generated_module_list {
             ("spook128su512v1", crate::spook128su512v1::INFO.id),
             ("spook128su512v2", crate::spook128su512v2::INFO.id),
             ("spookyhash", crate::spookyhash::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("sqisign-p324-3", crate::sqisign_p324_3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("sqisign-p500-27", crate::sqisign_p500_27::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("sqisign-p664-17", crate::sqisign_p664_17::INFO.id),
             ("square", crate::square::INFO.id),
             ("srp-6a-2048-sha256", crate::srp_6a_2048_sha256::INFO.id),
@@ -66741,13 +66135,10 @@ mod generated_module_list {
             ("tgifn2128v1", crate::tgifn2128v1::INFO.id),
             ("thin-ice", crate::thin_ice::INFO.id),
             ("threebears1248r2cca", crate::threebears1248r2cca::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("threebears1248r2ccax", crate::threebears1248r2ccax::INFO.id),
             ("threebears624r2cca", crate::threebears624r2cca::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("threebears624r2ccax", crate::threebears624r2ccax::INFO.id),
             ("threebears936r2cca", crate::threebears936r2cca::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("threebears936r2ccax", crate::threebears936r2ccax::INFO.id),
             ("threefish-1024", crate::threefish_1024::INFO.id),
             ("threefish-256", crate::threefish_256::INFO.id),
@@ -66758,7 +66149,6 @@ mod generated_module_list {
             ("tib3-384-sha3r1", crate::tib3_384_sha3r1::INFO.id),
             ("tib3-512-sha3r1", crate::tib3_512_sha3r1::INFO.id),
             ("tiger", crate::tiger::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("timerv5", crate::timerv5::INFO.id),
             ("tinyjambu", crate::tinyjambu::INFO.id),
             ("tinyjambu-192", crate::tinyjambu_192::INFO.id),
@@ -66767,11 +66157,8 @@ mod generated_module_list {
             ("tinyjambu128v2", crate::tinyjambu128v2::INFO.id),
             ("tinyjambu192v2", crate::tinyjambu192v2::INFO.id),
             ("tinyjambu256v2", crate::tinyjambu256v2::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("titaniumccatoy", crate::titaniumccatoy::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("tortuga-phc", crate::tortuga_phc::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("toy-r1", crate::toy_r1::INFO.id),
             ("triadaev1", crate::triadaev1::INFO.id),
             ("triadhashv1", crate::triadhashv1::INFO.id),
@@ -66794,7 +66181,6 @@ mod generated_module_list {
             ("twine80n6t4clocv3", crate::twine80n6t4clocv3::INFO.id),
             ("twofish", crate::twofish::INFO.id),
             ("usaber-90s-r3", crate::usaber_90s_r3::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("vox128-r1", crate::vox128_r1::INFO.id),
             ("wage", crate::wage::INFO.id),
             ("wageae128v1", crate::wageae128v1::INFO.id),
@@ -66807,11 +66193,8 @@ mod generated_module_list {
             ("waterfall-256-sha3r1", crate::waterfall_256_sha3r1::INFO.id),
             ("waterfall-384-sha3r1", crate::waterfall_384_sha3r1::INFO.id),
             ("waterfall-512-sha3r1", crate::waterfall_512_sha3r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("wave1249-r1", crate::wave1249_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("wave1644-r1", crate::wave1644_r1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("wave822-r1", crate::wave822_r1::INFO.id),
             ("wheesht", crate::wheesht::INFO.id),
             ("wheeshtv1mr3fr1t128", crate::wheeshtv1mr3fr1t128::INFO.id),
@@ -66824,181 +66207,132 @@ mod generated_module_list {
             ("x448", crate::x448::INFO.id),
             ("xchacha20", crate::xchacha20::INFO.id),
             ("xchacha20-poly1305", crate::xchacha20_poly1305::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmss-sha2-10-192", crate::xmss_sha2_10_192::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmss-sha2-10-256", crate::xmss_sha2_10_256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmss-sha2-10-512", crate::xmss_sha2_10_512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmss-shake-10-256", crate::xmss_shake_10_256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmss-shake-10-512", crate::xmss_shake_10_512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmss-shake256-10-192", crate::xmss_shake256_10_192::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmss-shake256-10-256", crate::xmss_shake256_10_256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-20-2-192", crate::xmssmt_sha2_20_2_192::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-20-2-256", crate::xmssmt_sha2_20_2_256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-20-2-512", crate::xmssmt_sha2_20_2_512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-20-4-192", crate::xmssmt_sha2_20_4_192::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-20-4-256", crate::xmssmt_sha2_20_4_256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-20-4-512", crate::xmssmt_sha2_20_4_512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-40-4-192", crate::xmssmt_sha2_40_4_192::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-40-4-256", crate::xmssmt_sha2_40_4_256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-40-4-512", crate::xmssmt_sha2_40_4_512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-40-8-192", crate::xmssmt_sha2_40_8_192::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-40-8-256", crate::xmssmt_sha2_40_8_256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-40-8-512", crate::xmssmt_sha2_40_8_512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-sha2-60-12-192",
                 crate::xmssmt_sha2_60_12_192::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-sha2-60-12-256",
                 crate::xmssmt_sha2_60_12_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-sha2-60-12-512",
                 crate::xmssmt_sha2_60_12_512::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-60-6-192", crate::xmssmt_sha2_60_6_192::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-60-6-256", crate::xmssmt_sha2_60_6_256::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("xmssmt-sha2-60-6-512", crate::xmssmt_sha2_60_6_512::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-20-2-256",
                 crate::xmssmt_shake_20_2_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-20-2-512",
                 crate::xmssmt_shake_20_2_512::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-20-4-256",
                 crate::xmssmt_shake_20_4_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-20-4-512",
                 crate::xmssmt_shake_20_4_512::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-40-4-256",
                 crate::xmssmt_shake_40_4_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-40-4-512",
                 crate::xmssmt_shake_40_4_512::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-40-8-256",
                 crate::xmssmt_shake_40_8_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-40-8-512",
                 crate::xmssmt_shake_40_8_512::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-60-12-256",
                 crate::xmssmt_shake_60_12_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-60-12-512",
                 crate::xmssmt_shake_60_12_512::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-60-6-256",
                 crate::xmssmt_shake_60_6_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake-60-6-512",
                 crate::xmssmt_shake_60_6_512::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-20-2-192",
                 crate::xmssmt_shake256_20_2_192::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-20-2-256",
                 crate::xmssmt_shake256_20_2_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-20-4-192",
                 crate::xmssmt_shake256_20_4_192::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-20-4-256",
                 crate::xmssmt_shake256_20_4_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-40-4-192",
                 crate::xmssmt_shake256_40_4_192::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-40-4-256",
                 crate::xmssmt_shake256_40_4_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-40-8-192",
                 crate::xmssmt_shake256_40_8_192::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-40-8-256",
                 crate::xmssmt_shake256_40_8_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-60-12-192",
                 crate::xmssmt_shake256_60_12_192::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-60-12-256",
                 crate::xmssmt_shake256_60_12_256::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-60-6-192",
                 crate::xmssmt_shake256_60_6_192::INFO.id,
             ),
-            #[cfg(not(target_env = "msvc"))]
             (
                 "xmssmt-shake256-60-6-256",
                 crate::xmssmt_shake256_60_6_256::INFO.id,
@@ -67038,10 +66372,8 @@ mod generated_module_list {
             ("yaes", crate::yaes::INFO.id),
             ("yaes128v2", crate::yaes128v2::INFO.id),
             ("yarara128v1", crate::yarara128v1::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("yarn-phc", crate::yarn_phc::INFO.id),
             ("yescrypt", crate::yescrypt::INFO.id),
-            #[cfg(not(target_env = "msvc"))]
             ("yescrypt-phc", crate::yescrypt_phc::INFO.id),
             ("z-base-32", crate::z_base_32::INFO.id),
             ("z85", crate::z85::INFO.id),

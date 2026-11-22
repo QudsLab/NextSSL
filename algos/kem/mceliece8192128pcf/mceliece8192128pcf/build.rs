@@ -48,6 +48,9 @@ fn base() -> cc::Build {
     // targets it is compiled with clang-cl instead: same ABI and object format, linked by link.exe.
     if b.get_compiler().is_like_msvc() {
         b.compiler(clang_cl());
+        // cl.exe merges C tentative definitions (common symbols); clang-cl defaults to -fno-common.
+        // Same single definition as cl.exe and GCC -fcommon builds; link.exe merges COFF commons.
+        b.flag("/clang:-fcommon");
     }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
@@ -63,8 +66,12 @@ fn base() -> cc::Build {
 ",
     );
     let msvc = b.get_compiler().is_like_msvc();
-    if msvc {
-        pre.push_str("#define __attribute__(x)\n");
+    // cl.exe only: clang-cl understands GNU attributes (its own headers need them).
+    if msvc && !b.get_compiler().is_like_clang_cl() {
+        pre.push_str(
+            "#define __attribute__(x)
+",
+        );
     }
     if !pre.is_empty() {
         let h = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_pre.h");

@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/SPHINCS_Plus.zip", sha256 = "6711703e84d5ea18871f983b17499a75158b698725278d358281d26c9089e62f", license = "NOASSERTION", files = ["crypto_sign/sphincs-shake256-256f/api.h", "crypto_sign/sphincs-shake256-256f/fips202.c", "crypto_sign/sphincs-shake256-256f/fips202.h", "crypto_sign/sphincs-shake256-256f/fors.c", "crypto_sign/sphincs-shake256-256f/fors.h", "crypto_sign/sphincs-shake256-256f/hash.h", "crypto_sign/sphincs-shake256-256f/hash_address.c", "crypto_sign/sphincs-shake256-256f/hash_address.h", "crypto_sign/sphincs-shake256-256f/hash_shake256.c", "crypto_sign/sphincs-shake256-256f/params.h", "crypto_sign/sphincs-shake256-256f/rng.h", "crypto_sign/sphincs-shake256-256f/sign.c", "crypto_sign/sphincs-shake256-256f/utils.c", "crypto_sign/sphincs-shake256-256f/utils.h", "crypto_sign/sphincs-shake256-256f/wots.c", "crypto_sign/sphincs-shake256-256f/wots.h", "LICENSE"] }
 
 # Variant wired: crypto_sign/sphincs-shake256-256f (sign). Other variants not wired: none.

@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'libkeccak.a.headers/SimpleFIPS202.h': No such file or directory"
 upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["ref/api.h", "ref/encrypt.c", "ref/encrypt.h", "ref/fastrandombytes.c", "ref/fastrandombytes.h", "ref/keccak.h", "ref/kem.c", "ref/kem.h", "ref/littleendian.h", "ref/ntt.c", "ref/ntt.h", "ref/pack.c", "ref/pack.h", "ref/param.h", "ref/product.c", "ref/product.h", "ref/sampler.c", "ref/sampler.h", "LICENSE"] }
 
 # Variant wired: ref (kem). Other variants not wired: none.

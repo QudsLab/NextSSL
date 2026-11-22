@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression (C99 variable-length array)"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/lightweight-cryptography/documents/round-2/submissions-rnd2/knot.zip", sha256 = "dc0f60b72c5dac2b28079e5b96d75938ecd91f05dff54d7283904fdae8dc4535", license = "NOASSERTION", files = ["ref/api.h", "ref/hash.c", "LICENSE"] }
 
 # Variant wired: ref (hash). Other variants not wired: none.

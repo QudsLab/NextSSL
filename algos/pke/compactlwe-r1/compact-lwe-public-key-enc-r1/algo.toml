@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/Compact_LWE.zip", sha256 = "3d7f33ec3d63dc64aacc8e2a69e07d8a8048547bc8c8798f771f70fb451754e2", license = "NOASSERTION", files = ["api.h", "compact-lwe.c", "compact-lwe.h", "encrypt.c", "mini-gmp.c", "mini-gmp.h", "rng.h", "LICENSE"] }
 
 # Variant wired: . (pke). Other variants not wired: none.

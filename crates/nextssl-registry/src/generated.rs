@@ -2014,7 +2014,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes_siv_cmac_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "aes128cpfbv1",
         kind: Kind::Aead,
@@ -2603,7 +2602,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aes128poetv2aes4ni::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "aes256cpfbv1",
         kind: Kind::Aead,
@@ -2996,7 +2994,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_aezv5::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "aimer-l1-param1-r1",
         kind: Kind::Sign,
@@ -3027,7 +3024,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_aimer_l1_param1_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "aimer-l1-param2-r1",
         kind: Kind::Sign,
@@ -3058,7 +3054,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_aimer_l1_param2_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "aimer-l1-param3-r1",
         kind: Kind::Sign,
@@ -4323,7 +4318,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_ascon80pqv12::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "ascon96v1",
         kind: Kind::Aead,
@@ -5442,7 +5436,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_belt_hash::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "bike-l1",
         kind: Kind::Kem,
@@ -5474,7 +5467,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_bike_l1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "bike-l3",
         kind: Kind::Kem,
@@ -5506,7 +5498,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_bike_l3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "bike-l5",
         kind: Kind::Kem,
@@ -6746,7 +6737,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_cast6::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "catena-butterfly-phc",
         kind: Kind::PwHash,
@@ -6799,7 +6789,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_catena_butterfly_phc::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "catena-dragonfly-phc",
         kind: Kind::PwHash,
@@ -8091,7 +8080,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kdf(nextssl_algo_comp128_3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "compact-lwe-public-key-enc-r1",
         kind: Kind::Pke,
@@ -12074,7 +12062,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_cubehash162::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "cubehash1632",
         kind: Kind::Hash,
@@ -12153,7 +12140,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_cubehash168::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "cubehash512",
         kind: Kind::Hash,
@@ -12889,7 +12875,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Mac(nextssl_algo_des_mac::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium-medium-r1",
         kind: Kind::Sign,
@@ -12920,7 +12905,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium_medium_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium-recommended-r1",
         kind: Kind::Sign,
@@ -12951,7 +12935,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium_recommended_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium-very-high-r1",
         kind: Kind::Sign,
@@ -12982,7 +12965,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium_very_high_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium-weak-r1",
         kind: Kind::Sign,
@@ -13013,7 +12995,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium_weak_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium1-aes-r2",
         kind: Kind::Sign,
@@ -13044,7 +13025,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium1_aes_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium1-r2",
         kind: Kind::Sign,
@@ -13075,7 +13055,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium1_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium2",
         kind: Kind::Sign,
@@ -13136,7 +13115,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium2_aes_r_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium2-aes-r2",
         kind: Kind::Sign,
@@ -13227,7 +13205,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium2_r_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium2-r2",
         kind: Kind::Sign,
@@ -13288,7 +13265,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium2_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium2aes",
         kind: Kind::Sign,
@@ -13319,7 +13295,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium2aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium3",
         kind: Kind::Sign,
@@ -13440,7 +13415,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium3_r_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium3-r2",
         kind: Kind::Sign,
@@ -13501,7 +13475,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium3_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium3aes",
         kind: Kind::Sign,
@@ -13532,7 +13505,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium3aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium5",
         kind: Kind::Sign,
@@ -13683,7 +13655,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_dilithium5_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "dilithium5aes",
         kind: Kind::Sign,
@@ -14782,7 +14753,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ed448::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "ed448goldilocks",
         kind: Kind::Sign,
@@ -15463,7 +15433,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_elephant200v2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "enchilada256v1",
         kind: Kind::Aead,
@@ -15726,7 +15695,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_esch384v2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "essence224",
         kind: Kind::Hash,
@@ -15753,7 +15721,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_essence224::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "essence256",
         kind: Kind::Hash,
@@ -15780,7 +15747,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_essence256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "essence384",
         kind: Kind::Hash,
@@ -15807,7 +15773,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_essence384::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "essence512",
         kind: Kind::Hash,
@@ -16804,7 +16769,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Encoding(nextssl_algo_ff70::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "fire-saber-r1",
         kind: Kind::Kem,
@@ -16836,7 +16800,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_fire_saber_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "firesaber2",
         kind: Kind::Kem,
@@ -18920,7 +18883,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_groestl_512_sha3r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "groestl256",
         kind: Kind::Hash,
@@ -18947,7 +18909,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_groestl256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "groestl512",
         kind: Kind::Hash,
@@ -19212,7 +19173,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_haetae2v4::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "haetae2v5",
         kind: Kind::Sign,
@@ -23355,7 +23315,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_keccakc256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "keccakc256treed2",
         kind: Kind::Hash,
@@ -23434,7 +23393,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_keccakc512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "keccakc512treed2",
         kind: Kind::Hash,
@@ -23928,7 +23886,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_kiasuneq128v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kindi256342",
         kind: Kind::Kem,
@@ -23960,7 +23917,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kindi256342::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kindi256522",
         kind: Kind::Kem,
@@ -23992,7 +23948,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kindi256522::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kindi512222",
         kind: Kind::Kem,
@@ -24024,7 +23979,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kindi512222::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kindi512241",
         kind: Kind::Kem,
@@ -24056,7 +24010,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kindi512241::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kindi512321",
         kind: Kind::Kem,
@@ -24446,7 +24399,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_knot_hash_512_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot128v1",
         kind: Kind::Aead,
@@ -24475,7 +24427,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_knot128v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot128v1-lwc1",
         kind: Kind::Aead,
@@ -24504,7 +24455,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_knot128v1_lwc1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot128v2",
         kind: Kind::Aead,
@@ -24533,7 +24483,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_knot128v2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot192",
         kind: Kind::Aead,
@@ -24562,7 +24511,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_knot192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot256",
         kind: Kind::Aead,
@@ -24591,7 +24539,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_knot256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot256v1",
         kind: Kind::Hash,
@@ -24618,7 +24565,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_knot256v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot256v1-lwc1",
         kind: Kind::Hash,
@@ -24645,7 +24591,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_knot256v1_lwc1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot256v2",
         kind: Kind::Hash,
@@ -24672,7 +24617,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_knot256v2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot384",
         kind: Kind::Hash,
@@ -24699,7 +24643,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_knot384::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "knot512",
         kind: Kind::Hash,
@@ -24786,7 +24729,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_kuznyechik::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber1024-90s-r2",
         kind: Kind::Kem,
@@ -24849,7 +24791,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber1024_90s_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber1024-r1",
         kind: Kind::Kem,
@@ -24881,7 +24822,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber1024_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber1024-r2",
         kind: Kind::Kem,
@@ -24944,7 +24884,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber1024_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber512",
         kind: Kind::Kem,
@@ -24976,7 +24915,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber512-90s-r2",
         kind: Kind::Kem,
@@ -25039,7 +24977,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber512_90s_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber512-r1",
         kind: Kind::Kem,
@@ -25071,7 +25008,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber512_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber512-r2",
         kind: Kind::Kem,
@@ -25134,7 +25070,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber512_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber768",
         kind: Kind::Kem,
@@ -25166,7 +25101,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber768::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber768-90s-r2",
         kind: Kind::Kem,
@@ -25229,7 +25163,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber768_90s_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber768-r1",
         kind: Kind::Kem,
@@ -25261,7 +25194,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber768_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber768-r2",
         kind: Kind::Kem,
@@ -25324,7 +25256,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber768_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber90s512",
         kind: Kind::Kem,
@@ -25356,7 +25287,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_kyber90s512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "kyber90s768",
         kind: Kind::Kem,
@@ -25416,7 +25346,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lacv1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lanarea-phc",
         kind: Kind::PwHash,
@@ -27241,7 +27170,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_libecc_ecsdsa_secp521r1_sha512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "light-saber-r1",
         kind: Kind::Kem,
@@ -27273,7 +27201,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_light_saber_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lightsaber2",
         kind: Kind::Kem,
@@ -27305,7 +27232,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_lightsaber2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaei128v1",
         kind: Kind::Aead,
@@ -27334,7 +27260,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaei128v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaei128v11",
         kind: Kind::Aead,
@@ -27363,7 +27288,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaei128v11::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaei192v1",
         kind: Kind::Aead,
@@ -27392,7 +27316,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaei192v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaei192v11",
         kind: Kind::Aead,
@@ -27421,7 +27344,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaei192v11::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaei256v1",
         kind: Kind::Aead,
@@ -27450,7 +27372,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaei256v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaei256v11",
         kind: Kind::Aead,
@@ -27479,7 +27400,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaei256v11::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaeii128v1",
         kind: Kind::Aead,
@@ -27508,7 +27428,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaeii128v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaeii128v11",
         kind: Kind::Aead,
@@ -27537,7 +27456,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaeii128v11::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaeii192v1",
         kind: Kind::Aead,
@@ -27566,7 +27484,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaeii192v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaeii192v11",
         kind: Kind::Aead,
@@ -27595,7 +27512,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaeii192v11::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaeii256v1",
         kind: Kind::Aead,
@@ -27624,7 +27540,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_lilliputaeii256v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "lilliputaeii256v11",
         kind: Kind::Aead,
@@ -28488,7 +28403,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_mars::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mayo-1",
         kind: Kind::Sign,
@@ -28519,7 +28433,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mayo_1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mayo-1-r2",
         kind: Kind::Sign,
@@ -28550,7 +28463,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mayo_1_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mayo-2",
         kind: Kind::Sign,
@@ -28581,7 +28493,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mayo_2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mayo-2-r2",
         kind: Kind::Sign,
@@ -28612,7 +28523,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mayo_2_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mayo-3",
         kind: Kind::Sign,
@@ -28643,7 +28553,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mayo_3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mayo-3-r2",
         kind: Kind::Sign,
@@ -28674,7 +28583,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mayo_3_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mayo-5",
         kind: Kind::Sign,
@@ -28705,7 +28613,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mayo_5::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mayo-5-r2",
         kind: Kind::Sign,
@@ -29501,7 +29408,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_md6d512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "meds13220-r1",
         kind: Kind::Sign,
@@ -29532,7 +29438,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_meds13220_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "meds134180-r1",
         kind: Kind::Sign,
@@ -29563,7 +29468,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_meds134180_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "meds167717-r1",
         kind: Kind::Sign,
@@ -29594,7 +29498,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_meds167717_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "meds41711-r1",
         kind: Kind::Sign,
@@ -29625,7 +29528,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_meds41711_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "meds55604-r1",
         kind: Kind::Sign,
@@ -29656,7 +29558,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_meds55604_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "meds9923-r1",
         kind: Kind::Sign,
@@ -29817,7 +29718,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_metrohash::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mgrostl256",
         kind: Kind::Hash,
@@ -29844,7 +29744,7 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_mgrostl256::new),
     },
-    #[cfg(all(feature = "copyleft", not(target_env = "msvc")))]
+    #[cfg(feature = "copyleft")]
     AlgoInfo {
         id: "milenage",
         kind: Kind::Kdf,
@@ -29874,7 +29774,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kdf(nextssl_algo_milenage::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-1a-fast-r2",
         kind: Kind::Sign,
@@ -29905,7 +29804,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_1a_fast_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-1a-short-r2",
         kind: Kind::Sign,
@@ -29936,7 +29834,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_1a_short_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-1b-fast-r2",
         kind: Kind::Sign,
@@ -29967,7 +29864,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_1b_fast_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-1b-short-r2",
         kind: Kind::Sign,
@@ -29998,7 +29894,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_1b_short_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-3a-fast-r2",
         kind: Kind::Sign,
@@ -30029,7 +29924,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_3a_fast_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-3a-short-r2",
         kind: Kind::Sign,
@@ -30060,7 +29954,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_3a_short_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-3b-fast-r2",
         kind: Kind::Sign,
@@ -30091,7 +29984,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_3b_fast_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-3b-short-r2",
         kind: Kind::Sign,
@@ -30122,7 +30014,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_3b_short_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-5a-fast-r2",
         kind: Kind::Sign,
@@ -30153,7 +30044,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_5a_fast_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-5a-short-r2",
         kind: Kind::Sign,
@@ -30184,7 +30074,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_5a_short_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-5b-fast-r2",
         kind: Kind::Sign,
@@ -30215,7 +30104,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_mirath_tcith_5b_fast_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "mirath-tcith-5b-short-r2",
         kind: Kind::Sign,
@@ -33545,7 +33433,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ov_v_pkc_skc::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "paefforkskinnyb128t192n48v1",
         kind: Kind::Aead,
@@ -33574,7 +33461,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_paefforkskinnyb128t192n48v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "paefforkskinnyb128t256n112v1",
         kind: Kind::Aead,
@@ -33603,7 +33489,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_paefforkskinnyb128t256n112v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "paefforkskinnyb128t288n104v1",
         kind: Kind::Aead,
@@ -33632,7 +33517,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_paefforkskinnyb128t288n104v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "paefforkskinnyb64t192n48v1",
         kind: Kind::Aead,
@@ -36564,7 +36448,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_qtesla_v_s_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "qtesla1",
         kind: Kind::Sign,
@@ -36595,7 +36478,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_qtesla1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "qtesla128",
         kind: Kind::Sign,
@@ -36626,7 +36508,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_qtesla128::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "qtesla192",
         kind: Kind::Sign,
@@ -36657,7 +36538,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_qtesla192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "qtesla1p",
         kind: Kind::Sign,
@@ -36688,7 +36568,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_qtesla1p::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "qtesla256",
         kind: Kind::Sign,
@@ -36719,7 +36598,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_qtesla256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "qtesla3f",
         kind: Kind::Sign,
@@ -36750,7 +36628,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_qtesla3f::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "qtesla3p",
         kind: Kind::Sign,
@@ -36781,7 +36658,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_qtesla3p::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "qtesla3s",
         kind: Kind::Sign,
@@ -37176,7 +37052,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_remusn3v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "rig-phc",
         kind: Kind::PwHash,
@@ -37527,7 +37402,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_romulus_n3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "romulush",
         kind: Kind::Hash,
@@ -38212,7 +38086,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Pke(nextssl_algo_rsa_pkcs1v15_enc_4096::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "ryde1f-r2",
         kind: Kind::Sign,
@@ -38243,7 +38116,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ryde1f_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "ryde1s-r2",
         kind: Kind::Sign,
@@ -38274,7 +38146,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ryde1s_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "ryde3f-r2",
         kind: Kind::Sign,
@@ -38305,7 +38176,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ryde3f_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "ryde3s-r2",
         kind: Kind::Sign,
@@ -38336,7 +38206,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ryde3s_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "ryde5f-r2",
         kind: Kind::Sign,
@@ -38367,7 +38236,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ryde5f_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "ryde5s-r2",
         kind: Kind::Sign,
@@ -38398,7 +38266,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_ryde5s_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "saber-r1",
         kind: Kind::Kem,
@@ -38430,7 +38297,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_saber_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "saber2",
         kind: Kind::Kem,
@@ -39050,7 +38916,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_saeaes256a64t64v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "saefforkskinnyb128t192n56v1",
         kind: Kind::Aead,
@@ -39079,7 +38944,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_saefforkskinnyb128t192n56v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "saefforkskinnyb128t256n120v1",
         kind: Kind::Aead,
@@ -40338,7 +40202,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_scrypt::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l1-gf2-fast",
         kind: Kind::Sign,
@@ -40369,7 +40232,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l1_gf2_fast::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l1-gf2-fast-cipherpow",
         kind: Kind::Sign,
@@ -40400,7 +40262,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l1_gf2_fast_cipherpow::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l1-gf2-short",
         kind: Kind::Sign,
@@ -40431,7 +40292,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l1_gf2_short::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l1-gf2-short-cipherpow",
         kind: Kind::Sign,
@@ -40462,7 +40322,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l1_gf2_short_cipherpow::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l3-gf2-fast",
         kind: Kind::Sign,
@@ -40493,7 +40352,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l3_gf2_fast::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l3-gf2-fast-cipherpow",
         kind: Kind::Sign,
@@ -40524,7 +40382,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l3_gf2_fast_cipherpow::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l3-gf2-short",
         kind: Kind::Sign,
@@ -40555,7 +40412,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l3_gf2_short::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l3-gf2-short-cipherpow",
         kind: Kind::Sign,
@@ -40586,7 +40442,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l3_gf2_short_cipherpow::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l5-gf2-fast",
         kind: Kind::Sign,
@@ -40617,7 +40472,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l5_gf2_fast::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l5-gf2-fast-cipherpow",
         kind: Kind::Sign,
@@ -40648,7 +40502,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l5_gf2_fast_cipherpow::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l5-gf2-short",
         kind: Kind::Sign,
@@ -40679,7 +40532,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sdith_l5_gf2_short::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sdith-l5-gf2-short-cipherpow",
         kind: Kind::Sign,
@@ -42063,7 +41915,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_shavite3512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d4n64",
         kind: Kind::Aead,
@@ -42092,7 +41943,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d4n64::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d4n80",
         kind: Kind::Aead,
@@ -42121,7 +41971,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d4n80::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d5n64",
         kind: Kind::Aead,
@@ -42150,7 +41999,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d5n64::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d5n80",
         kind: Kind::Aead,
@@ -42179,7 +42027,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d5n80::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d6n64",
         kind: Kind::Aead,
@@ -42208,7 +42055,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d6n64::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d6n80",
         kind: Kind::Aead,
@@ -42237,7 +42083,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d6n80::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d7n64",
         kind: Kind::Aead,
@@ -42266,7 +42111,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d7n64::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d7n80",
         kind: Kind::Aead,
@@ -42295,7 +42139,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d7n80::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d8n64",
         kind: Kind::Aead,
@@ -42324,7 +42167,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d8n64::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "shellaes128v1d8n80",
         kind: Kind::Aead,
@@ -42353,7 +42195,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_shellaes128v1d8n80::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sikep434comp",
         kind: Kind::Kem,
@@ -42385,7 +42226,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_sikep434comp::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sikep503comp",
         kind: Kind::Kem,
@@ -42417,7 +42257,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_sikep503comp::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sikep610comp",
         kind: Kind::Kem,
@@ -42449,7 +42288,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_sikep610comp::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sikep751comp",
         kind: Kind::Kem,
@@ -43671,7 +43509,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_skein1024::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "skein10241024",
         kind: Kind::Hash,
@@ -43724,7 +43561,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_skein256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "skein256256",
         kind: Kind::Hash,
@@ -43777,7 +43613,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_skein512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "skein512256",
         kind: Kind::Hash,
@@ -43804,7 +43639,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_skein512256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "skein512512",
         kind: Kind::Hash,
@@ -44873,7 +44707,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::BlockCipher(nextssl_algo_sm4::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "smaugt1v5",
         kind: Kind::Kem,
@@ -45041,7 +44874,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_sneikha384::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-i-b",
         kind: Kind::Sign,
@@ -45072,7 +44904,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_i_b::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-i-b-aes",
         kind: Kind::Sign,
@@ -45103,7 +44934,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_i_b_aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-i-k",
         kind: Kind::Sign,
@@ -45134,7 +44964,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_i_k::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-i-k-aes",
         kind: Kind::Sign,
@@ -45165,7 +44994,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_i_k_aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-i-s",
         kind: Kind::Sign,
@@ -45196,7 +45024,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_i_s::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-i-s-aes",
         kind: Kind::Sign,
@@ -45227,7 +45054,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_i_s_aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-iii-b",
         kind: Kind::Sign,
@@ -45258,7 +45084,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_iii_b::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-iii-b-aes",
         kind: Kind::Sign,
@@ -45289,7 +45114,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_iii_b_aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-iii-k",
         kind: Kind::Sign,
@@ -45320,7 +45144,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_iii_k::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-iii-k-aes",
         kind: Kind::Sign,
@@ -45351,7 +45174,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_iii_k_aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-iii-s",
         kind: Kind::Sign,
@@ -45382,7 +45204,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_iii_s::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-iii-s-aes",
         kind: Kind::Sign,
@@ -45413,7 +45234,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_iii_s_aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-v-b",
         kind: Kind::Sign,
@@ -45444,7 +45264,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_v_b::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-v-b-aes",
         kind: Kind::Sign,
@@ -45475,7 +45294,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_v_b_aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-v-k",
         kind: Kind::Sign,
@@ -45506,7 +45324,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_v_k::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-v-k-aes",
         kind: Kind::Sign,
@@ -45537,7 +45354,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_v_k_aes::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-v-s",
         kind: Kind::Sign,
@@ -45568,7 +45384,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_snova_v_s::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "snova-v-s-aes",
         kind: Kind::Sign,
@@ -45825,7 +45640,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_sparkle_schwaemm::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-128f-r1",
         kind: Kind::Sign,
@@ -45856,7 +45670,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_128f_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-128f-robust-r2",
         kind: Kind::Sign,
@@ -45887,7 +45700,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_128f_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-128f-simple-r2",
         kind: Kind::Sign,
@@ -45918,7 +45730,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_128f_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-128s-r1",
         kind: Kind::Sign,
@@ -45949,7 +45760,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_128s_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-128s-robust-r2",
         kind: Kind::Sign,
@@ -45980,7 +45790,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_128s_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-128s-simple-r2",
         kind: Kind::Sign,
@@ -46011,7 +45820,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_128s_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-192f-r1",
         kind: Kind::Sign,
@@ -46042,7 +45850,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_192f_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-192f-robust-r2",
         kind: Kind::Sign,
@@ -46073,7 +45880,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_192f_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-192f-simple-r2",
         kind: Kind::Sign,
@@ -46104,7 +45910,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_192f_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-192s-r1",
         kind: Kind::Sign,
@@ -46135,7 +45940,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_192s_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-192s-robust-r2",
         kind: Kind::Sign,
@@ -46166,7 +45970,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_192s_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-192s-simple-r2",
         kind: Kind::Sign,
@@ -46197,7 +46000,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_192s_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-256f-r1",
         kind: Kind::Sign,
@@ -46228,7 +46030,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_256f_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-256f-robust-r2",
         kind: Kind::Sign,
@@ -46259,7 +46060,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_256f_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-256f-simple-r2",
         kind: Kind::Sign,
@@ -46290,7 +46090,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_256f_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-256s-r1",
         kind: Kind::Sign,
@@ -46321,7 +46120,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_256s_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-256s-robust-r2",
         kind: Kind::Sign,
@@ -46352,7 +46150,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_haraka_256s_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-haraka-256s-simple-r2",
         kind: Kind::Sign,
@@ -46563,7 +46360,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha2_256s_simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-128f-robust-r2",
         kind: Kind::Sign,
@@ -46594,7 +46390,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_128f_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-128f-simple-r2",
         kind: Kind::Sign,
@@ -46625,7 +46420,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_128f_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-128s-robust-r2",
         kind: Kind::Sign,
@@ -46656,7 +46450,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_128s_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-128s-simple-r2",
         kind: Kind::Sign,
@@ -46687,7 +46480,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_128s_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-192f-robust-r2",
         kind: Kind::Sign,
@@ -46718,7 +46510,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_192f_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-192f-simple-r2",
         kind: Kind::Sign,
@@ -46749,7 +46540,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_192f_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-192s-robust-r2",
         kind: Kind::Sign,
@@ -46780,7 +46570,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_192s_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-192s-simple-r2",
         kind: Kind::Sign,
@@ -46811,7 +46600,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_192s_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-256f-robust-r2",
         kind: Kind::Sign,
@@ -46842,7 +46630,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_256f_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-256f-simple-r2",
         kind: Kind::Sign,
@@ -46873,7 +46660,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_256f_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-256s-robust-r2",
         kind: Kind::Sign,
@@ -46904,7 +46690,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_sha256_256s_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-sha256-256s-simple-r2",
         kind: Kind::Sign,
@@ -47115,7 +46900,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake_256s_simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-128f-r1",
         kind: Kind::Sign,
@@ -47146,7 +46930,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_128f_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-128f-robust-r2",
         kind: Kind::Sign,
@@ -47177,7 +46960,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_128f_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-128f-simple-r2",
         kind: Kind::Sign,
@@ -47208,7 +46990,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_128f_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-128s-r1",
         kind: Kind::Sign,
@@ -47239,7 +47020,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_128s_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-128s-robust-r2",
         kind: Kind::Sign,
@@ -47270,7 +47050,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_128s_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-128s-simple-r2",
         kind: Kind::Sign,
@@ -47301,7 +47080,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_128s_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-192f-r1",
         kind: Kind::Sign,
@@ -47332,7 +47110,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_192f_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-192f-robust-r2",
         kind: Kind::Sign,
@@ -47363,7 +47140,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_192f_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-192f-simple-r2",
         kind: Kind::Sign,
@@ -47394,7 +47170,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_192f_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-192s-r1",
         kind: Kind::Sign,
@@ -47425,7 +47200,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_192s_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-192s-robust-r2",
         kind: Kind::Sign,
@@ -47456,7 +47230,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_192s_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-192s-simple-r2",
         kind: Kind::Sign,
@@ -47487,7 +47260,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_192s_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-256f-r1",
         kind: Kind::Sign,
@@ -47518,7 +47290,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_256f_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-256f-robust-r2",
         kind: Kind::Sign,
@@ -47549,7 +47320,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_256f_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-256f-simple-r2",
         kind: Kind::Sign,
@@ -47580,7 +47350,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_256f_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-256s-r1",
         kind: Kind::Sign,
@@ -47611,7 +47380,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_256s_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-256s-robust-r2",
         kind: Kind::Sign,
@@ -47642,7 +47410,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_256s_robust_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincs-shake256-256s-simple-r2",
         kind: Kind::Sign,
@@ -47673,7 +47440,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincs_shake256_256s_simple_r2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf128harakarobust",
         kind: Kind::Sign,
@@ -47704,7 +47470,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf128harakarobust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf128harakasimple",
         kind: Kind::Sign,
@@ -47735,7 +47500,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf128harakasimple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf128sha256robust",
         kind: Kind::Sign,
@@ -47766,7 +47530,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf128sha256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf128sha256simple",
         kind: Kind::Sign,
@@ -47797,7 +47560,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf128sha256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf128shake256robust",
         kind: Kind::Sign,
@@ -47828,7 +47590,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf128shake256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf128shake256simple",
         kind: Kind::Sign,
@@ -47859,7 +47620,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf128shake256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf192harakarobust",
         kind: Kind::Sign,
@@ -47890,7 +47650,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf192harakarobust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf192harakasimple",
         kind: Kind::Sign,
@@ -47921,7 +47680,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf192harakasimple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf192sha256robust",
         kind: Kind::Sign,
@@ -47952,7 +47710,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf192sha256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf192sha256simple",
         kind: Kind::Sign,
@@ -47983,7 +47740,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf192sha256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf192shake256robust",
         kind: Kind::Sign,
@@ -48014,7 +47770,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf192shake256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf192shake256simple",
         kind: Kind::Sign,
@@ -48045,7 +47800,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf192shake256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf256harakarobust",
         kind: Kind::Sign,
@@ -48076,7 +47830,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf256harakarobust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf256harakasimple",
         kind: Kind::Sign,
@@ -48107,7 +47860,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf256harakasimple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf256sha256robust",
         kind: Kind::Sign,
@@ -48138,7 +47890,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf256sha256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf256sha256simple",
         kind: Kind::Sign,
@@ -48169,7 +47920,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf256sha256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf256shake256robust",
         kind: Kind::Sign,
@@ -48200,7 +47950,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf256shake256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincsf256shake256simple",
         kind: Kind::Sign,
@@ -48231,7 +47980,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincsf256shake256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss128harakarobust",
         kind: Kind::Sign,
@@ -48262,7 +48010,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss128harakarobust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss128harakasimple",
         kind: Kind::Sign,
@@ -48293,7 +48040,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss128harakasimple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss128sha256robust",
         kind: Kind::Sign,
@@ -48324,7 +48070,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss128sha256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss128sha256simple",
         kind: Kind::Sign,
@@ -48355,7 +48100,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss128sha256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss128shake256robust",
         kind: Kind::Sign,
@@ -48386,7 +48130,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss128shake256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss128shake256simple",
         kind: Kind::Sign,
@@ -48417,7 +48160,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss128shake256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss192harakarobust",
         kind: Kind::Sign,
@@ -48448,7 +48190,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss192harakarobust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss192harakasimple",
         kind: Kind::Sign,
@@ -48479,7 +48220,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss192harakasimple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss192sha256robust",
         kind: Kind::Sign,
@@ -48510,7 +48250,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss192sha256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss192sha256simple",
         kind: Kind::Sign,
@@ -48541,7 +48280,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss192sha256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss192shake256robust",
         kind: Kind::Sign,
@@ -48572,7 +48310,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss192shake256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss192shake256simple",
         kind: Kind::Sign,
@@ -48603,7 +48340,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss192shake256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss256harakarobust",
         kind: Kind::Sign,
@@ -48634,7 +48370,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss256harakarobust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss256harakasimple",
         kind: Kind::Sign,
@@ -48665,7 +48400,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss256harakasimple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss256sha256robust",
         kind: Kind::Sign,
@@ -48696,7 +48430,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss256sha256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss256sha256simple",
         kind: Kind::Sign,
@@ -48727,7 +48460,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss256sha256simple::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss256shake256robust",
         kind: Kind::Sign,
@@ -48758,7 +48490,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sphincss256shake256robust::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sphincss256shake256simple",
         kind: Kind::Sign,
@@ -49444,7 +49175,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Checksum(nextssl_algo_spookyhash::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sqisign-p324-3",
         kind: Kind::Sign,
@@ -49475,7 +49205,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sqisign_p324_3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sqisign-p500-27",
         kind: Kind::Sign,
@@ -49506,7 +49235,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_sqisign_p500_27::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "sqisign-p664-17",
         kind: Kind::Sign,
@@ -50781,7 +50509,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_threebears1248r2cca::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "threebears1248r2ccax",
         kind: Kind::Kem,
@@ -50844,7 +50571,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_threebears624r2cca::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "threebears624r2ccax",
         kind: Kind::Kem,
@@ -50907,7 +50633,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_threebears936r2cca::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "threebears936r2ccax",
         kind: Kind::Kem,
@@ -51199,7 +50924,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_tiger::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "timerv5",
         kind: Kind::Kem,
@@ -51427,7 +51151,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_tinyjambu256v2::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "titaniumccatoy",
         kind: Kind::Kem,
@@ -51459,7 +51182,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_titaniumccatoy::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "tortuga-phc",
         kind: Kind::PwHash,
@@ -51512,7 +51234,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_tortuga_phc::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "toy-r1",
         kind: Kind::Sign,
@@ -52124,7 +51845,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Kem(nextssl_algo_usaber_90s_r3::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "vox128-r1",
         kind: Kind::Sign,
@@ -52447,7 +52167,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Hash(nextssl_algo_waterfall_512_sha3r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "wave1249-r1",
         kind: Kind::Sign,
@@ -52478,7 +52197,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_wave1249_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "wave1644-r1",
         kind: Kind::Sign,
@@ -52509,7 +52227,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Sign(nextssl_algo_wave1644_r1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "wave822-r1",
         kind: Kind::Sign,
@@ -52845,7 +52562,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_xchacha20_poly1305::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmss-sha2-10-192",
         kind: Kind::StatefulSign,
@@ -52875,7 +52591,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmss_sha2_10_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmss-sha2-10-256",
         kind: Kind::StatefulSign,
@@ -52905,7 +52620,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmss_sha2_10_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmss-sha2-10-512",
         kind: Kind::StatefulSign,
@@ -52935,7 +52649,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmss_sha2_10_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmss-shake-10-256",
         kind: Kind::StatefulSign,
@@ -52965,7 +52678,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmss_shake_10_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmss-shake-10-512",
         kind: Kind::StatefulSign,
@@ -52995,7 +52707,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmss_shake_10_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmss-shake256-10-192",
         kind: Kind::StatefulSign,
@@ -53025,7 +52736,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmss_shake256_10_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmss-shake256-10-256",
         kind: Kind::StatefulSign,
@@ -53055,7 +52765,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmss_shake256_10_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-20-2-192",
         kind: Kind::StatefulSign,
@@ -53085,7 +52794,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_20_2_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-20-2-256",
         kind: Kind::StatefulSign,
@@ -53115,7 +52823,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_20_2_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-20-2-512",
         kind: Kind::StatefulSign,
@@ -53145,7 +52852,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_20_2_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-20-4-192",
         kind: Kind::StatefulSign,
@@ -53175,7 +52881,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_20_4_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-20-4-256",
         kind: Kind::StatefulSign,
@@ -53205,7 +52910,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_20_4_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-20-4-512",
         kind: Kind::StatefulSign,
@@ -53235,7 +52939,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_20_4_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-40-4-192",
         kind: Kind::StatefulSign,
@@ -53265,7 +52968,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_40_4_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-40-4-256",
         kind: Kind::StatefulSign,
@@ -53295,7 +52997,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_40_4_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-40-4-512",
         kind: Kind::StatefulSign,
@@ -53325,7 +53026,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_40_4_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-40-8-192",
         kind: Kind::StatefulSign,
@@ -53355,7 +53055,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_40_8_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-40-8-256",
         kind: Kind::StatefulSign,
@@ -53385,7 +53084,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_40_8_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-40-8-512",
         kind: Kind::StatefulSign,
@@ -53415,7 +53113,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_40_8_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-60-12-192",
         kind: Kind::StatefulSign,
@@ -53445,7 +53142,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_60_12_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-60-12-256",
         kind: Kind::StatefulSign,
@@ -53475,7 +53171,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_60_12_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-60-12-512",
         kind: Kind::StatefulSign,
@@ -53505,7 +53200,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_60_12_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-60-6-192",
         kind: Kind::StatefulSign,
@@ -53535,7 +53229,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_60_6_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-60-6-256",
         kind: Kind::StatefulSign,
@@ -53565,7 +53258,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_60_6_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-sha2-60-6-512",
         kind: Kind::StatefulSign,
@@ -53595,7 +53287,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_sha2_60_6_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-20-2-256",
         kind: Kind::StatefulSign,
@@ -53625,7 +53316,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_20_2_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-20-2-512",
         kind: Kind::StatefulSign,
@@ -53655,7 +53345,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_20_2_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-20-4-256",
         kind: Kind::StatefulSign,
@@ -53685,7 +53374,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_20_4_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-20-4-512",
         kind: Kind::StatefulSign,
@@ -53715,7 +53403,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_20_4_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-40-4-256",
         kind: Kind::StatefulSign,
@@ -53745,7 +53432,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_40_4_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-40-4-512",
         kind: Kind::StatefulSign,
@@ -53775,7 +53461,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_40_4_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-40-8-256",
         kind: Kind::StatefulSign,
@@ -53805,7 +53490,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_40_8_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-40-8-512",
         kind: Kind::StatefulSign,
@@ -53835,7 +53519,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_40_8_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-60-12-256",
         kind: Kind::StatefulSign,
@@ -53865,7 +53548,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_60_12_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-60-12-512",
         kind: Kind::StatefulSign,
@@ -53895,7 +53577,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_60_12_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-60-6-256",
         kind: Kind::StatefulSign,
@@ -53925,7 +53606,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_60_6_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake-60-6-512",
         kind: Kind::StatefulSign,
@@ -53955,7 +53635,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake_60_6_512::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-20-2-192",
         kind: Kind::StatefulSign,
@@ -53985,7 +53664,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_20_2_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-20-2-256",
         kind: Kind::StatefulSign,
@@ -54015,7 +53693,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_20_2_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-20-4-192",
         kind: Kind::StatefulSign,
@@ -54045,7 +53722,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_20_4_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-20-4-256",
         kind: Kind::StatefulSign,
@@ -54075,7 +53751,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_20_4_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-40-4-192",
         kind: Kind::StatefulSign,
@@ -54105,7 +53780,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_40_4_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-40-4-256",
         kind: Kind::StatefulSign,
@@ -54135,7 +53809,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_40_4_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-40-8-192",
         kind: Kind::StatefulSign,
@@ -54165,7 +53838,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_40_8_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-40-8-256",
         kind: Kind::StatefulSign,
@@ -54195,7 +53867,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_40_8_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-60-12-192",
         kind: Kind::StatefulSign,
@@ -54225,7 +53896,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_60_12_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-60-12-256",
         kind: Kind::StatefulSign,
@@ -54255,7 +53925,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_60_12_256::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-60-6-192",
         kind: Kind::StatefulSign,
@@ -54285,7 +53954,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::StatefulSign(nextssl_algo_xmssmt_shake256_60_6_192::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "xmssmt-shake256-60-6-256",
         kind: Kind::StatefulSign,
@@ -55106,7 +54774,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::Aead(nextssl_algo_yarara128v1::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "yarn-phc",
         kind: Kind::PwHash,
@@ -55227,7 +54894,6 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         smoke_skip: None,
         ctor: Ctor::PwHash(nextssl_algo_yescrypt::new),
     },
-    #[cfg(not(target_env = "msvc"))]
     AlgoInfo {
         id: "yescrypt-phc",
         kind: Kind::PwHash,

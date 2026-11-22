@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/SPHINCS-Round2.zip", sha256 = "dc5f2631d2145371a5c2b2cd013f333b96eb21ea9dbd9abc2e2f071bbcfba083", license = "NOASSERTION", files = ["crypto_sign/sphincs-shake256-128s-robust/address.c", "crypto_sign/sphincs-shake256-128s-robust/address.h", "crypto_sign/sphincs-shake256-128s-robust/api.h", "crypto_sign/sphincs-shake256-128s-robust/fips202.c", "crypto_sign/sphincs-shake256-128s-robust/fips202.h", "crypto_sign/sphincs-shake256-128s-robust/fors.c", "crypto_sign/sphincs-shake256-128s-robust/fors.h", "crypto_sign/sphincs-shake256-128s-robust/hash.h", "crypto_sign/sphincs-shake256-128s-robust/hash_shake256.c", "crypto_sign/sphincs-shake256-128s-robust/params.h", "crypto_sign/sphincs-shake256-128s-robust/rng.h", "crypto_sign/sphincs-shake256-128s-robust/sign.c", "crypto_sign/sphincs-shake256-128s-robust/thash.h", "crypto_sign/sphincs-shake256-128s-robust/thash_shake256_robust.c", "crypto_sign/sphincs-shake256-128s-robust/utils.c", "crypto_sign/sphincs-shake256-128s-robust/utils.h", "crypto_sign/sphincs-shake256-128s-robust/wots.c", "crypto_sign/sphincs-shake256-128s-robust/wots.h", "LICENSE"] }
 
 # Variant wired: crypto_sign/sphincs-shake256-128s-robust (sign). Other variants not wired: none.

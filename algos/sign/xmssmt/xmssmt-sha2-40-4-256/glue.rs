@@ -7,8 +7,6 @@
 //! key replaced and the signature returned. The reference never signs with the last leaf (it wipes the key in memory and
 //! signs with a zero seed), so the usable number of signatures is 2^h - 1 and the key counts as exhausted at index 2^h - 1.
 //! Keygen from `rng` draws 3 * n bytes; `keygen_from_seed` takes SK_SEED || SK_PRF || PUB_SEED (3 * n bytes).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{
     EntropySource, Error, Len, Params, PublicKey, Result, Seed, Signature, Sizes, StatefulKey,
@@ -344,5 +342,24 @@ mod tests {
         assert!(!called);
         let bad_seed = Seed::from_bytes(&[7u8; SEED - 1], Len::fixed(SEED - 1)).unwrap();
         assert!(a.keygen_from_seed(&bad_seed).is_err());
+    }
+
+    /// The index is a full 64-bit value on every target: on Windows/32-bit, where C `long` is 32 bits,
+    /// build.rs compiles xmss_core.c with a 64-bit index cast (see index_fix_source).
+    #[test]
+    fn index_above_2_pow_32() {
+        let a = new(&Params::new()).unwrap();
+        let seed = Seed::from_bytes(&[9u8; SEED], Len::fixed(SEED)).unwrap();
+        let (pk, sk) = a.keygen_from_seed(&seed).unwrap();
+        let start: u64 = (1u64 << 32) + 3;
+        let mut raw = sk.as_bytes().to_vec();
+        for (i, b) in start.to_be_bytes()[8 - IDX_BYTES..].iter().enumerate() {
+            raw[IDX_OFF + i] = *b;
+        }
+        let mut key = StatefulKey::from_bytes(&raw, Len::fixed(SK)).unwrap();
+        let mut keep = |_: &[u8]| -> Result<()> { Ok(()) };
+        let sig = a.sign(&mut key, b"high index", &mut keep).unwrap();
+        assert!(a.verify(&pk, b"high index", &sig).unwrap());
+        assert_eq!(index_of(key.as_bytes()).unwrap(), start + 1);
     }
 }

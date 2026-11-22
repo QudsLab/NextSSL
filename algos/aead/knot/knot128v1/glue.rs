@@ -1,8 +1,6 @@
 //! Adapter: NIST LWC round 2 knot128v1 (ref) (verbatim C, symbols renamed `nextssl__knot128v1__*`) -> nextssl `Aead`.
 //! Generated wiring, no crypto logic. UNTESTED (not yet compiled). Output of `seal` is
 //! `ciphertext || tag`; the secret message number (nsec) is not used (always NULL).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{Aead, Error, Len, Params, Result, Sizes, SymmetricKey, Zeroizing};
 

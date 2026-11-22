@@ -6,8 +6,6 @@
 //! password 0..=65536 bytes, output 16..=256 bytes.
 //! PHC form: `$tortuga-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! Upstream uses variable-length arrays on the stack sized by m_cost (key bytes = next power of four above m_cost + 1), so m_cost is capped at 16384 (16 KiB of stack). Links libm (log2, sqrt).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};

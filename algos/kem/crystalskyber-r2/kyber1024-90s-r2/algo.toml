@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/CRYSTALS-Kyber-Round2.zip", sha256 = "2e186207a652e2edf89784be3d96e3a563ff11ef0e10a6b7f9e1192c58d979df", license = "NOASSERTION", files = ["crypto_kem/kyber1024-90s/aes256ctr.c", "crypto_kem/kyber1024-90s/aes256ctr.h", "crypto_kem/kyber1024-90s/api.h", "crypto_kem/kyber1024-90s/cbd.c", "crypto_kem/kyber1024-90s/cbd.h", "crypto_kem/kyber1024-90s/indcpa.c", "crypto_kem/kyber1024-90s/indcpa.h", "crypto_kem/kyber1024-90s/kem.c", "crypto_kem/kyber1024-90s/ntt.c", "crypto_kem/kyber1024-90s/ntt.h", "crypto_kem/kyber1024-90s/params.h", "crypto_kem/kyber1024-90s/poly.c", "crypto_kem/kyber1024-90s/poly.h", "crypto_kem/kyber1024-90s/polyvec.c", "crypto_kem/kyber1024-90s/polyvec.h", "crypto_kem/kyber1024-90s/reduce.c", "crypto_kem/kyber1024-90s/reduce.h", "crypto_kem/kyber1024-90s/rng.h", "crypto_kem/kyber1024-90s/sha2.h", "crypto_kem/kyber1024-90s/sha256.c", "crypto_kem/kyber1024-90s/sha512.c", "crypto_kem/kyber1024-90s/symmetric-fips202.c", "crypto_kem/kyber1024-90s/symmetric.h", "crypto_kem/kyber1024-90s/verify.c", "crypto_kem/kyber1024-90s/verify.h", "crypto_kem/kyber1024/fips202.c", "crypto_kem/kyber1024/fips202.h", "LICENSE"] }
 
 # Variant wired: crypto_kem/kyber1024-90s (kem). Other variants not wired: none.

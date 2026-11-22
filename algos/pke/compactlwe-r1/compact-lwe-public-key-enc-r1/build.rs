@@ -14,8 +14,82 @@ const SOURCES: &[&str] = &[
 const INCLUDES: &[&str] = &["upstream/."];
 const PREFIX: &str = "nextssl__compact_lwe_public_key_enc_r1__";
 
+/// Targets with a 32-bit C `long` only (Windows, wasm32, other 32-bit). compact-lwe and its bundled mini-gmp were written for LP64, where `long` is
+/// 64-bit: randomMPZ reads `sizeof(unsigned long)` random bytes and adds them with mpz_add_ui, the
+/// limb type is `unsigned long`, and lengths go to mpz_export(size_t *) through `unsigned long`. With
+/// a 32-bit `long` the output differs from LP64 targets (and a 4-byte variable gets 8 bytes). The compiled
+/// copies (OUT_DIR/lp64) spell every lone `long` in the upstream .c/.h files as `long long`, which
+/// gives the LP64 sizes; LP64 targets (64-bit Linux, macOS) compile the verbatim files. Checked by the
+/// `same_output_on_every_target` test (glue.rs).
+fn lp64_dir() -> Option<PathBuf> {
+    // C `long` is 32-bit on Windows (LLP64) and on every 32-bit target (wasm32, ILP32).
+    let long_is_32 = std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("windows")
+        || std::env::var("CARGO_CFG_TARGET_POINTER_WIDTH").as_deref() == Ok("32");
+    if !long_is_32 {
+        return None;
+    }
+    let dir = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("lp64");
+    std::fs::create_dir_all(&dir).expect("create lp64 dir");
+    for e in std::fs::read_dir("upstream").expect("read upstream") {
+        let path = e.expect("upstream entry").path();
+        let ext = path.extension().and_then(|x| x.to_str());
+        if ext != Some("c") && ext != Some("h") {
+            continue;
+        }
+        let text = std::fs::read_to_string(&path).expect("read upstream source");
+        assert!(
+            !text.contains("long double"),
+            "{}: `long double` would be rewritten",
+            path.display()
+        );
+        std::fs::write(dir.join(path.file_name().unwrap()), lp64_text(&text))
+            .expect("write LP64 copy");
+    }
+    Some(dir)
+}
+
+/// A lone `long` becomes `long long`; `long long` stays as it is. Works on bytes (the files are UTF-8
+/// with non-ASCII only in comments; `long` is ASCII, so boundaries are never split).
+fn lp64_text(text: &str) -> String {
+    let ident = |c: u8| c.is_ascii_alphanumeric() || c == b'_';
+    let b = text.as_bytes();
+    let mut out: Vec<u8> = Vec::with_capacity(b.len() + 1024);
+    let mut i = 0;
+    while i < b.len() {
+        let is_long = b[i..].starts_with(b"long")
+            && (i == 0 || !ident(b[i - 1]))
+            && !b.get(i + 4).is_some_and(|&c| ident(c));
+        if is_long {
+            let rest = text[i + 4..].trim_start();
+            let prev = text[..i].trim_end();
+            if rest.starts_with("long") || prev.ends_with("long") {
+                out.extend_from_slice(b"long");
+            } else {
+                out.extend_from_slice(b"long long");
+            }
+            i += 4;
+            continue;
+        }
+        out.push(b[i]);
+        i += 1;
+    }
+    String::from_utf8(out).expect("LP64 copy stays UTF-8")
+}
+
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // POSIX/glibc headers the upstream includes; MSVC targets get stand-ins (compat/msvc).
+    if b.get_compiler().is_like_msvc() {
+        b.include("compat/msvc");
+    }
+    // The upstream uses C99 variable-length arrays (and GNU C), which cl.exe cannot compile. On MSVC
+    // targets it is compiled with clang-cl instead: same ABI and object format, linked by link.exe.
+    if b.get_compiler().is_like_msvc() {
+        b.compiler(clang_cl());
+        // cl.exe merges C tentative definitions (common symbols); clang-cl defaults to -fno-common.
+        // Same single definition as cl.exe and GCC -fcommon builds; link.exe merges COFF commons.
+        b.flag("/clang:-fcommon");
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
@@ -27,7 +101,8 @@ fn base() -> cc::Build {
     // `__attribute__` (GNU annotations carry no semantics for the portable C; cl.exe cannot take a function-like macro with /D).
     let mut pre = String::from("");
     let msvc = b.get_compiler().is_like_msvc();
-    if msvc {
+    // cl.exe only: clang-cl understands GNU attributes (its own headers need them).
+    if msvc && !b.get_compiler().is_like_clang_cl() {
         pre.push_str("#define __attribute__(x)\n");
     }
     if !pre.is_empty() {
@@ -39,11 +114,18 @@ fn base() -> cc::Build {
             b.flag("-include").flag(h.to_str().unwrap());
         }
     }
+    let lp64 = lp64_dir();
+    if let Some(d) = &lp64 {
+        b.include(d);
+    }
     for i in INCLUDES {
         b.include(i);
     }
     for s in SOURCES {
-        b.file(s);
+        match (&lp64, s.strip_prefix("upstream/")) {
+            (Some(d), Some(name)) => b.file(d.join(name)),
+            _ => b.file(s),
+        };
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")
@@ -116,12 +198,6 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 }
 
 fn main() {
-    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'unistd.h': No such file or directory
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
-        return;
-    }
-    // END TARGET GATE
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let mut probe = base();
     probe.out_dir(out.join("probe"));
@@ -149,6 +225,29 @@ fn main() {
         println!("cargo:rerun-if-changed=shim.c");
     }
     println!("cargo:rerun-if-changed=build.rs");
+}
+
+/// clang-cl for MSVC targets: `NEXTSSL_CLANG_CL`, then PATH, then the LLVM installer's default
+/// directory. There is no fallback to cl.exe (it cannot compile this upstream).
+fn clang_cl() -> PathBuf {
+    println!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
+    if let Some(p) = std::env::var_os("NEXTSSL_CLANG_CL") {
+        return PathBuf::from(p);
+    }
+    let mut dirs: Vec<PathBuf> = std::env::var_os("PATH")
+        .map(|p| std::env::split_paths(&p).collect())
+        .unwrap_or_default();
+    dirs.push(PathBuf::from(r"C:\Program Files\LLVM\bin"));
+    for d in dirs {
+        let c = d.join("clang-cl.exe");
+        if c.is_file() {
+            return c;
+        }
+    }
+    panic!(
+        "this algorithm's C upstream needs clang-cl on MSVC targets (C99 variable-length arrays): \
+         install LLVM or set NEXTSSL_CLANG_CL to clang-cl.exe"
+    );
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)

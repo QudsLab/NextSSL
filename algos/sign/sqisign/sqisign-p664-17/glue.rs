@@ -1,8 +1,6 @@
 //! Adapter: liboqs SQIsign sqisign_p664_17 (portable C) (verbatim C, symbols renamed `nextssl__sqisign_p664_17__*`) -> nextssl `Sign`.
 //! Generated wiring, no crypto logic. Randomness comes only from the caller's EntropySource; there is no
 //! deterministic seed (`seed = 0`) and no context string (`ctx = 0`: a non-empty ctx is an error, never ignored).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{
     EntropySource, Error, Len, Params, PrivateKey, PublicKey, Result, Seed, Sign, Signature, Sizes,

@@ -1,7 +1,5 @@
 //! Adapter: libosmocore MILENAGE f2/f3/f4/f5 (3GPP TS 35.206, GPL-2.0-or-later, verbatim C, symbols renamed `nextssl__milenage__*`) -> nextssl `Kdf`.
 //! Glue only, no crypto logic. Shape: ikm = K (16), salt = RAND (16), info = OPc (16), output = RES (8) || CK (16) || IK (16) || AK (6) = 46 bytes.
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{Error, Kdf, Len, Params, Result, Sizes, SymmetricKey};
 

@@ -8,8 +8,6 @@ status    = "active"
 standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason = "MSVC cannot build the upstream C: yescrypt-ref.c: fatal error C1021: invalid preprocessor command 'warning'"
 upstream  = { url = "https://password-hashing.net/submissions/yescrypt-v2.tar.gz", sha256 = "3d8566421bce945a5a1a0e837af095c22453bcbbac899c7a0fb450693be4c8fa", license = "NOASSERTION", files = ["yescrypt.h", "yescrypt-ref.c", "yescrypt-common.c", "yescrypt-platform.c", "sha256.c", "sha256.h", "sysendian.h", "phc.c", "LICENSE"] }
 # PHC submission version 0.8.1 (distinct from the 1.x 'yescrypt'): phc.c PHS = yescrypt_kdf with YESCRYPT_RW, N = 8 << m_cost, r = 8, p = 1, t = t_cost. Portable yescrypt-ref.c core (no OpenMP, no SIMD). Sources carry a short 'redistribution and use ... are permitted' notice (no SPDX id, no license file).
 # NO license file in the package: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.

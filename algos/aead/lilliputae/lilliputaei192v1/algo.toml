@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression (C99 variable-length array)"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Lightweight-Cryptography/documents/round-1/submissions/lilliput-ae.zip", sha256 = "df168eb9b82979ae49269b84251a04e5dc4710d821846ef361e7115d757c52a4", license = "NOASSERTION", files = ["ref/api.h", "ref/cipher.c", "ref/cipher.h", "ref/constants.h", "ref/encrypt.c", "ref/lilliput-ae-utils.h", "ref/lilliput-ae.h", "ref/lilliput-i.c", "ref/parameters.h", "ref/tweakey.c", "ref/tweakey.h", "LICENSE"] }
 
 # Variant wired: ref (aead). Other variants not wired: none.

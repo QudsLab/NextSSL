@@ -1,7 +1,5 @@
 //! Adapter: knot256v2 (SUPERCOP crypto_hash) (ref) (verbatim C, symbols renamed `nextssl__knot256v2__*`) -> nextssl `Hash`.
 //! Generated wiring, no crypto logic. UNTESTED (not yet compiled).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{Error, Hash, Params, Result};
 

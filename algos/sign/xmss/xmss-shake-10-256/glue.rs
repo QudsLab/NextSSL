@@ -7,8 +7,6 @@
 //! key replaced and the signature returned. The reference never signs with the last leaf (it wipes the key in memory and
 //! signs with a zero seed), so the usable number of signatures is 2^h - 1 and the key counts as exhausted at index 2^h - 1.
 //! Keygen from `rng` draws 3 * n bytes; `keygen_from_seed` takes SK_SEED || SK_PRF || PUB_SEED (3 * n bytes).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{
     EntropySource, Error, Len, Params, PublicKey, Result, Seed, Signature, Sizes, StatefulKey,

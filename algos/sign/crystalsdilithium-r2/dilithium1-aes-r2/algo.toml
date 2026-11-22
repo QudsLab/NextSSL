@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: poly.c error C2057: expected constant expression (C99 variable-length array)"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/CRYSTALS-Dilithium-Round2.zip", sha256 = "f6dcf5d833cf46ac99165974e83d9e7298550b870d113d4730d8c786b600a2c3", license = "NOASSERTION", files = ["crypto_sign/dilithium1-AES/aes256ctr.c", "crypto_sign/dilithium1-AES/aes256ctr.h", "crypto_sign/dilithium1-AES/api.h", "crypto_sign/dilithium1-AES/config.h", "crypto_sign/dilithium1-AES/fips202.c", "crypto_sign/dilithium1-AES/fips202.h", "crypto_sign/dilithium1-AES/ntt.c", "crypto_sign/dilithium1-AES/ntt.h", "crypto_sign/dilithium1-AES/packing.c", "crypto_sign/dilithium1-AES/packing.h", "crypto_sign/dilithium1-AES/params.h", "crypto_sign/dilithium1-AES/poly.c", "crypto_sign/dilithium1-AES/poly.h", "crypto_sign/dilithium1-AES/polyvec.c", "crypto_sign/dilithium1-AES/polyvec.h", "crypto_sign/dilithium1-AES/randombytes.h", "crypto_sign/dilithium1-AES/reduce.c", "crypto_sign/dilithium1-AES/reduce.h", "crypto_sign/dilithium1-AES/rng.h", "crypto_sign/dilithium1-AES/rounding.c", "crypto_sign/dilithium1-AES/rounding.h", "crypto_sign/dilithium1-AES/sign.c", "crypto_sign/dilithium1-AES/sign.h", "crypto_sign/dilithium1-AES/symmetric.h", "crypto_sign/dilithium1-AES/test/cpucycles.h", "LICENSE"] }
 
 # Variant wired: crypto_sign/dilithium1-AES (sign). Other variants not wired: none.

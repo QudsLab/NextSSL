@@ -14,6 +14,14 @@ const PREFIX: &str = "nextssl__keccakc256treed2__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // The upstream uses C99 variable-length arrays (and GNU C), which cl.exe cannot compile. On MSVC
+    // targets it is compiled with clang-cl instead: same ABI and object format, linked by link.exe.
+    if b.get_compiler().is_like_msvc() {
+        b.compiler(clang_cl());
+        // cl.exe merges C tentative definitions (common symbols); clang-cl defaults to -fno-common.
+        // Same single definition as cl.exe and GCC -fcommon builds; link.exe merges COFF commons.
+        b.flag("/clang:-fcommon");
+    }
     // The only upstream implementation uses x86 SIMD intrinsics. Off x86 (wasm32, aarch64) the x86
     // intrinsic headers come from SIMDe (third_party/simde/x86-shim, portable C); x86 targets are unchanged.
     if !matches!(
@@ -38,11 +46,18 @@ fn base() -> cc::Build {
     // `__attribute__` (GNU annotations carry no semantics for the portable C; cl.exe cannot take a function-like macro with /D).
     let mut pre = String::from("");
     let msvc = b.get_compiler().is_like_msvc();
-    if msvc {
-        pre.push_str("#define __attribute__(x)\n");
+    // cl.exe only: clang-cl understands GNU attributes (its own headers need them).
+    if msvc && !b.get_compiler().is_like_clang_cl() {
+        pre.push_str(
+            "#define __attribute__(x)
+",
+        );
     }
     // NextSSL fix (fix156): non-MSVC defines/flags
-    if !msvc && std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("x86_64") {
+    // SSSE3 for the sseu24 code on x86-64: GCC/clang, and clang-cl on MSVC targets.
+    if (!msvc || b.get_compiler().is_like_clang_cl())
+        && std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("x86_64")
+    {
         b.flag("-mssse3");
     }
     if !pre.is_empty() {
@@ -131,12 +146,6 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 }
 
 fn main() {
-    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C: fatal error C1083: Cannot open include file: 'x86intrin.h': No such file or directory
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
-        return;
-    }
-    // END TARGET GATE
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let mut probe = base();
     probe.out_dir(out.join("probe"));
@@ -164,6 +173,29 @@ fn main() {
         println!("cargo:rerun-if-changed=shim.c");
     }
     println!("cargo:rerun-if-changed=build.rs");
+}
+
+/// clang-cl for MSVC targets: `NEXTSSL_CLANG_CL`, then PATH, then the LLVM installer's default
+/// directory. There is no fallback to cl.exe (it cannot compile this upstream).
+fn clang_cl() -> PathBuf {
+    println!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
+    if let Some(p) = std::env::var_os("NEXTSSL_CLANG_CL") {
+        return PathBuf::from(p);
+    }
+    let mut dirs: Vec<PathBuf> = std::env::var_os("PATH")
+        .map(|p| std::env::split_paths(&p).collect())
+        .unwrap_or_default();
+    dirs.push(PathBuf::from(r"C:\Program Files\LLVM\bin"));
+    for d in dirs {
+        let c = d.join("clang-cl.exe");
+        if c.is_file() {
+            return c;
+        }
+    }
+    panic!(
+        "this algorithm's C upstream needs clang-cl on MSVC targets (C99 variable-length arrays): \
+         install LLVM or set NEXTSSL_CLANG_CL to clang-cl.exe"
+    );
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)

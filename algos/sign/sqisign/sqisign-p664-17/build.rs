@@ -94,6 +94,20 @@ const PREFIX: &str = "nextssl__sqisign_p664_17__";
 
 fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
+    // The upstream uses POSIX ssize_t; MSVC targets get it from a force-included compat header.
+    if b.get_compiler().is_like_msvc() {
+        let h = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap())
+            .join("compat/msvc/nextssl_msvc_types.h");
+        b.flag(format!("/FI{}", h.display()));
+    }
+    // The upstream uses C99 variable-length arrays (and GNU C), which cl.exe cannot compile. On MSVC
+    // targets it is compiled with clang-cl instead: same ABI and object format, linked by link.exe.
+    if b.get_compiler().is_like_msvc() {
+        b.compiler(clang_cl());
+        // cl.exe merges C tentative definitions (common symbols); clang-cl defaults to -fno-common.
+        // Same single definition as cl.exe and GCC -fcommon builds; link.exe merges COFF commons.
+        b.flag("/clang:-fcommon");
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !cpp && !b.get_compiler().is_like_msvc() {
@@ -228,12 +242,6 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 }
 
 fn main() {
-    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C: error C2143: syntax error: missing ')' before '*'
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
-        return;
-    }
-    // END TARGET GATE
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let sets = [
         (
@@ -283,6 +291,29 @@ fn main() {
     println!("cargo:rerun-if-changed=shim.c");
     println!("cargo:rerun-if-changed=shim.cpp");
     println!("cargo:rerun-if-changed=build.rs");
+}
+
+/// clang-cl for MSVC targets: `NEXTSSL_CLANG_CL`, then PATH, then the LLVM installer's default
+/// directory. There is no fallback to cl.exe (it cannot compile this upstream).
+fn clang_cl() -> PathBuf {
+    println!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
+    if let Some(p) = std::env::var_os("NEXTSSL_CLANG_CL") {
+        return PathBuf::from(p);
+    }
+    let mut dirs: Vec<PathBuf> = std::env::var_os("PATH")
+        .map(|p| std::env::split_paths(&p).collect())
+        .unwrap_or_default();
+    dirs.push(PathBuf::from(r"C:\Program Files\LLVM\bin"));
+    for d in dirs {
+        let c = d.join("clang-cl.exe");
+        if c.is_file() {
+            return c;
+        }
+    }
+    panic!(
+        "this algorithm's C upstream needs clang-cl on MSVC targets (C99 variable-length arrays): \
+         install LLVM or set NEXTSSL_CLANG_CL to clang-cl.exe"
+    );
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)

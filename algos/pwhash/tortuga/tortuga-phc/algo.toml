@@ -8,8 +8,6 @@ status    = "active"
 standards = ["Password Hashing Competition submission (2014-2015), PHC API PHS()"]
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason = "MSVC cannot build the upstream C: tortuga.c: error C2057: expected constant expression (variable-length arrays)"
 upstream  = { url = "https://password-hashing.net/submissions/Tortuga-v0.tar.gz", sha256 = "65dd00bc96f817a613c382b7244dcef9f8322b3b5fe3d66a99eb0c4c025b2a0c", license = "NOASSERTION", files = ["phs.c", "phs.h", "tortuga.c", "tortuga.h", "turtle.c", "turtle.h", "LICENSE"] }
 # Upstream uses variable-length arrays on the stack sized by m_cost (key bytes = next power of four above m_cost + 1), so m_cost is capped at 16384 (16 KiB of stack). Links libm (log2, sqrt).
 # NO license file in the package: upstream/LICENSE is a NextSSL placeholder naming the manifest license; owner must add the real text (rule 8). Tier unverified: PHC competition code, not independently reviewed (root API only). PHC string is NextSSL framing ($id$t=,m=$salt$hash). The upstream rng/main/test files are not compiled.

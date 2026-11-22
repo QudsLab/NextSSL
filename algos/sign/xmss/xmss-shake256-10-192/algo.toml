@@ -8,8 +8,6 @@ status    = "active"
 standards = ["RFC 8391", "NIST SP 800-208"]
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { repo = "https://github.com/XMSS/xmss-reference", commit = "171ccbd26f098542a67eb5d2b128281c80bd71a6", license = "CC0-1.0", files = ["params.c", "hash.c", "fips202.c", "hash_address.c", "wots.c", "xmss.c", "xmss_core.c", "xmss_commons.c", "utils.c", "params.h", "hash.h", "fips202.h", "hash_address.h", "randombytes.h", "wots.h", "xmss.h", "xmss_core.h", "xmss_commons.h", "utils.h", "LICENSE"] }
 
 # XMSS-SHAKE256_10_192, OID 0x00000013, reference implementation (xmss_core.c, full secret state, no BDS traversal).

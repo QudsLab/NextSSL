@@ -1,7 +1,5 @@
 //! Adapter: skein10241024 (SUPERCOP crypto_hash) (opt) (verbatim C, symbols renamed `nextssl__skein10241024__*`) -> nextssl `Hash`.
 //! Generated wiring, no crypto logic. UNTESTED (not yet compiled).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{Error, Hash, Params, Result};
 

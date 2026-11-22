@@ -3,8 +3,6 @@
 //! deterministic seed (`seed = 0`, `coins = 0`).
 //! Decapsulation: a nonzero C return code is an error (`Backend`), never a shared secret; implicit-rejection schemes
 //! return 0 with a pseudorandom secret on a bad ciphertext, as the upstream defines.
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 use nextssl_core::{
     Ciphertext, EntropySource, Error, Kem, Len, Params, PrivateKey, PublicKey, Result, Seed,
     SharedSecret, Sizes, Zeroizing,

@@ -4,8 +4,6 @@
 //! its buffer that way); plaintexts are capped at PT_MAX (the generator's maximum message length) and the
 //! label must be empty (the scheme has no label input), a non-empty label is an error, never ignored.
 //! Every decryption failure is the one `AuthenticationFailed`.
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use nextssl_core::{
     EntropySource, Error, Len, Params, Pke, PrivateKey, PublicKey, Result, Sizes, Zeroizing,
@@ -232,4 +230,34 @@ mod tests {
             .is_err());
         assert!(p.decrypt(&sk, &[0u8; 3], b"").is_err());
     }
+
+    /// LP64 check: Windows compiles an LLP64-fixed copy of compact-lwe.c (build.rs). Fixed entropy must
+    /// give the same keys and ciphertext on every target; the expected value was produced on Linux x86-64.
+    #[test]
+    fn same_output_on_every_target() {
+        let p = new(&Params::new()).unwrap();
+        let seed: Vec<u8> = (0..(1u64 << 16))
+            .map(|i| (i.wrapping_mul(0x9E37_79B9) >> 7) as u8)
+            .collect();
+        let mut rng = FixedEntropy::new(&seed);
+        let (pk, sk) = p.keygen(&mut rng).unwrap();
+        let ct = p.encrypt(&pk, &[0x5Au8; 16], b"", &mut rng).unwrap();
+        let mut h: u64 = 0xcbf2_9ce4_8422_2325;
+        for b in pk
+            .as_bytes()
+            .iter()
+            .chain(sk.as_bytes().iter())
+            .chain(ct.iter())
+        {
+            h = (h ^ u64::from(*b)).wrapping_mul(0x0000_0100_0000_01b3);
+        }
+        eprintln!(
+            "FINGERPRINT {h:016x} {} {} {}",
+            pk.as_bytes().len(),
+            sk.as_bytes().len(),
+            ct.len()
+        );
+        assert_eq!(h, EXPECTED);
+    }
+    const EXPECTED: u64 = 0x6806_bfc7_ed74_3fc3;
 }

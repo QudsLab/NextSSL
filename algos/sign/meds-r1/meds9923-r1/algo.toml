@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { url = "https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/submission-pkg/MEDS-submission.zip", sha256 = "1e68efd4bb5ee60dfaad8ce0b12aa3b4ab95f34f1e1eec3b578047207493385e", license = "NOASSERTION", files = ["MEDS9923/api.h", "MEDS9923/bitstream.c", "MEDS9923/bitstream.h", "MEDS9923/fips202.c", "MEDS9923/fips202.h", "MEDS9923/log.h", "MEDS9923/matrixmod.c", "MEDS9923/matrixmod.h", "MEDS9923/meds.c", "MEDS9923/meds.h", "MEDS9923/osfreq.c", "MEDS9923/params.h", "MEDS9923/randombytes.h", "MEDS9923/rng.h", "MEDS9923/seed.c", "MEDS9923/seed.h", "MEDS9923/util.c", "MEDS9923/util.h", "LICENSE"] }
 
 # Variant wired: MEDS9923 (sign). Other variants not wired: none.

@@ -33,8 +33,41 @@ const INCLUDES: &[&str] = &[
 const DEFINES: &[(&str, &str)] = &[];
 const PREFIX: &str = "nextssl__xmss_sha2_10_256__";
 
+/// Targets with a 32-bit C `long` (Windows, wasm32, other 32-bit) only: xmss_core.c reads the
+/// signing index with `idx = (unsigned long)bytes_to_ull(...)` into an `unsigned long long`. With a
+/// 32-bit `long` the cast drops the high bits, so an index >= 2^32 (total height 40/60) would sign
+/// with a reused one-time key, and an exhausted key (index set to all ones) would sign again. The
+/// compiled copy (OUT_DIR) casts to `unsigned long long`, the value the code means on LP64; LP64
+/// targets compile the verbatim file.
+fn index_fix_source(src: &str) -> PathBuf {
+    let long_is_32 = std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("windows")
+        || std::env::var("CARGO_CFG_TARGET_POINTER_WIDTH").as_deref() == Ok("32");
+    if !long_is_32 || !src.ends_with("/xmss_core.c") {
+        return PathBuf::from(src);
+    }
+    let text = std::fs::read_to_string(src).expect("read xmss_core.c");
+    let from = "(unsigned long)bytes_to_ull(";
+    assert_eq!(
+        text.matches(from).count(),
+        1,
+        "xmss_core.c: expected one `{from}`"
+    );
+    let p = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("xmss_core_index64.c");
+    std::fs::write(&p, text.replace(from, "(unsigned long long)bytes_to_ull("))
+        .expect("write xmss_core_index64.c");
+    p
+}
+
 fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
+    // The upstream uses C99 variable-length arrays (and GNU C), which cl.exe cannot compile. On MSVC
+    // targets it is compiled with clang-cl instead: same ABI and object format, linked by link.exe.
+    if b.get_compiler().is_like_msvc() {
+        b.compiler(clang_cl());
+        // cl.exe merges C tentative definitions (common symbols); clang-cl defaults to -fno-common.
+        // Same single definition as cl.exe and GCC -fcommon builds; link.exe merges COFF commons.
+        b.flag("/clang:-fcommon");
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !cpp && !b.get_compiler().is_like_msvc() {
@@ -56,7 +89,7 @@ fn base(cpp: bool) -> cc::Build {
         b.define("OQS_HAVE_POSIX_MEMALIGN", None);
     }
     for s in if cpp { CPP_SOURCES } else { SOURCES } {
-        b.file(s);
+        b.file(index_fix_source(s));
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")
@@ -169,12 +202,6 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 }
 
 fn main() {
-    // BEGIN TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-    // Excluded: MSVC cannot build the upstream C: error C2057: expected constant expression
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
-        return;
-    }
-    // END TARGET GATE
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let sets = [
         (
@@ -224,6 +251,29 @@ fn main() {
     println!("cargo:rerun-if-changed=shim.c");
     println!("cargo:rerun-if-changed=shim.cpp");
     println!("cargo:rerun-if-changed=build.rs");
+}
+
+/// clang-cl for MSVC targets: `NEXTSSL_CLANG_CL`, then PATH, then the LLVM installer's default
+/// directory. There is no fallback to cl.exe (it cannot compile this upstream).
+fn clang_cl() -> PathBuf {
+    println!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
+    if let Some(p) = std::env::var_os("NEXTSSL_CLANG_CL") {
+        return PathBuf::from(p);
+    }
+    let mut dirs: Vec<PathBuf> = std::env::var_os("PATH")
+        .map(|p| std::env::split_paths(&p).collect())
+        .unwrap_or_default();
+    dirs.push(PathBuf::from(r"C:\Program Files\LLVM\bin"));
+    for d in dirs {
+        let c = d.join("clang-cl.exe");
+        if c.is_file() {
+            return c;
+        }
+    }
+    panic!(
+        "this algorithm's C upstream needs clang-cl on MSVC targets (C99 variable-length arrays): \
+         install LLVM or set NEXTSSL_CLANG_CL to clang-cl.exe"
+    );
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)

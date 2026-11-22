@@ -6,8 +6,6 @@
 //! password 0..=MAX_INPUT_LEN bytes, output 16..=64 bytes.
 //! PHC form: `$yarn-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! PHS runs yarn() with par = 6, initrnd = 10, m_step = 72, no personalization; yarn() returns 1 on success (the shim maps that to 0). Memory = 16 << m_cost bytes. The package's test-vectors.txt uses other par/initrnd/m_step values, so no vector matches PHS: empty KAT.
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};

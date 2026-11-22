@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-1/submissions/CRYSTALS_Kyber.zip", sha256 = "a357712bc0f15336080a339ee278f6b472e1bd556ee9f29f919a09538e0c0e7d", license = "NOASSERTION", files = ["crypto_kem/kyber768/api.h", "crypto_kem/kyber768/cbd.c", "crypto_kem/kyber768/cbd.h", "crypto_kem/kyber768/fips202.c", "crypto_kem/kyber768/fips202.h", "crypto_kem/kyber768/indcpa.c", "crypto_kem/kyber768/indcpa.h", "crypto_kem/kyber768/kem.c", "crypto_kem/kyber768/ntt.c", "crypto_kem/kyber768/ntt.h", "crypto_kem/kyber768/params.h", "crypto_kem/kyber768/poly.c", "crypto_kem/kyber768/poly.h", "crypto_kem/kyber768/polyvec.c", "crypto_kem/kyber768/polyvec.h", "crypto_kem/kyber768/precomp.c", "crypto_kem/kyber768/reduce.c", "crypto_kem/kyber768/reduce.h", "crypto_kem/kyber768/rng.h", "crypto_kem/kyber768/verify.c", "crypto_kem/kyber768/verify.h", "LICENSE"] }
 
 # Variant wired: crypto_kem/kyber768 (kem). Other variants not wired: none.

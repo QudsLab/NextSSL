@@ -8,8 +8,6 @@ status    = "active"
 standards = ["3GPP TS 35.205", "3GPP TS 35.206"]
 fips      = false
 copyleft  = true
-exclude_targets = ["msvc"]
-exclude_reason = "MSVC cannot build the upstream C: error C2010 '.' unexpected in macro parameter list (GNU named variadic macros in common.h)"
 upstream  = { repo = "https://github.com/osmocom/libosmocore", commit = "1b72c0288c3f6fcec916cc439623af1c1c4b5d4c", license = "GPL-2.0-or-later", files = ["src/gsm/milenage/aes-encblock.c", "src/gsm/milenage/aes-internal-enc.c", "src/gsm/milenage/aes-internal.c", "src/gsm/milenage/aes.h", "src/gsm/milenage/aes_i.h", "src/gsm/milenage/aes_wrap.h", "src/gsm/milenage/common.h", "src/gsm/milenage/crypto.h", "src/gsm/milenage/includes.h", "src/gsm/milenage/milenage.c", "src/gsm/milenage/milenage.h", "LICENSE"] }
 # Wired: milenage_f2345() from libosmocore src/gsm/milenage (3GPP TS 35.206, wpa_supplicant-derived code, GPL-2.0 or BSD-3-Clause per file; the GPL-2.0-or-later libosmocore terms are recorded).
 # Kind kdf is the closest honest fit: ikm = K (16 bytes), salt = RAND (16 bytes), info = OPc (16 bytes, the already derived operator code), out = RES (8) || CK (16) || IK (16) || AK (6) = exactly 46 bytes.

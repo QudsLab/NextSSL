@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: fatal error C1003: error count exceeds 100; stopping compilation"
 upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["gcc/api.h", "gcc/essence.h", "gcc/essence_L_tables.c", "gcc/essence_api.c", "gcc/essence_api.h", "gcc/essence_compress_256.c", "gcc/essence_compress_256_dual.c", "gcc/essence_compress_512.c", "gcc/hash.c", "LICENSE"] }
 
 # Variant wired: gcc (hash). Other variants not wired: none.

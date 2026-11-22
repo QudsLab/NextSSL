@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2091: function returns function"
 upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["ref/api.h", "ref/cbd.c", "ref/cbd.h", "ref/fips202.c", "ref/fips202.h", "ref/indcpa.c", "ref/indcpa.h", "ref/kem.c", "ref/kem.h", "ref/ntt.c", "ref/ntt.h", "ref/params.h", "ref/poly.c", "ref/poly.h", "ref/polyvec.c", "ref/polyvec.h", "ref/reduce.c", "ref/reduce.h", "ref/symmetric-shake.c", "ref/symmetric.h", "ref/verify.c", "ref/verify.h", "LICENSE"] }
 
 # Variant wired: ref (kem). Other variants not wired: compact.

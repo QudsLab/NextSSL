@@ -6,8 +6,6 @@
 //! password 0..=MAX_INPUT_LEN bytes, output 16..=64 bytes.
 //! PHC form: `$catena-butterfly-phc$t=<n>,m=<n>$<salt>$<hash>` (NextSSL framing, strict parser in `nextssl_core::phc`).
 //! Makefile defaults: -DFAST, reference BLAKE2b, instance Butterfly (catena-DBG.c). PHS maps t_cost to lambda and m_cost to garlic (= min_garlic). The FAST hash keeps a static state, so calls are serialized. Uses <endian.h>/<byteswap.h> (POSIX).
-// TARGET GATE (cargo xtask gen, from algo.toml exclude_targets)
-#![cfg(not(target_env = "msvc"))]
 
 use core::ffi::{c_int, c_void};
 use nextssl_core::phc::{self, PhcParam, PhcSpec};

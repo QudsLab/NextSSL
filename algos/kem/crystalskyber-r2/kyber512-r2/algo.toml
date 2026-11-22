@@ -8,8 +8,6 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-exclude_targets = ["msvc"]
-exclude_reason  = "MSVC cannot build the upstream C: error C2057: expected constant expression"
 upstream  = { url = "https://csrc.nist.gov/CSRC/media/Projects/Post-Quantum-Cryptography/documents/round-2/submissions/CRYSTALS-Kyber-Round2.zip", sha256 = "2e186207a652e2edf89784be3d96e3a563ff11ef0e10a6b7f9e1192c58d979df", license = "NOASSERTION", files = ["crypto_kem/kyber512/aes256ctr.c", "crypto_kem/kyber512/aes256ctr.h", "crypto_kem/kyber512/api.h", "crypto_kem/kyber512/cbd.c", "crypto_kem/kyber512/cbd.h", "crypto_kem/kyber512/fips202.c", "crypto_kem/kyber512/fips202.h", "crypto_kem/kyber512/indcpa.c", "crypto_kem/kyber512/indcpa.h", "crypto_kem/kyber512/kem.c", "crypto_kem/kyber512/ntt.c", "crypto_kem/kyber512/ntt.h", "crypto_kem/kyber512/params.h", "crypto_kem/kyber512/poly.c", "crypto_kem/kyber512/poly.h", "crypto_kem/kyber512/polyvec.c", "crypto_kem/kyber512/polyvec.h", "crypto_kem/kyber512/reduce.c", "crypto_kem/kyber512/reduce.h", "crypto_kem/kyber512/rng.h", "crypto_kem/kyber512/sha2.h", "crypto_kem/kyber512/sha256.c", "crypto_kem/kyber512/sha512.c", "crypto_kem/kyber512/symmetric-fips202.c", "crypto_kem/kyber512/symmetric.h", "crypto_kem/kyber512/verify.c", "crypto_kem/kyber512/verify.h", "LICENSE"] }
 
 # Variant wired: crypto_kem/kyber512 (kem). Other variants not wired: none.
