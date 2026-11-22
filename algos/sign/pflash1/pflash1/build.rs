@@ -44,6 +44,11 @@ fn base() -> cc::Build {
         // SignScheme.c names a static array `_MT`, which the MSVC toolchain predefines for /MD and
         // /MT. Include the CRT headers the upstream uses first (they may test _MT), then give the
         // identifier back to the upstream under a private name.
+        // UCRT defines printf & co. inline in <stdio.h>; the rename probe would take them for upstream
+        // globals. _NO_CRT_STDIO_INLINE makes them plain declarations resolved by the CRT.
+        pre.push_str("#define _NO_CRT_STDIO_INLINE\n");
+        // ...and the out-of-line definitions live in legacy_stdio_definitions.lib (Microsoft's documented pairing).
+        println!("cargo:rustc-link-lib=legacy_stdio_definitions");
         pre.push_str("#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n");
         pre.push_str("#undef _MT\n#define _MT nextssl__pflash1__static_MT\n");
     }

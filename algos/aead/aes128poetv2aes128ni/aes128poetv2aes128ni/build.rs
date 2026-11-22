@@ -7,10 +7,28 @@ use std::path::PathBuf;
 
 const SOURCES: &[&str] = &["upstream/ref/encrypt.c", "upstream/ref/poet.c"];
 const INCLUDES: &[&str] = &["upstream/ref", "upstream/."];
+const PORTABLE_SOURCES: &[&str] = &[
+    "upstream/portable/aes.c",
+    "upstream/portable/encrypt.c",
+    "upstream/portable/poet.c",
+];
 const PREFIX: &str = "nextssl__aes128poetv2aes128ni__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // The only upstream implementation uses x86 SIMD intrinsics. Off x86 (wasm32, aarch64) the x86
+    // intrinsic headers come from SIMDe (third_party/simde/x86-shim, portable C); x86 targets are unchanged.
+    if !matches!(
+        std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
+        Ok("x86_64") | Ok("x86")
+    ) {
+        let root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("../../../..");
+        b.include(root.join("third_party/simde/x86-shim"));
+        println!(
+            "cargo:rerun-if-changed={}",
+            root.join("third_party/simde").display()
+        );
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
@@ -18,7 +36,12 @@ fn base() -> cc::Build {
     }
     b.warnings(false).opt_level(2);
     // AES-NI/SSE4.1 implementation: GCC/Clang need the target features enabled explicitly.
-    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() != Ok("msvc") {
+    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() != Ok("msvc")
+        && matches!(
+            std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
+            Ok("x86_64") | Ok("x86")
+        )
+    {
         b.flag("-msse4.1").flag("-maes").flag("-mpclmul");
     }
 
@@ -38,11 +61,23 @@ fn base() -> cc::Build {
             b.flag("-include").flag(h.to_str().unwrap());
         }
     }
-    for i in INCLUDES {
-        b.include(i);
-    }
-    for s in SOURCES {
-        b.file(s);
+    // x86: the AES-NI implementation. Elsewhere (wasm32, aarch64): SUPERCOP's portable implementation of
+    // the same primitive (aes128poetv2aes128/ref, same pinned tarball; identical SUPERCOP checksums).
+    if matches!(
+        std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
+        Ok("x86_64") | Ok("x86")
+    ) {
+        for i in INCLUDES {
+            b.include(i);
+        }
+        for s in SOURCES {
+            b.file(s);
+        }
+    } else {
+        b.include("upstream/portable").include("upstream/.");
+        for s in PORTABLE_SOURCES {
+            b.file(s);
+        }
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")

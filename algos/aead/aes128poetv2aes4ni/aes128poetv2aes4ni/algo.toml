@@ -8,7 +8,7 @@ status    = "active"
 standards = []
 fips      = false
 copyleft  = false
-upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["crypto_aead.h", "ref/api.h", "ref/encrypt.c", "ref/poet.c", "ref/poet.h", "LICENSE"] }
+upstream  = { url = "https://bench.cr.yp.to/supercop/supercop-20261018.tar.xz", sha256 = "9a44c3e619632d140cbad436f5cebbea5f2b8d6efe752946c3e367c4c2ac8288", license = "NOASSERTION", files = ["crypto_aead.h", "ref/api.h", "ref/encrypt.c", "ref/poet.c", "ref/poet.h", "LICENSE", "portable/aes.c", "portable/aes.h", "portable/api.h", "portable/encrypt.c", "portable/poet.c", "portable/poet.h"] }
 
 # Variant wired: ref (aead). Other variants not wired: none.
 # no vectors replayed (untested, tier unverified). No .rsp/.kat file found for this row.

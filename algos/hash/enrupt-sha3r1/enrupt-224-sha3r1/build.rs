@@ -11,6 +11,19 @@ const PREFIX: &str = "nextssl__enrupt_224_sha3r1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // The only upstream implementation uses x86 SIMD intrinsics. Off x86 (wasm32, aarch64) the x86
+    // intrinsic headers come from SIMDe (third_party/simde/x86-shim, portable C); x86 targets are unchanged.
+    if !matches!(
+        std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
+        Ok("x86_64") | Ok("x86")
+    ) {
+        let root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("../../../..");
+        b.include(root.join("third_party/simde/x86-shim"));
+        println!(
+            "cargo:rerun-if-changed={}",
+            root.join("third_party/simde").display()
+        );
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {

@@ -3326,7 +3326,13 @@
           "ref/encrypt.c",
           "ref/poet.c",
           "ref/poet.h",
-          "LICENSE"
+          "LICENSE",
+          "portable/aes.c",
+          "portable/aes.h",
+          "portable/api.h",
+          "portable/encrypt.c",
+          "portable/poet.c",
+          "portable/poet.h"
         ]
       },
       "params": {},
@@ -3363,7 +3369,13 @@
           "ref/encrypt.c",
           "ref/poet.c",
           "ref/poet.h",
-          "LICENSE"
+          "LICENSE",
+          "portable/aes.c",
+          "portable/aes.h",
+          "portable/api.h",
+          "portable/encrypt.c",
+          "portable/poet.c",
+          "portable/poet.h"
         ]
       },
       "params": {},

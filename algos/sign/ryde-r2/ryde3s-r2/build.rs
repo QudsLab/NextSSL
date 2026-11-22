@@ -37,8 +37,55 @@ const INCLUDES: &[&str] = &[
 ];
 const PREFIX: &str = "nextssl__ryde3s_r2__";
 
+/// Non-x86 targets only (wasm32, aarch64): rbc_*_elt.c computes the degree with x86 inline asm
+/// `__asm__ volatile("bsr %1,%0;" : "=r"(index) : "r"(X));` (index of the highest set bit of X). The
+/// compiled copy (OUT_DIR) replaces exactly those statements with `63 - __builtin_clzll(X)`, the same value
+/// for X != 0; for X == 0 bsr leaves the index undefined and the upstream masks it out, so 0 is used there.
+/// x86 targets compile the verbatim file.
+fn portable_source(src: &str) -> PathBuf {
+    const HEAD: &str = "__asm__ volatile(\"bsr %1,%0;\" : \"=r\"(index) : \"r\"(";
+    let x86 = matches!(
+        std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
+        Ok("x86_64") | Ok("x86")
+    );
+    let text = std::fs::read_to_string(src).expect("read upstream source");
+    if x86 || !text.contains(HEAD) {
+        return PathBuf::from(src);
+    }
+    let mut out_text = String::new();
+    let mut rest = text.as_str();
+    while let Some(i) = rest.find(HEAD) {
+        let after = &rest[i + HEAD.len()..];
+        let end = after.find("));").expect("bsr statement end");
+        let x = &after[..end];
+        out_text.push_str(&rest[..i]);
+        out_text.push_str(&format!(
+            "index = ({x} != 0) ? (int64_t)(63 - __builtin_clzll((unsigned long long)({x}))) : 0;"
+        ));
+        rest = &after[end + 3..];
+    }
+    out_text.push_str(rest);
+    let name = src.replace('/', "_");
+    let out = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join(format!("portable_{name}"));
+    std::fs::write(&out, out_text).expect("write portable copy");
+    out
+}
+
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // The only upstream implementation uses x86 SIMD intrinsics. Off x86 (wasm32, aarch64) the x86
+    // intrinsic headers come from SIMDe (third_party/simde/x86-shim, portable C); x86 targets are unchanged.
+    if !matches!(
+        std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
+        Ok("x86_64") | Ok("x86")
+    ) {
+        let root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("../../../..");
+        b.include(root.join("third_party/simde/x86-shim"));
+        println!(
+            "cargo:rerun-if-changed={}",
+            root.join("third_party/simde").display()
+        );
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
@@ -66,7 +113,12 @@ fn base() -> cc::Build {
         b.include(i);
     }
     for s in SOURCES {
-        b.file(s);
+        let f = portable_source(s);
+        if f.as_os_str() != std::ffi::OsStr::new(s) {
+            // the copy lives in OUT_DIR: keep the original directory for its "..." includes
+            b.include(std::path::Path::new(s).parent().unwrap());
+        }
+        b.file(f);
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")
