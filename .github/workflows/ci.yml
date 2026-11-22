@@ -25,7 +25,15 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
-      - uses: Swatinem/rust-cache@v2
+      # Registry and git checkouts only. Swatinem/rust-cache kept the whole 1924-member workspace in its
+      # post-step state and its node process failed with "Argument list too long".
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: cargo-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
       - run: cargo xtask gen --check
       # Formatting does not depend on the OS. On Windows `cargo fmt --all` passes every crate's
       # source paths to one rustfmt process and, with the whole catalog, overflows the 32 KiB
@@ -67,7 +75,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      # Registry and git checkouts only. Swatinem/rust-cache kept the whole 1924-member workspace in its
+      # post-step state and its node process failed with "Argument list too long".
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: cargo-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
       - run: cargo test --workspace
 
   # The slow layers run inside the same Docker image the owner uses locally
