@@ -27,6 +27,11 @@ fn base() -> cc::Build {
     let msvc = b.get_compiler().is_like_msvc();
     if msvc {
         pre.push_str("#define __attribute__(x)\n");
+        // echo_ref.c includes <stdio.h> only under TRACE, yet its Print* helpers call printf. glibc has an
+        // out-of-line printf for that implicit declaration; the MSVC UCRT has printf only as an inline
+        // in <stdio.h> (LNK2019 printf). Declare it (no inline copy, which the rename pass would pick
+        // up) and link the out-of-line one from legacy_stdio_definitions.lib. MSVC targets only.
+        pre.push_str("#define _NO_CRT_STDIO_INLINE\n#include <stdio.h>\n");
     }
     if !pre.is_empty() {
         let h = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_pre.h");
@@ -139,6 +144,10 @@ fn main() {
         b.flag("-include").flag(hdr.to_str().unwrap());
     }
     link_shared(&mut b, "nextssl_echo_256_sha3r1", false);
+    // out-of-line printf for MSVC targets (see the preamble in base())
+    if std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
+        println!("cargo:rustc-link-lib=legacy_stdio_definitions");
+    }
     println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
     if std::path::Path::new("upstream").exists() {
         println!("cargo:rerun-if-changed=upstream");

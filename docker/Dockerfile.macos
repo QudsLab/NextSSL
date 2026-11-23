@@ -1,0 +1,13 @@
+# Local macOS BUILD check (nothing runs): the CI image plus Zig as the C compiler/linker for
+# aarch64-apple-darwin and x86_64-apple-darwin via cargo-zigbuild. Zig ships its own macOS libc headers
+# and linker, so no Apple SDK is needed. It catches compile and link errors that only macOS has
+# (glibc-only headers, `#ifdef __APPLE__` code, arm64 inline asm); runtime behaviour on macOS is still
+# covered only by GitHub CI's macos job. Built by tools/fasttest.py --targets macos (local only).
+FROM nextssl-test:ci
+ARG ZIG_VERSION=0.14.1
+ARG CARGO_ZIGBUILD_VERSION=0.19.8
+# ziglang from PyPI: a pinned Zig release in a wheel whose hash pip checks against the index.
+RUN python3 -m pip install --no-cache-dir --break-system-packages "ziglang==${ZIG_VERSION}" \
+    && rustup target add --toolchain stable aarch64-apple-darwin x86_64-apple-darwin \
+    && cargo install cargo-zigbuild --version "${CARGO_ZIGBUILD_VERSION}" --locked \
+    && cargo-zigbuild --version && python3 -m ziglang version

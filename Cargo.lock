@@ -504,6 +504,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4ff2a8126fff0f8c839080d619675a585e61720bb12d2baceae45769fd66f155"
 dependencies = [
  "find-msvc-tools",
+ "jobserver",
+ "libc",
  "shlex 2.0.1",
 ]
 
@@ -1716,6 +1718,16 @@ dependencies = [
  "digest 0.11.3",
  "hex-literal",
  "ppv-lite86",
+]
+
+[[package]]
+name = "jobserver"
+version = "0.1.35"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1c00acbd29eabad4a2392fa0e921c874934dbbf4194312ad20f04a0ed67a3cb3"
+dependencies = [
+ "getrandom 0.4.3",
+ "libc",
 ]
 
 [[package]]
@@ -20880,6 +20892,7 @@ name = "nextssl-core"
 version = "0.0.1"
 dependencies = [
  "base64ct",
+ "cc",
  "subtle",
  "zeroize",
 ]

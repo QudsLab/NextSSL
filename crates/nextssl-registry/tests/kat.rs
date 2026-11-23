@@ -931,14 +931,26 @@ fn join_worker(h: Option<std::thread::JoinHandle<()>>) {
 
 #[test]
 fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
-    let mut kinds = BTreeSet::new();
-    let mut failures: Vec<String> = Vec::new();
     // Triage aid: KAT_SKIP=id1,id2 leaves those algorithms out of this smoke loop (unset = none).
     let skip = std::env::var("KAT_SKIP").unwrap_or_default();
-    for a in all() {
-        if skip.split(',').any(|s| s == a.id) || !selected(a.id) {
-            continue;
-        }
+    let todo: Vec<&'static AlgoInfo> = all()
+        .iter()
+        .filter(|a| !skip.split(',').any(|s| s == a.id) && selected(a.id))
+        .collect();
+    // One algorithm per worker, each with its own timeout. SMOKE_JOBS=N runs N algorithms at once
+    // (local fast mode); unset or 1 (CI) runs them one after another as before. Two different
+    // algorithms never share C globals (every upstream symbol carries its own prefix). WebAssembly
+    // has no threads, so there it is always 1.
+    let jobs = if cfg!(target_family = "wasm") {
+        1
+    } else {
+        std::env::var("SMOKE_JOBS")
+            .ok()
+            .and_then(|v| v.parse::<usize>().ok())
+            .unwrap_or(1)
+            .max(1)
+    };
+    let run = |a: &'static AlgoInfo| -> Result<(), String> {
         if std::env::var_os("KAT_TRACE").is_some() {
             println!("smoke {}", a.id);
         }
@@ -954,13 +966,43 @@ fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
         });
         match rx.recv_timeout(PER_ALGO_TIMEOUT) {
             Ok(Ok(())) => {
-                kinds.insert(a.kind.as_str());
                 join_worker(h);
+                Ok(())
             }
-            Ok(Err(m)) => failures.push(format!("{}: {m}", a.id)),
-            Err(_) => failures.push(format!("{}: HANG (> {:?})", a.id, PER_ALGO_TIMEOUT)),
+            Ok(Err(m)) => Err(format!("{}: {m}", a.id)),
+            Err(_) => Err(format!("{}: HANG (> {:?})", a.id, PER_ALGO_TIMEOUT)),
+        }
+    };
+    let results: Vec<(&'static AlgoInfo, Result<(), String>)> = if jobs == 1 {
+        todo.iter().map(|&a| (a, run(a))).collect()
+    } else {
+        let next = std::sync::atomic::AtomicUsize::new(0);
+        let out = std::sync::Mutex::new(Vec::with_capacity(todo.len()));
+        std::thread::scope(|s| {
+            for _ in 0..jobs.min(todo.len()) {
+                s.spawn(|| loop {
+                    let i = next.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                    let Some(&a) = todo.get(i) else { break };
+                    let r = run(a);
+                    out.lock().unwrap_or_else(|p| p.into_inner()).push((a, r));
+                });
+            }
+        });
+        out.into_inner().unwrap_or_else(|p| p.into_inner())
+    };
+    let mut kinds = BTreeSet::new();
+    let mut failures: Vec<String> = Vec::new();
+    for (a, r) in &results {
+        match r {
+            Ok(()) => {
+                kinds.insert(a.kind.as_str());
+            }
+            Err(m) => failures.push(m.clone()),
         }
     }
+    // Same order whatever SMOKE_JOBS is.
+    failures.sort();
+    assert_eq!(results.len(), todo.len(), "every selected algorithm ran");
     for f in &failures {
         println!("SMOKE FAIL {f}");
     }

@@ -16,5 +16,11 @@ subtle.workspace = true
 zeroize.workspace = true
 base64ct.workspace = true
 
+# No build script uses this. Every C-backed algorithm depends on nextssl-core, so Cargo's feature
+# unification turns on cc's `parallel` feature for all of their build scripts: the C files of one crate
+# compile at the same time (cargo's jobserver caps the total), instead of one after another. Same objects.
+[build-dependencies]
+cc = { version = "1", features = ["parallel"] }
+
 [lints]
 workspace = true
