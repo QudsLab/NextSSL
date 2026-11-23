@@ -199,6 +199,17 @@ mod tests {
 
     #[test]
     fn roundtrip_and_rejects() {
+        // The upstream keeps large arrays on the stack (more than a 2 MiB test thread has on
+        // Windows); run on a thread with room for them, as the registry smoke does.
+        std::thread::Builder::new()
+            .stack_size(64 << 20)
+            .spawn(roundtrip_and_rejects_body)
+            .unwrap()
+            .join()
+            .unwrap();
+    }
+
+    fn roundtrip_and_rejects_body() {
         let g = new(&Params::new()).unwrap();
         let mut rng = FixedEntropy::new(
             &(0..8192u64)

@@ -5,7 +5,7 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
-const SOURCES: &[&str] = &["upstream/ref/ace.c", "upstream/ref/encrypt.c"];
+const SOURCES: &[&str] = &["upstream/ref/ace.c", "upstream/ref/encrypt.c", "shim.c"];
 const INCLUDES: &[&str] = &["upstream/ref"];
 const PREFIX: &str = "nextssl__aceae128v1__";
 
@@ -22,6 +22,11 @@ fn base() -> cc::Build {
     // `__attribute__` (GNU annotations carry no semantics for the portable C; cl.exe cannot take a function-like macro with /D).
     let mut pre = String::from("");
     let msvc = b.get_compiler().is_like_msvc();
+    // Allocation guard (shim.c): the upstream leaks heap buffers on error paths; route its
+    // malloc/free through the shim so the glue can zeroize and free what a call leaves behind.
+    pre.push_str("#include <stdlib.h>\n");
+    pre.push_str("void *nextssl__aceae128v1__mem_alloc(size_t n);\nvoid nextssl__aceae128v1__mem_free(void *p);\n");
+    pre.push_str("#define malloc(n) nextssl__aceae128v1__mem_alloc(n)\n#define free(p) nextssl__aceae128v1__mem_free(p)\n");
     if msvc {
         pre.push_str("#define __attribute__(x)\n");
     }

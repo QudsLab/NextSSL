@@ -5,18 +5,15 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
+// Level 1 only: aim192/aim256 and field192/field256 define the same symbols for other levels (the
+// linker would pick one at random), and aim_common.c is #included by aim128.c.
 const SOURCES: &[&str] = &[
     "upstream/AIMer-l1-param1/aim128.c",
-    "upstream/AIMer-l1-param1/aim192.c",
-    "upstream/AIMer-l1-param1/aim256.c",
-    "upstream/AIMer-l1-param1/aim_common.c",
     "upstream/AIMer-l1-param1/aimer.c",
     "upstream/AIMer-l1-param1/aimer_instances.c",
     "upstream/AIMer-l1-param1/aimer_internal.c",
     "upstream/AIMer-l1-param1/api.c",
     "upstream/AIMer-l1-param1/field/field128.c",
-    "upstream/AIMer-l1-param1/field/field192.c",
-    "upstream/AIMer-l1-param1/field/field256.c",
     "upstream/AIMer-l1-param1/hash.c",
     "upstream/AIMer-l1-param1/shake/KeccakHash.c",
     "upstream/AIMer-l1-param1/shake/KeccakHashtimes4.c",

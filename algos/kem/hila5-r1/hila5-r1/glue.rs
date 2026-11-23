@@ -186,7 +186,7 @@ mod tests {
     fn roundtrip_and_lengths() {
         let k = new(&Params::new()).unwrap();
         let mut rng = FixedEntropy::new(
-            &(0..8192u64)
+            &(0..65536u64)
                 .map(|i| {
                     let x = (i + 1).wrapping_mul(0x9E37_79B9_7F4A_7C15);
                     let x = (x ^ (x >> 30)).wrapping_mul(0xBF58_476D_1CE4_E5B9);

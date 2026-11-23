@@ -34,9 +34,19 @@ const PREFIX: &str = "nextssl__faest_192s_r2__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // MSVC: clang-cl, not cl.exe. Without GNU vector types the upstream falls back to a 24-byte
+    // bf192_t with 16-byte alignment, and faest_aligned_alloc(16, n * 24) returns NULL for odd n
+    // (the caller then writes through it). clang-cl has vector_size, so Windows takes the same
+    // code path as Linux and macOS. -fcommon: cl.exe merges tentative definitions, as before.
+    if b.get_compiler().is_like_msvc() {
+        b.compiler(clang_cl());
+        b.flag("/clang:-fcommon");
+    }
     // faest_*.c calls memcpy/memset without <string.h> (x86 builds got it through the intrinsics
-    // headers); include it for every non-MSVC target.
-    if !b.get_compiler().is_like_msvc() {
+    // headers); include it on every target (/FI is clang-cl's -include).
+    if b.get_compiler().is_like_msvc() {
+        b.flag("/FIstring.h");
+    } else {
         b.flag("-include").flag("string.h");
     }
     // FAEST randomness.c: take the NIST/SUPERCOP `randombytes` path (served by shim.c from the
@@ -56,7 +66,8 @@ fn base() -> cc::Build {
     // `__attribute__` (GNU annotations carry no semantics for the portable C; cl.exe cannot take a function-like macro with /D).
     let mut pre = String::from("");
     let msvc = b.get_compiler().is_like_msvc();
-    if msvc {
+    // cl.exe only: clang-cl understands GNU attributes (vector_size is required here).
+    if msvc && !b.get_compiler().is_like_clang_cl() {
         pre.push_str("#define __attribute__(x)\n");
     }
     if !pre.is_empty() {
@@ -172,6 +183,27 @@ fn main() {
         println!("cargo:rerun-if-changed=shim.c");
     }
     println!("cargo:rerun-if-changed=build.rs");
+}
+
+fn clang_cl() -> PathBuf {
+    println!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
+    if let Some(p) = std::env::var_os("NEXTSSL_CLANG_CL") {
+        return PathBuf::from(p);
+    }
+    let mut dirs: Vec<PathBuf> = std::env::var_os("PATH")
+        .map(|p| std::env::split_paths(&p).collect())
+        .unwrap_or_default();
+    dirs.push(PathBuf::from(r"C:\Program Files\LLVM\bin"));
+    for d in dirs {
+        let c = d.join("clang-cl.exe");
+        if c.is_file() {
+            return c;
+        }
+    }
+    panic!(
+        "this algorithm's C upstream needs clang-cl on MSVC targets (GNU vector types): \
+         install LLVM or set NEXTSSL_CLANG_CL to clang-cl.exe"
+    );
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)

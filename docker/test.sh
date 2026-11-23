@@ -24,7 +24,7 @@ if [ "${NEXTSSL_SKIP_BASE:-0}" != "1" ]; then
   cargo xtask gen --check
   cargo fmt --all --check
   cargo clippy --workspace --all-targets -- -D warnings
-  cargo test --workspace
+  cargo test --workspace --no-fail-fast
 fi
 
 if [ "${NEXTSSL_FFI_SWEEP:-0}" = "1" ]; then
@@ -56,7 +56,7 @@ if [ "${NEXTSSL_ASAN:-0}" = "1" ]; then
   ASAN_OPTIONS="detect_leaks=1:abort_on_error=0" \
 \
   CARGO_TARGET_DIR=/tmp/target-asan \
-    cargo +nightly test -Zbuild-std --target x86_64-unknown-linux-gnu --workspace
+    cargo +nightly test -Zbuild-std --target x86_64-unknown-linux-gnu --workspace --no-fail-fast
 fi
 
 FUZZ_TARGETS=$(cd fuzz/fuzz_targets && ls *.rs | sed 's/\.rs$//')
@@ -106,7 +106,9 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   WASM_NO_RUN=""
   if [ "${NEXTSSL_WASM:-0}" != "1" ]; then WASM_NO_RUN="--no-run"; fi
   CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864 -C link-arg=-L/usr/lib/wasm32-wasi" \
-  CARGO_TARGET_WASM32_WASIP1_RUNNER="wasmtime run --dir=/src" \
+  # A test binary running longer than NEXTSSL_WASM_TEST_SECS (default 600) is killed and reported
+  # (exit status 124) instead of holding the job until the CI time limit (run 45091824679: ntruplus576).
+  CARGO_TARGET_WASM32_WASIP1_RUNNER="timeout ${NEXTSSL_WASM_TEST_SECS:-600} wasmtime run --dir=/src" \
     cargo test --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm --no-fail-fast $WASM_NO_RUN \
     || WASM_FAIL=1
   if [ "$WASM_FAIL" != "0" ]; then echo "wasm: FAILED"; exit 1; fi

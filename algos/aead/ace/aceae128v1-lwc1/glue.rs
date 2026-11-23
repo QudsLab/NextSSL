@@ -36,6 +36,8 @@ mod ffi {
             npub: *const u8,
             k: *const u8,
         ) -> c_int;
+        #[link_name = "nextssl__aceae128v1_lwc1__mem_release"]
+        pub fn mem_release();
     }
 }
 
@@ -78,6 +80,12 @@ impl Aead for A {
                 key.as_bytes().as_ptr(),
             )
         };
+        // SAFETY: zeroizes and frees the blocks the C call above left allocated (see shim.c);
+        // nothing else holds them.
+        #[allow(unsafe_code)]
+        unsafe {
+            ffi::mem_release()
+        };
         if rc != 0 || clen as usize != out.len() {
             return Err(Error::Backend("seal failed"));
         }
@@ -110,6 +118,12 @@ impl Aead for A {
                 nonce.as_ptr(),
                 key.as_bytes().as_ptr(),
             )
+        };
+        // SAFETY: zeroizes and frees the blocks the C call above left allocated (see shim.c);
+        // nothing else holds them.
+        #[allow(unsafe_code)]
+        unsafe {
+            ffi::mem_release()
         };
         if rc != 0 || mlen as usize != ct.len() - TAG {
             out.fill(0);

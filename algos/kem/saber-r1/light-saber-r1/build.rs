@@ -5,6 +5,8 @@ use std::collections::BTreeSet;
 use std::io::Write;
 use std::path::PathBuf;
 
+// recon.c #includes the recon_*.c for this parameter set and SABER_indcpa.c #includes poly_mul.c;
+// compiling them again would give the linker several definitions to pick from.
 const SOURCES: &[&str] = &[
     "upstream/light_saber/SABER_indcpa.c",
     "upstream/light_saber/cbd.c",
@@ -12,11 +14,7 @@ const SOURCES: &[&str] = &[
     "upstream/light_saber/kem.c",
     "upstream/light_saber/pack_unpack.c",
     "upstream/light_saber/poly.c",
-    "upstream/light_saber/poly_mul.c",
     "upstream/light_saber/recon.c",
-    "upstream/light_saber/recon_FireSaber.c",
-    "upstream/light_saber/recon_LightSaber.c",
-    "upstream/light_saber/recon_Saber.c",
     "upstream/light_saber/verify.c",
     "shim.c",
 ];
