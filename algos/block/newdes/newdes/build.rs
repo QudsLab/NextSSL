@@ -32,7 +32,8 @@ fn base(cpp: bool) -> cc::Build {
             "-x",
             "c",
         ] {
-            b.flag(f);
+            // Older GCC (13 on the arm64 runner) has no -Wreturn-mismatch and rejects the flag.
+            b.flag_if_supported(f);
         }
     }
     if cpp {

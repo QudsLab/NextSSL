@@ -105,9 +105,10 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   # The default 1 MiB wasm stack overflows in the larger code-based schemes (CROSS, McEliece).
   WASM_NO_RUN=""
   if [ "${NEXTSSL_WASM:-0}" != "1" ]; then WASM_NO_RUN="--no-run"; fi
-  CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864 -C link-arg=-L/usr/lib/wasm32-wasi" \
   # A test binary running longer than NEXTSSL_WASM_TEST_SECS (default 600) is killed and reported
   # (exit status 124) instead of holding the job until the CI time limit (run 45091824679: ntruplus576).
+  # No comment lines inside the continued command below: a comment ends it there (run 45182945205).
+  CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864 -C link-arg=-L/usr/lib/wasm32-wasi" \
   CARGO_TARGET_WASM32_WASIP1_RUNNER="timeout ${NEXTSSL_WASM_TEST_SECS:-600} wasmtime run --dir=/src" \
     cargo test --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm --no-fail-fast $WASM_NO_RUN \
     || WASM_FAIL=1
