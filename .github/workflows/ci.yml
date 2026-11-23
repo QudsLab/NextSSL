@@ -9,17 +9,31 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-# Two stages (owner rule):
-#   1. build: every algorithm must build on all four platforms (Linux, Windows, macOS, wasm).
-#   2. test: unit tests, KATs and the slow layers run only when stage 1 is green everywhere.
+permissions:
+  contents: read
+
+# Flow (owner decision 2026-11-23):
+#   * Every platform builds and then tests in the same job: no rebuild, and no platform waits for
+#     another. Linux x64/arm64, Windows x64/arm64, macOS arm64, wasm and the slow layers all start at once.
+#   * Tests never stop at the first failure (--no-fail-fast). tools/ci_test_report.py writes a report
+#     per job (at most 5 distinct issues per algorithm, duplicates folded) and it is uploaded as the
+#     artifact test-report-<job>, also when the job fails.
+#   * Release: only on a push to main, only when every job above is green. Release libraries are built
+#     per platform and published as the GitHub pre-release v<version>+<commit>.
 jobs:
-  build:
-    name: build (${{ matrix.os }})
+  native:
+    name: ${{ matrix.name }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - { name: linux-x64, os: ubuntu-latest }
+          - { name: linux-arm64, os: ubuntu-24.04-arm }
+          - { name: windows-x64, os: windows-latest }
+          - { name: windows-arm64, os: windows-11-arm }
+          - { name: macos-arm64, os: macos-latest }
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
@@ -33,22 +47,51 @@ jobs:
             ~/.cargo/registry/index
             ~/.cargo/registry/cache
             ~/.cargo/git/db
-          key: cargo-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+          key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # Several C upstreams need clang-cl on MSVC targets (C99 VLAs, GNU vector types). The x64 image
+      # ships LLVM; install it where it is missing (the arm64 image).
+      - name: clang-cl (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (-not (Test-Path 'C:\Program Files\LLVM\bin\clang-cl.exe')) { choco install llvm -y --no-progress }
       - run: cargo xtask gen --check
+      # The C toolchain in the log, so a local run can use the same versions (the local clang-cl 23 had
+      # <endian.h> and this runner's did not: run 45035640571).
+      - name: C toolchain versions
+        shell: bash
+        run: |
+          cc --version 2>/dev/null | head -1 || true
+          clang --version 2>/dev/null | head -1 || true
+          if [ "$RUNNER_OS" = Windows ]; then "/c/Program Files/LLVM/bin/clang-cl.exe" --version | head -1; fi
       # Formatting does not depend on the OS. On Windows `cargo fmt --all` passes every crate's
       # source paths to one rustfmt process and, with the whole catalog, overflows the 32 KiB
-      # CreateProcess command line ("filename or extension is too long"), so the check runs on
-      # Linux and macOS only.
+      # CreateProcess command line ("filename or extension is too long"), so the check runs elsewhere.
       - run: cargo fmt --all --check
         if: runner.os != 'Windows'
       # --keep-going: report every crate that does not build, not just the first one.
       - run: cargo clippy --workspace --all-targets --keep-going -- -D warnings
-      # Compile (not run) the test binaries too, so stage 2 starts from a complete build.
-      - run: cargo test --workspace --no-run --no-fail-fast
+      # Runs even when clippy failed, so one run reports lint and test results together.
+      - name: Test (all crates, no stop at the first failure)
+        if: ${{ !cancelled() }}
+        shell: bash
+        run: python tools/ci_test_report.py --out test-report -- cargo test --workspace --no-fail-fast
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: test-report-${{ matrix.name }}
+          path: test-report/
+          if-no-files-found: warn
 
-  build-wasm:
-    name: build (wasm)
+  # Both wasm targets are built (wasm32-unknown-unknown for browsers, wasm32-wasip1 for the tests),
+  # then every test runs in wasmtime with a per-binary time limit (docker/test.sh).
+  wasm:
+    name: wasm
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
@@ -61,37 +104,21 @@ jobs:
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Build every algorithm for wasm32 (nothing run)
-        run: docker run --rm -e NEXTSSL_SKIP_BASE=1 -e NEXTSSL_WASM_BUILD=1 nextssl-test
-
-  test:
-    name: test (${{ matrix.os }})
-    needs: [build, build-wasm]
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v7
-      - uses: dtolnay/rust-toolchain@stable
-      # Registry and git checkouts only. Swatinem/rust-cache kept the whole 1924-member workspace in its
-      # post-step state and its node process failed with "Argument list too long".
-      - uses: actions/cache@v6
+      - name: Build and test every algorithm for wasm
+        run: python3 tools/ci_test_report.py --out test-report -- docker run --rm -e NEXTSSL_SKIP_BASE=1 -e NEXTSSL_WASM=1 nextssl-test
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
         with:
-          path: |
-            ~/.cargo/registry/index
-            ~/.cargo/registry/cache
-            ~/.cargo/git/db
-          key: cargo-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
-      - run: cargo test --workspace
+          name: test-report-wasm
+          path: test-report/
+          if-no-files-found: warn
 
   # The slow layers run inside the same Docker image the owner uses locally
   # (docker/Dockerfile.test); docker/test.sh selects the layer from the env flag.
   layers:
     name: ${{ matrix.layer }}
-    needs: [build, build-wasm]
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     strategy:
       fail-fast: false
       matrix:
@@ -104,8 +131,6 @@ jobs:
             env: NEXTSSL_FUZZ_SECS=30
           - layer: asan
             env: NEXTSSL_ASAN=1
-          - layer: wasm
-            env: NEXTSSL_WASM=1
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
@@ -119,4 +144,116 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Run ${{ matrix.layer }}
-        run: docker run --rm -e NEXTSSL_SKIP_BASE=1 -e ${{ matrix.env }} nextssl-test
+        run: python3 tools/ci_test_report.py --out test-report -- docker run --rm -e NEXTSSL_SKIP_BASE=1 -e ${{ matrix.env }} nextssl-test
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: test-report-${{ matrix.layer }}
+          path: test-report/
+          if-no-files-found: warn
+
+  # Release libraries, built only after every build and test above passed on a push to main.
+  release-build:
+    name: release-build (${{ matrix.name }})
+    needs: [native, wasm, layers]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - { name: linux-x64, os: ubuntu-latest }
+          - { name: linux-arm64, os: ubuntu-24.04-arm }
+          - { name: windows-x64, os: windows-latest }
+          - { name: windows-arm64, os: windows-11-arm }
+          - { name: macos-arm64, os: macos-latest }
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
+      - name: clang-cl (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (-not (Test-Path 'C:\Program Files\LLVM\bin\clang-cl.exe')) { choco install llvm -y --no-progress }
+      - run: cargo build -p nextssl-ffi --release --locked
+      - name: Package
+        shell: bash
+        run: bash tools/release_package.sh "${{ matrix.name }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.name }}
+          path: dist/
+          if-no-files-found: error
+
+  release-build-wasm:
+    name: release-build (wasm)
+    needs: [native, wasm, layers]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - name: Build test image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile.test
+          tags: nextssl-test
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      # NEXTSSL_WASM_BUILD=1 builds nextssl_wasm.wasm (release) and the test binaries; nothing runs.
+      - name: Build wasm release
+        run: |
+          mkdir -p wasm-out
+          docker run --rm -e NEXTSSL_SKIP_BASE=1 -e NEXTSSL_WASM_BUILD=1 -e CARGO_TARGET_DIR=/tmp/t \
+            -v "$PWD/wasm-out:/out" nextssl-test \
+            bash -c 'bash docker/test.sh && cp /tmp/t/wasm32-unknown-unknown/release/nextssl_wasm.wasm /out/'
+      - name: Package
+        run: bash tools/release_package.sh wasm
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-wasm
+          path: dist/
+          if-no-files-found: error
+
+  publish:
+    name: publish pre-release
+    needs: [release-build, release-build-wasm]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: dist
+          merge-multiple: true
+      - name: Create GitHub pre-release v<version>+<commit>
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VER=$(sed -n 's/^version = "\(.*\)"$/\1/p' Cargo.toml | head -1)
+          TAG="v${VER}+${GITHUB_SHA::7}"
+          (cd dist && sha256sum * > SHA256SUMS)
+          cat > notes.md <<EOF
+          Automatic pre-release of commit ${GITHUB_SHA} (version ${VER}).
+          Built and tested on Linux x64/arm64, Windows x64/arm64, macOS arm64 and wasm by CI run
+          ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}.
+          Each archive holds the nextssl-ffi libraries, the C header and the license of every bundled
+          upstream. Tested against published KAT vectors; not FIPS validated.
+          EOF
+          # --draft: only the owner sees it until the license policy for the 1052 algorithms whose
+          # algo.toml says NOASSERTION is decided (CLAUDE.md rule 3). Remove --draft to publish.
+          gh release create "$TAG" dist/* --draft --prerelease --target "$GITHUB_SHA" --title "NextSSL $TAG" --notes-file notes.md
