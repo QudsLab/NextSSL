@@ -12,17 +12,18 @@ concurrency:
 permissions:
   contents: read
 
-# Flow (owner decision 2026-11-23):
-#   * Every platform builds and then tests in the same job: no rebuild, and no platform waits for
-#     another. Linux x64/arm64, Windows x64/arm64, macOS arm64, wasm and the slow layers all start at once.
-#   * Tests never stop at the first failure (--no-fail-fast). tools/ci_test_report.py writes a report
-#     per job (at most 5 distinct issues per algorithm, duplicates folded) and it is uploaded as the
-#     artifact test-report-<job>, also when the job fails.
+# Flow (owner decisions 2026-11-23/24):
+#   * Lint and test are separate jobs per platform and run at the same time: clippy only checks, so
+#     doing both in one job built the whole catalog twice in a row.
+#   * Tests run through tools/testrun.py: every test binary is built (--keep-going), then every test
+#     runs in its own process, several at a time, with a time limit. A failure, crash or hang fails
+#     only that test; nothing stops the run. The report (at most 5 distinct issues per algorithm) is
+#     uploaded as test-report-<job>, with cargo's --timings HTML for the build.
 #   * Release: only on a push to main, only when every job above is green. Release libraries are built
-#     per platform and published as the GitHub pre-release v<version>+<commit>.
+#     per platform and published as the GitHub pre-release v<version>+<commit> (draft).
 jobs:
-  native:
-    name: ${{ matrix.name }}
+  lint:
+    name: lint (${{ matrix.name }})
     strategy:
       fail-fast: false
       matrix:
@@ -33,7 +34,7 @@ jobs:
           - { name: windows-arm64, os: windows-11-arm }
           - { name: macos-arm64, os: macos-latest }
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 360
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
@@ -48,9 +49,6 @@ jobs:
             ~/.cargo/registry/cache
             ~/.cargo/git/db
           key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
       # Several C upstreams need clang-cl on MSVC targets (C99 VLAs, GNU vector types). The x64 image
       # ships LLVM; install it where it is missing (the arm64 image).
       - name: clang-cl (Windows)
@@ -58,27 +56,56 @@ jobs:
         shell: pwsh
         run: |
           if (-not (Test-Path 'C:\Program Files\LLVM\bin\clang-cl.exe')) { choco install llvm -y --no-progress }
+      # Generated files and formatting do not depend on the OS. On Windows `cargo fmt --all` passes every
+      # crate's source paths to one rustfmt process and overflows the 32 KiB command line.
       - run: cargo xtask gen --check
-      # The C toolchain in the log, so a local run can use the same versions (the local clang-cl 23 had
-      # <endian.h> and this runner's did not: run 45035640571).
+        if: matrix.name == 'linux-x64'
+      - run: cargo fmt --all --check
+        if: matrix.name == 'linux-x64'
+      # --keep-going: report every crate that does not build, not just the first one.
+      - run: cargo clippy --workspace --all-targets --keep-going -- -D warnings
+
+  test:
+    name: test (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: linux-x64, os: ubuntu-latest }
+          - { name: linux-arm64, os: ubuntu-24.04-arm }
+          - { name: windows-x64, os: windows-latest }
+          - { name: windows-arm64, os: windows-11-arm }
+          - { name: macos-arm64, os: macos-latest }
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: clang-cl (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (-not (Test-Path 'C:\Program Files\LLVM\bin\clang-cl.exe')) { choco install llvm -y --no-progress }
+      # The C toolchain in the log, so a local run can use the same versions (run 45035640571).
       - name: C toolchain versions
         shell: bash
         run: |
           cc --version 2>/dev/null | head -1 || true
           clang --version 2>/dev/null | head -1 || true
           if [ "$RUNNER_OS" = Windows ]; then "/c/Program Files/LLVM/bin/clang-cl.exe" --version | head -1; fi
-      # Formatting does not depend on the OS. On Windows `cargo fmt --all` passes every crate's
-      # source paths to one rustfmt process and, with the whole catalog, overflows the 32 KiB
-      # CreateProcess command line ("filename or extension is too long"), so the check runs elsewhere.
-      - run: cargo fmt --all --check
-        if: runner.os != 'Windows'
-      # --keep-going: report every crate that does not build, not just the first one.
-      - run: cargo clippy --workspace --all-targets --keep-going -- -D warnings
-      # Runs even when clippy failed, so one run reports lint and test results together.
-      - name: Test (all crates, no stop at the first failure)
-        if: ${{ !cancelled() }}
+      - name: Build and test every algorithm
         shell: bash
-        run: python tools/ci_test_report.py --out test-report -- cargo test --workspace --no-fail-fast
+        run: python tools/testrun.py --out test-report --timings --timeout 600 -- --workspace
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
@@ -87,11 +114,11 @@ jobs:
           if-no-files-found: warn
 
   # Both wasm targets are built (wasm32-unknown-unknown for browsers, wasm32-wasip1 for the tests),
-  # then every test runs in wasmtime with a per-binary time limit (docker/test.sh).
+  # then every test runs in its own wasmtime process (docker/test.sh -> tools/testrun.py).
   wasm:
     name: wasm
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
@@ -105,7 +132,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Build and test every algorithm for wasm
-        run: python3 tools/ci_test_report.py --out test-report -- docker run --rm -e NEXTSSL_SKIP_BASE=1 -e NEXTSSL_WASM=1 nextssl-test
+        run: |
+          mkdir -p test-report
+          docker run --rm -v "$PWD/test-report:/report" -e NEXTSSL_REPORT_DIR=/report \
+            -e NEXTSSL_SKIP_BASE=1 -e NEXTSSL_WASM=1 nextssl-test
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
@@ -118,7 +148,7 @@ jobs:
   layers:
     name: ${{ matrix.layer }}
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
@@ -143,8 +173,14 @@ jobs:
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      # asan writes its per-test report through tools/testrun.py; the other layers are logged by
+      # tools/ci_test_report.py.
       - name: Run ${{ matrix.layer }}
-        run: python3 tools/ci_test_report.py --out test-report -- docker run --rm -e NEXTSSL_SKIP_BASE=1 -e ${{ matrix.env }} nextssl-test
+        run: |
+          mkdir -p test-report
+          python3 tools/ci_test_report.py --out test-report -- \
+            docker run --rm -v "$PWD/test-report:/report" -e NEXTSSL_REPORT_DIR=/report \
+            -e NEXTSSL_SKIP_BASE=1 -e ${{ matrix.env }} nextssl-test
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
@@ -155,7 +191,7 @@ jobs:
   # Release libraries, built only after every build and test above passed on a push to main.
   release-build:
     name: release-build (${{ matrix.name }})
-    needs: [native, wasm, layers]
+    needs: [lint, test, wasm, layers]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     strategy:
       fail-fast: true
@@ -167,7 +203,7 @@ jobs:
           - { name: windows-arm64, os: windows-11-arm }
           - { name: macos-arm64, os: macos-latest }
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 360
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
@@ -195,10 +231,10 @@ jobs:
 
   release-build-wasm:
     name: release-build (wasm)
-    needs: [native, wasm, layers]
+    needs: [lint, test, wasm, layers]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
