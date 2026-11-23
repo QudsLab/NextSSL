@@ -14,6 +14,8 @@
 #   NEXTSSL_ALL=1         all of the above (fuzz seconds default 60)
 set -euxo pipefail
 cd "$(dirname "$0")/.."
+# Test reports (tools/testrun.py) go here; CI mounts a host directory and uploads it.
+REPORT_DIR="${NEXTSSL_REPORT_DIR:-/tmp/test-report}"
 
 if [ "${NEXTSSL_ALL:-0}" = "1" ]; then
   export NEXTSSL_SYMBOLS=1 NEXTSSL_MIRI=1 NEXTSSL_ASAN=1 NEXTSSL_WASM=1
@@ -24,7 +26,8 @@ if [ "${NEXTSSL_SKIP_BASE:-0}" != "1" ]; then
   cargo xtask gen --check
   cargo fmt --all --check
   cargo clippy --workspace --all-targets -- -D warnings
-  cargo test --workspace --no-fail-fast
+  # Every test in its own process, in parallel, with a time limit; nothing stops the run (tools/testrun.py).
+  python3 tools/testrun.py --out "$REPORT_DIR/base" -- --workspace
 fi
 
 if [ "${NEXTSSL_FFI_SWEEP:-0}" = "1" ]; then
@@ -50,13 +53,14 @@ fi
 if [ "${NEXTSSL_ASAN:-0}" = "1" ]; then
   # Rust under AddressSanitizer; the C upstreams are built with ASan+UBSan by their build.rs.
   # rustc supplies the ASan runtime; UBSan in the C code is trap mode (no second runtime).
+  # Each test runs in its own process (tools/testrun.py), so a sanitizer abort fails only that test.
   NEXTSSL_C_SANITIZE=1 \
   CC=clang \
   RUSTFLAGS="-Zsanitizer=address" \
   ASAN_OPTIONS="detect_leaks=1:abort_on_error=0" \
-\
   CARGO_TARGET_DIR=/tmp/target-asan \
-    cargo +nightly test -Zbuild-std --target x86_64-unknown-linux-gnu --workspace --no-fail-fast
+    python3 tools/testrun.py --out "$REPORT_DIR/asan" --cargo "cargo +nightly" --timeout 1200 \
+    -- -Zbuild-std --target x86_64-unknown-linux-gnu --workspace
 fi
 
 FUZZ_TARGETS=$(cd fuzz/fuzz_targets && ls *.rs | sed 's/\.rs$//')
@@ -103,14 +107,18 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm" || WASM_FAIL=1
   # KAT + unit tests inside wasmtime (/src preopened so the KAT json files are readable).
   # The default 1 MiB wasm stack overflows in the larger code-based schemes (CROSS, McEliece).
-  WASM_NO_RUN=""
-  if [ "${NEXTSSL_WASM:-0}" != "1" ]; then WASM_NO_RUN="--no-run"; fi
-  # A test binary running longer than NEXTSSL_WASM_TEST_SECS (default 600) is killed and reported
-  # (exit status 124) instead of holding the job until the CI time limit (run 45091824679: ntruplus576).
-  # No comment lines inside the continued command below: a comment ends it there (run 45182945205).
-  CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864 -C link-arg=-L/usr/lib/wasm32-wasi" \
-  CARGO_TARGET_WASM32_WASIP1_RUNNER="timeout ${NEXTSSL_WASM_TEST_SECS:-600} wasmtime run --dir=/src" \
-    cargo test --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm --no-fail-fast $WASM_NO_RUN \
-    || WASM_FAIL=1
+  # NEXTSSL_WASM=1: every test in its own wasmtime process, in parallel, killed after
+  # NEXTSSL_WASM_TEST_SECS (tools/testrun.py). NEXTSSL_WASM_BUILD=1: the same test binaries, not run.
+  # No comment lines inside the continued commands below: a comment ends the command there (run 45182945205).
+  export CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864 -C link-arg=-L/usr/lib/wasm32-wasi"
+  if [ "${NEXTSSL_WASM:-0}" = "1" ]; then
+    python3 tools/testrun.py --out "$REPORT_DIR/wasm" --runner "wasmtime run --dir=/src" \
+      --timeout "${NEXTSSL_WASM_TEST_SECS:-1200}" \
+      -- --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm \
+      || WASM_FAIL=1
+  else
+    cargo build --tests --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm --keep-going \
+      || WASM_FAIL=1
+  fi
   if [ "$WASM_FAIL" != "0" ]; then echo "wasm: FAILED"; exit 1; fi
 fi

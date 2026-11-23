@@ -181,6 +181,12 @@ fn main() {
     println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
     println!("cargo:rerun-if-changed=upstream");
     println!("cargo:rerun-if-changed=shim.c");
+    println!("cargo:rerun-if-changed=compat");
+    println!("cargo:rerun-if-changed=ns_support_sort_int32_0.c");
+    println!("cargo:rerun-if-changed=ns_support_sort_int64_0.c");
+    println!("cargo:rerun-if-changed=ns_support_xof_shake256_0.c");
+    println!("cargo:rerun-if-changed=ns_support_xof_shake256_1.c");
+    println!("cargo:rerun-if-changed=ns_support_xof_shake256_2.c");
     println!("cargo:rerun-if-changed=build.rs");
 }
 

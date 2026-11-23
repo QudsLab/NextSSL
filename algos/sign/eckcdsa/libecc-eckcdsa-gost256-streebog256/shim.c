@@ -17,6 +17,19 @@ typedef int (*ns_fill_fn)(void *ctx, unsigned char *out, size_t n);
 static NS_TLS ns_fill_fn ns_fill;
 static NS_TLS void *ns_ctx;
 static NS_TLS int ns_fail;
+/* Entropy source failed: the call returns an error and its output is discarded, but the upstream
+ * may retry (rejection sampling, invertibility loops) until it gets usable bytes. Zeros would make
+ * such a loop endless, so fill with a non-repeating, non-secret counter stream (splitmix64). */
+static NS_TLS unsigned long long ns_spent_ctr;
+static void ns_spent(void *out, size_t n) {
+    unsigned char *p = (unsigned char *)out;
+    for (size_t i = 0; i < n; i++) {
+        unsigned long long x = (++ns_spent_ctr) * 0x9E3779B97F4A7C15ULL;
+        x = (x ^ (x >> 30)) * 0xBF58476D1CE4E5B9ULL;
+        x = (x ^ (x >> 27)) * 0x94D049BB133111EBULL;
+        p[i] = (unsigned char)(x ^ (x >> 31));
+    }
+}
 
 void shim_rng_set(ns_fill_fn f, void *ctx) { ns_fill = f; ns_ctx = ctx; ns_fail = 0; }
 int shim_rng_failed(void) { return ns_fail; }
@@ -45,7 +58,7 @@ int get_random(unsigned char *buf, u16 len)
     if (len == 0) return 0;
     if (ns_fill == NULL && ns_public_mode) { public_fill(buf, (size_t)len); return 0; }
     if (ns_fill == NULL || ns_fill(ns_ctx, buf, (size_t)len) != 0) {
-        memset(buf, 0, len);
+        ns_spent(buf, len);
         ns_fail = 1;
         return -1;
     }

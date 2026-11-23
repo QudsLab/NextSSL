@@ -3,7 +3,7 @@ ARG WASMTIME_VERSION=50.0.1
 ARG WASMTIME_SHA256=685466455dd42a14774a86c36c8f2e45cbb9bd6d92a850139315df60a75498a5
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        clang lld llvm build-essential pkg-config curl ca-certificates xz-utils \
+        clang lld llvm build-essential pkg-config curl ca-certificates xz-utils python3 \
         wasi-libc libclang-rt-dev-wasm32 libc++-19-dev-wasm32 libc++abi-19-dev-wasm32 \
     && rm -rf /var/lib/apt/lists/*
 # wasmtime runs the wasm32-wasip1 KAT tests (pinned release, checksum verified).

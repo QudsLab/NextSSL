@@ -138,7 +138,9 @@ fn main() {
     link_shared(&mut b, "nextssl_cmcc22v1", false);
     println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
     println!("cargo:rerun-if-changed=upstream");
-    println!("cargo:rerun-if-changed=shim.c");
+    println!("cargo:rerun-if-changed=compat");
+    println!("cargo:rerun-if-changed=ns_support_core_aes128encrypt_0.c");
+    println!("cargo:rerun-if-changed=ns_support_verify_16_0.c");
     println!("cargo:rerun-if-changed=build.rs");
 }
 

@@ -149,6 +149,7 @@ fn main() {
     if std::path::Path::new("shim.c").exists() {
         println!("cargo:rerun-if-changed=shim.c");
     }
+    println!("cargo:rerun-if-changed=compat");
     println!("cargo:rerun-if-changed=build.rs");
 }
 

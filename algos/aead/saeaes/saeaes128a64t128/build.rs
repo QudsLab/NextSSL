@@ -201,6 +201,7 @@ fn main() {
     if std::path::Path::new("shim.cpp").exists() {
         println!("cargo:rerun-if-changed=shim.cpp");
     }
+    println!("cargo:rerun-if-changed=compat");
     println!("cargo:rerun-if-changed=build.rs");
 }
 

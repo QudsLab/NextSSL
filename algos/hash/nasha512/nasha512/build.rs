@@ -144,7 +144,7 @@ fn main() {
     link_shared(&mut b, "nextssl_nasha512", false);
     println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
     println!("cargo:rerun-if-changed=upstream");
-    println!("cargo:rerun-if-changed=shim.c");
+    println!("cargo:rerun-if-changed=compat");
     println!("cargo:rerun-if-changed=build.rs");
 }
 
