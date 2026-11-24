@@ -21,6 +21,12 @@ REPORT_DIR="${NEXTSSL_REPORT_DIR:-/tmp/test-report}"
 # their KATs run too.
 TESTRUN_OPTS="--umbrella-features nextssl-registry/copyleft,nextssl-registry/all-heavy"
 if [ -n "${NEXTSSL_SHARD:-}" ]; then TESTRUN_OPTS="$TESTRUN_OPTS --shard $NEXTSSL_SHARD"; fi
+# NEXTSSL_RESULT_CACHE=DIR: crates whose inputs passed before are not built or run again (see
+# tools/testrun.py); NEXTSSL_RESULT_CACHE_WRITE_ONLY=1 runs everything and only records the passes.
+if [ -n "${NEXTSSL_RESULT_CACHE:-}" ]; then
+  TESTRUN_OPTS="$TESTRUN_OPTS --result-cache $NEXTSSL_RESULT_CACHE"
+  if [ "${NEXTSSL_RESULT_CACHE_WRITE_ONLY:-0}" = "1" ]; then TESTRUN_OPTS="$TESTRUN_OPTS --result-cache-write-only"; fi
+fi
 
 if [ "${NEXTSSL_ALL:-0}" = "1" ]; then
   export NEXTSSL_SYMBOLS=1 NEXTSSL_MIRI=1 NEXTSSL_ASAN=1 NEXTSSL_WASM=1

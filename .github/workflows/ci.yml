@@ -4,10 +4,13 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  # Every night a full run: nothing is skipped by the result cache (it only records the passes).
+  schedule:
+    - cron: '0 20 * * *'
 
 # A newer push to the same branch cancels the older run instead of queueing behind it.
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.ref }}-${{ github.event_name == 'schedule' && 'nightly' || 'push' }}
   cancel-in-progress: true
 
 permissions:
@@ -30,9 +33,14 @@ permissions:
 # * clippy runs in the same compile as the tests (testrun.py --clippy), warnings are errors.
 # * Every test runs in its own process with a time limit; a failure, crash or hang fails only that
 #   test and is reported per algorithm in the artifact test-report-<job>.
-# * C library cache (crates/nextssl-cbuild, test jobs only): a compiled, renamed static library is
-#   reused only when two digests (SHA-256 and BLAKE3) of every input match bit for bit; release
-#   builds never use it.
+# * C library cache (crates/nextssl-cbuild): a compiled, renamed static library is reused only when
+#   two digests (SHA-256 and BLAKE3) of every input match bit for bit. Test and release builds keep
+#   separate caches (different optimisation levels); only runs on main write them.
+# * Result cache (tools/testrun.py --result-cache): a crate whose inputs (its family directory, its
+#   path dependencies, third_party/, docker/, Cargo.lock, the toolchain, the build environment and
+#   the test options) are bit for bit those of an earlier run where it compiled and all its tests
+#   passed is not built or tested again; the report counts it as cached. The nightly scheduled run
+#   (20:00 UTC) skips nothing.
 env:
   CARGO_INCREMENTAL: '0'
   CARGO_PROFILE_DEV_DEBUG: '0'
@@ -121,6 +129,13 @@ jobs:
           path: ${{ runner.temp }}/ccache
           key: ${{ env.CACHE_VERSION }}-${{ matrix.layer }}-${{ github.run_id }}
           restore-keys: ${{ env.CACHE_VERSION }}-${{ matrix.layer }}-
+      - name: Result cache directory
+        run: mkdir -p "$RUNNER_TEMP/results"
+      - uses: actions/cache/restore@v6
+        with:
+          path: ${{ runner.temp }}/results
+          key: results-v1-${{ matrix.layer }}-${{ matrix.part }}-${{ github.run_id }}
+          restore-keys: results-v1-${{ matrix.layer }}-${{ matrix.part }}-
       # The image id is part of the cache key (its compilers and wasi-libc headers).
       - name: Run ${{ matrix.layer }}
         run: |
@@ -128,7 +143,7 @@ jobs:
           if [ -n "${{ matrix.part }}" ]; then SHARD="${{ matrix.part }}/2"; fi
           python3 tools/ci_test_report.py --out test-report -- \
             docker run --rm -v "$PWD/test-report:/report" -e NEXTSSL_REPORT_DIR=/report \
-            -v "$RUNNER_TEMP/ccache:/ccache" -e NEXTSSL_C_CACHE=/ccache \
+            -v "$RUNNER_TEMP/ccache:/ccache" -e NEXTSSL_C_CACHE=/ccache             -v "$RUNNER_TEMP/results:/results" -e NEXTSSL_RESULT_CACHE=/results             -e NEXTSSL_RESULT_CACHE_WRITE_ONLY=${{ github.event_name == 'schedule' && '1' || '0' }} \
             -e NEXTSSL_IMAGE_ID="$(docker image inspect nextssl-test --format '{{.Id}}')" \
             -e NEXTSSL_SHARD="$SHARD" -e CARGO_INCREMENTAL -e CARGO_PROFILE_DEV_DEBUG \
             -e NEXTSSL_SKIP_BASE=1 -e ${{ matrix.env }} nextssl-test
@@ -149,6 +164,14 @@ jobs:
         with:
           path: ${{ runner.temp }}/ccache
           key: ${{ env.CACHE_VERSION }}-${{ matrix.layer }}-${{ github.run_id }}
+      - name: Result cache owner
+        if: ${{ !cancelled() && github.event_name != 'pull_request' }}
+        run: sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/results"
+      - uses: actions/cache/save@v6
+        if: ${{ !cancelled() && github.event_name != 'pull_request' }}
+        with:
+          path: ${{ runner.temp }}/results
+          key: results-v1-${{ matrix.layer }}-${{ matrix.part }}-${{ github.run_id }}
 
   release-build-wasm:
     name: release-build (wasm)

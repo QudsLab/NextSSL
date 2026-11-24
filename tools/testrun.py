@@ -163,12 +163,143 @@ def load_weights(path):
     return build_w, test_w
 
 
-def workspace_members(cargo, excluded):
+def cargo_metadata(cargo):
     out = subprocess.run(shlex.split(cargo) + ['metadata', '--no-deps', '--format-version', '1'],
                          capture_output=True, check=True).stdout
-    meta = json.loads(out)
+    return json.loads(out)
+
+
+def workspace_members(cargo, excluded, meta=None):
+    meta = meta or cargo_metadata(cargo)
     members = set(meta['workspace_members'])
     return sorted(p['name'] for p in meta['packages'] if p['id'] in members and p['name'] not in excluded)
+
+
+# ---------------------------------------------------------------------------------------------- result cache
+#
+# --result-cache DIR: a crate whose inputs are bit for bit the same as in an earlier run where it
+# compiled (clippy included) and every one of its tests passed is not built or run again; the report
+# lists it as "cached". The key of a crate is a SHA-256 over
+#   * the content of every file of its own directory tree and of every path dependency, transitively
+#     (an algorithm's whole family directory algos/<kind>/<family>/, so sibling parameter sets that
+#     share sources are covered),
+#   * the files every crate can read: third_party/, docker/, Cargo.toml, Cargo.lock,
+#     rust-toolchain.toml, .cargo/, tools/testrun.py,
+#   * the toolchain (rustc -vV, cc/c++ --version, runner image, Docker image id), every environment
+#     variable a build can read (CC*, CXX*, AR*, *FLAGS*, CARGO_*, RUST*, NEXTSSL_* except paths) and
+#     the testrun options (cargo command, runner, limits, clippy, features).
+# Anything else changes the key, and a crate whose key is new is built and tested in full.
+# --result-cache-write-only records results without skipping anything (the scheduled full run).
+
+GLOBAL_INPUTS = ['third_party', 'docker', 'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', '.cargo',
+                 'tools/testrun.py']
+KEY_ENV = re.compile(r'^(CC|CXX|AR|CFLAGS|CXXFLAGS|RUSTFLAGS|RUSTDOCFLAGS|CARGO_|RUST|NEXTSSL_|TARGET_|HOST_|'
+                     r'SMOKE_|ASAN_|UBSAN_|LSAN_|MSAN_|MIRI|WASMTIME|ImageOS$|ImageVersion$|RUNNER_OS$|'
+                     r'RUNNER_ARCH$|MACOSX_|SDKROOT$)')
+KEY_ENV_SKIP = {'CARGO_HOME', 'CARGO_TARGET_DIR', 'RUSTUP_HOME', 'NEXTSSL_C_CACHE', 'NEXTSSL_REPORT_DIR',
+                'NEXTSSL_RESULT_CACHE', 'NEXTSSL_RESULT_CACHE_WRITE_ONLY', 'NEXTSSL_SHARD', 'CARGO_TERM_COLOR'}
+
+
+def tree_digest(path, memo):
+    """SHA-256 over the relative path and content of every file below `path` (or of the file)."""
+    path = os.path.normpath(path)
+    if path in memo:
+        return memo[path]
+    import hashlib
+    h = hashlib.sha256()
+    if os.path.isfile(path):
+        files = [path]
+    else:
+        files = []
+        for root, dirs, names in os.walk(path):
+            dirs[:] = sorted(d for d in dirs if d not in ('target', '.git'))
+            files += [os.path.join(root, n) for n in sorted(names)]
+    for f in files:
+        h.update(os.path.relpath(f, path).replace(os.sep, '/').encode() + b'\0')
+        with open(f, 'rb') as fh:
+            h.update(hashlib.sha256(fh.read()).digest())
+    memo[path] = h.hexdigest()
+    return memo[path]
+
+
+def tool_version(cmd):
+    try:
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=60).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        return ''
+
+
+def result_keys(cargo, meta, names, options):
+    """{crate: key} for `names` (see the result cache comment above)."""
+    import hashlib
+    root = meta['workspace_root']
+    by_name = {p['name']: p for p in meta['packages']}
+    by_dir = {os.path.normpath(os.path.dirname(p['manifest_path'])): p for p in meta['packages']}
+    algos = os.path.normpath(os.path.join(root, 'algos'))
+
+    def unit_dir(d):
+        """An algorithm crate is keyed by its family directory (algos/<kind>/<family>)."""
+        d = os.path.normpath(d)
+        rel = os.path.relpath(d, algos)
+        if not rel.startswith('..') and len(rel.split(os.sep)) >= 3:
+            return os.path.join(algos, *rel.split(os.sep)[:2])
+        return d
+
+    memo = {}
+    toolchain = [x for x in shlex.split(cargo)[1:] if x.startswith('+')]
+    common = hashlib.sha256()
+    for g in GLOBAL_INPUTS:
+        p = os.path.join(root, g)
+        if os.path.exists(p):
+            common.update(f'{g}={tree_digest(p, memo)}\n'.encode())
+    common.update(tool_version(['rustc'] + toolchain + ['-vV']).encode())
+    for c in ('cc', 'c++', 'clang', 'clang-cl'):
+        common.update(tool_version([c, '--version']).encode())
+    for k in sorted(os.environ):
+        if KEY_ENV.match(k) and k not in KEY_ENV_SKIP:
+            common.update(f'{k}={os.environ[k]}\n'.encode())
+    common.update(json.dumps(options, sort_keys=True).encode())
+    common = common.hexdigest()
+
+    closure = {}
+
+    def dirs_of(pkg):
+        name = pkg['name']
+        if name in closure:
+            return closure[name]
+        closure[name] = set()  # cycle guard (dev-dependencies)
+        out = {unit_dir(os.path.dirname(pkg['manifest_path']))}
+        for dep in pkg.get('dependencies', []):
+            p = dep.get('path')
+            if not p:
+                continue
+            sub = by_dir.get(os.path.normpath(p))
+            if sub is not None:
+                out |= dirs_of(sub)
+            else:
+                out.add(unit_dir(p))
+        closure[name] = out
+        return out
+
+    keys = {}
+    for n in names:
+        h = hashlib.sha256(common.encode())
+        for d in sorted(dirs_of(by_name[n])):
+            h.update(f'{os.path.relpath(d, root)}={tree_digest(d, memo)}\n'.encode())
+        keys[n] = h.hexdigest()
+    return keys
+
+
+def cache_file(cache_dir, crate):
+    return os.path.join(cache_dir, crate + '.pass')
+
+
+def cached_pass(cache_dir, crate, key):
+    try:
+        with open(cache_file(cache_dir, crate), encoding='utf-8') as f:
+            return f.readline().strip() == key
+    except OSError:
+        return False
 
 
 def shard_packages(names, k, n, build_w, test_w):
@@ -342,6 +473,9 @@ def markdown(r):
         f"| {r['crates_not_compiled']} | {r['failing_crates']} |",
         '',
     ]
+    if r.get('crates_cached'):
+        out += [f"{r['crates_cached']} crate(s) not built or run: their inputs are bit for bit those of an "
+                'earlier run where they compiled and every test passed (tools/testrun.py --result-cache).', '']
     if r['failing_crates_by_kind']:
         out += ['| kind | crates |', '|---|---|']
         out += [f'| {k} | {n} |' for k, n in r['failing_crates_by_kind'].items()]
@@ -385,6 +519,9 @@ def main():
     ap.add_argument('--umbrella-features', default='',
                     help='cargo features enabled whenever the non-algorithm crates are built, e.g. '
                          'nextssl-registry/copyleft,nextssl-registry/all-heavy')
+    ap.add_argument('--result-cache', metavar='DIR', help='skip crates whose inputs passed before (see above)')
+    ap.add_argument('--result-cache-write-only', action='store_true',
+                    help='with --result-cache: run everything, only record the passes')
     ap.add_argument('cargo_args', nargs=argparse.REMAINDER, help='-- arguments for cargo build')
     a = ap.parse_args()
     args = a.cargo_args[1:] if a.cargo_args[:1] == ['--'] else a.cargo_args
@@ -397,30 +534,55 @@ def main():
         for c in crates:
             args += ['-p', c]
     build_w, test_w = load_weights(a.weights)
+    limits = {}
+    for item in a.crate_timeout:
+        crate, _, secs = item.partition('=')
+        if not crate or not secs.isdigit():
+            ap.error(f'--crate-timeout {item!r}: expected CRATE=SECONDS')
+        limits[crate] = int(secs)
     umbrella = '--workspace' in args
+    excluded = {args[i + 1] for i, x in enumerate(args[:-1]) if x == '--exclude'}
+    rest = []
+    skip = False
+    for x in args:
+        if skip:
+            skip = False
+        elif x == '--exclude':
+            skip = True
+        elif x != '--workspace':
+            rest.append(x)
+    pkgs = None
+    meta = None
     if a.shard:
         m = re.fullmatch(r'(\d+)/(\d+)', a.shard)
         if not m or not 1 <= int(m.group(1)) <= int(m.group(2)):
             ap.error('--shard expects K/N with 1 <= K <= N')
         k, n = int(m.group(1)), int(m.group(2))
-        excluded = {args[i + 1] for i, x in enumerate(args[:-1]) if x == '--exclude'}
-        rest = []
-        skip = False
-        for x in args:
-            if skip:
-                skip = False
-            elif x == '--exclude':
-                skip = True
-            elif x != '--workspace':
-                rest.append(x)
-        names = workspace_members(a.cargo, excluded)
+        meta = cargo_metadata(a.cargo)
+        names = workspace_members(a.cargo, excluded, meta)
         pkgs, loads = shard_packages(names, k, n, build_w, test_w)
         print(f'[testrun] shard {k}/{n}: {len(pkgs)} of {len(names)} packages; expected load per shard (s): '
               + ', '.join(f'{x:.0f}' for x in loads), flush=True)
         umbrella = k == 1
-        chunks = [pkgs]
+    elif a.result_cache and '--workspace' in args and not a.rerun_failed:
+        meta = cargo_metadata(a.cargo)
+        pkgs = workspace_members(a.cargo, excluded, meta)
+    keys, cached = {}, []
+    if a.result_cache and pkgs is not None:
+        os.makedirs(a.result_cache, exist_ok=True)
+        options = {'cargo': a.cargo, 'runner': a.runner, 'timeout': a.timeout, 'limits': limits,
+                   'clippy': a.clippy, 'umbrella': a.umbrella_features, 'args': rest}
+        t_key = time.time()
+        keys = result_keys(a.cargo, meta, pkgs, options)
+        if not a.result_cache_write_only:
+            cached = [p for p in pkgs if cached_pass(a.result_cache, p, keys[p])]
+            pkgs = [p for p in pkgs if p not in set(cached)]
+        print(f'[testrun] result cache: {len(cached)} crate(s) unchanged since a passing run, '
+              f'{len(pkgs)} to build and test ({time.time() - t_key:.0f} s to hash the inputs)', flush=True)
+    if pkgs is not None:
+        chunks = [pkgs] if pkgs else []
         # Windows limits a command line to 32767 characters: split very long package lists.
-        while sum(len(p) + 4 for p in chunks[-1]) > 28000:
+        while chunks and sum(len(p) + 4 for p in chunks[-1]) > 28000:
             last = chunks.pop()
             chunks += [last[:len(last) // 2], last[len(last) // 2:]]
         arg_sets = [rest + [y for p in c for y in ('-p', p)] for c in chunks]
@@ -449,12 +611,6 @@ def main():
                 arg_sets[i] = s + ['--features', ','.join(mine)]
     extra_env = clippy_env(a.cargo) if a.clippy else None
     runner = shlex.split(a.runner)
-    limits = {}
-    for item in a.crate_timeout:
-        crate, _, secs = item.partition('=')
-        if not crate or not secs.isdigit():
-            ap.error(f'--crate-timeout {item!r}: expected CRATE=SECONDS')
-        limits[crate] = int(secs)
     os.makedirs(a.out, exist_ok=True)
     t0 = time.time()
     log = open(os.path.join(a.out, 'test-full.log'), 'w', encoding='utf-8', newline='\n')
@@ -542,6 +698,21 @@ def main():
                          'distinct_not_shown': dropped, 'raw_issues': total})
     failures.sort(key=lambda f: f['crate'])
     times.sort(reverse=True)
+    # Record the passes: a crate that produced test binaries, has no issue of any kind, and whose build
+    # either succeeded or failed only in crates that are named (an unexplained build failure records nothing).
+    recorded = 0
+    if keys and (brc == 0 or compile_errs):
+        built = {b['crate'] for b in binaries}
+        bad = {f['crate'] for f in failures}
+        run_id = os.environ.get('GITHUB_RUN_ID', 'local')
+        for p in pkgs:
+            if p in built and p not in bad:
+                with open(cache_file(a.result_cache, p), 'w', encoding='utf-8', newline='\n') as f:
+                    f.write(f'{keys[p]}\nrun {run_id} {time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}\n')
+                recorded += 1
+            elif os.path.exists(cache_file(a.result_cache, p)):
+                os.remove(cache_file(a.result_cache, p))
+        print(f'[testrun] result cache: recorded {recorded} passing crate(s)', flush=True)
     r = {
         'build_command': ' '.join([a.cargo, 'build', '--tests', '--keep-going'] + args),
         'build_exit_status': brc,
@@ -558,6 +729,8 @@ def main():
         'crates_not_compiled': len(compile_errs),
         'failing_crates': len(failures),
         'failing_crates_by_kind': dict(kinds.most_common()),
+        'crates_cached': len(cached),
+        'cached_crates': cached,
         'max_issues_per_algo': a.max_per_algo,
         'failures': failures,
         'slowest': [{'seconds': round(s, 1), 'crate': c, 'test': n} for s, c, n in times[:30]],

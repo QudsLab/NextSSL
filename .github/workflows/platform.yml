@@ -62,6 +62,20 @@ jobs:
           path: ${{ runner.temp }}/ccache
           key: ${{ env.CACHE_VERSION }}-${{ inputs.name }}-${{ github.run_id }}
           restore-keys: ${{ env.CACHE_VERSION }}-${{ inputs.name }}-
+      # Test results (tools/testrun.py --result-cache): a crate whose inputs are bit for bit those of an
+      # earlier passing run is not built or tested again. The scheduled run tests everything.
+      - name: Result cache directory
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/results"
+          FLAGS="--result-cache $RUNNER_TEMP/results"
+          if [ "${{ github.event_name }}" = schedule ]; then FLAGS="$FLAGS --result-cache-write-only"; fi
+          echo "RESULT_FLAGS=$FLAGS" >> "$GITHUB_ENV"
+      - uses: actions/cache/restore@v6
+        with:
+          path: ${{ runner.temp }}/results
+          key: results-v1-${{ inputs.name }}-${{ matrix.shard }}-${{ github.run_id }}
+          restore-keys: results-v1-${{ inputs.name }}-${{ matrix.shard }}-
       - name: C toolchain versions
         shell: bash
         run: |
@@ -76,7 +90,7 @@ jobs:
         env:
           SMOKE_JOBS: '4'
         run: >-
-          python tools/testrun.py --out test-report --timings --clippy --shard ${{ matrix.shard }}/3
+          python tools/testrun.py --out test-report --timings --clippy --shard ${{ matrix.shard }}/3 $RESULT_FLAGS
           --umbrella-features nextssl-registry/copyleft,nextssl-registry/all-heavy
           --timeout 600 --crate-timeout nextssl-registry=3600 -- --workspace
       - uses: actions/upload-artifact@v4
@@ -95,8 +109,15 @@ jobs:
         with:
           path: ${{ runner.temp }}/ccache
           key: ${{ env.CACHE_VERSION }}-${{ inputs.name }}-${{ github.run_id }}
+      # Passing crates are recorded even when another crate failed; a failing crate's entry is removed.
+      - uses: actions/cache/save@v6
+        if: ${{ !cancelled() && github.event_name != 'pull_request' }}
+        with:
+          path: ${{ runner.temp }}/results
+          key: results-v1-${{ inputs.name }}-${{ matrix.shard }}-${{ github.run_id }}
 
-  # Release libraries from source (never the C library cache), only after all 3 shards passed.
+  # Release libraries, only after all 3 shards passed. Their own C library cache (release-<platform>,
+  # written only by this job on main): a library is reused only when every input digest matches.
   release:
     name: release
     needs: test
@@ -113,12 +134,33 @@ jobs:
             ~/.cargo/registry/cache
             ~/.cargo/git/db
           key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: clang-cl (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
           if (-not (Test-Path 'C:\Program Files\LLVM\bin\clang-cl.exe')) { choco install llvm -y --no-progress }
+      - name: C library cache directory
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/ccache"
+          touch "$RUNNER_TEMP/ccache-stamp"
+          echo "NEXTSSL_C_CACHE=$RUNNER_TEMP/ccache" >> "$GITHUB_ENV"
+      - uses: actions/cache/restore@v6
+        with:
+          path: ${{ runner.temp }}/ccache
+          key: ${{ env.CACHE_VERSION }}-release-${{ inputs.name }}-${{ github.run_id }}
+          restore-keys: ${{ env.CACHE_VERSION }}-release-${{ inputs.name }}-
       - run: cargo build -p nextssl-ffi --release --locked
+      - name: Prune the C library cache
+        shell: bash
+        run: python tools/ccache_prune.py "$NEXTSSL_C_CACHE" "$RUNNER_TEMP/ccache-stamp"
+      - uses: actions/cache/save@v6
+        with:
+          path: ${{ runner.temp }}/ccache
+          key: ${{ env.CACHE_VERSION }}-release-${{ inputs.name }}-${{ github.run_id }}
       - name: Package
         shell: bash
         run: bash tools/release_package.sh "${{ inputs.name }}"
