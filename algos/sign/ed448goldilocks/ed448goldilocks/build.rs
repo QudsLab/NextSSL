@@ -61,14 +61,14 @@ fn entropy_copy(src: &str) -> PathBuf {
 /// aarch64 only; the sources are then compiled from a copy of upstream/32 (OUT_DIR) whose word.h has
 /// these exact changes. 1. macOS: word.h's `#ifdef __APPLE__` block assumes an Intel Mac and
 /// byte-swaps with x86 `bswapq` inline asm; the copy has `x = __builtin_bswap64(x);` (same result).
-/// 2. Without `__ARM_NEON__` (GCC on Linux, clang-cl on Windows; Apple clang defines it), word.h
-/// takes its `_WIN64 || __amd64__ || __X86_64__ || __aarch64__` branch, made for 64-bit words: a
-/// 64-bit big_register_t. This tree has 32-bit words, so br_is_zero() and br_set_to_mask() give
-/// 32-bit masks that select only the low half of each register in the constant-time table lookup
-/// and conditional swap, and every signature fails to verify (CI run 45393949691, linux-arm64 and
-/// windows-arm64). The copy takes that branch for 64-bit words only; with 32-bit words the
-/// portable branch (32-bit big_register_t) is used, as on every 32-bit target. Other targets
-/// (x86 uses its SSE2 branch, wasm32 the portable one) compile upstream/32 unchanged.
+/// 2. Apple clang defines `__ARM_NEON__` on aarch64 and word.h/magic.h then take their NEON
+/// branch, which passes the KATs (CI, macos-arm64). GCC on Linux and clang-cl on Windows define
+/// only `__ARM_NEON`, so word.h falls to its `_WIN64 || __amd64__ || __X86_64__ || __aarch64__`
+/// branch, made for 64-bit words: with this tree's 32-bit words its masks cover only the low half
+/// of each 64-bit register in the constant-time lookup and swap, and every signature fails to
+/// verify (CI run 45393949691, linux-arm64 and windows-arm64). The copy defines `__ARM_NEON__` on
+/// every aarch64 compiler that lacks it (NEON is part of every aarch64 CPU), so all aarch64
+/// targets take the same branch as macOS. Other targets compile upstream/32 unchanged.
 fn apple_arm_tree() -> Option<PathBuf> {
     let mac = std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("macos");
     if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() != Ok("aarch64") {
@@ -85,8 +85,8 @@ fn apple_arm_tree() -> Option<PathBuf> {
     let w = dst.join("word.h");
     let mut text = std::fs::read_to_string(&w).expect("read word.h");
     let mut edits = vec![(
-        "#elif _WIN64 || __amd64__ || __X86_64__ || __aarch64__\n",
-        "#elif (_WIN64 || __amd64__ || __X86_64__ || __aarch64__) && WORD_BITS == 64\n",
+        "#include \"arch_config.h\"\n",
+        "#include \"arch_config.h\"\n#if defined(__aarch64__) && !defined(__ARM_NEON__)\n#define __ARM_NEON__ 1\n#endif\n",
     )];
     if mac {
         edits.push((

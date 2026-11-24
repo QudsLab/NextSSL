@@ -17,7 +17,7 @@
 #endif
 /* clang-cl (Windows on ARM64) takes SIMDe's C11 path for _mm_sfence, atomic_thread_fence(), but
  * SIMDe does not include <stdatomic.h>; GCC and clang elsewhere use the __atomic builtin instead. */
-#if defined(_MSC_VER) && defined(__clang__) && !defined(__cplusplus) && defined(__STDC_VERSION__) && \n    __STDC_VERSION__ >= 201112L && !defined(__STDC_NO_ATOMICS__)
+#if defined(_MSC_VER) && defined(__clang__) && !defined(__cplusplus) && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L && !defined(__STDC_NO_ATOMICS__)
 #include <stdatomic.h>
 #endif
 #include "../x86/avx2.h"

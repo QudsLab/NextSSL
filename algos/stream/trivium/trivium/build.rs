@@ -25,6 +25,8 @@ fn base(cpp: bool) -> cc::Build {
     if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("aarch64")
         && std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc")
     {
+        // MSVC's <xmmintrin.h> must come through <intrin.h> on ARM64.
+        b.flag("/FIintrin.h");
         b.define("USE_SOFT_INTRINSICS", None);
     }
     // Plain `char` is unsigned on Linux ARM but signed on x86, Windows and Apple, where the

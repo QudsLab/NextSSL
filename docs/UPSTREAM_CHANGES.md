@@ -201,11 +201,11 @@ upstream/32/goldilocks.c seeds a process-global generator from /dev/urandom in g
 
 Crates: ed448goldilocks
 
-aarch64 only; the sources are then compiled from a copy of upstream/32 (OUT_DIR) whose word.h has these exact changes. 1. macOS: word.h's `#ifdef __APPLE__` block assumes an Intel Mac and byte-swaps with x86 `bswapq` inline asm; the copy has `x = __builtin_bswap64(x);` (same result). 2. Without `__ARM_NEON__` (GCC on Linux, clang-cl on Windows; Apple clang defines it), word.h takes its `_WIN64 || __amd64__ || __X86_64__ || __aarch64__` branch, made for 64-bit words: a 64-bit big_register_t. This tree has 32-bit words, so br_is_zero() and br_set_to_mask() give 32-bit masks that select only the low half of each register in the constant-time table lookup and conditional swap, and every signature fails to verify (CI run 45393949691, linux-arm64 and windows-arm64). The copy takes that branch for 64-bit words only; with 32-bit words the portable branch (32-bit big_register_t) is used, as on every 32-bit target. Other targets (x86 uses its SSE2 branch, wasm32 the portable one) compile upstream/32 unchanged.
+aarch64 only; the sources are then compiled from a copy of upstream/32 (OUT_DIR) whose word.h has these exact changes. 1. macOS: word.h's `#ifdef __APPLE__` block assumes an Intel Mac and byte-swaps with x86 `bswapq` inline asm; the copy has `x = __builtin_bswap64(x);` (same result). 2. Apple clang defines `__ARM_NEON__` on aarch64 and word.h/magic.h then take their NEON branch, which passes the KATs (CI, macos-arm64). GCC on Linux and clang-cl on Windows define only `__ARM_NEON`, so word.h falls to its `_WIN64 || __amd64__ || __X86_64__ || __aarch64__` branch, made for 64-bit words: with this tree's 32-bit words its masks cover only the low half of each 64-bit register in the constant-time lookup and swap, and every signature fails to verify (CI run 45393949691, linux-arm64 and windows-arm64). The copy defines `__ARM_NEON__` on every aarch64 compiler that lacks it (NEON is part of every aarch64 CPU), so all aarch64 targets take the same branch as macOS. Other targets compile upstream/32 unchanged.
 
 ```diff
-- #elif _WIN64 || __amd64__ || __X86_64__ || __aarch64__\n
-+ #elif (_WIN64 || __amd64__ || __X86_64__ || __aarch64__) && WORD_BITS == 64\n
+- #include \"arch_config.h\"\n
++ #include \"arch_config.h\"\n#if defined(__aarch64__) && !defined(__ARM_NEON__)\n#define __ARM_NEON__ 1\n#endif\n
 -     __asm__ (\"bswapq %0\" : \"+r\"(x));\n
 +     x = __builtin_bswap64(x);\n
 ```
@@ -611,11 +611,11 @@ every other target compiles these crates unchanged.
 - `_MSC_STDINT_H_ /FIstdint.h`: stdint_win.h (a stdint.h for Visual C++ before 2010) clashes with the compiler's own <stdint.h> there (int_fast16_t); its include guard is defined and the compiler's <stdint.h> is used. Other targets compile unchanged.
   Crates: omdsha256k128n96tau128v1, omdsha256k128n96tau128v2, omdsha256k128n96tau64v1, omdsha256k128n96tau64v2, omdsha256k128n96tau96v1, omdsha256k128n96tau96v2, omdsha256k192n104tau128v1, omdsha256k192n104tau128v2, omdsha256k256n104tau160v1, omdsha256k256n104tau160v2, omdsha256k256n248tau256v1, omdsha256k256n248tau256v2, omdsha512k128n128tau128v1, omdsha512k128n128tau128v2, omdsha512k256n256tau256v1, omdsha512k256n256tau256v2, omdsha512k512n256tau256v1, omdsha512k512n256tau256v2
 
-- `USE_SOFT_INTRINSICS __BYTE_ORDER=1234`: ecrypt-config.h takes <xmmintrin.h> for every MSVC (only for the __m128 alignment type); on ARM64 MSVC provides that header only with USE_SOFT_INTRINSICS (Microsoft's portable implementation). portEnRUPT.h knows the x86 MSVC macros only and asks for the byte order to be defined; __BYTE_ORDER=1234 is the form it reads (no other upstream file uses it). Windows on ARM64 is always little-endian. Other targets compile unchanged.
+- `USE_SOFT_INTRINSICS __BYTE_ORDER=1234 /FIintrin.h`: ecrypt-config.h takes <xmmintrin.h> for every MSVC (only for the __m128 alignment type); on ARM64 MSVC provides that header only with USE_SOFT_INTRINSICS (Microsoft's portable implementation). portEnRUPT.h knows the x86 MSVC macros only and asks for the byte order to be defined; __BYTE_ORDER=1234 is the form it reads (no other upstream file uses it). Windows on ARM64 is always little-endian. Other targets compile unchanged.
   Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
 
 - `__LITTLE_ENDIAN__`: brg_endian.h does not know _M_ARM64; it reads __LITTLE_ENDIAN__ as the byte order. Windows on ARM64 is always little-endian. Other targets compile unchanged.
   Crates: keccak-224-sha3r2, keccak-256-sha3r2, keccak-384-sha3r2, keccak-512-sha3r2
 
-- `USE_SOFT_INTRINSICS`: ecrypt-config.h takes <xmmintrin.h> for every MSVC (only for the __m128 alignment type); on ARM64 MSVC provides that header only with USE_SOFT_INTRINSICS (Microsoft's portable implementation). Other targets compile unchanged.
+- `USE_SOFT_INTRINSICS /FIintrin.h`: ecrypt-config.h takes <xmmintrin.h> for every MSVC (only for the __m128 alignment type); on ARM64 MSVC provides that header only with USE_SOFT_INTRINSICS (Microsoft's portable implementation). Other targets compile unchanged.
   Crates: cryptmt, dragon, lex, snow-2-0, trivium
