@@ -4,4 +4,5 @@ None. The files in this directory are byte-identical to the upstream named in
 `../algo.toml`. Exported symbols are renamed with `-D` defines in `../build.rs`
 (prefix `nextssl__drygascon__`), not by editing the sources.
 
-MSVC build: on cl.exe build.rs force-includes `../msvc_compat.h`-style file `msvc_compat.h` (our file, outside upstream/) that defines `__attribute__(x)` as empty; the upstream only uses it for `aligned(16)` on a union. No source edit.
+MSVC build: the C is compiled with clang-cl (see `../build.rs`), which keeps the upstream's
+`__attribute__((aligned(16)))` on the sponge state; the upstream refuses an unaligned state. No source edit.

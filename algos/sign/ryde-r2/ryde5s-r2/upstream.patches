@@ -1,0 +1,10 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: ryde-mat-fq-word-size
+why: rbc_*_mat_fq_init allocates the matrix words, which are uint64_t, with sizeof(uint64_t *): the same
+why: 8 bytes on 64-bit targets, but 4 bytes on 32-bit wasm32, so the matrix gets half the memory it uses
+why: and the heap is overwritten (wasm32 abort in free from rbc_*_mat_fq_clear, CI run 45416349331).
+why: The patch allocates sizeof(uint64_t) per word. 64-bit targets compile identical code.
+file: upstream/ryde5s/src/rbc-67/rbc_67_mat_fq.c
+count: 1
+find: (*m)[0] = calloc(rows * words, sizeof(uint64_t *));
+replace: (*m)[0] = calloc(rows * words, sizeof(uint64_t));

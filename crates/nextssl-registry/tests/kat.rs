@@ -854,8 +854,49 @@ fn run_pake(
 /// rely on this size, the test just uses a generous one.
 #[cfg_attr(target_family = "wasm", allow(dead_code))]
 const WORKER_STACK: usize = 64 << 20;
-/// A real hang fails after this long instead of running forever.
-const PER_ALGO_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(300);
+/// A real hang fails after this long instead of running forever. The reference implementations of
+/// the slowest signatures (FAEST, Mirath, RYDE "s" sets) need several minutes per algorithm on a CI
+/// runner shared by 4 workers (CI run 45416349331: 300 s reported them as hangs although they finish).
+const PER_ALGO_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(900);
+
+/// SMOKE_JOBS=N runs N algorithms (or KAT files) at once; unset or 1 runs them one after another.
+/// Two different algorithms never share C globals (every upstream symbol carries its own prefix).
+/// WebAssembly has no threads, so there it is always 1.
+fn jobs() -> usize {
+    if cfg!(target_family = "wasm") {
+        return 1;
+    }
+    std::env::var("SMOKE_JOBS")
+        .ok()
+        .and_then(|v| v.parse::<usize>().ok())
+        .unwrap_or(1)
+        .max(1)
+}
+
+/// Runs `run` over `todo` with `jobs()` threads; the results come back in `todo`'s order.
+fn run_pool<I: Copy + Sync, R: Send>(todo: &[I], run: impl Fn(I) -> R + Sync) -> Vec<(I, R)> {
+    let jobs = jobs();
+    if jobs == 1 {
+        return todo.iter().map(|&a| (a, run(a))).collect();
+    }
+    let next = std::sync::atomic::AtomicUsize::new(0);
+    let out = std::sync::Mutex::new(Vec::with_capacity(todo.len()));
+    std::thread::scope(|s| {
+        for _ in 0..jobs.min(todo.len()) {
+            s.spawn(|| loop {
+                let i = next.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                let Some(&a) = todo.get(i) else { break };
+                let r = run(a);
+                out.lock()
+                    .unwrap_or_else(|p| p.into_inner())
+                    .push((i, a, r));
+            });
+        }
+    });
+    let mut v = out.into_inner().unwrap_or_else(|p| p.into_inner());
+    v.sort_by_key(|x| x.0);
+    v.into_iter().map(|(_, a, r)| (a, r)).collect()
+}
 
 /// Waits for a worker's result up to PER_ALGO_TIMEOUT. Every minute it prints which algorithm is
 /// still running, and a timeout is printed at once: if the whole test is killed from outside (the
@@ -968,19 +1009,7 @@ fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
         .iter()
         .filter(|a| !skip.split(',').any(|s| s == a.id) && selected(a.id))
         .collect();
-    // One algorithm per worker, each with its own timeout. SMOKE_JOBS=N runs N algorithms at once
-    // (local fast mode); unset or 1 (CI) runs them one after another as before. Two different
-    // algorithms never share C globals (every upstream symbol carries its own prefix). WebAssembly
-    // has no threads, so there it is always 1.
-    let jobs = if cfg!(target_family = "wasm") {
-        1
-    } else {
-        std::env::var("SMOKE_JOBS")
-            .ok()
-            .and_then(|v| v.parse::<usize>().ok())
-            .unwrap_or(1)
-            .max(1)
-    };
+    // One algorithm per worker, each with its own timeout; SMOKE_JOBS at once (see jobs()).
     let run = |a: &'static AlgoInfo| -> Result<(), String> {
         if std::env::var_os("KAT_TRACE").is_some() {
             println!("smoke {}", a.id);
@@ -1007,23 +1036,7 @@ fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
             None => Err(format!("{}: HANG (> {:?})", a.id, PER_ALGO_TIMEOUT)),
         }
     };
-    let results: Vec<(&'static AlgoInfo, Result<(), String>)> = if jobs == 1 {
-        todo.iter().map(|&a| (a, run(a))).collect()
-    } else {
-        let next = std::sync::atomic::AtomicUsize::new(0);
-        let out = std::sync::Mutex::new(Vec::with_capacity(todo.len()));
-        std::thread::scope(|s| {
-            for _ in 0..jobs.min(todo.len()) {
-                s.spawn(|| loop {
-                    let i = next.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-                    let Some(&a) = todo.get(i) else { break };
-                    let r = run(a);
-                    out.lock().unwrap_or_else(|p| p.into_inner()).push((a, r));
-                });
-            }
-        });
-        out.into_inner().unwrap_or_else(|p| p.into_inner())
-    };
+    let results: Vec<(&'static AlgoInfo, Result<(), String>)> = run_pool(&todo, run);
     let mut kinds = BTreeSet::new();
     let mut failures: Vec<String> = Vec::new();
     for (a, r) in &results {
@@ -1143,8 +1156,9 @@ fn replay_registry_vector(inst: &Instance, v: &J) -> Result<(), String> {
 fn published_kats_replay_through_the_registry() {
     let root = algos_dir();
     let mut ran = 0usize;
-    let mut files = 0usize;
     let mut failures: Vec<String> = Vec::new();
+    // Every registry-replayed file, then one file per worker (SMOKE_JOBS at once, see jobs()).
+    let mut todo: Vec<(&'static AlgoInfo, &'static str)> = Vec::new();
     for a in all().iter().filter(|a| selected(a.id)) {
         #[cfg(miri)]
         if a.c_backed {
@@ -1153,53 +1167,60 @@ fn published_kats_replay_through_the_registry() {
         for f in a.kat {
             let path = root.join(a.dir).join(f);
             let doc: J = serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
-            if doc.get("replay").and_then(J::as_str) != Some("registry") {
-                continue;
+            if doc.get("replay").and_then(J::as_str) == Some("registry") {
+                todo.push((a, *f));
             }
-            files += 1;
-            let vectors = doc["vectors"].as_array().expect("vectors").clone();
-            let (id, file) = (a.id, f.to_string());
-            let (tx, rx) = std::sync::mpsc::channel();
-            let h = spawn_worker(format!("kat-{id}"), move || {
-                let mut out: Vec<String> = Vec::new();
-                let a = all().iter().find(|x| x.id == id).unwrap();
-                for v in &vectors {
-                    let name = v["id"].as_str().unwrap_or("?").to_string();
-                    let params = if v.get("params").is_some() {
-                        params_of(v)
-                    } else {
-                        a.smoke_params()
-                    };
-                    let r = match instantiate_in(all(), Policy::Any, a.id, &params) {
-                        Ok(inst) => std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                            replay_registry_vector(&inst, v)
-                        }))
-                        .unwrap_or_else(|_| Err("panic".into())),
-                        Err(e) => Err(format!("instantiate: {e}")),
-                    };
-                    match r {
-                        Ok(()) => out.push(format!("ok {name}")),
-                        Err(m) => out.push(format!("KAT FAIL {} / {} / {name}: {m}", a.id, file)),
+        }
+    }
+    let files = todo.len();
+    let run = |(a, f): (&'static AlgoInfo, &'static str)| -> Option<Vec<String>> {
+        let path = root.join(a.dir).join(f);
+        let doc: J = serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+        let vectors = doc["vectors"].as_array().expect("vectors").clone();
+        let (id, file) = (a.id, f.to_string());
+        let (tx, rx) = std::sync::mpsc::channel();
+        let h = spawn_worker(format!("kat-{id}"), move || {
+            let mut out: Vec<String> = Vec::new();
+            let a = all().iter().find(|x| x.id == id).unwrap();
+            for v in &vectors {
+                let name = v["id"].as_str().unwrap_or("?").to_string();
+                let params = if v.get("params").is_some() {
+                    params_of(v)
+                } else {
+                    a.smoke_params()
+                };
+                let r = match instantiate_in(all(), Policy::Any, a.id, &params) {
+                    Ok(inst) => std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                        replay_registry_vector(&inst, v)
+                    }))
+                    .unwrap_or_else(|_| Err("panic".into())),
+                    Err(e) => Err(format!("instantiate: {e}")),
+                };
+                match r {
+                    Ok(()) => out.push(format!("ok {name}")),
+                    Err(m) => out.push(format!("KAT FAIL {} / {} / {name}: {m}", a.id, file)),
+                }
+            }
+            let _ = tx.send(out);
+        });
+        let r = wait_reporting(&rx, &format!("{} / {f}", a.id));
+        if r.is_some() {
+            join_worker(h);
+        }
+        r
+    };
+    for ((a, f), r) in run_pool(&todo, run) {
+        match r {
+            Some(lines) => {
+                for l in lines {
+                    ran += 1;
+                    if !l.starts_with("ok ") {
+                        println!("{l}");
+                        failures.push(l);
                     }
                 }
-                let _ = tx.send(out);
-            });
-            match wait_reporting(&rx, &format!("{} / {f}", a.id)) {
-                Some(lines) => {
-                    for l in lines {
-                        if let Some(rest) = l.strip_prefix("ok ") {
-                            let _ = rest;
-                            ran += 1;
-                        } else {
-                            println!("{l}");
-                            failures.push(l);
-                            ran += 1;
-                        }
-                    }
-                    join_worker(h);
-                }
-                None => failures.push(format!("KAT FAIL {} / {f}: HANG", a.id)),
             }
+            None => failures.push(format!("KAT FAIL {} / {f}: HANG", a.id)),
         }
     }
     println!(

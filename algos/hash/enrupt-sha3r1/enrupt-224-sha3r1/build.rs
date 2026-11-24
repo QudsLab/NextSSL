@@ -11,17 +11,15 @@ const PREFIX: &str = "nextssl__enrupt_224_sha3r1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
-    // Windows on ARM64 (cl.exe): ecrypt-config.h takes <xmmintrin.h> for every MSVC (only for the __m128 alignment type); on ARM64
-    // MSVC provides that header only with USE_SOFT_INTRINSICS (Microsoft's portable implementation).
+    // Windows on ARM64 (cl.exe): portEnRUPT.h takes the x86 intrinsic headers, which come from SIMDe here
+    // (x86-shim below); SIMDe's ARM64 MSVC path uses the _ARM64_BARRIER_* macros of <intrin.h>.
     // portEnRUPT.h knows the x86 MSVC macros only and asks for the byte order to be defined;
     // __BYTE_ORDER=1234 is the form it reads (no other upstream file uses it).
     // Windows on ARM64 is always little-endian. Other targets compile unchanged.
     if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("aarch64")
         && std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc")
     {
-        // MSVC's <xmmintrin.h> must come through <intrin.h> on ARM64.
         b.flag("/FIintrin.h");
-        b.define("USE_SOFT_INTRINSICS", None);
         b.define("__BYTE_ORDER", "1234");
     }
     // Plain `char` is unsigned on Linux ARM but signed on x86, Windows and Apple, where the

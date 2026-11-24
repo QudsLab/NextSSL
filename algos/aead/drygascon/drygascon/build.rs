@@ -83,9 +83,13 @@ fn build_main() {
         b.file(f);
     }
     b.file("shim.c").include("upstream").warnings(false);
+    // The upstream needs its `__attribute__((aligned(16)))` state: drygascon128_aead_encrypt_core
+    // returns -1 when the state is not 16-byte aligned. cl.exe has no __attribute__ (msvc_compat.h
+    // would drop it), so on MSVC targets the C is compiled with clang-cl, which keeps the alignment:
+    // same ABI and object format, linked by link.exe (CI run 45416349331: "seal failed" on
+    // windows-arm64, where the stack slot was not 16-byte aligned).
     if b.get_compiler().is_like_msvc() {
-        b.include(".");
-        b.flag("/FImsvc_compat.h");
+        b.compiler(clang_cl());
     }
     for sym in EXPORTED {
         b.define(sym, Some(format!("nextssl__drygascon__{sym}").as_str()));
@@ -105,6 +109,27 @@ fn build_main() {
         nextssl_cbuild::directive!("cargo:rerun-if-changed=shim.c");
     }
     nextssl_cbuild::directive!("cargo:rerun-if-changed=build.rs");
+}
+
+fn clang_cl() -> std::path::PathBuf {
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
+    if let Some(p) = std::env::var_os("NEXTSSL_CLANG_CL") {
+        return std::path::PathBuf::from(p);
+    }
+    let mut dirs: Vec<std::path::PathBuf> = std::env::var_os("PATH")
+        .map(|p| std::env::split_paths(&p).collect())
+        .unwrap_or_default();
+    dirs.push(std::path::PathBuf::from(r"C:\Program Files\LLVM\bin"));
+    for d in dirs {
+        let c = d.join("clang-cl.exe");
+        if c.is_file() {
+            return c;
+        }
+    }
+    panic!(
+        "drygascon's C upstream needs clang-cl on MSVC targets (aligned state): \
+         install LLVM or set NEXTSSL_CLANG_CL to clang-cl.exe"
+    );
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)

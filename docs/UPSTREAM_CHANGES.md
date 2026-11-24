@@ -19,7 +19,7 @@ so anyone can see what was changed, where and why, and reproduce or review it.
 
 Glue code (`glue.rs`), shims (`shim.c`) and `build.rs` are NextSSL code, not upstream code.
 
-## 1. Patches (9 distinct, in 11 crates)
+## 1. Patches (14 distinct, in 20 crates)
 
 ### cloc-silc-pstate2-prototype
 
@@ -32,6 +32,32 @@ cloc.c/silc.c call pstate2() (a debug print, empty unless _PRINT) with no protot
 ```diff
 - void pstate(const unsigned char* st, int len);
 + void pstate(const unsigned char* st, int len); void pstate2(const unsigned char *str, const byte* state);
+```
+
+### ketje-tag-mismatch-without-exceptions
+
+Crates: ketjemajor, ketjeminor, ketjesr
+
+File: `upstream/*/monkey.cpp` (1 occurrence(s))
+
+MonkeyWrap::unwrap throws on a wrong tag and crypto_aead_decrypt catches it to return -1. The wasm32 C++ runtime (Debian wasi libc++abi) has no exception support, so the throw aborts the module (CI run 45416349331). The throw goes through a macro from compat/nextssl_ketje_tag.h: on every target except wasm32 it is the same `throw`; on wasm32 it records the mismatch, and crypto_aead_decrypt returns -1 right after unwrap, before any plaintext is copied.
+
+```diff
+- throw Exception("Tags do not match after unwrap.");
++ NEXTSSL_KETJE_TAG_MISMATCH(Exception("Tags do not match after unwrap."));
+```
+
+### ketje-tag-mismatch-check
+
+Crates: ketjemajor, ketjeminor, ketjesr
+
+File: `upstream/*/encrypt.cpp` (1 occurrence(s))
+
+The decrypt side of ketje-tag-mismatch-without-exceptions (always false off wasm32).
+
+```diff
+- plaintext = instance.unwrap(AD, ciphertext, tag);
++ plaintext = instance.unwrap(AD, ciphertext, tag); if (NEXTSSL_KETJE_TAG_FAILED()) return -1;
 ```
 
 ### keyak-keccakp-prototype
@@ -71,6 +97,45 @@ ROT(w, b) computes (w >> b) ^ (w << (64 - b)), and meshhash calls it with b = 0 
 ```diff
 - #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> (b) ^ (w) << (64 - (b))) & 0xffffffffffffffffULL)
 + #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> ((b) & 63) | (w) << ((64 - (b)) & 63)) & 0xffffffffffffffffULL)
+```
+
+### ryde-mat-fq-word-size
+
+Crates: ryde1f-r2, ryde1s-r2
+
+File: `upstream/*/src/rbc-53/rbc_53_mat_fq.c` (1 occurrence(s))
+
+rbc_*_mat_fq_init allocates the matrix words, which are uint64_t, with sizeof(uint64_t *): the same 8 bytes on 64-bit targets, but 4 bytes on 32-bit wasm32, so the matrix gets half the memory it uses and the heap is overwritten (wasm32 abort in free from rbc_*_mat_fq_clear, CI run 45416349331). The patch allocates sizeof(uint64_t) per word. 64-bit targets compile identical code.
+
+```diff
+- (*m)[0] = calloc(rows * words, sizeof(uint64_t *));
++ (*m)[0] = calloc(rows * words, sizeof(uint64_t));
+```
+
+### ryde-mat-fq-word-size
+
+Crates: ryde3f-r2, ryde3s-r2
+
+File: `upstream/*/src/rbc-61/rbc_61_mat_fq.c` (1 occurrence(s))
+
+rbc_*_mat_fq_init allocates the matrix words, which are uint64_t, with sizeof(uint64_t *): the same 8 bytes on 64-bit targets, but 4 bytes on 32-bit wasm32, so the matrix gets half the memory it uses and the heap is overwritten (wasm32 abort in free from rbc_*_mat_fq_clear, CI run 45416349331). The patch allocates sizeof(uint64_t) per word. 64-bit targets compile identical code.
+
+```diff
+- (*m)[0] = calloc(rows * words, sizeof(uint64_t *));
++ (*m)[0] = calloc(rows * words, sizeof(uint64_t));
+```
+
+### ryde-mat-fq-word-size
+
+Crates: ryde5f-r2, ryde5s-r2
+
+File: `upstream/*/src/rbc-67/rbc_67_mat_fq.c` (1 occurrence(s))
+
+rbc_*_mat_fq_init allocates the matrix words, which are uint64_t, with sizeof(uint64_t *): the same 8 bytes on 64-bit targets, but 4 bytes on 32-bit wasm32, so the matrix gets half the memory it uses and the heap is overwritten (wasm32 abort in free from rbc_*_mat_fq_clear, CI run 45416349331). The patch allocates sizeof(uint64_t) per word. 64-bit targets compile identical code.
+
+```diff
+- (*m)[0] = calloc(rows * words, sizeof(uint64_t *));
++ (*m)[0] = calloc(rows * words, sizeof(uint64_t));
 ```
 
 ### wave-1ul-vf2
@@ -222,7 +287,7 @@ Crates: xmss-sha2-10-192, xmss-sha2-10-256, xmss-sha2-10-512, xmss-shake-10-256,
 
 Targets with a 32-bit C `long` (Windows, wasm32, other 32-bit) only: xmss_core.c reads the signing index with `idx = (unsigned long)bytes_to_ull(...)` into an `unsigned long long`. With a 32-bit `long` the cast drops the high bits, so an index >= 2^32 (total height 40/60) would sign with a reused one-time key, and an exhausted key (index set to all ones) would sign again. The compiled copy (OUT_DIR) casts to `unsigned long long`, the value the code means on LP64; LP64 targets compile the verbatim file.
 
-## 3. Compatibility files (123 distinct files, 101 names)
+## 3. Compatibility files (124 distinct files, 102 names)
 
 | file | variants | crates | purpose (first comment) |
 |---|---|---|---|
@@ -284,6 +349,7 @@ Targets with a 32-bit C `long` (Windows, wasm32, other 32-bit) only: xmss_core.c
 | `msvc/sys/param.h` | 1 | 2 | NextSSL compat (not upstream), MSVC targets only: catena.c includes <sys/param.h> and uses nothing |
 | `msvc/unistd.h` | 2 | 25 | NextSSL compat (not upstream), MSVC only: upstream ref/hanmre.c includes <unistd.h> but uses |
 | `newdes2p.h` | 1 | 1 | ours: NEWDES2.C includes "newdes2p.h" (lower case); the file in the archive is NEWDES2P.H |
+| `nextssl_ketje_tag.h` | 1 | 3 | NextSSL compat (not upstream): force-included in this crate's C++ build; see upstream.patches. |
 | `nextssl_pre.h` | 6 | 7 | NextSSL compat header (not upstream code): cl.exe has no GNU __attribute__; the annotations (aligned(16)) carry no semantics for the portable C. |
 | `noglibc/printf.h` | 1 | 12 | NextSSL compat (not upstream): glibc-only <printf.h> is included but unused; empty stand-in for other C libraries |
 | `nox86/immintrin.h` | 1 | 6 | NextSSL compat (not upstream), non-x86 targets only. ref/sign.h and ref/poly.h include |
@@ -611,7 +677,7 @@ every other target compiles these crates unchanged.
 - `_MSC_STDINT_H_ /FIstdint.h`: stdint_win.h (a stdint.h for Visual C++ before 2010) clashes with the compiler's own <stdint.h> there (int_fast16_t); its include guard is defined and the compiler's <stdint.h> is used. Other targets compile unchanged.
   Crates: omdsha256k128n96tau128v1, omdsha256k128n96tau128v2, omdsha256k128n96tau64v1, omdsha256k128n96tau64v2, omdsha256k128n96tau96v1, omdsha256k128n96tau96v2, omdsha256k192n104tau128v1, omdsha256k192n104tau128v2, omdsha256k256n104tau160v1, omdsha256k256n104tau160v2, omdsha256k256n248tau256v1, omdsha256k256n248tau256v2, omdsha512k128n128tau128v1, omdsha512k128n128tau128v2, omdsha512k256n256tau256v1, omdsha512k256n256tau256v2, omdsha512k512n256tau256v1, omdsha512k512n256tau256v2
 
-- `USE_SOFT_INTRINSICS __BYTE_ORDER=1234 /FIintrin.h`: ecrypt-config.h takes <xmmintrin.h> for every MSVC (only for the __m128 alignment type); on ARM64 MSVC provides that header only with USE_SOFT_INTRINSICS (Microsoft's portable implementation). portEnRUPT.h knows the x86 MSVC macros only and asks for the byte order to be defined; __BYTE_ORDER=1234 is the form it reads (no other upstream file uses it). Windows on ARM64 is always little-endian. Other targets compile unchanged.
+- `__BYTE_ORDER=1234 /FIintrin.h`: portEnRUPT.h takes the x86 intrinsic headers, which come from SIMDe here (x86-shim below); SIMDe's ARM64 MSVC path uses the _ARM64_BARRIER_* macros of <intrin.h>. portEnRUPT.h knows the x86 MSVC macros only and asks for the byte order to be defined; __BYTE_ORDER=1234 is the form it reads (no other upstream file uses it). Windows on ARM64 is always little-endian. Other targets compile unchanged.
   Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
 
 - `__LITTLE_ENDIAN__`: brg_endian.h does not know _M_ARM64; it reads __LITTLE_ENDIAN__ as the byte order. Windows on ARM64 is always little-endian. Other targets compile unchanged.

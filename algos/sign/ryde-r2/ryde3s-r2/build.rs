@@ -48,9 +48,9 @@ fn portable_source(src: &str) -> PathBuf {
         std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
         Ok("x86_64") | Ok("x86")
     );
-    let text = std::fs::read_to_string(src).expect("read upstream source");
+    let text = std::fs::read_to_string(up(src)).expect("read upstream source");
     if x86 || !text.contains(HEAD) {
-        return PathBuf::from(src);
+        return up(src);
     }
     let mut out_text = String::new();
     let mut rest = text.as_str();
@@ -131,13 +131,13 @@ fn base() -> cc::Build {
         }
     }
     for i in INCLUDES {
-        b.include(i);
+        b.include(up(i));
     }
     for s in SOURCES {
         let f = portable_source(s);
-        if f.as_os_str() != std::ffi::OsStr::new(s) {
+        if f != up(s) {
             // the copy lives in OUT_DIR: keep the original directory for its "..." includes
-            b.include(std::path::Path::new(s).parent().unwrap());
+            b.include(up(s).parent().unwrap());
         }
         b.file(f);
     }
@@ -252,6 +252,7 @@ fn build_main() {
     if std::path::Path::new("shim.c").exists() {
         nextssl_cbuild::directive!("cargo:rerun-if-changed=shim.c");
     }
+    nextssl_cbuild::directive!("cargo:rerun-if-changed=upstream.patches");
     nextssl_cbuild::directive!("cargo:rerun-if-changed=build.rs");
 }
 
@@ -365,4 +366,100 @@ fn check_prefixed(out: &std::path::Path) {
         missed.is_empty(),
         "globals defined by the optimised build but not renamed (the -O0 probe missed them): {missed:?}"
     );
+}
+
+// BEGIN UPSTREAM PATCHES (upstream.patches, listed in docs/UPSTREAM_CHANGES.md)
+/// A path under `upstream/` mapped into the patched copy of the tree; other paths are unchanged.
+fn up(p: &str) -> PathBuf {
+    match p.strip_prefix("upstream") {
+        Some(rest) if rest.is_empty() || rest.starts_with('/') => {
+            patched_upstream().join(rest.trim_start_matches('/'))
+        }
+        _ => PathBuf::from(p),
+    }
+}
+
+/// Copy of upstream/ in OUT_DIR with the replacements of `upstream.patches` applied; the files on
+/// disk stay verbatim. Each patch names a file, the exact text to find, how many times it occurs
+/// and its replacement; any other count stops the build, so a changed upstream is never patched
+/// blindly. The reason for every patch is in upstream.patches and docs/UPSTREAM_CHANGES.md.
+fn patched_upstream() -> &'static std::path::Path {
+    static DIR: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+    DIR.get_or_init(|| {
+        let dst = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("patched-upstream");
+        let _ = std::fs::remove_dir_all(&dst);
+        copy_tree(std::path::Path::new("upstream"), &dst);
+        let spec = std::fs::read_to_string("upstream.patches").expect("read upstream.patches");
+        for p in parse_patches(&spec) {
+            let rel = p
+                .file
+                .strip_prefix("upstream/")
+                .expect("patch file under upstream/");
+            let path = dst.join(rel);
+            let text = std::fs::read_to_string(&path).expect("read patched file");
+            let n = text.matches(p.find.as_str()).count();
+            assert_eq!(
+                n, p.count,
+                "{}: `{}` occurs {n} times, expected {}",
+                p.file, p.find, p.count
+            );
+            std::fs::write(&path, text.replace(p.find.as_str(), p.replace.as_str()))
+                .expect("write patched file");
+        }
+        dst
+    })
+}
+
+struct Patch {
+    file: String,
+    count: usize,
+    find: String,
+    replace: String,
+}
+
+/// `patch:` starts a record; `file:`, `count:`, `find:` and `replace:` follow (the value is the
+/// rest of the line after `key: `). `why:` lines and lines starting with `#` are documentation.
+fn parse_patches(spec: &str) -> Vec<Patch> {
+    let mut out: Vec<Patch> = Vec::new();
+    for line in spec.lines() {
+        let line = line.trim_end_matches('\r');
+        if line.starts_with("patch:") {
+            out.push(Patch {
+                file: String::new(),
+                count: 0,
+                find: String::new(),
+                replace: String::new(),
+            });
+        } else if let Some(p) = out.last_mut() {
+            if let Some(v) = line.strip_prefix("file: ") {
+                p.file = v.to_string();
+            } else if let Some(v) = line.strip_prefix("count: ") {
+                p.count = v.parse().expect("count is a number");
+            } else if let Some(v) = line.strip_prefix("find: ") {
+                p.find = v.to_string();
+            } else if let Some(v) = line.strip_prefix("replace: ") {
+                p.replace = v.to_string();
+            }
+        }
+    }
+    for p in &out {
+        assert!(
+            !p.file.is_empty() && p.count > 0 && !p.find.is_empty(),
+            "upstream.patches: incomplete record"
+        );
+    }
+    out
+}
+
+fn copy_tree(from: &std::path::Path, to: &std::path::Path) {
+    std::fs::create_dir_all(to).expect("create patched tree");
+    for e in std::fs::read_dir(from).expect("read upstream dir") {
+        let e = e.expect("dir entry");
+        let target = to.join(e.file_name());
+        if e.file_type().expect("file type").is_dir() {
+            copy_tree(&e.path(), &target);
+        } else {
+            std::fs::copy(e.path(), &target).expect("copy upstream file");
+        }
+    }
 }

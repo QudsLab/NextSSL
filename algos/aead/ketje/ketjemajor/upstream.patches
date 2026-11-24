@@ -1,0 +1,17 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: ketje-tag-mismatch-without-exceptions
+why: MonkeyWrap::unwrap throws on a wrong tag and crypto_aead_decrypt catches it to return -1.
+why: The wasm32 C++ runtime (Debian wasi libc++abi) has no exception support, so the throw aborts
+why: the module (CI run 45416349331). The throw goes through a macro from compat/nextssl_ketje_tag.h:
+why: on every target except wasm32 it is the same `throw`; on wasm32 it records the mismatch, and
+why: crypto_aead_decrypt returns -1 right after unwrap, before any plaintext is copied.
+file: upstream/ketjemajorv2/monkey.cpp
+count: 1
+find: throw Exception("Tags do not match after unwrap.");
+replace: NEXTSSL_KETJE_TAG_MISMATCH(Exception("Tags do not match after unwrap."));
+patch: ketje-tag-mismatch-check
+why: The decrypt side of ketje-tag-mismatch-without-exceptions (always false off wasm32).
+file: upstream/ketjemajorv2/encrypt.cpp
+count: 1
+find: plaintext = instance.unwrap(AD, ciphertext, tag);
+replace: plaintext = instance.unwrap(AD, ciphertext, tag); if (NEXTSSL_KETJE_TAG_FAILED()) return -1;
