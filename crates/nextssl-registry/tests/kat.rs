@@ -874,7 +874,10 @@ fn jobs() -> usize {
 }
 
 /// Runs `run` over `todo` with `jobs()` threads; the results come back in `todo`'s order.
-fn run_pool<I: Copy + Sync, R: Send>(todo: &[I], run: impl Fn(I) -> R + Sync) -> Vec<(I, R)> {
+fn run_pool<I: Copy + Send + Sync, R: Send>(
+    todo: &[I],
+    run: impl Fn(I) -> R + Sync,
+) -> Vec<(I, R)> {
     let jobs = jobs();
     if jobs == 1 {
         return todo.iter().map(|&a| (a, run(a))).collect();
