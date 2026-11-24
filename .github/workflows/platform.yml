@@ -1,0 +1,129 @@
+name: platform
+# One platform's chain, called by ci.yml once per platform: test (3 shards in parallel) -> release.
+# Each platform runs its own chain, so a fast platform releases without waiting for a slow one, and
+# the release libraries are built only after every test of that platform passed.
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      os:
+        required: true
+        type: string
+      release:
+        required: true
+        type: boolean
+
+env:
+  CARGO_INCREMENTAL: '0'
+  CARGO_PROFILE_DEV_DEBUG: '0'
+  CACHE_VERSION: ccache-v1
+
+jobs:
+  test:
+    name: test ${{ matrix.shard }}/3
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    runs-on: ${{ inputs.os }}
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      # Registry and git checkouts only (rust-cache cannot hold the 1924-member workspace state).
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # Several C upstreams need clang-cl on MSVC targets; the arm64 image has no LLVM.
+      - name: clang-cl (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (-not (Test-Path 'C:\Program Files\LLVM\bin\clang-cl.exe')) { choco install llvm -y --no-progress }
+      - name: C library cache directory
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/ccache"
+          touch "$RUNNER_TEMP/ccache-stamp"
+          echo "NEXTSSL_C_CACHE=$RUNNER_TEMP/ccache" >> "$GITHUB_ENV"
+      - uses: actions/cache/restore@v6
+        with:
+          path: ${{ runner.temp }}/ccache
+          key: ${{ env.CACHE_VERSION }}-${{ inputs.name }}-${{ github.run_id }}
+          restore-keys: ${{ env.CACHE_VERSION }}-${{ inputs.name }}-
+      - name: C toolchain versions
+        shell: bash
+        run: |
+          cc --version 2>/dev/null | head -1 || true
+          clang --version 2>/dev/null | head -1 || true
+          if [ "$RUNNER_OS" = Windows ]; then "/c/Program Files/LLVM/bin/clang-cl.exe" --version | head -1; fi
+      # Every test in its own process with a time limit; nothing stops the run. The registry smoke
+      # walks the whole catalog: 4 algorithms (or KAT files) at a time inside it, up to 900 s each,
+      # and a 1 h limit for the crate.
+      - name: Build, lint and test (shard ${{ matrix.shard }}/3)
+        shell: bash
+        env:
+          SMOKE_JOBS: '4'
+        run: >-
+          python tools/testrun.py --out test-report --timings --clippy --shard ${{ matrix.shard }}/3
+          --umbrella-features nextssl-registry/copyleft,nextssl-registry/all-heavy
+          --timeout 600 --crate-timeout nextssl-registry=3600 -- --workspace
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: test-report-${{ inputs.name }}-${{ matrix.shard }}
+          path: test-report/
+          if-no-files-found: warn
+      # Shard 1 builds every library of the platform; keep only the entries this run used.
+      - name: Prune the C library cache
+        if: ${{ !cancelled() && matrix.shard == 1 && github.event_name == 'push' }}
+        shell: bash
+        run: python tools/ccache_prune.py "$NEXTSSL_C_CACHE" "$RUNNER_TEMP/ccache-stamp"
+      - uses: actions/cache/save@v6
+        if: ${{ !cancelled() && matrix.shard == 1 && github.event_name == 'push' }}
+        with:
+          path: ${{ runner.temp }}/ccache
+          key: ${{ env.CACHE_VERSION }}-${{ inputs.name }}-${{ github.run_id }}
+
+  # Release libraries from source (never the C library cache), only after all 3 shards passed.
+  release:
+    name: release
+    needs: test
+    if: inputs.release
+    runs-on: ${{ inputs.os }}
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
+      - name: clang-cl (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (-not (Test-Path 'C:\Program Files\LLVM\bin\clang-cl.exe')) { choco install llvm -y --no-progress }
+      - run: cargo build -p nextssl-ffi --release --locked
+      - name: Package
+        shell: bash
+        run: bash tools/release_package.sh "${{ inputs.name }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ inputs.name }}
+          path: dist/
+          if-no-files-found: error
