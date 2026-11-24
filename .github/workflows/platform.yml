@@ -42,7 +42,7 @@ jobs:
             ~/.cargo/registry/cache
             ~/.cargo/git/db
           key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       # Several C upstreams need clang-cl on MSVC targets; the arm64 image has no LLVM.
@@ -63,14 +63,12 @@ jobs:
           key: ${{ env.CACHE_VERSION }}-${{ inputs.name }}-${{ github.run_id }}
           restore-keys: ${{ env.CACHE_VERSION }}-${{ inputs.name }}-
       # Test results (tools/testrun.py --result-cache): a crate whose inputs are bit for bit those of an
-      # earlier passing run is not built or tested again. The scheduled run tests everything.
+      # earlier passing run is not built or tested again.
       - name: Result cache directory
         shell: bash
         run: |
           mkdir -p "$RUNNER_TEMP/results"
-          FLAGS="--result-cache $RUNNER_TEMP/results"
-          if [ "${{ github.event_name }}" = schedule ]; then FLAGS="$FLAGS --result-cache-write-only"; fi
-          echo "RESULT_FLAGS=$FLAGS" >> "$GITHUB_ENV"
+          echo "RESULT_FLAGS=--result-cache $RUNNER_TEMP/results" >> "$GITHUB_ENV"
       - uses: actions/cache/restore@v6
         with:
           path: ${{ runner.temp }}/results
@@ -93,7 +91,7 @@ jobs:
           python tools/testrun.py --out test-report --timings --clippy --shard ${{ matrix.shard }}/3 $RESULT_FLAGS
           --umbrella-features nextssl-registry/copyleft,nextssl-registry/all-heavy
           --timeout 600 --crate-timeout nextssl-registry=3600 -- --workspace
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: test-report-${{ inputs.name }}-${{ matrix.shard }}
@@ -134,7 +132,7 @@ jobs:
             ~/.cargo/registry/cache
             ~/.cargo/git/db
           key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: clang-cl (Windows)
@@ -164,7 +162,7 @@ jobs:
       - name: Package
         shell: bash
         run: bash tools/release_package.sh "${{ inputs.name }}"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-${{ inputs.name }}
           path: dist/

@@ -4,13 +4,10 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
-  # Every night a full run: nothing is skipped by the result cache (it only records the passes).
-  schedule:
-    - cron: '0 20 * * *'
 
 # A newer push to the same branch cancels the older run instead of queueing behind it.
 concurrency:
-  group: ci-${{ github.ref }}-${{ github.event_name == 'schedule' && 'nightly' || 'push' }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -39,8 +36,11 @@ permissions:
 # * Result cache (tools/testrun.py --result-cache): a crate whose inputs (its family directory, its
 #   path dependencies, third_party/, docker/, Cargo.lock, the toolchain, the build environment and
 #   the test options) are bit for bit those of an earlier run where it compiled and all its tests
-#   passed is not built or tested again; the report counts it as cached. The nightly scheduled run
-#   (20:00 UTC) skips nothing.
+#   passed is not built or tested again; the report counts it as cached.
+# * Docker layer cache: in the GitHub container registry (ghcr.io/<owner>/nextssl-buildcache, with
+#   the workflow's own GITHUB_TOKEN), not in the 10 GB Actions cache; only pushes to main write it.
+# * release: the final (non-pre-release) draft v<version>, after every job above passed and the
+#   artifacts were checked; once per version.
 env:
   CARGO_INCREMENTAL: '0'
   CARGO_PROFILE_DEV_DEBUG: '0'
@@ -94,6 +94,9 @@ jobs:
   # owner uses locally (docker/Dockerfile.test); docker/test.sh selects the work from the env flags.
   docker:
     needs: guard
+    permissions:
+      contents: read
+      packages: write
     name: ${{ matrix.layer }}${{ matrix.part && format(' {0}/2', matrix.part) || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
@@ -111,6 +114,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
+      - name: Layer cache reference
+        run: echo "BUILDCACHE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/nextssl-buildcache:test" >> "$GITHUB_ENV"
+      # A failed login only loses the layer cache; the image is then built from scratch.
+      - uses: docker/login-action@v4
+        continue-on-error: true
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build test image
         uses: docker/build-push-action@v7
         with:
@@ -118,8 +130,8 @@ jobs:
           file: docker/Dockerfile.test
           tags: nextssl-test
           load: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.BUILDCACHE }}
+          cache-to: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.layer == 'symbols') && format('type=registry,ref={0},mode=max', env.BUILDCACHE) || '' }}
       - name: C library cache directory
         run: |
           mkdir -p "$RUNNER_TEMP/ccache" test-report
@@ -143,11 +155,11 @@ jobs:
           if [ -n "${{ matrix.part }}" ]; then SHARD="${{ matrix.part }}/2"; fi
           python3 tools/ci_test_report.py --out test-report -- \
             docker run --rm -v "$PWD/test-report:/report" -e NEXTSSL_REPORT_DIR=/report \
-            -v "$RUNNER_TEMP/ccache:/ccache" -e NEXTSSL_C_CACHE=/ccache             -v "$RUNNER_TEMP/results:/results" -e NEXTSSL_RESULT_CACHE=/results             -e NEXTSSL_RESULT_CACHE_WRITE_ONLY=${{ github.event_name == 'schedule' && '1' || '0' }} \
+            -v "$RUNNER_TEMP/ccache:/ccache" -e NEXTSSL_C_CACHE=/ccache             -v "$RUNNER_TEMP/results:/results" -e NEXTSSL_RESULT_CACHE=/results \
             -e NEXTSSL_IMAGE_ID="$(docker image inspect nextssl-test --format '{{.Id}}')" \
             -e NEXTSSL_SHARD="$SHARD" -e CARGO_INCREMENTAL -e CARGO_PROFILE_DEV_DEBUG \
             -e NEXTSSL_SKIP_BASE=1 -e ${{ matrix.env }} nextssl-test
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: test-report-${{ matrix.layer }}${{ matrix.part && format('-{0}', matrix.part) || '' }}
@@ -178,11 +190,23 @@ jobs:
     # After the wasm tests (and the other docker layers) passed.
     needs: docker
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      packages: read
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
+      - name: Layer cache reference
+        run: echo "BUILDCACHE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/nextssl-buildcache:test" >> "$GITHUB_ENV"
+      # A failed login only loses the layer cache; the image is then built from scratch.
+      - uses: docker/login-action@v4
+        continue-on-error: true
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build test image
         uses: docker/build-push-action@v7
         with:
@@ -190,8 +214,7 @@ jobs:
           file: docker/Dockerfile.test
           tags: nextssl-test
           load: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=${{ env.BUILDCACHE }}
       # The browser module (release) only; the wasm tests run in the docker job above.
       - name: Build wasm release
         run: |
@@ -206,7 +229,7 @@ jobs:
             cp /tmp/t/wasm32-unknown-unknown/release/nextssl_wasm.wasm /out/'
       - name: Package
         run: bash tools/release_package.sh wasm
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-wasm
           path: dist/
@@ -221,7 +244,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           pattern: release-*
           path: dist
@@ -244,3 +267,65 @@ jobs:
           # --draft: only the owner sees it until the license policy for the 1052 algorithms whose
           # algo.toml says NOASSERTION is decided (CLAUDE.md rule 3). Remove --draft to publish.
           gh release create "$TAG" dist/* --draft --prerelease --target "$GITHUB_SHA" --title "NextSSL $TAG" --notes-file notes.md
+
+  # The final release v<version> (not a pre-release): only after every job above passed (all platform
+  # chains, wasm, asan, miri, symbols, fuzz-smoke and the pre-release), and only once per version: when
+  # v<version> exists already, nothing is changed (bump the version in Cargo.toml for a new release).
+  release:
+    name: release
+    needs: [publish]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: release-*
+          path: dist
+          merge-multiple: true
+      - name: Precheck
+        id: pre
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          VER=$(sed -n 's/^version = "\(.*\)"$/\1/p' Cargo.toml | head -1)
+          [ -n "$VER" ] || { echo "no version in Cargo.toml"; exit 1; }
+          echo "ver=$VER" >> "$GITHUB_OUTPUT"
+          # A draft has no tag yet, so look it up in the list (drafts included), not by tag.
+          if gh release list --limit 1000 --json tagName --jq '.[].tagName' | grep -qx "v$VER"; then
+            echo "v$VER exists already; no new release (bump the version in Cargo.toml)." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "skip=1" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # One archive per platform, each a readable tar.gz of this commit and version.
+          missing=0
+          for p in linux-x64 linux-arm64 windows-x64 windows-arm64 macos-arm64 wasm; do
+            set -- dist/nextssl-"${VER}"+*-"${p}".tar.gz
+            f=$1
+            if [ "$#" != 1 ] || [ ! -s "$f" ]; then echo "missing or ambiguous: $p ($*)"; missing=1; continue; fi
+            tar -tzf "$f" > /dev/null || { echo "unreadable: $f"; missing=1; }
+            tar -tzf "$f" | grep -q '/LICENSE$' || { echo "no LICENSE in $f"; missing=1; }
+          done
+          [ "$missing" = 0 ] || exit 1
+          (cd dist && sha256sum * > SHA256SUMS && sha256sum -c SHA256SUMS)
+          echo "skip=0" >> "$GITHUB_OUTPUT"
+      - name: Create the release v<version>
+        if: steps.pre.outputs.skip == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VER=${{ steps.pre.outputs.ver }}
+          cat > notes.md <<NOTES
+          NextSSL ${VER}, commit ${GITHUB_SHA}.
+          Built and tested on Linux x64/arm64, Windows x64/arm64, macOS arm64 and wasm, with the
+          AddressSanitizer, Miri, symbol and fuzz layers, by CI run
+          ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}.
+          Tested against published KAT vectors; not FIPS validated. Changes to upstream sources:
+          docs/UPSTREAM_CHANGES.md.
+          NOTES
+          # --draft (owner decision 2026-11-25): same as the pre-release, only the owner sees it until
+          # the license policy is decided (CLAUDE.md rule 3); the owner publishes it by hand.
+          gh release create "v${VER}" dist/* --draft --target "$GITHUB_SHA" --title "NextSSL v${VER}" --notes-file notes.md
