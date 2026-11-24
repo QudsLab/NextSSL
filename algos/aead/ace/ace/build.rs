@@ -15,6 +15,14 @@ const PREFIX: &str = "nextssl__ace__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Windows on ARM64 (cl.exe): the upstream's endianness check lists _M_ARM but not _M_ARM64 and says to define
+    // __LITTLE_ENDIAN__ in the compiler flags instead.
+    // Windows on ARM64 is always little-endian. Other targets compile unchanged.
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("aarch64")
+        && std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc")
+    {
+        b.define("__LITTLE_ENDIAN__", None);
+    }
     // Plain `char` is unsigned on Linux ARM but signed on x86, Windows and Apple, where the
     // upstreams were written and tested (Khichidi-1's `char i; i >= 0` loop never ends unsigned).
     if !b.get_compiler().is_like_msvc() {

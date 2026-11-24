@@ -857,6 +857,35 @@ const WORKER_STACK: usize = 64 << 20;
 /// A real hang fails after this long instead of running forever.
 const PER_ALGO_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(300);
 
+/// Waits for a worker's result up to PER_ALGO_TIMEOUT. Every minute it prints which algorithm is
+/// still running, and a timeout is printed at once: if the whole test is killed from outside (the
+/// runner's time limit), its output still names the algorithms that were slow or hung (CI run
+/// 45393949691 lost that information).
+fn wait_reporting<T>(rx: &std::sync::mpsc::Receiver<T>, label: &str) -> Option<T> {
+    let step = std::time::Duration::from_secs(60);
+    let start = std::time::Instant::now();
+    loop {
+        let left = PER_ALGO_TIMEOUT.saturating_sub(start.elapsed());
+        if left.is_zero() {
+            eprintln!("[hang] {label}: no result after {PER_ALGO_TIMEOUT:?}");
+            return None;
+        }
+        match rx.recv_timeout(left.min(step)) {
+            Ok(v) => return Some(v),
+            Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
+                eprintln!(
+                    "[slow] {label}: still running after {} s",
+                    start.elapsed().as_secs()
+                );
+            }
+            Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => {
+                eprintln!("[hang] {label}: worker ended without a result");
+                return None;
+            }
+        }
+    }
+}
+
 fn check_one(a: &'static AlgoInfo) {
     // Miri cannot execute foreign (C/C++) functions; `AlgoInfo::c_backed` is generated from
     // algo.toml `[upstream]`. Those are covered by the native, ASan/UBSan and wasm runs.
@@ -966,13 +995,16 @@ fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
                     .unwrap_or_else(|| "panic".into())
             }));
         });
-        match rx.recv_timeout(PER_ALGO_TIMEOUT) {
-            Ok(Ok(())) => {
+        match wait_reporting(&rx, a.id) {
+            Some(Ok(())) => {
                 join_worker(h);
                 Ok(())
             }
-            Ok(Err(m)) => Err(format!("{}: {m}", a.id)),
-            Err(_) => Err(format!("{}: HANG (> {:?})", a.id, PER_ALGO_TIMEOUT)),
+            Some(Err(m)) => {
+                eprintln!("[fail] {}: {m}", a.id);
+                Err(format!("{}: {m}", a.id))
+            }
+            None => Err(format!("{}: HANG (> {:?})", a.id, PER_ALGO_TIMEOUT)),
         }
     };
     let results: Vec<(&'static AlgoInfo, Result<(), String>)> = if jobs == 1 {
@@ -1152,8 +1184,8 @@ fn published_kats_replay_through_the_registry() {
                 }
                 let _ = tx.send(out);
             });
-            match rx.recv_timeout(PER_ALGO_TIMEOUT) {
-                Ok(lines) => {
+            match wait_reporting(&rx, &format!("{} / {f}", a.id)) {
+                Some(lines) => {
                     for l in lines {
                         if let Some(rest) = l.strip_prefix("ok ") {
                             let _ = rest;
@@ -1166,7 +1198,7 @@ fn published_kats_replay_through_the_registry() {
                     }
                     join_worker(h);
                 }
-                Err(_) => failures.push(format!("KAT FAIL {} / {f}: HANG", a.id)),
+                None => failures.push(format!("KAT FAIL {} / {f}: HANG", a.id)),
             }
         }
     }

@@ -436,7 +436,17 @@ def main():
         if 'nextssl-registry/all-heavy' in feats:
             feats += ['nextssl-root/all-heavy', 'nextssl-ffi/all-heavy']
         feats = list(dict.fromkeys(feats))
-        arg_sets[0] = arg_sets[0] + ['--features', ','.join(feats)]
+        # A long shard is split into several cargo calls, and cargo rejects a feature of a package
+        # that call does not select (run 45393949691, wasm 1/2): each call gets the features of its
+        # own packages. A --workspace call selects every package.
+        for i, s in enumerate(arg_sets):
+            if '--workspace' in s:
+                mine = feats
+            else:
+                sel = {s[j + 1] for j, x in enumerate(s[:-1]) if x == '-p'}
+                mine = [f for f in feats if f.split('/')[0] in sel]
+            if mine:
+                arg_sets[i] = s + ['--features', ','.join(mine)]
     extra_env = clippy_env(a.cargo) if a.clippy else None
     runner = shlex.split(a.runner)
     limits = {}

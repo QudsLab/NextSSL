@@ -26,6 +26,14 @@ const PREFIX: &str = "nextssl__dragon__";
 
 fn base(cpp: bool) -> cc::Build {
     let mut b = cc::Build::new();
+    // Windows on ARM64 (cl.exe): ecrypt-config.h takes <xmmintrin.h> for every MSVC (only for the __m128 alignment type); on ARM64
+    // MSVC provides that header only with USE_SOFT_INTRINSICS (Microsoft's portable implementation).
+    // Other targets compile unchanged.
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("aarch64")
+        && std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc")
+    {
+        b.define("USE_SOFT_INTRINSICS", None);
+    }
     // Plain `char` is unsigned on Linux ARM but signed on x86, Windows and Apple, where the
     // upstreams were written and tested (Khichidi-1's `char i; i >= 0` loop never ends unsigned).
     if !b.get_compiler().is_like_msvc() {

@@ -588,8 +588,10 @@ mod tests {
 
     #[test]
     fn parses_nm_with_members() {
-        let out = "\nfoo.o:\n0000000000000000 T nextssl__x__f\n                 U memcpy\n0000000000000010 t local\n0000000000000020 D nextssl_v\n";
-        let v = parse_nm(out);
+        // The nm text carries the same Mach-O underscore as the expected symbols (see sk).
+        let u = if cfg!(target_os = "macos") { "_" } else { "" };
+        let out = format!("\nfoo.o:\n0000000000000000 T {u}nextssl__x__f\n                 U {u}memcpy\n0000000000000010 t {u}local\n0000000000000020 D {u}nextssl_v\n");
+        let v = parse_nm(&out);
         assert_eq!(
             v,
             vec![

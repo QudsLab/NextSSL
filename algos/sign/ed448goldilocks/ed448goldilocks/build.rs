@@ -58,19 +58,23 @@ fn entropy_copy(src: &str) -> PathBuf {
     p
 }
 
-/// macOS on aarch64 only: word.h's `#ifdef __APPLE__` block assumes an Intel Mac and byte-swaps with x86
-/// `bswapq` inline asm. On that target the sources are compiled from a copy of upstream/32 (OUT_DIR) whose
-/// word.h has `x = __builtin_bswap64(x);` instead (same result). Every other target compiles upstream/32.
+/// aarch64 only; the sources are then compiled from a copy of upstream/32 (OUT_DIR) whose word.h has
+/// these exact changes. 1. macOS: word.h's `#ifdef __APPLE__` block assumes an Intel Mac and
+/// byte-swaps with x86 `bswapq` inline asm; the copy has `x = __builtin_bswap64(x);` (same result).
+/// 2. Without `__ARM_NEON__` (GCC on Linux, clang-cl on Windows; Apple clang defines it), word.h
+/// takes its `_WIN64 || __amd64__ || __X86_64__ || __aarch64__` branch, made for 64-bit words: a
+/// 64-bit big_register_t. This tree has 32-bit words, so br_is_zero() and br_set_to_mask() give
+/// 32-bit masks that select only the low half of each register in the constant-time table lookup
+/// and conditional swap, and every signature fails to verify (CI run 45393949691, linux-arm64 and
+/// windows-arm64). The copy takes that branch for 64-bit words only; with 32-bit words the
+/// portable branch (32-bit big_register_t) is used, as on every 32-bit target. Other targets
+/// (x86 uses its SSE2 branch, wasm32 the portable one) compile upstream/32 unchanged.
 fn apple_arm_tree() -> Option<PathBuf> {
     let mac = std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("macos");
-    let x86 = matches!(
-        std::env::var("CARGO_CFG_TARGET_ARCH").as_deref(),
-        Ok("x86_64") | Ok("x86")
-    );
-    if !mac || x86 {
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() != Ok("aarch64") {
         return None;
     }
-    let dst = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("upstream32_apple_arm");
+    let dst = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("upstream32_aarch64");
     std::fs::create_dir_all(&dst).expect("create copy dir");
     for e in std::fs::read_dir("upstream/32").expect("read upstream/32") {
         let p = e.expect("dir entry").path();
@@ -79,10 +83,26 @@ fn apple_arm_tree() -> Option<PathBuf> {
         }
     }
     let w = dst.join("word.h");
-    let text = std::fs::read_to_string(&w).expect("read word.h");
-    let asm = "    __asm__ (\"bswapq %0\" : \"+r\"(x));\n";
-    assert_eq!(text.matches(asm).count(), 1, "word.h: expected one bswapq");
-    std::fs::write(&w, text.replace(asm, "    x = __builtin_bswap64(x);\n")).expect("write word.h");
+    let mut text = std::fs::read_to_string(&w).expect("read word.h");
+    let mut edits = vec![(
+        "#elif _WIN64 || __amd64__ || __X86_64__ || __aarch64__\n",
+        "#elif (_WIN64 || __amd64__ || __X86_64__ || __aarch64__) && WORD_BITS == 64\n",
+    )];
+    if mac {
+        edits.push((
+            "    __asm__ (\"bswapq %0\" : \"+r\"(x));\n",
+            "    x = __builtin_bswap64(x);\n",
+        ));
+    }
+    for (find, replace) in edits {
+        assert_eq!(
+            text.matches(find).count(),
+            1,
+            "word.h: expected one `{find}`"
+        );
+        text = text.replace(find, replace);
+    }
+    std::fs::write(&w, text).expect("write word.h");
     Some(dst)
 }
 
@@ -150,7 +170,7 @@ fn base() -> cc::Build {
         b.define("_BSD_SOURCE", None);
     }
     for s in SOURCES {
-        // On aarch64 macOS the upstream/32 files come from the patched copy (see apple_arm_tree).
+        // On aarch64 the upstream/32 files come from the patched copy (see apple_arm_tree).
         let src = match (&tree, s.strip_prefix("upstream/32/")) {
             (Some(t), Some(name)) => t.join(name).to_string_lossy().into_owned(),
             _ => s.to_string(),

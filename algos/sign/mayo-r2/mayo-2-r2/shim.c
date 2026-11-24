@@ -31,7 +31,9 @@ static void ns_spent(void *out, size_t n) {
 void nextssl__mayo_2_r2__rng_set(ns_fill_fn f, void *ctx) { ns_fill = f; ns_ctx = ctx; ns_fail = 0; }
 int nextssl__mayo_2_r2__rng_failed(void) { return ns_fail; }
 
-int randombytes(unsigned char *output, unsigned long long n) {
+/* size_t as in the upstream's include/randombytes.h: on wasm32 a 64-bit length is a different
+ * function signature, and the linker replaces the call with a trap (CI run 45393949691). */
+int randombytes(unsigned char *output, size_t n) {
     if (n == 0) return 0;
     if (ns_fill == NULL || ns_fill(ns_ctx, output, n) != 0) {
         ns_spent(output, n);

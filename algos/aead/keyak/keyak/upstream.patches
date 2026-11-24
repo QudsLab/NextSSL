@@ -1,0 +1,13 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: keyak-keccakp-prototype
+why: KeccakF-interface.h maps KeccakF_StatePermute to KeccakP1600_12_StatePermute but does not include
+why: KeccakP-1600-12-interface.h, which declares it; SerialFallback.c then calls it with no prototype
+why: in scope (C89 implicit `int f()`), while KeccakP-1600-12-reference.c defines it `void f(void *)`.
+why: Native ABIs ignore the mismatch; WebAssembly checks call signatures, and the linker replaces the
+why: call with a trap (invalid code in KeccakF_ParallelStatePermute, CI run 45393949691). The patch
+why: adds the declaration from KeccakP-1600-12-interface.h (identical) in front of the first function
+why: of SerialFallback.c. No code changes.
+file: upstream/SerialFallback.c
+count: 1
+find: void KeccakF_ParallelInitialize( void )
+replace: void KeccakP1600_12_StatePermute(void *state); void KeccakF_ParallelInitialize( void )

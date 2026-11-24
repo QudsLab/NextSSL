@@ -19,7 +19,7 @@ so anyone can see what was changed, where and why, and reproduce or review it.
 
 Glue code (`glue.rs`), shims (`shim.c`) and `build.rs` are NextSSL code, not upstream code.
 
-## 1. Patches (8 distinct, in 10 crates)
+## 1. Patches (9 distinct, in 11 crates)
 
 ### cloc-silc-pstate2-prototype
 
@@ -32,6 +32,19 @@ cloc.c/silc.c call pstate2() (a debug print, empty unless _PRINT) with no protot
 ```diff
 - void pstate(const unsigned char* st, int len);
 + void pstate(const unsigned char* st, int len); void pstate2(const unsigned char *str, const byte* state);
+```
+
+### keyak-keccakp-prototype
+
+Crates: keyak
+
+File: `upstream/SerialFallback.c` (1 occurrence(s))
+
+KeccakF-interface.h maps KeccakF_StatePermute to KeccakP1600_12_StatePermute but does not include KeccakP-1600-12-interface.h, which declares it; SerialFallback.c then calls it with no prototype in scope (C89 implicit `int f()`), while KeccakP-1600-12-reference.c defines it `void f(void *)`. Native ABIs ignore the mismatch; WebAssembly checks call signatures, and the linker replaces the call with a trap (invalid code in KeccakF_ParallelStatePermute, CI run 45393949691). The patch adds the declaration from KeccakP-1600-12-interface.h (identical) in front of the first function of SerialFallback.c. No code changes.
+
+```diff
+- void KeccakF_ParallelInitialize( void )
++ void KeccakP1600_12_StatePermute(void *state); void KeccakF_ParallelInitialize( void )
 ```
 
 ### cloc-silc-pstate2-prototype
@@ -188,7 +201,14 @@ upstream/32/goldilocks.c seeds a process-global generator from /dev/urandom in g
 
 Crates: ed448goldilocks
 
-macOS on aarch64 only: word.h's `#ifdef __APPLE__` block assumes an Intel Mac and byte-swaps with x86 `bswapq` inline asm. On that target the sources are compiled from a copy of upstream/32 (OUT_DIR) whose word.h has `x = __builtin_bswap64(x);` instead (same result). Every other target compiles upstream/32.
+aarch64 only; the sources are then compiled from a copy of upstream/32 (OUT_DIR) whose word.h has these exact changes. 1. macOS: word.h's `#ifdef __APPLE__` block assumes an Intel Mac and byte-swaps with x86 `bswapq` inline asm; the copy has `x = __builtin_bswap64(x);` (same result). 2. Without `__ARM_NEON__` (GCC on Linux, clang-cl on Windows; Apple clang defines it), word.h takes its `_WIN64 || __amd64__ || __X86_64__ || __aarch64__` branch, made for 64-bit words: a 64-bit big_register_t. This tree has 32-bit words, so br_is_zero() and br_set_to_mask() give 32-bit masks that select only the low half of each register in the constant-time table lookup and conditional swap, and every signature fails to verify (CI run 45393949691, linux-arm64 and windows-arm64). The copy takes that branch for 64-bit words only; with 32-bit words the portable branch (32-bit big_register_t) is used, as on every 32-bit target. Other targets (x86 uses its SSE2 branch, wasm32 the portable one) compile upstream/32 unchanged.
+
+```diff
+- #elif _WIN64 || __amd64__ || __X86_64__ || __aarch64__\n
++ #elif (_WIN64 || __amd64__ || __X86_64__ || __aarch64__) && WORD_BITS == 64\n
+-     __asm__ (\"bswapq %0\" : \"+r\"(x));\n
++     x = __builtin_bswap64(x);\n
+```
 
 ### `portable_source` in 6 crate(s)
 
@@ -579,3 +599,23 @@ Targets with a 32-bit C `long` (Windows, wasm32, other 32-bit) only: xmss_core.c
 | `WITH_SIG_ECSDSA` | 1 |
 | `main=nextssl_lookup3_unused_main` | 1 |
 | `nPARALLEL=1` | 1 |
+
+### Windows on ARM64 (aarch64-pc-windows-msvc) only (114 crates)
+
+Compiler defines and flags given only when the target is aarch64 with the MSVC environment;
+every other target compiles these crates unchanged.
+
+- `__LITTLE_ENDIAN__`: the upstream's endianness check lists _M_ARM but not _M_ARM64 and says to define __LITTLE_ENDIAN__ in the compiler flags instead. Windows on ARM64 is always little-endian. Other targets compile unchanged.
+  Crates: ace, ascon-80pq, ascon-aead128a, ascon-hash-v12, comet-128-cham, comet-64-cham, comet-64-speck, drygascon, drygascon-128-hash, drygascon-256, drygascon-256-hash, elephant-delirium, elephant-dumbo, elephant-jumbo, esch-384, estate-twegift, forkae-paef-128-192, forkae-paef-128-256, forkae-paef-128-288, forkae-paef-64-192, forkae-saef-128-192, forkae-saef-128-256, gift-cofb, gimli, gimli24-hash, grain-128aead, hyena-v1, hyena-v2, isap-a-128a, isap-k-128a, knot-aead-128-256, knot-aead-128-384, knot-aead-192-384, knot-aead-256-512, knot-hash-256-256, knot-hash-256-384, knot-hash-384-384, knot-hash-512-512, locus, lotus, orange, orangish-hash, oribatida-192, oribatida-256, photon-beetle, photon-beetle-hash, pyjamask, pyjamask-96, romulus-m1, romulus-m2, romulus-m3, romulus-n2, romulus-n3, saturnin, saturnin-hash, schwaemm-128-128, schwaemm-192-192, schwaemm-256-256, skinny-aead-m1, skinny-aead-m2, skinny-aead-m3, skinny-aead-m4, skinny-aead-m5, skinny-aead-m6, skinny-tk2-hash, skinny-tk3-hash, spix, spoc-128, spoc-64, spook, spook-su, subterranean, subterranean-hash, sundae, sundae-0, sundae-128, sundae-64, tinyjambu, tinyjambu-192, tinyjambu-256, wage, xoodyak, xoodyak-hash
+
+- `_MSC_STDINT_H_ /FIstdint.h`: stdint_win.h (a stdint.h for Visual C++ before 2010) clashes with the compiler's own <stdint.h> there (int_fast16_t); its include guard is defined and the compiler's <stdint.h> is used. Other targets compile unchanged.
+  Crates: omdsha256k128n96tau128v1, omdsha256k128n96tau128v2, omdsha256k128n96tau64v1, omdsha256k128n96tau64v2, omdsha256k128n96tau96v1, omdsha256k128n96tau96v2, omdsha256k192n104tau128v1, omdsha256k192n104tau128v2, omdsha256k256n104tau160v1, omdsha256k256n104tau160v2, omdsha256k256n248tau256v1, omdsha256k256n248tau256v2, omdsha512k128n128tau128v1, omdsha512k128n128tau128v2, omdsha512k256n256tau256v1, omdsha512k256n256tau256v2, omdsha512k512n256tau256v1, omdsha512k512n256tau256v2
+
+- `USE_SOFT_INTRINSICS __BYTE_ORDER=1234`: ecrypt-config.h takes <xmmintrin.h> for every MSVC (only for the __m128 alignment type); on ARM64 MSVC provides that header only with USE_SOFT_INTRINSICS (Microsoft's portable implementation). portEnRUPT.h knows the x86 MSVC macros only and asks for the byte order to be defined; __BYTE_ORDER=1234 is the form it reads (no other upstream file uses it). Windows on ARM64 is always little-endian. Other targets compile unchanged.
+  Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
+
+- `__LITTLE_ENDIAN__`: brg_endian.h does not know _M_ARM64; it reads __LITTLE_ENDIAN__ as the byte order. Windows on ARM64 is always little-endian. Other targets compile unchanged.
+  Crates: keccak-224-sha3r2, keccak-256-sha3r2, keccak-384-sha3r2, keccak-512-sha3r2
+
+- `USE_SOFT_INTRINSICS`: ecrypt-config.h takes <xmmintrin.h> for every MSVC (only for the __m128 alignment type); on ARM64 MSVC provides that header only with USE_SOFT_INTRINSICS (Microsoft's portable implementation). Other targets compile unchanged.
+  Crates: cryptmt, dragon, lex, snow-2-0, trivium

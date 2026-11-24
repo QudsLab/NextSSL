@@ -15,6 +15,15 @@ const PREFIX: &str = "nextssl__omdsha512k128n128tau128v1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Windows on ARM64 (cl.exe): stdint_win.h (a stdint.h for Visual C++ before 2010) clashes with the compiler's own <stdint.h>
+    // there (int_fast16_t); its include guard is defined and the compiler's <stdint.h> is used.
+    // Other targets compile unchanged.
+    if std::env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("aarch64")
+        && std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc")
+    {
+        b.define("_MSC_STDINT_H_", None);
+        b.flag("/FIstdint.h");
+    }
     // Plain `char` is unsigned on Linux ARM but signed on x86, Windows and Apple, where the
     // upstreams were written and tested (Khichidi-1's `char i; i >= 0` loop never ends unsigned).
     if !b.get_compiler().is_like_msvc() {
