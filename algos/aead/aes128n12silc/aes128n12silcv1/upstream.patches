@@ -1,0 +1,11 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: cloc-silc-pstate2-prototype
+why: cloc.c/silc.c call pstate2() (a debug print, empty unless _PRINT) with no prototype in scope,
+why: so C89 rules make it `int pstate2()`, while utils.c defines `void pstate2(const unsigned char *,
+why: const byte *)`. Native ABIs ignore the mismatch; WebAssembly checks call signatures and traps
+why: (signature_mismatch, CI run 45377985234). The later CLOC/SILC versions (v2, v3) declare it in the
+why: header; the patch adds the same declaration next to pstate()'s. No code changes.
+file: upstream/ref/silc.h
+count: 1
+find: void pstate(const unsigned char* st, int len);
+replace: void pstate(const unsigned char* st, int len); void pstate2(const unsigned char *str, const byte* state);

@@ -532,10 +532,16 @@ mod tests {
         sk(member, name, 'T')
     }
 
+    /// Test symbols are written as ELF names; on a macOS host they get the leading underscore a
+    /// Mach-O object really has, which `norm` strips again (CI run 45377985234).
     fn sk(member: Option<&str>, name: &str, kind: char) -> Sym {
         Sym {
             member: member.map(str::to_string),
-            name: name.to_string(),
+            name: if cfg!(target_os = "macos") {
+                format!("_{name}")
+            } else {
+                name.to_string()
+            },
             kind,
         }
     }

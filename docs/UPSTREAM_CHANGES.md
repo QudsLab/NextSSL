@@ -19,7 +19,33 @@ so anyone can see what was changed, where and why, and reproduce or review it.
 
 Glue code (`glue.rs`), shims (`shim.c`) and `build.rs` are NextSSL code, not upstream code.
 
-## 1. Patches (6 distinct, in 7 crates)
+## 1. Patches (8 distinct, in 10 crates)
+
+### cloc-silc-pstate2-prototype
+
+Crates: aes128n12silcv1, aes128n8silcv1
+
+File: `upstream/*/silc.h` (1 occurrence(s))
+
+cloc.c/silc.c call pstate2() (a debug print, empty unless _PRINT) with no prototype in scope, so C89 rules make it `int pstate2()`, while utils.c defines `void pstate2(const unsigned char *, const byte *)`. Native ABIs ignore the mismatch; WebAssembly checks call signatures and traps (signature_mismatch, CI run 45377985234). The later CLOC/SILC versions (v2, v3) declare it in the header; the patch adds the same declaration next to pstate()'s. No code changes.
+
+```diff
+- void pstate(const unsigned char* st, int len);
++ void pstate(const unsigned char* st, int len); void pstate2(const unsigned char *str, const byte* state);
+```
+
+### cloc-silc-pstate2-prototype
+
+Crates: twine80n6clocv1
+
+File: `upstream/*/cloc.h` (1 occurrence(s))
+
+cloc.c/silc.c call pstate2() (a debug print, empty unless _PRINT) with no prototype in scope, so C89 rules make it `int pstate2()`, while utils.c defines `void pstate2(const unsigned char *, const byte *)`. Native ABIs ignore the mismatch; WebAssembly checks call signatures and traps (signature_mismatch, CI run 45377985234). The later CLOC/SILC versions (v2, v3) declare it in the header; the patch adds the same declaration next to pstate()'s. No code changes.
+
+```diff
+- void pstate(const unsigned char* st, int len);
++ void pstate(const unsigned char* st, int len); void pstate2(const unsigned char *str, const byte* state);
+```
 
 ### meshhash-rot
 

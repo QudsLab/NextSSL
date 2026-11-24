@@ -427,7 +427,16 @@ def main():
     else:
         arg_sets = [args]
     if a.umbrella_features and umbrella:
-        arg_sets[0] = arg_sets[0] + ['--features', a.umbrella_features]
+        feats = [f for f in a.umbrella_features.split(',') if f]
+        # The crates above the registry gate the same algorithms with their own features (root's
+        # generated modules, the ffi table): enable them together, or the registry lists algorithms
+        # the root does not (run 45377985234: "registry and generated root modules differ").
+        if 'nextssl-registry/copyleft' in feats:
+            feats += ['nextssl/copyleft', 'nextssl-root/copyleft', 'nextssl-ffi/copyleft']
+        if 'nextssl-registry/all-heavy' in feats:
+            feats += ['nextssl-root/all-heavy', 'nextssl-ffi/all-heavy']
+        feats = list(dict.fromkeys(feats))
+        arg_sets[0] = arg_sets[0] + ['--features', ','.join(feats)]
     extra_env = clippy_env(a.cargo) if a.clippy else None
     runner = shlex.split(a.runner)
     limits = {}

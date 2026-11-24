@@ -81,8 +81,10 @@ if [ -n "${NEXTSSL_FUZZ_SECS:-}" ]; then
   FUZZ_BIN="${CARGO_TARGET_DIR:-fuzz/target}/x86_64-unknown-linux-gnu/release"
   for t in $FUZZ_TARGETS; do
     mkdir -p "fuzz/corpus/$t" "fuzz/artifacts/$t"
-    # A crash makes libFuzzer exit non-zero, which fails the script (pipefail).
-    "$FUZZ_BIN/$t" -artifact_prefix="fuzz/artifacts/$t/" -max_total_time="$NEXTSSL_FUZZ_SECS" \
+    # A crash makes libFuzzer exit non-zero, which fails the script (pipefail). ASAN_OPTIONS is what
+    # `cargo fuzz run` sets: identical constants of different upstreams are reported as ODR
+    # violations otherwise (hawk512 bits_lim00/bits_lims1, run 45377985234).
+    ASAN_OPTIONS="detect_odr_violation=0" "$FUZZ_BIN/$t" -artifact_prefix="fuzz/artifacts/$t/" -max_total_time="$NEXTSSL_FUZZ_SECS" \
       -print_final_stats=1 "fuzz/corpus/$t" 2>&1 | tee "/tmp/fuzzlogs/$t.log"
   done
   set +x

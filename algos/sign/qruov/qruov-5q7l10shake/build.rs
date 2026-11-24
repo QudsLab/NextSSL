@@ -102,6 +102,8 @@ fn base(cpp: bool) -> cc::Build {
 fn toolchain_name(n: &str) -> bool {
     const P: &[&str] = &[
         "__asan",
+        // ASan module globals (three underscores, e.g. ___asan_globals_registered).
+        "___asan",
         "__odr_asan",
         "__ubsan",
         "__sancov",

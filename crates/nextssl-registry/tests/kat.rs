@@ -392,7 +392,9 @@ fn smoke(a: &AlgoInfo, inst: &Instance) {
             let kl = pick(s.key, 32);
             let key =
                 SymmetricKey::from_bytes(&vec![6u8; kl], nextssl_core::Len::fixed(kl)).unwrap();
-            let nonce = vec![7u8; s.nonce.unwrap().min()];
+            // All-zero nonce: valid for every stream cipher, also those whose nonce carries a
+            // bounded field (A5/x GSM frame number < 26*51*2048, GEA direction bit 0/1).
+            let nonce = vec![0u8; s.nonce.unwrap().min()];
             let mut data = b"stream cipher round trip".to_vec();
             let orig = data.clone();
             c.apply_keystream(&key, &nonce, &mut data).unwrap();
