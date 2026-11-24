@@ -1,0 +1,61 @@
+# Portability patches for the Wave upstream (format and list: docs/UPSTREAM_CHANGES.md).
+
+patch: wave-1ul-vf2
+why: The upstream builds 64-bit masks with `1UL << n` on 64-bit words (wave_word is uint64_t).
+why: `unsigned long` is 64 bits only on LP64 systems; on Windows (LLP64) and wasm32 it is 32
+why: bits, so for n >= 32 the shift is undefined and the masks are wrong. Keygen then fails its
+why: Gaussian elimination and writes past a buffer (clang-cl ASan: heap-buffer-overflow in
+why: vf3_set_coeff, CI run 45270462977). `1ULL` is at least 64 bits everywhere and gives the
+why: same value as `1UL` on LP64 systems, so Linux and macOS results do not change.
+file: upstream/Wave1249/fq_arithmetic/vf2.c
+count: 1
+find: 1UL <<
+replace: 1ULL <<
+
+patch: wave-1ul-vf2-h
+why: The upstream builds 64-bit masks with `1UL << n` on 64-bit words (wave_word is uint64_t).
+why: `unsigned long` is 64 bits only on LP64 systems; on Windows (LLP64) and wasm32 it is 32
+why: bits, so for n >= 32 the shift is undefined and the masks are wrong. Keygen then fails its
+why: Gaussian elimination and writes past a buffer (clang-cl ASan: heap-buffer-overflow in
+why: vf3_set_coeff, CI run 45270462977). `1ULL` is at least 64 bits everywhere and gives the
+why: same value as `1UL` on LP64 systems, so Linux and macOS results do not change.
+file: upstream/Wave1249/fq_arithmetic/vf2.h
+count: 1
+find: 1UL <<
+replace: 1ULL <<
+
+patch: wave-1ul-vf3
+why: The upstream builds 64-bit masks with `1UL << n` on 64-bit words (wave_word is uint64_t).
+why: `unsigned long` is 64 bits only on LP64 systems; on Windows (LLP64) and wasm32 it is 32
+why: bits, so for n >= 32 the shift is undefined and the masks are wrong. Keygen then fails its
+why: Gaussian elimination and writes past a buffer (clang-cl ASan: heap-buffer-overflow in
+why: vf3_set_coeff, CI run 45270462977). `1ULL` is at least 64 bits everywhere and gives the
+why: same value as `1UL` on LP64 systems, so Linux and macOS results do not change.
+file: upstream/Wave1249/fq_arithmetic/vf3.c
+count: 6
+find: 1UL <<
+replace: 1ULL <<
+
+patch: wave-1ul-vf3-h
+why: The upstream builds 64-bit masks with `1UL << n` on 64-bit words (wave_word is uint64_t).
+why: `unsigned long` is 64 bits only on LP64 systems; on Windows (LLP64) and wasm32 it is 32
+why: bits, so for n >= 32 the shift is undefined and the masks are wrong. Keygen then fails its
+why: Gaussian elimination and writes past a buffer (clang-cl ASan: heap-buffer-overflow in
+why: vf3_set_coeff, CI run 45270462977). `1ULL` is at least 64 bits everywhere and gives the
+why: same value as `1UL` on LP64 systems, so Linux and macOS results do not change.
+file: upstream/Wave1249/fq_arithmetic/vf3.h
+count: 2
+find: 1UL <<
+replace: 1ULL <<
+
+patch: wave-1ul-sample
+why: The upstream builds 64-bit masks with `1UL << n` on 64-bit words (wave_word is uint64_t).
+why: `unsigned long` is 64 bits only on LP64 systems; on Windows (LLP64) and wasm32 it is 32
+why: bits, so for n >= 32 the shift is undefined and the masks are wrong. Keygen then fails its
+why: Gaussian elimination and writes past a buffer (clang-cl ASan: heap-buffer-overflow in
+why: vf3_set_coeff, CI run 45270462977). `1ULL` is at least 64 bits everywhere and gives the
+why: same value as `1UL` on LP64 systems, so Linux and macOS results do not change.
+file: upstream/Wave1249/wave/sample.c
+count: 2
+find: 1UL <<
+replace: 1ULL <<

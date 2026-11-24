@@ -11,6 +11,11 @@ const PREFIX: &str = "nextssl__meshhash_512_sha3r1__";
 
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Plain `char` is unsigned on Linux ARM but signed on x86, Windows and Apple, where the
+    // upstreams were written and tested (Khichidi-1's `char i; i >= 0` loop never ends unsigned).
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-fsigned-char");
+    }
     // Pin the C dialect: GCC 15 defaults to C23, where `int f()` means no parameters; that breaks
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
@@ -41,10 +46,10 @@ fn base() -> cc::Build {
     b.flag_if_supported("-Wno-error=return-mismatch");
     b.flag_if_supported("-Wno-error=declaration-missing-parameter-type");
     for i in INCLUDES {
-        b.include(i);
+        b.include(up(i));
     }
     for s in SOURCES {
-        b.file(s);
+        b.file(up(s));
     }
     if std::env::var("NEXTSSL_C_SANITIZE").is_ok_and(|v| v == "1") {
         b.flag("-fsanitize=address,undefined")
@@ -76,6 +81,8 @@ fn toolchain_name(n: &str) -> bool {
         "__clang",
         "__emutls",
         "__tls",
+        // MSVC auto-vectorizer flag (COMDAT, merged by the linker; emitted only at -O2).
+        "__isa_available",
     ];
     P.iter().any(|p| n.starts_with(p))
 }
@@ -117,8 +124,16 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 }
 
 fn main() {
+    // Compiles the upstream, or reuses the identical result of an earlier build when CI enables the
+    // cache (NEXTSSL_C_CACHE); see crates/nextssl-cbuild.
+    nextssl_cbuild::cached(build_main);
+}
+
+fn build_main() {
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let mut probe = base();
+    // Only lists the defined globals; the optimisation level does not change that set.
+    probe.opt_level(0);
     probe.out_dir(out.join("probe"));
     std::fs::create_dir_all(out.join("probe")).unwrap();
     let objs = probe.compile_intermediates();
@@ -136,14 +151,17 @@ fn main() {
         b.flag("-include").flag(hdr.to_str().unwrap());
     }
     link_shared(&mut b, "nextssl_meshhash_512_sha3r1", false);
-    println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
+    // The final objects must define no global the -O0 probe missed (see check_prefixed).
+    check_prefixed(&out);
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
     if std::path::Path::new("upstream").exists() {
-        println!("cargo:rerun-if-changed=upstream");
+        nextssl_cbuild::directive!("cargo:rerun-if-changed=upstream");
     }
     if std::path::Path::new("shim.c").exists() {
-        println!("cargo:rerun-if-changed=shim.c");
+        nextssl_cbuild::directive!("cargo:rerun-if-changed=shim.c");
     }
-    println!("cargo:rerun-if-changed=build.rs");
+    nextssl_cbuild::directive!("cargo:rerun-if-changed=upstream.patches");
+    nextssl_cbuild::directive!("cargo:rerun-if-changed=build.rs");
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)
@@ -178,10 +196,10 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");
-    println!("cargo:rustc-link-search=native={}", shared.display());
-    println!("cargo:rustc-link-lib=static={uniq}");
-    println!("cargo:rerun-if-env-changed=CC");
-    println!("cargo:rerun-if-env-changed=CFLAGS");
+    nextssl_cbuild::directive!("cargo:rustc-link-search=native={}", shared.display());
+    nextssl_cbuild::directive!("cargo:rustc-link-lib=static={uniq}");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=CC");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=CFLAGS");
     if cpp {
         let env = std::env::var("CARGO_CFG_TARGET_ENV").unwrap_or_default();
         let os = std::env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
@@ -195,8 +213,138 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
             .to_string()
         });
         if !std_lib.is_empty() {
-            println!("cargo:rustc-link-lib={std_lib}");
+            nextssl_cbuild::directive!("cargo:rustc-link-lib={std_lib}");
         }
     }
 }
 // END SHARED LINK
+
+// BEGIN UPSTREAM PATCHES (upstream.patches, listed in docs/UPSTREAM_CHANGES.md)
+/// A path under `upstream/` mapped into the patched copy of the tree; other paths are unchanged.
+fn up(p: &str) -> PathBuf {
+    match p.strip_prefix("upstream") {
+        Some(rest) if rest.is_empty() || rest.starts_with('/') => {
+            patched_upstream().join(rest.trim_start_matches('/'))
+        }
+        _ => PathBuf::from(p),
+    }
+}
+
+/// Copy of upstream/ in OUT_DIR with the replacements of `upstream.patches` applied; the files on
+/// disk stay verbatim. Each patch names a file, the exact text to find, how many times it occurs
+/// and its replacement; any other count stops the build, so a changed upstream is never patched
+/// blindly. The reason for every patch is in upstream.patches and docs/UPSTREAM_CHANGES.md.
+fn patched_upstream() -> &'static std::path::Path {
+    static DIR: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
+    DIR.get_or_init(|| {
+        let dst = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("patched-upstream");
+        let _ = std::fs::remove_dir_all(&dst);
+        copy_tree(std::path::Path::new("upstream"), &dst);
+        let spec = std::fs::read_to_string("upstream.patches").expect("read upstream.patches");
+        for p in parse_patches(&spec) {
+            let rel = p
+                .file
+                .strip_prefix("upstream/")
+                .expect("patch file under upstream/");
+            let path = dst.join(rel);
+            let text = std::fs::read_to_string(&path).expect("read patched file");
+            let n = text.matches(p.find.as_str()).count();
+            assert_eq!(
+                n, p.count,
+                "{}: `{}` occurs {n} times, expected {}",
+                p.file, p.find, p.count
+            );
+            std::fs::write(&path, text.replace(p.find.as_str(), p.replace.as_str()))
+                .expect("write patched file");
+        }
+        dst
+    })
+}
+
+struct Patch {
+    file: String,
+    count: usize,
+    find: String,
+    replace: String,
+}
+
+/// `patch:` starts a record; `file:`, `count:`, `find:` and `replace:` follow (the value is the
+/// rest of the line after `key: `). `why:` lines and lines starting with `#` are documentation.
+fn parse_patches(spec: &str) -> Vec<Patch> {
+    let mut out: Vec<Patch> = Vec::new();
+    for line in spec.lines() {
+        let line = line.trim_end_matches('\r');
+        if line.starts_with("patch:") {
+            out.push(Patch {
+                file: String::new(),
+                count: 0,
+                find: String::new(),
+                replace: String::new(),
+            });
+        } else if let Some(p) = out.last_mut() {
+            if let Some(v) = line.strip_prefix("file: ") {
+                p.file = v.to_string();
+            } else if let Some(v) = line.strip_prefix("count: ") {
+                p.count = v.parse().expect("count is a number");
+            } else if let Some(v) = line.strip_prefix("find: ") {
+                p.find = v.to_string();
+            } else if let Some(v) = line.strip_prefix("replace: ") {
+                p.replace = v.to_string();
+            }
+        }
+    }
+    for p in &out {
+        assert!(
+            !p.file.is_empty() && p.count > 0 && !p.find.is_empty(),
+            "upstream.patches: incomplete record"
+        );
+    }
+    out
+}
+
+fn copy_tree(from: &std::path::Path, to: &std::path::Path) {
+    std::fs::create_dir_all(to).expect("create patched tree");
+    for e in std::fs::read_dir(from).expect("read upstream dir") {
+        let e = e.expect("dir entry");
+        let target = to.join(e.file_name());
+        if e.file_type().expect("file type").is_dir() {
+            copy_tree(&e.path(), &target);
+        } else {
+            std::fs::copy(e.path(), &target).expect("copy upstream file");
+        }
+    }
+}
+
+/// The probe (pass 1) runs at -O0 only to list the globals the upstream defines; the set of external
+/// definitions does not depend on the optimisation level. This parses the final optimised objects
+/// and stops the build if any of them defines a global that was not renamed, so a symbol the probe
+/// missed can never reach the link (where it could collide with another upstream).
+fn check_prefixed(out: &std::path::Path) {
+    fn walk(dir: &std::path::Path, acc: &mut Vec<PathBuf>) {
+        for e in std::fs::read_dir(dir).expect("read OUT_DIR").flatten() {
+            let p = e.path();
+            if p.is_dir() {
+                let name = e.file_name();
+                if name != "probe" && name != "probe_cpp" && name != "patched-upstream" {
+                    walk(&p, acc);
+                }
+            } else if p.extension().is_some_and(|x| x == "o" || x == "obj")
+                && !p.file_stem().is_some_and(|s| s == "flag_check")
+            {
+                acc.push(p);
+            }
+        }
+    }
+    let mut objs = Vec::new();
+    walk(out, &mut objs);
+    assert!(
+        !objs.is_empty(),
+        "no object files found under {}",
+        out.display()
+    );
+    let missed = defined_symbols(&objs);
+    assert!(
+        missed.is_empty(),
+        "globals defined by the optimised build but not renamed (the -O0 probe missed them): {missed:?}"
+    );
+}

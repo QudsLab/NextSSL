@@ -86,14 +86,15 @@ def pkg_name(package_id):
 
 # ---------------------------------------------------------------------------------------------- build
 
-def build(cargo, args, log, timings):
+def build(cargo, args, log, timings, extra_env=None):
     cmd = shlex.split(cargo) + ['build', '--tests', '--keep-going', '--message-format=json-render-diagnostics']
     if timings:
         cmd.append('--timings')
     cmd += args
-    print('[testrun] build:', ' '.join(cmd), flush=True)
-    log.write('### build: ' + ' '.join(cmd) + '\n')
-    env = dict(os.environ, CARGO_TERM_COLOR='never')
+    shown = ' '.join(cmd)
+    print('[testrun] build:', shown if len(shown) < 600 else shown[:600] + f' … ({len(args)} arguments)', flush=True)
+    log.write('### build: ' + shown + '\n')
+    env = dict(os.environ, CARGO_TERM_COLOR='never', **(extra_env or {}))
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
     binaries = []
     errors = collections.OrderedDict()
@@ -141,6 +142,69 @@ def build(cargo, args, log, timings):
             extra = [x.strip() for x in stderr_lines if crate in x and ('panicked' in x or 'error' in x)]
             errors[crate] += [('compile', x) for x in extra[:3]]
     return rc, binaries, errors
+
+
+# ---------------------------------------------------------------------------------------------- shards
+
+def load_weights(path):
+    """tools/ci_weights.tsv -> ({crate: build seconds}, {(crate, test): seconds}); empty when absent."""
+    build_w, test_w = {}, {}
+    if not path or not os.path.exists(path):
+        return build_w, test_w
+    with open(path, encoding='utf-8') as f:
+        for line in f:
+            if line.startswith('#') or not line.strip():
+                continue
+            kind, crate, test, secs = line.rstrip('\n').split('\t')
+            if kind == 'build':
+                build_w[crate] = float(secs)
+            elif kind == 'test':
+                test_w[(crate, test)] = float(secs)
+    return build_w, test_w
+
+
+def workspace_members(cargo, excluded):
+    out = subprocess.run(shlex.split(cargo) + ['metadata', '--no-deps', '--format-version', '1'],
+                         capture_output=True, check=True).stdout
+    meta = json.loads(out)
+    members = set(meta['workspace_members'])
+    return sorted(p['name'] for p in meta['packages'] if p['id'] in members and p['name'] not in excluded)
+
+
+def shard_packages(names, k, n, build_w, test_w):
+    """Split the workspace into n shards of about equal expected time; return shard k's packages.
+
+    Every crate that is not an algorithm (registry, ffi, root, ...) links the whole catalog, so they all
+    go to shard 1, whose load starts with the build of every algorithm library. The algorithms are then
+    placed greedily, heaviest first, on the least loaded shard. A crate missing from the weights gets
+    the median weight, so a new algorithm is always placed. Deterministic for the same inputs."""
+    per_test = collections.Counter()
+    for (crate, _), s in test_w.items():
+        per_test[crate] += s
+    def weight(c):
+        return build_w.get(c, med) + per_test.get(c, 0.0)
+    known = sorted(build_w.get(c, 0.0) + per_test.get(c, 0.0) for c in names if c in build_w)
+    med = known[len(known) // 2] if known else 1.0
+    algos = [c for c in names if c.startswith('nextssl-algo-')]
+    others = [c for c in names if not c.startswith('nextssl-algo-')]
+    loads = [0.0] * n
+    bins = [[] for _ in range(n)]
+    bins[0] = list(others)
+    loads[0] = sum(weight(c) for c in others) + sum(build_w.get(c, med) for c in algos)
+    for c in sorted(algos, key=lambda c: (-weight(c), c)):
+        i = min(range(n), key=lambda j: (loads[j], j))
+        bins[i].append(c)
+        loads[i] += weight(c)
+    return sorted(bins[k - 1]), loads
+
+
+def clippy_env(cargo):
+    """RUSTC_WORKSPACE_WRAPPER=clippy-driver: the same compile that builds the tests also runs clippy
+    on every workspace crate, with warnings as errors (as `cargo clippy -- -D warnings`)."""
+    toolchain = [a[1:] for a in shlex.split(cargo)[1:] if a.startswith('+')]
+    cmd = ['rustup', 'which'] + (['--toolchain', toolchain[0]] if toolchain else []) + ['clippy-driver']
+    driver = subprocess.run(cmd, capture_output=True, text=True, check=True).stdout.strip()
+    return {'RUSTC_WORKSPACE_WRAPPER': driver, 'CLIPPY_ARGS': '-D__CLIPPY_HACKERY__warnings__CLIPPY_HACKERY__'}
 
 
 # ---------------------------------------------------------------------------------------------- run
@@ -306,11 +370,21 @@ def main():
     ap.add_argument('--out', default='test-report')
     ap.add_argument('--jobs', type=int, default=os.cpu_count() or 2, help='tests run at the same time')
     ap.add_argument('--timeout', type=int, default=600, help='seconds one test may run before it is killed')
+    ap.add_argument('--crate-timeout', action='append', default=[], metavar='CRATE=SECONDS',
+                    help='a different limit for every test of one crate (e.g. the registry smoke, which '
+                         'walks the whole catalog in one test); may be repeated')
     ap.add_argument('--max-per-algo', type=int, default=5)
     ap.add_argument('--cargo', default='cargo', help='cargo command, e.g. "cargo +nightly"')
     ap.add_argument('--runner', default='', help='prefix for every test binary, e.g. "wasmtime run --dir=/src"')
     ap.add_argument('--timings', action='store_true', help='cargo --timings; the HTML report is copied to --out')
     ap.add_argument('--rerun-failed', metavar='JSON', help='run only the crates that failed in this report')
+    ap.add_argument('--shard', metavar='K/N', help='build and test only shard K of N (see shard_packages)')
+    ap.add_argument('--weights', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ci_weights.tsv'),
+                    help='build and test seconds per crate/test (tools/ci_weights.py): shard balance, test order')
+    ap.add_argument('--clippy', action='store_true', help='run clippy -D warnings in the same compile')
+    ap.add_argument('--umbrella-features', default='',
+                    help='cargo features enabled whenever the non-algorithm crates are built, e.g. '
+                         'nextssl-registry/copyleft,nextssl-registry/all-heavy')
     ap.add_argument('cargo_args', nargs=argparse.REMAINDER, help='-- arguments for cargo build')
     a = ap.parse_args()
     args = a.cargo_args[1:] if a.cargo_args[:1] == ['--'] else a.cargo_args
@@ -322,12 +396,57 @@ def main():
         args = [x for x in args if x != '--workspace']
         for c in crates:
             args += ['-p', c]
+    build_w, test_w = load_weights(a.weights)
+    umbrella = '--workspace' in args
+    if a.shard:
+        m = re.fullmatch(r'(\d+)/(\d+)', a.shard)
+        if not m or not 1 <= int(m.group(1)) <= int(m.group(2)):
+            ap.error('--shard expects K/N with 1 <= K <= N')
+        k, n = int(m.group(1)), int(m.group(2))
+        excluded = {args[i + 1] for i, x in enumerate(args[:-1]) if x == '--exclude'}
+        rest = []
+        skip = False
+        for x in args:
+            if skip:
+                skip = False
+            elif x == '--exclude':
+                skip = True
+            elif x != '--workspace':
+                rest.append(x)
+        names = workspace_members(a.cargo, excluded)
+        pkgs, loads = shard_packages(names, k, n, build_w, test_w)
+        print(f'[testrun] shard {k}/{n}: {len(pkgs)} of {len(names)} packages; expected load per shard (s): '
+              + ', '.join(f'{x:.0f}' for x in loads), flush=True)
+        umbrella = k == 1
+        chunks = [pkgs]
+        # Windows limits a command line to 32767 characters: split very long package lists.
+        while sum(len(p) + 4 for p in chunks[-1]) > 28000:
+            last = chunks.pop()
+            chunks += [last[:len(last) // 2], last[len(last) // 2:]]
+        arg_sets = [rest + [y for p in c for y in ('-p', p)] for c in chunks]
+    else:
+        arg_sets = [args]
+    if a.umbrella_features and umbrella:
+        arg_sets[0] = arg_sets[0] + ['--features', a.umbrella_features]
+    extra_env = clippy_env(a.cargo) if a.clippy else None
     runner = shlex.split(a.runner)
+    limits = {}
+    for item in a.crate_timeout:
+        crate, _, secs = item.partition('=')
+        if not crate or not secs.isdigit():
+            ap.error(f'--crate-timeout {item!r}: expected CRATE=SECONDS')
+        limits[crate] = int(secs)
     os.makedirs(a.out, exist_ok=True)
     t0 = time.time()
     log = open(os.path.join(a.out, 'test-full.log'), 'w', encoding='utf-8', newline='\n')
 
-    brc, binaries, compile_errs = build(a.cargo, args, log, a.timings)
+    brc, binaries, compile_errs = 0, [], collections.OrderedDict()
+    for argv in arg_sets:
+        rc, bins, errs = build(a.cargo, argv, log, a.timings, extra_env)
+        brc = brc or rc
+        binaries += bins
+        for c, e in errs.items():
+            compile_errs.setdefault(c, []).extend(e)
     t_build = time.time() - t0
     if a.timings:
         for root, _, files in os.walk(os.environ.get('CARGO_TARGET_DIR', 'target')):
@@ -351,6 +470,11 @@ def main():
             continue
         for n in names:
             jobs.append((b, n))
+    # Longest first (times from the weights file), so a slow signature test does not start last and
+    # hold the run alone at the end. Unknown tests count as slow and also start early.
+    known = sorted(test_w.values())
+    slow = known[int(len(known) * 0.9)] if known else 0.0
+    jobs.sort(key=lambda j: -test_w.get((j[0]['crate'], j[1]), slow))
     print(f'[testrun] {len(jobs)} tests in {len(binaries)} binaries; running {a.jobs} at a time, '
           f'limit {a.timeout} s each', flush=True)
 
@@ -363,10 +487,11 @@ def main():
     def one(job):
         b, name = job
         cmd = runner + [b['exe'], '--exact', name, '--test-threads', '1', '--nocapture']
-        rc, out, secs, timed_out = run_proc(cmd, b['dir'], env_for(b), a.timeout)
+        limit = limits.get(b['crate'], a.timeout)
+        rc, out, secs, timed_out = run_proc(cmd, b['dir'], env_for(b), limit)
         lines = out.splitlines()
         ran_one = any(re.match(r'^test result: ok\. 1 passed', ln) for ln in lines)
-        iss = [] if (rc == 0 and not timed_out and ran_one) else issues_of(lines, rc, timed_out, a.timeout, ran_one)
+        iss = [] if (rc == 0 and not timed_out and ran_one) else issues_of(lines, rc, timed_out, limit, ran_one)
         with lock:
             done[0] += 1
             times.append((secs, b['crate'], name))

@@ -21,7 +21,18 @@ fn sanitize(b: &mut cc::Build) {
 }
 
 fn main() {
+    // Compiles the upstream, or reuses the identical result of an earlier build when CI enables the
+    // cache (NEXTSSL_C_CACHE); see crates/nextssl-cbuild.
+    nextssl_cbuild::cached(build_main);
+}
+
+fn build_main() {
     let mut b = cc::Build::new();
+    // Plain `char` is unsigned on Linux ARM but signed on x86, Windows and Apple, where the
+    // upstreams were written and tested (Khichidi-1's `char i; i >= 0` loop never ends unsigned).
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-fsigned-char");
+    }
     for f in SOURCES {
         b.file(f);
     }
@@ -36,14 +47,14 @@ fn main() {
         b.flag("-std=gnu17");
     }
     link_shared(&mut b, "nextssl_ascon_aead128", false);
-    println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
     if std::path::Path::new("upstream").exists() {
-        println!("cargo:rerun-if-changed=upstream");
+        nextssl_cbuild::directive!("cargo:rerun-if-changed=upstream");
     }
     if std::path::Path::new("shim.c").exists() {
-        println!("cargo:rerun-if-changed=shim.c");
+        nextssl_cbuild::directive!("cargo:rerun-if-changed=shim.c");
     }
-    println!("cargo:rerun-if-changed=build.rs");
+    nextssl_cbuild::directive!("cargo:rerun-if-changed=build.rs");
 }
 
 // BEGIN SHARED LINK (cargo xtask build-link)
@@ -78,10 +89,10 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");
-    println!("cargo:rustc-link-search=native={}", shared.display());
-    println!("cargo:rustc-link-lib=static={uniq}");
-    println!("cargo:rerun-if-env-changed=CC");
-    println!("cargo:rerun-if-env-changed=CFLAGS");
+    nextssl_cbuild::directive!("cargo:rustc-link-search=native={}", shared.display());
+    nextssl_cbuild::directive!("cargo:rustc-link-lib=static={uniq}");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=CC");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=CFLAGS");
     if cpp {
         let env = std::env::var("CARGO_CFG_TARGET_ENV").unwrap_or_default();
         let os = std::env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
@@ -95,7 +106,7 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
             .to_string()
         });
         if !std_lib.is_empty() {
-            println!("cargo:rustc-link-lib={std_lib}");
+            nextssl_cbuild::directive!("cargo:rustc-link-lib={std_lib}");
         }
     }
 }

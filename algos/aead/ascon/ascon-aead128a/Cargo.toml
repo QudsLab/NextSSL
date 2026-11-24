@@ -15,6 +15,7 @@ nextssl-core.workspace = true
 zeroize.workspace = true
 
 [build-dependencies]
+nextssl-cbuild.workspace = true
 cc = "1"
 
 [dev-dependencies]

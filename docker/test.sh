@@ -16,6 +16,11 @@ set -euxo pipefail
 cd "$(dirname "$0")/.."
 # Test reports (tools/testrun.py) go here; CI mounts a host directory and uploads it.
 REPORT_DIR="${NEXTSSL_REPORT_DIR:-/tmp/test-report}"
+# Options shared by every tools/testrun.py call: NEXTSSL_SHARD=K/N runs one shard (CI splits a
+# platform over several jobs); the registry's copyleft and heavy algorithms are always included, so
+# their KATs run too.
+TESTRUN_OPTS="--umbrella-features nextssl-registry/copyleft,nextssl-registry/all-heavy"
+if [ -n "${NEXTSSL_SHARD:-}" ]; then TESTRUN_OPTS="$TESTRUN_OPTS --shard $NEXTSSL_SHARD"; fi
 
 if [ "${NEXTSSL_ALL:-0}" = "1" ]; then
   export NEXTSSL_SYMBOLS=1 NEXTSSL_MIRI=1 NEXTSSL_ASAN=1 NEXTSSL_WASM=1
@@ -27,7 +32,8 @@ if [ "${NEXTSSL_SKIP_BASE:-0}" != "1" ]; then
   cargo fmt --all --check
   cargo clippy --workspace --all-targets -- -D warnings
   # Every test in its own process, in parallel, with a time limit; nothing stops the run (tools/testrun.py).
-  python3 tools/testrun.py --out "$REPORT_DIR/base" -- --workspace
+  # The registry smoke walks the whole catalog in one test: 4 algorithms at a time, longer limit.
+  SMOKE_JOBS=4 python3 tools/testrun.py --out "$REPORT_DIR/base" $TESTRUN_OPTS --crate-timeout nextssl-registry=1800 -- --workspace
 fi
 
 if [ "${NEXTSSL_FFI_SWEEP:-0}" = "1" ]; then
@@ -59,8 +65,9 @@ if [ "${NEXTSSL_ASAN:-0}" = "1" ]; then
   RUSTFLAGS="-Zsanitizer=address" \
   ASAN_OPTIONS="detect_leaks=1:abort_on_error=0" \
   CARGO_TARGET_DIR=/tmp/target-asan \
-    python3 tools/testrun.py --out "$REPORT_DIR/asan" --cargo "cargo +nightly" --timeout 1200 \
-    -- -Zbuild-std --target x86_64-unknown-linux-gnu --workspace
+  SMOKE_JOBS=4 \
+    python3 tools/testrun.py --out "$REPORT_DIR/asan" $TESTRUN_OPTS --cargo "cargo +nightly" --timeout 1200 \
+    --crate-timeout nextssl-registry=3600 -- -Zbuild-std --target x86_64-unknown-linux-gnu --workspace
 fi
 
 FUZZ_TARGETS=$(cd fuzz/fuzz_targets && ls *.rs | sed 's/\.rs$//')
@@ -69,10 +76,14 @@ if [ "${NEXTSSL_FUZZ_BUILD:-0}" = "1" ] || [ -n "${NEXTSSL_FUZZ_SECS:-}" ]; then
 fi
 if [ -n "${NEXTSSL_FUZZ_SECS:-}" ]; then
   mkdir -p /tmp/fuzzlogs
+  # Run the binaries `cargo fuzz build` made, directly: `cargo fuzz run` would build again for every
+  # target (run 45202466359: 8 rebuilds of 12 min for 4 x 30 s of fuzzing).
+  FUZZ_BIN="${CARGO_TARGET_DIR:-fuzz/target}/x86_64-unknown-linux-gnu/release"
   for t in $FUZZ_TARGETS; do
+    mkdir -p "fuzz/corpus/$t" "fuzz/artifacts/$t"
     # A crash makes libFuzzer exit non-zero, which fails the script (pipefail).
-    (cd fuzz && cargo +nightly fuzz run "$t" -- \
-      -max_total_time="$NEXTSSL_FUZZ_SECS" -print_final_stats=1) 2>&1 | tee "/tmp/fuzzlogs/$t.log"
+    "$FUZZ_BIN/$t" -artifact_prefix="fuzz/artifacts/$t/" -max_total_time="$NEXTSSL_FUZZ_SECS" \
+      -print_final_stats=1 "fuzz/corpus/$t" 2>&1 | tee "/tmp/fuzzlogs/$t.log"
   done
   set +x
   for t in $FUZZ_TARGETS; do
@@ -102,9 +113,14 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   # backend cfg (see crates/nextssl-wasm/Cargo.toml); this env var replaces .cargo/config.toml rustflags.
   # Both wasm builds always run (--keep-going, failures collected) so one pass reports every crate.
   WASM_FAIL=0
-  CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_RUSTFLAGS='--cfg getrandom_backend="wasm_js" -C link-arg=-L/usr/lib/wasm32-wasi -C link-arg=-lc' \
-    cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release --keep-going || WASM_FAIL=1
-  ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm" || WASM_FAIL=1
+  # The browser module is built once: by shard 1 when the tests are split (NEXTSSL_SHARD=1/N).
+  case "${NEXTSSL_SHARD:-1/1}" in
+    1/*)
+      CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_RUSTFLAGS='--cfg getrandom_backend="wasm_js" -C link-arg=-L/usr/lib/wasm32-wasi -C link-arg=-lc' \
+        cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release --keep-going || WASM_FAIL=1
+      ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm" || WASM_FAIL=1
+      ;;
+  esac
   # KAT + unit tests inside wasmtime (/src preopened so the KAT json files are readable).
   # The default 1 MiB wasm stack overflows in the larger code-based schemes (CROSS, McEliece).
   # NEXTSSL_WASM=1: every test in its own wasmtime process, in parallel, killed after
@@ -112,8 +128,8 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   # No comment lines inside the continued commands below: a comment ends the command there (run 45182945205).
   export CARGO_TARGET_WASM32_WASIP1_RUSTFLAGS="-C link-arg=-zstack-size=67108864 -C link-arg=-L/usr/lib/wasm32-wasi"
   if [ "${NEXTSSL_WASM:-0}" = "1" ]; then
-    python3 tools/testrun.py --out "$REPORT_DIR/wasm" --runner "wasmtime run --dir=/src" \
-      --timeout "${NEXTSSL_WASM_TEST_SECS:-1200}" \
+    python3 tools/testrun.py --out "$REPORT_DIR/wasm" $TESTRUN_OPTS --runner "wasmtime run --dir=/src" \
+      --timeout "${NEXTSSL_WASM_TEST_SECS:-1200}" --crate-timeout nextssl-registry=3600 \
       -- --target wasm32-wasip1 --workspace --exclude xtask --exclude nextssl-wasm \
       || WASM_FAIL=1
   else

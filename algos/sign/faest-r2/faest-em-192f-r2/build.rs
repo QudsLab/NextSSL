@@ -36,8 +36,30 @@ const INCLUDES: &[&str] = &[
 ];
 const PREFIX: &str = "nextssl__faest_em_192f_r2__";
 
+/// MSVC preamble (see `base`): the C library headers first, then malloc/calloc/free mapped to the
+/// `_aligned_*` family (32 = the largest alignment the upstream asks for, BF256_ALIGN).
+const MSVC_ALLOC: &str = "#include <stdlib.h>
+#include <string.h>
+#include <malloc.h>
+static __inline void *nextssl_faest_calloc(size_t n, size_t s) {
+  void *p;
+  if (s != 0 && n > ((size_t)-1) / s) return NULL;
+  p = _aligned_malloc(n * s ? n * s : 1, 32);
+  if (p) memset(p, 0, n * s);
+  return p;
+}
+#define malloc(n) _aligned_malloc((n) ? (n) : 1, 32)
+#define calloc(n, s) nextssl_faest_calloc((n), (s))
+#define free(p) _aligned_free(p)
+";
+
 fn base() -> cc::Build {
     let mut b = cc::Build::new();
+    // Plain `char` is unsigned on Linux ARM but signed on x86, Windows and Apple, where the
+    // upstreams were written and tested (Khichidi-1's `char i; i >= 0` loop never ends unsigned).
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-fsigned-char");
+    }
     // MSVC: clang-cl, not cl.exe. Without GNU vector types the upstream falls back to a 24-byte
     // bf192_t with 16-byte alignment, and faest_aligned_alloc(16, n * 24) returns NULL for odd n
     // (the caller then writes through it). clang-cl has vector_size, so Windows takes the same
@@ -73,6 +95,13 @@ fn base() -> cc::Build {
     // cl.exe only: clang-cl understands GNU attributes (vector_size is required here).
     if msvc && !b.get_compiler().is_like_clang_cl() {
         pre.push_str("#define __attribute__(x)\n");
+    }
+    // MSVC: faest_aes.c allocates z_tilde_key in aes_{192,256}_constraints_verifier with
+    // faest_aligned_alloc (_aligned_malloc here) and releases it with free(), which corrupts the
+    // Windows heap (glibc and macOS accept it). Every allocation of this upstream goes to the
+    // _aligned_* family instead, so free() and faest_aligned_free() reach the same allocator.
+    if msvc {
+        pre.push_str(MSVC_ALLOC);
     }
     if !pre.is_empty() {
         let h = PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("nextssl_pre.h");
@@ -119,6 +148,8 @@ fn toolchain_name(n: &str) -> bool {
         "__clang",
         "__emutls",
         "__tls",
+        // MSVC auto-vectorizer flag (COMDAT, merged by the linker; emitted only at -O2).
+        "__isa_available",
     ];
     P.iter().any(|p| n.starts_with(p))
 }
@@ -160,8 +191,16 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
 }
 
 fn main() {
+    // Compiles the upstream, or reuses the identical result of an earlier build when CI enables the
+    // cache (NEXTSSL_C_CACHE); see crates/nextssl-cbuild.
+    nextssl_cbuild::cached(build_main);
+}
+
+fn build_main() {
     let out = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let mut probe = base();
+    // Only lists the defined globals; the optimisation level does not change that set.
+    probe.opt_level(0);
     probe.out_dir(out.join("probe"));
     std::fs::create_dir_all(out.join("probe")).unwrap();
     let objs = probe.compile_intermediates();
@@ -179,19 +218,21 @@ fn main() {
         b.flag("-include").flag(hdr.to_str().unwrap());
     }
     link_shared(&mut b, "nextssl_faest_em_192f_r2", false);
-    println!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
+    // The final objects must define no global the -O0 probe missed (see check_prefixed).
+    check_prefixed(&out);
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=NEXTSSL_C_SANITIZE");
     if std::path::Path::new("upstream").exists() {
-        println!("cargo:rerun-if-changed=upstream");
+        nextssl_cbuild::directive!("cargo:rerun-if-changed=upstream");
     }
     if std::path::Path::new("shim.c").exists() {
-        println!("cargo:rerun-if-changed=shim.c");
+        nextssl_cbuild::directive!("cargo:rerun-if-changed=shim.c");
     }
-    println!("cargo:rerun-if-changed=compat");
-    println!("cargo:rerun-if-changed=build.rs");
+    nextssl_cbuild::directive!("cargo:rerun-if-changed=compat");
+    nextssl_cbuild::directive!("cargo:rerun-if-changed=build.rs");
 }
 
 fn clang_cl() -> PathBuf {
-    println!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=NEXTSSL_CLANG_CL");
     if let Some(p) = std::env::var_os("NEXTSSL_CLANG_CL") {
         return PathBuf::from(p);
     }
@@ -243,10 +284,10 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");
-    println!("cargo:rustc-link-search=native={}", shared.display());
-    println!("cargo:rustc-link-lib=static={uniq}");
-    println!("cargo:rerun-if-env-changed=CC");
-    println!("cargo:rerun-if-env-changed=CFLAGS");
+    nextssl_cbuild::directive!("cargo:rustc-link-search=native={}", shared.display());
+    nextssl_cbuild::directive!("cargo:rustc-link-lib=static={uniq}");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=CC");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=CFLAGS");
     if cpp {
         let env = std::env::var("CARGO_CFG_TARGET_ENV").unwrap_or_default();
         let os = std::env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
@@ -260,8 +301,42 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
             .to_string()
         });
         if !std_lib.is_empty() {
-            println!("cargo:rustc-link-lib={std_lib}");
+            nextssl_cbuild::directive!("cargo:rustc-link-lib={std_lib}");
         }
     }
 }
 // END SHARED LINK
+
+/// The probe (pass 1) runs at -O0 only to list the globals the upstream defines; the set of external
+/// definitions does not depend on the optimisation level. This parses the final optimised objects
+/// and stops the build if any of them defines a global that was not renamed, so a symbol the probe
+/// missed can never reach the link (where it could collide with another upstream).
+fn check_prefixed(out: &std::path::Path) {
+    fn walk(dir: &std::path::Path, acc: &mut Vec<PathBuf>) {
+        for e in std::fs::read_dir(dir).expect("read OUT_DIR").flatten() {
+            let p = e.path();
+            if p.is_dir() {
+                let name = e.file_name();
+                if name != "probe" && name != "probe_cpp" && name != "patched-upstream" {
+                    walk(&p, acc);
+                }
+            } else if p.extension().is_some_and(|x| x == "o" || x == "obj")
+                && !p.file_stem().is_some_and(|s| s == "flag_check")
+            {
+                acc.push(p);
+            }
+        }
+    }
+    let mut objs = Vec::new();
+    walk(out, &mut objs);
+    assert!(
+        !objs.is_empty(),
+        "no object files found under {}",
+        out.display()
+    );
+    let missed = defined_symbols(&objs);
+    assert!(
+        missed.is_empty(),
+        "globals defined by the optimised build but not renamed (the -O0 probe missed them): {missed:?}"
+    );
+}

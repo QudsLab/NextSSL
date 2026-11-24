@@ -211,7 +211,7 @@ fn cargo_toml(s: &Spec) -> String {
         }
         Upstream::C { .. } => {
             t.push_str(
-                "zeroize.workspace = true\n\n[build-dependencies]\ncc = \"1\"\n\n\
+                "zeroize.workspace = true\n\n[build-dependencies]\ncc = \"1\"\nnextssl-cbuild.workspace = true\n\n\
                  # Per-algo C wrapper: the only place besides nextssl-ffi allowed to use unsafe.\n\
                  [lints.rust]\nunsafe_code = \"deny\"\n\n[lints.clippy]\nall = { level = \"warn\", priority = -1 }\n",
             );

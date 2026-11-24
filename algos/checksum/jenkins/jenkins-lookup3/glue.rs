@@ -3,16 +3,11 @@
 //! NON-CRYPTOGRAPHIC; reachable through the root API only. Seeds fixed to 0. Output: 4 bytes, big-endian.
 //! Generated wiring, no crypto logic.
 
-#[cfg(target_env = "msvc")]
-use nextssl_core::Checksum;
-#[cfg(not(target_env = "msvc"))]
 use nextssl_core::{Checksum, Len, Sizes};
 use nextssl_core::{Params, Result};
 
-#[cfg(not(target_env = "msvc"))]
 const OUT: usize = 4;
 
-#[cfg(not(target_env = "msvc"))]
 mod ffi {
     #![allow(unsafe_code)]
     use super::OUT;
@@ -30,10 +25,8 @@ mod ffi {
     }
 }
 
-#[cfg(not(target_env = "msvc"))]
 struct Impl;
 
-#[cfg(not(target_env = "msvc"))]
 impl Checksum for Impl {
     fn sizes(&self) -> Sizes {
         Sizes {
@@ -50,13 +43,6 @@ impl Checksum for Impl {
 }
 
 /// Registry constructor. No parameters.
-#[cfg(not(target_env = "msvc"))]
 pub fn new(_params: &Params) -> Result<Box<dyn Checksum>> {
     Ok(Box::new(Impl))
-}
-
-/// MSVC: the upstream needs POSIX headers (<sys/param.h>), so this algorithm is not built there.
-#[cfg(target_env = "msvc")]
-pub fn new(_params: &Params) -> Result<Box<dyn Checksum>> {
-    Err(nextssl_core::Error::Unsupported)
 }

@@ -1,0 +1,12 @@
+# Portability patches for the meshhash upstream (format and list: docs/UPSTREAM_CHANGES.md).
+patch: meshhash-rot
+why: ROT(w, b) computes (w >> b) ^ (w << (64 - b)), and meshhash calls it with b = 0 (pipe 0), a
+why: shift by 64 (undefined behaviour in C). GCC turns the expression into a rotate instruction, so
+why: ROT(w, 0) = w and the published KAT matches; MSVC and clang compute w ^ w = 0 and every hash
+why: differs (CI run 45270462977, Windows). The patch writes the rotate explicitly: shift counts
+why: are taken modulo 64 and the halves are joined with `|`. For b != 0 the halves have no common
+why: bits, so `|` and `^` give the same value; for b = 0 the result is w, as the KAT requires.
+file: upstream/MeshHash/Optimized_32bit/meshhash.c
+count: 1
+find: #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> (b) ^ (w) << (64 - (b))) & 0xffffffffffffffffULL)
+replace: #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> ((b) & 63) | (w) << ((64 - (b)) & 63)) & 0xffffffffffffffffULL)

@@ -201,12 +201,17 @@ mod tests {
     fn roundtrip_and_rejects() {
         // The upstream keeps large arrays on the stack (more than a 2 MiB test thread has on
         // Windows); run on a thread with room for them, as the registry smoke does.
-        std::thread::Builder::new()
-            .stack_size(64 << 20)
-            .spawn(roundtrip_and_rejects_body)
-            .unwrap()
-            .join()
-            .unwrap();
+        // wasm has no threads; its stack is already 64 MiB (link argument in docker/test.sh).
+        if cfg!(target_family = "wasm") {
+            roundtrip_and_rejects_body();
+        } else {
+            std::thread::Builder::new()
+                .stack_size(64 << 20)
+                .spawn(roundtrip_and_rejects_body)
+                .unwrap()
+                .join()
+                .unwrap();
+        }
     }
 
     fn roundtrip_and_rejects_body() {

@@ -1,0 +1,17 @@
+[package]
+name = "nextssl-cbuild"
+description = "Build-script helper for the C-backed algorithm crates: content-addressed cache of their finished static libraries (CI only)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+cc = "1"
+sha2 = "0.10"
+# `pure`: no assembly or C in the hasher itself (it runs inside every build script).
+blake3 = { version = "1", default-features = false, features = ["std", "pure"] }
+
+[lints]
+workspace = true

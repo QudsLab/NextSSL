@@ -41,10 +41,10 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
     let tmp = shared.join(format!("{}.tmp", file(&uniq)));
     std::fs::copy(out.join(file(lib)), &tmp).expect("copy static library");
     std::fs::rename(&tmp, shared.join(file(&uniq))).expect("publish static library");
-    println!("cargo:rustc-link-search=native={}", shared.display());
-    println!("cargo:rustc-link-lib=static={uniq}");
-    println!("cargo:rerun-if-env-changed=CC");
-    println!("cargo:rerun-if-env-changed=CFLAGS");
+    nextssl_cbuild::directive!("cargo:rustc-link-search=native={}", shared.display());
+    nextssl_cbuild::directive!("cargo:rustc-link-lib=static={uniq}");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=CC");
+    nextssl_cbuild::directive!("cargo:rerun-if-env-changed=CFLAGS");
     if cpp {
         let env = std::env::var("CARGO_CFG_TARGET_ENV").unwrap_or_default();
         let os = std::env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
@@ -58,7 +58,7 @@ fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
             .to_string()
         });
         if !std_lib.is_empty() {
-            println!("cargo:rustc-link-lib={std_lib}");
+            nextssl_cbuild::directive!("cargo:rustc-link-lib={std_lib}");
         }
     }
 }

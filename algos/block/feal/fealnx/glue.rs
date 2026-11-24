@@ -151,6 +151,9 @@ mod tests {
         assert!(c.keyed(&key(&[1u8; 17])).is_err());
     }
 
+    // Threads only exist natively: wasm32-wasip1 cannot spawn one ("operation not supported"),
+    // so there is no parallel use to serialise there.
+    #[cfg(not(target_family = "wasm"))]
     #[test]
     fn parallel_use_is_serialised() {
         let c = std::sync::Arc::new(new(&Params::new()).unwrap());

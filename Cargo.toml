@@ -19,6 +19,7 @@ all = { level = "warn", priority = -1 }
 
 [workspace.dependencies]
 nextssl-core = { path = "crates/nextssl-core" }
+nextssl-cbuild = { path = "crates/nextssl-cbuild" }
 nextssl-registry = { path = "crates/nextssl-registry" }
 nextssl-compose = { path = "crates/nextssl-compose" }
 nextssl = { path = "crates/nextssl" }
