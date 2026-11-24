@@ -1,0 +1,5 @@
+{
+ "algorithm": "mgm-kuznyechik",
+ "vectors": [],
+ "note": "no vectors replayed; RFC 9058 vectors not copied (never invented)."
+}

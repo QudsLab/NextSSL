@@ -1,0 +1,23 @@
+id        = "mgm-kuznyechik"
+kind      = "aead"
+category  = "aead"
+family    = "mgm"
+aliases   = []
+tier      = "unverified"
+status    = "active"
+standards = ["RFC 9058 (MGM)", "GOST R 34.13-2015 block cipher Kuznyechik (GOST R 34.12-2015, 128-bit block)"]
+fips      = false
+copyleft  = false
+upstream  = { crate = "mgm", version = "=0.4.6", license = "MIT OR Apache-2.0" }
+# MGM over Kuznyechik (GOST R 34.12-2015, 128-bit block). The crate sits on aead 0.4 / cipher 0.3 / generic-array 0.14, so the cipher is the matching
+# kuznyechik 0.7 release under a renamed dependency (the workspace's newer kuznyechik is unaffected). RFC 9058 publishes test vectors;
+# none replayed here (KAT empty, never invented). Wired in batch 9 (was skipped as "not wired in this run"), not compiled or tested at wiring time.
+# If dependency resolution rejects the old subtle (<2.5) next to the workspace, move this crate to algos_untrusted.
+
+[kat]
+files = ["kat/mgm-kuznyechik.json"]
+
+[sizes]
+key = 32
+nonce = 16
+tag = 16

@@ -1,0 +1,19 @@
+[package]
+name = "nextssl-algo-mgm-kuznyechik"
+version = "0.0.1"
+edition = "2021"
+license = "Apache-2.0"
+publish = false
+
+[lib]
+path = "glue.rs"
+
+[dependencies]
+nextssl-core = { path = "../../../../crates/nextssl-core" }
+# MGM sits on the older RustCrypto stack (aead 0.4 / cipher 0.3 / generic-array 0.14); the cipher crates are the matching 0.7 releases,
+# renamed so they cannot be confused with the workspace's kuznyechik 0.9 / magma 0.10.
+mgm = { version = "=0.4.6", default-features = false }
+aead04 = { package = "aead", version = "=0.4.3", default-features = false }
+kuznyechik07 = { package = "kuznyechik", version = "=0.7.2", default-features = false }
+
+[workspace]
