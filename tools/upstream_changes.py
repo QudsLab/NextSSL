@@ -31,7 +31,9 @@ def rel(p):
 
 
 def crate_dirs():
-    return sorted(os.path.dirname(p) for p in glob.glob(os.path.join(ROOT, 'algos', '*', '*', '*', 'Cargo.toml')))
+    # Sort by the '/' form so Windows (backslash) and Linux list crates in the same order (CI --check).
+    return sorted((os.path.dirname(p) for p in glob.glob(os.path.join(ROOT, 'algos', '*', '*', '*', 'Cargo.toml'))),
+                  key=lambda d: d.replace(os.sep, '/'))
 
 
 def read(p):
@@ -142,7 +144,7 @@ def main():
             inline.setdefault((fn, doc, tuple(pairs)), []).append(crate)
         cdir = os.path.join(d, 'compat')
         if os.path.isdir(cdir):
-            for f in sorted(glob.glob(os.path.join(cdir, '**', '*'), recursive=True)):
+            for f in sorted(glob.glob(os.path.join(cdir, '**', '*'), recursive=True), key=lambda x: x.replace(os.sep, '/')):
                 if os.path.isfile(f):
                     data = read(f)
                     h = hashlib.sha256(data.encode()).hexdigest()[:12]

@@ -4027,6 +4027,45 @@ Rust passes pk, sk and sm slices at any byte offset, but pack/unpack code in sig
 
 ### qtesla-sample-unaligned-load-1
 
+Crates: qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- y[i]  = (*(uint32_t*)(buf+pos)) & ((1<<(PARAM_B_BITS+1))-1);
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; y[i] = qt_ & ((1<<(PARAM_B_BITS+1))-1); }
+```
+
+### qtesla-gauss-skip-shift-by-64
+
+Crates: qtesla1, qtesla1p, qtesla3p, qtesla3s
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'shift exponent 64 is too large for 64-bit type int64_t' (CI run 45610244076): 'rbits <<= (64-bitsremained)' runs with bitsremained == 0, i.e. a shift by 64. x86-64 masks the count to 0 (rbits unchanged), AArch64 gives 0. In both cases the result is dead: the very next statement is 'if (bitsremained==0LL) { rbits = buf[j++]; bitsremained=64; }', which overwrites rbits before any use. bitsremained is never above 64 or negative here (refill sets 64, the 6-bit top-up is guarded by <= 58). The patch skips the shift when bitsremained == 0; for every other value the shift is the identical expression.
+
+```diff
+- rbits <<=(64-bitsremained);
++ if (bitsremained != 0) rbits <<= (64-bitsremained);
+```
+
+### qtesla-gauss-aligned-seed-buffer
+
+Crates: qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+seed_ex is an unsigned char stack array that is reinterpreted as int64_t* (buf): not guaranteed 8-byte aligned (UB, misaligned load). The patch declares the storage as an int64_t array and keeps seed_ex as a byte pointer to it; sizes and contents are unchanged.
+
+```diff
+- unsigned char seed_ex[PARAM_N*8];
++ int64_t seed_ex_w_[PARAM_N*1]; unsigned char *seed_ex = (unsigned char *)seed_ex_w_;
+```
+
+### qtesla-sample-unaligned-load-1
+
 Crates: qtesla128, qtesla192, qtesla256
 
 File: `upstream/*/sample.c` (1 occurrence(s))
@@ -4075,45 +4114,6 @@ seed_ex is an unsigned char stack array that is reinterpreted as int64_t* (buf):
 ```diff
 - unsigned char seed_ex[PARAM_N*16];
 + int64_t seed_ex_w_[PARAM_N*2]; unsigned char *seed_ex = (unsigned char *)seed_ex_w_;
-```
-
-### qtesla-sample-unaligned-load-1
-
-Crates: qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
-
-File: `upstream/*/sample.c` (1 occurrence(s))
-
-UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
-
-```diff
-- y[i]  = (*(uint32_t*)(buf+pos)) & ((1<<(PARAM_B_BITS+1))-1);
-+ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; y[i] = qt_ & ((1<<(PARAM_B_BITS+1))-1); }
-```
-
-### qtesla-gauss-skip-shift-by-64
-
-Crates: qtesla1, qtesla1p, qtesla3p, qtesla3s
-
-File: `upstream/*/sample.c` (1 occurrence(s))
-
-UBSan 'shift exponent 64 is too large for 64-bit type int64_t' (CI run 45610244076): 'rbits <<= (64-bitsremained)' runs with bitsremained == 0, i.e. a shift by 64. x86-64 masks the count to 0 (rbits unchanged), AArch64 gives 0. In both cases the result is dead: the very next statement is 'if (bitsremained==0LL) { rbits = buf[j++]; bitsremained=64; }', which overwrites rbits before any use. bitsremained is never above 64 or negative here (refill sets 64, the 6-bit top-up is guarded by <= 58). The patch skips the shift when bitsremained == 0; for every other value the shift is the identical expression.
-
-```diff
-- rbits <<=(64-bitsremained);
-+ if (bitsremained != 0) rbits <<= (64-bitsremained);
-```
-
-### qtesla-gauss-aligned-seed-buffer
-
-Crates: qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
-
-File: `upstream/*/sample.c` (1 occurrence(s))
-
-seed_ex is an unsigned char stack array that is reinterpreted as int64_t* (buf): not guaranteed 8-byte aligned (UB, misaligned load). The patch declares the storage as an int64_t array and keeps seed_ex as a byte pointer to it; sizes and contents are unchanged.
-
-```diff
-- unsigned char seed_ex[PARAM_N*8];
-+ int64_t seed_ex_w_[PARAM_N*1]; unsigned char *seed_ex = (unsigned char *)seed_ex_w_;
 ```
 
 ### qtesla-gauss-skip-shift-by-64
