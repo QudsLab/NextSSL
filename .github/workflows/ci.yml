@@ -14,13 +14,14 @@ permissions:
   contents: read
 
 # Every push to main (owner decision 2026-11-24) builds, lints and tests every algorithm on every
-# platform and publishes the pre-release v<version>+<commit> when everything is green. Pull requests
-# run the same checks without a release.
+# platform. Each platform publishes its own pre-release v<version>-pre.<commit>.<platform> as soon as
+# its chain is green; the final release v<version> follows when every platform is green (owner
+# decision 2026-11-25). Pull requests run the same checks without a release.
 #
 # Pipeline (owner decision 2026-11-24: stages one after another, each platform on its own line):
-#   guard  ->  <platform> test 1/3, 2/3, 3/3  ->  <platform> release  ->  publish
-#          ->  wasm 1/2, 2/2                  ->  wasm release        ->
-#          ->  asan 1/2, 2/2, symbols, miri, fuzz-smoke               ->
+#   guard  ->  <platform> test 1/3, 2/3, 3/3  ->  <platform> release + pre-release  ->  release
+#          ->  wasm 1/2, 2/2                  ->  wasm release + pre-release        ->
+#          ->  asan 1/2, 2/2, symbols, miri, fuzz-smoke                             ->
 # * guard: the checks that do not depend on the platform (generated files, change paper, rustfmt),
 #   a few minutes; nothing else starts when they fail.
 # * Each platform chain is .github/workflows/platform.yml; a platform's release libraries are built
@@ -66,27 +67,44 @@ jobs:
         run: |
           cargo xtask gen --check
           python3 tools/upstream_changes.py --check
+          python3 tools/release_info.py --check
+          python3 tools/licenses_gen.py --check
           cargo fmt --all --check
           python3 -m py_compile tools/*.py
 
   linux-x64:
     needs: guard
+    permissions:
+      contents: write
+      actions: read
     uses: ./.github/workflows/platform.yml
     with: { name: linux-x64, os: ubuntu-latest, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
   linux-arm64:
     needs: guard
+    permissions:
+      contents: write
+      actions: read
     uses: ./.github/workflows/platform.yml
     with: { name: linux-arm64, os: ubuntu-24.04-arm, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
   windows-x64:
     needs: guard
+    permissions:
+      contents: write
+      actions: read
     uses: ./.github/workflows/platform.yml
     with: { name: windows-x64, os: windows-latest, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
   windows-arm64:
     needs: guard
+    permissions:
+      contents: write
+      actions: read
     uses: ./.github/workflows/platform.yml
     with: { name: windows-arm64, os: windows-11-arm, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
   macos-arm64:
     needs: guard
+    permissions:
+      contents: write
+      actions: read
     uses: ./.github/workflows/platform.yml
     with: { name: macos-arm64, os: macos-latest, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
 
@@ -186,12 +204,12 @@ jobs:
           key: results-v1-${{ matrix.layer }}-${{ matrix.part }}-${{ github.run_id }}
 
   release-build-wasm:
-    name: release-build (wasm)
+    name: wasm / pre-release
     # After the wasm tests (and the other docker layers) passed.
     needs: docker
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
-      contents: read
+      contents: write
       packages: read
     runs-on: ubuntu-latest
     timeout-minutes: 120
@@ -234,9 +252,16 @@ jobs:
           name: release-wasm
           path: dist/
           if-no-files-found: error
+      - name: Pre-release (wasm)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash tools/ci_release.sh platform wasm
 
-  publish:
-    name: publish pre-release
+  # The release of the run, v<version>+<commit> with every platform's files: only after every job above
+  # passed (each platform chain with its own pre-release, wasm, asan, miri, symbols, fuzz-smoke). Marked
+  # pre-release while release.toml says stage = "pre-release" for the version base (tools/ci_release.sh).
+  release:
+    name: release
     needs: [linux-x64, linux-arm64, windows-x64, windows-arm64, macos-arm64, docker, release-build-wasm]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -249,83 +274,10 @@ jobs:
           pattern: release-*
           path: dist
           merge-multiple: true
-      - name: Create GitHub pre-release v<version>+<commit>
+      - name: Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          VER=$(sed -n 's/^version = "\(.*\)"$/\1/p' Cargo.toml | head -1)
-          TAG="v${VER}+${GITHUB_SHA::7}"
-          (cd dist && sha256sum * > SHA256SUMS)
-          cat > notes.md <<EOF
-          Automatic pre-release of commit ${GITHUB_SHA} (version ${VER}).
-          Built and tested on Linux x64/arm64, Windows x64/arm64, macOS arm64 and wasm by CI run
-          ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}.
-          Each archive holds the nextssl-ffi libraries, the C header and the license of every bundled
-          upstream; release libraries are built from source. Tested against published KAT vectors;
-          not FIPS validated. Changes to upstream sources: docs/UPSTREAM_CHANGES.md.
-          EOF
-          # --draft: only the owner sees it until the license policy for the 1052 algorithms whose
-          # algo.toml says NOASSERTION is decided (CLAUDE.md rule 3). Remove --draft to publish.
-          gh release create "$TAG" dist/* --draft --prerelease --target "$GITHUB_SHA" --title "NextSSL $TAG" --notes-file notes.md
-
-  # The final release v<version> (not a pre-release): only after every job above passed (all platform
-  # chains, wasm, asan, miri, symbols, fuzz-smoke and the pre-release), and only once per version: when
-  # v<version> exists already, nothing is changed (bump the version in Cargo.toml for a new release).
-  release:
-    name: release
-    needs: [publish]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/download-artifact@v8
-        with:
-          pattern: release-*
-          path: dist
-          merge-multiple: true
-      - name: Precheck
-        id: pre
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          VER=$(sed -n 's/^version = "\(.*\)"$/\1/p' Cargo.toml | head -1)
-          [ -n "$VER" ] || { echo "no version in Cargo.toml"; exit 1; }
-          echo "ver=$VER" >> "$GITHUB_OUTPUT"
-          # A draft has no tag yet, so look it up in the list (drafts included), not by tag.
-          if gh release list --limit 1000 --json tagName --jq '.[].tagName' | grep -qx "v$VER"; then
-            echo "v$VER exists already; no new release (bump the version in Cargo.toml)." | tee -a "$GITHUB_STEP_SUMMARY"
-            echo "skip=1" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          # One archive per platform, each a readable tar.gz of this commit and version.
-          missing=0
-          for p in linux-x64 linux-arm64 windows-x64 windows-arm64 macos-arm64 wasm; do
-            set -- dist/nextssl-"${VER}"+*-"${p}".tar.gz
-            f=$1
-            if [ "$#" != 1 ] || [ ! -s "$f" ]; then echo "missing or ambiguous: $p ($*)"; missing=1; continue; fi
-            tar -tzf "$f" > /dev/null || { echo "unreadable: $f"; missing=1; }
-            tar -tzf "$f" | grep -q '/LICENSE$' || { echo "no LICENSE in $f"; missing=1; }
-          done
-          [ "$missing" = 0 ] || exit 1
-          (cd dist && sha256sum * > SHA256SUMS && sha256sum -c SHA256SUMS)
-          echo "skip=0" >> "$GITHUB_OUTPUT"
-      - name: Create the release v<version>
-        if: steps.pre.outputs.skip == '0'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          VER=${{ steps.pre.outputs.ver }}
-          cat > notes.md <<NOTES
-          NextSSL ${VER}, commit ${GITHUB_SHA}.
-          Built and tested on Linux x64/arm64, Windows x64/arm64, macOS arm64 and wasm, with the
-          AddressSanitizer, Miri, symbol and fuzz layers, by CI run
-          ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}.
-          Tested against published KAT vectors; not FIPS validated. Changes to upstream sources:
-          docs/UPSTREAM_CHANGES.md.
-          NOTES
-          # --draft (owner decision 2026-11-25): same as the pre-release, only the owner sees it until
-          # the license policy is decided (CLAUDE.md rule 3); the owner publishes it by hand.
-          gh release create "v${VER}" dist/* --draft --target "$GITHUB_SHA" --title "NextSSL v${VER}" --notes-file notes.md
+          # The platform jobs' checksum files are not part of the release; ci_release.sh writes one SHA256SUMS.
+          rm -f dist/SHA256SUMS*
+          bash tools/ci_release.sh final

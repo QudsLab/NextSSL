@@ -17,3 +17,6 @@ CODE_OF_CONDUCT.md
 
 # Raw downloaded sources; collection/MANIFEST.csv and ORIGIN.md files record them.
 collection/**/upstream/
+
+# Local notes and owner decisions: never committed (any file named *.memory.md)
+*.memory.md

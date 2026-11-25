@@ -117,10 +117,12 @@ jobs:
   # Release libraries, only after all 3 shards passed. Their own C library cache (release-<platform>,
   # written only by this job on main): a library is reused only when every input digest matches.
   release:
-    name: release
+    name: pre-release
     needs: test
     if: inputs.release
     runs-on: ${{ inputs.os }}
+    permissions:
+      contents: write
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
@@ -167,3 +169,10 @@ jobs:
           name: release-${{ inputs.name }}
           path: dist/
           if-no-files-found: error
+      # This platform's own pre-release, as soon as its 3 test shards and the release build passed; the
+      # final release v<version> (ci.yml) comes only after every platform passed.
+      - name: Pre-release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash tools/ci_release.sh platform "${{ inputs.name }}"

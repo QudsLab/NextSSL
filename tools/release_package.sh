@@ -7,7 +7,10 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 platform="$1"
-ver=$(sed -n 's/^version = "\(.*\)"$/\1/p' Cargo.toml | head -1)
+# <base>.<run number> from release.toml (python3, or python on Windows runners; 3.11+ for tomllib).
+py=python3
+"$py" -c "import tomllib" 2> /dev/null || py=python
+ver=$("$py" tools/release_info.py version)
 sha=$(git rev-parse --short=7 HEAD)
 name="nextssl-${ver}+${sha}-${platform}"
 stage="dist-stage/${name}"

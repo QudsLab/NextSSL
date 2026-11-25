@@ -1,0 +1,18 @@
+# NextSSL release channel (owner decision 2026-11-26). tools/release_info.py reads it.
+#
+# Version of a CI run on main: <base>.<GitHub run number>, e.g. 0.0.142; tag v<version>+<commit7>.
+# The run number only grows and is never reused, so two runs never get the same version.
+# Raise `base` (e.g. "0.1") for a new line; it must equal the major.minor of Cargo.toml's
+# [workspace.package] version (guard checks it).
+#
+# Each base has its stage:
+#   stage = "pre-release"  not ready for production: every platform pre-release and the final release
+#                          of a run are marked pre-release.
+#   stage = "release"      production: the final release of a run (after every platform passed) is
+#                          marked as the release; the platform pre-releases stay pre-releases.
+# Releases are public (no drafts).
+base = "0.0"
+
+[bases."0.0"]
+stage = "pre-release"
+note = "Early remake of NextSSL: tested in CI on every platform, not yet for production use."

@@ -1,0 +1,7 @@
+pypride.py, Copyright (C) 2016  Felix C. Stegerman <flx@obfusk.net>, Version v0.1.1
+License: LGPLv3+  (header of pypride.py in https://github.com/obfusk/pypride, commit 97d724c086a0f498bdd049ddaf0b6f9e30822492)
+Specification: https://eprint.iacr.org/2014/453.pdf   License text: https://www.gnu.org/licenses/lgpl-3.0.html
+
+The repository has no separate license file; the full GNU LGPL-3.0 text is not reproduced here. The C port in port/
+is a derivative work and keeps this license (LGPL-3.0-or-later). NextSSL gates it behind the `copyleft` cargo feature.
+Owner: add the verbatim LGPL-3.0 and GPL-3.0 texts before any release (hard rule 8).
