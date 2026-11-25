@@ -1,0 +1,10 @@
+#!/bin/bash
+# C compiler for the ASan layer (docker/test.sh NEXTSSL_ASAN=1): clang with every flag the build script
+# passes, except that UBSan reports instead of trapping. The algorithm build scripts compile with
+# -fsanitize-trap=undefined, which only shows up as SIGILL without the check or the source line
+# (CI runs up to 45513495947). The Rust ASan runtime carries the UBSan handlers, so no second runtime is
+# linked; with UBSAN_OPTIONS=halt_on_error=1 the test still fails at the first report, now with
+# "file:line: runtime error: <check>" in the log.
+args=()
+for a in "$@"; do [ "$a" = "-fsanitize-trap=undefined" ] || args+=("$a"); done
+exec clang "${args[@]}"
