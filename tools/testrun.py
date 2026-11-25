@@ -41,7 +41,7 @@ PANIC = re.compile(r"^thread '([^']*)'(?: \(\d+\))? panicked at (.+?):(\d+):\d+:
 OVERFLOW = re.compile(r"^thread '([^']*)'(?: \(\d+\))? has overflowed its stack")
 SAN_ERR = re.compile(r'^(?:==\d+==)?ERROR: (AddressSanitizer|LeakSanitizer|MemorySanitizer|ThreadSanitizer): (.*)$')
 SAN_SUM = re.compile(r'^SUMMARY: (\w+Sanitizer): (.*)$')
-UBSAN = re.compile(r'^(\S+:\d+:\d+): runtime error: (.*)$')
+UBSAN = re.compile(r'(\S+:\d+:\d+): runtime error: (.*)$')
 FRAME = re.compile(r'^\s*#\d+ 0x[0-9a-f]+ in (\S+) (\S+)')
 COULD_NOT = re.compile(r'^error: could not compile `([\w.-]+)`')
 BUILD_SCRIPT = re.compile(r'^error: failed to run custom build command for `([\w.-]+) v')
@@ -430,9 +430,11 @@ def issues_of(lines, rc, timed_out, timeout, ran_one):
             continue
         m = SAN_SUM.match(line)
         if m:
-            out.append(('sanitizer', f'SUMMARY {m.group(1)}: {m.group(2)}'))
+            # UBSan's summary repeats its runtime-error line (listed below); keep the others.
+            if m.group(1) != 'UndefinedBehaviorSanitizer':
+                out.append(('sanitizer', f'SUMMARY {m.group(1)}: {m.group(2)}'))
             continue
-        m = UBSAN.match(line)
+        m = UBSAN.search(line)
         if m:
             out.append(('sanitizer', f'UBSan at {m.group(1)}: {m.group(2)}'))
     e = exit_issue(rc, timed_out, timeout)
@@ -666,7 +668,9 @@ def main():
         rc, out, secs, timed_out = run_proc(cmd, b['dir'], env_for(b), limit)
         lines = out.splitlines()
         ran_one = any(re.match(r'^test result: ok\. 1 passed', ln) for ln in lines)
-        iss = [] if (rc == 0 and not timed_out and ran_one) else issues_of(lines, rc, timed_out, limit, ran_one)
+        # A sanitizer that recovers (the ASan layer) lets the test pass; any report still fails it.
+        reported = 'runtime error:' in out or 'Sanitizer:' in out
+        iss = [] if (rc == 0 and not timed_out and ran_one and not reported) else issues_of(lines, rc, timed_out, limit, ran_one)
         with lock:
             done[0] += 1
             times.append((secs, b['crate'], name))

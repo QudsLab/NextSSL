@@ -3,8 +3,9 @@
 # passes, except that UBSan reports instead of trapping. The algorithm build scripts compile with
 # -fsanitize-trap=undefined, which only shows up as SIGILL without the check or the source line
 # (CI runs up to 45513495947). The Rust ASan runtime carries the UBSan handlers, so no second runtime is
-# linked; with UBSAN_OPTIONS=halt_on_error=1 the test still fails at the first report, now with
-# "file:line: runtime error: <check>" in the log.
+# linked. Every report is "file:line: runtime error: <check>" (or an ASan report) in the log, and the
+# test goes on: tools/testrun.py fails a test that printed any report, and lists all of them.
 args=()
 for a in "$@"; do [ "$a" = "-fsanitize-trap=undefined" ] || args+=("$a"); done
-exec clang "${args[@]}"
+# Recover from every report (UBSan and ASan in the C code), so one run lists all of them.
+exec clang "${args[@]}" -fsanitize-recover=address,undefined

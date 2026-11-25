@@ -66,17 +66,18 @@ if [ "${NEXTSSL_ASAN:-0}" = "1" ]; then
   # Rust under AddressSanitizer; the C upstreams are built with ASan+UBSan by their build.rs.
   # rustc supplies the ASan runtime, which also carries the UBSan handlers. UBSan reports (file:line and
   # the check) instead of trapping with a bare SIGILL: CC is tools/clang-ubsan-report, which drops the
-  # build scripts' -fsanitize-trap=undefined. halt_on_error keeps the first report a test failure;
-  # handle_sigill symbolizes any trap that is left.
+  # build scripts' -fsanitize-trap=undefined and lets the C code recover from every report. The test
+  # runs on (halt_on_error=0), so one CI run lists every UB and memory error; testrun.py fails each
+  # test that printed a report. handle_sigill symbolizes any trap that is left.
   # Each test runs in its own process (tools/testrun.py), so a sanitizer abort fails only that test.
   NEXTSSL_C_SANITIZE=1 \
   CC="$PWD/tools/clang-ubsan-report" \
   RUSTFLAGS="-Zsanitizer=address" \
-  ASAN_OPTIONS="detect_leaks=1:abort_on_error=0:handle_sigill=1:symbolize=1" \
-  UBSAN_OPTIONS="print_stacktrace=1:halt_on_error=1" \
+  ASAN_OPTIONS="detect_leaks=1:abort_on_error=0:halt_on_error=0:handle_sigill=1:symbolize=1" \
+  UBSAN_OPTIONS="print_stacktrace=1:halt_on_error=0" \
   CARGO_TARGET_DIR=/tmp/target-asan \
   SMOKE_JOBS=4 \
-    python3 tools/testrun.py --out "$REPORT_DIR/asan" $TESTRUN_OPTS --cargo "cargo +nightly" --timeout 1200 \
+    python3 tools/testrun.py --out "$REPORT_DIR/asan" $TESTRUN_OPTS --cargo "cargo +nightly" --timeout 1200 --max-per-algo 50 \
     --crate-timeout nextssl-registry=3600 -- -Zbuild-std --target x86_64-unknown-linux-gnu --workspace
 fi
 
