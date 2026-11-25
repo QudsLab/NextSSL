@@ -255,6 +255,14 @@ fn build_main() {
 // algorithm (see xtask/src/buildlink.rs). The library is renamed `<lib>_<hash>` so names stay unique.
 fn link_shared(b: &mut cc::Build, lib: &str, cpp: bool) {
     let out = std::path::PathBuf::from(std::env::var("OUT_DIR").expect("OUT_DIR"));
+    // Signed overflow and shifts into or of the sign bit wrap (two's complement), as the reference
+    // code assumes, instead of being undefined: the optimiser can no longer drop or reorder that
+    // arithmetic (UBSan, CI run 45581879065: 137 crates). cl.exe has no such option.
+    if !b.get_compiler().is_like_msvc() {
+        b.flag("-fwrapv");
+    } else if b.get_compiler().is_like_clang_cl() {
+        b.flag("/clang:-fwrapv");
+    }
     b.cargo_metadata(false).compile(lib);
     let msvc = b.get_compiler().is_like_msvc();
     let pkg_dir = out.parent().expect("OUT_DIR has a parent");

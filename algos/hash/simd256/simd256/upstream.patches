@@ -1,0 +1,28 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: simd-keep-allocations
+why: InitIV() mallocs the message buffer and the state words, then moves both pointers forward to a 16-byte
+why: boundary, so they can never be passed to free(): every hash leaked both blocks (LeakSanitizer, CI run
+why: 45581879065). These patches keep the original pointers in two new hashState fields and free them in Hash()
+why: after Final(); the aligned pointers and every hash value are unchanged.
+file: upstream/ref/nist.h
+count: 1
+find:   unsigned char* buffer;
+replace:   unsigned char* buffer; void *nextssl_buffer_mem; void *nextssl_A_mem;
+patch: simd-keep-allocations-buffer
+why: (see simd-keep-allocations)
+file: upstream/ref/nist.c
+count: 1
+find:   state->buffer = malloc(16*n + 16);
+replace:   state->buffer = state->nextssl_buffer_mem = malloc(16*n + 16);
+patch: simd-keep-allocations-state
+why: (see simd-keep-allocations)
+file: upstream/ref/nist.c
+count: 1
+find:   state->A = malloc((4*n+4)*sizeof(u32));
+replace:   state->A = state->nextssl_A_mem = malloc((4*n+4)*sizeof(u32));
+patch: simd-free-after-final
+why: (see simd-keep-allocations)
+file: upstream/ref/nist.c
+count: 1
+find:   r = Final(&s, hashval);
+replace:   r = Final(&s, hashval); free(s.nextssl_buffer_mem); free(s.nextssl_A_mem);

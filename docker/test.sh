@@ -75,6 +75,7 @@ if [ "${NEXTSSL_ASAN:-0}" = "1" ]; then
   RUSTFLAGS="-Zsanitizer=address" \
   ASAN_OPTIONS="detect_leaks=1:abort_on_error=0:halt_on_error=0:handle_sigill=1:symbolize=1" \
   UBSAN_OPTIONS="print_stacktrace=1:halt_on_error=0" \
+  ASAN_SYMBOLIZER_PATH="$(ls /usr/lib/llvm-*/bin/llvm-symbolizer 2>/dev/null | head -1)" \
   CARGO_TARGET_DIR=/tmp/target-asan \
   SMOKE_JOBS=4 \
     python3 tools/testrun.py --out "$REPORT_DIR/asan" $TESTRUN_OPTS --cargo "cargo +nightly" --timeout 1200 --max-per-algo 50 \

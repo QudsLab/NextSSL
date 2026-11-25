@@ -1,0 +1,9 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: lwc-decrypt-free-on-tag-mismatch
+why: crypto_aead_decrypt allocates `state` and `tag` with malloc and frees them on success, but returns on a tag
+why: mismatch without freeing them: every rejected ciphertext leaked the keyed sponge state (LeakSanitizer, CI run
+why: 45581879065). The patch frees both before that return; the return value and every other path are unchanged.
+file: upstream/ref/encrypt.c
+count: 1
+find:                                 return -1; // authentication failure should result in return code -1.
+replace:                                 { free(state); free(tag); return -1; } // authentication failure should result in return code -1.

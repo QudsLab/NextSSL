@@ -1,0 +1,9 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: wamm-error-buffer-once
+why: Init() calls InitErrorMessageBuffer(), which mallocs the global error-message buffer again on every hash and
+why: drops the previous one (LeakSanitizer, CI run 45581879065). The patch allocates it only while it is NULL;
+why: it is still cleared on every call, so the observable behaviour is unchanged.
+file: upstream/WaMM/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMMErrorMessage.c
+count: 1
+find: 	_WaMM_ErrorMesssage = (char*) malloc(WaMM_ErrorMessageBufferSize);
+replace: 	if (_WaMM_ErrorMesssage == NULL) _WaMM_ErrorMesssage = (char*) malloc(WaMM_ErrorMessageBufferSize);

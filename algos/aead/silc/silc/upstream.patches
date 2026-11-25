@@ -1,0 +1,22 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: silc-free-context
+why: crypto_aead_encrypt/decrypt allocate the cipher context (key schedule included) with ae_allocate() and never
+why: free it: every call leaked it (LeakSanitizer, CI run 45581879065). The later SILC versions (aes128n8silcv1 and
+why: others) free it the same way. The patch frees it before both successful returns.
+file: upstream/encrypt.c
+count: 2
+find: 	return RETURN_SUCCESS;
+replace: 	free(cxt); return RETURN_SUCCESS;
+patch: silc-free-context-on-tag-mismatch
+why: The same context is also not freed when decryption rejects the tag; the patch frees it before that return.
+file: upstream/encrypt.c
+count: 1
+find:             return RETURN_TAG_NO_MATCH;
+replace:             { free(cxt); return RETURN_TAG_NO_MATCH; }
+patch: silc-free-context-declare-free
+why: encrypt.c does not include <stdlib.h>; the free() calls added above need a declaration (C99 has no implicit
+why: declarations), so each function that allocates the context declares free() exactly as <stdlib.h> does.
+file: upstream/encrypt.c
+count: 2
+find:     ae_cxt* cxt = ae_allocate();
+replace:     void free(void *); ae_cxt* cxt = ae_allocate();

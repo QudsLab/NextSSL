@@ -1,0 +1,25 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: cmcc-decrypt-free-on-reject-1
+why: crypto_aead_decrypt allocates cbc_buffer, x and scratch and frees them only on success; the three checks that
+why: reject a forged ciphertext (non-zero padding bytes) return -1 without freeing them, leaking key-derived data
+why: on every rejection (LeakSanitizer, CI run 45581879065). The patch frees the three buffers before that return.
+file: upstream/ref/encrypt.c
+count: 1
+find: 	      return -1;
+replace: 	      { free(scratch); free(x); free(cbc_buffer); return -1; }
+patch: cmcc-decrypt-free-on-reject-2
+why: crypto_aead_decrypt allocates cbc_buffer, x and scratch and frees them only on success; the three checks that
+why: reject a forged ciphertext (non-zero padding bytes) return -1 without freeing them, leaking key-derived data
+why: on every rejection (LeakSanitizer, CI run 45581879065). The patch frees the three buffers before that return.
+file: upstream/ref/encrypt.c
+count: 1
+find: 	  return -1;
+replace: 	  { free(scratch); free(x); free(cbc_buffer); return -1; }
+patch: cmcc-decrypt-free-on-reject-3
+why: crypto_aead_decrypt allocates cbc_buffer, x and scratch and frees them only on success; the three checks that
+why: reject a forged ciphertext (non-zero padding bytes) return -1 without freeing them, leaking key-derived data
+why: on every rejection (LeakSanitizer, CI run 45581879065). The patch frees the three buffers before that return.
+file: upstream/ref/encrypt.c
+count: 1
+find: 	return -1;
+replace: 	{ free(scratch); free(x); free(cbc_buffer); return -1; }

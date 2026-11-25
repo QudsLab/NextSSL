@@ -19,7 +19,7 @@ so anyone can see what was changed, where and why, and reproduce or review it.
 
 Glue code (`glue.rs`), shims (`shim.c`) and `build.rs` are NextSSL code, not upstream code.
 
-## 1. Patches (23 distinct, in 28 crates)
+## 1. Patches (45 distinct, in 60 crates)
 
 ### cloc-silc-pstate2-prototype
 
@@ -32,6 +32,45 @@ cloc.c/silc.c call pstate2() (a debug print, empty unless _PRINT) with no protot
 ```diff
 - void pstate(const unsigned char* st, int len);
 + void pstate(const unsigned char* st, int len); void pstate2(const unsigned char *str, const byte* state);
+```
+
+### cmcc-decrypt-free-on-reject-1
+
+Crates: cmcc22v1, cmcc24v1, cmcc42v1, cmcc44v1, cmcc84v1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+crypto_aead_decrypt allocates cbc_buffer, x and scratch and frees them only on success; the three checks that reject a forged ciphertext (non-zero padding bytes) return -1 without freeing them, leaking key-derived data on every rejection (LeakSanitizer, CI run 45581879065). The patch frees the three buffers before that return.
+
+```diff
+- 	      return -1;
++ 	      { free(scratch); free(x); free(cbc_buffer); return -1; }
+```
+
+### cmcc-decrypt-free-on-reject-2
+
+Crates: cmcc22v1, cmcc24v1, cmcc42v1, cmcc44v1, cmcc84v1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+crypto_aead_decrypt allocates cbc_buffer, x and scratch and frees them only on success; the three checks that reject a forged ciphertext (non-zero padding bytes) return -1 without freeing them, leaking key-derived data on every rejection (LeakSanitizer, CI run 45581879065). The patch frees the three buffers before that return.
+
+```diff
+- 	  return -1;
++ 	  { free(scratch); free(x); free(cbc_buffer); return -1; }
+```
+
+### cmcc-decrypt-free-on-reject-3
+
+Crates: cmcc22v1, cmcc24v1, cmcc42v1, cmcc44v1, cmcc84v1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+crypto_aead_decrypt allocates cbc_buffer, x and scratch and frees them only on success; the three checks that reject a forged ciphertext (non-zero padding bytes) return -1 without freeing them, leaking key-derived data on every rejection (LeakSanitizer, CI run 45581879065). The patch frees the three buffers before that return.
+
+```diff
+- 	return -1;
++ 	{ free(scratch); free(x); free(cbc_buffer); return -1; }
 ```
 
 ### ketje-tag-mismatch-without-exceptions
@@ -73,6 +112,110 @@ KeccakF-interface.h maps KeccakF_StatePermute to KeccakP1600_12_StatePermute but
 + void KeccakP1600_12_StatePermute(void *state); void KeccakF_ParallelInitialize( void )
 ```
 
+### silc-free-context
+
+Crates: led80n6silcv1, present80n6silcv1
+
+File: `upstream/*/encrypt.c` (2 occurrence(s))
+
+crypto_aead_encrypt/decrypt allocate the cipher context (key schedule included) with ae_allocate() and never free it: every call leaked it (LeakSanitizer, CI run 45581879065). The later SILC versions (aes128n8silcv1 and others) free it the same way. The patch frees it before both successful returns.
+
+```diff
+- 	return RETURN_SUCCESS;
++ 	free(cxt); return RETURN_SUCCESS;
+```
+
+### silc-free-context-on-tag-mismatch
+
+Crates: led80n6silcv1, present80n6silcv1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The same context is also not freed when decryption rejects the tag; the patch frees it before that return.
+
+```diff
+-             return RETURN_TAG_NO_MATCH;
++             { free(cxt); return RETURN_TAG_NO_MATCH; }
+```
+
+### silc-free-context-declare-free
+
+Crates: led80n6silcv1, present80n6silcv1
+
+File: `upstream/*/encrypt.c` (2 occurrence(s))
+
+encrypt.c does not include <stdlib.h>; the free() calls added above need a declaration (C99 has no implicit declarations), so each function that allocates the context declares free() exactly as <stdlib.h> does.
+
+```diff
+-     ae_cxt* cxt = ae_allocate();
++     void free(void *); ae_cxt* cxt = ae_allocate();
+```
+
+### silc-free-context
+
+Crates: silc
+
+File: `upstream/encrypt.c` (2 occurrence(s))
+
+crypto_aead_encrypt/decrypt allocate the cipher context (key schedule included) with ae_allocate() and never free it: every call leaked it (LeakSanitizer, CI run 45581879065). The later SILC versions (aes128n8silcv1 and others) free it the same way. The patch frees it before both successful returns.
+
+```diff
+- 	return RETURN_SUCCESS;
++ 	free(cxt); return RETURN_SUCCESS;
+```
+
+### silc-free-context-on-tag-mismatch
+
+Crates: silc
+
+File: `upstream/encrypt.c` (1 occurrence(s))
+
+The same context is also not freed when decryption rejects the tag; the patch frees it before that return.
+
+```diff
+-             return RETURN_TAG_NO_MATCH;
++             { free(cxt); return RETURN_TAG_NO_MATCH; }
+```
+
+### silc-free-context-declare-free
+
+Crates: silc
+
+File: `upstream/encrypt.c` (2 occurrence(s))
+
+encrypt.c does not include <stdlib.h>; the free() calls added above need a declaration (C99 has no implicit declarations), so each function that allocates the context declares free() exactly as <stdlib.h> does.
+
+```diff
+-     ae_cxt* cxt = ae_allocate();
++     void free(void *); ae_cxt* cxt = ae_allocate();
+```
+
+### lwc-decrypt-free-on-tag-mismatch
+
+Crates: spix128v1, spix128v1-lwc1, syconaer64128v1, syconaer96128v1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+crypto_aead_decrypt allocates `state` and `tag` with malloc and frees them on success, but returns on a tag mismatch without freeing them: every rejected ciphertext leaked the keyed sponge state (LeakSanitizer, CI run 45581879065). The patch frees both before that return; the return value and every other path are unchanged.
+
+```diff
+-                                 return(KAT_CRYPTO_FAILURE);
++                                 { free(state); free(tag); return(KAT_CRYPTO_FAILURE); }
+```
+
+### lwc-decrypt-free-on-tag-mismatch
+
+Crates: spoc128sliscplight256v1, spoc128sliscplight256v1-lwc1, spoc64sliscplight192v1, spoc64sliscplight192v1-lwc1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+crypto_aead_decrypt allocates `state` and `tag` with malloc and frees them on success, but returns on a tag mismatch without freeing them: every rejected ciphertext leaked the keyed sponge state (LeakSanitizer, CI run 45581879065). The patch frees both before that return; the return value and every other path are unchanged.
+
+```diff
+-                                 return -1; // authentication failure should result in return code -1.
++                                 { free(state); free(tag); return -1; } // authentication failure should result in return code -1.
+```
+
 ### cloc-silc-pstate2-prototype
 
 Crates: twine80n6clocv1
@@ -86,6 +229,19 @@ cloc.c/silc.c call pstate2() (a debug print, empty unless _PRINT) with no protot
 + void pstate(const unsigned char* st, int len); void pstate2(const unsigned char *str, const byte* state);
 ```
 
+### lwc-decrypt-free-on-tag-mismatch
+
+Crates: wageae128v1, wageae128v1-lwc1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+crypto_aead_decrypt allocates `state` and `tag` with malloc and frees them on success, but returns on a tag mismatch without freeing them: every rejected ciphertext leaked the keyed sponge state (LeakSanitizer, CI run 45581879065). The patch frees both before that return; the return value and every other path are unchanged.
+
+```diff
+-                               return(KAT_CRYPTO_FAILURE);
++                               { free(state); free(tag); return(KAT_CRYPTO_FAILURE); }
+```
+
 ### meshhash-rot
 
 Crates: meshhash-224-sha3r1, meshhash-256-sha3r1, meshhash-384-sha3r1, meshhash-512-sha3r1
@@ -97,6 +253,123 @@ ROT(w, b) computes (w >> b) ^ (w << (64 - b)), and meshhash calls it with b = 0 
 ```diff
 - #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> (b) ^ (w) << (64 - (b))) & 0xffffffffffffffffULL)
 + #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> ((b) & 63) | (w) << ((64 - (b)) & 63)) & 0xffffffffffffffffULL)
+```
+
+### simd-keep-allocations
+
+Crates: simd-224-sha3r1, simd-224-sha3r2, simd-256-sha3r1, simd-256-sha3r2, simd-384-sha3r1, simd-384-sha3r2, simd-512-sha3r1, simd-512-sha3r2
+
+File: `upstream/*/Reference_Implementation/nist.h` (1 occurrence(s))
+
+InitIV() mallocs the message buffer and the state words, then moves both pointers forward to a 16-byte boundary, so they can never be passed to free(): every hash leaked both blocks (LeakSanitizer, CI run 45581879065). These patches keep the original pointers in two new hashState fields and free them in Hash() after Final(); the aligned pointers and every hash value are unchanged.
+
+```diff
+-   unsigned char* buffer;
++   unsigned char* buffer; void *nextssl_buffer_mem; void *nextssl_A_mem;
+```
+
+### simd-keep-allocations-buffer
+
+Crates: simd-224-sha3r1, simd-224-sha3r2, simd-256-sha3r1, simd-256-sha3r2, simd-384-sha3r1, simd-384-sha3r2, simd-512-sha3r1, simd-512-sha3r2
+
+File: `upstream/*/Reference_Implementation/nist.c` (1 occurrence(s))
+
+(see simd-keep-allocations)
+
+```diff
+-   state->buffer = malloc(16*n + 16);
++   state->buffer = state->nextssl_buffer_mem = malloc(16*n + 16);
+```
+
+### simd-keep-allocations-state
+
+Crates: simd-224-sha3r1, simd-224-sha3r2, simd-256-sha3r1, simd-256-sha3r2, simd-384-sha3r1, simd-384-sha3r2, simd-512-sha3r1, simd-512-sha3r2
+
+File: `upstream/*/Reference_Implementation/nist.c` (1 occurrence(s))
+
+(see simd-keep-allocations)
+
+```diff
+-   state->A = malloc((4*n+4)*sizeof(u32));
++   state->A = state->nextssl_A_mem = malloc((4*n+4)*sizeof(u32));
+```
+
+### simd-free-after-final
+
+Crates: simd-224-sha3r1, simd-224-sha3r2, simd-256-sha3r1, simd-256-sha3r2, simd-384-sha3r1, simd-384-sha3r2, simd-512-sha3r1, simd-512-sha3r2
+
+File: `upstream/*/Reference_Implementation/nist.c` (1 occurrence(s))
+
+(see simd-keep-allocations)
+
+```diff
+-   r = Final(&s, hashval);
++   r = Final(&s, hashval); free(s.nextssl_buffer_mem); free(s.nextssl_A_mem);
+```
+
+### simd-keep-allocations
+
+Crates: simd256, simd512
+
+File: `upstream/*/nist.h` (1 occurrence(s))
+
+InitIV() mallocs the message buffer and the state words, then moves both pointers forward to a 16-byte boundary, so they can never be passed to free(): every hash leaked both blocks (LeakSanitizer, CI run 45581879065). These patches keep the original pointers in two new hashState fields and free them in Hash() after Final(); the aligned pointers and every hash value are unchanged.
+
+```diff
+-   unsigned char* buffer;
++   unsigned char* buffer; void *nextssl_buffer_mem; void *nextssl_A_mem;
+```
+
+### simd-keep-allocations-buffer
+
+Crates: simd256, simd512
+
+File: `upstream/*/nist.c` (1 occurrence(s))
+
+(see simd-keep-allocations)
+
+```diff
+-   state->buffer = malloc(16*n + 16);
++   state->buffer = state->nextssl_buffer_mem = malloc(16*n + 16);
+```
+
+### simd-keep-allocations-state
+
+Crates: simd256, simd512
+
+File: `upstream/*/nist.c` (1 occurrence(s))
+
+(see simd-keep-allocations)
+
+```diff
+-   state->A = malloc((4*n+4)*sizeof(u32));
++   state->A = state->nextssl_A_mem = malloc((4*n+4)*sizeof(u32));
+```
+
+### simd-free-after-final
+
+Crates: simd256, simd512
+
+File: `upstream/*/nist.c` (1 occurrence(s))
+
+(see simd-keep-allocations)
+
+```diff
+-   r = Final(&s, hashval);
++   r = Final(&s, hashval); free(s.nextssl_buffer_mem); free(s.nextssl_A_mem);
+```
+
+### wamm-error-buffer-once
+
+Crates: wamm-224-sha3r1, wamm-256-sha3r1, wamm-384-sha3r1, wamm-512-sha3r1
+
+File: `upstream/*/Reference_Implementation/WaMM_Ref/WaMM_Ref/WaMMErrorMessage.c` (1 occurrence(s))
+
+Init() calls InitErrorMessageBuffer(), which mallocs the global error-message buffer again on every hash and drops the previous one (LeakSanitizer, CI run 45581879065). The patch allocates it only while it is NULL; it is still cleared on every call, so the observable behaviour is unchanged.
+
+```diff
+- 	_WaMM_ErrorMesssage = (char*) malloc(WaMM_ErrorMessageBufferSize);
++ 	if (_WaMM_ErrorMesssage == NULL) _WaMM_ErrorMesssage = (char*) malloc(WaMM_ErrorMessageBufferSize);
 ```
 
 ### bike-sampling-bit-word-size
@@ -240,6 +513,19 @@ ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it
 ```diff
 -     size_t i_cast[RYDE_5F_PARAM_M_WORDS] = {0};
 +     uint64_t i_cast[RYDE_5F_PARAM_M_WORDS] = {0};
+```
+
+### ryde5-ur-mul-in-bounds
+
+Crates: ryde5f-r2, ryde5s-r2
+
+File: `upstream/*/src/rbc-67/rbc_67_elt.c` (1 occurrence(s))
+
+rbc_67_elt_ur_mul adds ELT_SIZE + 1 = 3 words of each shifted e2 at word offset i/64, so for i = 64..66 it reads and writes o[3] of the 3-word rbc_67_elt_ur: one word past the caller's stack buffer (AddressSanitizer stack-buffer-overflow, CI run 45581879065). That word is always XORed with shifts[i % 64][2], the bits 128+ of e2 (67 bits) shifted by at most 2, which are zero, so stopping the loop at the end of o leaves every result unchanged and touches nothing outside the buffer. RYDE-1/3 (m = 53, 61 < 64) never reach offset 1.
+
+```diff
+-     for(uint8_t j=0 ; j<RBC_67_ELT_SIZE + 1 ; j++) {
++     for(uint8_t j=0 ; j<RBC_67_ELT_SIZE + 1 && j + offset < RBC_67_ELT_UR_SIZE ; j++) {
 ```
 
 ### ryde-phi-word-size

@@ -18,3 +18,13 @@ file: upstream/ryde5f/src/tcith.c
 count: 1
 find:     size_t i_cast[RYDE_5F_PARAM_M_WORDS] = {0};
 replace:     uint64_t i_cast[RYDE_5F_PARAM_M_WORDS] = {0};
+patch: ryde5-ur-mul-in-bounds
+why: rbc_67_elt_ur_mul adds ELT_SIZE + 1 = 3 words of each shifted e2 at word offset i/64, so for i = 64..66 it
+why: reads and writes o[3] of the 3-word rbc_67_elt_ur: one word past the caller's stack buffer (AddressSanitizer
+why: stack-buffer-overflow, CI run 45581879065). That word is always XORed with shifts[i % 64][2], the bits 128+ of
+why: e2 (67 bits) shifted by at most 2, which are zero, so stopping the loop at the end of o leaves every result
+why: unchanged and touches nothing outside the buffer. RYDE-1/3 (m = 53, 61 < 64) never reach offset 1.
+file: upstream/ryde5f/src/rbc-67/rbc_67_elt.c
+count: 1
+find:     for(uint8_t j=0 ; j<RBC_67_ELT_SIZE + 1 ; j++) {
+replace:     for(uint8_t j=0 ; j<RBC_67_ELT_SIZE + 1 && j + offset < RBC_67_ELT_UR_SIZE ; j++) {
