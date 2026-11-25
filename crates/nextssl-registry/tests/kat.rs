@@ -1103,7 +1103,10 @@ fn smoke_part(part: usize) {
         failures.len()
     );
     // The kinds this part instantiated; the catalog-wide floor is checked in `..._kinds`.
-    println!("part {part}: {} algorithms, kinds exercised: {kinds:?}", results.len());
+    println!(
+        "part {part}: {} algorithms, kinds exercised: {kinds:?}",
+        results.len()
+    );
 }
 
 /// Replays the published-vector files that carry `"replay": "registry"` (AEAD, block cipher,
