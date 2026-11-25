@@ -130,7 +130,10 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
         let strip = f.format() == BinaryFormat::MachO
             || (f.format() == BinaryFormat::Coff && f.architecture() == Architecture::I386);
         for s in f.symbols() {
-            if s.is_undefined() || !s.is_global() {
+            // A Mach-O common symbol (tentative definition, -fcommon) is N_UNDF with its size as the
+            // value: object reports it undefined, so it counts as defined when its address is not 0
+            // (CI run 45581879065: macOS SPHINCS+ crates shared one unrenamed `state_seeded`).
+            if (s.is_undefined() && s.address() == 0) || !s.is_global() {
                 continue;
             }
             if !matches!(
