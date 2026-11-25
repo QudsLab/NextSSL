@@ -1,0 +1,61 @@
+# Source tags: where an algorithm's code comes from. Read by `cargo xtask gen` (docs/algo.generated.json,
+# field `source`) and tools/catalog/gen_catalog.py. Every algorithm must match exactly one rule, or gen stops.
+#
+# Columns (tab-separated): match, tag, label.
+#   match  crate            a Rust crate from crates.io (upstream.crate)
+#          repo:<owner>     a repository https://github.com/<owner>/... (upstream.repo)
+#          url:<host>       a download from <host> (upstream.url); an https://web.archive.org/web/<time>/<orig>
+#                           copy is matched by the host of <orig> and also gets the flag `web-archive`
+# Flags added to any tag: `web-archive` (archived copy of the original URL), `port` (upstream/port/: a
+# line-by-line port from another language, CLAUDE.md rule 1).
+#
+# Tags
+#   nist         NIST competition or standardisation submission package, as published by NIST
+#   supercop     SUPERCOP (eBACS) benchmark package: implementations submitted by the designers
+#   phc          Password Hashing Competition submission package
+#   liboqs       Open Quantum Safe liboqs
+#   pqclean      PQClean (clean, reviewed PQC reference code)
+#   designer     the designers' own reference code
+#   library      an established cryptographic library
+#   crates-io    a Rust crate (RustCrypto and others), exact version pinned
+#   mirror       an old crypto archive mirror
+#   third-party  an individual's implementation, not the designers' and not a library
+crate	crates-io	Rust crate (crates.io)
+url:csrc.nist.gov	nist	NIST submission package
+url:bench.cr.yp.to	supercop	SUPERCOP (eBACS)
+url:password-hashing.net	phc	Password Hashing Competition submission
+repo:open-quantum-safe	liboqs	liboqs (Open Quantum Safe)
+repo:PQClean	pqclean	PQClean
+repo:XMSS	designer	designers' reference (XMSS, RFC 8391)
+repo:ascon	designer	designers' reference (Ascon)
+repo:romulusae	designer	designers' reference (Romulus)
+repo:cryptolu	designer	designers' reference (SPARKLE, CryptoLUX)
+repo:veorq	designer	designers' reference (SipHash)
+repo:BLAKE2	designer	designers' reference (BLAKE2)
+repo:norx	designer	designers' reference (NORX)
+repo:Cyan4973	designer	designer's reference (xxHash)
+repo:cr-marcstevens	designer	designer's reference (SHA-1 collision detection)
+repo:openwall	designer	designer's reference (yescrypt, Openwall)
+url:burtleburtle.net	designer	designer's reference (Bob Jenkins)
+url:mouha.be	designer	designer's reference (Chaskey)
+url:darkside.com.au	designer	designer's reference (ICE)
+url:sony.co.jp	designer	designers' reference (CLEFIA, Sony)
+repo:post-quantum	designer	designers' reference (NTS-KEM)
+url:ciphergoth.org	designer	designer's reference (Mercy, Paul Crowley)
+repo:rweather	library	library (rweather lightweight-crypto)
+repo:ANSSI-FR	library	library (ANSSI libecc)
+repo:libtom	library	library (LibTomCrypt)
+repo:weidai11	library	library (Crypto++)
+repo:osmocom	library	library (libosmocore)
+repo:gost-engine	library	library (OpenSSL GOST engine)
+repo:pornin	library	library (sphlib, Thomas Pornin)
+repo:rhash	library	library (RHash)
+url:ftp.nic.funet.fi	mirror	crypto archive mirror (funet.fi)
+repo:mouse07410	third-party	third-party implementation
+repo:P1sec	third-party	third-party implementation
+repo:nabijaczleweli	third-party	third-party implementation
+repo:jibsen	third-party	third-party implementation
+repo:amoallim15	third-party	third-party implementation
+repo:obfusk	third-party	third-party implementation
+repo:Vozec	third-party	third-party implementation
+repo:jackiecan	third-party	third-party implementation

@@ -250,6 +250,62 @@ struct Algo {
     /// Filled in by the loader: `category/family/id`.
     #[serde(skip_deserializing, default)]
     dir: String,
+    /// Filled in by the loader from tools/source_tags.tsv: where the code comes from.
+    #[serde(skip_deserializing, default)]
+    source: Source,
+}
+
+/// Provenance tag of an algorithm (tools/source_tags.tsv), derived from `upstream`; never written by hand.
+#[derive(Debug, Serialize, Clone, Default)]
+struct Source {
+    tag: String,
+    label: String,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    flags: Vec<String>,
+}
+
+const SOURCE_TAGS: &str = include_str!("../../tools/source_tags.tsv");
+
+/// (match key, flags) of an upstream: `crate`, `repo:<owner>` or `url:<host>` (see source_tags.tsv).
+fn source_key(up: &Upstream) -> (String, Vec<String>) {
+    fn host(u: &str) -> &str {
+        let rest = u.split_once("://").map_or(u, |(_, r)| r);
+        let h = rest.split('/').next().unwrap_or("");
+        h.strip_prefix("www.").unwrap_or(h)
+    }
+    if up.krate.is_some() {
+        return ("crate".into(), vec![]);
+    }
+    if let Some(r) = &up.repo {
+        let path = r.split_once("://").map_or(r.as_str(), |(_, p)| p);
+        let owner = path.split('/').nth(1).unwrap_or("");
+        return (format!("repo:{owner}"), vec![]);
+    }
+    let u = up.url.as_deref().unwrap_or("");
+    if host(u) == "web.archive.org" {
+        // https://web.archive.org/web/<time>/<original URL>
+        let orig = u.splitn(6, '/').nth(5).unwrap_or("");
+        return (format!("url:{}", host(orig)), vec!["web-archive".into()]);
+    }
+    (format!("url:{}", host(u)), vec![])
+}
+
+fn source_of(up: &Upstream, dir: &Path) -> Res<Source> {
+    let (key, mut flags) = source_key(up);
+    let rule = SOURCE_TAGS
+        .lines()
+        .filter(|l| !l.starts_with('#') && !l.trim().is_empty())
+        .map(|l| l.split('\t').collect::<Vec<_>>())
+        .find(|c| c.len() == 3 && c[0] == key)
+        .ok_or_else(|| format!("no source tag for `{key}`: add a rule to tools/source_tags.tsv"))?;
+    if dir.join("upstream").join("port").is_dir() {
+        flags.push("port".into());
+    }
+    Ok(Source {
+        tag: rule[1].into(),
+        label: rule[2].into(),
+        flags,
+    })
 }
 
 type Res<T> = Result<T, String>;
@@ -582,6 +638,7 @@ fn load() -> Res<Vec<Algo>> {
             .to_string_lossy()
             .replace('\\', "/");
         validate(&a, dir).map_err(|e| format!("{}: {e}", f.display()))?;
+        a.source = source_of(&a.upstream, dir).map_err(|e| format!("{}: {e}", f.display()))?;
         algos.push(a);
     }
     algos.sort_by(|x, y| x.id.cmp(&y.id));

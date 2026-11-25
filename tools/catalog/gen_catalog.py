@@ -6,6 +6,8 @@ Inputs (all read-only):
   algos/**/kat/*.json                   counts of published vectors per algorithm
   algos/**/build.rs, upstream/ORIGIN.md implementation language and port origin
   algos_parked/**/PARKED.md + folder    collected algorithms that do not build or pass yet
+  algos_untrusted/**/STAGED.md + folder staged algorithms, kept outside the workspace (not wired yet)
+  tools/source_tags.tsv                 source tags (registered rows take them from algo.generated.json)
 
 Output: docs/catalog.html (the template below + the data as one JSON blob).
 Run from anywhere:  python tools/catalog/gen_catalog.py
@@ -68,6 +70,49 @@ def source_of(up):
     return re.sub(r"^https?://(www\.)?", "", u)[:80]
 
 
+def load_source_rules():
+    rules = {}
+    for line in read(os.path.join(ROOT, "tools", "source_tags.tsv")).splitlines():
+        c = line.split("\t")
+        if line.startswith("#") or len(c) != 3:
+            continue
+        rules[c[0]] = {"tag": c[1], "label": c[2]}
+    return rules
+
+
+SOURCE_RULES = None
+
+
+def source_tag(up, algo_dir):
+    """Same rule as `cargo xtask gen` (xtask source_key): crate, repo:<owner> or url:<host>."""
+    global SOURCE_RULES
+    if SOURCE_RULES is None:
+        SOURCE_RULES = load_source_rules()
+
+    def host(u):
+        h = u.split("://", 1)[-1].split("/")[0]
+        return h[4:] if h.startswith("www.") else h
+    flags = []
+    if not up:
+        # A parked note without algo.toml: the source was never recorded in a machine-readable form.
+        return {"tag": "unrecorded", "label": "source not recorded (parked note without algo.toml)", "flags": []}
+    if up.get("crate"):
+        key = "crate"
+    elif up.get("repo"):
+        key = "repo:" + up["repo"].split("://", 1)[-1].split("/")[1]
+    else:
+        u = up.get("url", "")
+        if host(u) == "web.archive.org":
+            parts = u.split("/", 5)
+            u = parts[5] if len(parts) > 5 else ""
+            flags.append("web-archive")
+        key = "url:" + host(u)
+    if os.path.isdir(os.path.join(algo_dir, "upstream", "port")):
+        flags.append("port")
+    r = SOURCE_RULES.get(key, {"tag": "untagged", "label": "no rule in tools/source_tags.tsv for " + key})
+    return {"tag": r["tag"], "label": r["label"], "flags": flags}
+
+
 def pinned(up):
     return bool((up.get("crate") and up.get("version")) or (up.get("repo") and up.get("commit"))
                 or (up.get("url") and up.get("sha256")))
@@ -88,6 +133,7 @@ def entry(a, algo_dir, status, reason=""):
         ev.append("roundtrip")
     if nvec and status == "registered":
         ev.append("kat")
+    so = a.get("source") or source_tag(up, algo_dir)
     plat = "all"
     if a.get("exclude_targets"):
         plat = "not " + "/".join(a["exclude_targets"])
@@ -99,6 +145,7 @@ def entry(a, algo_dir, status, reason=""):
         "sz": a.get("sizes", {}), "kv": nvec, "kf": kat_files, "ev": ev, "pl": plat,
         "xr": a.get("exclude_reason", ""), "why": reason, "dir": a.get("dir", ""),
         "pr": sorted((a.get("params") or {}).keys()),
+        "so": so["tag"], "sol": so["label"], "sof": so.get("flags", []),
     }
 
 
@@ -149,14 +196,27 @@ def main():
         seen.add(a["id"])
         a["dir"] = os.path.relpath(d, os.path.join(ROOT, "algos_parked")).replace(os.sep, "/")
         rows.append(entry(a, d, "parked", reason))
+    # Staged: kept as their own workspaces under algos_untrusted/ until they can join the main one.
+    for sm in glob.glob(os.path.join(ROOT, "algos_untrusted", "*", "*", "STAGED.md")):
+        sdir = os.path.dirname(sm)
+        paras = read(sm).replace("\r\n", "\n").split("\n\n")
+        reason = " ".join(paras[1].split()) if len(paras) > 1 else ""
+        for t in sorted(glob.glob(os.path.join(sdir, "*", "algo.toml"))):
+            a = load_toml_light(read(t))
+            d = os.path.dirname(t)
+            if not a.get("id") or a["id"] in seen:
+                continue
+            seen.add(a["id"])
+            a["dir"] = os.path.relpath(d, os.path.join(ROOT, "algos_untrusted")).replace(os.sep, "/")
+            rows.append(entry(a, d, "staged", reason[:400]))
     rows.sort(key=lambda r: (r["c"], r["f"], r["i"]))
     data = json.dumps(rows, separators=(",", ":"), ensure_ascii=False)
     html = TEMPLATE.replace("/*DATA*/[]", data).replace("{{GENERATED_BY}}", meta.get("generated_by", ""))
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write(html)
-    reg = sum(1 for r in rows if r["st"] == "registered")
-    print("wrote %s: %d algorithms (%d registered, %d parked)" % (os.path.relpath(OUT, ROOT), len(rows), reg,
-                                                                  len(rows) - reg))
+    n = {k: sum(1 for r in rows if r["st"] == k) for k in ("registered", "parked", "staged")}
+    print("wrote %s: %d algorithms (%d registered, %d parked, %d staged)" % (
+        os.path.relpath(OUT, ROOT), len(rows), n["registered"], n["parked"], n["staged"]))
 
 
 TEMPLATE = r"""<!doctype html>
@@ -200,14 +260,15 @@ a{color:var(--acc)}.muted{color:var(--mut)}.count{color:var(--mut);font-size:13p
 <body>
 <header>
   <h1>NextSSL Algorithm Catalog</h1>
-  <div class="sub">Every algorithm NextSSL has gathered: registered ones (built into the library) and parked ones (collected, not building or passing yet). Click a row for its source and evidence.</div>
+  <div class="sub">Every algorithm NextSSL has gathered: registered (built into the library and tested), and upcoming: parked (collected, not building or passing yet) and staged (kept outside the workspace until a dependency conflict is solved). Click a row for its source and evidence.</div>
   <div class="stats" id="stats"></div>
 </header>
 <div class="bar"><div class="filters">
   <input type="search" id="q" placeholder="Search id, family, alias, standard, source...">
   <select id="fk"><option value="">All kinds</option></select>
   <select id="ft"><option value="">All tiers</option></select>
-  <select id="fs"><option value="">Registered + parked</option><option>registered</option><option>parked</option></select>
+  <select id="fs"><option value="">All statuses</option><option>registered</option><option value="upcoming">upcoming (parked + staged)</option><option>parked</option><option>staged</option></select>
+  <select id="fo"><option value="">All sources</option></select>
   <select id="fl"><option value="">All languages</option></select>
   <select id="fe"><option value="">Any evidence</option><option value="kat">Has KAT vectors</option><option value="nokat">No KAT vectors</option><option value="license-known">License known</option><option value="copyleft">Copyleft</option></select>
   <select id="fp"><option value="">All platforms</option><option value="all">All targets</option><option value="limited">Platform-limited</option></select>
@@ -221,12 +282,13 @@ const D=/*DATA*/[];
 const $=s=>document.querySelector(s);
 const uniq=k=>[...new Set(D.map(r=>r[k]).filter(Boolean))].sort();
 function fill(sel,vals){const e=$(sel);vals.forEach(v=>{const o=document.createElement('option');o.textContent=v;e.appendChild(o)})}
-fill('#fk',uniq('k'));fill('#ft',uniq('t'));fill('#fl',uniq('lang'));
+fill('#fk',uniq('k'));fill('#ft',uniq('t'));fill('#fl',uniq('lang'));fill('#fo',uniq('so'));
+const stc=r=>r.st==='registered'?'registered':`<span class="parked">${esc(r.st)}</span>`;
 function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function stats(){
   const reg=D.filter(r=>r.st==='registered'),kat=reg.filter(r=>r.kv>0);
   const box=(n,l)=>`<div class="stat"><b>${n.toLocaleString()}</b><span>${l}</span></div>`;
-  $('#stats').innerHTML=box(D.length,'algorithms gathered')+box(reg.length,'registered')+box(D.length-reg.length,'parked')+
+  $('#stats').innerHTML=box(D.length,'algorithms gathered')+box(reg.length,'registered')+box(D.length-reg.length,'upcoming (parked + staged)')+
    box(kat.length,'with published KAT vectors')+box(new Set(D.map(r=>r.f)).size,'families')+box(new Set(D.map(r=>r.k)).size,'kinds');
 }
 function link(up){
@@ -240,41 +302,41 @@ function show(i){
   const row=(k,v)=>v===''||v==null||(Array.isArray(v)&&!v.length)?'':`<div>${k}</div><div>${v}</div>`;
   const sz=Object.entries(r.sz||{}).map(([k,v])=>`${k}=${typeof v==='object'?JSON.stringify(v):v}`).join(', ');
   $('#dbody').innerHTML=`<div class="kv">`+
-   row('Status',r.st==='parked'?`<span class="parked">parked</span>`:'registered')+
-   row('Why parked',esc(r.why))+row('Kind',esc(r.k))+row('Category / family',esc(r.c)+' / '+esc(r.f))+
+   row('Status',stc(r))+
+   row(r.st==='staged'?'Why staged':'Why parked',esc(r.why))+row('Kind',esc(r.k))+row('Category / family',esc(r.c)+' / '+esc(r.f))+
    row('Tier',`<span class="t-${esc(r.t)}">${esc(r.t)}</span>`)+row('Aliases',esc(r.al.join(', ')))+
-   row('Standards',esc(r.sd.join(', ')))+row('Language',esc(r.lang))+row('Source',link(u))+
+   row('Standards',esc(r.sd.join(', ')))+row('Language',esc(r.lang))+row('Source tag',`<span class="chip">${esc(r.so)}</span> ${esc(r.sol)}`+r.sof.map(f=>` <span class="chip ev">${esc(f)}</span>`).join(''))+row('Source',link(u))+
    row('Pinned at',esc(u.commit||u.sha256||u.version||''))+row('License',esc(r.lic)+(r.cl?' (copyleft feature)':''))+
    row('Upstream files',r.nf?String(r.nf):'')+row('Sizes',esc(sz))+row('Parameters',esc(r.pr.join(', ')))+
    row('KAT vectors',r.kv?`${r.kv} in ${esc(r.kf.join(', '))}`:'<span class="muted">none yet</span>')+
    row('Evidence',r.ev.map(e=>`<span class="chip ev">${esc(e)}</span>`).join(''))+
-   row('Platforms',esc(r.pl)+(r.xr?' — '+esc(r.xr):''))+row('Folder',esc((r.st==='parked'?'algos_parked/':'algos/')+r.dir))+`</div>`;
+   row('Platforms',esc(r.pl)+(r.xr?' — '+esc(r.xr):''))+row('Folder',esc(({parked:'algos_parked/',staged:'algos_untrusted/'}[r.st]||'algos/')+r.dir))+`</div>`;
   $('#dlg').showModal();
 }
 let sortKey='i',sortDir=1;
 function render(){
-  const q=$('#q').value.toLowerCase().trim(),fk=$('#fk').value,ft=$('#ft').value,fs=$('#fs').value,fl=$('#fl').value,
+  const q=$('#q').value.toLowerCase().trim(),fk=$('#fk').value,ft=$('#ft').value,fs=$('#fs').value,fl=$('#fl').value,fo=$('#fo').value,
         fe=$('#fe').value,fp=$('#fp').value,fg=$('#fg').value;
-  let rows=D.map((r,i)=>[r,i]).filter(([r])=>(!fk||r.k===fk)&&(!ft||r.t===ft)&&(!fs||r.st===fs)&&(!fl||r.lang===fl)&&
+  let rows=D.map((r,i)=>[r,i]).filter(([r])=>(!fk||r.k===fk)&&(!ft||r.t===ft)&&(!fs||r.st===fs||(fs==='upcoming'&&r.st!=='registered'))&&(!fo||r.so===fo)&&(!fl||r.lang===fl)&&
     (!fe||(fe==='kat'?r.kv>0:fe==='nokat'?!r.kv:fe==='copyleft'?r.cl:r.ev.includes(fe)))&&
     (!fp||(fp==='all'?r.pl==='all':r.pl!=='all'))&&
-    (!q||[r.i,r.f,r.c,r.k,r.src,r.lic,...r.al,...r.sd].join(' ').toLowerCase().includes(q)));
+    (!q||[r.i,r.f,r.c,r.k,r.src,r.so,r.sol,r.lic,...r.al,...r.sd].join(' ').toLowerCase().includes(q)));
   rows.sort((a,b)=>{const x=a[0][sortKey],y=b[0][sortKey];return (typeof x==='number'?x-y:String(x).localeCompare(String(y)))*sortDir});
   $('#count').textContent=`${rows.length.toLocaleString()} of ${D.length.toLocaleString()}`;
   const groups=new Map();rows.forEach(x=>{const g=fg?x[0][fg]:'';if(!groups.has(g))groups.set(g,[]);groups.get(g).push(x)});
   const head=`<tr><th data-k="i">Algorithm</th><th data-k="k">Kind</th><th data-k="t">Tier</th><th data-k="lang" class="hide-sm">Language</th>`+
-    `<th data-k="src" class="hide-sm">Source</th><th data-k="kv">KAT</th><th data-k="st">Status</th></tr>`;
+    `<th data-k="so">Source tag</th><th data-k="src" class="hide-sm">Source</th><th data-k="kv">KAT</th><th data-k="st">Status</th></tr>`;
   let h='';const keys=[...groups.keys()].sort();
   for(const g of keys){const list=groups.get(g);
     if(fg)h+=`<div class="cat">${esc(g)} <span class="muted">(${list.length})</span></div>`;
     h+=`<table>${head}`+list.slice(0,fg?100000:3000).map(([r,i])=>`<tr class="r" data-i="${i}"><td class="id">${esc(r.i)}</td><td>${esc(r.k)}</td>`+
-      `<td class="t-${esc(r.t)}">${esc(r.t)}</td><td class="hide-sm">${esc(r.lang)}</td><td class="hide-sm">${esc(r.src)}</td>`+
-      `<td>${r.kv||'<span class="muted">-</span>'}</td><td>${r.st==='parked'?'<span class="parked">parked</span>':'registered'}</td></tr>`).join('')+`</table>`;}
+      `<td class="t-${esc(r.t)}">${esc(r.t)}</td><td class="hide-sm">${esc(r.lang)}</td><td><span class="chip">${esc(r.so)}</span>${r.sof.length?' <span class="muted">'+esc(r.sof.join(', '))+'</span>':''}</td><td class="hide-sm">${esc(r.src)}</td>`+
+      `<td>${r.kv||'<span class="muted">-</span>'}</td><td>${stc(r)}</td></tr>`).join('')+`</table>`;}
   $('#out').innerHTML=h||'<p class="muted">No algorithm matches.</p>';
 }
 document.addEventListener('click',e=>{const tr=e.target.closest('tr.r');if(tr)show(+tr.dataset.i);
   const th=e.target.closest('th[data-k]');if(th){const k=th.dataset.k;sortDir=sortKey===k?-sortDir:1;sortKey=k;render()}});
-['#q','#fk','#ft','#fs','#fl','#fe','#fp','#fg'].forEach(s=>$(s).addEventListener('input',render));
+['#q','#fk','#ft','#fs','#fo','#fl','#fe','#fp','#fg'].forEach(s=>$(s).addEventListener('input',render));
 stats();render();
 </script>
 </body>
