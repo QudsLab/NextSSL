@@ -19,7 +19,7 @@ so anyone can see what was changed, where and why, and reproduce or review it.
 
 Glue code (`glue.rs`), shims (`shim.c`) and `build.rs` are NextSSL code, not upstream code.
 
-## 1. Patches (15 distinct, in 21 crates)
+## 1. Patches (22 distinct, in 24 crates)
 
 ### cloc-silc-pstate2-prototype
 
@@ -99,6 +99,19 @@ ROT(w, b) computes (w >> b) ^ (w << (64 - b)), and meshhash calls it with b = 0 
 + #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> ((b) & 63) | (w) << ((64 - (b)) & 63)) & 0xffffffffffffffffULL)
 ```
 
+### bike-sampling-bit-word-size
+
+Crates: bike-l1, bike-l3, bike-l5
+
+File: `upstream/*/kem/bike/additional_r4/sampling_portable.c` (1 occurrence(s))
+
+secure_set_bits_port keeps each bit position as BIT(w & 63) = 1ULL << (0..63) in a size_t array. size_t is 64 bits on 64-bit targets, but 32 bits on wasm32, where every bit 32..63 is lost: the sampled error vector is wrong and decapsulation returns a different shared secret (wasm32 roundtrip failure, CI runs 45416349331 to 45513495947). The patch stores the positions as uint64_t, the type they are OR-ed into; 64-bit targets compile identical code.
+
+```diff
+-   size_t pos_bit[MAX_WLIST_SIZE];
++   uint64_t pos_bit[MAX_WLIST_SIZE];
+```
+
 ### ntruhrss-r1-pack-tail-in-bounds
 
 Crates: ntruhrss701-r1
@@ -125,6 +138,32 @@ rbc_*_mat_fq_init allocates the matrix words, which are uint64_t, with sizeof(ui
 + (*m)[0] = calloc(rows * words, sizeof(uint64_t));
 ```
 
+### ryde-phi-word-size
+
+Crates: ryde1f-r2
+
+File: `upstream/*/src/tcith.c` (1 occurrence(s))
+
+ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it as uint64_t words. size_t is 64 bits on 64-bit targets, but 32 bits on wasm32, where the read takes 4 bytes of whatever follows on the stack: phi differs between signing and verification and every signature is rejected (wasm32 failure, CI runs 45445531139 to 45513495947). The patch declares the array uint64_t; 64-bit targets compile identical code.
+
+```diff
+-     size_t i_cast[RYDE_1F_PARAM_M_WORDS] = {0};
++     uint64_t i_cast[RYDE_1F_PARAM_M_WORDS] = {0};
+```
+
+### ryde-phi-word-size
+
+Crates: ryde1s-r2
+
+File: `upstream/*/src/tcith.c` (1 occurrence(s))
+
+ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it as uint64_t words. size_t is 64 bits on 64-bit targets, but 32 bits on wasm32, where the read takes 4 bytes of whatever follows on the stack: phi differs between signing and verification and every signature is rejected (wasm32 failure, CI runs 45445531139 to 45513495947). The patch declares the array uint64_t; 64-bit targets compile identical code.
+
+```diff
+-     size_t i_cast[RYDE_1S_PARAM_M_WORDS] = {0};
++     uint64_t i_cast[RYDE_1S_PARAM_M_WORDS] = {0};
+```
+
 ### ryde-mat-fq-word-size
 
 Crates: ryde3f-r2, ryde3s-r2
@@ -138,6 +177,32 @@ rbc_*_mat_fq_init allocates the matrix words, which are uint64_t, with sizeof(ui
 + (*m)[0] = calloc(rows * words, sizeof(uint64_t));
 ```
 
+### ryde-phi-word-size
+
+Crates: ryde3f-r2
+
+File: `upstream/*/src/tcith.c` (1 occurrence(s))
+
+ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it as uint64_t words. size_t is 64 bits on 64-bit targets, but 32 bits on wasm32, where the read takes 4 bytes of whatever follows on the stack: phi differs between signing and verification and every signature is rejected (wasm32 failure, CI runs 45445531139 to 45513495947). The patch declares the array uint64_t; 64-bit targets compile identical code.
+
+```diff
+-     size_t i_cast[RYDE_3F_PARAM_M_WORDS] = {0};
++     uint64_t i_cast[RYDE_3F_PARAM_M_WORDS] = {0};
+```
+
+### ryde-phi-word-size
+
+Crates: ryde3s-r2
+
+File: `upstream/*/src/tcith.c` (1 occurrence(s))
+
+ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it as uint64_t words. size_t is 64 bits on 64-bit targets, but 32 bits on wasm32, where the read takes 4 bytes of whatever follows on the stack: phi differs between signing and verification and every signature is rejected (wasm32 failure, CI runs 45445531139 to 45513495947). The patch declares the array uint64_t; 64-bit targets compile identical code.
+
+```diff
+-     size_t i_cast[RYDE_3S_PARAM_M_WORDS] = {0};
++     uint64_t i_cast[RYDE_3S_PARAM_M_WORDS] = {0};
+```
+
 ### ryde-mat-fq-word-size
 
 Crates: ryde5f-r2, ryde5s-r2
@@ -149,6 +214,32 @@ rbc_*_mat_fq_init allocates the matrix words, which are uint64_t, with sizeof(ui
 ```diff
 - (*m)[0] = calloc(rows * words, sizeof(uint64_t *));
 + (*m)[0] = calloc(rows * words, sizeof(uint64_t));
+```
+
+### ryde-phi-word-size
+
+Crates: ryde5f-r2
+
+File: `upstream/*/src/tcith.c` (1 occurrence(s))
+
+ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it as uint64_t words. size_t is 64 bits on 64-bit targets, but 32 bits on wasm32, where the read takes 4 bytes of whatever follows on the stack: phi differs between signing and verification and every signature is rejected (wasm32 failure, CI runs 45445531139 to 45513495947). The patch declares the array uint64_t; 64-bit targets compile identical code.
+
+```diff
+-     size_t i_cast[RYDE_5F_PARAM_M_WORDS] = {0};
++     uint64_t i_cast[RYDE_5F_PARAM_M_WORDS] = {0};
+```
+
+### ryde-phi-word-size
+
+Crates: ryde5s-r2
+
+File: `upstream/*/src/tcith.c` (1 occurrence(s))
+
+ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it as uint64_t words. size_t is 64 bits on 64-bit targets, but 32 bits on wasm32, where the read takes 4 bytes of whatever follows on the stack: phi differs between signing and verification and every signature is rejected (wasm32 failure, CI runs 45445531139 to 45513495947). The patch declares the array uint64_t; 64-bit targets compile identical code.
+
+```diff
+-     size_t i_cast[RYDE_5S_PARAM_M_WORDS] = {0};
++     uint64_t i_cast[RYDE_5S_PARAM_M_WORDS] = {0};
 ```
 
 ### wave-1ul-vf2

@@ -1,0 +1,11 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: bike-sampling-bit-word-size
+why: secure_set_bits_port keeps each bit position as BIT(w & 63) = 1ULL << (0..63) in a size_t array.
+why: size_t is 64 bits on 64-bit targets, but 32 bits on wasm32, where every bit 32..63 is lost: the sampled
+why: error vector is wrong and decapsulation returns a different shared secret (wasm32 roundtrip failure,
+why: CI runs 45416349331 to 45513495947). The patch stores the positions as uint64_t, the type they are
+why: OR-ed into; 64-bit targets compile identical code.
+file: upstream/src/kem/bike/additional_r4/sampling_portable.c
+count: 1
+find:   size_t pos_bit[MAX_WLIST_SIZE];
+replace:   uint64_t pos_bit[MAX_WLIST_SIZE];

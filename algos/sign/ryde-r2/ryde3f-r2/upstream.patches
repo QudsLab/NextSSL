@@ -8,3 +8,13 @@ file: upstream/ryde3f/src/rbc-61/rbc_61_mat_fq.c
 count: 1
 find: (*m)[0] = calloc(rows * words, sizeof(uint64_t *));
 replace: (*m)[0] = calloc(rows * words, sizeof(uint64_t));
+patch: ryde-phi-word-size
+why: ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it as uint64_t words. size_t
+why: is 64 bits on 64-bit targets, but 32 bits on wasm32, where the read takes 4 bytes of whatever follows on the
+why: stack: phi differs between signing and verification and every signature is rejected (wasm32 failure,
+why: CI runs 45445531139 to 45513495947). The patch declares the array uint64_t; 64-bit targets compile
+why: identical code.
+file: upstream/ryde3f/src/tcith.c
+count: 1
+find:     size_t i_cast[RYDE_3F_PARAM_M_WORDS] = {0};
+replace:     uint64_t i_cast[RYDE_3F_PARAM_M_WORDS] = {0};
