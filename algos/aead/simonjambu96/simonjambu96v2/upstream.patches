@@ -1,0 +1,9 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: jambu-simon96-nonce-in-bounds
+why: jambu_initialization reads 8 bytes from the 6-byte nonce and masks off the 2 extra bytes: the value is right on
+why: little-endian targets, but the read runs 2 bytes past the nonce (AddressSanitizer heap-buffer-overflow, CI run
+why: 45581879065). The patch copies the 6 nonce bytes into a zeroed word, the same value without the over-read.
+file: upstream/ref/encrypt_simon96.c
+count: 1
+find: 	stateS[0] = (((uint64_t *)iv)[0] & 0xffffffffffff); stateS[1] = 0; 
+replace: 	stateS[0] = 0; memcpy(&stateS[0], iv, 6); stateS[1] = 0; 

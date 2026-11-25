@@ -1,0 +1,11 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: nasha-update-tail-in-bounds
+why: Nasha*_Update copies the last partial block with memcpy(..., len/8+1), one byte more than the input holds
+why: when the remaining bit length is a multiple of 8, which is every byte-oriented call (AddressSanitizer
+why: global-buffer-overflow past the input, CI run 45581879065). Final masks every bit at or after the bit count
+why: (or clears the word when it is a multiple of 64), so that byte never reached the digest. (len+7)/8 copies the
+why: bytes that hold input bits only; every digest is unchanged.
+file: upstream/opt/Nasha.c
+count: 2
+find: memcpy((unsigned char *)state->M, sp, len/8+1);
+replace: memcpy((unsigned char *)state->M, sp, (len+7)/8);

@@ -18,3 +18,38 @@ file: upstream/ryde1f/src/tcith.c
 count: 1
 find:     size_t i_cast[RYDE_1F_PARAM_M_WORDS] = {0};
 replace:     uint64_t i_cast[RYDE_1F_PARAM_M_WORDS] = {0};
+patch: xkcp-no-misaligned-accesses
+why: XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte
+why: aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on
+why: strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned
+why: pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches
+why: are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every
+why: hash value is unchanged.
+file: upstream/ryde1f/lib/XKCP/opt64/KeccakP-1600-opt64.c
+count: 1
+find: #ifdef NO_MISALIGNED_ACCESSES
+replace: #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+patch: xkcp-no-fast-loop-keccakf1600
+why: (see xkcp-no-misaligned-accesses)
+file: upstream/ryde1f/lib/XKCP/avx2/KeccakP-1600-SnP.h
+count: 1
+find: #define KeccakF1600_FastLoop_supported
+replace: /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+patch: xkcp-no-fast-loop-keccakf1600
+why: (see xkcp-no-misaligned-accesses)
+file: upstream/ryde1f/lib/XKCP/opt64/KeccakP-1600-SnP.h
+count: 1
+find: #define KeccakF1600_FastLoop_supported
+replace: /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+patch: xkcp-no-fast-loop-keccakp1600
+why: (see xkcp-no-misaligned-accesses)
+file: upstream/ryde1f/lib/XKCP/avx2/KeccakP-1600-SnP.h
+count: 1
+find: #define KeccakP1600_12rounds_FastLoop_supported
+replace: /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+patch: xkcp-no-fast-loop-keccakp1600
+why: (see xkcp-no-misaligned-accesses)
+file: upstream/ryde1f/lib/XKCP/opt64/KeccakP-1600-SnP.h
+count: 1
+find: #define KeccakP1600_12rounds_FastLoop_supported
+replace: /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */

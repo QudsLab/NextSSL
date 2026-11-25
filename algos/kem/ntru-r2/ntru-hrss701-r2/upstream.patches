@@ -1,0 +1,11 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: ntru-r2-rejection-hash-input
+why: crypto_kem_dec hashes NTRU_PRFKEYBYTES + NTRU_CIPHERTEXTBYTES bytes starting at cmp = buf + NTRU_PRFKEYBYTES,
+why: so it reads 32 bytes past the end of buf (AddressSanitizer stack-buffer-overflow, CI run 45581879065) and
+why: leaves the PRF key out: the implicit-rejection key depended on stack contents. The intended input is
+why: buf = PRF key || ciphertext, which PQClean's NTRU (algos/kem/ntru/*) hashes. Valid ciphertexts and every
+why: KAT are unaffected; only the key returned for a rejected ciphertext is now defined.
+file: upstream/crypto_kem/ntru-hrss701/kem.c
+count: 1
+find:   sha3_256(rm, cmp, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);
+replace:   sha3_256(rm, buf, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);

@@ -1,0 +1,10 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: sphincs-r1-haraka-bitmask-size
+why: thash() lets haraka256() write its 32-byte output into bitmask[inblocks * SPX_N], which is only 24 bytes for
+why: one block: a stack overflow (AddressSanitizer dynamic-stack-buffer-overflow, CI run 45581879065). Only the first
+why: inblocks * SPX_N bytes of bitmask are used, so the patch hashes into the 32-byte outbuf of the same function
+why: and copies those bytes; every signature is unchanged.
+file: upstream/crypto_sign/sphincs-haraka-192s/hash_haraka.c
+count: 1
+find:         haraka256(bitmask, buf_tmp);
+replace:         haraka256(outbuf, buf_tmp); memcpy(bitmask, outbuf, inblocks * SPX_N);

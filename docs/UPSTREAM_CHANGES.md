@@ -19,7 +19,7 @@ so anyone can see what was changed, where and why, and reproduce or review it.
 
 Glue code (`glue.rs`), shims (`shim.c`) and `build.rs` are NextSSL code, not upstream code.
 
-## 1. Patches (45 distinct, in 60 crates)
+## 1. Patches (105 distinct, in 136 crates)
 
 ### cloc-silc-pstate2-prototype
 
@@ -73,6 +73,32 @@ crypto_aead_decrypt allocates cbc_buffer, x and scratch and frees them only on s
 + 	{ free(scratch); free(x); free(cbc_buffer); return -1; }
 ```
 
+### jambu-simon64-nonce-in-bounds
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+jambu_initialization loads the state from iv[0..7], but the nonce is CRYPTO_NPUBBYTES = 4 bytes: it read 4 bytes past the nonce (AddressSanitizer heap-buffer-overflow, CI run 45581879065), so every output depended on whatever followed the nonce in memory. JAMBU starts from 0^n || V; the 96-bit variant of the same submission (simonjambu96v2) loads the nonce and sets the other state word to 0. The patch loads the 4-byte nonce byte by byte and sets stateS[1] = 0, the same construction. No KATs exist for this crate (tier unverified).
+
+```diff
+- 	stateS[0] = ((unsigned int *)iv)[0]; stateS[1] = ((unsigned int *)iv)[1]; 
++ 	memcpy(&stateS[0], iv, 4); stateS[1] = 0; 
+```
+
+### jambu-simon96-nonce-in-bounds
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+jambu_initialization reads 8 bytes from the 6-byte nonce and masks off the 2 extra bytes: the value is right on little-endian targets, but the read runs 2 bytes past the nonce (AddressSanitizer heap-buffer-overflow, CI run 45581879065). The patch copies the 6 nonce bytes into a zeroed word, the same value without the over-read.
+
+```diff
+- 	stateS[0] = (((uint64_t *)iv)[0] & 0xffffffffffff); stateS[1] = 0; 
++ 	stateS[0] = 0; memcpy(&stateS[0], iv, 6); stateS[1] = 0; 
+```
+
 ### ketje-tag-mismatch-without-exceptions
 
 Crates: ketjemajor, ketjeminor, ketjesr
@@ -110,6 +136,45 @@ KeccakF-interface.h maps KeccakF_StatePermute to KeccakP1600_12_StatePermute but
 ```diff
 - void KeccakF_ParallelInitialize( void )
 + void KeccakP1600_12_StatePermute(void *state); void KeccakF_ParallelInitialize( void )
+```
+
+### lac-free-padding
+
+Crates: lacv1
+
+File: `upstream/*/encrypt.c` (2 occurrence(s))
+
+crypto_aead_encrypt/decrypt malloc the padded message (mpad) and padded associated data (adpad) and never free them: every call leaked both (LeakSanitizer, CI run 45581879065). mpad starts as NULL (decrypt only allocates it for a non-empty message; adpad already starts as NULL) and both are freed before each return of the two functions. No output changes.
+
+```diff
+- 	unsigned char *mpad; 
++ 	unsigned char *mpad = NULL; 
+```
+
+### lac-free-padding-success
+
+Crates: lacv1
+
+File: `upstream/*/encrypt.c` (2 occurrence(s))
+
+(see lac-free-padding)
+
+```diff
+- 	return 0;
++ 	free(mpad); free(adpad); return 0;
+```
+
+### lac-free-padding-reject
+
+Crates: lacv1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+(see lac-free-padding)
+
+```diff
+- 			return -1;
++ 			{ free(mpad); free(adpad); return -1; }
 ```
 
 ### silc-free-context
@@ -190,6 +255,32 @@ encrypt.c does not include <stdlib.h>; the free() calls added above need a decla
 +     void free(void *); ae_cxt* cxt = ae_allocate();
 ```
 
+### jambu-simon64-nonce-in-bounds
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (1 occurrence(s))
+
+jambu_initialization loads the state from iv[0..7], but the nonce is CRYPTO_NPUBBYTES = 4 bytes: it read 4 bytes past the nonce (AddressSanitizer heap-buffer-overflow, CI run 45581879065), so every output depended on whatever followed the nonce in memory. JAMBU starts from 0^n || V; the 96-bit variant of the same submission (simonjambu96v2) loads the nonce and sets the other state word to 0. The patch loads the 4-byte nonce byte by byte and sets stateS[1] = 0, the same construction. No KATs exist for this crate (tier unverified).
+
+```diff
+- 	stateS[0] = ((unsigned int *)iv)[0]; stateS[1] = ((unsigned int *)iv)[1]; 
++ 	memcpy(&stateS[0], iv, 4); stateS[1] = 0; 
+```
+
+### jambu-simon96-nonce-in-bounds
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+jambu_initialization reads 8 bytes from the 6-byte nonce and masks off the 2 extra bytes: the value is right on little-endian targets, but the read runs 2 bytes past the nonce (AddressSanitizer heap-buffer-overflow, CI run 45581879065). The patch copies the 6 nonce bytes into a zeroed word, the same value without the over-read.
+
+```diff
+- 	stateS[0] = (((uint64_t *)iv)[0] & 0xffffffffffff); stateS[1] = 0; 
++ 	stateS[0] = 0; memcpy(&stateS[0], iv, 6); stateS[1] = 0; 
+```
+
 ### lwc-decrypt-free-on-tag-mismatch
 
 Crates: spix128v1, spix128v1-lwc1, syconaer64128v1, syconaer96128v1
@@ -242,6 +333,45 @@ crypto_aead_decrypt allocates `state` and `tag` with malloc and frees them on su
 +                               { free(state); free(tag); return(KAT_CRYPTO_FAILURE); }
 ```
 
+### mcssha-remainder-in-bounds
+
+Crates: mcssha4
+
+File: `upstream/*/mcssha4.c` (1 occurrence(s))
+
+Update reads data[i] for the remaining bits even when there are none (x[4] == 0), one byte past the input (AddressSanitizer global-buffer-overflow, CI run 45581879065). With x[4] == 0 the expression shifts that byte out completely and stores 0, so the patch stores 0 without reading it; every digest is unchanged.
+
+```diff
+- 		   c->x[5] = (data[i]>>(8-c->x[4]))<<(8-c->x[4]);
++ 		   c->x[5] = c->x[4] ? (data[i]>>(8-c->x[4]))<<(8-c->x[4]) : 0;
+```
+
+### mcssha-remainder-in-bounds
+
+Crates: mcssha5
+
+File: `upstream/*/mcssha5.c` (1 occurrence(s))
+
+Update reads data[i] for the remaining bits even when there are none (x[4] == 0), one byte past the input (AddressSanitizer global-buffer-overflow, CI run 45581879065). With x[4] == 0 the expression shifts that byte out completely and stores 0, so the patch stores 0 without reading it; every digest is unchanged.
+
+```diff
+- 		   c->x[5] = (data[i]>>(8-c->x[4]))<<(8-c->x[4]);
++ 		   c->x[5] = c->x[4] ? (data[i]>>(8-c->x[4]))<<(8-c->x[4]) : 0;
+```
+
+### mcssha-remainder-in-bounds
+
+Crates: mcssha6
+
+File: `upstream/*/mcssha6.c` (1 occurrence(s))
+
+Update reads data[i] for the remaining bits even when there are none (x[4] == 0), one byte past the input (AddressSanitizer global-buffer-overflow, CI run 45581879065). With x[4] == 0 the expression shifts that byte out completely and stores 0, so the patch stores 0 without reading it; every digest is unchanged.
+
+```diff
+- 		   c->x[5] = (data[i]>>(8-c->x[4]))<<(8-c->x[4]);
++ 		   c->x[5] = c->x[4] ? (data[i]>>(8-c->x[4]))<<(8-c->x[4]) : 0;
+```
+
 ### meshhash-rot
 
 Crates: meshhash-224-sha3r1, meshhash-256-sha3r1, meshhash-384-sha3r1, meshhash-512-sha3r1
@@ -253,6 +383,19 @@ ROT(w, b) computes (w >> b) ^ (w << (64 - b)), and meshhash calls it with b = 0 
 ```diff
 - #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> (b) ^ (w) << (64 - (b))) & 0xffffffffffffffffULL)
 + #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> ((b) & 63) | (w) << ((64 - (b)) & 63)) & 0xffffffffffffffffULL)
+```
+
+### nasha-update-tail-in-bounds
+
+Crates: nasha256, nasha512
+
+File: `upstream/*/Nasha.c` (2 occurrence(s))
+
+Nasha*_Update copies the last partial block with memcpy(..., len/8+1), one byte more than the input holds when the remaining bit length is a multiple of 8, which is every byte-oriented call (AddressSanitizer global-buffer-overflow past the input, CI run 45581879065). Final masks every bit at or after the bit count (or clears the word when it is a multiple of 64), so that byte never reached the digest. (len+7)/8 copies the bytes that hold input bits only; every digest is unchanged.
+
+```diff
+- memcpy((unsigned char *)state->M, sp, len/8+1);
++ memcpy((unsigned char *)state->M, sp, (len+7)/8);
 ```
 
 ### simd-keep-allocations
@@ -385,6 +528,58 @@ secure_set_bits_port keeps each bit position as BIT(w & 63) = 1ULL << (0..63) in
 +   uint64_t pos_bit[MAX_WLIST_SIZE];
 ```
 
+### ntru-r2-rejection-hash-input
+
+Crates: ntru-hps2048509-r2
+
+File: `upstream/*/ntru-hps2048509/kem.c` (1 occurrence(s))
+
+crypto_kem_dec hashes NTRU_PRFKEYBYTES + NTRU_CIPHERTEXTBYTES bytes starting at cmp = buf + NTRU_PRFKEYBYTES, so it reads 32 bytes past the end of buf (AddressSanitizer stack-buffer-overflow, CI run 45581879065) and leaves the PRF key out: the implicit-rejection key depended on stack contents. The intended input is buf = PRF key || ciphertext, which PQClean's NTRU (algos/kem/ntru/*) hashes. Valid ciphertexts and every KAT are unaffected; only the key returned for a rejected ciphertext is now defined.
+
+```diff
+-   sha3_256(rm, cmp, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);
++   sha3_256(rm, buf, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);
+```
+
+### ntru-r2-rejection-hash-input
+
+Crates: ntru-hps2048677-r2
+
+File: `upstream/*/ntru-hps2048677/kem.c` (1 occurrence(s))
+
+crypto_kem_dec hashes NTRU_PRFKEYBYTES + NTRU_CIPHERTEXTBYTES bytes starting at cmp = buf + NTRU_PRFKEYBYTES, so it reads 32 bytes past the end of buf (AddressSanitizer stack-buffer-overflow, CI run 45581879065) and leaves the PRF key out: the implicit-rejection key depended on stack contents. The intended input is buf = PRF key || ciphertext, which PQClean's NTRU (algos/kem/ntru/*) hashes. Valid ciphertexts and every KAT are unaffected; only the key returned for a rejected ciphertext is now defined.
+
+```diff
+-   sha3_256(rm, cmp, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);
++   sha3_256(rm, buf, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);
+```
+
+### ntru-r2-rejection-hash-input
+
+Crates: ntru-hps4096821-r2
+
+File: `upstream/*/ntru-hps4096821/kem.c` (1 occurrence(s))
+
+crypto_kem_dec hashes NTRU_PRFKEYBYTES + NTRU_CIPHERTEXTBYTES bytes starting at cmp = buf + NTRU_PRFKEYBYTES, so it reads 32 bytes past the end of buf (AddressSanitizer stack-buffer-overflow, CI run 45581879065) and leaves the PRF key out: the implicit-rejection key depended on stack contents. The intended input is buf = PRF key || ciphertext, which PQClean's NTRU (algos/kem/ntru/*) hashes. Valid ciphertexts and every KAT are unaffected; only the key returned for a rejected ciphertext is now defined.
+
+```diff
+-   sha3_256(rm, cmp, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);
++   sha3_256(rm, buf, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);
+```
+
+### ntru-r2-rejection-hash-input
+
+Crates: ntru-hrss701-r2
+
+File: `upstream/*/ntru-hrss701/kem.c` (1 occurrence(s))
+
+crypto_kem_dec hashes NTRU_PRFKEYBYTES + NTRU_CIPHERTEXTBYTES bytes starting at cmp = buf + NTRU_PRFKEYBYTES, so it reads 32 bytes past the end of buf (AddressSanitizer stack-buffer-overflow, CI run 45581879065) and leaves the PRF key out: the implicit-rejection key depended on stack contents. The intended input is buf = PRF key || ciphertext, which PQClean's NTRU (algos/kem/ntru/*) hashes. Valid ciphertexts and every KAT are unaffected; only the key returned for a rejected ciphertext is now defined.
+
+```diff
+-   sha3_256(rm, cmp, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);
++   sha3_256(rm, buf, NTRU_PRFKEYBYTES+NTRU_CIPHERTEXTBYTES);
+```
+
 ### ntruhrss-r1-pack-tail-in-bounds
 
 Crates: ntruhrss701-r1
@@ -398,6 +593,123 @@ poly_S3_tobytes / poly_S3_frombytes pack NTRU_PACK_DEG = 700 trits five per byte
 +   i = NTRU_PACK_DEG/5 - (NTRU_PACK_DEG % 5 == 0);
 ```
 
+### xkcp-no-misaligned-accesses
+
+Crates: threebears1248r2ccax, threebears624r2ccax, threebears936r2ccax, titaniumccatoy
+
+File: `upstream/*/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: threebears1248r2ccax, threebears624r2ccax, threebears936r2ccax, titaniumccatoy
+
+File: `upstream/*/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-fast-loop-keccakp1600
+
+Crates: threebears1248r2ccax, threebears624r2ccax, threebears936r2ccax, titaniumccatoy
+
+File: `upstream/*/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakP1600_12rounds_FastLoop_supported
++ /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: aimer-l1-param1-r1, aimer-l1-param2-r1, aimer-l1-param3-r1
+
+File: `upstream/*/shake/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: aimer-l1-param1-r1, aimer-l1-param2-r1, aimer-l1-param3-r1
+
+File: `upstream/*/shake/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-fast-loop-keccakp1600
+
+Crates: aimer-l1-param1-r1, aimer-l1-param2-r1, aimer-l1-param3-r1
+
+File: `upstream/*/shake/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakP1600_12rounds_FastLoop_supported
++ /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: faest-128f-r1, faest-128f-r2, faest-128s-r1, faest-128s-r2, faest-192f-r1, faest-192f-r2, faest-192s-r1, faest-192s-r2, faest-256f-r1, faest-256f-r2, faest-em-128f-r1, faest-em-128f-r2, faest-em-128s-r1, faest-em-128s-r2, faest-em-192f-r1, faest-em-192f-r2, faest-em-192s-r1, faest-em-192s-r2, faest-em-256f-r1, faest-em-256f-r2, faest-em-256s-r2
+
+File: `upstream/*/sha3/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: faest-128f-r1, faest-128f-r2, faest-128s-r1, faest-128s-r2, faest-192f-r1, faest-192f-r2, faest-192s-r1, faest-192s-r2, faest-256f-r1, faest-256f-r2, faest-em-128f-r1, faest-em-128f-r2, faest-em-128s-r1, faest-em-128s-r2, faest-em-192f-r1, faest-em-192f-r2, faest-em-192s-r1, faest-em-192s-r2, faest-em-256f-r1, faest-em-256f-r2, faest-em-256s-r2
+
+File: `upstream/*/sha3/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-fast-loop-keccakp1600
+
+Crates: faest-128f-r1, faest-128f-r2, faest-128s-r1, faest-128s-r2, faest-192f-r1, faest-192f-r2, faest-192s-r1, faest-192s-r2, faest-256f-r1, faest-256f-r2, faest-em-128f-r1, faest-em-128f-r2, faest-em-128s-r1, faest-em-128s-r2, faest-em-192f-r1, faest-em-192f-r2, faest-em-192s-r1, faest-em-192s-r2, faest-em-256f-r1, faest-em-256f-r2, faest-em-256s-r2
+
+File: `upstream/*/sha3/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakP1600_12rounds_FastLoop_supported
++ /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
 ### mayo-shake256-return-type
 
 Crates: mayo-1-r2, mayo-2-r2, mayo-3-r2, mayo-5-r2
@@ -409,6 +721,357 @@ fips202.h declares `int shake256(...)` but fips202.c (which does not include it)
 ```diff
 - int shake256(unsigned char *output, size_t outputByteLen, const unsigned char *input, size_t inputByteLen);
 + void shake256(unsigned char *output, size_t outputByteLen, const unsigned char *input, size_t inputByteLen);
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-1a-fast-r2
+
+File: `upstream/*/mirath_tcith_1a_fast/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-1a-fast-r2
+
+File: `upstream/*/mirath_tcith_1a_fast/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-1a-short-r2
+
+File: `upstream/*/mirath_tcith_1a_short/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-1a-short-r2
+
+File: `upstream/*/mirath_tcith_1a_short/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-1b-fast-r2
+
+File: `upstream/*/mirath_tcith_1b_fast/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-1b-fast-r2
+
+File: `upstream/*/mirath_tcith_1b_fast/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-1b-short-r2
+
+File: `upstream/*/mirath_tcith_1b_short/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-1b-short-r2
+
+File: `upstream/*/mirath_tcith_1b_short/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-3a-fast-r2
+
+File: `upstream/*/mirath_tcith_3a_fast/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-3a-fast-r2
+
+File: `upstream/*/mirath_tcith_3a_fast/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-3a-short-r2
+
+File: `upstream/*/mirath_tcith_3a_short/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-3a-short-r2
+
+File: `upstream/*/mirath_tcith_3a_short/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-3b-fast-r2
+
+File: `upstream/*/mirath_tcith_3b_fast/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-3b-fast-r2
+
+File: `upstream/*/mirath_tcith_3b_fast/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-3b-short-r2
+
+File: `upstream/*/mirath_tcith_3b_short/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-3b-short-r2
+
+File: `upstream/*/mirath_tcith_3b_short/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-5a-fast-r2
+
+File: `upstream/*/mirath_tcith_5a_fast/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-5a-fast-r2
+
+File: `upstream/*/mirath_tcith_5a_fast/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-5a-short-r2
+
+File: `upstream/*/mirath_tcith_5a_short/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-5a-short-r2
+
+File: `upstream/*/mirath_tcith_5a_short/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-5b-fast-r2
+
+File: `upstream/*/mirath_tcith_5b_fast/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-5b-fast-r2
+
+File: `upstream/*/mirath_tcith_5b_fast/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: mirath-tcith-5b-short-r2
+
+File: `upstream/*/mirath_tcith_5b_short/common/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: mirath-tcith-5b-short-r2
+
+File: `upstream/*/mirath_tcith_5b_short/common/KeccakHash.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: perk-128-fast-3-r1, perk-128-fast-3-r2, perk-128-fast-5-r1, perk-128-fast-5-r2, perk-128-short-3-r1, perk-128-short-5-r1, perk-192-fast-3-r1, perk-192-fast-3-r2, perk-192-fast-5-r1, perk-192-fast-5-r2, perk-192-short-3-r1, perk-192-short-5-r1, perk-256-fast-3-r1, perk-256-fast-3-r2, perk-256-fast-5-r1, perk-256-fast-5-r2, perk-256-short-3-r1, perk-256-short-5-r1
+
+File: `upstream/*/lib/XKCP/KeccakP-1600-opt64.c` (2 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: perk-128-fast-3-r1, perk-128-fast-3-r2, perk-128-fast-5-r1, perk-128-fast-5-r2, perk-128-short-3-r1, perk-128-short-5-r1, perk-192-fast-3-r1, perk-192-fast-3-r2, perk-192-fast-5-r1, perk-192-fast-5-r2, perk-192-short-3-r1, perk-192-short-5-r1, perk-256-fast-3-r1, perk-256-fast-3-r2, perk-256-fast-5-r1, perk-256-fast-5-r2, perk-256-short-3-r1, perk-256-short-5-r1
+
+File: `upstream/*/lib/XKCP/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-fast-loop-keccakp1600
+
+Crates: perk-128-fast-3-r1, perk-128-fast-3-r2, perk-128-fast-5-r1, perk-128-fast-5-r2, perk-128-short-3-r1, perk-128-short-5-r1, perk-192-fast-3-r1, perk-192-fast-3-r2, perk-192-fast-5-r1, perk-192-fast-5-r2, perk-192-short-3-r1, perk-192-short-5-r1, perk-256-fast-3-r1, perk-256-fast-3-r2, perk-256-fast-5-r1, perk-256-fast-5-r2, perk-256-short-3-r1, perk-256-short-5-r1
+
+File: `upstream/*/lib/XKCP/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakP1600_12rounds_FastLoop_supported
++ /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
 ```
 
 ### ryde-mat-fq-word-size
@@ -435,6 +1098,71 @@ ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it
 ```diff
 -     size_t i_cast[RYDE_1F_PARAM_M_WORDS] = {0};
 +     uint64_t i_cast[RYDE_1F_PARAM_M_WORDS] = {0};
+```
+
+### xkcp-no-misaligned-accesses
+
+Crates: ryde1f-r2, ryde1s-r2, ryde3f-r2, ryde3s-r2, ryde5f-r2, ryde5s-r2
+
+File: `upstream/*/lib/XKCP/opt64/KeccakP-1600-opt64.c` (1 occurrence(s))
+
+XKCP's KeccakP-1600-opt64.c reads input lanes as uint64_t at any address. The input often is not 8-byte aligned (UBSan "load of misaligned address", CI run 45581879065), which is undefined behaviour and faults on strict-alignment CPUs. XKCP ships the fix as the NO_MISALIGNED_ACCESSES option (byte-wise for a misaligned pointer); this patch makes it always on. The lane fast loops have no such path, so their *_supported switches are turned off and the sponge absorbs block by block through the same, now alignment-safe, functions. Every hash value is unchanged.
+
+```diff
+- #ifdef NO_MISALIGNED_ACCESSES
++ #if 1 /* nextssl: NO_MISALIGNED_ACCESSES path always on */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: ryde1f-r2, ryde1s-r2, ryde3f-r2, ryde3s-r2, ryde5f-r2, ryde5s-r2
+
+File: `upstream/*/lib/XKCP/avx2/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-fast-loop-keccakf1600
+
+Crates: ryde1f-r2, ryde1s-r2, ryde3f-r2, ryde3s-r2, ryde5f-r2, ryde5s-r2
+
+File: `upstream/*/lib/XKCP/opt64/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakF1600_FastLoop_supported
++ /* nextssl: KeccakF1600_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-fast-loop-keccakp1600
+
+Crates: ryde1f-r2, ryde1s-r2, ryde3f-r2, ryde3s-r2, ryde5f-r2, ryde5s-r2
+
+File: `upstream/*/lib/XKCP/avx2/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakP1600_12rounds_FastLoop_supported
++ /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### xkcp-no-fast-loop-keccakp1600
+
+Crates: ryde1f-r2, ryde1s-r2, ryde3f-r2, ryde3s-r2, ryde5f-r2, ryde5s-r2
+
+File: `upstream/*/lib/XKCP/opt64/KeccakP-1600-SnP.h` (1 occurrence(s))
+
+(see xkcp-no-misaligned-accesses)
+
+```diff
+- #define KeccakP1600_12rounds_FastLoop_supported
++ /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
 ```
 
 ### ryde-phi-word-size
@@ -539,6 +1267,58 @@ ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it
 ```diff
 -     size_t i_cast[RYDE_5S_PARAM_M_WORDS] = {0};
 +     uint64_t i_cast[RYDE_5S_PARAM_M_WORDS] = {0};
+```
+
+### sphincs-r1-haraka-bitmask-size
+
+Crates: sphincs-haraka-128f-r1
+
+File: `upstream/*/sphincs-haraka-128f/hash_haraka.c` (1 occurrence(s))
+
+thash() lets haraka256() write its 32-byte output into bitmask[inblocks * SPX_N], which is only 16 bytes for one block: a stack overflow (AddressSanitizer dynamic-stack-buffer-overflow, CI run 45581879065). Only the first inblocks * SPX_N bytes of bitmask are used, so the patch hashes into the 32-byte outbuf of the same function and copies those bytes; every signature is unchanged.
+
+```diff
+-         haraka256(bitmask, buf_tmp);
++         haraka256(outbuf, buf_tmp); memcpy(bitmask, outbuf, inblocks * SPX_N);
+```
+
+### sphincs-r1-haraka-bitmask-size
+
+Crates: sphincs-haraka-128s-r1
+
+File: `upstream/*/sphincs-haraka-128s/hash_haraka.c` (1 occurrence(s))
+
+thash() lets haraka256() write its 32-byte output into bitmask[inblocks * SPX_N], which is only 16 bytes for one block: a stack overflow (AddressSanitizer dynamic-stack-buffer-overflow, CI run 45581879065). Only the first inblocks * SPX_N bytes of bitmask are used, so the patch hashes into the 32-byte outbuf of the same function and copies those bytes; every signature is unchanged.
+
+```diff
+-         haraka256(bitmask, buf_tmp);
++         haraka256(outbuf, buf_tmp); memcpy(bitmask, outbuf, inblocks * SPX_N);
+```
+
+### sphincs-r1-haraka-bitmask-size
+
+Crates: sphincs-haraka-192f-r1
+
+File: `upstream/*/sphincs-haraka-192f/hash_haraka.c` (1 occurrence(s))
+
+thash() lets haraka256() write its 32-byte output into bitmask[inblocks * SPX_N], which is only 24 bytes for one block: a stack overflow (AddressSanitizer dynamic-stack-buffer-overflow, CI run 45581879065). Only the first inblocks * SPX_N bytes of bitmask are used, so the patch hashes into the 32-byte outbuf of the same function and copies those bytes; every signature is unchanged.
+
+```diff
+-         haraka256(bitmask, buf_tmp);
++         haraka256(outbuf, buf_tmp); memcpy(bitmask, outbuf, inblocks * SPX_N);
+```
+
+### sphincs-r1-haraka-bitmask-size
+
+Crates: sphincs-haraka-192s-r1
+
+File: `upstream/*/sphincs-haraka-192s/hash_haraka.c` (1 occurrence(s))
+
+thash() lets haraka256() write its 32-byte output into bitmask[inblocks * SPX_N], which is only 24 bytes for one block: a stack overflow (AddressSanitizer dynamic-stack-buffer-overflow, CI run 45581879065). Only the first inblocks * SPX_N bytes of bitmask are used, so the patch hashes into the 32-byte outbuf of the same function and copies those bytes; every signature is unchanged.
+
+```diff
+-         haraka256(bitmask, buf_tmp);
++         haraka256(outbuf, buf_tmp); memcpy(bitmask, outbuf, inblocks * SPX_N);
 ```
 
 ### wave-1ul-vf2

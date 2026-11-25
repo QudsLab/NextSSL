@@ -1,0 +1,9 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: mcssha-remainder-in-bounds
+why: Update reads data[i] for the remaining bits even when there are none (x[4] == 0), one byte past the input
+why: (AddressSanitizer global-buffer-overflow, CI run 45581879065). With x[4] == 0 the expression shifts that byte
+why: out completely and stores 0, so the patch stores 0 without reading it; every digest is unchanged.
+file: upstream/ref/mcssha4.c
+count: 1
+find: 		   c->x[5] = (data[i]>>(8-c->x[4]))<<(8-c->x[4]);
+replace: 		   c->x[5] = c->x[4] ? (data[i]>>(8-c->x[4]))<<(8-c->x[4]) : 0;

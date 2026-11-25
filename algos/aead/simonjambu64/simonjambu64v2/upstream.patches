@@ -1,0 +1,11 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: jambu-simon64-nonce-in-bounds
+why: jambu_initialization loads the state from iv[0..7], but the nonce is CRYPTO_NPUBBYTES = 4 bytes: it read 4 bytes
+why: past the nonce (AddressSanitizer heap-buffer-overflow, CI run 45581879065), so every output depended on
+why: whatever followed the nonce in memory. JAMBU starts from 0^n || V; the 96-bit variant of the same submission
+why: (simonjambu96v2) loads the nonce and sets the other state word to 0. The patch loads the 4-byte nonce byte
+why: by byte and sets stateS[1] = 0, the same construction. No KATs exist for this crate (tier unverified).
+file: upstream/ref/encrypt_simon64.c
+count: 1
+find: 	stateS[0] = ((unsigned int *)iv)[0]; stateS[1] = ((unsigned int *)iv)[1]; 
+replace: 	memcpy(&stateS[0], iv, 4); stateS[1] = 0; 

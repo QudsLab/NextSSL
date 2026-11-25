@@ -1,0 +1,22 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: lac-free-padding
+why: crypto_aead_encrypt/decrypt malloc the padded message (mpad) and padded associated data (adpad) and never free
+why: them: every call leaked both (LeakSanitizer, CI run 45581879065). mpad starts as NULL (decrypt only allocates it
+why: for a non-empty message; adpad already starts as NULL) and both are freed before each return of the two
+why: functions. No output changes.
+file: upstream/ref/encrypt.c
+count: 2
+find: 	unsigned char *mpad; 
+replace: 	unsigned char *mpad = NULL; 
+patch: lac-free-padding-success
+why: (see lac-free-padding)
+file: upstream/ref/encrypt.c
+count: 2
+find: 	return 0;
+replace: 	free(mpad); free(adpad); return 0;
+patch: lac-free-padding-reject
+why: (see lac-free-padding)
+file: upstream/ref/encrypt.c
+count: 1
+find: 			return -1;
+replace: 			{ free(mpad); free(adpad); return -1; }
