@@ -1,0 +1,10 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: sphlib-no-unaligned-access
+why: sph_types.h defines SPH_DETECT_UNALIGNED=1 on x86/x86-64, so sph_enc64be/sph_dec* store and load sph_u64/sph_u32
+why: through casted pointers at any address: UBSan "store to misaligned address for type sph_u64" (sph_types.h:1661).
+why: With SPH_UNALIGNED=0, sphlib's own documented path is used (cast only when the pointer is aligned, otherwise
+why: byte-by-byte); both write the same bytes, so output is unchanged.
+file: upstream/sphlib/sph_types.h
+count: 2
+find: #define SPH_DETECT_UNALIGNED         1
+replace: #define SPH_DETECT_UNALIGNED         0

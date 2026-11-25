@@ -18484,10 +18484,10 @@ pub static ALGORITHMS: &[AlgoInfo] = &[
         cose_alg: None,
         oid: "",
         sizes: Sizes {
-            out: Some(Len::range(0, 3300)),
+            out: Some(Len::fixed(16)),
             pk: Some(Len::fixed(14412)),
             sk: Some(Len::fixed(15014)),
-            ct: Some(Len::range(1, 32124)),
+            ct: Some(Len::fixed(28824)),
             ctx: Some(Len::fixed(0)),
             ..Sizes::NONE
         },

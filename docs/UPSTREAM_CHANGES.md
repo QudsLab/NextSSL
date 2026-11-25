@@ -19,7 +19,7 @@ so anyone can see what was changed, where and why, and reproduce or review it.
 
 Glue code (`glue.rs`), shims (`shim.c`) and `build.rs` are NextSSL code, not upstream code.
 
-## 1. Patches (105 distinct, in 136 crates)
+## 1. Patches (346 distinct, in 232 crates)
 
 ### cloc-silc-pstate2-prototype
 
@@ -32,6 +32,305 @@ cloc.c/silc.c call pstate2() (a debug print, empty unless _PRINT) with no protot
 ```diff
 - void pstate(const unsigned char* st, int len);
 + void pstate(const unsigned char* st, int len); void pstate2(const unsigned char *str, const byte* state);
+```
+
+### unaligned-aes-c-line-358
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/aes.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- rkexp[0] = ((unsigned int *)rk)[0] ^
++ rkexp[0] = jb_ld32(rk, 0) ^
+```
+
+### unaligned-aes-c-helpers
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/aes.c` (1 occurrence(s))
+
+Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+
+```diff
+- void AESKeySteup(
++ static __inline unsigned int jb_ld32(const void *p, size_t i) { unsigned int v; memcpy(&v, (const unsigned char *)p + 4 * i, 4); return v; } void AESKeySteup(
+```
+
+### unaligned-encrypt-c-line-15
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[0] = ((unsigned int *)iv)[0]; stateS[1] = ((unsigned int *)iv)[1];
++ stateS[0] = jb_ld32(iv, 0); stateS[1] = jb_ld32(iv, 1);
+```
+
+### unaligned-encrypt-c-line-35
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)(c+msglen))[0] = stateS[0] ^ stateS[2] ^ stateR[0];
++ jb_st32((c+msglen), 0, stateS[0] ^ stateS[2] ^ stateR[0]);
+```
+
+### unaligned-encrypt-c-line-36
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)(c+msglen))[1] = stateS[1] ^ stateS[3] ^ stateR[1];
++ jb_st32((c+msglen), 1, stateS[1] ^ stateS[3] ^ stateR[1]);
+```
+
+### unaligned-encrypt-c-line-54
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)t)[0] = stateS[0] ^ stateS[2] ^ stateR[0];
++ jb_st32(t, 0, stateS[0] ^ stateS[2] ^ stateR[0]);
+```
+
+### unaligned-encrypt-c-line-55
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)t)[1] = stateS[1] ^ stateS[3] ^ stateR[1];
++ jb_st32(t, 1, stateS[1] ^ stateS[3] ^ stateR[1]);
+```
+
+### unaligned-encrypt-c-line-66
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[2] ^= ((unsigned int *)adblock)[0];
++ stateS[2] ^= jb_ld32(adblock, 0);
+```
+
+### unaligned-encrypt-c-line-67
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[3] ^= ((unsigned int *)adblock)[1];
++ stateS[3] ^= jb_ld32(adblock, 1);
+```
+
+### unaligned-encrypt-c-line-88
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (3 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[2] ^= ((unsigned int *)p)[0];
++ stateS[2] ^= jb_ld32(p, 0);
+```
+
+### unaligned-encrypt-c-line-89
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (3 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[3] ^= ((unsigned int *)p)[1];
++ stateS[3] ^= jb_ld32(p, 1);
+```
+
+### unaligned-encrypt-c-line-116
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[2] ^= ((unsigned int *)plaintextblk)[0];
++ stateS[2] ^= jb_ld32(plaintextblk, 0);
+```
+
+### unaligned-encrypt-c-line-117
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[3] ^= ((unsigned int *)plaintextblk)[1];
++ stateS[3] ^= jb_ld32(plaintextblk, 1);
+```
+
+### unaligned-encrypt-c-line-121
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)ciphertextblk)[0] = stateS[0] ^ ((unsigned int *)plaintextblk)[0];
++ jb_st32(ciphertextblk, 0, stateS[0] ^ jb_ld32(plaintextblk, 0));
+```
+
+### unaligned-encrypt-c-line-122
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)ciphertextblk)[1] = stateS[1] ^ ((unsigned int *)plaintextblk)[1];
++ jb_st32(ciphertextblk, 1, stateS[1] ^ jb_ld32(plaintextblk, 1));
+```
+
+### unaligned-encrypt-c-line-146
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)ciphertextblk)[0] = stateS[0] ^ ((unsigned int *)p)[0];
++ jb_st32(ciphertextblk, 0, stateS[0] ^ jb_ld32(p, 0));
+```
+
+### unaligned-encrypt-c-line-147
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)ciphertextblk)[1] = stateS[1] ^ ((unsigned int *)p)[1];
++ jb_st32(ciphertextblk, 1, stateS[1] ^ jb_ld32(p, 1));
+```
+
+### unaligned-encrypt-c-line-170
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)plaintextblk)[0] = stateS[0] ^ ((unsigned int *)ciphertextblk)[0];
++ jb_st32(plaintextblk, 0, stateS[0] ^ jb_ld32(ciphertextblk, 0));
+```
+
+### unaligned-encrypt-c-line-171
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)plaintextblk)[1] = stateS[1] ^ ((unsigned int *)ciphertextblk)[1];
++ jb_st32(plaintextblk, 1, stateS[1] ^ jb_ld32(ciphertextblk, 1));
+```
+
+### unaligned-encrypt-c-line-187
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)p)[0] = stateS[0] ^ ((unsigned int *)ciphertextblk)[0];
++ jb_st32(p, 0, stateS[0] ^ jb_ld32(ciphertextblk, 0));
+```
+
+### unaligned-encrypt-c-line-188
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)p)[1] = stateS[1] ^ ((unsigned int *)ciphertextblk)[1];
++ jb_st32(p, 1, stateS[1] ^ jb_ld32(ciphertextblk, 1));
+```
+
+### unaligned-encrypt-c-helpers
+
+Crates: aesjambuv1, aesjambuv2, jambuaes128v2, jambusimon64v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+
+```diff
+- static inline void jambu_initialization(
++ static __inline unsigned int jb_ld32(const void *p, size_t i) { unsigned int v; memcpy(&v, (const unsigned char *)p + 4 * i, 4); return v; } static __inline void jb_st32(void *p, size_t i, unsigned int v) { memcpy((unsigned char *)p + 4 * i, &v, 4); } static inline void jambu_initialization(
+```
+
+### bleep64-key-word-4-wraps
+
+Crates: bleep64
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The key is CRYPTO_KEYBYTES = 16 bytes = 4 words (key[0..3]), but the IV setup reads key[4], a fifth word past the key (AddressSanitizer heap-buffer-overflow, CI run 45610244076): every output depended on whatever followed the key in memory, so the same key/nonce/message encrypted differently on different platforms (macOS decrypt failure). The rest of the setup uses the key words cyclically (key[0], key[1], key[2], key[3], key[0], key[1]); the patch reads word 4 mod 4 = key[0], the same cycle. No KATs exist, so this is a NextSSL choice (tier stays unverified).
+
+```diff
+-   t  = key[0] * (iv[0] + key[4]);
++   t  = key[0] * (iv[0] + key[0]);
 ```
 
 ### cmcc-decrypt-free-on-reject-1
@@ -73,6 +372,318 @@ crypto_aead_decrypt allocates cbc_buffer, x and scratch and frees them only on s
 + 	{ free(scratch); free(x); free(cbc_buffer); return -1; }
 ```
 
+### enchilada256-aes-ctx-layout
+
+Crates: enchilada256v1
+
+File: `upstream/*/enchilada256.c` (1 occurrence(s))
+
+enchilada256.c declares its own aes_ctx with k_sch[RD_RKEYS*RD_WORDS] = 120 words, but aescrypt.c (Gladman, built with BLOCK_SIZE 32 in aes.h) uses aes.h's layout, k_sch[KS_LENGTH = 128] then n_rnd, n_blk. aes_enc_blk therefore read n_rnd and n_blk 8 words past the end of rd_context (AddressSanitizer global-buffer-overflow, CI run 45610244076): the round count and the key-ready flag came from whatever followed it in memory. The schedule array now has aes.h's size, so n_rnd and n_blk are the fields enchilada256.c sets; the 120 schedule words ChaCha writes are unchanged (the last 8 are unused, 14 rounds).
+
+```diff
+- {   u32    k_sch[RD_RKEYS*RD_WORDS];	/* the encryption key schedule      */
++ {   u32    k_sch[4 * 32];	/* the encryption key schedule      */
+```
+
+### enchilada256-aes-ctx-encrypt-flag
+
+Crates: enchilada256v1
+
+File: `upstream/*/enchilada256.c` (1 occurrence(s))
+
+aes_enc_blk returns aes_bad without encrypting unless bit 0 of n_blk is set (Gladman: the encryption key schedule is ready), and with BLOCK_SIZE fixed n_blk carries only these flags. enchilada256.c set it to RD_RKEYS * RD_BYTES = 480 (even), so with the layout fixed every block would be left unencrypted (the return value is ignored). The setup builds 15 round keys of 8 words and sets n_rnd = 14, i.e. it means Rijndael-256 with 14 rounds; n_blk is now RD_BYTES | 1 (32-byte block, encryption ready). No KATs exist, so this is a NextSSL reading of the evident intent (tier stays unverified).
+
+```diff
+- 	rd_context.n_blk = RD_RKEYS * RD_BYTES ;
++ 	rd_context.n_blk = RD_BYTES | 1 ;
+```
+
+### hs1-siv-hi-read32le
+
+Crates: hs1sivhiv1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+read32le/read64le/write32le/write64le dereference uint32_t/uint64_t pointers that callers build by casting byte pointers (input, output, key and buffer offsets such as buf+buflen-16), a misaligned typed access (UBSan "load of misaligned address", CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type; the byte order logic (le() ? w : swapNN(w)) is unchanged, so output is identical. The four helpers take void pointers: with a uint32_t*/uint64_t* parameter clang still assumes (and UBSan checks) the alignment of the memcpy source/destination (Docker ASan run, encrypt.c:120). Callers pass the same addresses.
+
+```diff
+- static uint32_t read32le(uint32_t *p) { return (le()?*p:swap32(*p)); }
++ static uint32_t read32le(const void *p) { uint32_t v; memcpy(&v, p, 4); return (le()?v:swap32(v)); }
+```
+
+### hs1-siv-hi-read64le
+
+Crates: hs1sivhiv1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+read32le/read64le/write32le/write64le dereference uint32_t/uint64_t pointers that callers build by casting byte pointers (input, output, key and buffer offsets such as buf+buflen-16), a misaligned typed access (UBSan "load of misaligned address", CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type; the byte order logic (le() ? w : swapNN(w)) is unchanged, so output is identical.
+
+```diff
+- static uint64_t read64le(uint64_t *p) { return (le()?*p:swap64(*p)); }
++ static uint64_t read64le(const void *p) { uint64_t v; memcpy(&v, p, 8); return (le()?v:swap64(v)); }
+```
+
+### hs1-siv-hi-write32le
+
+Crates: hs1sivhiv1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+read32le/read64le/write32le/write64le dereference uint32_t/uint64_t pointers that callers build by casting byte pointers (input, output, key and buffer offsets such as buf+buflen-16), a misaligned typed access (UBSan "load of misaligned address", CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type; the byte order logic (le() ? w : swapNN(w)) is unchanged, so output is identical.
+
+```diff
+- static void write32le(uint32_t *p, uint32_t w) { *p = (le()?w:swap32(w)); }
++ static void write32le(void *p, uint32_t w) { uint32_t v = (le()?w:swap32(w)); memcpy(p, &v, 4); }
+```
+
+### hs1-siv-hi-write64le
+
+Crates: hs1sivhiv1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+read32le/read64le/write32le/write64le dereference uint32_t/uint64_t pointers that callers build by casting byte pointers (input, output, key and buffer offsets such as buf+buflen-16), a misaligned typed access (UBSan "load of misaligned address", CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type; the byte order logic (le() ? w : swapNN(w)) is unchanged, so output is identical.
+
+```diff
+- static void write64le(uint64_t *p, uint64_t w) { *p = (le()?w:swap64(w)); }
++ static void write64le(void *p, uint64_t w) { uint64_t v = (le()?w:swap64(w)); memcpy(p, &v, 8); }
+```
+
+### hs1-siv-hi-chacha-key-xor
+
+Crates: hs1sivhiv1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+key is a local unsigned char[32]; ((uint64_t *)key)[i] ^= h[i] is a typed access through a cast of a byte array (no alignment guarantee). The patch does the same XOR through memcpy to and from a uint64_t local (native order both ways), so the result is identical.
+
+```diff
+- for (i=0; i<sizeof(h)/8;i++) ((uint64_t *)key)[i] ^= h[i];
++ for (i=0; i<sizeof(h)/8;i++) { uint64_t kw; memcpy(&kw, key + 8 * i, 8); kw ^= h[i]; memcpy(key + 8 * i, &kw, 8); }
+```
+
+### unaligned-simon-c-line-25
+
+Crates: jambusimon128v2, jambusimon64v2, jambusimon96v2, simonjambu128v2, simonjambu64v2, simonjambu96v2
+
+File: `upstream/*/Simon.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- rkexp[i] = ((uint32_t *)rk)[i];
++ rkexp[i] = jb_ld32(rk, i);
+```
+
+### unaligned-simon-c-line-42
+
+Crates: jambusimon128v2, jambusimon64v2, jambusimon96v2, simonjambu128v2, simonjambu64v2, simonjambu96v2
+
+File: `upstream/*/Simon.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- rkexp[0] = (((uint64_t *)rk)[0]) & 0xffffffffffff;
++ rkexp[0] = (jb_ld64(rk, 0)) & 0xffffffffffff;
+```
+
+### unaligned-simon-c-line-43
+
+Crates: jambusimon128v2, jambusimon64v2, jambusimon96v2, simonjambu128v2, simonjambu64v2, simonjambu96v2
+
+File: `upstream/*/Simon.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- rkexp[1] = ((((uint64_t *)(rk + 6))[0])) & 0xffffffffffff;
++ rkexp[1] = jb_ld48(rk + 6, 0);
+```
+
+### unaligned-simon-c-line-63
+
+Crates: jambusimon128v2, jambusimon64v2, jambusimon96v2, simonjambu128v2, simonjambu64v2, simonjambu96v2
+
+File: `upstream/*/Simon.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- rkexp[0] = ((uint64_t*)rk)[0];
++ rkexp[0] = jb_ld64(rk, 0);
+```
+
+### unaligned-simon-c-line-64
+
+Crates: jambusimon128v2, jambusimon64v2, jambusimon96v2, simonjambu128v2, simonjambu64v2, simonjambu96v2
+
+File: `upstream/*/Simon.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- rkexp[1] = ((uint64_t*)rk+1)[0];
++ rkexp[1] = jb_ld64(rk, (1)+(0));
+```
+
+### unaligned-simon-c-helpers
+
+Crates: jambusimon128v2, jambusimon64v2, jambusimon96v2, simonjambu128v2, simonjambu64v2, simonjambu96v2
+
+File: `upstream/*/Simon.c` (1 occurrence(s))
+
+Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+
+```diff
+- void SimonKeySetup64(
++ static __inline unsigned int jb_ld32(const void *p, size_t i) { unsigned int v; { size_t j; for (j = 0; j < 4; j++) ((unsigned char *)&v)[j] = ((const unsigned char *)p)[4 * i + j]; } return v; } static __inline uint64_t jb_ld64(const void *p, size_t i) { uint64_t v; { size_t j; for (j = 0; j < 8; j++) ((unsigned char *)&v)[j] = ((const unsigned char *)p)[8 * i + j]; } return v; } static __inline uint64_t jb_ld48(const void *p, size_t i) { uint64_t v; v = 0; { size_t j; for (j = 0; j < 6; j++) ((unsigned char *)&v)[j] = ((const unsigned char *)p)[8 * i + j]; } return v; } void SimonKeySetup64(
+```
+
+### unaligned-encrypt-c-line-20
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[0] = ((uint64_t *)iv)[0];
++ stateS[0] = jb_ld64(iv, 0);
+```
+
+### unaligned-encrypt-c-line-43
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)(c+msglen))[0] = stateS[0] ^ stateS[1] ^ stateR[0];
++ jb_st64((c+msglen), 0, stateS[0] ^ stateS[1] ^ stateR[0]);
+```
+
+### unaligned-encrypt-c-line-58
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)t)[0] = stateS[0] ^ stateS[1] ^ stateR[0];
++ jb_st64(t, 0, stateS[0] ^ stateS[1] ^ stateR[0]);
+```
+
+### unaligned-encrypt-c-line-68
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((uint64_t *)adblock)[0];
++ stateS[1] ^= jb_ld64(adblock, 0);
+```
+
+### unaligned-encrypt-c-line-86
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (3 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((uint64_t *)p)[0];
++ stateS[1] ^= jb_ld64(p, 0);
+```
+
+### unaligned-encrypt-c-line-109
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((uint64_t *)plaintextblk)[0];
++ stateS[1] ^= jb_ld64(plaintextblk, 0);
+```
+
+### unaligned-encrypt-c-line-111
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)ciphertextblk)[0] = stateS[0] ^ ((uint64_t *)plaintextblk)[0];
++ jb_st64(ciphertextblk, 0, stateS[0] ^ jb_ld64(plaintextblk, 0));
+```
+
+### unaligned-encrypt-c-line-131
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)ciphertextblk)[0] = stateS[0] ^ ((uint64_t *)p)[0];
++ jb_st64(ciphertextblk, 0, stateS[0] ^ jb_ld64(p, 0));
+```
+
+### unaligned-encrypt-c-line-153
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)plaintextblk)[0] = stateS[0] ^ ((uint64_t *)ciphertextblk)[0];
++ jb_st64(plaintextblk, 0, stateS[0] ^ jb_ld64(ciphertextblk, 0));
+```
+
+### unaligned-encrypt-c-line-166
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)p)[0] = stateS[0] ^ ((uint64_t *)ciphertextblk)[0];
++ jb_st64(p, 0, stateS[0] ^ jb_ld64(ciphertextblk, 0));
+```
+
+### unaligned-encrypt-c-helpers
+
+Crates: jambusimon128v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+
+```diff
+- static inline void jambu_initialization(
++ static __inline uint64_t jb_ld64(const void *p, size_t i) { uint64_t v; memcpy(&v, (const unsigned char *)p + 8 * i, 8); return v; } static __inline void jb_st64(void *p, size_t i, uint64_t v) { memcpy((unsigned char *)p + 8 * i, &v, 8); } static inline void jambu_initialization(
+```
+
 ### jambu-simon64-nonce-in-bounds
 
 Crates: jambusimon64v2
@@ -86,6 +697,123 @@ jambu_initialization loads the state from iv[0..7], but the nonce is CRYPTO_NPUB
 + 	memcpy(&stateS[0], iv, 4); stateS[1] = 0; 
 ```
 
+### unaligned-encrypt-c-line-38
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)(c+msglen))[0] = stateS[0] ^ stateS[1] ^ stateR[0];
++ jb_st32((c+msglen), 0, stateS[0] ^ stateS[1] ^ stateR[0]);
+```
+
+### unaligned-encrypt-c-line-53
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)t)[0] = stateS[0] ^ stateS[1] ^ stateR[0];
++ jb_st32(t, 0, stateS[0] ^ stateS[1] ^ stateR[0]);
+```
+
+### unaligned-encrypt-c-line-63
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((unsigned int *)adblock)[0];
++ stateS[1] ^= jb_ld32(adblock, 0);
+```
+
+### unaligned-encrypt-c-line-82
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (3 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((unsigned int *)p)[0];
++ stateS[1] ^= jb_ld32(p, 0);
+```
+
+### unaligned-encrypt-c-line-105
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((unsigned int *)plaintextblk)[0];
++ stateS[1] ^= jb_ld32(plaintextblk, 0);
+```
+
+### unaligned-encrypt-c-line-107
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)ciphertextblk)[0] = stateS[0] ^ ((unsigned int *)plaintextblk)[0];
++ jb_st32(ciphertextblk, 0, stateS[0] ^ jb_ld32(plaintextblk, 0));
+```
+
+### unaligned-encrypt-c-line-129
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)ciphertextblk)[0] = stateS[0] ^ ((unsigned int *)p)[0];
++ jb_st32(ciphertextblk, 0, stateS[0] ^ jb_ld32(p, 0));
+```
+
+### unaligned-encrypt-c-line-149
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)plaintextblk)[0] = stateS[0] ^ ((unsigned int *)ciphertextblk)[0];
++ jb_st32(plaintextblk, 0, stateS[0] ^ jb_ld32(ciphertextblk, 0));
+```
+
+### unaligned-encrypt-c-line-163
+
+Crates: jambusimon64v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)p)[0] = stateS[0] ^ ((unsigned int *)ciphertextblk)[0];
++ jb_st32(p, 0, stateS[0] ^ jb_ld32(ciphertextblk, 0));
+```
+
 ### jambu-simon96-nonce-in-bounds
 
 Crates: jambusimon96v2
@@ -97,6 +825,188 @@ jambu_initialization reads 8 bytes from the 6-byte nonce and masks off the 2 ext
 ```diff
 - 	stateS[0] = (((uint64_t *)iv)[0] & 0xffffffffffff); stateS[1] = 0; 
 + 	stateS[0] = 0; memcpy(&stateS[0], iv, 6); stateS[1] = 0; 
+```
+
+### unaligned-encrypt-c-line-36
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)(c + msglen))[0] = (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff;
++ jb_st48((c + msglen), 0, (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff);
+```
+
+### unaligned-encrypt-c-line-51
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)t)[0] = (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff;
++ jb_st48(t, 0, (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff);
+```
+
+### unaligned-encrypt-c-line-62
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= ((uint64_t *)adblock)[0] & 0xffffffffffff;
++ stateS[1] ^= jb_ld48(adblock, 0) & 0xffffffffffff;
+```
+
+### unaligned-encrypt-c-line-80
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= ((uint64_t *)p)[0] & 0xffffffffffff;
++ stateS[1] ^= jb_ld48(p, 0) & 0xffffffffffff;
+```
+
+### unaligned-encrypt-c-line-101
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= ((uint64_t *)plaintextblk)[0] & 0xffffffffffff;
++ stateS[1] ^= jb_ld48(plaintextblk, 0) & 0xffffffffffff;
+```
+
+### unaligned-encrypt-c-line-103
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)ciphertextblk)[0] = (stateS[0] ^ ((uint64_t *)plaintextblk)[0]) & 0xffffffffffff;
++ jb_st48(ciphertextblk, 0, (stateS[0] ^ jb_ld48(plaintextblk, 0)) & 0xffffffffffff);
+```
+
+### unaligned-encrypt-c-line-121
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= (((uint64_t *)p)[0] & 0xffffffffffff);
++ stateS[1] ^= (jb_ld48(p, 0) & 0xffffffffffff);
+```
+
+### unaligned-encrypt-c-line-123
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)ciphertextblk)[0] = (stateS[0] ^ ((uint64_t *)p)[0] & 0xffffffffffff);
++ jb_st48(ciphertextblk, 0, (stateS[0] ^ jb_ld48(p, 0) & 0xffffffffffff));
+```
+
+### unaligned-encrypt-c-line-144
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)plaintextblk)[0] = stateS[0] ^ (((uint64_t *)ciphertextblk)[0] & 0xffffffffffff);
++ jb_st48(plaintextblk, 0, stateS[0] ^ (jb_ld48(ciphertextblk, 0) & 0xffffffffffff));
+```
+
+### unaligned-encrypt-c-line-145
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= (((uint64_t *)plaintextblk)[0] & 0xffffffffffff);
++ stateS[1] ^= (jb_ld48(plaintextblk, 0) & 0xffffffffffff);
+```
+
+### unaligned-encrypt-c-line-158
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)p)[0] = stateS[0] ^ ((((uint64_t *)ciphertextblk)[0]) & 0xffffffffffff);
++ jb_st48(p, 0, stateS[0] ^ ((jb_ld48(ciphertextblk, 0)) & 0xffffffffffff));
+```
+
+### unaligned-encrypt-c-helpers
+
+Crates: jambusimon96v2
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+
+```diff
+- static inline void jambu_initialization(
++ static __inline uint64_t jb_ld48(const void *p, size_t i) { uint64_t v; v = 0; memcpy(&v, (const unsigned char *)p + 8 * i, 6); return v; } static __inline void jb_st48(void *p, size_t i, uint64_t v) { memcpy((unsigned char *)p + 8 * i, &v, 6); } static inline void jambu_initialization(
+```
+
+### joltik-eq-xls-tag-offset
+
+Crates: joltikeq12864v1, joltikeq8048v1, joltikeq9696v1
+
+File: `upstream/*/joltik.c` (1 occurrence(s))
+
+joltik_aead_decrypt computed XLSin+c_len-8-8*(i-1) with XLSin a 16-byte array: left to right that forms the pointer XLSin+c_len, which UBSan reports as 'index N out of bounds for uint8_t[16]' (joltik.c, CI run 45581879065), before subtracting back. The patch parenthesises the offset, XLSin+(c_len-8-8*(i-1)); the offset is the partial block length s (1..7), the destination byte is identical and output is unchanged.
+
+```diff
+-       memcpy(XLSin+c_len-8-8*(i-1), ciphertext+c_len-8, 8); /* append tag */
++       memcpy(XLSin+(c_len-8-8*(i-1)), ciphertext+c_len-8, 8); /* append tag */
+```
+
+### joltik-neq-pad-offset
+
+Crates: joltikneq12864v1, joltikneq12864v13, joltikneq6464v1, joltikneq6464v13, joltikneq80112v13, joltikneq8048v1, joltikneq9696v1, joltikneq9696v13
+
+File: `upstream/*/joltik.c` (1 occurrence(s))
+
+joltik_aead_decrypt computed Pad+c_len-8*i with Pad a uint8_t[8]: left to right that forms the pointer Pad+c_len, which UBSan reports as 'index N out of bounds for uint8_t[8]' (joltik.c, CI run 45581879065), before subtracting back. The patch parenthesises the offset, Pad+(c_len-8*i); the offset is the partial block length (1..7), the destination byte is identical and output is unchanged.
+
+```diff
+-         memset(Pad+c_len-8*i, 0, 8-(c_len-8*i));
++         memset(Pad+(c_len-8*i), 0, 8-(c_len-8*i));
 ```
 
 ### ketje-tag-mismatch-without-exceptions
@@ -136,6 +1046,58 @@ KeccakF-interface.h maps KeccakF_StatePermute to KeccakP1600_12_StatePermute but
 ```diff
 - void KeccakF_ParallelInitialize( void )
 + void KeccakP1600_12_StatePermute(void *state); void KeccakF_ParallelInitialize( void )
+```
+
+### knot-permute-typed-wrappers
+
+Crates: knot-aead-128-256, knot-aead-128-384, knot-aead-192-384, knot-aead-256-512
+
+File: `upstream/knot-aead.c` (1 occurrence(s))
+
+knot_aead_absorb_data/encrypt/decrypt call their permutation through a knot_permute_t (void (*)(void *, uint8_t)), but the pointers are cast from knot256_permute_6/knot384_permute_7/knot512_permute_7, which take a typed state pointer (UBSan -fsanitize=function: call through pointer to incorrect function type, knot-aead.c:110/130/157; a trap on WebAssembly). The patch adds wrappers with the exact knot_permute_t signature that forward to the real permutation (void* converts implicitly to the state pointer) and passes them instead of the casted functions. The same permutation is called with the same state and rounds, so output is unchanged.
+
+```diff
+- aead_cipher_t const knot_aead_128_256_cipher = {
++ static void ns_knot256_permute_6(void *state, uint8_t rounds) { knot256_permute_6(state, rounds); } static void ns_knot384_permute_7(void *state, uint8_t rounds) { knot384_permute_7(state, rounds); } static void ns_knot512_permute_7(void *state, uint8_t rounds) { knot512_permute_7(state, rounds); } aead_cipher_t const knot_aead_128_256_cipher = {
+```
+
+### knot-permute-use-wrapper-256
+
+Crates: knot-aead-128-256, knot-aead-128-384, knot-aead-192-384, knot-aead-256-512
+
+File: `upstream/knot-aead.c` (4 occurrence(s))
+
+pass the correctly typed wrapper instead of a cast function pointer (see knot-permute-typed-wrappers).
+
+```diff
+- (knot_permute_t)knot256_permute_6,
++ ns_knot256_permute_6,
+```
+
+### knot-permute-use-wrapper-384
+
+Crates: knot-aead-128-256, knot-aead-128-384, knot-aead-192-384, knot-aead-256-512
+
+File: `upstream/knot-aead.c` (8 occurrence(s))
+
+pass the correctly typed wrapper instead of a cast function pointer (see knot-permute-typed-wrappers).
+
+```diff
+- (knot_permute_t)knot384_permute_7,
++ ns_knot384_permute_7,
+```
+
+### knot-permute-use-wrapper-512
+
+Crates: knot-aead-128-256, knot-aead-128-384, knot-aead-192-384, knot-aead-256-512
+
+File: `upstream/knot-aead.c` (4 occurrence(s))
+
+pass the correctly typed wrapper instead of a cast function pointer (see knot-permute-typed-wrappers).
+
+```diff
+- (knot_permute_t)knot512_permute_7,
++ ns_knot512_permute_7,
 ```
 
 ### lac-free-padding
@@ -216,6 +1178,253 @@ encrypt.c does not include <stdlib.h>; the free() calls added above need a decla
 +     void free(void *); ae_cxt* cxt = ae_allocate();
 ```
 
+### lilliput-vla-param-lilliput-i-c-const-uint8_t-M-M_len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1
+
+File: `upstream/*/lilliput-i.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t M[M_len],
++     const uint8_t *M,
+```
+
+### lilliput-vla-param-lilliput-i-c-uint8_t-C-M_len-BLOCK_BYTES
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1
+
+File: `upstream/*/lilliput-i.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     uint8_t       C[M_len+BLOCK_BYTES],
++     uint8_t       *C,
+```
+
+### lilliput-vla-param-lilliput-i-c-const-uint8_t-C-C_len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1
+
+File: `upstream/*/lilliput-i.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t C[C_len],
++     const uint8_t *C,
+```
+
+### lilliput-vla-param-lilliput-i-c-uint8_t-M-C_len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1
+
+File: `upstream/*/lilliput-i.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     uint8_t       M[C_len],
++     uint8_t       *M,
+```
+
+### lilliput-vla-param-lilliput-i-c-const-uint8_t-message-message_len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1
+
+File: `upstream/*/lilliput-i.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t message[message_len],
++     const uint8_t *message,
+```
+
+### lilliput-vla-param-lilliput-i-c-const-uint8_t-auth_data-auth_data_len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1
+
+File: `upstream/*/lilliput-i.c` (2 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t auth_data[auth_data_len],
++     const uint8_t *auth_data,
+```
+
+### lilliput-vla-param-lilliput-i-c-uint8_t-ciphertext-message_len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1
+
+File: `upstream/*/lilliput-i.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     uint8_t       ciphertext[message_len],
++     uint8_t       *ciphertext,
+```
+
+### lilliput-vla-param-lilliput-i-c-const-uint8_t-ciphertext-ciphertext_len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1
+
+File: `upstream/*/lilliput-i.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t ciphertext[ciphertext_len],
++     const uint8_t *ciphertext,
+```
+
+### lilliput-vla-param-lilliput-i-c-uint8_t-message-ciphertext_len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1
+
+File: `upstream/*/lilliput-i.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     uint8_t       message[ciphertext_len]
++     uint8_t       *message
+```
+
+### lilliput-vla-param-lilliput-ae-utils-h-static-inline-void-xor_arrays-size_t-len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1, lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ae-utils.h` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+- static inline void xor_arrays(size_t len, uint8_t out[len], const uint8_t a[len], const uint8_t b[len])
++ static inline void xor_arrays(size_t len, uint8_t *out, const uint8_t *a, const uint8_t *b)
+```
+
+### lilliput-vla-param-lilliput-ae-utils-h-static-inline-void-pad10-size_t-X_len-co
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1, lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ae-utils.h` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+- static inline void pad10(size_t X_len, const uint8_t X[X_len], uint8_t padded[BLOCK_BYTES])
++ static inline void pad10(size_t X_len, const uint8_t *X, uint8_t padded[BLOCK_BYTES])
+```
+
+### lilliput-vla-param-lilliput-ae-utils-h-const-uint8_t-A-A_len
+
+Crates: lilliputaei128v1, lilliputaei192v1, lilliputaei256v1, lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ae-utils.h` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t A[A_len],
++     const uint8_t *A,
+```
+
+### lilliput-vla-param-lilliput-ii-c-const-uint8_t-M-M_len
+
+Crates: lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ii.c` (2 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t M[M_len],
++     const uint8_t *M,
+```
+
+### lilliput-vla-param-lilliput-ii-c-uint8_t-C-M_len
+
+Crates: lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ii.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     uint8_t       C[M_len]
++     uint8_t       *C
+```
+
+### lilliput-vla-param-lilliput-ii-c-const-uint8_t-message-message_len
+
+Crates: lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ii.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t message[message_len],
++     const uint8_t *message,
+```
+
+### lilliput-vla-param-lilliput-ii-c-const-uint8_t-auth_data-auth_data_len
+
+Crates: lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ii.c` (2 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t auth_data[auth_data_len],
++     const uint8_t *auth_data,
+```
+
+### lilliput-vla-param-lilliput-ii-c-uint8_t-ciphertext-message_len
+
+Crates: lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ii.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     uint8_t       ciphertext[message_len],
++     uint8_t       *ciphertext,
+```
+
+### lilliput-vla-param-lilliput-ii-c-const-uint8_t-ciphertext-ciphertext_len
+
+Crates: lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ii.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     const uint8_t ciphertext[ciphertext_len],
++     const uint8_t *ciphertext,
+```
+
+### lilliput-vla-param-lilliput-ii-c-uint8_t-message-ciphertext_len
+
+Crates: lilliputaeii128v1, lilliputaeii192v1, lilliputaeii256v1
+
+File: `upstream/*/lilliput-ii.c` (1 occurrence(s))
+
+The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message, associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0' (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+
+```diff
+-     uint8_t       message[ciphertext_len]
++     uint8_t       *message
+```
+
 ### silc-free-context
 
 Crates: silc
@@ -255,6 +1464,149 @@ encrypt.c does not include <stdlib.h>; the free() calls added above need a decla
 +     void free(void *); ae_cxt* cxt = ae_allocate();
 ```
 
+### unaligned-encrypt_simon128-c-line-20
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[0] = ((uint64_t *)iv)[0];
++ stateS[0] = jb_ld64(iv, 0);
+```
+
+### unaligned-encrypt_simon128-c-line-43
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)(c+msglen))[0] = stateS[0] ^ stateS[1] ^ stateR[0];
++ jb_st64((c+msglen), 0, stateS[0] ^ stateS[1] ^ stateR[0]);
+```
+
+### unaligned-encrypt_simon128-c-line-58
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)t)[0] = stateS[0] ^ stateS[1] ^ stateR[0];
++ jb_st64(t, 0, stateS[0] ^ stateS[1] ^ stateR[0]);
+```
+
+### unaligned-encrypt_simon128-c-line-68
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((uint64_t *)adblock)[0];
++ stateS[1] ^= jb_ld64(adblock, 0);
+```
+
+### unaligned-encrypt_simon128-c-line-86
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (3 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((uint64_t *)p)[0];
++ stateS[1] ^= jb_ld64(p, 0);
+```
+
+### unaligned-encrypt_simon128-c-line-109
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((uint64_t *)plaintextblk)[0];
++ stateS[1] ^= jb_ld64(plaintextblk, 0);
+```
+
+### unaligned-encrypt_simon128-c-line-111
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)ciphertextblk)[0] = stateS[0] ^ ((uint64_t *)plaintextblk)[0];
++ jb_st64(ciphertextblk, 0, stateS[0] ^ jb_ld64(plaintextblk, 0));
+```
+
+### unaligned-encrypt_simon128-c-line-131
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)ciphertextblk)[0] = stateS[0] ^ ((uint64_t *)p)[0];
++ jb_st64(ciphertextblk, 0, stateS[0] ^ jb_ld64(p, 0));
+```
+
+### unaligned-encrypt_simon128-c-line-153
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)plaintextblk)[0] = stateS[0] ^ ((uint64_t *)ciphertextblk)[0];
++ jb_st64(plaintextblk, 0, stateS[0] ^ jb_ld64(ciphertextblk, 0));
+```
+
+### unaligned-encrypt_simon128-c-line-166
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((uint64_t *)p)[0] = stateS[0] ^ ((uint64_t *)ciphertextblk)[0];
++ jb_st64(p, 0, stateS[0] ^ jb_ld64(ciphertextblk, 0));
+```
+
+### unaligned-encrypt_simon128-c-helpers
+
+Crates: simonjambu128v2
+
+File: `upstream/*/encrypt_simon128.c` (1 occurrence(s))
+
+Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+
+```diff
+- static inline void jambu_initialization(
++ static __inline uint64_t jb_ld64(const void *p, size_t i) { uint64_t v; memcpy(&v, (const unsigned char *)p + 8 * i, 8); return v; } static __inline void jb_st64(void *p, size_t i, uint64_t v) { memcpy((unsigned char *)p + 8 * i, &v, 8); } static inline void jambu_initialization(
+```
+
 ### jambu-simon64-nonce-in-bounds
 
 Crates: simonjambu64v2
@@ -268,6 +1620,136 @@ jambu_initialization loads the state from iv[0..7], but the nonce is CRYPTO_NPUB
 + 	memcpy(&stateS[0], iv, 4); stateS[1] = 0; 
 ```
 
+### unaligned-encrypt_simon64-c-line-38
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)(c+msglen))[0] = stateS[0] ^ stateS[1] ^ stateR[0];
++ jb_st32((c+msglen), 0, stateS[0] ^ stateS[1] ^ stateR[0]);
+```
+
+### unaligned-encrypt_simon64-c-line-53
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)t)[0] = stateS[0] ^ stateS[1] ^ stateR[0];
++ jb_st32(t, 0, stateS[0] ^ stateS[1] ^ stateR[0]);
+```
+
+### unaligned-encrypt_simon64-c-line-63
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((unsigned int *)adblock)[0];
++ stateS[1] ^= jb_ld32(adblock, 0);
+```
+
+### unaligned-encrypt_simon64-c-line-82
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (3 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((unsigned int *)p)[0];
++ stateS[1] ^= jb_ld32(p, 0);
+```
+
+### unaligned-encrypt_simon64-c-line-105
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- stateS[1] ^= ((unsigned int *)plaintextblk)[0];
++ stateS[1] ^= jb_ld32(plaintextblk, 0);
+```
+
+### unaligned-encrypt_simon64-c-line-107
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)ciphertextblk)[0] = stateS[0] ^ ((unsigned int *)plaintextblk)[0];
++ jb_st32(ciphertextblk, 0, stateS[0] ^ jb_ld32(plaintextblk, 0));
+```
+
+### unaligned-encrypt_simon64-c-line-129
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)ciphertextblk)[0] = stateS[0] ^ ((unsigned int *)p)[0];
++ jb_st32(ciphertextblk, 0, stateS[0] ^ jb_ld32(p, 0));
+```
+
+### unaligned-encrypt_simon64-c-line-149
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)plaintextblk)[0] = stateS[0] ^ ((unsigned int *)ciphertextblk)[0];
++ jb_st32(plaintextblk, 0, stateS[0] ^ jb_ld32(ciphertextblk, 0));
+```
+
+### unaligned-encrypt_simon64-c-line-163
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((unsigned int *)p)[0] = stateS[0] ^ ((unsigned int *)ciphertextblk)[0];
++ jb_st32(p, 0, stateS[0] ^ jb_ld32(ciphertextblk, 0));
+```
+
+### unaligned-encrypt_simon64-c-helpers
+
+Crates: simonjambu64v2
+
+File: `upstream/*/encrypt_simon64.c` (1 occurrence(s))
+
+Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+
+```diff
+- static inline void jambu_initialization(
++ static __inline unsigned int jb_ld32(const void *p, size_t i) { unsigned int v; memcpy(&v, (const unsigned char *)p + 4 * i, 4); return v; } static __inline void jb_st32(void *p, size_t i, unsigned int v) { memcpy((unsigned char *)p + 4 * i, &v, 4); } static inline void jambu_initialization(
+```
+
 ### jambu-simon96-nonce-in-bounds
 
 Crates: simonjambu96v2
@@ -279,6 +1761,162 @@ jambu_initialization reads 8 bytes from the 6-byte nonce and masks off the 2 ext
 ```diff
 - 	stateS[0] = (((uint64_t *)iv)[0] & 0xffffffffffff); stateS[1] = 0; 
 + 	stateS[0] = 0; memcpy(&stateS[0], iv, 6); stateS[1] = 0; 
+```
+
+### unaligned-encrypt_simon96-c-line-36
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)(c + msglen))[0] = (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff;
++ jb_st48((c + msglen), 0, (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff);
+```
+
+### unaligned-encrypt_simon96-c-line-51
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)t)[0] = (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff;
++ jb_st48(t, 0, (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff);
+```
+
+### unaligned-encrypt_simon96-c-line-62
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= ((uint64_t *)adblock)[0] & 0xffffffffffff;
++ stateS[1] ^= jb_ld48(adblock, 0) & 0xffffffffffff;
+```
+
+### unaligned-encrypt_simon96-c-line-80
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= ((uint64_t *)p)[0] & 0xffffffffffff;
++ stateS[1] ^= jb_ld48(p, 0) & 0xffffffffffff;
+```
+
+### unaligned-encrypt_simon96-c-line-101
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= ((uint64_t *)plaintextblk)[0] & 0xffffffffffff;
++ stateS[1] ^= jb_ld48(plaintextblk, 0) & 0xffffffffffff;
+```
+
+### unaligned-encrypt_simon96-c-line-103
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)ciphertextblk)[0] = (stateS[0] ^ ((uint64_t *)plaintextblk)[0]) & 0xffffffffffff;
++ jb_st48(ciphertextblk, 0, (stateS[0] ^ jb_ld48(plaintextblk, 0)) & 0xffffffffffff);
+```
+
+### unaligned-encrypt_simon96-c-line-121
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= (((uint64_t *)p)[0] & 0xffffffffffff);
++ stateS[1] ^= (jb_ld48(p, 0) & 0xffffffffffff);
+```
+
+### unaligned-encrypt_simon96-c-line-123
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)ciphertextblk)[0] = (stateS[0] ^ ((uint64_t *)p)[0] & 0xffffffffffff);
++ jb_st48(ciphertextblk, 0, (stateS[0] ^ jb_ld48(p, 0) & 0xffffffffffff));
+```
+
+### unaligned-encrypt_simon96-c-line-144
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)plaintextblk)[0] = stateS[0] ^ (((uint64_t *)ciphertextblk)[0] & 0xffffffffffff);
++ jb_st48(plaintextblk, 0, stateS[0] ^ (jb_ld48(ciphertextblk, 0) & 0xffffffffffff));
+```
+
+### unaligned-encrypt_simon96-c-line-145
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- stateS[1] ^= (((uint64_t *)plaintextblk)[0] & 0xffffffffffff);
++ stateS[1] ^= (jb_ld48(plaintextblk, 0) & 0xffffffffffff);
+```
+
+### unaligned-encrypt_simon96-c-line-158
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the access no longer runs 2 bytes past the block. Output is bit-identical.
+
+```diff
+- ((uint64_t *)p)[0] = stateS[0] ^ ((((uint64_t *)ciphertextblk)[0]) & 0xffffffffffff);
++ jb_st48(p, 0, stateS[0] ^ ((jb_ld48(ciphertextblk, 0)) & 0xffffffffffff));
+```
+
+### unaligned-encrypt_simon96-c-helpers
+
+Crates: simonjambu96v2
+
+File: `upstream/*/encrypt_simon96.c` (1 occurrence(s))
+
+Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+
+```diff
+- static inline void jambu_initialization(
++ static __inline uint64_t jb_ld48(const void *p, size_t i) { uint64_t v; v = 0; memcpy(&v, (const unsigned char *)p + 8 * i, 6); return v; } static __inline void jb_st48(void *p, size_t i, uint64_t v) { memcpy((unsigned char *)p + 8 * i, &v, 6); } static inline void jambu_initialization(
 ```
 
 ### lwc-decrypt-free-on-tag-mismatch
@@ -307,6 +1945,539 @@ crypto_aead_decrypt allocates `state` and `tag` with malloc and frees them on su
 +                                 { free(state); free(tag); return -1; } // authentication failure should result in return code -1.
 ```
 
+### unaligned-tiaoxin-tablebased-c-line-22
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[0] = ((col*)Te0)[*(p + 0)]  ^ ((col*)Te1)[*(p + 5)]  ^ ((col*)Te2)[*(p +10)]  ^ ((col*)Te3)[*(p +15)]  ^ ((col*)k)[0]; \
++ jb_stcol((c), 0, jb_ldcol(Te0, *(p + 0))  ^ jb_ldcol(Te1, *(p + 5))  ^ jb_ldcol(Te2, *(p +10))  ^ jb_ldcol(Te3, *(p +15))  ^ jb_ldcol(k, 0)); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-23
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[1] = ((col*)Te0)[*(p + 4)]  ^ ((col*)Te1)[*(p + 9)]  ^ ((col*)Te2)[*(p +14)]  ^ ((col*)Te3)[*(p + 3)]  ^ ((col*)k)[1]; \
++ jb_stcol((c), 1, jb_ldcol(Te0, *(p + 4))  ^ jb_ldcol(Te1, *(p + 9))  ^ jb_ldcol(Te2, *(p +14))  ^ jb_ldcol(Te3, *(p + 3))  ^ jb_ldcol(k, 1)); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-24
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[2] = ((col*)Te0)[*(p + 8)]  ^ ((col*)Te1)[*(p +13)]  ^ ((col*)Te2)[*(p + 2)]  ^ ((col*)Te3)[*(p + 7)]  ^ ((col*)k)[2]; \
++ jb_stcol((c), 2, jb_ldcol(Te0, *(p + 8))  ^ jb_ldcol(Te1, *(p +13))  ^ jb_ldcol(Te2, *(p + 2))  ^ jb_ldcol(Te3, *(p + 7))  ^ jb_ldcol(k, 2)); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-25
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[3] = ((col*)Te0)[*(p +12)]  ^ ((col*)Te1)[*(p + 1)]  ^ ((col*)Te2)[*(p + 6)]  ^ ((col*)Te3)[*(p +11)]  ^ ((col*)k)[3];
++ jb_stcol((c), 3, jb_ldcol(Te0, *(p +12))  ^ jb_ldcol(Te1, *(p + 1))  ^ jb_ldcol(Te2, *(p + 6))  ^ jb_ldcol(Te3, *(p +11))  ^ jb_ldcol(k, 3));
+```
+
+### unaligned-tiaoxin-tablebased-c-line-29
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[0] = ((col*)Te0)[*(p + 0)]  ^ ((col*)Te1)[*(p + 5)]  ^ ((col*)Te2)[*(p +10)]  ^ ((col*)Te3)[*(p +15)]  ^ ((col*)k1)[0]  ^ ((col*)k2)[0]; \
++ jb_stcol((c), 0, jb_ldcol(Te0, *(p + 0))  ^ jb_ldcol(Te1, *(p + 5))  ^ jb_ldcol(Te2, *(p +10))  ^ jb_ldcol(Te3, *(p +15))  ^ jb_ldcol(k1, 0)  ^ jb_ldcol(k2, 0)); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-30
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[1] = ((col*)Te0)[*(p + 4)]  ^ ((col*)Te1)[*(p + 9)]  ^ ((col*)Te2)[*(p +14)]  ^ ((col*)Te3)[*(p + 3)]  ^ ((col*)k1)[1]  ^ ((col*)k2)[1]; \
++ jb_stcol((c), 1, jb_ldcol(Te0, *(p + 4))  ^ jb_ldcol(Te1, *(p + 9))  ^ jb_ldcol(Te2, *(p +14))  ^ jb_ldcol(Te3, *(p + 3))  ^ jb_ldcol(k1, 1)  ^ jb_ldcol(k2, 1)); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-31
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[2] = ((col*)Te0)[*(p + 8)]  ^ ((col*)Te1)[*(p +13)]  ^ ((col*)Te2)[*(p + 2)]  ^ ((col*)Te3)[*(p + 7)]  ^ ((col*)k1)[2]  ^ ((col*)k2)[2]; \
++ jb_stcol((c), 2, jb_ldcol(Te0, *(p + 8))  ^ jb_ldcol(Te1, *(p +13))  ^ jb_ldcol(Te2, *(p + 2))  ^ jb_ldcol(Te3, *(p + 7))  ^ jb_ldcol(k1, 2)  ^ jb_ldcol(k2, 2)); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-32
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[3] = ((col*)Te0)[*(p +12)]  ^ ((col*)Te1)[*(p + 1)]  ^ ((col*)Te2)[*(p + 6)]  ^ ((col*)Te3)[*(p +11)]  ^ ((col*)k1)[3]  ^ ((col*)k2)[3];
++ jb_stcol((c), 3, jb_ldcol(Te0, *(p +12))  ^ jb_ldcol(Te1, *(p + 1))  ^ jb_ldcol(Te2, *(p + 6))  ^ jb_ldcol(Te3, *(p +11))  ^ jb_ldcol(k1, 3)  ^ jb_ldcol(k2, 3));
+```
+
+### unaligned-tiaoxin-tablebased-c-line-36
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[0] = ((col*)Te0)[*(p + 0)]  ^ ((col*)Te1)[*(p + 5)]  ^ ((col*)Te2)[*(p +10)]  ^ ((col*)Te3)[*(p +15)]  ^ ((col*)k1)[0]  ^ ((col*)k2)[0]  ^ ((col*)k3)[0]; \
++ jb_stcol((c), 0, jb_ldcol(Te0, *(p + 0))  ^ jb_ldcol(Te1, *(p + 5))  ^ jb_ldcol(Te2, *(p +10))  ^ jb_ldcol(Te3, *(p +15))  ^ jb_ldcol(k1, 0)  ^ jb_ldcol(k2, 0)  ^ jb_ldcol(k3, 0)); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-37
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[1] = ((col*)Te0)[*(p + 4)]  ^ ((col*)Te1)[*(p + 9)]  ^ ((col*)Te2)[*(p +14)]  ^ ((col*)Te3)[*(p + 3)]  ^ ((col*)k1)[1]  ^ ((col*)k2)[1]  ^ ((col*)k3)[1]; \
++ jb_stcol((c), 1, jb_ldcol(Te0, *(p + 4))  ^ jb_ldcol(Te1, *(p + 9))  ^ jb_ldcol(Te2, *(p +14))  ^ jb_ldcol(Te3, *(p + 3))  ^ jb_ldcol(k1, 1)  ^ jb_ldcol(k2, 1)  ^ jb_ldcol(k3, 1)); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-38
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[2] = ((col*)Te0)[*(p + 8)]  ^ ((col*)Te1)[*(p +13)]  ^ ((col*)Te2)[*(p + 2)]  ^ ((col*)Te3)[*(p + 7)]  ^ ((col*)k1)[2]  ^ ((col*)k2)[2]  ^ ((col*)k3)[2]; \
++ jb_stcol((c), 2, jb_ldcol(Te0, *(p + 8))  ^ jb_ldcol(Te1, *(p +13))  ^ jb_ldcol(Te2, *(p + 2))  ^ jb_ldcol(Te3, *(p + 7))  ^ jb_ldcol(k1, 2)  ^ jb_ldcol(k2, 2)  ^ jb_ldcol(k3, 2)); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-39
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((col*)(c))[3] = ((col*)Te0)[*(p +12)]  ^ ((col*)Te1)[*(p + 1)]  ^ ((col*)Te2)[*(p + 6)]  ^ ((col*)Te3)[*(p +11)]  ^ ((col*)k1)[3]  ^ ((col*)k2)[3]  ^ ((col*)k3)[3];
++ jb_stcol((c), 3, jb_ldcol(Te0, *(p +12))  ^ jb_ldcol(Te1, *(p + 1))  ^ jb_ldcol(Te2, *(p + 6))  ^ jb_ldcol(Te3, *(p +11))  ^ jb_ldcol(k1, 3)  ^ jb_ldcol(k2, 3)  ^ jb_ldcol(k3, 3));
+```
+
+### unaligned-tiaoxin-tablebased-c-line-97
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T6[0]))[0] = ((hw*)(c+16))[0] ^ ((hw*)(T4[2]))[0] ^ ( ((hw*)(T6[5]))[0] & ((hw*)(T3[2]))[0] ) ^ ((hw*)(T3[1]))[0] ; \
++ jb_sthw((T6[0]), 0, jb_ldhw((c+16), 0) ^ jb_ldhw((T4[2]), 0) ^ ( jb_ldhw((T6[5]), 0) & jb_ldhw((T3[2]), 0) ) ^ jb_ldhw((T3[1]), 0) ); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-98
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T6[0]))[1] = ((hw*)(c+16))[1] ^ ((hw*)(T4[2]))[1] ^ ( ((hw*)(T6[5]))[1] & ((hw*)(T3[2]))[1] ) ^ ((hw*)(T3[1]))[1] ; \
++ jb_sthw((T6[0]), 1, jb_ldhw((c+16), 1) ^ jb_ldhw((T4[2]), 1) ^ ( jb_ldhw((T6[5]), 1) & jb_ldhw((T3[2]), 1) ) ^ jb_ldhw((T3[1]), 1) ); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-99
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T3[0]))[0] = ((hw*)(c+ 0))[0] ^ ((hw*)(T3[2]))[0] ^ ( ((hw*)(T6[3]))[0] & ((hw*)(T4[3]))[0] ) ^ ((hw*)(T4[1]))[0] ; \
++ jb_sthw((T3[0]), 0, jb_ldhw((c+ 0), 0) ^ jb_ldhw((T3[2]), 0) ^ ( jb_ldhw((T6[3]), 0) & jb_ldhw((T4[3]), 0) ) ^ jb_ldhw((T4[1]), 0) ); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-100
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T3[0]))[1] = ((hw*)(c+ 0))[1] ^ ((hw*)(T3[2]))[1] ^ ( ((hw*)(T6[3]))[1] & ((hw*)(T4[3]))[1] ) ^ ((hw*)(T4[1]))[1] ; \
++ jb_sthw((T3[0]), 1, jb_ldhw((c+ 0), 1) ^ jb_ldhw((T3[2]), 1) ^ ( jb_ldhw((T6[3]), 1) & jb_ldhw((T4[3]), 1) ) ^ jb_ldhw((T4[1]), 1) ); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-101
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(m))[0] ^= ((hw*)(T3[0]))[0]; ((hw*)(m))[1] ^= ((hw*)(T3[0]))[1]; \
++ jb_sthw((m), 0, jb_ldhw((m), 0) ^ (jb_ldhw((T3[0]), 0))); jb_sthw((m), 1, jb_ldhw((m), 1) ^ (jb_ldhw((T3[0]), 1))); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-102
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(m+16))[0] ^= ((hw*)(T6[0]))[0] ^ ((hw*)(m))[0]; ((hw*)(m+16))[1] ^= ((hw*)(T6[0]))[1] ^ ((hw*)(m))[1]; \
++ jb_sthw((m+16), 0, jb_ldhw((m+16), 0) ^ (jb_ldhw((T6[0]), 0) ^ jb_ldhw((m), 0))); jb_sthw((m+16), 1, jb_ldhw((m+16), 1) ^ (jb_ldhw((T6[0]), 1) ^ jb_ldhw((m), 1))); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-103
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T4[0]))[0] = ((hw*)(tmp))[0] ^ ((hw*)(m+16))[0];((hw*)(T4[0]))[1] = ((hw*)(tmp))[1] ^ ((hw*)(m+16))[1];
++ jb_sthw((T4[0]), 0, jb_ldhw((tmp), 0) ^ jb_ldhw((m+16), 0));jb_sthw((T4[0]), 1, jb_ldhw((tmp), 1) ^ jb_ldhw((m+16), 1));
+```
+
+### unaligned-tiaoxin-tablebased-c-line-107
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(C))[0] = ((hw*)(T3[0]))[0] ^ ((hw*)(T3[2]))[0] ^ ((hw*)(T4[1]))[0] ^ ( ((hw*)(T6[3]))[0] & ((hw*)(T4[3]))[0] ) ;\
++ jb_sthw((C), 0, jb_ldhw((T3[0]), 0) ^ jb_ldhw((T3[2]), 0) ^ jb_ldhw((T4[1]), 0) ^ ( jb_ldhw((T6[3]), 0) & jb_ldhw((T4[3]), 0) ) );\
+```
+
+### unaligned-tiaoxin-tablebased-c-line-108
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(C))[1] = ((hw*)(T3[0]))[1] ^ ((hw*)(T3[2]))[1] ^ ((hw*)(T4[1]))[1] ^ ( ((hw*)(T6[3]))[1] & ((hw*)(T4[3]))[1] ) ;\
++ jb_sthw((C), 1, jb_ldhw((T3[0]), 1) ^ jb_ldhw((T3[2]), 1) ^ jb_ldhw((T4[1]), 1) ^ ( jb_ldhw((T6[3]), 1) & jb_ldhw((T4[3]), 1) ) );\
+```
+
+### unaligned-tiaoxin-tablebased-c-line-109
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(C))[2] = ((hw*)(T6[0]))[0] ^ ((hw*)(T4[2]))[0] ^ ((hw*)(T3[1]))[0] ^ ( ((hw*)(T6[5]))[0] & ((hw*)(T3[2]))[0] ) ;\
++ jb_sthw((C), 2, jb_ldhw((T6[0]), 0) ^ jb_ldhw((T4[2]), 0) ^ jb_ldhw((T3[1]), 0) ^ ( jb_ldhw((T6[5]), 0) & jb_ldhw((T3[2]), 0) ) );\
+```
+
+### unaligned-tiaoxin-tablebased-c-line-110
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(C))[3] = ((hw*)(T6[0]))[1] ^ ((hw*)(T4[2]))[1] ^ ((hw*)(T3[1]))[1] ^ ( ((hw*)(T6[5]))[1] & ((hw*)(T3[2]))[1] ) ;
++ jb_sthw((C), 3, jb_ldhw((T6[0]), 1) ^ jb_ldhw((T4[2]), 1) ^ jb_ldhw((T3[1]), 1) ^ ( jb_ldhw((T6[5]), 1) & jb_ldhw((T3[2]), 1) ) );
+```
+
+### unaligned-tiaoxin-tablebased-c-line-195
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(c + mlen))[0] =  ((hw*)(T3[0]))[0] ^ ((hw*)(T3[1]))[0] ^ ((hw*)(T3[2]))[0] ^
++ jb_sthw((c + mlen), 0,  jb_ldhw((T3[0]), 0) ^ jb_ldhw((T3[1]), 0) ^ jb_ldhw((T3[2]), 0) ^
+```
+
+### unaligned-tiaoxin-tablebased-c-line-196
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T4[0]))[0] ^ ((hw*)(T4[1]))[0] ^ ((hw*)(T4[2]))[0] ^ ((hw*)(T4[3]))[0] ^
++ jb_ldhw((T4[0]), 0) ^ jb_ldhw((T4[1]), 0) ^ jb_ldhw((T4[2]), 0) ^ jb_ldhw((T4[3]), 0) ^
+```
+
+### unaligned-tiaoxin-tablebased-c-line-197
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T6[0]))[0] ^ ((hw*)(T6[1]))[0] ^ ((hw*)(T6[2]))[0] ^ ((hw*)(T6[3]))[0] ^ ((hw*)(T6[4]))[0] ^ ((hw*)(T6[5]))[0] ;
++ jb_ldhw((T6[0]), 0) ^ jb_ldhw((T6[1]), 0) ^ jb_ldhw((T6[2]), 0) ^ jb_ldhw((T6[3]), 0) ^ jb_ldhw((T6[4]), 0) ^ jb_ldhw((T6[5]), 0) );
+```
+
+### unaligned-tiaoxin-tablebased-c-line-198
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(c + mlen))[1] =  ((hw*)(T3[0]))[1] ^ ((hw*)(T3[1]))[1] ^ ((hw*)(T3[2]))[1] ^
++ jb_sthw((c + mlen), 1,  jb_ldhw((T3[0]), 1) ^ jb_ldhw((T3[1]), 1) ^ jb_ldhw((T3[2]), 1) ^
+```
+
+### unaligned-tiaoxin-tablebased-c-line-199
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T4[0]))[1] ^ ((hw*)(T4[1]))[1] ^ ((hw*)(T4[2]))[1] ^ ((hw*)(T4[3]))[1] ^
++ jb_ldhw((T4[0]), 1) ^ jb_ldhw((T4[1]), 1) ^ jb_ldhw((T4[2]), 1) ^ jb_ldhw((T4[3]), 1) ^
+```
+
+### unaligned-tiaoxin-tablebased-c-line-200
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (2 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T6[0]))[1] ^ ((hw*)(T6[1]))[1] ^ ((hw*)(T6[2]))[1] ^ ((hw*)(T6[3]))[1] ^ ((hw*)(T6[4]))[1] ^ ((hw*)(T6[5]))[1] ;
++ jb_ldhw((T6[0]), 1) ^ jb_ldhw((T6[1]), 1) ^ jb_ldhw((T6[2]), 1) ^ jb_ldhw((T6[3]), 1) ^ jb_ldhw((T6[4]), 1) ^ jb_ldhw((T6[5]), 1) );
+```
+
+### unaligned-tiaoxin-tablebased-c-line-268
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(tmp))[0] = ((hw*)(incomplete_block))[0] ^ ((hw*)(T3[0]))[0] ^ ((hw*)(T3[2]))[0] ^ ((hw*)(T4[1]))[0] ^ ( ((hw*)(T6[3]))[0] & ((hw*)(T4[3]))[0] )  ; \
++ jb_sthw((tmp), 0, jb_ldhw((incomplete_block), 0) ^ jb_ldhw((T3[0]), 0) ^ jb_ldhw((T3[2]), 0) ^ jb_ldhw((T4[1]), 0) ^ ( jb_ldhw((T6[3]), 0) & jb_ldhw((T4[3]), 0) )  ); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-269
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(tmp))[1] = ((hw*)(incomplete_block))[1] ^ ((hw*)(T3[0]))[1] ^ ((hw*)(T3[2]))[1] ^ ((hw*)(T4[1]))[1] ^ ( ((hw*)(T6[3]))[1] & ((hw*)(T4[3]))[1] )  ; \
++ jb_sthw((tmp), 1, jb_ldhw((incomplete_block), 1) ^ jb_ldhw((T3[0]), 1) ^ jb_ldhw((T3[2]), 1) ^ jb_ldhw((T4[1]), 1) ^ ( jb_ldhw((T6[3]), 1) & jb_ldhw((T4[3]), 1) )  ); \
+```
+
+### unaligned-tiaoxin-tablebased-c-line-277
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(tc))[0] = ((hw*)(incomplete_block+16))[0] ^ ((hw*)(T6[0]))[0] ^ ((hw*)(T4[2]))[0] ^ ((hw*)(T3[1]))[0] ^
++ jb_sthw((tc), 0, jb_ldhw((incomplete_block+16), 0) ^ jb_ldhw((T6[0]), 0) ^ jb_ldhw((T4[2]), 0) ^ jb_ldhw((T3[1]), 0) ^
+```
+
+### unaligned-tiaoxin-tablebased-c-line-278
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ( ((hw*)(T6[5]))[0] & ((hw*)(T3[2]))[0] ) ^ ((hw*)(tmp))[0] ;
++ ( jb_ldhw((T6[5]), 0) & jb_ldhw((T3[2]), 0) ) ^ jb_ldhw((tmp), 0) );
+```
+
+### unaligned-tiaoxin-tablebased-c-line-279
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(tc))[1] = ((hw*)(incomplete_block+16))[1] ^ ((hw*)(T6[0]))[1] ^ ((hw*)(T4[2]))[1] ^ ((hw*)(T3[1]))[1] ^
++ jb_sthw((tc), 1, jb_ldhw((incomplete_block+16), 1) ^ jb_ldhw((T6[0]), 1) ^ jb_ldhw((T4[2]), 1) ^ jb_ldhw((T3[1]), 1) ^
+```
+
+### unaligned-tiaoxin-tablebased-c-line-280
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ( ((hw*)(T6[5]))[1] & ((hw*)(T3[2]))[1] ) ^ ((hw*)(tmp))[1] ;
++ ( jb_ldhw((T6[5]), 1) & jb_ldhw((T3[2]), 1) ) ^ jb_ldhw((tmp), 1) );
+```
+
+### unaligned-tiaoxin-tablebased-c-line-285
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T3[0]))[0] ^= ((hw*)(tmp))[0]; ((hw*)(T3[0]))[1] ^= ((hw*)(tmp))[1];
++ jb_sthw((T3[0]), 0, jb_ldhw((T3[0]), 0) ^ (jb_ldhw((tmp), 0))); jb_sthw((T3[0]), 1, jb_ldhw((T3[0]), 1) ^ (jb_ldhw((tmp), 1)));
+```
+
+### unaligned-tiaoxin-tablebased-c-line-286
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T4[0]))[0] ^= ((hw*)(tc ))[0]; ((hw*)(T4[0]))[1] ^= ((hw*)(tc ))[1];
++ jb_sthw((T4[0]), 0, jb_ldhw((T4[0]), 0) ^ (jb_ldhw((tc ), 0))); jb_sthw((T4[0]), 1, jb_ldhw((T4[0]), 1) ^ (jb_ldhw((tc ), 1)));
+```
+
+### unaligned-tiaoxin-tablebased-c-line-287
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(T6[0]))[0] ^= ((hw*)(tmp))[0] ^ ((hw*)(tc))[0]; ((hw*)(T6[0]))[1] ^= ((hw*)(tmp))[1] ^ ((hw*)(tc))[1];
++ jb_sthw((T6[0]), 0, jb_ldhw((T6[0]), 0) ^ (jb_ldhw((tmp), 0) ^ jb_ldhw((tc), 0))); jb_sthw((T6[0]), 1, jb_ldhw((T6[0]), 1) ^ (jb_ldhw((tmp), 1) ^ jb_ldhw((tc), 1)));
+```
+
+### unaligned-tiaoxin-tablebased-c-line-313
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(tmp))[0] =  ((hw*)(T3[0]))[0] ^ ((hw*)(T3[1]))[0] ^ ((hw*)(T3[2]))[0] ^
++ jb_sthw((tmp), 0,  jb_ldhw((T3[0]), 0) ^ jb_ldhw((T3[1]), 0) ^ jb_ldhw((T3[2]), 0) ^
+```
+
+### unaligned-tiaoxin-tablebased-c-line-316
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]), which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order word the cast read or wrote, so every output is bit-identical on every target.
+
+```diff
+- ((hw*)(tmp))[1] =  ((hw*)(T3[0]))[1] ^ ((hw*)(T3[1]))[1] ^ ((hw*)(T3[2]))[1] ^
++ jb_sthw((tmp), 1,  jb_ldhw((T3[0]), 1) ^ jb_ldhw((T3[1]), 1) ^ jb_ldhw((T3[2]), 1) ^
+```
+
+### unaligned-tiaoxin-tablebased-c-helpers
+
+Crates: tiaoxinv2
+
+File: `upstream/*/tiaoxin-tablebased.c` (1 occurrence(s))
+
+Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+
+```diff
+- typedef unsigned int  col;
++ typedef unsigned int  col; static __inline hw jb_ldhw(const void *p, size_t i) { hw v; memcpy(&v, (const unsigned char *)p + 8 * i, 8); return v; } static __inline void jb_sthw(void *p, size_t i, hw v) { memcpy((unsigned char *)p + 8 * i, &v, 8); } static __inline col jb_ldcol(const void *p, size_t i) { col v; memcpy(&v, (const unsigned char *)p + 4 * i, 4); return v; } static __inline void jb_stcol(void *p, size_t i, col v) { memcpy((unsigned char *)p + 4 * i, &v, 4); }
+```
+
 ### cloc-silc-pstate2-prototype
 
 Crates: twine80n6clocv1
@@ -331,6 +2502,266 @@ crypto_aead_decrypt allocates `state` and `tag` with malloc and frees them on su
 ```diff
 -                               return(KAT_CRYPTO_FAILURE);
 +                               { free(state); free(tag); return(KAT_CRYPTO_FAILURE); }
+```
+
+### xoodoo-extractbytes-skip-empty-copy
+
+Crates: xoodyakround3, xoodyakv1
+
+File: `upstream/*/Xoodoo-reference.c` (1 occurrence(s))
+
+UBSan: memcpy in Xoodoo_ExtractBytes (Xoodoo-reference.c:76, reported) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute). Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+
+```diff
+-     memcpy(data, (unsigned char*)state+offset, length);
++     if (length != 0) memcpy(data, (unsigned char*)state+offset, length);
+```
+
+### xoodoo-overwritebytes-skip-empty-copy
+
+Crates: xoodyakround3, xoodyakv1
+
+File: `upstream/*/Xoodoo-reference.c` (1 occurrence(s))
+
+UBSan: memcpy in Xoodoo_OverwriteBytes (Xoodoo-reference.c:59, same pattern as the reported line, data may be NULL) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute). Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+
+```diff
+-     memcpy((unsigned char*)state+offset, data, length);
++     if (length != 0) memcpy((unsigned char*)state+offset, data, length);
+```
+
+### cyclist-initialize-skip-empty-id-copy
+
+Crates: xoodyakround3, xoodyakv1
+
+File: `upstream/*/Cyclist.inc` (1 occurrence(s))
+
+UBSan: memcpy(KID + KLen, ID, IDLen) in Cyclist_Initialize (Cyclist.inc:114, reported for the xoodyakv1 NULL ID, IDLen 0) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute). Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+
+```diff
+-         memcpy(KID + KLen, ID, IDLen);
++         if (IDLen != 0) memcpy(KID + KLen, ID, IDLen);
+```
+
+### cyclist-crypt-skip-empty-copy
+
+Crates: xoodyakround3, xoodyakv1
+
+File: `upstream/*/Cyclist.inc` (1 occurrence(s))
+
+UBSan: memcpy(P, I, splitLen) in Cyclist_Crypt (Cyclist.inc:154, empty plaintext with NULL buffers) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute). Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+
+```diff
+-             memcpy(P, I, splitLen);
++             if (splitLen != 0) memcpy(P, I, splitLen);
+```
+
+### xoodyak-decrypt-skip-empty-memset
+
+Crates: xoodyakround3, xoodyakv1
+
+File: `upstream/*/encrypt.c` (1 occurrence(s))
+
+UBSan: memset(m, 0, mlen_) in crypto_aead_decrypt (encrypt.c, empty plaintext with NULL m, same pattern) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute). Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+
+```diff
+-         memset(m, 0, (size_t)mlen_);
++         if (mlen_ != 0) memset(m, 0, (size_t)mlen_);
+```
+
+### dsha-rotr64-count-mask
+
+Crates: dynamicsha-384-sha3r1, dynamicsha-512-sha3r1
+
+File: `upstream/*/Reference Implementation/dsha_ref.h` (1 occurrence(s))
+
+UBSan: ROTR64 / ROTR32 compute (x << (W - n)); when the rotate count n is 0 (data dependent) the shift exponent is W, which is undefined behaviour (reported as shift exponent 64 too large for uint_64t). Masking the left-shift count with W-1 makes n == 0 shift by 0: (x >> 0) | (x << 0) = x | x = x, the value x86 produced (hardware masks the count) and the value an ideal rotate gives; ARM gave x | 0 = x as well. For n in 1..W-1 the mask is a no-op, so output is unchanged.
+
+```diff
+- #define ROTR64(x,n)   (((x) >> (n)) | ((x) << (64 - (n))))
++ #define ROTR64(x,n)   (((x) >> (n)) | ((x) << ((64 - (n)) & 63)))
+```
+
+### dsha-rotr32-count-mask
+
+Crates: dynamicsha-384-sha3r1, dynamicsha-512-sha3r1
+
+File: `upstream/*/Reference Implementation/dsha_ref.h` (1 occurrence(s))
+
+UBSan: ROTR64 / ROTR32 compute (x << (W - n)); when the rotate count n is 0 (data dependent) the shift exponent is W, which is undefined behaviour (reported as shift exponent 64 too large for uint_64t). Masking the left-shift count with W-1 makes n == 0 shift by 0: (x >> 0) | (x << 0) = x | x = x, the value x86 produced (hardware masks the count) and the value an ideal rotate gives; ARM gave x | 0 = x as well. For n in 1..W-1 the mask is a no-op, so output is unchanged.
+
+```diff
+- #define ROTR32(x,n)   (((x) >> (n)) | ((x) << (32 - (n))))
++ #define ROTR32(x,n)   (((x) >> (n)) | ((x) << ((32 - (n)) & 31)))
+```
+
+### dsha-rotr64-count-mask
+
+Crates: dynamicsha2-384-sha3r1, dynamicsha2-512-sha3r1
+
+File: `upstream/*/Reference Implementation/dsha2_Ref.h` (1 occurrence(s))
+
+UBSan: ROTR64 / ROTR32 compute (x << (W - n)); when the rotate count n is 0 (data dependent) the shift exponent is W, which is undefined behaviour (reported as shift exponent 64 too large for uint_64t). Masking the left-shift count with W-1 makes n == 0 shift by 0: (x >> 0) | (x << 0) = x | x = x, the value x86 produced (hardware masks the count) and the value an ideal rotate gives; ARM gave x | 0 = x as well. For n in 1..W-1 the mask is a no-op, so output is unchanged.
+
+```diff
+- #define ROTR64(x,n)   (((x) >> (n)) | ((x) << (64 - (n))))
++ #define ROTR64(x,n)   (((x) >> (n)) | ((x) << ((64 - (n)) & 63)))
+```
+
+### dsha-rotr32-count-mask
+
+Crates: dynamicsha2-384-sha3r1, dynamicsha2-512-sha3r1
+
+File: `upstream/*/Reference Implementation/dsha2_Ref.h` (1 occurrence(s))
+
+UBSan: ROTR64 / ROTR32 compute (x << (W - n)); when the rotate count n is 0 (data dependent) the shift exponent is W, which is undefined behaviour (reported as shift exponent 64 too large for uint_64t). Masking the left-shift count with W-1 makes n == 0 shift by 0: (x >> 0) | (x << 0) = x | x = x, the value x86 produced (hardware masks the count) and the value an ideal rotate gives; ARM gave x | 0 = x as well. For n in 1..W-1 the mask is a no-op, so output is unchanged.
+
+```diff
+- #define ROTR32(x,n)   (((x) >> (n)) | ((x) << (32 - (n))))
++ #define ROTR32(x,n)   (((x) >> (n)) | ((x) << ((32 - (n)) & 31)))
+```
+
+### enrupt-typed-update-final-wrappers
+
+Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
+
+File: `upstream/*/Optimized_32bit/EnRUPT_opt.c` (1 occurrence(s))
+
+EnRUPT_Init stores EnRUPTu64_<n> / EnRUPTf64_<n> in hashState.u / .f through casts to iru* / irf*. Those typedefs take a void * state, the functions take hashState *, so Hash()/Update()/Final() called them through a pointer to an incorrect function type (UBSan -fsanitize=function, EnRUPT_opt.c:368 columns 143 and 186; a trap on WebAssembly). The patch adds static wrappers with exactly the iru / irf signature that forward to the real function (casting the void * back to hashState *) and stores those instead. Same function runs on the same state, so output is unchanged.
+
+```diff
+- HashReturn Init (hashState *state, int hashbitlen) { EnRUPT_Init(state) return SUCCESS; }
++ static HashReturn ns_EnRUPTu64_256(void *s, const BitSequence *d, const DataLength n) { return EnRUPTu64_256((hashState *)s, d, n); } static HashReturn ns_EnRUPTu64_384(void *s, const BitSequence *d, const DataLength n) { return EnRUPTu64_384((hashState *)s, d, n); } static HashReturn ns_EnRUPTu64_512(void *s, const BitSequence *d, const DataLength n) { return EnRUPTu64_512((hashState *)s, d, n); } static HashReturn ns_EnRUPTf64_224(void *s, BitSequence *h) { return EnRUPTf64_224((hashState *)s, h); } static HashReturn ns_EnRUPTf64_256(void *s, BitSequence *h) { return EnRUPTf64_256((hashState *)s, h); } static HashReturn ns_EnRUPTf64_384(void *s, BitSequence *h) { return EnRUPTf64_384((hashState *)s, h); } static HashReturn ns_EnRUPTf64_512(void *s, BitSequence *h) { return EnRUPTf64_512((hashState *)s, h); } HashReturn Init (hashState *state, int hashbitlen) { EnRUPT_Init(state) return SUCCESS; }
+```
+
+### enrupt-use-update-wrapper-256
+
+Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
+
+File: `upstream/*/Optimized_32bit/EnRUPT_opt.c` (2 occurrence(s))
+
+store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+
+```diff
+- (iru*)&EnRUPTu64_256,
++ ns_EnRUPTu64_256,
+```
+
+### enrupt-use-update-wrapper-384
+
+Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
+
+File: `upstream/*/Optimized_32bit/EnRUPT_opt.c` (1 occurrence(s))
+
+store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+
+```diff
+- (iru*)&EnRUPTu64_384,
++ ns_EnRUPTu64_384,
+```
+
+### enrupt-use-update-wrapper-512
+
+Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
+
+File: `upstream/*/Optimized_32bit/EnRUPT_opt.c` (1 occurrence(s))
+
+store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+
+```diff
+- (iru*)&EnRUPTu64_512,
++ ns_EnRUPTu64_512,
+```
+
+### enrupt-use-final-wrapper-224
+
+Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
+
+File: `upstream/*/Optimized_32bit/EnRUPT_opt.c` (1 occurrence(s))
+
+store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+
+```diff
+- (irf*)&EnRUPTf64_224;
++ ns_EnRUPTf64_224;
+```
+
+### enrupt-use-final-wrapper-256
+
+Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
+
+File: `upstream/*/Optimized_32bit/EnRUPT_opt.c` (1 occurrence(s))
+
+store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+
+```diff
+- (irf*)&EnRUPTf64_256;
++ ns_EnRUPTf64_256;
+```
+
+### enrupt-use-final-wrapper-384
+
+Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
+
+File: `upstream/*/Optimized_32bit/EnRUPT_opt.c` (1 occurrence(s))
+
+store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+
+```diff
+- (irf*)&EnRUPTf64_384;
++ ns_EnRUPTf64_384;
+```
+
+### enrupt-use-final-wrapper-512
+
+Crates: enrupt-224-sha3r1, enrupt-256-sha3r1, enrupt-384-sha3r1, enrupt-512-sha3r1
+
+File: `upstream/*/Optimized_32bit/EnRUPT_opt.c` (1 occurrence(s))
+
+store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+
+```diff
+- (irf*)&EnRUPTf64_512;
++ ns_EnRUPTf64_512;
+```
+
+### sphlib-no-unaligned-access
+
+Crates: fugue256, fugue512
+
+File: `upstream/*/sph_types.h` (2 occurrence(s))
+
+sph_types.h defines SPH_DETECT_UNALIGNED=1 on x86/x86-64, so sph_enc64be/sph_dec* store and load sph_u64/sph_u32 through casted pointers at any address: UBSan "store to misaligned address for type sph_u64" (sph_types.h:1661). With SPH_UNALIGNED=0, sphlib's own documented path is used (cast only when the pointer is aligned, otherwise byte-by-byte); both write the same bytes, so output is unchanged.
+
+```diff
+- #define SPH_DETECT_UNALIGNED         1
++ #define SPH_DETECT_UNALIGNED         0
+```
+
+### luffa-tweak-rotate-count-mask
+
+Crates: luffa-224-sha3r1, luffa-224-sha3r2, luffa-256-sha3r1, luffa-256-sha3r2, luffa-384-sha3r1, luffa-384-sha3r2, luffa-512-sha3r1, luffa-512-sha3r2
+
+File: `upstream/*/Reference Implementation/luffa.c` (1 occurrence(s))
+
+UBSan: shift exponent 32 is too large for 32-bit type 'uint32' in the Luffa tweak rotate-left by j (j in 0..4) when j == 0: x >> (32-0). Masking the count with 31 makes j == 0 shift by 0, so the rotate is (x << 0) | (x >> 0) = x | x = x, exactly the value x86 (count masked to 0) produced and the value an ideal rotate gives; on ARM the old code gave x | 0 = x as well. Output unchanged for j = 1..4.
+
+```diff
+- >>(32-j));
++ >>((32-j)&31));
+```
+
+### luffa-tweak-rotate-count-mask
+
+Crates: luffa256, luffa384, luffa512
+
+File: `upstream/*/luffa_for_32.c` (4 occurrence(s))
+
+UBSan: shift exponent 32 is too large for 32-bit type 'uint32' in the Luffa tweak rotate-left by j (j in 0..4) when j == 0: x >> (32-0). Masking the count with 31 makes j == 0 shift by 0, so the rotate is (x << 0) | (x >> 0) = x | x = x, exactly the value x86 (count masked to 0) produced and the value an ideal rotate gives; on ARM the old code gave x | 0 = x as well. Output unchanged for j = 1..4.
+
+```diff
+- >>(32-j))
++ >>((32-(j))&31))
 ```
 
 ### mcssha-remainder-in-bounds
@@ -370,6 +2801,84 @@ Update reads data[i] for the remaining bits even when there are none (x[4] == 0)
 ```diff
 - 		   c->x[5] = (data[i]>>(8-c->x[4]))<<(8-c->x[4]);
 + 		   c->x[5] = c->x[4] ? (data[i]>>(8-c->x[4]))<<(8-c->x[4]) : 0;
+```
+
+### md6-trim-hashval-ptr-decl
+
+Crates: md6d224, md6d256, md6d384, md6d512
+
+File: `upstream/*/md6_mode.c` (1 occurrence(s))
+
+trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits). md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745). The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged. hv is derived from the whole md6_state object (an unsigned char view of its representation), not from the 64-byte hashval member, so reading its 128 bytes stays inside the object the pointer came from.
+
+```diff
+-   int bits = st->d % 8;                 /* bits in partial byte */
++   int bits = st->d % 8;                 /* bits in partial byte */ unsigned char *hv = (unsigned char *)st + ((unsigned char *)st->hashval - (unsigned char *)st);
+```
+
+### md6-trim-hashval-ptr-move
+
+Crates: md6d224, md6d256, md6d384, md6d512
+
+File: `upstream/*/md6_mode.c` (1 occurrence(s))
+
+trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits). md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745). The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged.
+
+```diff
+-     st->hashval[i] = st->hashval[c*(w/8)-full_or_partial_bytes+i];
++     hv[i] = hv[c*(w/8)-full_or_partial_bytes+i];
+```
+
+### md6-trim-hashval-ptr-zero
+
+Crates: md6d224, md6d256, md6d384, md6d512
+
+File: `upstream/*/md6_mode.c` (1 occurrence(s))
+
+trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits). md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745). The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged.
+
+```diff
+-     st->hashval[i] = 0;
++     hv[i] = 0;
+```
+
+### md6-trim-hashval-ptr-shift
+
+Crates: md6d224, md6d256, md6d384, md6d512
+
+File: `upstream/*/md6_mode.c` (1 occurrence(s))
+
+trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits). md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745). The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged.
+
+```diff
+- 	{ st->hashval[i] = (st->hashval[i] << (8-bits));
++ 	{ hv[i] = (hv[i] << (8-bits));
+```
+
+### md6-trim-hashval-ptr-or
+
+Crates: md6d224, md6d256, md6d384, md6d512
+
+File: `upstream/*/md6_mode.c` (1 occurrence(s))
+
+trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits). md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745). The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged.
+
+```diff
+- 	    st->hashval[i] |= (st->hashval[i+1] >> bits);
++ 	    hv[i] |= (hv[i+1] >> bits);
+```
+
+### md6-process-chaining-value-in-object
+
+Crates: md6d224, md6d256, md6d384, md6d512
+
+File: `upstream/*/md6_mode.c` (1 occurrence(s))
+
+md6_process stores the full 128-byte final chaining value (c*(w/8)) with memcpy(st->hashval, ...), but hashval is unsigned char[64]: the upper 64 bytes go into the next member, hexhashval, which trim_hashval then reads back. The destination is now the same address taken as an unsigned char view of the whole md6_state object, so the copy stays inside the object its pointer came from (no member overflow, also under _FORTIFY_SOURCE object-size checks). The same bytes are written to the same place; output is unchanged.
+
+```diff
+-     { memcpy( st->hashval, C, md6_c*(w/8) );
++     { memcpy( (unsigned char *)st + ((unsigned char *)st->hashval - (unsigned char *)st), C, md6_c*(w/8) );
 ```
 
 ### meshhash-rot
@@ -528,6 +3037,19 @@ secure_set_bits_port keeps each bit position as BIT(w & 63) = 1ULL << (0..63) in
 +   uint64_t pos_bit[MAX_WLIST_SIZE];
 ```
 
+### xkcp-x4-extractbytes-fn-type
+
+Crates: efrodokem1344shake-oqs, efrodokem640shake-oqs, efrodokem976shake-oqs, frodokem1344shake-oqs, frodokem640shake-oqs, frodokem976shake-oqs, sdith-l1-gf2-fast, sdith-l1-gf2-fast-cipherpow, sdith-l1-gf2-short, sdith-l1-gf2-short-cipherpow, sdith-l3-gf2-fast, sdith-l3-gf2-fast-cipherpow, sdith-l3-gf2-short, sdith-l3-gf2-short-cipherpow, sdith-l5-gf2-fast, sdith-l5-gf2-fast-cipherpow, sdith-l5-gf2-short, sdith-l5-gf2-short-cipherpow
+
+File: `upstream/*/common/sha3/xkcp_dispatch.h` (1 occurrence(s))
+
+KeccakX4ExtractBytesFn declares its state parameter as const void *, but every implementation it is pointed at (KeccakP1600times4_ExtractBytes_serial from PlSnP-Fallback.inc, and the avx2 one) is defined with void *states. xkcp_sha3x4.c calls them through Keccak_X4_ExtractBytes_ptr, so UBSan -fsanitize=function reports a call through a pointer to an incorrect function type (xkcp_sha3x4.c:144-147 and 157-160; a trap on WebAssembly). The patch makes the typedef match the definitions (void *); callers pass a non-const uint64_t * so nothing else changes and the output is identical. Later liboqs versions declare the x4 typedef the same way.
+
+```diff
+- typedef void KeccakX4ExtractBytesFn(const void *, unsigned int, unsigned char *, unsigned int, unsigned int);
++ typedef void KeccakX4ExtractBytesFn(void *, unsigned int, unsigned char *, unsigned int, unsigned int);
+```
+
 ### ntru-r2-rejection-hash-input
 
 Crates: ntru-hps2048509-r2
@@ -632,6 +3154,266 @@ File: `upstream/*/KeccakP-1600-SnP.h` (1 occurrence(s))
 + /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
 ```
 
+### compact-lwe-sk-gen-init-secret-mpz
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+sk_gen passed the never-initialised mpz sk->k[j], sk->ck[j] and sk->s[j][i] to randomMPZ, whose mpz_init was their only init. randomMPZ is changed (patch compact-lwe-random-mpz-clear-first) to clear its argument first, so every caller must pass an initialised mpz: sk_gen now mpz_init()s all of them up front (the same empty value mpz_init gave them). No value changes.
+
+```diff
+- 	mpz_set_ui(sk->wPos,W_POS);
++ 	for(j=0; j<F; j++){ mpz_init(sk->k[j]); mpz_init(sk->ck[j]); for(i=0; i<(int)N; i++) mpz_init(sk->s[j][i]); } mpz_set_ui(sk->wPos,W_POS);
+```
+
+### compact-lwe-random-mpz-clear-first
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+LeakSanitizer (CI run, pk_gen/sk_gen): randomMPZ called mpz_init(a) on an mpz that already holds limbs (pk_gen re-fills e and pTemp in its loops; sk_gen re-fills sk->ck[j] and sk->s[j][0] in its retry loops), so the old limb array was lost. randomMPZ now mpz_clear()s its argument before the mpz_init. Every caller passes an initialised mpz (a, e, pTemp, and the sk fields initialised by compact-lwe-sk-gen-init-secret-mpz), and an initialised-but-empty mpz clears safely. The value built afterwards is identical.
+
+```diff
+- void randomMPZ(int len, mpz_t a){
++ void randomMPZ(int len, mpz_t a){ mpz_clear(a);
+```
+
+### compact-lwe-sk-gen-clear-sckinv
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+sk_gen initialised the local sckInv but never cleared it (LeakSanitizer, mpz_div_qr/mpz_set in sk_gen). It is cleared with the other locals.
+
+```diff
+- 	mpz_clear (sk_max);
++ 	mpz_clear (sk_max); mpz_clear (sckInv);
+```
+
+### compact-lwe-sk-gen-error-cleanup
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+The "Too big error" return of sk_gen left all 8 locals and every sk field allocated. They are cleared before the return -1 (unreachable with the shipped constants; the caller cannot know which fields were set, so sk_gen cleans up itself).
+
+```diff
+- 		printf("Too big error: %s\n", eMax);
++ 		printf("Too big error: %s\n", eMax); mpz_clear(a); mpz_clear(b); mpz_clear(c); mpz_clear(d); mpz_clear(qDivW); mpz_clear(peMax); mpz_clear(sk_max); mpz_clear(sckInv); mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(j=0; j<F; j++){ mpz_clear(sk->kInv[j]); mpz_clear(sk->k[j]); mpz_clear(sk->ck[j]); for(i=0; i<(int)N; i++) mpz_clear(sk->s[j][i]); } 
+```
+
+### compact-lwe-pk-gen-error-cleanup
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+The e_min >= e_max return of pk_gen left its 8 locals, the pk fields and the m*F elements allocated, and the two strings from mpz_get_str(NULL, ...) were never freed. The strings are now freed after printing (same text printed) and everything is cleared before the return -1 (unreachable with the shipped constants).
+
+```diff
+- 		printf("Incorrect: e_min %s is bigger than e_max %s\n", mpz_get_str(NULL, 10, e_min), mpz_get_str(NULL, 10, sk->r));
++ 		{ char *s_min = mpz_get_str(NULL, 10, e_min); char *s_max = mpz_get_str(NULL, 10, sk->r); printf("Incorrect: e_min %s is bigger than e_max %s\n", s_min, s_max); free(s_min); free(s_max); } mpz_clear(skInvQ); mpz_clear(leftSum); mpz_clear(a); mpz_clear(b); mpz_clear(e); mpz_clear(pSum); mpz_clear(pTemp); mpz_clear(e_min); mpz_clear(pk->q); mpz_clear(pk->t); mpz_clear(pk->wPos); mpz_clear(pk->wNeg); mpz_clear(pk->bv); for(j=0; j<F; j++){ for(i=0; i<sk->m; i++) mpz_clear(pk->element[j][i]); } 
+```
+
+### compact-lwe-clear-cipher-clears-head
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+clearCipher called mpz_init() on D->head[i] instead of mpz_clear(), so the N-1 head limb arrays of every ciphertext block leaked (LeakSanitizer: enc/mpz_add, cipher_in_str/mpz_import). The head values are now cleared first; the original mpz_init loop that follows only resets the cleared (limb-less) values to empty. clearCipher never reads the values, so outputs are unchanged.
+
+```diff
+- void clearCipher(struct Cipher* D){
++ void clearCipher(struct Cipher* D){ { unsigned int ci; for(ci=0; ci<N-1; ci++) mpz_clear(D->head[ci]); }
+```
+
+### compact-lwe-cipher-in-str-head-bound
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+cipher_in_str initialised D->head[0..N-1], but head has N-1 elements: head[N-1] is the memory of tail[0] (out-of-bounds index, overlapping the next member). Only the N-1 real elements are initialised now; tail[0] was initialised just before and holds no limbs yet, so re-initialising it was a no-op and the result is identical.
+
+```diff
+-         for(i=0; i<N; i++){
++         for(i=0; i<N-1; i++){
+```
+
+### compact-lwe-sk-in-str-error-cleanup
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+sk_in_str returned NULL on a too-short buffer leaking the malloc and all initialised mpz fields. The check is repeated right after "len" is computed (same message) and clears the fields (n of them for s, as initialised) and frees the struct first.
+
+```diff
+-         int len = sk->q_bytes+sk->q_bytes+ F*sk->q_bytes+sk->q_bytes+F*sk->n*sk->q_bytes+2*F*sk->q_bytes+ 2+2+1+1+1+1+sk->q_bytes; //224
++         int len = sk->q_bytes+sk->q_bytes+ F*sk->q_bytes+sk->q_bytes+F*sk->n*sk->q_bytes+2*F*sk->q_bytes+ 2+2+1+1+1+1+sk->q_bytes; //224 if(buf_len < len){ printf("The buf for sk is too small: expected %d, actual %d\n", len, buf_len); mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(j=0; j<F; j++){ mpz_clear(sk->kInv[j]); mpz_clear(sk->k[j]); mpz_clear(sk->ck[j]); for(i=0; i<sk->n; i++) mpz_clear(sk->s[j][i]); } free(sk); return NULL; }
+```
+
+### compact-lwe-sk-in-str-length-mismatch-cleanup
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+The pos != len return of sk_in_str leaked the struct and all mpz fields; cleared and freed before returning NULL.
+
+```diff
+- 		printf("Something wrong in sk input");
++ 		printf("Something wrong in sk input"); mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(j=0; j<F; j++){ mpz_clear(sk->kInv[j]); mpz_clear(sk->k[j]); mpz_clear(sk->ck[j]); for(i=0; i<sk->n; i++) mpz_clear(sk->s[j][i]); } free(sk);
+```
+
+### compact-lwe-pk-in-str-error-cleanup
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/compact-lwe.c` (1 occurrence(s))
+
+pk_in_str returned NULL on a too-short buffer leaking the malloc and all initialised mpz fields (M*F elements, always initialised). The check is repeated after "len" is computed (same message) and clears and frees first.
+
+```diff
+- 	int len = pk->m*F*pk->q_bytes + 2+2+1+1+1+1+pk->q_bytes; 
++ 	int len = pk->m*F*pk->q_bytes + 2+2+1+1+1+1+pk->q_bytes; if(buf_len < len){ printf("The buf for pk is too small: expected %d, actual %d\n", len, buf_len); clearPK(pk); free(pk); return NULL; } 
+```
+
+### compact-lwe-keypair-clear-secrets
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/encrypt.c` (1 occurrence(s))
+
+crypto_encrypt_keypair cleared the public-parameter fields of its local struct SK but not sk.k[], sk.ck[] and sk.s[][] (LeakSanitizer, sk_gen mpz allocations). They are cleared with the rest; sk_out_str and pk_gen have already read them.
+
+```diff
+- 	 mpz_clear (sk.ckInv);
++ 	 mpz_clear (sk.ckInv); for(j=0; j<F; j++){ int si; mpz_clear(sk.k[j]); mpz_clear(sk.ck[j]); for(si=0; si<(int)N; si++) mpz_clear(sk.s[j][si]); }
+```
+
+### compact-lwe-encrypt-pk-null-frees-m
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/encrypt.c` (1 occurrence(s))
+
+crypto_encrypt returned -1 on an unparsable public key without freeing the padded-message buffer m. Freed first; the original NULL check follows.
+
+```diff
+- 	pk = pk_in_str(pk_str, CRYPTO_PUBLICKEYBYTES);
++ 	pk = pk_in_str(pk_str, CRYPTO_PUBLICKEYBYTES); if(pk==NULL) free(m);
+```
+
+### compact-lwe-encrypt-cipher-len-error-cleanup
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/encrypt.c` (1 occurrence(s))
+
+crypto_encrypt returned -1 on a bad cipher_out_str length leaking the current ciphertext block, the parsed public key and m. All are released before the original return -1.
+
+```diff
+- 		if(cipher_len!=single_clen){
++ 		if(cipher_len!=single_clen){ clearCipher(&D); clearPK(pk); free(pk); free(m); } if(cipher_len!=single_clen){
+```
+
+### compact-lwe-open-sk-null-frees-m
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/encrypt.c` (1 occurrence(s))
+
+crypto_encrypt_open returned -1 on an unparsable secret key without freeing the plaintext buffer m. Freed first.
+
+```diff
+- 	sk = sk_in_str(sk_str, CRYPTO_SECRETKEYBYTES);
++ 	sk = sk_in_str(sk_str, CRYPTO_SECRETKEYBYTES); if(sk==NULL) free(m);
+```
+
+### compact-lwe-open-bad-pos-cleanup
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/encrypt.c` (1 occurrence(s))
+
+crypto_encrypt_open returned -1 when cipher_in_str reported a wrong length, leaking sk (with its mpz fields), m and D. All released first (n of the s entries are cleared, as sk_in_str initialised n).
+
+```diff
+- 			*mlen = 0;
++ 			clearCipher(&D); { int cj, ci; mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(cj=0; cj<F; cj++){ mpz_clear(sk->kInv[cj]); mpz_clear(sk->k[cj]); mpz_clear(sk->ck[cj]); for(ci=0; ci<sk->n; ci++) mpz_clear(sk->s[cj][ci]); } } free(sk); free(m); *mlen = 0;
+```
+
+### compact-lwe-open-clear-sk
+
+Crates: compact-lwe-public-key-enc-r1
+
+File: `upstream/encrypt.c` (1 occurrence(s))
+
+crypto_encrypt_open freed the parsed struct SK without clearing its mpz fields (LeakSanitizer: sk_in_str/mpz_import, mpz_mul_2exp). They are cleared before the free (n of the s entries, as sk_in_str initialised n). The decoded output is already in m1 by then.
+
+```diff
+- 	free(sk);
++ 	{ int cj, ci; mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(cj=0; cj<F; cj++){ mpz_clear(sk->kInv[cj]); mpz_clear(sk->k[cj]); mpz_clear(sk->ck[cj]); for(ci=0; ci<sk->n; ci++) mpz_clear(sk->s[cj][ci]); } } free(sk);
+```
+
+### lanarea-rotate-count-mask
+
+Crates: lanarea-phc
+
+File: `upstream/lanarea.c` (2 occurrence(s))
+
+UBSan: ROL/ROR compute value << (sizeof(value)*8 - (shift % sizeof(value))); when shift % sizeof(value) == 0 (r multiple of 8, reported at lanarea.c:152 and :155) the exponent is 64 (width of size_t), which is undefined behaviour. Masking that complementary count with (width - 1) makes it 0, so the result is (c >> 0) | (c << 0) = c, exactly what x86-64 and AArch64 (count taken mod width) and wasm produced; for nonzero r the mask is a no-op. The author's byte-vs-bit modulus is kept as is, so output is unchanged.
+
+```diff
+- (sizeof(value) * 8 - (shift % sizeof(value)))
++ ((sizeof(value) * 8 - (shift % sizeof(value))) & (sizeof(value) * 8 - 1))
+```
+
+### turtle-vla-nonzero-L
+
+Crates: tortuga-phc
+
+File: `upstream/turtle.c` (1 occurrence(s))
+
+UBSan: turtle.c:35 `unsigned char L[sz >> 1]` is a variable length array whose bound is 0 when sz == 1 (the leaf case sz == w == 1, which returns before L is used); a zero-size VLA is undefined behaviour. The bound becomes at least 1. For sz >= 2 (the only case where L is read or written) sz >> 1 >= 1, so sizeof(L), R, tmp and every memcpy/xor length are unchanged and output is identical.
+
+```diff
+- 	unsigned char L[sz >> 1];
++ 	unsigned char L[(sz >> 1) ? (sz >> 1) : 1];
+```
+
+### turtle-vla-nonzero-R
+
+Crates: tortuga-phc
+
+File: `upstream/turtle.c` (1 occurrence(s))
+
+UBSan: with L padded to size 1 for sz == 1 (see turtle-vla-nonzero-L), `R[sz - sizeof(L)]` would become a zero-size VLA (and tmp[sizeof(R)] with it); the bound is kept at least 1 as well. For sz >= 2, sz - sizeof(L) = sz - sz/2 >= 1, so R, tmp and all lengths are unchanged; the sz == 1 case returns before R/tmp are used. Output is identical.
+
+```diff
+- 	unsigned char R[sz - sizeof(L)];
++ 	unsigned char R[(sz - sizeof(L)) ? (sz - sizeof(L)) : 1];
+```
+
+### turtle-inplace-tmp-nonzero
+
+Crates: tortuga-phc
+
+File: `upstream/turtle.c` (1 occurrence(s))
+
+Same pattern as the other turtle.c VLAs: turtle_inplace's `unsigned char tmp[sz]` is a zero-size VLA (undefined behaviour) if sz == 0, which the tests may not reach. The bound is kept at least 1; for sz >= 1 it is unchanged, and tmp is only used through turtle(tmp, X, sz, ...) and memcpy of sz bytes, so output is identical.
+
+```diff
+- 	unsigned char tmp[sz];
++ 	unsigned char tmp[sz ? sz : 1];
+```
+
 ### xkcp-no-misaligned-accesses
 
 Crates: aimer-l1-param1-r1, aimer-l1-param2-r1, aimer-l1-param3-r1
@@ -708,6 +3490,32 @@ File: `upstream/*/sha3/KeccakP-1600-SnP.h` (1 occurrence(s))
 ```diff
 - #define KeccakP1600_12rounds_FastLoop_supported
 + /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
+```
+
+### hawk-no-unaligned-access
+
+Crates: hawk1024-r1, hawk1024-r2, hawk512-r1, hawk512-r2
+
+File: `upstream/*/hawk_inner.h` (1 occurrence(s))
+
+HAWK_UNALIGNED=1 on x86-64/aarch64 makes dec16le/dec32le/dec64le/enc*le (and the 64-bit XOR helpers in hawk_sign.c) dereference uint16/32/64 pointers into byte buffers at arbitrary offsets: UBSan "load of misaligned address for type const uint32_t" (hawk_inner.h:162 via decode_gr in hawk_vrfy.c). Upstream's own configuration switch HAWK_UNALIGNED=0 selects the byte-wise little-endian code, which computes the same values; output is unchanged.
+
+```diff
+- #define HAWK_UNALIGNED   1
++ #define HAWK_UNALIGNED   0
+```
+
+### hawk-ntrugen-no-unaligned-access
+
+Crates: hawk1024-r1, hawk1024-r2, hawk512-r1, hawk512-r2
+
+File: `upstream/*/ng_inner.h` (1 occurrence(s))
+
+Same as hawk-no-unaligned-access for the NTRUGEN_UNALIGNED switch in ng_inner.h (same dec/enc helpers for key generation); NTRUGEN_UNALIGNED=0 is upstream's byte-wise path with identical results.
+
+```diff
+- #define NTRUGEN_UNALIGNED   1
++ #define NTRUGEN_UNALIGNED   0
 ```
 
 ### mayo-shake256-return-type
@@ -1074,6 +3882,253 @@ File: `upstream/*/lib/XKCP/KeccakP-1600-SnP.h` (1 occurrence(s))
 + /* nextssl: KeccakP1600_12rounds_FastLoop_supported off, see docs/UPSTREAM_CHANGES.md */
 ```
 
+### qtesla-poly-unaligned-load-1
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2, qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/poly.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- val1  = (*(uint32_t*)(buf+pos)) & mask;
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; val1 = qt_ & mask; }
+```
+
+### qtesla-poly-unaligned-load-2
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2, qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/poly.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- val2  = (*(uint32_t*)(buf+pos)) & mask;
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; val2 = qt_ & mask; }
+```
+
+### qtesla-poly-unaligned-load-3
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2, qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/poly.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- val3  = (*(uint32_t*)(buf+pos)) & mask;
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; val3 = qt_ & mask; }
+```
+
+### qtesla-poly-unaligned-load-4
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2, qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/poly.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- val4  = (*(uint32_t*)(buf+pos)) & mask;
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; val4 = qt_ & mask; }
+```
+
+### qtesla-sample-unaligned-load-1
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- y_t[0]  = (*(uint32_t*)(buf+pos))          & ((1<<(PARAM_B_BITS+1))-1);
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; y_t[0] = qt_ & ((1<<(PARAM_B_BITS+1))-1); }
+```
+
+### qtesla-sample-unaligned-load-2
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- y_t[1]  = (*(uint32_t*)(buf+pos+nbytes))   & ((1<<(PARAM_B_BITS+1))-1);
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos+nbytes); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; y_t[1] = qt_ & ((1<<(PARAM_B_BITS+1))-1); }
+```
+
+### qtesla-sample-unaligned-load-3
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- y_t[2]  = (*(uint32_t*)(buf+pos+2*nbytes)) & ((1<<(PARAM_B_BITS+1))-1);
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos+2*nbytes); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; y_t[2] = qt_ & ((1<<(PARAM_B_BITS+1))-1); }
+```
+
+### qtesla-sample-unaligned-load-4
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- y_t[3]  = (*(uint32_t*)(buf+pos+3*nbytes)) & ((1<<(PARAM_B_BITS+1))-1);
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos+3*nbytes); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; y_t[3] = qt_ & ((1<<(PARAM_B_BITS+1))-1); }
+```
+
+### qtesla-aligned-wrapper-keypair
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2, qtesla1, qtesla128, qtesla192, qtesla1p, qtesla256, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/sign.c` (1 occurrence(s))
+
+Rust passes pk, sk and sm slices at any byte offset, but pack/unpack code in sign.c (and pack.c) reads and writes them through uint32_t*, int16_t*, int32_t* casts: misaligned access, undefined behaviour (UBSan: load/store of misaligned address). The patch renames the upstream function to a static qt_wrap_*_impl and defines the public one in front of it with the same signature: it runs the unchanged function on 8-byte aligned buffers (uint64_t arrays; sm via malloc) and copies the bytes in and out, so the algorithm sees identical bytes and outputs identical bytes. The aligned secret-key copy is zeroized on every exit path; an allocation failure or length overflow returns -1.
+
+```diff
+- int crypto_sign_keypair(unsigned char *pk, unsigned char *sk)
++ static int qt_wrap_keypair_impl(unsigned char *pk, unsigned char *sk); int crypto_sign_keypair(unsigned char *pk, unsigned char *sk) { uint64_t pkw[(CRYPTO_PUBLICKEYBYTES+7)/8]; uint64_t skw[(CRYPTO_SECRETKEYBYTES+7)/8]; int r; r = qt_wrap_keypair_impl((unsigned char *)pkw, (unsigned char *)skw); memcpy(pk, pkw, CRYPTO_PUBLICKEYBYTES); memcpy(sk, skw, CRYPTO_SECRETKEYBYTES); { volatile unsigned char *qz_ = (volatile unsigned char *)skw; size_t qi_; for (qi_ = 0; qi_ < sizeof skw; qi_++) qz_[qi_] = 0; } return r; } static int qt_wrap_keypair_impl(unsigned char *pk, unsigned char *sk)
+```
+
+### qtesla-aligned-wrapper-sign
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2, qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/sign.c` (1 occurrence(s))
+
+Rust passes pk, sk and sm slices at any byte offset, but pack/unpack code in sign.c (and pack.c) reads and writes them through uint32_t*, int16_t*, int32_t* casts: misaligned access, undefined behaviour (UBSan: load/store of misaligned address). The patch renames the upstream function to a static qt_wrap_*_impl and defines the public one in front of it with the same signature: it runs the unchanged function on 8-byte aligned buffers (uint64_t arrays; sm via malloc) and copies the bytes in and out, so the algorithm sees identical bytes and outputs identical bytes. The aligned secret-key copy is zeroized on every exit path; an allocation failure or length overflow returns -1.
+
+```diff
+- int crypto_sign(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk)
++ static int qt_wrap_sign_impl(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk); int crypto_sign(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk) { uint64_t skw[(CRYPTO_SECRETKEYBYTES+7)/8]; unsigned long long cap = mlen + CRYPTO_BYTES; uint64_t *smw; int r; if (cap < mlen || cap > (unsigned long long)((size_t)-1) - 16) return -1; smw = (uint64_t *)malloc((size_t)((cap + 7) / 8 + 1) * 8); if (smw == NULL) return -1; memcpy(skw, sk, CRYPTO_SECRETKEYBYTES); r = qt_wrap_sign_impl((unsigned char *)smw, smlen, m, mlen, (const unsigned char *)skw); if (r == 0) { if (*smlen > cap) r = -1; else memcpy(sm, smw, (size_t)*smlen); } free(smw); { volatile unsigned char *qz_ = (volatile unsigned char *)skw; size_t qi_; for (qi_ = 0; qi_ < sizeof skw; qi_++) qz_[qi_] = 0; } return r; } static int qt_wrap_sign_impl(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk)
+```
+
+### qtesla-aligned-wrapper-open
+
+Crates: qtesla-i-r2, qtesla-i-s-r2, qtesla-iii-r2, qtesla-iii-s-r2, qtesla-v-r2, qtesla-v-s-r2, qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/sign.c` (1 occurrence(s))
+
+Rust passes pk, sk and sm slices at any byte offset, but pack/unpack code in sign.c (and pack.c) reads and writes them through uint32_t*, int16_t*, int32_t* casts: misaligned access, undefined behaviour (UBSan: load/store of misaligned address). The patch renames the upstream function to a static qt_wrap_*_impl and defines the public one in front of it with the same signature: it runs the unchanged function on 8-byte aligned buffers (uint64_t arrays; sm via malloc) and copies the bytes in and out, so the algorithm sees identical bytes and outputs identical bytes. The aligned secret-key copy is zeroized on every exit path; an allocation failure or length overflow returns -1.
+
+```diff
+- int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk)
++ static int qt_wrap_open_impl(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk); int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk) { uint64_t pkw[(CRYPTO_PUBLICKEYBYTES+7)/8]; uint64_t *smw; int r; if (smlen > (unsigned long long)((size_t)-1) - 16) return -1; smw = (uint64_t *)malloc((size_t)((smlen + 7) / 8 + 1) * 8); if (smw == NULL) return -1; if (smlen != 0) memcpy(smw, sm, (size_t)smlen); memcpy(pkw, pk, CRYPTO_PUBLICKEYBYTES); r = qt_wrap_open_impl(m, mlen, (const unsigned char *)smw, smlen, (const unsigned char *)pkw); free(smw); return r; } static int qt_wrap_open_impl(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk)
+```
+
+### qtesla-sample-unaligned-load-1
+
+Crates: qtesla128, qtesla192, qtesla256
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- val  = (*(uint32_t *)(buf+pos)) &((1<<PARAM_B_BITS)-1);
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; val = qt_ &((1<<PARAM_B_BITS)-1); }
+```
+
+### qtesla-aligned-wrapper-sign
+
+Crates: qtesla128, qtesla192, qtesla256
+
+File: `upstream/*/sign.c` (1 occurrence(s))
+
+Rust passes pk, sk and sm slices at any byte offset, but pack/unpack code in sign.c (and pack.c) reads and writes them through uint32_t*, int16_t*, int32_t* casts: misaligned access, undefined behaviour (UBSan: load/store of misaligned address). The patch renames the upstream function to a static qt_wrap_*_impl and defines the public one in front of it with the same signature: it runs the unchanged function on 8-byte aligned buffers (uint64_t arrays; sm via malloc) and copies the bytes in and out, so the algorithm sees identical bytes and outputs identical bytes. The aligned secret-key copy is zeroized on every exit path; an allocation failure or length overflow returns -1.
+
+```diff
+- int crypto_sign(unsigned char *sm,
++ static int qt_wrap_sign_impl(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk); int crypto_sign(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk) { uint64_t skw[(CRYPTO_SECRETKEYBYTES+7)/8]; unsigned long long cap = mlen + CRYPTO_BYTES; uint64_t *smw; int r; if (cap < mlen || cap > (unsigned long long)((size_t)-1) - 16) return -1; smw = (uint64_t *)malloc((size_t)((cap + 7) / 8 + 1) * 8); if (smw == NULL) return -1; memcpy(skw, sk, CRYPTO_SECRETKEYBYTES); r = qt_wrap_sign_impl((unsigned char *)smw, smlen, m, mlen, (const unsigned char *)skw); if (r == 0) { if (*smlen > cap) r = -1; else memcpy(sm, smw, (size_t)*smlen); } free(smw); { volatile unsigned char *qz_ = (volatile unsigned char *)skw; size_t qi_; for (qi_ = 0; qi_ < sizeof skw; qi_++) qz_[qi_] = 0; } return r; } static int qt_wrap_sign_impl(unsigned char *sm,
+```
+
+### qtesla-aligned-wrapper-open
+
+Crates: qtesla128, qtesla192, qtesla256
+
+File: `upstream/*/sign.c` (1 occurrence(s))
+
+Rust passes pk, sk and sm slices at any byte offset, but pack/unpack code in sign.c (and pack.c) reads and writes them through uint32_t*, int16_t*, int32_t* casts: misaligned access, undefined behaviour (UBSan: load/store of misaligned address). The patch renames the upstream function to a static qt_wrap_*_impl and defines the public one in front of it with the same signature: it runs the unchanged function on 8-byte aligned buffers (uint64_t arrays; sm via malloc) and copies the bytes in and out, so the algorithm sees identical bytes and outputs identical bytes. The aligned secret-key copy is zeroized on every exit path; an allocation failure or length overflow returns -1.
+
+```diff
+- int crypto_sign_open(unsigned char *m,
++ static int qt_wrap_open_impl(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk); int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk) { uint64_t pkw[(CRYPTO_PUBLICKEYBYTES+7)/8]; uint64_t *smw; int r; if (smlen > (unsigned long long)((size_t)-1) - 16) return -1; smw = (uint64_t *)malloc((size_t)((smlen + 7) / 8 + 1) * 8); if (smw == NULL) return -1; if (smlen != 0) memcpy(smw, sm, (size_t)smlen); memcpy(pkw, pk, CRYPTO_PUBLICKEYBYTES); r = qt_wrap_open_impl(m, mlen, (const unsigned char *)smw, smlen, (const unsigned char *)pkw); free(smw); return r; } static int qt_wrap_open_impl(unsigned char *m,
+```
+
+### qtesla-gauss-aligned-seed-buffer
+
+Crates: qtesla128, qtesla192, qtesla256
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+seed_ex is an unsigned char stack array that is reinterpreted as int64_t* (buf): not guaranteed 8-byte aligned (UB, misaligned load). The patch declares the storage as an int64_t array and keeps seed_ex as a byte pointer to it; sizes and contents are unchanged.
+
+```diff
+- unsigned char seed_ex[PARAM_N*16];
++ int64_t seed_ex_w_[PARAM_N*2]; unsigned char *seed_ex = (unsigned char *)seed_ex_w_;
+```
+
+### qtesla-sample-unaligned-load-1
+
+Crates: qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour. The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced) and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+
+```diff
+- y[i]  = (*(uint32_t*)(buf+pos)) & ((1<<(PARAM_B_BITS+1))-1);
++ { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; y[i] = qt_ & ((1<<(PARAM_B_BITS+1))-1); }
+```
+
+### qtesla-gauss-skip-shift-by-64
+
+Crates: qtesla1, qtesla1p, qtesla3p, qtesla3s
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'shift exponent 64 is too large for 64-bit type int64_t' (CI run 45610244076): 'rbits <<= (64-bitsremained)' runs with bitsremained == 0, i.e. a shift by 64. x86-64 masks the count to 0 (rbits unchanged), AArch64 gives 0. In both cases the result is dead: the very next statement is 'if (bitsremained==0LL) { rbits = buf[j++]; bitsremained=64; }', which overwrites rbits before any use. bitsremained is never above 64 or negative here (refill sets 64, the 6-bit top-up is guarded by <= 58). The patch skips the shift when bitsremained == 0; for every other value the shift is the identical expression.
+
+```diff
+- rbits <<=(64-bitsremained);
++ if (bitsremained != 0) rbits <<= (64-bitsremained);
+```
+
+### qtesla-gauss-aligned-seed-buffer
+
+Crates: qtesla1, qtesla1p, qtesla3f, qtesla3p, qtesla3s
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+seed_ex is an unsigned char stack array that is reinterpreted as int64_t* (buf): not guaranteed 8-byte aligned (UB, misaligned load). The patch declares the storage as an int64_t array and keeps seed_ex as a byte pointer to it; sizes and contents are unchanged.
+
+```diff
+- unsigned char seed_ex[PARAM_N*8];
++ int64_t seed_ex_w_[PARAM_N*1]; unsigned char *seed_ex = (unsigned char *)seed_ex_w_;
+```
+
+### qtesla-gauss-skip-shift-by-64
+
+Crates: qtesla3f
+
+File: `upstream/*/sample.c` (1 occurrence(s))
+
+UBSan 'shift exponent 64 is too large for 64-bit type int64_t' (CI run 45610244076): 'rbits <<= (64-bitsremained)' runs with bitsremained == 0, i.e. a shift by 64. x86-64 masks the count to 0 (rbits unchanged), AArch64 gives 0. In both cases the result is dead: the very next statement is 'if (bitsremained==0LL) { rbits = buf[j++]; bitsremained=64; }', which overwrites rbits before any use. bitsremained is never above 64 or negative here (refill sets 64, the 6-bit top-up is guarded by <= 58). The patch skips the shift when bitsremained == 0; for every other value the shift is the identical expression.
+
+```diff
+- rbits <<= (64-bitsremained);
++ if (bitsremained != 0) rbits <<= (64-bitsremained);
+```
+
 ### ryde-mat-fq-word-size
 
 Crates: ryde1f-r2, ryde1s-r2
@@ -1269,6 +4324,71 @@ ryde_*_tcith_phi stores i + 1 in a size_t array of M_WORDS elements and reads it
 +     uint64_t i_cast[RYDE_5S_PARAM_M_WORDS] = {0};
 ```
 
+### sdith-ggm-kappabit-memcpy-helpers
+
+Crates: sdith-l1-gf2-fast, sdith-l1-gf2-fast-cipherpow, sdith-l1-gf2-short, sdith-l1-gf2-short-cipherpow, sdith-l3-gf2-fast, sdith-l3-gf2-fast-cipherpow, sdith-l3-gf2-short, sdith-l3-gf2-short-cipherpow, sdith-l5-gf2-fast, sdith-l5-gf2-fast-cipherpow, sdith-l5-gf2-short, sdith-l5-gf2-short-cipherpow
+
+File: `upstream/*/sig/sdith/sdith_sdith_common/ggm.c` (1 occurrence(s))
+
+extract_kappabit_uint_inline / xorto_kappabit_uint_inline index a byte buffer (delta0_and_vgrind, delta1, ...) through a uint64_t *, but callers pass buffers that are not 8-byte aligned, so data[limb_pos] and data[limb_pos + 1] are misaligned 64-bit loads/stores (UBSan, ggm.c:123 and 125, via extract_kappabit_uint from sdith_prng.c). The patch accesses the same 8-byte limbs with memcpy (ns_sdith_ld64 / ns_sdith_xor64, native byte order exactly like the original load/store), so the values read and written are identical.
+
+```diff
+- SDITH_ALWAYS_INLINE uint32_t extract_kappabit_uint_inline(uint64_t kappa, uint64_t bitpos, const uint64_t* data) {
++ static uint64_t ns_sdith_ld64(const uint64_t* p, uint64_t i) { uint64_t v; memcpy(&v, (const unsigned char*)p + i * 8, 8); return v; } static void ns_sdith_xor64(uint64_t* p, uint64_t i, uint64_t v) { uint64_t t; unsigned char* q = (unsigned char*)p + i * 8; memcpy(&t, q, 8); t ^= v; memcpy(q, &t, 8); } SDITH_ALWAYS_INLINE uint32_t extract_kappabit_uint_inline(uint64_t kappa, uint64_t bitpos, const uint64_t* data) {
+```
+
+### sdith-ggm-extract-fast
+
+Crates: sdith-l1-gf2-fast, sdith-l1-gf2-fast-cipherpow, sdith-l1-gf2-short, sdith-l1-gf2-short-cipherpow, sdith-l3-gf2-fast, sdith-l3-gf2-fast-cipherpow, sdith-l3-gf2-short, sdith-l3-gf2-short-cipherpow, sdith-l5-gf2-fast, sdith-l5-gf2-fast-cipherpow, sdith-l5-gf2-short, sdith-l5-gf2-short-cipherpow
+
+File: `upstream/*/sig/sdith/sdith_sdith_common/ggm.c` (1 occurrence(s))
+
+use the memcpy helpers instead of misaligned uint64_t accesses (see sdith-ggm-kappabit-memcpy-helpers).
+
+```diff
+-     return (data[limb_pos] >> limb_rem) & kappa_mask;
++     return (ns_sdith_ld64(data, limb_pos) >> limb_rem) & kappa_mask;
+```
+
+### sdith-ggm-extract-span
+
+Crates: sdith-l1-gf2-fast, sdith-l1-gf2-fast-cipherpow, sdith-l1-gf2-short, sdith-l1-gf2-short-cipherpow, sdith-l3-gf2-fast, sdith-l3-gf2-fast-cipherpow, sdith-l3-gf2-short, sdith-l3-gf2-short-cipherpow, sdith-l5-gf2-fast, sdith-l5-gf2-fast-cipherpow, sdith-l5-gf2-short, sdith-l5-gf2-short-cipherpow
+
+File: `upstream/*/sig/sdith/sdith_sdith_common/ggm.c` (1 occurrence(s))
+
+use the memcpy helpers instead of misaligned uint64_t accesses (see sdith-ggm-kappabit-memcpy-helpers).
+
+```diff
+-     return ((data[limb_pos] >> limb_rem) | (data[limb_pos + 1] << (64 - limb_rem))) & kappa_mask;
++     return ((ns_sdith_ld64(data, limb_pos) >> limb_rem) | (ns_sdith_ld64(data, limb_pos + 1) << (64 - limb_rem))) & kappa_mask;
+```
+
+### sdith-ggm-xor-low
+
+Crates: sdith-l1-gf2-fast, sdith-l1-gf2-fast-cipherpow, sdith-l1-gf2-short, sdith-l1-gf2-short-cipherpow, sdith-l3-gf2-fast, sdith-l3-gf2-fast-cipherpow, sdith-l3-gf2-short, sdith-l3-gf2-short-cipherpow, sdith-l5-gf2-fast, sdith-l5-gf2-fast-cipherpow, sdith-l5-gf2-short, sdith-l5-gf2-short-cipherpow
+
+File: `upstream/*/sig/sdith/sdith_sdith_common/ggm.c` (2 occurrence(s))
+
+use the memcpy helpers instead of misaligned uint64_t accesses (see sdith-ggm-kappabit-memcpy-helpers).
+
+```diff
+-     data[limb_pos] ^= value << limb_rem;
++     ns_sdith_xor64(data, limb_pos, value << limb_rem);
+```
+
+### sdith-ggm-xor-high
+
+Crates: sdith-l1-gf2-fast, sdith-l1-gf2-fast-cipherpow, sdith-l1-gf2-short, sdith-l1-gf2-short-cipherpow, sdith-l3-gf2-fast, sdith-l3-gf2-fast-cipherpow, sdith-l3-gf2-short, sdith-l3-gf2-short-cipherpow, sdith-l5-gf2-fast, sdith-l5-gf2-fast-cipherpow, sdith-l5-gf2-short, sdith-l5-gf2-short-cipherpow
+
+File: `upstream/*/sig/sdith/sdith_sdith_common/ggm.c` (1 occurrence(s))
+
+use the memcpy helpers instead of misaligned uint64_t accesses (see sdith-ggm-kappabit-memcpy-helpers).
+
+```diff
+-     data[limb_pos + 1] ^= value >> (64 - limb_rem);
++     ns_sdith_xor64(data, limb_pos + 1, value >> (64 - limb_rem));
+```
+
 ### sphincs-r1-haraka-bitmask-size
 
 Crates: sphincs-haraka-128f-r1
@@ -1386,6 +4506,19 @@ The upstream builds 64-bit masks with `1UL << n` on 64-bit words (wave_word is u
 + 1ULL <<
 ```
 
+### wave-vf2-vector-1t0-shift-in-range
+
+Crates: wave1249-r1, wave1644-r1, wave822-r1
+
+File: `upstream/*/fq_arithmetic/vf2.c` (1 occurrence(s))
+
+vf2_vector_1t0 evaluates 0xFFFF...F >> (wl - t) for every word, also when t <= 0 (shift >= wl, or negative after t -= wl) and t >= wl (shift <= 0, negative): UBSan "shift exponent -696 is negative" (vf2.c:80). The term is multiplied by ((t > 0) & (t < wl)), which is 0 in exactly those cases, so the shifted value is never used. The patch evaluates the shift only when 0 < t < wl (shift 1..wl-1) and uses 0 otherwise; the word value is identical.
+
+```diff
+-               ((t > 0) & (t < wl)) * (0xFFFFFFFFFFFFFFFF >> (wl - t));
++               ((t > 0) & (t < wl)) * (0xFFFFFFFFFFFFFFFF >> ((t > 0 && t < wl) ? (wl - t) : 0));
+```
+
 ## 2. Build-time rewrites in build.rs (8 distinct, 64 crates)
 
 ### `portable_copy` in 1 crate(s)
@@ -1470,7 +4603,7 @@ Crates: xmss-sha2-10-192, xmss-sha2-10-256, xmss-sha2-10-512, xmss-shake-10-256,
 
 Targets with a 32-bit C `long` (Windows, wasm32, other 32-bit) only: xmss_core.c reads the signing index with `idx = (unsigned long)bytes_to_ull(...)` into an `unsigned long long`. With a 32-bit `long` the cast drops the high bits, so an index >= 2^32 (total height 40/60) would sign with a reused one-time key, and an exhausted key (index set to all ones) would sign again. The compiled copy (OUT_DIR) casts to `unsigned long long`, the value the code means on LP64; LP64 targets compile the verbatim file.
 
-## 3. Compatibility files (124 distinct files, 102 names)
+## 3. Compatibility files (125 distinct files, 102 names)
 
 | file | variants | crates | purpose (first comment) |
 |---|---|---|---|
@@ -1539,7 +4672,7 @@ Targets with a 32-bit C `long` (Windows, wasm32, other 32-bit) only: xmss_core.c
 | `ns_pre.h` | 2 | 48 | NextSSL compat header (not upstream code), force-included into every libecc source. |
 | `ns_xkcp_plain64.c` | 1 | 98 | NextSSL compat TU (not upstream code): selects the plain-C XKCP symbol names, then includes the verbatim upstream file. |
 | `ns_xkcp_sha3.c` | 1 | 98 | NextSSL compat TU (not upstream code): selects the plain-C XKCP symbol names, then includes the verbatim upstream file. |
-| `ns_xkcp_sha3x4.c` | 1 | 98 | NextSSL compat TU (not upstream code): selects the plain-C XKCP symbol names, then includes the verbatim upstream file. |
+| `ns_xkcp_sha3x4.c` | 2 | 98 | NextSSL compat TU (not upstream code): selects the plain-C XKCP symbol names, then includes the verbatim upstream file. |
 | `ns_xkcp_times4.c` | 1 | 98 | NextSSL compat TU (not upstream code): selects the plain-C XKCP symbol names, then includes the verbatim upstream file. |
 | `omp.h` | 1 | 1 | NextSSL compat stub (not upstream). Lyra2.c includes <omp.h> unconditionally, but with |
 | `openssl/crypto.h` | 1 | 6 | NextSSL compat header (not upstream code): gost89.c includes <openssl/crypto.h> only for OPENSSL_cleanse. |

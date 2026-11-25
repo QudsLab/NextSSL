@@ -487,6 +487,9 @@ fn rng_and_pake_sessions() {
     assert_eq!(rc, NEXTSSL_ERR_WRONG_KIND);
 }
 
+// Catching a panic at the ABI boundary needs unwinding; with panic = "abort" (the wasm32 targets) a
+// panic ends the process instead, so there is nothing to catch and this test cannot run there.
+#[cfg(panic = "unwind")]
 #[test]
 fn panics_do_not_cross_the_abi() {
     let mut buf = [0u8; 4];

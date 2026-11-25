@@ -1,8 +1,10 @@
 //! Adapter: NIST `giophantus IEC602 round 1 (encrypt/IEC602)` (verbatim C, symbols renamed `nextssl__giophantus_iec602_pke_r1__*`) -> nextssl `Pke`.
 //! Generated wiring, no crypto logic. UNTESTED (not yet run). Randomness comes only from the caller's
-//! EntropySource. NIST crypto_encrypt contract: clen <= mlen + CRYPTO_BYTES (the NIST KAT generator sizes
-//! its buffer that way); plaintexts are capped at PT_MAX (the generator's maximum message length) and the
-//! label must be empty (the scheme has no label input), a non-empty label is an error, never ignored.
+//! EntropySource. IEC602 encrypts a fixed MLEN = 16-byte message into a fixed C_SIZE = 28824-byte
+//! ciphertext: crypto_encrypt copies exactly 16 bytes whatever msglen says and crypto_encrypt_open reads
+//! exactly C_SIZE bytes whatever ciplen says, so both lengths are checked here and any other length is an
+//! error (the authors' KATs use these sizes). The label must be empty (the scheme has no label input), a
+//! non-empty label is an error, never ignored.
 //! Every decryption failure is the one `AuthenticationFailed`.
 
 use nextssl_core::{
@@ -11,8 +13,8 @@ use nextssl_core::{
 
 const PK: usize = 14412;
 const SK: usize = 15014;
-const OVER: usize = 28824;
-const PT_MAX: usize = 3300;
+const CT: usize = 28824;
+const PT: usize = 16;
 
 mod ffi {
     #![allow(unsafe_code)]
@@ -102,8 +104,8 @@ impl Pke for P {
         Sizes {
             pk: Some(Len::fixed(PK)),
             sk: Some(Len::fixed(SK)),
-            ct: Some(Len::range(1, PT_MAX + OVER)),
-            out: Some(Len::range(0, PT_MAX)),
+            ct: Some(Len::fixed(CT)),
+            out: Some(Len::fixed(PT)),
             ctx: Some(Len::fixed(0)),
             ..Sizes::NONE
         }
@@ -139,13 +141,13 @@ impl Pke for P {
         if pk.len() != PK {
             return Err(len_err("pk", pk.len(), PK, PK));
         }
-        if pt.len() > PT_MAX {
-            return Err(len_err("plaintext", pt.len(), 0, PT_MAX));
+        if pt.len() != PT {
+            return Err(len_err("plaintext", pt.len(), PT, PT));
         }
-        let mut ct = vec![0u8; pt.len() + OVER];
+        let mut ct = vec![0u8; CT];
         let mut clen: core::ffi::c_ulonglong = 0;
-        // SAFETY: ct has room for plaintext + CRYPTO_BYTES (the NIST bound on what the callee writes);
-        // pt/pk are valid for their lengths (pk length checked above).
+        // SAFETY: ct is valid for CT = C_SIZE bytes, exactly what the callee writes; pt is valid for the
+        // MLEN = PT bytes the callee reads and pk for PK bytes (both lengths checked above).
         #[allow(unsafe_code)]
         let rc = with_rng(rng, || unsafe {
             ffi::encrypt(
@@ -157,7 +159,7 @@ impl Pke for P {
             )
         })?;
         let clen = clen as usize;
-        if rc != 0 || clen == 0 || clen > ct.len() {
+        if rc != 0 || clen != CT {
             return Err(Error::Backend("encryption failed"));
         }
         ct.truncate(clen);
@@ -171,14 +173,13 @@ impl Pke for P {
         if sk.len() != SK {
             return Err(len_err("sk", sk.len(), SK, SK));
         }
-        if ct.is_empty() || ct.len() > PT_MAX + OVER {
-            return Err(len_err("ciphertext", ct.len(), 1, PT_MAX + OVER));
+        if ct.len() != CT {
+            return Err(len_err("ciphertext", ct.len(), CT, CT));
         }
-        // The plaintext is never longer than the ciphertext in the NIST layout.
-        let mut m = Zeroizing::new(vec![0u8; ct.len()]);
+        let mut m = Zeroizing::new(vec![0u8; PT]);
         let mut mlen: core::ffi::c_ulonglong = 0;
-        // SAFETY: m is valid for ct.len() bytes (the plaintext cannot exceed the ciphertext); ct/sk are valid
-        // for their lengths (sk length checked above).
+        // SAFETY: m is valid for the MLEN = PT bytes the callee writes; ct is valid for the CT = C_SIZE bytes
+        // it reads and sk for SK bytes (both lengths checked above).
         #[allow(unsafe_code)]
         let rc = unsafe {
             ffi::decrypt(
@@ -190,7 +191,7 @@ impl Pke for P {
             )
         };
         let mlen = mlen as usize;
-        if rc != 0 || mlen > m.len() {
+        if rc != 0 || mlen != PT {
             return Err(Error::AuthenticationFailed);
         }
         m.truncate(mlen);
@@ -225,9 +226,17 @@ mod tests {
         let ct = p.encrypt(&pk, &[0x42u8; 16], b"", &mut rng).unwrap();
         assert_eq!(&p.decrypt(&sk, &ct, b"").unwrap()[..], &[0x42u8; 16][..]);
         assert!(p.encrypt(&pk, &[1u8; 16], b"label", &mut rng).is_err());
-        assert!(p
-            .encrypt(&pk, &vec![1u8; PT_MAX + 1], b"", &mut rng)
-            .is_err());
+        // Upstream copies exactly 16 message bytes and reads exactly C_SIZE ciphertext bytes, so any other
+        // length must be refused before the C code runs (a short buffer would be over-read).
+        assert!(p.encrypt(&pk, &[1u8; PT - 1], b"", &mut rng).is_err());
+        assert!(p.encrypt(&pk, &[1u8; PT + 1], b"", &mut rng).is_err());
         assert!(p.decrypt(&sk, &[0u8; 3], b"").is_err());
+        assert!(p.decrypt(&sk, &ct[..CT - 1], b"").is_err());
+        let mut long = ct.clone();
+        long.push(0);
+        assert!(p.decrypt(&sk, &long, b"").is_err());
+        let mut bad = ct.clone();
+        bad[0] ^= 1;
+        assert!(p.decrypt(&sk, &bad, b"").is_err());
     }
 }

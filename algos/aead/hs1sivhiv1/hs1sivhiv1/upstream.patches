@@ -1,0 +1,42 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: hs1-siv-hi-read32le
+why: read32le/read64le/write32le/write64le dereference uint32_t/uint64_t pointers that callers build by casting byte pointers (input, output,
+why: key and buffer offsets such as buf+buflen-16), a misaligned typed access (UBSan "load of misaligned address", CI run 45610244076).
+why: The patch moves the bytes with memcpy to or from a local of the same type; the byte order logic (le() ? w : swapNN(w)) is unchanged, so output is identical.
+why: The four helpers take void pointers: with a uint32_t*/uint64_t* parameter clang still assumes (and UBSan checks) the
+why: alignment of the memcpy source/destination (Docker ASan run, encrypt.c:120). Callers pass the same addresses.
+file: upstream/ref/encrypt.c
+count: 1
+find: static uint32_t read32le(uint32_t *p) { return (le()?*p:swap32(*p)); }
+replace: static uint32_t read32le(const void *p) { uint32_t v; memcpy(&v, p, 4); return (le()?v:swap32(v)); }
+patch: hs1-siv-hi-read64le
+why: read32le/read64le/write32le/write64le dereference uint32_t/uint64_t pointers that callers build by casting byte pointers (input, output,
+why: key and buffer offsets such as buf+buflen-16), a misaligned typed access (UBSan "load of misaligned address", CI run 45610244076).
+why: The patch moves the bytes with memcpy to or from a local of the same type; the byte order logic (le() ? w : swapNN(w)) is unchanged, so output is identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: static uint64_t read64le(uint64_t *p) { return (le()?*p:swap64(*p)); }
+replace: static uint64_t read64le(const void *p) { uint64_t v; memcpy(&v, p, 8); return (le()?v:swap64(v)); }
+patch: hs1-siv-hi-write32le
+why: read32le/read64le/write32le/write64le dereference uint32_t/uint64_t pointers that callers build by casting byte pointers (input, output,
+why: key and buffer offsets such as buf+buflen-16), a misaligned typed access (UBSan "load of misaligned address", CI run 45610244076).
+why: The patch moves the bytes with memcpy to or from a local of the same type; the byte order logic (le() ? w : swapNN(w)) is unchanged, so output is identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: static void write32le(uint32_t *p, uint32_t w) { *p = (le()?w:swap32(w)); }
+replace: static void write32le(void *p, uint32_t w) { uint32_t v = (le()?w:swap32(w)); memcpy(p, &v, 4); }
+patch: hs1-siv-hi-write64le
+why: read32le/read64le/write32le/write64le dereference uint32_t/uint64_t pointers that callers build by casting byte pointers (input, output,
+why: key and buffer offsets such as buf+buflen-16), a misaligned typed access (UBSan "load of misaligned address", CI run 45610244076).
+why: The patch moves the bytes with memcpy to or from a local of the same type; the byte order logic (le() ? w : swapNN(w)) is unchanged, so output is identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: static void write64le(uint64_t *p, uint64_t w) { *p = (le()?w:swap64(w)); }
+replace: static void write64le(void *p, uint64_t w) { uint64_t v = (le()?w:swap64(w)); memcpy(p, &v, 8); }
+patch: hs1-siv-hi-chacha-key-xor
+why: key is a local unsigned char[32]; ((uint64_t *)key)[i] ^= h[i] is a typed access through a cast of a byte array (no alignment guarantee).
+why: The patch does the same XOR through memcpy to and from a uint64_t local (native order both ways), so the result is identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: for (i=0; i<sizeof(h)/8;i++) ((uint64_t *)key)[i] ^= h[i];
+replace: for (i=0; i<sizeof(h)/8;i++) { uint64_t kw; memcpy(&kw, key + 8 * i, 8); kw ^= h[i]; memcpy(key + 8 * i, &kw, 8); }

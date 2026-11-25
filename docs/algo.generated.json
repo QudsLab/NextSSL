@@ -29858,16 +29858,10 @@
       "fips": false,
       "copyleft": false,
       "sizes": {
-        "out": {
-          "min": 0,
-          "max": 3300
-        },
+        "out": 16,
         "pk": 14412,
         "sk": 15014,
-        "ct": {
-          "min": 1,
-          "max": 32124
-        },
+        "ct": 28824,
         "ctx": 0
       },
       "upstream": {

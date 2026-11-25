@@ -1,0 +1,53 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: enrupt-typed-update-final-wrappers
+why: EnRUPT_Init stores EnRUPTu64_<n> / EnRUPTf64_<n> in hashState.u / .f through casts to iru* / irf*. Those typedefs
+why: take a void * state, the functions take hashState *, so Hash()/Update()/Final() called them through a pointer to an
+why: incorrect function type (UBSan -fsanitize=function, EnRUPT_opt.c:368 columns 143 and 186; a trap on WebAssembly).
+why: The patch adds static wrappers with exactly the iru / irf signature that forward to the real function (casting the
+why: void * back to hashState *) and stores those instead. Same function runs on the same state, so output is unchanged.
+file: upstream/EnRUPT/Optimized_32bit/EnRUPT_opt.c
+count: 1
+find: HashReturn Init (hashState *state, int hashbitlen) { EnRUPT_Init(state) return SUCCESS; }
+replace: static HashReturn ns_EnRUPTu64_256(void *s, const BitSequence *d, const DataLength n) { return EnRUPTu64_256((hashState *)s, d, n); } static HashReturn ns_EnRUPTu64_384(void *s, const BitSequence *d, const DataLength n) { return EnRUPTu64_384((hashState *)s, d, n); } static HashReturn ns_EnRUPTu64_512(void *s, const BitSequence *d, const DataLength n) { return EnRUPTu64_512((hashState *)s, d, n); } static HashReturn ns_EnRUPTf64_224(void *s, BitSequence *h) { return EnRUPTf64_224((hashState *)s, h); } static HashReturn ns_EnRUPTf64_256(void *s, BitSequence *h) { return EnRUPTf64_256((hashState *)s, h); } static HashReturn ns_EnRUPTf64_384(void *s, BitSequence *h) { return EnRUPTf64_384((hashState *)s, h); } static HashReturn ns_EnRUPTf64_512(void *s, BitSequence *h) { return EnRUPTf64_512((hashState *)s, h); } HashReturn Init (hashState *state, int hashbitlen) { EnRUPT_Init(state) return SUCCESS; }
+patch: enrupt-use-update-wrapper-256
+why: store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+file: upstream/EnRUPT/Optimized_32bit/EnRUPT_opt.c
+count: 2
+find: (iru*)&EnRUPTu64_256,
+replace: ns_EnRUPTu64_256,
+patch: enrupt-use-update-wrapper-384
+why: store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+file: upstream/EnRUPT/Optimized_32bit/EnRUPT_opt.c
+count: 1
+find: (iru*)&EnRUPTu64_384,
+replace: ns_EnRUPTu64_384,
+patch: enrupt-use-update-wrapper-512
+why: store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+file: upstream/EnRUPT/Optimized_32bit/EnRUPT_opt.c
+count: 1
+find: (iru*)&EnRUPTu64_512,
+replace: ns_EnRUPTu64_512,
+patch: enrupt-use-final-wrapper-224
+why: store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+file: upstream/EnRUPT/Optimized_32bit/EnRUPT_opt.c
+count: 1
+find: (irf*)&EnRUPTf64_224;
+replace: ns_EnRUPTf64_224;
+patch: enrupt-use-final-wrapper-256
+why: store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+file: upstream/EnRUPT/Optimized_32bit/EnRUPT_opt.c
+count: 1
+find: (irf*)&EnRUPTf64_256;
+replace: ns_EnRUPTf64_256;
+patch: enrupt-use-final-wrapper-384
+why: store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+file: upstream/EnRUPT/Optimized_32bit/EnRUPT_opt.c
+count: 1
+find: (irf*)&EnRUPTf64_384;
+replace: ns_EnRUPTf64_384;
+patch: enrupt-use-final-wrapper-512
+why: store the correctly typed wrapper instead of a cast function pointer (see enrupt-typed-update-final-wrappers).
+file: upstream/EnRUPT/Optimized_32bit/EnRUPT_opt.c
+count: 1
+find: (irf*)&EnRUPTf64_512;
+replace: ns_EnRUPTf64_512;

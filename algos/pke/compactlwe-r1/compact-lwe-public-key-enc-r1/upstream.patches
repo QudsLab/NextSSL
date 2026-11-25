@@ -1,0 +1,115 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: compact-lwe-sk-gen-init-secret-mpz
+why: sk_gen passed the never-initialised mpz sk->k[j], sk->ck[j] and sk->s[j][i] to randomMPZ, whose mpz_init was their only init.
+why: randomMPZ is changed (patch compact-lwe-random-mpz-clear-first) to clear its argument first, so every caller must pass an
+why: initialised mpz: sk_gen now mpz_init()s all of them up front (the same empty value mpz_init gave them). No value changes.
+file: upstream/compact-lwe.c
+count: 1
+find: 	mpz_set_ui(sk->wPos,W_POS);
+replace: 	for(j=0; j<F; j++){ mpz_init(sk->k[j]); mpz_init(sk->ck[j]); for(i=0; i<(int)N; i++) mpz_init(sk->s[j][i]); } mpz_set_ui(sk->wPos,W_POS);
+patch: compact-lwe-random-mpz-clear-first
+why: LeakSanitizer (CI run, pk_gen/sk_gen): randomMPZ called mpz_init(a) on an mpz that already holds limbs (pk_gen re-fills e and pTemp
+why: in its loops; sk_gen re-fills sk->ck[j] and sk->s[j][0] in its retry loops), so the old limb array was lost. randomMPZ now
+why: mpz_clear()s its argument before the mpz_init. Every caller passes an initialised mpz (a, e, pTemp, and the sk fields initialised
+why: by compact-lwe-sk-gen-init-secret-mpz), and an initialised-but-empty mpz clears safely. The value built afterwards is identical.
+file: upstream/compact-lwe.c
+count: 1
+find: void randomMPZ(int len, mpz_t a){
+replace: void randomMPZ(int len, mpz_t a){ mpz_clear(a);
+patch: compact-lwe-sk-gen-clear-sckinv
+why: sk_gen initialised the local sckInv but never cleared it (LeakSanitizer, mpz_div_qr/mpz_set in sk_gen). It is cleared with the other locals.
+file: upstream/compact-lwe.c
+count: 1
+find: 	mpz_clear (sk_max);
+replace: 	mpz_clear (sk_max); mpz_clear (sckInv);
+patch: compact-lwe-sk-gen-error-cleanup
+why: The "Too big error" return of sk_gen left all 8 locals and every sk field allocated. They are cleared before the return -1
+why: (unreachable with the shipped constants; the caller cannot know which fields were set, so sk_gen cleans up itself).
+file: upstream/compact-lwe.c
+count: 1
+find: 		printf("Too big error: %s\n", eMax);
+replace: 		printf("Too big error: %s\n", eMax); mpz_clear(a); mpz_clear(b); mpz_clear(c); mpz_clear(d); mpz_clear(qDivW); mpz_clear(peMax); mpz_clear(sk_max); mpz_clear(sckInv); mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(j=0; j<F; j++){ mpz_clear(sk->kInv[j]); mpz_clear(sk->k[j]); mpz_clear(sk->ck[j]); for(i=0; i<(int)N; i++) mpz_clear(sk->s[j][i]); } 
+patch: compact-lwe-pk-gen-error-cleanup
+why: The e_min >= e_max return of pk_gen left its 8 locals, the pk fields and the m*F elements allocated, and the two strings from
+why: mpz_get_str(NULL, ...) were never freed. The strings are now freed after printing (same text printed) and everything is cleared
+why: before the return -1 (unreachable with the shipped constants).
+file: upstream/compact-lwe.c
+count: 1
+find: 		printf("Incorrect: e_min %s is bigger than e_max %s\n", mpz_get_str(NULL, 10, e_min), mpz_get_str(NULL, 10, sk->r));
+replace: 		{ char *s_min = mpz_get_str(NULL, 10, e_min); char *s_max = mpz_get_str(NULL, 10, sk->r); printf("Incorrect: e_min %s is bigger than e_max %s\n", s_min, s_max); free(s_min); free(s_max); } mpz_clear(skInvQ); mpz_clear(leftSum); mpz_clear(a); mpz_clear(b); mpz_clear(e); mpz_clear(pSum); mpz_clear(pTemp); mpz_clear(e_min); mpz_clear(pk->q); mpz_clear(pk->t); mpz_clear(pk->wPos); mpz_clear(pk->wNeg); mpz_clear(pk->bv); for(j=0; j<F; j++){ for(i=0; i<sk->m; i++) mpz_clear(pk->element[j][i]); } 
+patch: compact-lwe-clear-cipher-clears-head
+why: clearCipher called mpz_init() on D->head[i] instead of mpz_clear(), so the N-1 head limb arrays of every ciphertext block leaked
+why: (LeakSanitizer: enc/mpz_add, cipher_in_str/mpz_import). The head values are now cleared first; the original mpz_init loop that
+why: follows only resets the cleared (limb-less) values to empty. clearCipher never reads the values, so outputs are unchanged.
+file: upstream/compact-lwe.c
+count: 1
+find: void clearCipher(struct Cipher* D){
+replace: void clearCipher(struct Cipher* D){ { unsigned int ci; for(ci=0; ci<N-1; ci++) mpz_clear(D->head[ci]); }
+patch: compact-lwe-cipher-in-str-head-bound
+why: cipher_in_str initialised D->head[0..N-1], but head has N-1 elements: head[N-1] is the memory of tail[0] (out-of-bounds index,
+why: overlapping the next member). Only the N-1 real elements are initialised now; tail[0] was initialised just before and holds no
+why: limbs yet, so re-initialising it was a no-op and the result is identical.
+file: upstream/compact-lwe.c
+count: 1
+find:         for(i=0; i<N; i++){
+replace:         for(i=0; i<N-1; i++){
+patch: compact-lwe-sk-in-str-error-cleanup
+why: sk_in_str returned NULL on a too-short buffer leaking the malloc and all initialised mpz fields. The check is repeated right after
+why: "len" is computed (same message) and clears the fields (n of them for s, as initialised) and frees the struct first.
+file: upstream/compact-lwe.c
+count: 1
+find:         int len = sk->q_bytes+sk->q_bytes+ F*sk->q_bytes+sk->q_bytes+F*sk->n*sk->q_bytes+2*F*sk->q_bytes+ 2+2+1+1+1+1+sk->q_bytes; //224
+replace:         int len = sk->q_bytes+sk->q_bytes+ F*sk->q_bytes+sk->q_bytes+F*sk->n*sk->q_bytes+2*F*sk->q_bytes+ 2+2+1+1+1+1+sk->q_bytes; //224 if(buf_len < len){ printf("The buf for sk is too small: expected %d, actual %d\n", len, buf_len); mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(j=0; j<F; j++){ mpz_clear(sk->kInv[j]); mpz_clear(sk->k[j]); mpz_clear(sk->ck[j]); for(i=0; i<sk->n; i++) mpz_clear(sk->s[j][i]); } free(sk); return NULL; }
+patch: compact-lwe-sk-in-str-length-mismatch-cleanup
+why: The pos != len return of sk_in_str leaked the struct and all mpz fields; cleared and freed before returning NULL.
+file: upstream/compact-lwe.c
+count: 1
+find: 		printf("Something wrong in sk input");
+replace: 		printf("Something wrong in sk input"); mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(j=0; j<F; j++){ mpz_clear(sk->kInv[j]); mpz_clear(sk->k[j]); mpz_clear(sk->ck[j]); for(i=0; i<sk->n; i++) mpz_clear(sk->s[j][i]); } free(sk);
+patch: compact-lwe-pk-in-str-error-cleanup
+why: pk_in_str returned NULL on a too-short buffer leaking the malloc and all initialised mpz fields (M*F elements, always initialised).
+why: The check is repeated after "len" is computed (same message) and clears and frees first.
+file: upstream/compact-lwe.c
+count: 1
+find: 	int len = pk->m*F*pk->q_bytes + 2+2+1+1+1+1+pk->q_bytes; 
+replace: 	int len = pk->m*F*pk->q_bytes + 2+2+1+1+1+1+pk->q_bytes; if(buf_len < len){ printf("The buf for pk is too small: expected %d, actual %d\n", len, buf_len); clearPK(pk); free(pk); return NULL; } 
+patch: compact-lwe-keypair-clear-secrets
+why: crypto_encrypt_keypair cleared the public-parameter fields of its local struct SK but not sk.k[], sk.ck[] and sk.s[][] (LeakSanitizer,
+why: sk_gen mpz allocations). They are cleared with the rest; sk_out_str and pk_gen have already read them.
+file: upstream/encrypt.c
+count: 1
+find: 	 mpz_clear (sk.ckInv);
+replace: 	 mpz_clear (sk.ckInv); for(j=0; j<F; j++){ int si; mpz_clear(sk.k[j]); mpz_clear(sk.ck[j]); for(si=0; si<(int)N; si++) mpz_clear(sk.s[j][si]); }
+patch: compact-lwe-encrypt-pk-null-frees-m
+why: crypto_encrypt returned -1 on an unparsable public key without freeing the padded-message buffer m. Freed first; the original NULL check follows.
+file: upstream/encrypt.c
+count: 1
+find: 	pk = pk_in_str(pk_str, CRYPTO_PUBLICKEYBYTES);
+replace: 	pk = pk_in_str(pk_str, CRYPTO_PUBLICKEYBYTES); if(pk==NULL) free(m);
+patch: compact-lwe-encrypt-cipher-len-error-cleanup
+why: crypto_encrypt returned -1 on a bad cipher_out_str length leaking the current ciphertext block, the parsed public key and m. All are
+why: released before the original return -1.
+file: upstream/encrypt.c
+count: 1
+find: 		if(cipher_len!=single_clen){
+replace: 		if(cipher_len!=single_clen){ clearCipher(&D); clearPK(pk); free(pk); free(m); } if(cipher_len!=single_clen){
+patch: compact-lwe-open-sk-null-frees-m
+why: crypto_encrypt_open returned -1 on an unparsable secret key without freeing the plaintext buffer m. Freed first.
+file: upstream/encrypt.c
+count: 1
+find: 	sk = sk_in_str(sk_str, CRYPTO_SECRETKEYBYTES);
+replace: 	sk = sk_in_str(sk_str, CRYPTO_SECRETKEYBYTES); if(sk==NULL) free(m);
+patch: compact-lwe-open-bad-pos-cleanup
+why: crypto_encrypt_open returned -1 when cipher_in_str reported a wrong length, leaking sk (with its mpz fields), m and D. All released first
+why: (n of the s entries are cleared, as sk_in_str initialised n).
+file: upstream/encrypt.c
+count: 1
+find: 			*mlen = 0;
+replace: 			clearCipher(&D); { int cj, ci; mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(cj=0; cj<F; cj++){ mpz_clear(sk->kInv[cj]); mpz_clear(sk->k[cj]); mpz_clear(sk->ck[cj]); for(ci=0; ci<sk->n; ci++) mpz_clear(sk->s[cj][ci]); } } free(sk); free(m); *mlen = 0;
+patch: compact-lwe-open-clear-sk
+why: crypto_encrypt_open freed the parsed struct SK without clearing its mpz fields (LeakSanitizer: sk_in_str/mpz_import, mpz_mul_2exp). They are
+why: cleared before the free (n of the s entries, as sk_in_str initialised n). The decoded output is already in m1 by then.
+file: upstream/encrypt.c
+count: 1
+find: 	free(sk);
+replace: 	{ int cj, ci; mpz_clear(sk->wPos); mpz_clear(sk->wNeg); mpz_clear(sk->p); mpz_clear(sk->q); mpz_clear(sk->r); mpz_clear(sk->t); mpz_clear(sk->bv); mpz_clear(sk->ckInv); for(cj=0; cj<F; cj++){ mpz_clear(sk->kInv[cj]); mpz_clear(sk->k[cj]); mpz_clear(sk->ck[cj]); for(ci=0; ci<sk->n; ci++) mpz_clear(sk->s[cj][ci]); } } free(sk);

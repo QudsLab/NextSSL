@@ -59,3 +59,12 @@ file: upstream/Wave822/wave/sample.c
 count: 2
 find: 1UL <<
 replace: 1ULL <<
+patch: wave-vf2-vector-1t0-shift-in-range
+why: vf2_vector_1t0 evaluates 0xFFFF...F >> (wl - t) for every word, also when t <= 0 (shift >= wl, or negative
+why: after t -= wl) and t >= wl (shift <= 0, negative): UBSan "shift exponent -696 is negative" (vf2.c:80). The term is
+why: multiplied by ((t > 0) & (t < wl)), which is 0 in exactly those cases, so the shifted value is never used.
+why: The patch evaluates the shift only when 0 < t < wl (shift 1..wl-1) and uses 0 otherwise; the word value is identical.
+file: upstream/Wave822/fq_arithmetic/vf2.c
+count: 1
+find:               ((t > 0) & (t < wl)) * (0xFFFFFFFFFFFFFFFF >> (wl - t));
+replace:               ((t > 0) & (t < wl)) * (0xFFFFFFFFFFFFFFFF >> ((t > 0 && t < wl) ? (wl - t) : 0));

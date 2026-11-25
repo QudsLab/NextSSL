@@ -7,3 +7,170 @@ file: upstream/ref/encrypt.c
 count: 1
 find: 	stateS[0] = (((uint64_t *)iv)[0] & 0xffffffffffff); stateS[1] = 0; 
 replace: 	stateS[0] = 0; memcpy(&stateS[0], iv, 6); stateS[1] = 0; 
+patch: unaligned-simon-c-line-25
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/Simon.c
+count: 1
+find: rkexp[i] = ((uint32_t *)rk)[i];
+replace: rkexp[i] = jb_ld32(rk, i);
+patch: unaligned-simon-c-line-42
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/Simon.c
+count: 1
+find: rkexp[0] = (((uint64_t *)rk)[0]) & 0xffffffffffff;
+replace: rkexp[0] = (jb_ld64(rk, 0)) & 0xffffffffffff;
+patch: unaligned-simon-c-line-43
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/Simon.c
+count: 1
+find: rkexp[1] = ((((uint64_t *)(rk + 6))[0])) & 0xffffffffffff;
+replace: rkexp[1] = jb_ld48(rk + 6, 0);
+patch: unaligned-simon-c-line-63
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/Simon.c
+count: 1
+find: rkexp[0] = ((uint64_t*)rk)[0];
+replace: rkexp[0] = jb_ld64(rk, 0);
+patch: unaligned-simon-c-line-64
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/Simon.c
+count: 1
+find: rkexp[1] = ((uint64_t*)rk+1)[0];
+replace: rkexp[1] = jb_ld64(rk, (1)+(0));
+patch: unaligned-simon-c-helpers
+why: Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+file: upstream/ref/Simon.c
+count: 1
+find: void SimonKeySetup64(
+replace: static __inline unsigned int jb_ld32(const void *p, size_t i) { unsigned int v; { size_t j; for (j = 0; j < 4; j++) ((unsigned char *)&v)[j] = ((const unsigned char *)p)[4 * i + j]; } return v; } static __inline uint64_t jb_ld64(const void *p, size_t i) { uint64_t v; { size_t j; for (j = 0; j < 8; j++) ((unsigned char *)&v)[j] = ((const unsigned char *)p)[8 * i + j]; } return v; } static __inline uint64_t jb_ld48(const void *p, size_t i) { uint64_t v; v = 0; { size_t j; for (j = 0; j < 6; j++) ((unsigned char *)&v)[j] = ((const unsigned char *)p)[8 * i + j]; } return v; } void SimonKeySetup64(
+patch: unaligned-encrypt-c-line-36
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((uint64_t *)(c + msglen))[0] = (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff;
+replace: jb_st48((c + msglen), 0, (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff);
+patch: unaligned-encrypt-c-line-51
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((uint64_t *)t)[0] = (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff;
+replace: jb_st48(t, 0, (stateS[0] ^ stateS[1] ^ stateR[0]) & 0xffffffffffff);
+patch: unaligned-encrypt-c-line-62
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: stateS[1] ^= ((uint64_t *)adblock)[0] & 0xffffffffffff;
+replace: stateS[1] ^= jb_ld48(adblock, 0) & 0xffffffffffff;
+patch: unaligned-encrypt-c-line-80
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: stateS[1] ^= ((uint64_t *)p)[0] & 0xffffffffffff;
+replace: stateS[1] ^= jb_ld48(p, 0) & 0xffffffffffff;
+patch: unaligned-encrypt-c-line-101
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: stateS[1] ^= ((uint64_t *)plaintextblk)[0] & 0xffffffffffff;
+replace: stateS[1] ^= jb_ld48(plaintextblk, 0) & 0xffffffffffff;
+patch: unaligned-encrypt-c-line-103
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((uint64_t *)ciphertextblk)[0] = (stateS[0] ^ ((uint64_t *)plaintextblk)[0]) & 0xffffffffffff;
+replace: jb_st48(ciphertextblk, 0, (stateS[0] ^ jb_ld48(plaintextblk, 0)) & 0xffffffffffff);
+patch: unaligned-encrypt-c-line-121
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 2
+find: stateS[1] ^= (((uint64_t *)p)[0] & 0xffffffffffff);
+replace: stateS[1] ^= (jb_ld48(p, 0) & 0xffffffffffff);
+patch: unaligned-encrypt-c-line-123
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((uint64_t *)ciphertextblk)[0] = (stateS[0] ^ ((uint64_t *)p)[0] & 0xffffffffffff);
+replace: jb_st48(ciphertextblk, 0, (stateS[0] ^ jb_ld48(p, 0) & 0xffffffffffff));
+patch: unaligned-encrypt-c-line-144
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((uint64_t *)plaintextblk)[0] = stateS[0] ^ (((uint64_t *)ciphertextblk)[0] & 0xffffffffffff);
+replace: jb_st48(plaintextblk, 0, stateS[0] ^ (jb_ld48(ciphertextblk, 0) & 0xffffffffffff));
+patch: unaligned-encrypt-c-line-145
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: stateS[1] ^= (((uint64_t *)plaintextblk)[0] & 0xffffffffffff);
+replace: stateS[1] ^= (jb_ld48(plaintextblk, 0) & 0xffffffffffff);
+patch: unaligned-encrypt-c-line-158
+why: The reference code reads and writes block words through casts of byte pointers (for example ((uint64_t *)(c + msglen))[0]), which
+why: are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). This 96-bit variant masks
+why: its words to 48 bits, so the patch moves exactly the 6 bytes the algorithm uses (memcpy into a zeroed or from a 64-bit local) instead of 8:
+why: the 48 bits are the same value as the old masked 8-byte access (the 2 extra bytes were masked off or were overwritten by the next block), and the
+why: access no longer runs 2 bytes past the block. Output is bit-identical.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((uint64_t *)p)[0] = stateS[0] ^ ((((uint64_t *)ciphertextblk)[0]) & 0xffffffffffff);
+replace: jb_st48(p, 0, stateS[0] ^ ((jb_ld48(ciphertextblk, 0)) & 0xffffffffffff));
+patch: unaligned-encrypt-c-helpers
+why: Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+file: upstream/ref/encrypt.c
+count: 1
+find: static inline void jambu_initialization(
+replace: static __inline uint64_t jb_ld48(const void *p, size_t i) { uint64_t v; v = 0; memcpy(&v, (const unsigned char *)p + 8 * i, 6); return v; } static __inline void jb_st48(void *p, size_t i, uint64_t v) { memcpy((unsigned char *)p + 8 * i, &v, 6); } static inline void jambu_initialization(

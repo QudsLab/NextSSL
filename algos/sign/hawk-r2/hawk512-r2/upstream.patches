@@ -1,0 +1,17 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: hawk-no-unaligned-access
+why: HAWK_UNALIGNED=1 on x86-64/aarch64 makes dec16le/dec32le/dec64le/enc*le (and the 64-bit XOR helpers in hawk_sign.c)
+why: dereference uint16/32/64 pointers into byte buffers at arbitrary offsets: UBSan "load of misaligned address for
+why: type const uint32_t" (hawk_inner.h:162 via decode_gr in hawk_vrfy.c). Upstream's own configuration switch
+why: HAWK_UNALIGNED=0 selects the byte-wise little-endian code, which computes the same values; output is unchanged.
+file: upstream/hawk512/hawk_inner.h
+count: 1
+find: #define HAWK_UNALIGNED   1
+replace: #define HAWK_UNALIGNED   0
+patch: hawk-ntrugen-no-unaligned-access
+why: Same as hawk-no-unaligned-access for the NTRUGEN_UNALIGNED switch in ng_inner.h (same dec/enc helpers for key
+why: generation); NTRUGEN_UNALIGNED=0 is upstream's byte-wise path with identical results.
+file: upstream/hawk512/ng_inner.h
+count: 1
+find: #define NTRUGEN_UNALIGNED   1
+replace: #define NTRUGEN_UNALIGNED   0

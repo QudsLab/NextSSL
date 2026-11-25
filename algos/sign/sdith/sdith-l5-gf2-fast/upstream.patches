@@ -1,0 +1,46 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: xkcp-x4-extractbytes-fn-type
+why: KeccakX4ExtractBytesFn declares its state parameter as const void *, but every implementation it is pointed at
+why: (KeccakP1600times4_ExtractBytes_serial from PlSnP-Fallback.inc, and the avx2 one) is defined with void *states.
+why: xkcp_sha3x4.c calls them through Keccak_X4_ExtractBytes_ptr, so UBSan -fsanitize=function reports a call through a
+why: pointer to an incorrect function type (xkcp_sha3x4.c:144-147 and 157-160; a trap on WebAssembly). The patch makes the
+why: typedef match the definitions (void *); callers pass a non-const uint64_t * so nothing else changes and the output
+why: is identical. Later liboqs versions declare the x4 typedef the same way.
+file: upstream/src/common/sha3/xkcp_dispatch.h
+count: 1
+find: typedef void KeccakX4ExtractBytesFn(const void *, unsigned int, unsigned char *, unsigned int, unsigned int);
+replace: typedef void KeccakX4ExtractBytesFn(void *, unsigned int, unsigned char *, unsigned int, unsigned int);
+patch: sdith-ggm-kappabit-memcpy-helpers
+why: extract_kappabit_uint_inline / xorto_kappabit_uint_inline index a byte buffer (delta0_and_vgrind, delta1, ...) through a
+why: uint64_t *, but callers pass buffers that are not 8-byte aligned, so data[limb_pos] and data[limb_pos + 1] are misaligned
+why: 64-bit loads/stores (UBSan, ggm.c:123 and 125, via extract_kappabit_uint from sdith_prng.c). The patch accesses the same
+why: 8-byte limbs with memcpy (ns_sdith_ld64 / ns_sdith_xor64, native byte order exactly like the original load/store), so the
+why: values read and written are identical.
+file: upstream/src/sig/sdith/sdith_sdith_common/ggm.c
+count: 1
+find: SDITH_ALWAYS_INLINE uint32_t extract_kappabit_uint_inline(uint64_t kappa, uint64_t bitpos, const uint64_t* data) {
+replace: static uint64_t ns_sdith_ld64(const uint64_t* p, uint64_t i) { uint64_t v; memcpy(&v, (const unsigned char*)p + i * 8, 8); return v; } static void ns_sdith_xor64(uint64_t* p, uint64_t i, uint64_t v) { uint64_t t; unsigned char* q = (unsigned char*)p + i * 8; memcpy(&t, q, 8); t ^= v; memcpy(q, &t, 8); } SDITH_ALWAYS_INLINE uint32_t extract_kappabit_uint_inline(uint64_t kappa, uint64_t bitpos, const uint64_t* data) {
+patch: sdith-ggm-extract-fast
+why: use the memcpy helpers instead of misaligned uint64_t accesses (see sdith-ggm-kappabit-memcpy-helpers).
+file: upstream/src/sig/sdith/sdith_sdith_common/ggm.c
+count: 1
+find:     return (data[limb_pos] >> limb_rem) & kappa_mask;
+replace:     return (ns_sdith_ld64(data, limb_pos) >> limb_rem) & kappa_mask;
+patch: sdith-ggm-extract-span
+why: use the memcpy helpers instead of misaligned uint64_t accesses (see sdith-ggm-kappabit-memcpy-helpers).
+file: upstream/src/sig/sdith/sdith_sdith_common/ggm.c
+count: 1
+find:     return ((data[limb_pos] >> limb_rem) | (data[limb_pos + 1] << (64 - limb_rem))) & kappa_mask;
+replace:     return ((ns_sdith_ld64(data, limb_pos) >> limb_rem) | (ns_sdith_ld64(data, limb_pos + 1) << (64 - limb_rem))) & kappa_mask;
+patch: sdith-ggm-xor-low
+why: use the memcpy helpers instead of misaligned uint64_t accesses (see sdith-ggm-kappabit-memcpy-helpers).
+file: upstream/src/sig/sdith/sdith_sdith_common/ggm.c
+count: 2
+find:     data[limb_pos] ^= value << limb_rem;
+replace:     ns_sdith_xor64(data, limb_pos, value << limb_rem);
+patch: sdith-ggm-xor-high
+why: use the memcpy helpers instead of misaligned uint64_t accesses (see sdith-ggm-kappabit-memcpy-helpers).
+file: upstream/src/sig/sdith/sdith_sdith_common/ggm.c
+count: 1
+find:     data[limb_pos + 1] ^= value >> (64 - limb_rem);
+replace:     ns_sdith_xor64(data, limb_pos + 1, value >> (64 - limb_rem));

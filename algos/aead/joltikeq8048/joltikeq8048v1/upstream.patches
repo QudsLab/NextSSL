@@ -1,0 +1,9 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: joltik-eq-xls-tag-offset
+why: joltik_aead_decrypt computed XLSin+c_len-8-8*(i-1) with XLSin a 16-byte array: left to right that forms the pointer XLSin+c_len,
+why: which UBSan reports as 'index N out of bounds for uint8_t[16]' (joltik.c, CI run 45581879065), before subtracting back.
+why: The patch parenthesises the offset, XLSin+(c_len-8-8*(i-1)); the offset is the partial block length s (1..7), the destination byte is identical and output is unchanged.
+file: upstream/ref/joltik.c
+count: 1
+find:       memcpy(XLSin+c_len-8-8*(i-1), ciphertext+c_len-8, 8); /* append tag */
+replace:       memcpy(XLSin+(c_len-8-8*(i-1)), ciphertext+c_len-8, 8); /* append tag */

@@ -1,0 +1,15 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: dsha-rotr64-count-mask
+why: UBSan: ROTR64 / ROTR32 compute (x << (W - n)); when the rotate count n is 0 (data dependent) the shift exponent is W, which is undefined behaviour (reported as shift exponent 64 too large for uint_64t).
+why: Masking the left-shift count with W-1 makes n == 0 shift by 0: (x >> 0) | (x << 0) = x | x = x, the value x86 produced (hardware masks the count) and the value an ideal rotate gives; ARM gave x | 0 = x as well. For n in 1..W-1 the mask is a no-op, so output is unchanged.
+file: upstream/DynamicSHA/Reference Implementation/dsha_ref.h
+count: 1
+find: #define ROTR64(x,n)   (((x) >> (n)) | ((x) << (64 - (n))))
+replace: #define ROTR64(x,n)   (((x) >> (n)) | ((x) << ((64 - (n)) & 63)))
+patch: dsha-rotr32-count-mask
+why: UBSan: ROTR64 / ROTR32 compute (x << (W - n)); when the rotate count n is 0 (data dependent) the shift exponent is W, which is undefined behaviour (reported as shift exponent 64 too large for uint_64t).
+why: Masking the left-shift count with W-1 makes n == 0 shift by 0: (x >> 0) | (x << 0) = x | x = x, the value x86 produced (hardware masks the count) and the value an ideal rotate gives; ARM gave x | 0 = x as well. For n in 1..W-1 the mask is a no-op, so output is unchanged.
+file: upstream/DynamicSHA/Reference Implementation/dsha_ref.h
+count: 1
+find: #define ROTR32(x,n)   (((x) >> (n)) | ((x) << (32 - (n))))
+replace: #define ROTR32(x,n)   (((x) >> (n)) | ((x) << ((32 - (n)) & 31)))

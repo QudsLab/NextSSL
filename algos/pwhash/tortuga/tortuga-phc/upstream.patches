@@ -1,0 +1,22 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: turtle-vla-nonzero-L
+why: UBSan: turtle.c:35 `unsigned char L[sz >> 1]` is a variable length array whose bound is 0 when sz == 1 (the leaf case sz == w == 1, which returns before L is used); a zero-size VLA is undefined behaviour.
+why: The bound becomes at least 1. For sz >= 2 (the only case where L is read or written) sz >> 1 >= 1, so sizeof(L), R, tmp and every memcpy/xor length are unchanged and output is identical.
+file: upstream/turtle.c
+count: 1
+find: 	unsigned char L[sz >> 1];
+replace: 	unsigned char L[(sz >> 1) ? (sz >> 1) : 1];
+patch: turtle-vla-nonzero-R
+why: UBSan: with L padded to size 1 for sz == 1 (see turtle-vla-nonzero-L), `R[sz - sizeof(L)]` would become a zero-size VLA (and tmp[sizeof(R)] with it); the bound is kept at least 1 as well.
+why: For sz >= 2, sz - sizeof(L) = sz - sz/2 >= 1, so R, tmp and all lengths are unchanged; the sz == 1 case returns before R/tmp are used. Output is identical.
+file: upstream/turtle.c
+count: 1
+find: 	unsigned char R[sz - sizeof(L)];
+replace: 	unsigned char R[(sz - sizeof(L)) ? (sz - sizeof(L)) : 1];
+patch: turtle-inplace-tmp-nonzero
+why: Same pattern as the other turtle.c VLAs: turtle_inplace's `unsigned char tmp[sz]` is a zero-size VLA (undefined behaviour) if sz == 0, which the tests may not reach.
+why: The bound is kept at least 1; for sz >= 1 it is unchanged, and tmp is only used through turtle(tmp, X, sz, ...) and memcpy of sz bytes, so output is identical.
+file: upstream/turtle.c
+count: 1
+find: 	unsigned char tmp[sz];
+replace: 	unsigned char tmp[sz ? sz : 1];

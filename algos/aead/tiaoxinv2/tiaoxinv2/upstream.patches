@@ -1,0 +1,367 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: unaligned-tiaoxin-tablebased-c-line-22
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[0] = ((col*)Te0)[*(p + 0)]  ^ ((col*)Te1)[*(p + 5)]  ^ ((col*)Te2)[*(p +10)]  ^ ((col*)Te3)[*(p +15)]  ^ ((col*)k)[0]; \
+replace: jb_stcol((c), 0, jb_ldcol(Te0, *(p + 0))  ^ jb_ldcol(Te1, *(p + 5))  ^ jb_ldcol(Te2, *(p +10))  ^ jb_ldcol(Te3, *(p +15))  ^ jb_ldcol(k, 0)); \
+patch: unaligned-tiaoxin-tablebased-c-line-23
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[1] = ((col*)Te0)[*(p + 4)]  ^ ((col*)Te1)[*(p + 9)]  ^ ((col*)Te2)[*(p +14)]  ^ ((col*)Te3)[*(p + 3)]  ^ ((col*)k)[1]; \
+replace: jb_stcol((c), 1, jb_ldcol(Te0, *(p + 4))  ^ jb_ldcol(Te1, *(p + 9))  ^ jb_ldcol(Te2, *(p +14))  ^ jb_ldcol(Te3, *(p + 3))  ^ jb_ldcol(k, 1)); \
+patch: unaligned-tiaoxin-tablebased-c-line-24
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[2] = ((col*)Te0)[*(p + 8)]  ^ ((col*)Te1)[*(p +13)]  ^ ((col*)Te2)[*(p + 2)]  ^ ((col*)Te3)[*(p + 7)]  ^ ((col*)k)[2]; \
+replace: jb_stcol((c), 2, jb_ldcol(Te0, *(p + 8))  ^ jb_ldcol(Te1, *(p +13))  ^ jb_ldcol(Te2, *(p + 2))  ^ jb_ldcol(Te3, *(p + 7))  ^ jb_ldcol(k, 2)); \
+patch: unaligned-tiaoxin-tablebased-c-line-25
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[3] = ((col*)Te0)[*(p +12)]  ^ ((col*)Te1)[*(p + 1)]  ^ ((col*)Te2)[*(p + 6)]  ^ ((col*)Te3)[*(p +11)]  ^ ((col*)k)[3];
+replace: jb_stcol((c), 3, jb_ldcol(Te0, *(p +12))  ^ jb_ldcol(Te1, *(p + 1))  ^ jb_ldcol(Te2, *(p + 6))  ^ jb_ldcol(Te3, *(p +11))  ^ jb_ldcol(k, 3));
+patch: unaligned-tiaoxin-tablebased-c-line-29
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[0] = ((col*)Te0)[*(p + 0)]  ^ ((col*)Te1)[*(p + 5)]  ^ ((col*)Te2)[*(p +10)]  ^ ((col*)Te3)[*(p +15)]  ^ ((col*)k1)[0]  ^ ((col*)k2)[0]; \
+replace: jb_stcol((c), 0, jb_ldcol(Te0, *(p + 0))  ^ jb_ldcol(Te1, *(p + 5))  ^ jb_ldcol(Te2, *(p +10))  ^ jb_ldcol(Te3, *(p +15))  ^ jb_ldcol(k1, 0)  ^ jb_ldcol(k2, 0)); \
+patch: unaligned-tiaoxin-tablebased-c-line-30
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[1] = ((col*)Te0)[*(p + 4)]  ^ ((col*)Te1)[*(p + 9)]  ^ ((col*)Te2)[*(p +14)]  ^ ((col*)Te3)[*(p + 3)]  ^ ((col*)k1)[1]  ^ ((col*)k2)[1]; \
+replace: jb_stcol((c), 1, jb_ldcol(Te0, *(p + 4))  ^ jb_ldcol(Te1, *(p + 9))  ^ jb_ldcol(Te2, *(p +14))  ^ jb_ldcol(Te3, *(p + 3))  ^ jb_ldcol(k1, 1)  ^ jb_ldcol(k2, 1)); \
+patch: unaligned-tiaoxin-tablebased-c-line-31
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[2] = ((col*)Te0)[*(p + 8)]  ^ ((col*)Te1)[*(p +13)]  ^ ((col*)Te2)[*(p + 2)]  ^ ((col*)Te3)[*(p + 7)]  ^ ((col*)k1)[2]  ^ ((col*)k2)[2]; \
+replace: jb_stcol((c), 2, jb_ldcol(Te0, *(p + 8))  ^ jb_ldcol(Te1, *(p +13))  ^ jb_ldcol(Te2, *(p + 2))  ^ jb_ldcol(Te3, *(p + 7))  ^ jb_ldcol(k1, 2)  ^ jb_ldcol(k2, 2)); \
+patch: unaligned-tiaoxin-tablebased-c-line-32
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[3] = ((col*)Te0)[*(p +12)]  ^ ((col*)Te1)[*(p + 1)]  ^ ((col*)Te2)[*(p + 6)]  ^ ((col*)Te3)[*(p +11)]  ^ ((col*)k1)[3]  ^ ((col*)k2)[3];
+replace: jb_stcol((c), 3, jb_ldcol(Te0, *(p +12))  ^ jb_ldcol(Te1, *(p + 1))  ^ jb_ldcol(Te2, *(p + 6))  ^ jb_ldcol(Te3, *(p +11))  ^ jb_ldcol(k1, 3)  ^ jb_ldcol(k2, 3));
+patch: unaligned-tiaoxin-tablebased-c-line-36
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[0] = ((col*)Te0)[*(p + 0)]  ^ ((col*)Te1)[*(p + 5)]  ^ ((col*)Te2)[*(p +10)]  ^ ((col*)Te3)[*(p +15)]  ^ ((col*)k1)[0]  ^ ((col*)k2)[0]  ^ ((col*)k3)[0]; \
+replace: jb_stcol((c), 0, jb_ldcol(Te0, *(p + 0))  ^ jb_ldcol(Te1, *(p + 5))  ^ jb_ldcol(Te2, *(p +10))  ^ jb_ldcol(Te3, *(p +15))  ^ jb_ldcol(k1, 0)  ^ jb_ldcol(k2, 0)  ^ jb_ldcol(k3, 0)); \
+patch: unaligned-tiaoxin-tablebased-c-line-37
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[1] = ((col*)Te0)[*(p + 4)]  ^ ((col*)Te1)[*(p + 9)]  ^ ((col*)Te2)[*(p +14)]  ^ ((col*)Te3)[*(p + 3)]  ^ ((col*)k1)[1]  ^ ((col*)k2)[1]  ^ ((col*)k3)[1]; \
+replace: jb_stcol((c), 1, jb_ldcol(Te0, *(p + 4))  ^ jb_ldcol(Te1, *(p + 9))  ^ jb_ldcol(Te2, *(p +14))  ^ jb_ldcol(Te3, *(p + 3))  ^ jb_ldcol(k1, 1)  ^ jb_ldcol(k2, 1)  ^ jb_ldcol(k3, 1)); \
+patch: unaligned-tiaoxin-tablebased-c-line-38
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[2] = ((col*)Te0)[*(p + 8)]  ^ ((col*)Te1)[*(p +13)]  ^ ((col*)Te2)[*(p + 2)]  ^ ((col*)Te3)[*(p + 7)]  ^ ((col*)k1)[2]  ^ ((col*)k2)[2]  ^ ((col*)k3)[2]; \
+replace: jb_stcol((c), 2, jb_ldcol(Te0, *(p + 8))  ^ jb_ldcol(Te1, *(p +13))  ^ jb_ldcol(Te2, *(p + 2))  ^ jb_ldcol(Te3, *(p + 7))  ^ jb_ldcol(k1, 2)  ^ jb_ldcol(k2, 2)  ^ jb_ldcol(k3, 2)); \
+patch: unaligned-tiaoxin-tablebased-c-line-39
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((col*)(c))[3] = ((col*)Te0)[*(p +12)]  ^ ((col*)Te1)[*(p + 1)]  ^ ((col*)Te2)[*(p + 6)]  ^ ((col*)Te3)[*(p +11)]  ^ ((col*)k1)[3]  ^ ((col*)k2)[3]  ^ ((col*)k3)[3];
+replace: jb_stcol((c), 3, jb_ldcol(Te0, *(p +12))  ^ jb_ldcol(Te1, *(p + 1))  ^ jb_ldcol(Te2, *(p + 6))  ^ jb_ldcol(Te3, *(p +11))  ^ jb_ldcol(k1, 3)  ^ jb_ldcol(k2, 3)  ^ jb_ldcol(k3, 3));
+patch: unaligned-tiaoxin-tablebased-c-line-97
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(T6[0]))[0] = ((hw*)(c+16))[0] ^ ((hw*)(T4[2]))[0] ^ ( ((hw*)(T6[5]))[0] & ((hw*)(T3[2]))[0] ) ^ ((hw*)(T3[1]))[0] ; \
+replace: jb_sthw((T6[0]), 0, jb_ldhw((c+16), 0) ^ jb_ldhw((T4[2]), 0) ^ ( jb_ldhw((T6[5]), 0) & jb_ldhw((T3[2]), 0) ) ^ jb_ldhw((T3[1]), 0) ); \
+patch: unaligned-tiaoxin-tablebased-c-line-98
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(T6[0]))[1] = ((hw*)(c+16))[1] ^ ((hw*)(T4[2]))[1] ^ ( ((hw*)(T6[5]))[1] & ((hw*)(T3[2]))[1] ) ^ ((hw*)(T3[1]))[1] ; \
+replace: jb_sthw((T6[0]), 1, jb_ldhw((c+16), 1) ^ jb_ldhw((T4[2]), 1) ^ ( jb_ldhw((T6[5]), 1) & jb_ldhw((T3[2]), 1) ) ^ jb_ldhw((T3[1]), 1) ); \
+patch: unaligned-tiaoxin-tablebased-c-line-99
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(T3[0]))[0] = ((hw*)(c+ 0))[0] ^ ((hw*)(T3[2]))[0] ^ ( ((hw*)(T6[3]))[0] & ((hw*)(T4[3]))[0] ) ^ ((hw*)(T4[1]))[0] ; \
+replace: jb_sthw((T3[0]), 0, jb_ldhw((c+ 0), 0) ^ jb_ldhw((T3[2]), 0) ^ ( jb_ldhw((T6[3]), 0) & jb_ldhw((T4[3]), 0) ) ^ jb_ldhw((T4[1]), 0) ); \
+patch: unaligned-tiaoxin-tablebased-c-line-100
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(T3[0]))[1] = ((hw*)(c+ 0))[1] ^ ((hw*)(T3[2]))[1] ^ ( ((hw*)(T6[3]))[1] & ((hw*)(T4[3]))[1] ) ^ ((hw*)(T4[1]))[1] ; \
+replace: jb_sthw((T3[0]), 1, jb_ldhw((c+ 0), 1) ^ jb_ldhw((T3[2]), 1) ^ ( jb_ldhw((T6[3]), 1) & jb_ldhw((T4[3]), 1) ) ^ jb_ldhw((T4[1]), 1) ); \
+patch: unaligned-tiaoxin-tablebased-c-line-101
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(m))[0] ^= ((hw*)(T3[0]))[0]; ((hw*)(m))[1] ^= ((hw*)(T3[0]))[1]; \
+replace: jb_sthw((m), 0, jb_ldhw((m), 0) ^ (jb_ldhw((T3[0]), 0))); jb_sthw((m), 1, jb_ldhw((m), 1) ^ (jb_ldhw((T3[0]), 1))); \
+patch: unaligned-tiaoxin-tablebased-c-line-102
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(m+16))[0] ^= ((hw*)(T6[0]))[0] ^ ((hw*)(m))[0]; ((hw*)(m+16))[1] ^= ((hw*)(T6[0]))[1] ^ ((hw*)(m))[1]; \
+replace: jb_sthw((m+16), 0, jb_ldhw((m+16), 0) ^ (jb_ldhw((T6[0]), 0) ^ jb_ldhw((m), 0))); jb_sthw((m+16), 1, jb_ldhw((m+16), 1) ^ (jb_ldhw((T6[0]), 1) ^ jb_ldhw((m), 1))); \
+patch: unaligned-tiaoxin-tablebased-c-line-103
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(T4[0]))[0] = ((hw*)(tmp))[0] ^ ((hw*)(m+16))[0];((hw*)(T4[0]))[1] = ((hw*)(tmp))[1] ^ ((hw*)(m+16))[1];
+replace: jb_sthw((T4[0]), 0, jb_ldhw((tmp), 0) ^ jb_ldhw((m+16), 0));jb_sthw((T4[0]), 1, jb_ldhw((tmp), 1) ^ jb_ldhw((m+16), 1));
+patch: unaligned-tiaoxin-tablebased-c-line-107
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(C))[0] = ((hw*)(T3[0]))[0] ^ ((hw*)(T3[2]))[0] ^ ((hw*)(T4[1]))[0] ^ ( ((hw*)(T6[3]))[0] & ((hw*)(T4[3]))[0] ) ;\
+replace: jb_sthw((C), 0, jb_ldhw((T3[0]), 0) ^ jb_ldhw((T3[2]), 0) ^ jb_ldhw((T4[1]), 0) ^ ( jb_ldhw((T6[3]), 0) & jb_ldhw((T4[3]), 0) ) );\
+patch: unaligned-tiaoxin-tablebased-c-line-108
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(C))[1] = ((hw*)(T3[0]))[1] ^ ((hw*)(T3[2]))[1] ^ ((hw*)(T4[1]))[1] ^ ( ((hw*)(T6[3]))[1] & ((hw*)(T4[3]))[1] ) ;\
+replace: jb_sthw((C), 1, jb_ldhw((T3[0]), 1) ^ jb_ldhw((T3[2]), 1) ^ jb_ldhw((T4[1]), 1) ^ ( jb_ldhw((T6[3]), 1) & jb_ldhw((T4[3]), 1) ) );\
+patch: unaligned-tiaoxin-tablebased-c-line-109
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(C))[2] = ((hw*)(T6[0]))[0] ^ ((hw*)(T4[2]))[0] ^ ((hw*)(T3[1]))[0] ^ ( ((hw*)(T6[5]))[0] & ((hw*)(T3[2]))[0] ) ;\
+replace: jb_sthw((C), 2, jb_ldhw((T6[0]), 0) ^ jb_ldhw((T4[2]), 0) ^ jb_ldhw((T3[1]), 0) ^ ( jb_ldhw((T6[5]), 0) & jb_ldhw((T3[2]), 0) ) );\
+patch: unaligned-tiaoxin-tablebased-c-line-110
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(C))[3] = ((hw*)(T6[0]))[1] ^ ((hw*)(T4[2]))[1] ^ ((hw*)(T3[1]))[1] ^ ( ((hw*)(T6[5]))[1] & ((hw*)(T3[2]))[1] ) ;
+replace: jb_sthw((C), 3, jb_ldhw((T6[0]), 1) ^ jb_ldhw((T4[2]), 1) ^ jb_ldhw((T3[1]), 1) ^ ( jb_ldhw((T6[5]), 1) & jb_ldhw((T3[2]), 1) ) );
+patch: unaligned-tiaoxin-tablebased-c-line-195
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(c + mlen))[0] =  ((hw*)(T3[0]))[0] ^ ((hw*)(T3[1]))[0] ^ ((hw*)(T3[2]))[0] ^
+replace: jb_sthw((c + mlen), 0,  jb_ldhw((T3[0]), 0) ^ jb_ldhw((T3[1]), 0) ^ jb_ldhw((T3[2]), 0) ^
+patch: unaligned-tiaoxin-tablebased-c-line-196
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 2
+find: ((hw*)(T4[0]))[0] ^ ((hw*)(T4[1]))[0] ^ ((hw*)(T4[2]))[0] ^ ((hw*)(T4[3]))[0] ^
+replace: jb_ldhw((T4[0]), 0) ^ jb_ldhw((T4[1]), 0) ^ jb_ldhw((T4[2]), 0) ^ jb_ldhw((T4[3]), 0) ^
+patch: unaligned-tiaoxin-tablebased-c-line-197
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 2
+find: ((hw*)(T6[0]))[0] ^ ((hw*)(T6[1]))[0] ^ ((hw*)(T6[2]))[0] ^ ((hw*)(T6[3]))[0] ^ ((hw*)(T6[4]))[0] ^ ((hw*)(T6[5]))[0] ;
+replace: jb_ldhw((T6[0]), 0) ^ jb_ldhw((T6[1]), 0) ^ jb_ldhw((T6[2]), 0) ^ jb_ldhw((T6[3]), 0) ^ jb_ldhw((T6[4]), 0) ^ jb_ldhw((T6[5]), 0) );
+patch: unaligned-tiaoxin-tablebased-c-line-198
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(c + mlen))[1] =  ((hw*)(T3[0]))[1] ^ ((hw*)(T3[1]))[1] ^ ((hw*)(T3[2]))[1] ^
+replace: jb_sthw((c + mlen), 1,  jb_ldhw((T3[0]), 1) ^ jb_ldhw((T3[1]), 1) ^ jb_ldhw((T3[2]), 1) ^
+patch: unaligned-tiaoxin-tablebased-c-line-199
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 2
+find: ((hw*)(T4[0]))[1] ^ ((hw*)(T4[1]))[1] ^ ((hw*)(T4[2]))[1] ^ ((hw*)(T4[3]))[1] ^
+replace: jb_ldhw((T4[0]), 1) ^ jb_ldhw((T4[1]), 1) ^ jb_ldhw((T4[2]), 1) ^ jb_ldhw((T4[3]), 1) ^
+patch: unaligned-tiaoxin-tablebased-c-line-200
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 2
+find: ((hw*)(T6[0]))[1] ^ ((hw*)(T6[1]))[1] ^ ((hw*)(T6[2]))[1] ^ ((hw*)(T6[3]))[1] ^ ((hw*)(T6[4]))[1] ^ ((hw*)(T6[5]))[1] ;
+replace: jb_ldhw((T6[0]), 1) ^ jb_ldhw((T6[1]), 1) ^ jb_ldhw((T6[2]), 1) ^ jb_ldhw((T6[3]), 1) ^ jb_ldhw((T6[4]), 1) ^ jb_ldhw((T6[5]), 1) );
+patch: unaligned-tiaoxin-tablebased-c-line-268
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(tmp))[0] = ((hw*)(incomplete_block))[0] ^ ((hw*)(T3[0]))[0] ^ ((hw*)(T3[2]))[0] ^ ((hw*)(T4[1]))[0] ^ ( ((hw*)(T6[3]))[0] & ((hw*)(T4[3]))[0] )  ; \
+replace: jb_sthw((tmp), 0, jb_ldhw((incomplete_block), 0) ^ jb_ldhw((T3[0]), 0) ^ jb_ldhw((T3[2]), 0) ^ jb_ldhw((T4[1]), 0) ^ ( jb_ldhw((T6[3]), 0) & jb_ldhw((T4[3]), 0) )  ); \
+patch: unaligned-tiaoxin-tablebased-c-line-269
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(tmp))[1] = ((hw*)(incomplete_block))[1] ^ ((hw*)(T3[0]))[1] ^ ((hw*)(T3[2]))[1] ^ ((hw*)(T4[1]))[1] ^ ( ((hw*)(T6[3]))[1] & ((hw*)(T4[3]))[1] )  ; \
+replace: jb_sthw((tmp), 1, jb_ldhw((incomplete_block), 1) ^ jb_ldhw((T3[0]), 1) ^ jb_ldhw((T3[2]), 1) ^ jb_ldhw((T4[1]), 1) ^ ( jb_ldhw((T6[3]), 1) & jb_ldhw((T4[3]), 1) )  ); \
+patch: unaligned-tiaoxin-tablebased-c-line-277
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(tc))[0] = ((hw*)(incomplete_block+16))[0] ^ ((hw*)(T6[0]))[0] ^ ((hw*)(T4[2]))[0] ^ ((hw*)(T3[1]))[0] ^
+replace: jb_sthw((tc), 0, jb_ldhw((incomplete_block+16), 0) ^ jb_ldhw((T6[0]), 0) ^ jb_ldhw((T4[2]), 0) ^ jb_ldhw((T3[1]), 0) ^
+patch: unaligned-tiaoxin-tablebased-c-line-278
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ( ((hw*)(T6[5]))[0] & ((hw*)(T3[2]))[0] ) ^ ((hw*)(tmp))[0] ;
+replace: ( jb_ldhw((T6[5]), 0) & jb_ldhw((T3[2]), 0) ) ^ jb_ldhw((tmp), 0) );
+patch: unaligned-tiaoxin-tablebased-c-line-279
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(tc))[1] = ((hw*)(incomplete_block+16))[1] ^ ((hw*)(T6[0]))[1] ^ ((hw*)(T4[2]))[1] ^ ((hw*)(T3[1]))[1] ^
+replace: jb_sthw((tc), 1, jb_ldhw((incomplete_block+16), 1) ^ jb_ldhw((T6[0]), 1) ^ jb_ldhw((T4[2]), 1) ^ jb_ldhw((T3[1]), 1) ^
+patch: unaligned-tiaoxin-tablebased-c-line-280
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ( ((hw*)(T6[5]))[1] & ((hw*)(T3[2]))[1] ) ^ ((hw*)(tmp))[1] ;
+replace: ( jb_ldhw((T6[5]), 1) & jb_ldhw((T3[2]), 1) ) ^ jb_ldhw((tmp), 1) );
+patch: unaligned-tiaoxin-tablebased-c-line-285
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(T3[0]))[0] ^= ((hw*)(tmp))[0]; ((hw*)(T3[0]))[1] ^= ((hw*)(tmp))[1];
+replace: jb_sthw((T3[0]), 0, jb_ldhw((T3[0]), 0) ^ (jb_ldhw((tmp), 0))); jb_sthw((T3[0]), 1, jb_ldhw((T3[0]), 1) ^ (jb_ldhw((tmp), 1)));
+patch: unaligned-tiaoxin-tablebased-c-line-286
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(T4[0]))[0] ^= ((hw*)(tc ))[0]; ((hw*)(T4[0]))[1] ^= ((hw*)(tc ))[1];
+replace: jb_sthw((T4[0]), 0, jb_ldhw((T4[0]), 0) ^ (jb_ldhw((tc ), 0))); jb_sthw((T4[0]), 1, jb_ldhw((T4[0]), 1) ^ (jb_ldhw((tc ), 1)));
+patch: unaligned-tiaoxin-tablebased-c-line-287
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(T6[0]))[0] ^= ((hw*)(tmp))[0] ^ ((hw*)(tc))[0]; ((hw*)(T6[0]))[1] ^= ((hw*)(tmp))[1] ^ ((hw*)(tc))[1];
+replace: jb_sthw((T6[0]), 0, jb_ldhw((T6[0]), 0) ^ (jb_ldhw((tmp), 0) ^ jb_ldhw((tc), 0))); jb_sthw((T6[0]), 1, jb_ldhw((T6[0]), 1) ^ (jb_ldhw((tmp), 1) ^ jb_ldhw((tc), 1)));
+patch: unaligned-tiaoxin-tablebased-c-line-313
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(tmp))[0] =  ((hw*)(T3[0]))[0] ^ ((hw*)(T3[1]))[0] ^ ((hw*)(T3[2]))[0] ^
+replace: jb_sthw((tmp), 0,  jb_ldhw((T3[0]), 0) ^ jb_ldhw((T3[1]), 0) ^ jb_ldhw((T3[2]), 0) ^
+patch: unaligned-tiaoxin-tablebased-c-line-316
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: ((hw*)(tmp))[1] =  ((hw*)(T3[0]))[1] ^ ((hw*)(T3[1]))[1] ^ ((hw*)(T3[2]))[1] ^
+replace: jb_sthw((tmp), 1,  jb_ldhw((T3[0]), 1) ^ jb_ldhw((T3[1]), 1) ^ jb_ldhw((T3[2]), 1) ^
+patch: unaligned-tiaoxin-tablebased-c-helpers
+why: Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+file: upstream/ref/tiaoxin-tablebased.c
+count: 1
+find: typedef unsigned int  col;
+replace: typedef unsigned int  col; static __inline hw jb_ldhw(const void *p, size_t i) { hw v; memcpy(&v, (const unsigned char *)p + 8 * i, 8); return v; } static __inline void jb_sthw(void *p, size_t i, hw v) { memcpy((unsigned char *)p + 8 * i, &v, 8); } static __inline col jb_ldcol(const void *p, size_t i) { col v; memcpy(&v, (const unsigned char *)p + 4 * i, 4); return v; } static __inline void jb_stcol(void *p, size_t i, col v) { memcpy((unsigned char *)p + 4 * i, &v, 4); }

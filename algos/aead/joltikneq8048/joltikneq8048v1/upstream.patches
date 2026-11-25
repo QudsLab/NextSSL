@@ -1,0 +1,9 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: joltik-neq-pad-offset
+why: joltik_aead_decrypt computed Pad+c_len-8*i with Pad a uint8_t[8]: left to right that forms the pointer Pad+c_len,
+why: which UBSan reports as 'index N out of bounds for uint8_t[8]' (joltik.c, CI run 45581879065), before subtracting back.
+why: The patch parenthesises the offset, Pad+(c_len-8*i); the offset is the partial block length (1..7), the destination byte is identical and output is unchanged.
+file: upstream/ref/joltik.c
+count: 1
+find:         memset(Pad+c_len-8*i, 0, 8-(c_len-8*i));
+replace:         memset(Pad+(c_len-8*i), 0, 8-(c_len-8*i));

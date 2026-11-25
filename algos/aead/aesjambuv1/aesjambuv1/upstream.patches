@@ -1,0 +1,193 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: unaligned-aes-c-line-358
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/aes.c
+count: 1
+find: rkexp[0] = ((unsigned int *)rk)[0] ^
+replace: rkexp[0] = jb_ld32(rk, 0) ^
+patch: unaligned-aes-c-helpers
+why: Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+file: upstream/ref/aes.c
+count: 1
+find: void AESKeySteup(
+replace: static __inline unsigned int jb_ld32(const void *p, size_t i) { unsigned int v; memcpy(&v, (const unsigned char *)p + 4 * i, 4); return v; } void AESKeySteup(
+patch: unaligned-encrypt-c-line-15
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: stateS[0] = ((unsigned int *)iv)[0]; stateS[1] = ((unsigned int *)iv)[1];
+replace: stateS[0] = jb_ld32(iv, 0); stateS[1] = jb_ld32(iv, 1);
+patch: unaligned-encrypt-c-line-35
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)(c+msglen))[0] = stateS[0] ^ stateS[2] ^ stateR[0];
+replace: jb_st32((c+msglen), 0, stateS[0] ^ stateS[2] ^ stateR[0]);
+patch: unaligned-encrypt-c-line-36
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)(c+msglen))[1] = stateS[1] ^ stateS[3] ^ stateR[1];
+replace: jb_st32((c+msglen), 1, stateS[1] ^ stateS[3] ^ stateR[1]);
+patch: unaligned-encrypt-c-line-54
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)t)[0] = stateS[0] ^ stateS[2] ^ stateR[0];
+replace: jb_st32(t, 0, stateS[0] ^ stateS[2] ^ stateR[0]);
+patch: unaligned-encrypt-c-line-55
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)t)[1] = stateS[1] ^ stateS[3] ^ stateR[1];
+replace: jb_st32(t, 1, stateS[1] ^ stateS[3] ^ stateR[1]);
+patch: unaligned-encrypt-c-line-66
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: stateS[2] ^= ((unsigned int *)adblock)[0];
+replace: stateS[2] ^= jb_ld32(adblock, 0);
+patch: unaligned-encrypt-c-line-67
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: stateS[3] ^= ((unsigned int *)adblock)[1];
+replace: stateS[3] ^= jb_ld32(adblock, 1);
+patch: unaligned-encrypt-c-line-88
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 3
+find: stateS[2] ^= ((unsigned int *)p)[0];
+replace: stateS[2] ^= jb_ld32(p, 0);
+patch: unaligned-encrypt-c-line-89
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 3
+find: stateS[3] ^= ((unsigned int *)p)[1];
+replace: stateS[3] ^= jb_ld32(p, 1);
+patch: unaligned-encrypt-c-line-116
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 2
+find: stateS[2] ^= ((unsigned int *)plaintextblk)[0];
+replace: stateS[2] ^= jb_ld32(plaintextblk, 0);
+patch: unaligned-encrypt-c-line-117
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 2
+find: stateS[3] ^= ((unsigned int *)plaintextblk)[1];
+replace: stateS[3] ^= jb_ld32(plaintextblk, 1);
+patch: unaligned-encrypt-c-line-121
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)ciphertextblk)[0] = stateS[0] ^ ((unsigned int *)plaintextblk)[0];
+replace: jb_st32(ciphertextblk, 0, stateS[0] ^ jb_ld32(plaintextblk, 0));
+patch: unaligned-encrypt-c-line-122
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)ciphertextblk)[1] = stateS[1] ^ ((unsigned int *)plaintextblk)[1];
+replace: jb_st32(ciphertextblk, 1, stateS[1] ^ jb_ld32(plaintextblk, 1));
+patch: unaligned-encrypt-c-line-146
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)ciphertextblk)[0] = stateS[0] ^ ((unsigned int *)p)[0];
+replace: jb_st32(ciphertextblk, 0, stateS[0] ^ jb_ld32(p, 0));
+patch: unaligned-encrypt-c-line-147
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)ciphertextblk)[1] = stateS[1] ^ ((unsigned int *)p)[1];
+replace: jb_st32(ciphertextblk, 1, stateS[1] ^ jb_ld32(p, 1));
+patch: unaligned-encrypt-c-line-170
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)plaintextblk)[0] = stateS[0] ^ ((unsigned int *)ciphertextblk)[0];
+replace: jb_st32(plaintextblk, 0, stateS[0] ^ jb_ld32(ciphertextblk, 0));
+patch: unaligned-encrypt-c-line-171
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)plaintextblk)[1] = stateS[1] ^ ((unsigned int *)ciphertextblk)[1];
+replace: jb_st32(plaintextblk, 1, stateS[1] ^ jb_ld32(ciphertextblk, 1));
+patch: unaligned-encrypt-c-line-187
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)p)[0] = stateS[0] ^ ((unsigned int *)ciphertextblk)[0];
+replace: jb_st32(p, 0, stateS[0] ^ jb_ld32(ciphertextblk, 0));
+patch: unaligned-encrypt-c-line-188
+why: The reference code reads and writes block words through casts of byte pointers (for example ((unsigned int *)(c+msglen))[0]),
+why: which are misaligned typed accesses (undefined behaviour, UBSan "misaligned address" in CI run 45610244076). The patch moves the
+why: bytes with memcpy to or from a local of the same type (helper functions added in the same file). The value is the native-order
+why: word the cast read or wrote, so every output is bit-identical on every target.
+file: upstream/ref/encrypt.c
+count: 1
+find: ((unsigned int *)p)[1] = stateS[1] ^ ((unsigned int *)ciphertextblk)[1];
+replace: jb_st32(p, 1, stateS[1] ^ jb_ld32(ciphertextblk, 1));
+patch: unaligned-encrypt-c-helpers
+why: Static helper functions for the memcpy-based word accesses of the other unaligned-* patches of this file (no new symbols).
+file: upstream/ref/encrypt.c
+count: 1
+find: static inline void jambu_initialization(
+replace: static __inline unsigned int jb_ld32(const void *p, size_t i) { unsigned int v; memcpy(&v, (const unsigned char *)p + 4 * i, 4); return v; } static __inline void jb_st32(void *p, size_t i, unsigned int v) { memcpy((unsigned char *)p + 4 * i, &v, 4); } static inline void jambu_initialization(

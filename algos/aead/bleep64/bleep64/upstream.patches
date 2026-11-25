@@ -1,0 +1,11 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: bleep64-key-word-4-wraps
+why: The key is CRYPTO_KEYBYTES = 16 bytes = 4 words (key[0..3]), but the IV setup reads key[4], a fifth word past the
+why: key (AddressSanitizer heap-buffer-overflow, CI run 45610244076): every output depended on whatever followed the key
+why: in memory, so the same key/nonce/message encrypted differently on different platforms (macOS decrypt failure).
+why: The rest of the setup uses the key words cyclically (key[0], key[1], key[2], key[3], key[0], key[1]); the patch
+why: reads word 4 mod 4 = key[0], the same cycle. No KATs exist, so this is a NextSSL choice (tier stays unverified).
+file: upstream/ref/encrypt.c
+count: 1
+find:   t  = key[0] * (iv[0] + key[4]);
+replace:   t  = key[0] * (iv[0] + key[0]);

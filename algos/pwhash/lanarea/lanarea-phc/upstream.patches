@@ -1,0 +1,8 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: lanarea-rotate-count-mask
+why: UBSan: ROL/ROR compute value << (sizeof(value)*8 - (shift % sizeof(value))); when shift % sizeof(value) == 0 (r multiple of 8, reported at lanarea.c:152 and :155) the exponent is 64 (width of size_t), which is undefined behaviour.
+why: Masking that complementary count with (width - 1) makes it 0, so the result is (c >> 0) | (c << 0) = c, exactly what x86-64 and AArch64 (count taken mod width) and wasm produced; for nonzero r the mask is a no-op. The author's byte-vs-bit modulus is kept as is, so output is unchanged.
+file: upstream/lanarea.c
+count: 2
+find: (sizeof(value) * 8 - (shift % sizeof(value)))
+replace: ((sizeof(value) * 8 - (shift % sizeof(value))) & (sizeof(value) * 8 - 1))

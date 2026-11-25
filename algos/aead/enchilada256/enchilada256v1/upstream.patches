@@ -1,0 +1,22 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: enchilada256-aes-ctx-layout
+why: enchilada256.c declares its own aes_ctx with k_sch[RD_RKEYS*RD_WORDS] = 120 words, but aescrypt.c (Gladman, built with
+why: BLOCK_SIZE 32 in aes.h) uses aes.h's layout, k_sch[KS_LENGTH = 128] then n_rnd, n_blk. aes_enc_blk therefore read n_rnd and
+why: n_blk 8 words past the end of rd_context (AddressSanitizer global-buffer-overflow, CI run 45610244076): the round count and
+why: the key-ready flag came from whatever followed it in memory. The schedule array now has aes.h's size, so n_rnd and n_blk
+why: are the fields enchilada256.c sets; the 120 schedule words ChaCha writes are unchanged (the last 8 are unused, 14 rounds).
+file: upstream/ref/enchilada256.c
+count: 1
+find: {   u32    k_sch[RD_RKEYS*RD_WORDS];	/* the encryption key schedule      */
+replace: {   u32    k_sch[4 * 32];	/* the encryption key schedule      */
+
+patch: enchilada256-aes-ctx-encrypt-flag
+why: aes_enc_blk returns aes_bad without encrypting unless bit 0 of n_blk is set (Gladman: the encryption key schedule is ready),
+why: and with BLOCK_SIZE fixed n_blk carries only these flags. enchilada256.c set it to RD_RKEYS * RD_BYTES = 480 (even), so with
+why: the layout fixed every block would be left unencrypted (the return value is ignored). The setup builds 15 round keys of 8
+why: words and sets n_rnd = 14, i.e. it means Rijndael-256 with 14 rounds; n_blk is now RD_BYTES | 1 (32-byte block, encryption
+why: ready). No KATs exist, so this is a NextSSL reading of the evident intent (tier stays unverified).
+file: upstream/ref/enchilada256.c
+count: 1
+find: 	rd_context.n_blk = RD_RKEYS * RD_BYTES ;
+replace: 	rd_context.n_blk = RD_BYTES | 1 ;

@@ -1,0 +1,12 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: xkcp-x4-extractbytes-fn-type
+why: KeccakX4ExtractBytesFn declares its state parameter as const void *, but every implementation it is pointed at
+why: (KeccakP1600times4_ExtractBytes_serial from PlSnP-Fallback.inc, and the avx2 one) is defined with void *states.
+why: xkcp_sha3x4.c calls them through Keccak_X4_ExtractBytes_ptr, so UBSan -fsanitize=function reports a call through a
+why: pointer to an incorrect function type (xkcp_sha3x4.c:144-147 and 157-160; a trap on WebAssembly). The patch makes the
+why: typedef match the definitions (void *); callers pass a non-const uint64_t * so nothing else changes and the output
+why: is identical. Later liboqs versions declare the x4 typedef the same way.
+file: upstream/src/common/sha3/xkcp_dispatch.h
+count: 1
+find: typedef void KeccakX4ExtractBytesFn(const void *, unsigned int, unsigned char *, unsigned int, unsigned int);
+replace: typedef void KeccakX4ExtractBytesFn(void *, unsigned int, unsigned char *, unsigned int, unsigned int);

@@ -86,6 +86,19 @@ fn with_rng<T>(rng: &mut dyn EntropySource, f: impl FnOnce() -> T) -> Result<T> 
     Ok(v)
 }
 
+/// First four bytes of every serialized key: m, n, t_bytes, q_bytes (sk_out_str / pk_out_str). The C
+/// parsers sk_in_str / pk_in_str take them from the buffer and use n and m as loop bounds over fixed
+/// arrays (s[F][N], element[F][M]) before any check, so a crafted key would overflow those arrays. Only the
+/// parameter set this crate is built for (M = 128, N = 9, T_BYTES = 4, Q_BYTES = 8) is accepted.
+const KEY_HEADER: [u8; 4] = [128, 9, 4, 8];
+
+fn check_header(what: &'static str, key: &[u8]) -> Result<()> {
+    if key.get(..4) != Some(&KEY_HEADER[..]) {
+        return Err(Error::InvalidInput(what));
+    }
+    Ok(())
+}
+
 fn len_err(what: &'static str, got: usize, min: usize, max: usize) -> Error {
     Error::InvalidLength {
         what,
@@ -139,6 +152,7 @@ impl Pke for P {
         if pk.len() != PK {
             return Err(len_err("pk", pk.len(), PK, PK));
         }
+        check_header("pk header is not (m=128, n=9, t=4, q=8)", pk.as_bytes())?;
         if pt.len() > PT_MAX {
             return Err(len_err("plaintext", pt.len(), 0, PT_MAX));
         }
@@ -171,6 +185,7 @@ impl Pke for P {
         if sk.len() != SK {
             return Err(len_err("sk", sk.len(), SK, SK));
         }
+        check_header("sk header is not (m=128, n=9, t=4, q=8)", sk.as_bytes())?;
         if ct.is_empty() || ct.len() > PT_MAX + OVER {
             return Err(len_err("ciphertext", ct.len(), 1, PT_MAX + OVER));
         }
@@ -229,6 +244,28 @@ mod tests {
             .encrypt(&pk, &vec![1u8; PT_MAX + 1], b"", &mut rng)
             .is_err());
         assert!(p.decrypt(&sk, &[0u8; 3], b"").is_err());
+        // Keys whose header names another parameter set never reach the C parsers.
+        assert_eq!(&pk.as_bytes()[..4], &KEY_HEADER[..]);
+        assert_eq!(&sk.as_bytes()[..4], &KEY_HEADER[..]);
+        let mut bad_sk = sk.as_bytes().to_vec();
+        bad_sk[1] = 200;
+        assert!(p
+            .decrypt(
+                &PrivateKey::from_bytes(&bad_sk, Len::fixed(SK)).unwrap(),
+                &ct,
+                b""
+            )
+            .is_err());
+        let mut bad_pk = pk.as_bytes().to_vec();
+        bad_pk[0] = 255;
+        assert!(p
+            .encrypt(
+                &PublicKey::from_bytes(&bad_pk, Len::fixed(PK)).unwrap(),
+                &[1u8; 16],
+                b"",
+                &mut rng,
+            )
+            .is_err());
     }
 
     /// LP64 check: Windows compiles an LLP64-fixed copy of compact-lwe.c (build.rs). Fixed entropy must

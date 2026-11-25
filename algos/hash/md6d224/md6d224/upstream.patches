@@ -1,0 +1,58 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: md6-trim-hashval-ptr-decl
+why: trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits).
+why: md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member
+why: (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745).
+why: The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged.
+why: hv is derived from the whole md6_state object (an unsigned char view of its representation), not from the
+why: 64-byte hashval member, so reading its 128 bytes stays inside the object the pointer came from.
+file: upstream/ref/md6_mode.c
+count: 1
+find:   int bits = st->d % 8;                 /* bits in partial byte */
+replace:   int bits = st->d % 8;                 /* bits in partial byte */ unsigned char *hv = (unsigned char *)st + ((unsigned char *)st->hashval - (unsigned char *)st);
+patch: md6-trim-hashval-ptr-move
+why: trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits).
+why: md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member
+why: (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745).
+why: The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged.
+file: upstream/ref/md6_mode.c
+count: 1
+find:     st->hashval[i] = st->hashval[c*(w/8)-full_or_partial_bytes+i];
+replace:     hv[i] = hv[c*(w/8)-full_or_partial_bytes+i];
+patch: md6-trim-hashval-ptr-zero
+why: trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits).
+why: md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member
+why: (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745).
+why: The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged.
+file: upstream/ref/md6_mode.c
+count: 1
+find:     st->hashval[i] = 0;
+replace:     hv[i] = 0;
+patch: md6-trim-hashval-ptr-shift
+why: trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits).
+why: md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member
+why: (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745).
+why: The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged.
+file: upstream/ref/md6_mode.c
+count: 1
+find: 	{ st->hashval[i] = (st->hashval[i] << (8-bits));
+replace: 	{ hv[i] = (hv[i] << (8-bits));
+patch: md6-trim-hashval-ptr-or
+why: trim_hashval treats st->hashval as the 128-byte chaining value (c*(w/8)), but the member is hashval[64] (d <= 512 bits).
+why: md6_process memcpy's all 128 bytes of the final chaining value into it, so the upper 64 bytes land in the adjacent hexhashval member
+why: (same struct, contiguous, no padding), and trim_hashval then indexes st->hashval[64..127] (UBSan: index N out of bounds for unsigned char[64], md6_mode.c:741 and :745).
+why: The patch indexes through a plain unsigned char pointer to the same member, so exactly the same bytes are read and written (the last d bits of the chaining value are moved to the front, the rest zeroed); output is unchanged.
+file: upstream/ref/md6_mode.c
+count: 1
+find: 	    st->hashval[i] |= (st->hashval[i+1] >> bits);
+replace: 	    hv[i] |= (hv[i+1] >> bits);
+patch: md6-process-chaining-value-in-object
+why: md6_process stores the full 128-byte final chaining value (c*(w/8)) with memcpy(st->hashval, ...), but hashval is
+why: unsigned char[64]: the upper 64 bytes go into the next member, hexhashval, which trim_hashval then reads back. The
+why: destination is now the same address taken as an unsigned char view of the whole md6_state object, so the copy stays
+why: inside the object its pointer came from (no member overflow, also under _FORTIFY_SOURCE object-size checks). The
+why: same bytes are written to the same place; output is unchanged.
+file: upstream/ref/md6_mode.c
+count: 1
+find:     { memcpy( st->hashval, C, md6_c*(w/8) );
+replace:     { memcpy( (unsigned char *)st + ((unsigned char *)st->hashval - (unsigned char *)st), C, md6_c*(w/8) );

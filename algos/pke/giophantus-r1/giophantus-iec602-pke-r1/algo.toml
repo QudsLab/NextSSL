@@ -19,6 +19,6 @@ files = ["kat/kat.json"]
 [sizes]
 pk = 14412
 sk = 15014
-ct = { min = 1, max = 32124 }
-out = { min = 0, max = 3300 }
+ct = 28824
+out = 16
 ctx = 0

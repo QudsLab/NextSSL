@@ -1,0 +1,91 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: lilliput-vla-param-lilliput-ii-c-const-uint8_t-M-M_len
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ii.c
+count: 2
+find:     const uint8_t M[M_len],
+replace:     const uint8_t *M,
+patch: lilliput-vla-param-lilliput-ii-c-uint8_t-C-M_len
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ii.c
+count: 1
+find:     uint8_t       C[M_len]
+replace:     uint8_t       *C
+patch: lilliput-vla-param-lilliput-ii-c-const-uint8_t-message-message_len
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ii.c
+count: 1
+find:     const uint8_t message[message_len],
+replace:     const uint8_t *message,
+patch: lilliput-vla-param-lilliput-ii-c-const-uint8_t-auth_data-auth_data_len
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ii.c
+count: 2
+find:     const uint8_t auth_data[auth_data_len],
+replace:     const uint8_t *auth_data,
+patch: lilliput-vla-param-lilliput-ii-c-uint8_t-ciphertext-message_len
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ii.c
+count: 1
+find:     uint8_t       ciphertext[message_len],
+replace:     uint8_t       *ciphertext,
+patch: lilliput-vla-param-lilliput-ii-c-const-uint8_t-ciphertext-ciphertext_len
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ii.c
+count: 1
+find:     const uint8_t ciphertext[ciphertext_len],
+replace:     const uint8_t *ciphertext,
+patch: lilliput-vla-param-lilliput-ii-c-uint8_t-message-ciphertext_len
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ii.c
+count: 1
+find:     uint8_t       message[ciphertext_len]
+replace:     uint8_t       *message
+patch: lilliput-vla-param-lilliput-ae-utils-h-static-inline-void-xor_arrays-size_t-len
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ae-utils.h
+count: 1
+find: static inline void xor_arrays(size_t len, uint8_t out[len], const uint8_t a[len], const uint8_t b[len])
+replace: static inline void xor_arrays(size_t len, uint8_t *out, const uint8_t *a, const uint8_t *b)
+patch: lilliput-vla-param-lilliput-ae-utils-h-static-inline-void-pad10-size_t-X_len-co
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ae-utils.h
+count: 1
+find: static inline void pad10(size_t X_len, const uint8_t X[X_len], uint8_t padded[BLOCK_BYTES])
+replace: static inline void pad10(size_t X_len, const uint8_t *X, uint8_t padded[BLOCK_BYTES])
+patch: lilliput-vla-param-lilliput-ae-utils-h-const-uint8_t-A-A_len
+why: The reference code declares array parameters whose bound is a runtime length (e.g. 'uint8_t C[C_len]'). With a zero-length message,
+why: associated data or ciphertext the bound is 0, which UBSan -fsanitize=vla-bound reports as 'variable length array bound evaluates to non-positive value 0'
+why: (CI run 45581879065; C99 6.7.6.2 requires a bound > 0). An array parameter is adjusted to a pointer, so the patch declares the same
+why: parameter as a pointer: the callee code, the argument values and the output are unchanged; only the bound check disappears.
+file: upstream/ref/lilliput-ae-utils.h
+count: 1
+find:     const uint8_t A[A_len],
+replace:     const uint8_t *A,

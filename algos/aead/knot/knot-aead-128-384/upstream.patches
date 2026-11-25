@@ -1,0 +1,30 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: knot-permute-typed-wrappers
+why: knot_aead_absorb_data/encrypt/decrypt call their permutation through a knot_permute_t (void (*)(void *, uint8_t)),
+why: but the pointers are cast from knot256_permute_6/knot384_permute_7/knot512_permute_7, which take a typed state
+why: pointer (UBSan -fsanitize=function: call through pointer to incorrect function type, knot-aead.c:110/130/157;
+why: a trap on WebAssembly). The patch adds wrappers with the exact knot_permute_t signature that forward to the real
+why: permutation (void* converts implicitly to the state pointer) and passes them instead of the casted functions.
+why: The same permutation is called with the same state and rounds, so output is unchanged.
+file: upstream/knot-aead.c
+count: 1
+find: aead_cipher_t const knot_aead_128_256_cipher = {
+replace: static void ns_knot256_permute_6(void *state, uint8_t rounds) { knot256_permute_6(state, rounds); } static void ns_knot384_permute_7(void *state, uint8_t rounds) { knot384_permute_7(state, rounds); } static void ns_knot512_permute_7(void *state, uint8_t rounds) { knot512_permute_7(state, rounds); } aead_cipher_t const knot_aead_128_256_cipher = {
+patch: knot-permute-use-wrapper-256
+why: pass the correctly typed wrapper instead of a cast function pointer (see knot-permute-typed-wrappers).
+file: upstream/knot-aead.c
+count: 4
+find: (knot_permute_t)knot256_permute_6,
+replace: ns_knot256_permute_6,
+patch: knot-permute-use-wrapper-384
+why: pass the correctly typed wrapper instead of a cast function pointer (see knot-permute-typed-wrappers).
+file: upstream/knot-aead.c
+count: 8
+find: (knot_permute_t)knot384_permute_7,
+replace: ns_knot384_permute_7,
+patch: knot-permute-use-wrapper-512
+why: pass the correctly typed wrapper instead of a cast function pointer (see knot-permute-typed-wrappers).
+file: upstream/knot-aead.c
+count: 4
+find: (knot_permute_t)knot512_permute_7,
+replace: ns_knot512_permute_7,

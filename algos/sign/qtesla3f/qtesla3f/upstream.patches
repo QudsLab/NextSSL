@@ -1,0 +1,93 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: qtesla-poly-unaligned-load-1
+why: UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of
+why: an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour.
+why: The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced)
+why: and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+file: upstream/ref/poly.c
+count: 1
+find: val1  = (*(uint32_t*)(buf+pos)) & mask;
+replace: { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; val1 = qt_ & mask; }
+patch: qtesla-poly-unaligned-load-2
+why: UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of
+why: an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour.
+why: The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced)
+why: and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+file: upstream/ref/poly.c
+count: 1
+find: val2  = (*(uint32_t*)(buf+pos)) & mask;
+replace: { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; val2 = qt_ & mask; }
+patch: qtesla-poly-unaligned-load-3
+why: UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of
+why: an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour.
+why: The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced)
+why: and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+file: upstream/ref/poly.c
+count: 1
+find: val3  = (*(uint32_t*)(buf+pos)) & mask;
+replace: { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; val3 = qt_ & mask; }
+patch: qtesla-poly-unaligned-load-4
+why: UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of
+why: an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour.
+why: The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced)
+why: and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+file: upstream/ref/poly.c
+count: 1
+find: val4  = (*(uint32_t*)(buf+pos)) & mask;
+replace: { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; val4 = qt_ & mask; }
+patch: qtesla-sample-unaligned-load-1
+why: UBSan 'load of misaligned address for type uint32_t' (CI run 45610244076): a uint32_t is read through a cast of
+why: an unsigned char buffer at a byte offset that is not a multiple of 4 (nbytes is 3 or 4 bytes per sample). Undefined behaviour.
+why: The patch copies the 4 bytes one by one into a local uint32_t (a memcpy without needing <string.h>, which these files do not include; the same native-order value the cast load produced)
+why: and applies the same mask and the same assignment, so every coefficient and thus every key, signature and KAT is unchanged.
+file: upstream/ref/sample.c
+count: 1
+find: y[i]  = (*(uint32_t*)(buf+pos)) & ((1<<(PARAM_B_BITS+1))-1);
+replace: { uint32_t qt_; unsigned char *qp_ = (unsigned char *)&qt_; const unsigned char *qs_ = (const unsigned char *)(buf+pos); qp_[0] = qs_[0]; qp_[1] = qs_[1]; qp_[2] = qs_[2]; qp_[3] = qs_[3]; y[i] = qt_ & ((1<<(PARAM_B_BITS+1))-1); }
+patch: qtesla-gauss-skip-shift-by-64
+why: UBSan 'shift exponent 64 is too large for 64-bit type int64_t' (CI run 45610244076): 'rbits <<= (64-bitsremained)' runs with
+why: bitsremained == 0, i.e. a shift by 64. x86-64 masks the count to 0 (rbits unchanged), AArch64 gives 0. In both cases the result is
+why: dead: the very next statement is 'if (bitsremained==0LL) { rbits = buf[j++]; bitsremained=64; }', which overwrites rbits
+why: before any use. bitsremained is never above 64 or negative here (refill sets 64, the 6-bit top-up is guarded by <= 58).
+why: The patch skips the shift when bitsremained == 0; for every other value the shift is the identical expression.
+file: upstream/ref/sample.c
+count: 1
+find: rbits <<= (64-bitsremained);
+replace: if (bitsremained != 0) rbits <<= (64-bitsremained);
+patch: qtesla-aligned-wrapper-keypair
+why: Rust passes pk, sk and sm slices at any byte offset, but pack/unpack code in sign.c (and pack.c) reads and writes them through
+why: uint32_t*, int16_t*, int32_t* casts: misaligned access, undefined behaviour (UBSan: load/store of misaligned address). The patch renames the
+why: upstream function to a static qt_wrap_*_impl and defines the public one in front of it with the same signature: it runs the unchanged
+why: function on 8-byte aligned buffers (uint64_t arrays; sm via malloc) and copies the bytes in and out, so the algorithm sees identical bytes
+why: and outputs identical bytes. The aligned secret-key copy is zeroized on every exit path; an allocation failure or length overflow returns -1.
+file: upstream/ref/sign.c
+count: 1
+find: int crypto_sign_keypair(unsigned char *pk, unsigned char *sk)
+replace: static int qt_wrap_keypair_impl(unsigned char *pk, unsigned char *sk); int crypto_sign_keypair(unsigned char *pk, unsigned char *sk) { uint64_t pkw[(CRYPTO_PUBLICKEYBYTES+7)/8]; uint64_t skw[(CRYPTO_SECRETKEYBYTES+7)/8]; int r; r = qt_wrap_keypair_impl((unsigned char *)pkw, (unsigned char *)skw); memcpy(pk, pkw, CRYPTO_PUBLICKEYBYTES); memcpy(sk, skw, CRYPTO_SECRETKEYBYTES); { volatile unsigned char *qz_ = (volatile unsigned char *)skw; size_t qi_; for (qi_ = 0; qi_ < sizeof skw; qi_++) qz_[qi_] = 0; } return r; } static int qt_wrap_keypair_impl(unsigned char *pk, unsigned char *sk)
+patch: qtesla-aligned-wrapper-sign
+why: Rust passes pk, sk and sm slices at any byte offset, but pack/unpack code in sign.c (and pack.c) reads and writes them through
+why: uint32_t*, int16_t*, int32_t* casts: misaligned access, undefined behaviour (UBSan: load/store of misaligned address). The patch renames the
+why: upstream function to a static qt_wrap_*_impl and defines the public one in front of it with the same signature: it runs the unchanged
+why: function on 8-byte aligned buffers (uint64_t arrays; sm via malloc) and copies the bytes in and out, so the algorithm sees identical bytes
+why: and outputs identical bytes. The aligned secret-key copy is zeroized on every exit path; an allocation failure or length overflow returns -1.
+file: upstream/ref/sign.c
+count: 1
+find: int crypto_sign(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk)
+replace: static int qt_wrap_sign_impl(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk); int crypto_sign(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk) { uint64_t skw[(CRYPTO_SECRETKEYBYTES+7)/8]; unsigned long long cap = mlen + CRYPTO_BYTES; uint64_t *smw; int r; if (cap < mlen || cap > (unsigned long long)((size_t)-1) - 16) return -1; smw = (uint64_t *)malloc((size_t)((cap + 7) / 8 + 1) * 8); if (smw == NULL) return -1; memcpy(skw, sk, CRYPTO_SECRETKEYBYTES); r = qt_wrap_sign_impl((unsigned char *)smw, smlen, m, mlen, (const unsigned char *)skw); if (r == 0) { if (*smlen > cap) r = -1; else memcpy(sm, smw, (size_t)*smlen); } free(smw); { volatile unsigned char *qz_ = (volatile unsigned char *)skw; size_t qi_; for (qi_ = 0; qi_ < sizeof skw; qi_++) qz_[qi_] = 0; } return r; } static int qt_wrap_sign_impl(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk)
+patch: qtesla-aligned-wrapper-open
+why: Rust passes pk, sk and sm slices at any byte offset, but pack/unpack code in sign.c (and pack.c) reads and writes them through
+why: uint32_t*, int16_t*, int32_t* casts: misaligned access, undefined behaviour (UBSan: load/store of misaligned address). The patch renames the
+why: upstream function to a static qt_wrap_*_impl and defines the public one in front of it with the same signature: it runs the unchanged
+why: function on 8-byte aligned buffers (uint64_t arrays; sm via malloc) and copies the bytes in and out, so the algorithm sees identical bytes
+why: and outputs identical bytes. The aligned secret-key copy is zeroized on every exit path; an allocation failure or length overflow returns -1.
+file: upstream/ref/sign.c
+count: 1
+find: int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk)
+replace: static int qt_wrap_open_impl(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk); int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk) { uint64_t pkw[(CRYPTO_PUBLICKEYBYTES+7)/8]; uint64_t *smw; int r; if (smlen > (unsigned long long)((size_t)-1) - 16) return -1; smw = (uint64_t *)malloc((size_t)((smlen + 7) / 8 + 1) * 8); if (smw == NULL) return -1; if (smlen != 0) memcpy(smw, sm, (size_t)smlen); memcpy(pkw, pk, CRYPTO_PUBLICKEYBYTES); r = qt_wrap_open_impl(m, mlen, (const unsigned char *)smw, smlen, (const unsigned char *)pkw); free(smw); return r; } static int qt_wrap_open_impl(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk)
+patch: qtesla-gauss-aligned-seed-buffer
+why: seed_ex is an unsigned char stack array that is reinterpreted as int64_t* (buf): not guaranteed 8-byte aligned (UB, misaligned load).
+why: The patch declares the storage as an int64_t array and keeps seed_ex as a byte pointer to it; sizes and contents are unchanged.
+file: upstream/ref/sample.c
+count: 1
+find: unsigned char seed_ex[PARAM_N*8];
+replace: int64_t seed_ex_w_[PARAM_N*1]; unsigned char *seed_ex = (unsigned char *)seed_ex_w_;

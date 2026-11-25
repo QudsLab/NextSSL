@@ -1,0 +1,8 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: luffa-tweak-rotate-count-mask
+why: UBSan: shift exponent 32 is too large for 32-bit type 'uint32' in the Luffa tweak rotate-left by j (j in 0..4) when j == 0: x >> (32-0).
+why: Masking the count with 31 makes j == 0 shift by 0, so the rotate is (x << 0) | (x >> 0) = x | x = x, exactly the value x86 (count masked to 0) produced and the value an ideal rotate gives; on ARM the old code gave x | 0 = x as well. Output unchanged for j = 1..4.
+file: upstream/Luffa/Reference Implementation/luffa.c
+count: 1
+find: >>(32-j));
+replace: >>((32-j)&31));

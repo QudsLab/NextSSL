@@ -1,0 +1,36 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: xoodoo-extractbytes-skip-empty-copy
+why: UBSan: memcpy in Xoodoo_ExtractBytes (Xoodoo-reference.c:76, reported) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute).
+why: Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+file: upstream/ref/Xoodoo-reference.c
+count: 1
+find:     memcpy(data, (unsigned char*)state+offset, length);
+replace:     if (length != 0) memcpy(data, (unsigned char*)state+offset, length);
+patch: xoodoo-overwritebytes-skip-empty-copy
+why: UBSan: memcpy in Xoodoo_OverwriteBytes (Xoodoo-reference.c:59, same pattern as the reported line, data may be NULL) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute).
+why: Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+file: upstream/ref/Xoodoo-reference.c
+count: 1
+find:     memcpy((unsigned char*)state+offset, data, length);
+replace:     if (length != 0) memcpy((unsigned char*)state+offset, data, length);
+patch: cyclist-initialize-skip-empty-id-copy
+why: UBSan: memcpy(KID + KLen, ID, IDLen) in Cyclist_Initialize (Cyclist.inc:114, reported for the xoodyakv1 NULL ID, IDLen 0) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute).
+why: Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+file: upstream/ref/Cyclist.inc
+count: 1
+find:         memcpy(KID + KLen, ID, IDLen);
+replace:         if (IDLen != 0) memcpy(KID + KLen, ID, IDLen);
+patch: cyclist-crypt-skip-empty-copy
+why: UBSan: memcpy(P, I, splitLen) in Cyclist_Crypt (Cyclist.inc:154, empty plaintext with NULL buffers) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute).
+why: Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+file: upstream/ref/Cyclist.inc
+count: 1
+find:             memcpy(P, I, splitLen);
+replace:             if (splitLen != 0) memcpy(P, I, splitLen);
+patch: xoodyak-decrypt-skip-empty-memset
+why: UBSan: memset(m, 0, mlen_) in crypto_aead_decrypt (encrypt.c, empty plaintext with NULL m, same pattern) is called with a null pointer and length 0 (empty AD/message, or Cyclist_Up(..., NULL, 0, ...) which extracts nothing); null is undefined for memcpy/memset even with length 0 (nonnull attribute).
+why: Guarding with the length skips only a zero-byte copy, which has no effect, so behaviour and output are identical; non-zero lengths take the same path as before.
+file: upstream/ref/encrypt.c
+count: 1
+find:         memset(m, 0, (size_t)mlen_);
+replace:         if (mlen_ != 0) memset(m, 0, (size_t)mlen_);
