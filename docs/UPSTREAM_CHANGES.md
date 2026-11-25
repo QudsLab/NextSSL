@@ -19,7 +19,7 @@ so anyone can see what was changed, where and why, and reproduce or review it.
 
 Glue code (`glue.rs`), shims (`shim.c`) and `build.rs` are NextSSL code, not upstream code.
 
-## 1. Patches (22 distinct, in 24 crates)
+## 1. Patches (23 distinct, in 28 crates)
 
 ### cloc-silc-pstate2-prototype
 
@@ -123,6 +123,19 @@ poly_S3_tobytes / poly_S3_frombytes pack NTRU_PACK_DEG = 700 trits five per byte
 ```diff
 -   i = NTRU_PACK_DEG/5;
 +   i = NTRU_PACK_DEG/5 - (NTRU_PACK_DEG % 5 == 0);
+```
+
+### mayo-shake256-return-type
+
+Crates: mayo-1-r2, mayo-2-r2, mayo-3-r2, mayo-5-r2
+
+File: `upstream/*/common/fips202.h` (1 occurrence(s))
+
+fips202.h declares `int shake256(...)` but fips202.c (which does not include it) defines `void shake256(...)`. x86/ARM ignore the mismatch; wasm checks function types, so mayo.c's `drop` of the missing result makes the module invalid ("type mismatch: expected a type but nothing on stack" in mayo_keypair_compact, every MAYO wasm32 binary, CI runs up to 45581879065). No caller uses the result. The patch declares the function as it is defined (void); the definition and every caller compile unchanged.
+
+```diff
+- int shake256(unsigned char *output, size_t outputByteLen, const unsigned char *input, size_t inputByteLen);
++ void shake256(unsigned char *output, size_t outputByteLen, const unsigned char *input, size_t inputByteLen);
 ```
 
 ### ryde-mat-fq-word-size

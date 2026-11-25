@@ -1,0 +1,11 @@
+# Portability patches (format and list: docs/UPSTREAM_CHANGES.md).
+patch: mayo-shake256-return-type
+why: fips202.h declares `int shake256(...)` but fips202.c (which does not include it) defines `void shake256(...)`.
+why: x86/ARM ignore the mismatch; wasm checks function types, so mayo.c's `drop` of the missing result makes the
+why: module invalid ("type mismatch: expected a type but nothing on stack" in mayo_keypair_compact, every MAYO
+why: wasm32 binary, CI runs up to 45581879065). No caller uses the result. The patch declares the function as
+why: it is defined (void); the definition and every caller compile unchanged.
+file: upstream/src/common/fips202.h
+count: 1
+find: int shake256(unsigned char *output, size_t outputByteLen, const unsigned char *input, size_t inputByteLen);
+replace: void shake256(unsigned char *output, size_t outputByteLen, const unsigned char *input, size_t inputByteLen);
