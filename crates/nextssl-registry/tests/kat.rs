@@ -1004,12 +1004,53 @@ fn join_worker(h: Option<std::thread::JoinHandle<()>>) {
     }
 }
 
+/// The smoke loop is split into SMOKE_PARTS tests (algorithm i goes to part i % SMOKE_PARTS) so a
+/// runner that starts every test in its own process (tools/testrun.py) runs the parts in parallel.
+/// wasm32 has no threads, so one test over the whole catalog ran alone for 2786 s in wasmtime
+/// (CI run 45679985523, limit 3600 s). Every algorithm is still checked exactly once.
+const SMOKE_PARTS: usize = 8;
+
+macro_rules! smoke_parts {
+    ($($name:ident = $part:expr;)*) => {
+        $(
+            #[test]
+            fn $name() {
+                smoke_part($part);
+            }
+        )*
+    };
+}
+
+smoke_parts! {
+    every_algorithm_instantiates_with_metadata_sizes_and_behaves_part0 = 0;
+    every_algorithm_instantiates_with_metadata_sizes_and_behaves_part1 = 1;
+    every_algorithm_instantiates_with_metadata_sizes_and_behaves_part2 = 2;
+    every_algorithm_instantiates_with_metadata_sizes_and_behaves_part3 = 3;
+    every_algorithm_instantiates_with_metadata_sizes_and_behaves_part4 = 4;
+    every_algorithm_instantiates_with_metadata_sizes_and_behaves_part5 = 5;
+    every_algorithm_instantiates_with_metadata_sizes_and_behaves_part6 = 6;
+    every_algorithm_instantiates_with_metadata_sizes_and_behaves_part7 = 7;
+}
+
+/// The parts together cover the catalog: every part asserts that each of its algorithms passed, so
+/// the kinds exercised by all parts are exactly the registered kinds counted here.
 #[test]
-fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
+fn every_algorithm_instantiates_with_metadata_sizes_and_behaves_kinds() {
+    let kinds: BTreeSet<&str> = all().iter().map(|a| a.kind.as_str()).collect();
+    println!("kinds registered: {kinds:?}");
+    if full_catalog() {
+        assert!(kinds.len() >= 10, "too few kinds registered: {kinds:?}");
+    }
+}
+
+fn smoke_part(part: usize) {
     // Triage aid: KAT_SKIP=id1,id2 leaves those algorithms out of this smoke loop (unset = none).
     let skip = std::env::var("KAT_SKIP").unwrap_or_default();
     let todo: Vec<&'static AlgoInfo> = all()
         .iter()
+        .enumerate()
+        .filter(|(i, _)| i % SMOKE_PARTS == part)
+        .map(|(_, a)| a)
         .filter(|a| !skip.split(',').any(|s| s == a.id) && selected(a.id))
         .collect();
     // One algorithm per worker, each with its own timeout; SMOKE_JOBS at once (see jobs()).
@@ -1061,11 +1102,8 @@ fn every_algorithm_instantiates_with_metadata_sizes_and_behaves() {
         "{} algorithms failed: {failures:?}",
         failures.len()
     );
-    // Every kind that has a registered algorithm was instantiated; print for the test log.
-    println!("kinds exercised: {kinds:?}");
-    if full_catalog() {
-        assert!(kinds.len() >= 10, "too few kinds registered: {kinds:?}");
-    }
+    // The kinds this part instantiated; the catalog-wide floor is checked in `..._kinds`.
+    println!("part {part}: {} algorithms, kinds exercised: {kinds:?}", results.len());
 }
 
 /// Replays the published-vector files that carry `"replay": "registry"` (AEAD, block cipher,
