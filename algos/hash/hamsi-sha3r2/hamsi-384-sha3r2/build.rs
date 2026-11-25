@@ -26,6 +26,10 @@ fn base() -> cc::Build {
     // K&R-era upstreams. gnu17 is the dialect these sources were written against.
     if !b.get_compiler().is_like_msvc() {
         b.flag("-std=gnu17");
+        // nist-wrapper.c defines `inline void HV(...)` without `extern`: under C99 that emits no
+        // external definition, so a build that does not inline it (the -O1 sanitizer build) fails to
+        // link (CI run 45581879065: undefined symbol HV). GNU inline rules emit the definition.
+        b.flag("-fgnu89-inline");
     }
     b.warnings(false).opt_level(2);
 
@@ -104,7 +108,10 @@ fn defined_symbols(objs: &[PathBuf]) -> BTreeSet<String> {
         let strip = f.format() == BinaryFormat::MachO
             || (f.format() == BinaryFormat::Coff && f.architecture() == Architecture::I386);
         for s in f.symbols() {
-            if s.is_undefined() || !s.is_global() {
+            // A Mach-O common symbol (tentative definition, -fcommon) is N_UNDF with its size as the
+            // value: object reports it undefined, so it counts as defined when its address is not 0
+            // (CI run 45581879065: macOS SPHINCS+ crates shared one unrenamed `state_seeded`).
+            if (s.is_undefined() && s.address() == 0) || !s.is_global() {
                 continue;
             }
             if !matches!(
