@@ -19,7 +19,7 @@ so anyone can see what was changed, where and why, and reproduce or review it.
 
 Glue code (`glue.rs`), shims (`shim.c`) and `build.rs` are NextSSL code, not upstream code.
 
-## 1. Patches (14 distinct, in 20 crates)
+## 1. Patches (15 distinct, in 21 crates)
 
 ### cloc-silc-pstate2-prototype
 
@@ -97,6 +97,19 @@ ROT(w, b) computes (w >> b) ^ (w << (64 - b)), and meshhash calls it with b = 0 
 ```diff
 - #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> (b) ^ (w) << (64 - (b))) & 0xffffffffffffffffULL)
 + #define ROT(w,b) ((((w) & 0xffffffffffffffffULL) >> ((b) & 63) | (w) << ((64 - (b)) & 63)) & 0xffffffffffffffffULL)
+```
+
+### ntruhrss-r1-pack-tail-in-bounds
+
+Crates: ntruhrss701-r1
+
+File: `upstream/*/ntruhrss701/poly.c` (2 occurrence(s))
+
+poly_S3_tobytes / poly_S3_frombytes pack NTRU_PACK_DEG = 700 trits five per byte into NTRU_OWCPA_MSGBYTES = (700+4)/5 = 140 bytes, then handle a partial last byte at index 700/5 = 140 that does not exist when 5 divides 700: tobytes writes msg[140] and frombytes reads msg[140], one byte past the buffer (the 140-byte stack array m in ntrukem.c; macOS's stack protector aborts, CI run 45513495947). The round 2 package fixes it with `#if NTRU_PACK_DEG > (NTRU_PACK_DEG / 5) * 5`. The patch starts the tail at the last full byte (139) when 5 divides 700: tobytes recomputes msg[139] from the same five coefficients, frombytes recomputes coeffs 695..699 from msg[139] (c*171>>9 repeated equals the direct c*57>>9, c*19>>9, c*203>>14 for every byte value), so the output is identical and nothing outside the buffers is touched.
+
+```diff
+-   i = NTRU_PACK_DEG/5;
++   i = NTRU_PACK_DEG/5 - (NTRU_PACK_DEG % 5 == 0);
 ```
 
 ### ryde-mat-fq-word-size
