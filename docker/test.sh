@@ -47,11 +47,16 @@ if [ "${NEXTSSL_FFI_SWEEP:-0}" = "1" ]; then
   NEXTSSL_FFI_SWEEP=1 cargo test -p nextssl-ffi sweep -- --nocapture
 fi
 
-if [ "${NEXTSSL_SYMBOLS:-0}" = "1" ]; then
+# Layers without per-crate result caching are skipped when their inputs are bit for bit those of an
+# earlier passing run (tools/layer_cache.py, records in $NEXTSSL_RESULT_CACHE; never skipped locally).
+LAYER_CACHE="python3 tools/layer_cache.py"
+
+if [ "${NEXTSSL_SYMBOLS:-0}" = "1" ] && ! $LAYER_CACHE check symbols; then
   cargo xtask check-symbols
+  $LAYER_CACHE record symbols
 fi
 
-if [ "${NEXTSSL_MIRI:-0}" = "1" ]; then
+if [ "${NEXTSSL_MIRI:-0}" = "1" ] && ! $LAYER_CACHE check miri; then
   # KAT tests read algos/**/kat/*.json, so Miri needs host file access.
   # blake2b (C via FFI) is skipped under cfg(miri); the ffi crate is exercised with pure-Rust algos.
   MIRIFLAGS="-Zmiri-disable-isolation" CARGO_TARGET_DIR=/tmp/target-miri \
@@ -60,6 +65,7 @@ if [ "${NEXTSSL_MIRI:-0}" = "1" ]; then
   # algorithm of the catalog (388) and the published KATs; under the Miri interpreter that does not
   # finish in CI time (SLH-DSA, ML-DSA, scrypt, ...). The same file runs natively, under ASan/UBSan
   # and in wasmtime. Individual pure-Rust algorithm crates are not run under Miri.
+  $LAYER_CACHE record miri
 fi
 
 if [ "${NEXTSSL_ASAN:-0}" = "1" ]; then
@@ -83,7 +89,15 @@ if [ "${NEXTSSL_ASAN:-0}" = "1" ]; then
 fi
 
 FUZZ_TARGETS=$(cd fuzz/fuzz_targets && ls *.rs | sed 's/\.rs$//')
+# fuzz-smoke on unchanged inputs is skipped like the other layers: 30 s per target finds little that
+# the same 30 s did not find on the same code.
+FUZZ_LAYER="fuzz ${NEXTSSL_FUZZ_BUILD:-0} ${NEXTSSL_FUZZ_SECS:-}"
+if { [ "${NEXTSSL_FUZZ_BUILD:-0}" = "1" ] || [ -n "${NEXTSSL_FUZZ_SECS:-}" ]; } && $LAYER_CACHE check $FUZZ_LAYER; then
+  NEXTSSL_FUZZ_BUILD=0
+  NEXTSSL_FUZZ_SECS=
+fi
 if [ "${NEXTSSL_FUZZ_BUILD:-0}" = "1" ] || [ -n "${NEXTSSL_FUZZ_SECS:-}" ]; then
+  FUZZ_RAN=1
   (cd fuzz && cargo +nightly fuzz build)
 fi
 if [ -n "${NEXTSSL_FUZZ_SECS:-}" ]; then
@@ -105,6 +119,7 @@ if [ -n "${NEXTSSL_FUZZ_SECS:-}" ]; then
   done
   set -x
 fi
+if [ "${FUZZ_RAN:-0}" = "1" ]; then $LAYER_CACHE record $FUZZ_LAYER; fi
 
 if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   # NEXTSSL_WASM_BUILD=1 (CI build stage): build everything for both wasm targets, run nothing.
@@ -132,13 +147,26 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   # time outside build and tests, mostly this module, was 1128 s of wasm 1/2 and 148 s of wasm 2/2).
   case "${NEXTSSL_SHARD:-1/1}" in
     1/1|2/2|3/3|4/4|5/5|6/6|7/7|8/8|9/9)
-      CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_RUSTFLAGS='--cfg getrandom_backend="wasm_js" -C link-arg=-L/usr/lib/wasm32-wasi -C link-arg=-lc' \
-        cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release --locked --keep-going || WASM_FAIL=1
-      ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm" || WASM_FAIL=1
+      # On unchanged inputs (tools/layer_cache.py) the module of the earlier passing build is reused:
+      # it is kept next to the record, so the release still gets the module of exactly these inputs.
+      MODULE="${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm"
+      KEPT="${NEXTSSL_RESULT_CACHE:-/nonexistent}/layers/nextssl_wasm.wasm"
+      if [ -f "$KEPT" ] && $LAYER_CACHE check wasm-browser; then
+        MODULE="$KEPT"
+      else
+        CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_RUSTFLAGS='--cfg getrandom_backend="wasm_js" -C link-arg=-L/usr/lib/wasm32-wasi -C link-arg=-lc' \
+          cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release --locked --keep-going || WASM_FAIL=1
+        ls -l "$MODULE" || WASM_FAIL=1
+        if [ "$WASM_FAIL" = "0" ] && [ -n "${NEXTSSL_RESULT_CACHE:-}" ]; then
+          mkdir -p "$NEXTSSL_RESULT_CACHE/layers"
+          cp "$MODULE" "$KEPT"
+          $LAYER_CACHE record wasm-browser
+        fi
+      fi
       # NEXTSSL_WASM_OUT: CI copies the module out; the wasm pre-release job publishes this exact file
       # instead of building it again.
       if [ -n "${NEXTSSL_WASM_OUT:-}" ] && [ "$WASM_FAIL" = "0" ]; then
-        cp "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm" "$NEXTSSL_WASM_OUT/" || WASM_FAIL=1
+        cp "$MODULE" "$NEXTSSL_WASM_OUT/" || WASM_FAIL=1
       fi
       ;;
   esac
