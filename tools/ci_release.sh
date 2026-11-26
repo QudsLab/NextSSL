@@ -55,8 +55,10 @@ case "${1:-}" in
     for p in linux-x64 linux-arm64 windows-x64 windows-arm64 macos-arm64 wasm; do
       set -- dist/nextssl-"${ver}"+"${sha::7}"-"${p}".tar.gz
       if [ "$#" != 1 ] || [ ! -s "$1" ]; then echo "missing: $p" >&2; missing=1; continue; fi
-      tar -tzf "$1" > /dev/null || { echo "unreadable: $1" >&2; missing=1; }
-      tar -tzf "$1" | grep -q '/LICENSE$' || { echo "no LICENSE in $1" >&2; missing=1; }
+      # List once, then search the list: `tar | grep -q` fails under pipefail when grep exits at the
+      # first match and tar gets a write error (run 45775068475: "no LICENSE" for all 6 archives).
+      if ! list=$(tar -tzf "$1"); then echo "unreadable: $1" >&2; missing=1; continue; fi
+      grep -q '/LICENSE$' <<< "$list" || { echo "no LICENSE in $1" >&2; missing=1; }
     done
     [ "$missing" = 0 ] || exit 1
     pre=yes

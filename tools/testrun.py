@@ -183,7 +183,7 @@ def workspace_members(cargo, excluded, meta=None):
 #   * the content of every file of its own directory tree and of every path dependency, transitively
 #     (an algorithm's whole family directory algos/<kind>/<family>/, so sibling parameter sets that
 #     share sources are covered),
-#   * the files every crate can read: third_party/, docker/, Cargo.toml, Cargo.lock,
+#   * the files every crate can read: third_party/, docker/ (in the container only), Cargo.toml, Cargo.lock,
 #     rust-toolchain.toml, .cargo/, tools/testrun.py,
 #   * the toolchain (rustc -vV, cc/c++ --version, runner image, Docker image id), every environment
 #     variable a build can read (CC*, CXX*, AR*, *FLAGS*, CARGO_*, RUST*, NEXTSSL_* except paths) and
@@ -193,6 +193,10 @@ def workspace_members(cargo, excluded, meta=None):
 
 GLOBAL_INPUTS = ['third_party', 'docker', 'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', '.cargo',
                  'tools/testrun.py']
+# docker/ is read only by runs inside the test container (docker/test.sh); a platform runner never
+# reads it, so a change there must not rerun every platform crate (run 45775068475: a docker/test.sh
+# edit sent linux-x64 test 2/3 from 1-5 min to 17 min).
+IN_CONTAINER = os.path.exists('/.dockerenv')
 KEY_ENV = re.compile(r'^(CC|CXX|AR|CFLAGS|CXXFLAGS|RUSTFLAGS|RUSTDOCFLAGS|CARGO_|RUST|NEXTSSL_|TARGET_|HOST_|'
                      r'SMOKE_|ASAN_|UBSAN_|LSAN_|MSAN_|MIRI|WASMTIME|ImageOS$|ImageVersion$|RUNNER_OS$|'
                      r'RUNNER_ARCH$|MACOSX_|SDKROOT$)')
@@ -249,6 +253,8 @@ def result_keys(cargo, meta, names, options):
     toolchain = [x for x in shlex.split(cargo)[1:] if x.startswith('+')]
     common = hashlib.sha256()
     for g in GLOBAL_INPUTS:
+        if g == 'docker' and not IN_CONTAINER:
+            continue
         p = os.path.join(root, g)
         if os.path.exists(p):
             common.update(f'{g}={tree_digest(p, memo)}\n'.encode())
