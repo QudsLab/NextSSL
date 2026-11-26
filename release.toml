@@ -1,18 +1,17 @@
-# NextSSL release channel (owner decision 2026-11-26). tools/release_info.py reads it.
+# NextSSL release channel (owner decision 2026-11-27). tools/release_info.py reads it.
 #
-# Version of a CI run on main: <base>.<GitHub run number>, e.g. 0.0.142; tag v<version>+<commit7>.
-# The run number only grows and is never reused, so two runs never get the same version.
-# Raise `base` (e.g. "0.1") for a new line; it must equal the major.minor of Cargo.toml's
-# [workspace.package] version (guard checks it).
-#
-# Each base has its stage:
-#   stage = "pre-release"  not ready for production: every platform pre-release and the final release
-#                          of a run are marked pre-release.
-#   stage = "release"      production: the final release of a run (after every platform passed) is
-#                          marked as the release; the platform pre-releases stay pre-releases.
+# The version is Cargo.toml's [workspace.package] version, set by hand and nowhere else; the tag is
+# v<version> (the commit is named in the release notes and BUILD_INFO.txt, not in the tag).
+# CI on main publishes a version once: when no release v<version> exists yet, the run builds the
+# release libraries and, after every platform passed, publishes
+#   v<version>-<platform>  one pre-release per platform, as soon as that platform passed;
+#   v<version>             the release with every platform's files, after all of them passed.
+# Every other push to main only builds and tests. To publish, raise the version in Cargo.toml.
 # Releases are public (no drafts).
-base = "0.0"
-
-[bases."0.0"]
+#
+#   stage = "pre-release"  the release v<version> is marked Pre-release on GitHub (beta);
+#   stage = "release"      it is a full release and becomes Latest.
+#   label                  shown in the release title, e.g. "beta".
 stage = "pre-release"
+label = "beta"
 note = "Early remake of NextSSL: tested in CI on every platform, not yet for production use."

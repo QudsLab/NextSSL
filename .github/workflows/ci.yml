@@ -14,10 +14,11 @@ permissions:
   contents: read
 
 # Every push to main (owner decision 2026-11-24) builds, lints and tests every algorithm on every
-# platform. Each platform publishes its own pre-release v<version>+<commit>-<platform> as soon as its
-# chain is green; the release v<version>+<commit> follows when every platform is green (owner
-# decisions 2026-11-25/26; version and stage from release.toml, no drafts). Pull requests run the
-# same checks without a release.
+# platform. A version is published once (owner decision 2026-11-27, release.toml): when guard finds no
+# release v<version> for Cargo.toml's version, the run also builds the release libraries; each platform
+# publishes its pre-release v<version>-<platform> as soon as its chain is green, and the release
+# v<version> follows when every platform is green (no drafts). Every other run only builds and tests.
+# Pull requests run the same checks without a release.
 #
 # Pipeline (owner decision 2026-11-24: stages one after another, each platform on its own line):
 #   guard  ->  <platform> test 1/3, 2/3, 3/3 (3/3 + release build)  ->  <platform> pre-release  ->  release
@@ -43,8 +44,8 @@ permissions:
 #   passed is not built or tested again; the report counts it as cached.
 # * Docker layer cache: in the GitHub container registry (ghcr.io/<owner>/nextssl-buildcache, with
 #   the workflow's own GITHUB_TOKEN), not in the 10 GB Actions cache; only pushes to main write it.
-# * release: v<version>+<commit> with every platform's files, after every job above passed and the
-#   archives were checked (tools/ci_release.sh final); a pre-release while release.toml says so.
+# * release: v<version> with every platform's files, after every job above passed and the archives
+#   were checked (tools/ci_release.sh final); marked pre-release while release.toml says so.
 env:
   CARGO_INCREMENTAL: '0'
   CARGO_PROFILE_DEV_DEBUG: '0'
@@ -54,6 +55,8 @@ jobs:
   guard:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    outputs:
+      release: ${{ steps.release.outputs.release }}
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
@@ -74,6 +77,22 @@ jobs:
           python3 tools/licenses_gen.py --check
           cargo fmt --all --check
           python3 -m py_compile tools/*.py
+      # A push to main publishes Cargo.toml's version once: only while no release v<version> exists.
+      - name: Release of this version needed
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$(python3 tools/release_info.py tag)
+          main=no
+          [ "${{ github.event_name }}" = push ] && [ "${{ github.ref }}" = refs/heads/main ] && main=yes
+          if [ "$main" = yes ] && ! gh release view "$tag" --json tagName > /dev/null 2>&1; then
+            echo "release=true" >> "$GITHUB_OUTPUT"
+            echo "$tag is not published yet: this run builds and publishes it." | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            echo "No release in this run ($tag is published already, or not a push to main)." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
 
   linux-x64:
     needs: guard
@@ -81,35 +100,35 @@ jobs:
       contents: write
       actions: read
     uses: ./.github/workflows/platform.yml
-    with: { name: linux-x64, os: ubuntu-latest, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
+    with: { name: linux-x64, os: ubuntu-latest, release: "${{ needs.guard.outputs.release == 'true' }}" }
   linux-arm64:
     needs: guard
     permissions:
       contents: write
       actions: read
     uses: ./.github/workflows/platform.yml
-    with: { name: linux-arm64, os: ubuntu-24.04-arm, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
+    with: { name: linux-arm64, os: ubuntu-24.04-arm, release: "${{ needs.guard.outputs.release == 'true' }}" }
   windows-x64:
     needs: guard
     permissions:
       contents: write
       actions: read
     uses: ./.github/workflows/platform.yml
-    with: { name: windows-x64, os: windows-latest, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
+    with: { name: windows-x64, os: windows-latest, release: "${{ needs.guard.outputs.release == 'true' }}" }
   windows-arm64:
     needs: guard
     permissions:
       contents: write
       actions: read
     uses: ./.github/workflows/platform.yml
-    with: { name: windows-arm64, os: windows-11-arm, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
+    with: { name: windows-arm64, os: windows-11-arm, release: "${{ needs.guard.outputs.release == 'true' }}" }
   macos-arm64:
     needs: guard
     permissions:
       contents: write
       actions: read
     uses: ./.github/workflows/platform.yml
-    with: { name: macos-arm64, os: macos-latest, release: "${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}" }
+    with: { name: macos-arm64, os: macos-latest, release: "${{ needs.guard.outputs.release == 'true' }}" }
 
   # Docker jobs: wasm (both wasm targets, tests in wasmtime) and the slow layers, in the same image the
   # owner uses locally (docker/Dockerfile.test); docker/test.sh selects the work from the env flags.
@@ -215,7 +234,7 @@ jobs:
       # The browser module built by the last wasm shard (docker/test.sh), published as is by the wasm
       # pre-release job below.
       - uses: actions/upload-artifact@v7
-        if: ${{ matrix.layer == 'wasm' && matrix.part == matrix.parts && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        if: ${{ matrix.layer == 'wasm' && matrix.part == matrix.parts && needs.guard.outputs.release == 'true' }}
         with:
           name: wasm-module
           path: wasm-out/nextssl_wasm.wasm
@@ -244,8 +263,8 @@ jobs:
     name: wasm / pre-release
     # After the wasm tests (and the other docker layers) passed. The module is the one the last wasm
     # shard built and tested (artifact wasm-module); it is not built a second time.
-    needs: docker
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [guard, docker]
+    if: needs.guard.outputs.release == 'true'
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -268,13 +287,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: bash tools/ci_release.sh platform wasm
 
-  # The release of the run, v<version>+<commit> with every platform's files: only after every job above
-  # passed (each platform chain with its own pre-release, wasm, asan, miri, symbols, fuzz-smoke). Marked
-  # pre-release while release.toml says stage = "pre-release" for the version base (tools/ci_release.sh).
+  # The release v<version> with every platform's files: only after every job above passed (each
+  # platform chain with its own pre-release, wasm, asan, miri, symbols, fuzz-smoke). Marked pre-release
+  # while release.toml says stage = "pre-release" (tools/ci_release.sh).
   release:
     name: release
-    needs: [linux-x64, linux-arm64, windows-x64, windows-arm64, macos-arm64, docker, release-build-wasm]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [guard, linux-x64, linux-arm64, windows-x64, windows-arm64, macos-arm64, docker, release-build-wasm]
+    if: needs.guard.outputs.release == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
