@@ -2,16 +2,15 @@
 #
 # The version is Cargo.toml's [workspace.package] version, set by hand and nowhere else; the tag is
 # v<version> (the commit is named in the release notes and BUILD_INFO.txt, not in the tag).
-# CI on main publishes a version once: when no release v<version> exists yet, the run builds the
-# release libraries and, after every platform passed, publishes
-#   v<version>-<platform>  one pre-release per platform, as soon as that platform passed;
-#   v<version>             the release with every platform's files, after all of them passed.
+# CI on main publishes a version once: when no release v<version> exists yet, the run builds every
+# platform's release archive and, after every job passed, publishes one release v<version> with all of
+# them (owner decision 2026-11-27: one release, no per-platform releases).
 # Every other push to main only builds and tests. To publish, raise the version in Cargo.toml.
 # Releases are public (no drafts).
 #
-#   stage = "pre-release"  the release v<version> is marked Pre-release on GitHub (beta);
-#   stage = "release"      it is a full release and becomes Latest.
+#   stage = "release"      a full release; it becomes Latest (owner decision 2026-11-27, also for beta);
+#   stage = "pre-release"  marked Pre-release on GitHub instead (never shown as Latest).
 #   label                  shown in the release title, e.g. "beta".
-stage = "pre-release"
+stage = "release"
 label = "beta"
 note = "Early remake of NextSSL: tested in CI on every platform, not yet for production use."

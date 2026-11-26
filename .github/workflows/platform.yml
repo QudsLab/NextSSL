@@ -1,11 +1,11 @@
 name: platform
-# One platform's chain, called by ci.yml once per platform: test (3 shards in parallel) -> pre-release.
-# Each platform runs its own chain, so a fast platform releases without waiting for a slow one.
+# One platform's tests, called by ci.yml once per platform: 3 shards in parallel. In a release run the
+# platform's release archive (artifact release-<platform>) is built here; ci.yml's release job publishes
+# one release with every platform's archive (owner decision 2026-11-27: no per-platform releases).
 # The release libraries are built by test shard 3 right after its tests (shards 2 and 3 finish long
 # before shard 1, which builds every algorithm library), so the release build overlaps shard 1
 # instead of following it, without taking another runner (GitHub runs about 20 jobs at once; in run
-# 45775068475 three jobs waited 13-16 min for a runner). The pre-release is published only after all
-# 3 shards, and so every test of the platform, passed.
+# 45775068475 three jobs waited 13-16 min for a runner).
 on:
   workflow_call:
     inputs:
@@ -156,25 +156,3 @@ jobs:
           name: release-${{ inputs.name }}
           path: dist/
           if-no-files-found: error
-
-  # This platform's own pre-release, once its 3 test shards (shard 3 with the release build) passed;
-  # the final release v<version> (ci.yml) comes only after every platform passed. Publishing needs no
-  # build, so it runs on a Linux runner for every platform.
-  release:
-    name: pre-release
-    needs: test
-    if: inputs.release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/download-artifact@v8
-        with:
-          name: release-${{ inputs.name }}
-          path: dist
-      - name: Pre-release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: bash tools/ci_release.sh platform "${{ inputs.name }}"
