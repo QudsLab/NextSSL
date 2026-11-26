@@ -313,7 +313,8 @@ def main():
             slog += '\ntest result: (per-crate run)\n'
         else:
             slog = in_docker(f'cargo test -p nextssl-registry --test kat --no-fail-fast '
-                             f'every_algorithm_instantiates_with_metadata_sizes_and_behaves -- --nocapture --test-threads 1 2>&1',
+                             f'every_algorithm_instantiates_with_metadata_sizes_and_behaves -- --nocapture '
+                             f'--test-threads {EXTRA_ENV.get("SMOKE_JOBS", "4")} 2>&1',
                              'nsl-target', files, 'smoke')
         (out / 'fasttest-smoke.log').write_text(slog, errors='replace')
         rows = [f'smoke {r}' for r in smoke_failures(slog)]

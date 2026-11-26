@@ -873,12 +873,28 @@ fn jobs() -> usize {
         .max(1)
 }
 
-/// Runs `run` over `todo` with `jobs()` threads; the results come back in `todo`'s order.
+/// Workers inside one smoke part: SMOKE_PART_JOBS, default 1. The 8 parts are separate tests, and
+/// tools/testrun.py runs every test in its own process, 4 at a time on the 4-vCPU CI runners, so one
+/// worker per part keeps 4 algorithms running at once, as the single smoke test did with SMOKE_JOBS=4.
+/// SMOKE_JOBS per part gave 16 workers on 4 vCPUs and FAEST/Mirath passed the 900 s limit (CI run
+/// 45790790602). Locally, run the parts side by side with `--test-threads N` instead.
+fn part_jobs() -> usize {
+    if cfg!(target_family = "wasm") {
+        return 1;
+    }
+    std::env::var("SMOKE_PART_JOBS")
+        .ok()
+        .and_then(|v| v.parse::<usize>().ok())
+        .unwrap_or(1)
+        .max(1)
+}
+
+/// Runs `run` over `todo` with `jobs` threads; the results come back in `todo`'s order.
 fn run_pool<I: Copy + Send + Sync, R: Send>(
     todo: &[I],
+    jobs: usize,
     run: impl Fn(I) -> R + Sync,
 ) -> Vec<(I, R)> {
-    let jobs = jobs();
     if jobs == 1 {
         return todo.iter().map(|&a| (a, run(a))).collect();
     }
@@ -1053,7 +1069,7 @@ fn smoke_part(part: usize) {
         .map(|(_, a)| a)
         .filter(|a| !skip.split(',').any(|s| s == a.id) && selected(a.id))
         .collect();
-    // One algorithm per worker, each with its own timeout; SMOKE_JOBS at once (see jobs()).
+    // One algorithm per worker, each with its own timeout; part_jobs() at once.
     let run = |a: &'static AlgoInfo| -> Result<(), String> {
         if std::env::var_os("KAT_TRACE").is_some() {
             println!("smoke {}", a.id);
@@ -1080,7 +1096,7 @@ fn smoke_part(part: usize) {
             None => Err(format!("{}: HANG (> {:?})", a.id, PER_ALGO_TIMEOUT)),
         }
     };
-    let results: Vec<(&'static AlgoInfo, Result<(), String>)> = run_pool(&todo, run);
+    let results: Vec<(&'static AlgoInfo, Result<(), String>)> = run_pool(&todo, part_jobs(), run);
     let mut kinds = BTreeSet::new();
     let mut failures: Vec<String> = Vec::new();
     for (a, r) in &results {
@@ -1091,7 +1107,7 @@ fn smoke_part(part: usize) {
             Err(m) => failures.push(m.clone()),
         }
     }
-    // Same order whatever SMOKE_JOBS is.
+    // Same order whatever the number of workers is.
     failures.sort();
     assert_eq!(results.len(), todo.len(), "every selected algorithm ran");
     for f in &failures {
@@ -1253,7 +1269,7 @@ fn published_kats_replay_through_the_registry() {
         }
         r
     };
-    for ((a, f), r) in run_pool(&todo, run) {
+    for ((a, f), r) in run_pool(&todo, jobs(), run) {
         match r {
             Some(lines) => {
                 for l in lines {
