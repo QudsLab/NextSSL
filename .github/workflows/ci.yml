@@ -21,7 +21,7 @@ permissions:
 # Pipeline (owner decision 2026-11-24: stages one after another, each platform on its own line):
 #   guard  ->  <platform> test 1/3, 2/3, 3/3  ->  <platform> release + pre-release  ->  release
 #          ->  wasm 1/2, 2/2                  ->  wasm release + pre-release        ->
-#          ->  asan 1/2, 2/2, symbols, miri, fuzz-smoke                             ->
+#          ->  asan 1/3, 2/3, 3/3, symbols, miri, fuzz-smoke                        ->
 # * guard: the checks that do not depend on the platform (generated files, change paper, rustfmt),
 #   a few minutes; nothing else starts when they fail.
 # * Each platform chain is .github/workflows/platform.yml; a platform's release libraries are built
@@ -115,20 +115,26 @@ jobs:
     permissions:
       contents: read
       packages: write
-    name: ${{ matrix.layer }}${{ matrix.part && format(' {0}/2', matrix.part) || '' }}
+    name: ${{ matrix.layer }}${{ matrix.part && format(' {0}/{1}', matrix.part, matrix.parts) || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { layer: wasm, env: NEXTSSL_WASM=1, part: '1' }
-          - { layer: wasm, env: NEXTSSL_WASM=1, part: '2' }
-          - { layer: asan, env: NEXTSSL_ASAN=1, part: '1' }
-          - { layer: asan, env: NEXTSSL_ASAN=1, part: '2' }
-          - { layer: symbols, env: NEXTSSL_SYMBOLS=1, part: '' }
-          - { layer: miri, env: NEXTSSL_MIRI=1, part: '' }
-          - { layer: fuzz-smoke, env: NEXTSSL_FUZZ_SECS=30, part: '' }
+          # Shard counts from run 45679985523 (4 vCPU runners). Shard 1 builds every algorithm library
+          # (the registry links them all), so it has a floor no shard count lowers: asan about 66 min,
+          # wasm about 34 min. The other shards get the fewest parts that keep each one below that floor
+          # and below 50 min: asan 2 parts were 62 min, 3 parts are about 41 and 46 min; wasm 2/2 is
+          # about 43 min with the browser module, which the last shard builds (docker/test.sh).
+          - { layer: wasm, env: NEXTSSL_WASM=1, part: '1', parts: '2' }
+          - { layer: wasm, env: NEXTSSL_WASM=1, part: '2', parts: '2' }
+          - { layer: asan, env: NEXTSSL_ASAN=1, part: '1', parts: '3' }
+          - { layer: asan, env: NEXTSSL_ASAN=1, part: '2', parts: '3' }
+          - { layer: asan, env: NEXTSSL_ASAN=1, part: '3', parts: '3' }
+          - { layer: symbols, env: NEXTSSL_SYMBOLS=1, part: '', parts: '' }
+          - { layer: miri, env: NEXTSSL_MIRI=1, part: '', parts: '' }
+          - { layer: fuzz-smoke, env: NEXTSSL_FUZZ_SECS=30, part: '', parts: '' }
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
@@ -170,7 +176,7 @@ jobs:
       - name: Run ${{ matrix.layer }}
         run: |
           SHARD=""
-          if [ -n "${{ matrix.part }}" ]; then SHARD="${{ matrix.part }}/2"; fi
+          if [ -n "${{ matrix.part }}" ]; then SHARD="${{ matrix.part }}/${{ matrix.parts }}"; fi
           python3 tools/ci_test_report.py --out test-report -- \
             docker run --rm -v "$PWD/test-report:/report" -e NEXTSSL_REPORT_DIR=/report \
             -v "$RUNNER_TEMP/ccache:/ccache" -e NEXTSSL_C_CACHE=/ccache             -v "$RUNNER_TEMP/results:/results" -e NEXTSSL_RESULT_CACHE=/results \
@@ -185,12 +191,12 @@ jobs:
           if-no-files-found: warn
       # The container wrote the cache as root.
       - name: Prune the C library cache
-        if: ${{ !cancelled() && matrix.part != '2' && github.event_name == 'push' }}
+        if: ${{ !cancelled() && (matrix.part == '' || matrix.part == '1') && github.event_name == 'push' }}
         run: |
           sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/ccache"
           python3 tools/ccache_prune.py "$RUNNER_TEMP/ccache" "$RUNNER_TEMP/ccache-stamp"
       - uses: actions/cache/save@v6
-        if: ${{ !cancelled() && matrix.part != '2' && github.event_name == 'push' }}
+        if: ${{ !cancelled() && (matrix.part == '' || matrix.part == '1') && github.event_name == 'push' }}
         with:
           path: ${{ runner.temp }}/ccache
           key: ${{ env.CACHE_VERSION }}-${{ matrix.layer }}-${{ github.run_id }}

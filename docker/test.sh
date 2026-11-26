@@ -127,9 +127,11 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   # backend cfg (see crates/nextssl-wasm/Cargo.toml); this env var replaces .cargo/config.toml rustflags.
   # Both wasm builds always run (--keep-going, failures collected) so one pass reports every crate.
   WASM_FAIL=0
-  # The browser module is built once: by shard 1 when the tests are split (NEXTSSL_SHARD=1/N).
+  # The browser module is built once: by the last shard when the tests are split (NEXTSSL_SHARD=N/N),
+  # because shard 1 already builds every algorithm library and is the longest (run 45679985523: the
+  # time outside build and tests, mostly this module, was 1128 s of wasm 1/2 and 148 s of wasm 2/2).
   case "${NEXTSSL_SHARD:-1/1}" in
-    1/*)
+    1/1|2/2|3/3|4/4|5/5|6/6|7/7|8/8|9/9)
       CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_RUSTFLAGS='--cfg getrandom_backend="wasm_js" -C link-arg=-L/usr/lib/wasm32-wasi -C link-arg=-lc' \
         cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release --keep-going || WASM_FAIL=1
       ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm" || WASM_FAIL=1
