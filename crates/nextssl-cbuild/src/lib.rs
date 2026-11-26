@@ -13,7 +13,8 @@
 //! * the workspace `Cargo.lock` (the `cc` version and every build dependency);
 //! * the C and C++ compiler path, size and `--version` output, and clang-cl's on MSVC targets;
 //! * every environment variable the C build can read (CC*, CFLAGS*, AR*, CARGO_CFG_*, TARGET, HOST,
-//!   OPT_LEVEL, DEBUG, PROFILE, NEXTSSL_*, the runner image version, ...);
+//!   OPT_LEVEL, DEBUG, PROFILE, NEXTSSL_*, the runner OS, ...);
+//! * the macOS/iOS SDK path and build version, or the glibc version (not the runner image version);
 //! * this crate's own source.
 //!
 //! A cached entry is used only when both digests match, and each stored library still matches its
@@ -257,8 +258,10 @@ impl Ctx {
 
 /// Environment the C build reads: cc-rs's tool and flag variables (also the `_<target>` and
 /// `TARGET_`/`HOST_` forms), Cargo's target description, our NEXTSSL_* switches, the SDK and
-/// toolchain locations and the runner image. Names that vary per machine without changing the build
-/// (HOSTNAME, RUNNER_*, PATH order, ...) are left out on purpose.
+/// toolchain locations and the runner OS. Names that vary per machine without changing the build
+/// (HOSTNAME, RUNNER_*, PATH order, ...) are left out on purpose, and so is the runner image version:
+/// GitHub rolls several image versions at once with the same toolchain (run 45828577802: every macOS
+/// entry missed). The system headers are keyed by `sysroot_identity` instead.
 fn relevant_env(k: &str) -> bool {
     const EXACT: &[&str] = &[
         "CC",
@@ -284,7 +287,6 @@ fn relevant_env(k: &str) -> bool {
         "MACOSX_DEPLOYMENT_TARGET",
         "IPHONEOS_DEPLOYMENT_TARGET",
         "ImageOS",
-        "ImageVersion",
     ];
     const PREFIXES: &[&str] = &[
         "CC_",
@@ -342,7 +344,7 @@ fn compilers() -> Vec<String> {
             paths.push((p, Vec::new()));
         }
     }
-    paths
+    let mut ids: Vec<String> = paths
         .into_iter()
         .map(|(p, envs)| {
             let size = std::fs::metadata(&p).map(|m| m.len()).unwrap_or(0);
@@ -361,7 +363,36 @@ fn compilers() -> Vec<String> {
                 .unwrap_or_default();
             format!("{}|{size}|{out}", p.display())
         })
-        .collect()
+        .collect();
+    ids.extend(sysroot_identity());
+    ids
+}
+
+/// The SDK and C library the compilers build against: the macOS/iOS SDK path and build version, or
+/// the glibc version. Empty where neither applies (MSVC is covered by INCLUDE/LIB and the tool).
+fn sysroot_identity() -> Vec<String> {
+    let run = |cmd: &str, args: &[&str]| {
+        std::process::Command::new(cmd)
+            .args(args)
+            .output()
+            .map(|o| {
+                format!(
+                    "{cmd} {args:?}: {}",
+                    String::from_utf8_lossy(&o.stdout).trim()
+                )
+            })
+            .unwrap_or_default()
+    };
+    match env("CARGO_CFG_TARGET_VENDOR").as_str() {
+        "apple" => vec![
+            run("xcrun", &["--show-sdk-path"]),
+            run("xcrun", &["--show-sdk-build-version"]),
+        ],
+        _ if env("CARGO_CFG_TARGET_ENV") == "gnu" && env("CARGO_CFG_TARGET_OS") == "linux" => {
+            vec![run("getconf", &["GNU_LIBC_VERSION"])]
+        }
+        _ => Vec::new(),
+    }
 }
 
 struct Manifest {

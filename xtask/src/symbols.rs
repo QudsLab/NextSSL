@@ -308,8 +308,10 @@ fn nm(tool: &str, file: &Path, dynamic: bool) -> Res<Vec<Sym>> {
 struct Built {
     staticlib: PathBuf,
     cdylib: PathBuf,
-    /// (algo id, build-script out dir)
-    c_out_dirs: Vec<(String, PathBuf)>,
+    /// (algo id, static libraries its build script told cargo to link). Taken from cargo's
+    /// linked_libs/linked_paths, not the out dir: a nextssl-cbuild cache hit writes the library only
+    /// to the shared nextssl-c-libs directory (run 45828577802: "no archive" for every C algo).
+    c_libs: Vec<(String, Vec<PathBuf>)>,
 }
 
 fn build(c_ids: &[String]) -> Res<Built> {
@@ -332,7 +334,7 @@ fn build(c_ids: &[String]) -> Res<Built> {
         return Err("cargo build -p nextssl-ffi failed".into());
     }
     let (mut staticlib, mut cdylib) = (None, None);
-    let mut c_out_dirs = Vec::new();
+    let mut c_libs = Vec::new();
     for line in String::from_utf8_lossy(&out.stdout).lines() {
         let Ok(v) = serde_json::from_str::<serde_json::Value>(line) else {
             continue;
@@ -357,9 +359,34 @@ fn build(c_ids: &[String]) -> Res<Built> {
                 for id in c_ids {
                     let name = format!("nextssl-algo-{id}");
                     if pkg.contains(&format!("#{name}@")) || pkg.starts_with(&format!("{name} ")) {
-                        if let Some(d) = v["out_dir"].as_str() {
-                            c_out_dirs.push((id.clone(), PathBuf::from(d)));
+                        let strs = |k: &str| -> Vec<String> {
+                            v[k].as_array()
+                                .into_iter()
+                                .flatten()
+                                .filter_map(|x| x.as_str().map(str::to_string))
+                                .collect()
+                        };
+                        let dirs: Vec<PathBuf> = strs("linked_paths")
+                            .iter()
+                            .map(|d| {
+                                PathBuf::from(d.split_once('=').map_or(d.as_str(), |(_, p)| p))
+                            })
+                            .collect();
+                        let mut libs = Vec::new();
+                        for l in strs("linked_libs") {
+                            let Some(name) = l.strip_prefix("static=") else {
+                                continue;
+                            };
+                            let name = name.split_once(':').map_or(name, |(_, n)| n);
+                            for d in &dirs {
+                                for f in [format!("lib{name}.a"), format!("{name}.lib")] {
+                                    if d.join(&f).is_file() {
+                                        libs.push(d.join(f));
+                                    }
+                                }
+                            }
                         }
+                        c_libs.push((id.clone(), libs));
                     }
                 }
             }
@@ -369,7 +396,7 @@ fn build(c_ids: &[String]) -> Res<Built> {
     Ok(Built {
         staticlib: staticlib.ok_or("staticlib artifact not reported by cargo")?,
         cdylib: cdylib.ok_or("cdylib artifact not reported by cargo")?,
-        c_out_dirs,
+        c_libs,
     })
 }
 
@@ -442,24 +469,17 @@ pub fn run() -> Res<()> {
     let mut c_members = BTreeSet::new();
     let mut c_archives: Vec<(String, PathBuf, Vec<Sym>)> = Vec::new();
     for id in &c_ids {
-        let Some((_, dir)) = built.c_out_dirs.iter().find(|(i, _)| i == id) else {
+        let Some((_, libs)) = built.c_libs.iter().find(|(i, _)| i == id) else {
             failures.push(format!("no build output found for C algo {id}"));
             continue;
         };
-        let mut archives: Vec<PathBuf> = std::fs::read_dir(dir)
-            .map_err(|e| format!("{}: {e}", dir.display()))?
-            .flatten()
-            .map(|e| e.path())
-            .filter(|p| {
-                matches!(
-                    p.extension().and_then(|e| e.to_str()),
-                    Some("a") | Some("lib")
-                )
-            })
-            .collect();
+        let mut archives = libs.clone();
         archives.sort();
+        archives.dedup();
         if archives.is_empty() {
-            failures.push(format!("C algo {id}: no archive in {}", dir.display()));
+            failures.push(format!(
+                "C algo {id}: no static library among its linked_libs"
+            ));
         }
         for ar in archives {
             let syms = nm(&tool, &ar, false)?;

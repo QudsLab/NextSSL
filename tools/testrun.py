@@ -185,7 +185,8 @@ def workspace_members(cargo, excluded, meta=None):
 #     share sources are covered),
 #   * the files every crate can read: third_party/, docker/ (in the container only), Cargo.toml, Cargo.lock,
 #     rust-toolchain.toml, .cargo/, tools/testrun.py,
-#   * the toolchain (rustc -vV, cc/c++ --version, runner image, Docker image id), every environment
+#   * the toolchain (rustc -vV, cc/c++ --version, macOS SDK build / glibc version, runner OS, Docker
+#     toolchain image), every environment
 #     variable a build can read (CC*, CXX*, AR*, *FLAGS*, CARGO_*, RUST*, NEXTSSL_* except paths) and
 #     the testrun options (cargo command, runner, limits, clippy, features).
 # Anything else changes the key, and a crate whose key is new is built and tested in full.
@@ -198,7 +199,7 @@ GLOBAL_INPUTS = ['third_party', 'docker', 'Cargo.toml', 'Cargo.lock', 'rust-tool
 # edit sent linux-x64 test 2/3 from 1-5 min to 17 min).
 IN_CONTAINER = os.path.exists('/.dockerenv')
 KEY_ENV = re.compile(r'^(CC|CXX|AR|CFLAGS|CXXFLAGS|RUSTFLAGS|RUSTDOCFLAGS|CARGO_|RUST|NEXTSSL_|TARGET_|HOST_|'
-                     r'SMOKE_|ASAN_|UBSAN_|LSAN_|MSAN_|MIRI|WASMTIME|ImageOS$|ImageVersion$|RUNNER_OS$|'
+                     r'SMOKE_|ASAN_|UBSAN_|LSAN_|MSAN_|MIRI|WASMTIME|ImageOS$|RUNNER_OS$|'
                      r'RUNNER_ARCH$|MACOSX_|SDKROOT$)')
 KEY_ENV_SKIP = {'CARGO_HOME', 'CARGO_TARGET_DIR', 'RUSTUP_HOME', 'NEXTSSL_C_CACHE', 'NEXTSSL_REPORT_DIR',
                 'NEXTSSL_RESULT_CACHE', 'NEXTSSL_RESULT_CACHE_WRITE_ONLY', 'NEXTSSL_SHARD', 'CARGO_TERM_COLOR'}
@@ -261,6 +262,11 @@ def result_keys(cargo, meta, names, options):
     common.update(tool_version(['rustc'] + toolchain + ['-vV']).encode())
     for c in ('cc', 'c++', 'clang', 'clang-cl'):
         common.update(tool_version([c, '--version']).encode())
+    # The system headers and libraries the compilers use (not the runner image version: GitHub rolls
+    # several image versions at once with the same toolchain, and run 45828577802's macOS image change
+    # dropped every cached result).
+    common.update(tool_version(['xcrun', '--show-sdk-build-version']).encode())
+    common.update(tool_version(['getconf', 'GNU_LIBC_VERSION']).encode())
     for k in sorted(os.environ):
         if KEY_ENV.match(k) and k not in KEY_ENV_SKIP:
             common.update(f'{k}={os.environ[k]}\n'.encode())
