@@ -1,4 +1,6 @@
-FROM rust:1
+# Stage toolchain: compilers, wasm runtime and Rust toolchains, no sources. CI keys its result cache
+# on this stage's layers (ci.yml), so a commit does not invalidate every cached test result.
+FROM rust:1 AS toolchain
 ARG WASMTIME_VERSION=50.0.1
 ARG WASMTIME_SHA256=685466455dd42a14774a86c36c8f2e45cbb9bd6d92a850139315df60a75498a5
 RUN apt-get update \
@@ -19,6 +21,8 @@ RUN rustup toolchain install stable --profile minimal -c rustfmt -c clippy \
         -t wasm32-unknown-unknown -t wasm32-wasip1 \
     && rustup toolchain install nightly --profile minimal -c rust-src -c miri -c rustfmt \
     && cargo install cargo-fuzz --locked
+
+FROM toolchain
 WORKDIR /src
 COPY . .
 # Windows checkouts may have CRLF; bash needs LF.

@@ -133,8 +133,13 @@ if [ "${NEXTSSL_WASM:-0}" = "1" ] || [ "${NEXTSSL_WASM_BUILD:-0}" = "1" ]; then
   case "${NEXTSSL_SHARD:-1/1}" in
     1/1|2/2|3/3|4/4|5/5|6/6|7/7|8/8|9/9)
       CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_RUSTFLAGS='--cfg getrandom_backend="wasm_js" -C link-arg=-L/usr/lib/wasm32-wasi -C link-arg=-lc' \
-        cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release --keep-going || WASM_FAIL=1
+        cargo build -p nextssl-wasm --target wasm32-unknown-unknown --release --locked --keep-going || WASM_FAIL=1
       ls -l "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm" || WASM_FAIL=1
+      # NEXTSSL_WASM_OUT: CI copies the module out; the wasm pre-release job publishes this exact file
+      # instead of building it again.
+      if [ -n "${NEXTSSL_WASM_OUT:-}" ] && [ "$WASM_FAIL" = "0" ]; then
+        cp "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/release/nextssl_wasm.wasm" "$NEXTSSL_WASM_OUT/" || WASM_FAIL=1
+      fi
       ;;
   esac
   # KAT + unit tests inside wasmtime (/src preopened so the KAT json files are readable).

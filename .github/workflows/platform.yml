@@ -1,7 +1,11 @@
 name: platform
-# One platform's chain, called by ci.yml once per platform: test (3 shards in parallel) -> release.
-# Each platform runs its own chain, so a fast platform releases without waiting for a slow one, and
-# the release libraries are built only after every test of that platform passed.
+# One platform's chain, called by ci.yml once per platform: test (3 shards in parallel) -> pre-release.
+# Each platform runs its own chain, so a fast platform releases without waiting for a slow one.
+# The release libraries are built by test shard 3 right after its tests (shards 2 and 3 finish long
+# before shard 1, which builds every algorithm library), so the release build overlaps shard 1
+# instead of following it, without taking another runner (GitHub runs about 20 jobs at once; in run
+# 45775068475 three jobs waited 13-16 min for a runner). The pre-release is published only after all
+# 3 shards, and so every test of the platform, passed.
 on:
   workflow_call:
     inputs:
@@ -113,66 +117,64 @@ jobs:
         with:
           path: ${{ runner.temp }}/results
           key: results-v1-${{ inputs.name }}-${{ matrix.shard }}-${{ github.run_id }}
-
-  # Release libraries, only after all 3 shards passed. Their own C library cache (release-<platform>,
-  # written only by this job on main): a library is reused only when every input digest matches.
-  release:
-    name: pre-release
-    needs: test
-    if: inputs.release
-    runs-on: ${{ inputs.os }}
-    permissions:
-      contents: write
-    timeout-minutes: 120
-    steps:
-      - uses: actions/checkout@v7
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: actions/cache@v6
-        with:
-          path: |
-            ~/.cargo/registry/index
-            ~/.cargo/registry/cache
-            ~/.cargo/git/db
-          key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock') }}
-      - uses: actions/setup-python@v7
-        with:
-          python-version: '3.12'
-      - name: clang-cl (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          if (-not (Test-Path 'C:\Program Files\LLVM\bin\clang-cl.exe')) { choco install llvm -y --no-progress }
-      - name: C library cache directory
+      # Release libraries (main only), on shard 3 after its tests passed, with their own C library
+      # cache (release-<platform>): a library is reused only when every input digest matches. The test
+      # build is removed first to keep the runner's disk free.
+      - name: Free the test build
+        if: inputs.release && matrix.shard == 3
         shell: bash
         run: |
-          mkdir -p "$RUNNER_TEMP/ccache"
-          touch "$RUNNER_TEMP/ccache-stamp"
-          echo "NEXTSSL_C_CACHE=$RUNNER_TEMP/ccache" >> "$GITHUB_ENV"
+          rm -rf target/debug
+          mkdir -p "$RUNNER_TEMP/ccache-release"
+          touch "$RUNNER_TEMP/ccache-release-stamp"
       - uses: actions/cache/restore@v6
+        if: inputs.release && matrix.shard == 3
         with:
-          path: ${{ runner.temp }}/ccache
+          path: ${{ runner.temp }}/ccache-release
           key: ${{ env.CACHE_VERSION }}-release-${{ inputs.name }}-${{ github.run_id }}
           restore-keys: ${{ env.CACHE_VERSION }}-release-${{ inputs.name }}-
-      - run: cargo build -p nextssl-ffi --release --locked
-      - name: Prune the C library cache
+      - name: Release build
+        if: inputs.release && matrix.shard == 3
         shell: bash
-        run: python tools/ccache_prune.py "$NEXTSSL_C_CACHE" "$RUNNER_TEMP/ccache-stamp"
+        run: NEXTSSL_C_CACHE="$RUNNER_TEMP/ccache-release" cargo build -p nextssl-ffi --release --locked
+      - name: Prune the release C library cache
+        if: inputs.release && matrix.shard == 3
+        shell: bash
+        run: python tools/ccache_prune.py "$RUNNER_TEMP/ccache-release" "$RUNNER_TEMP/ccache-release-stamp"
       - uses: actions/cache/save@v6
+        if: inputs.release && matrix.shard == 3
         with:
-          path: ${{ runner.temp }}/ccache
+          path: ${{ runner.temp }}/ccache-release
           key: ${{ env.CACHE_VERSION }}-release-${{ inputs.name }}-${{ github.run_id }}
       - name: Package
+        if: inputs.release && matrix.shard == 3
         shell: bash
         run: bash tools/release_package.sh "${{ inputs.name }}"
       - uses: actions/upload-artifact@v7
+        if: inputs.release && matrix.shard == 3
         with:
           name: release-${{ inputs.name }}
           path: dist/
           if-no-files-found: error
-      # This platform's own pre-release, as soon as its 3 test shards and the release build passed; the
-      # final release v<version> (ci.yml) comes only after every platform passed.
+
+  # This platform's own pre-release, once its 3 test shards (shard 3 with the release build) passed;
+  # the final release v<version> (ci.yml) comes only after every platform passed. Publishing needs no
+  # build, so it runs on a Linux runner for every platform.
+  release:
+    name: pre-release
+    needs: test
+    if: inputs.release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: release-${{ inputs.name }}
+          path: dist
       - name: Pre-release
-        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: bash tools/ci_release.sh platform "${{ inputs.name }}"

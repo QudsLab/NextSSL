@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Package one platform's release build into dist/nextssl-<version>+<commit>-<platform>.tar.gz (CI release
 # jobs). Contents: the nextssl-ffi libraries (or nextssl_wasm.wasm), the C header, the NextSSL LICENSE,
-# and for every algorithm its upstream LICENSE/ORIGIN.md plus a table of the SPDX ids from algo.toml.
+# and licenses/ (every algorithm's upstream license files, origin note and the SPDX table in README.md).
 # Usage: bash tools/release_package.sh <platform>   (wasm: expects wasm-out/nextssl_wasm.wasm)
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -31,22 +31,10 @@ else
 fi
 
 cp LICENSE "${stage}/LICENSE"
-# Every algorithm's upstream license text and origin note, and one table of the declared SPDX ids.
-{
-  printf 'algorithm\tlicense (algo.toml)\n'
-  for t in algos/*/*/*/algo.toml; do
-    d=$(dirname "$t")
-    id=$(basename "$d")
-    lic=$(grep -o 'license = "[^"]*"' "$t" | head -1 | sed 's/license = "\(.*\)"/\1/')
-    printf '%s\t%s\n' "$id" "${lic:-UNKNOWN}"
-    if [ -d "$d/upstream" ]; then
-      mkdir -p "${stage}/licenses/${id}"
-      for f in "$d"/upstream/LICENSE* "$d"/upstream/COPYING* "$d"/upstream/ORIGIN.md; do
-        [ -f "$f" ] && cp "$f" "${stage}/licenses/${id}/"
-      done
-    fi
-  done
-} > "${stage}/licenses/ALGORITHM_LICENSES.tsv"
+# Every algorithm's upstream license files and origin note, and the table of SPDX ids: licenses/
+# (tools/licenses_gen.py, checked by guard). One copy instead of a loop of ~10 processes per algorithm,
+# which took 858 s on the windows-arm64 runner (run 45679985523).
+cp -R licenses/. "${stage}/licenses/"
 
 cat > "${stage}/BUILD_INFO.txt" <<EOF
 NextSSL ${ver}
