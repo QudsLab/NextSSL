@@ -205,6 +205,15 @@ jobs:
           path: ${{ runner.temp }}/ccache
           key: ${{ env.CACHE_VERSION }}-${{ matrix.layer }}-${{ github.run_id }}
           restore-keys: ${{ env.CACHE_VERSION }}-${{ matrix.layer }}-
+      # The last wasm shard also builds the browser module (release, wasm32-unknown-unknown), whose C
+      # libraries are not in shard 1's cache; it keeps them in a cache of its own (wasm-browser). Without
+      # it they were compiled anew in every run: 18 min of wasm 2/2 in run 45828577802, its tests 0 s.
+      - uses: actions/cache/restore@v6
+        if: ${{ matrix.layer == 'wasm' && matrix.part == matrix.parts }}
+        with:
+          path: ${{ runner.temp }}/ccache
+          key: ${{ env.CACHE_VERSION }}-wasm-browser-${{ github.run_id }}
+          restore-keys: ${{ env.CACHE_VERSION }}-wasm-browser-
       - name: Result cache directory
         run: mkdir -p "$RUNNER_TEMP/results"
       - uses: actions/cache/restore@v6
@@ -250,6 +259,17 @@ jobs:
         with:
           path: ${{ runner.temp }}/ccache
           key: ${{ env.CACHE_VERSION }}-${{ matrix.layer }}-${{ github.run_id }}
+      # The browser module's C libraries (see the restore above); pruned to the entries this shard used.
+      - name: Prune the browser module's C library cache
+        if: ${{ !cancelled() && matrix.layer == 'wasm' && matrix.part == matrix.parts && github.event_name == 'push' }}
+        run: |
+          sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/ccache"
+          python3 tools/ccache_prune.py "$RUNNER_TEMP/ccache" "$RUNNER_TEMP/ccache-stamp"
+      - uses: actions/cache/save@v6
+        if: ${{ !cancelled() && matrix.layer == 'wasm' && matrix.part == matrix.parts && github.event_name == 'push' }}
+        with:
+          path: ${{ runner.temp }}/ccache
+          key: ${{ env.CACHE_VERSION }}-wasm-browser-${{ github.run_id }}
       - name: Result cache owner
         if: ${{ !cancelled() && github.event_name != 'pull_request' }}
         run: sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/results"
