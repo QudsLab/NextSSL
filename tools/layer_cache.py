@@ -14,8 +14,9 @@ variable `check` always fails and `record` does nothing, so a local run always r
 
 The key is a SHA-256 over
   * every file below the directories a build can read: algos/, algos_parked/, algos_untrusted/,
-    crates/, xtask/, fuzz/ (not its corpus, artifacts or target), third_party/, tools/, docker/,
-    .cargo/, and Cargo.toml, Cargo.lock, rust-toolchain.toml (path and content);
+    crates/, xtask/, fuzz/ (not its corpus, artifacts or target), third_party/, tools/ (except the
+    CI and release scripts in CI_ONLY, which no build or test reads), docker/, .cargo/, and
+    Cargo.toml, Cargo.lock, rust-toolchain.toml (path and content);
   * every environment variable tools/testrun.py keys on (CC*, CFLAGS*, CARGO_*, RUST*, NEXTSSL_*
     including NEXTSSL_IMAGE_ID, the toolchain image fingerprint, ...);
   * the layer name and the extra arguments (e.g. the fuzz seconds).
@@ -31,7 +32,15 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIRS = ['algos', 'algos_parked', 'algos_untrusted', 'crates', 'xtask', 'fuzz', 'third_party', 'tools',
         'docker', '.cargo']
 FILES = ['Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml']
-SKIP_DIRS = {os.path.join('fuzz', d) for d in ('corpus', 'artifacts', 'target')} | {'target', '.git'}
+SKIP_DIRS = {os.path.join('fuzz', d) for d in ('corpus', 'artifacts', 'target')} | {'target', '.git',
+                                                                                    os.path.join('tools', 'catalog')}
+# CI and release scripts run on the runner, never by a build, test or these layers (checked with grep
+# over algos/, crates/, xtask/, fuzz/, docker/ on 2026-11-27). Run 45910795433 changed only
+# tools/ci_release.sh and so ran symbols, miri, fuzz-smoke and the browser build in full (10-17 min).
+# A tools/ file not listed here stays an input, so a script a build starts to read is keyed by default.
+CI_ONLY = {'tools/' + f for f in ('ci_release.sh', 'release_info.py', 'release_package.sh', 'ci_weights.py',
+                                  'ci_weights.tsv', 'ci_test_report.py', 'ccache_prune.py', 'licenses_gen.py',
+                                  'upstream_changes.py', 'fasttest.py', 'wintests.py')}
 # Same selection as tools/testrun.py KEY_ENV / KEY_ENV_SKIP, minus the per-job paths and the shard.
 KEY_ENV = re.compile(r'^(CC|CXX|AR|CFLAGS|CXXFLAGS|RUSTFLAGS|RUSTDOCFLAGS|CARGO_|RUST|NEXTSSL_|TARGET_|HOST_|'
                      r'SMOKE_|ASAN_|UBSAN_|LSAN_|MSAN_|MIRI|WASMTIME|ImageOS$|RUNNER_OS$|'
@@ -54,6 +63,8 @@ def key(layer, extra):
             paths.extend(os.path.join(rel, f) for f in filenames if not f.endswith('.pyc'))
     paths.extend(f for f in FILES if os.path.isfile(os.path.join(ROOT, f)))
     for rel in sorted(p.replace(os.sep, '/') for p in paths):
+        if rel in CI_ONLY:
+            continue
         with open(os.path.join(ROOT, rel), 'rb') as f:
             data = f.read()
         h.update(f'{rel}\0{len(data)}\0'.encode())

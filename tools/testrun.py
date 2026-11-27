@@ -184,12 +184,15 @@ def workspace_members(cargo, excluded, meta=None):
 #     (an algorithm's whole family directory algos/<kind>/<family>/, so sibling parameter sets that
 #     share sources are covered),
 #   * the files every crate can read: third_party/, docker/ (in the container only), Cargo.toml, Cargo.lock,
-#     rust-toolchain.toml, .cargo/, tools/testrun.py,
+#     rust-toolchain.toml, .cargo/, tools/testrun.py, and every Cargo.toml of the workspace (feature
+#     unification: one manifest can change the code of a dependency another crate shares),
 #   * the toolchain (rustc -vV, cc/c++ --version, macOS SDK build / glibc version, runner OS, Docker
 #     toolchain image), every environment
 #     variable a build can read (CC*, CXX*, AR*, *FLAGS*, CARGO_*, RUST*, NEXTSSL_* except paths) and
 #     the testrun options (cargo command, runner, limits, clippy, features).
-# Anything else changes the key, and a crate whose key is new is built and tested in full.
+# Anything else changes the key, and a crate whose key is new is built and tested in full, except
+# the catalog crates (ALGO_CACHE_CRATES): their KAT and smoke loops skip the algorithms whose own
+# per-algorithm key passed before (KAT_DONE_FILE), so one changed algorithm reruns only itself.
 # --result-cache-write-only records results without skipping anything (the scheduled full run).
 
 GLOBAL_INPUTS = ['third_party', 'docker', 'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', '.cargo',
@@ -200,7 +203,11 @@ GLOBAL_INPUTS = ['third_party', 'docker', 'Cargo.toml', 'Cargo.lock', 'rust-tool
 IN_CONTAINER = os.path.exists('/.dockerenv')
 KEY_ENV = re.compile(r'^(CC|CXX|AR|CFLAGS|CXXFLAGS|RUSTFLAGS|RUSTDOCFLAGS|CARGO_|RUST|NEXTSSL_|TARGET_|HOST_|'
                      r'SMOKE_|ASAN_|UBSAN_|LSAN_|MSAN_|MIRI|WASMTIME|ImageOS$|RUNNER_OS$|'
-                     r'RUNNER_ARCH$|MACOSX_|SDKROOT$)')
+                     r'RUNNER_ARCH$|MACOSX_|SDKROOT$|KAT_ONLY$|KAT_SKIP$|KAT_DONE_FILE$)')
+# KAT_ONLY / KAT_SKIP / KAT_DONE_FILE (crates/nextssl-registry/tests/kat.rs) leave algorithms out of the
+# catalog tests: a pass under them proves only a subset, so they are keyed, and the per-algorithm
+# cache is off while one is set (a subset pass would record every algorithm).
+KAT_SUBSET_ENV = ('KAT_ONLY', 'KAT_SKIP', 'KAT_DONE_FILE')
 KEY_ENV_SKIP = {'CARGO_HOME', 'CARGO_TARGET_DIR', 'RUSTUP_HOME', 'NEXTSSL_C_CACHE', 'NEXTSSL_REPORT_DIR',
                 'NEXTSSL_RESULT_CACHE', 'NEXTSSL_RESULT_CACHE_WRITE_ONLY', 'NEXTSSL_SHARD', 'CARGO_TERM_COLOR'}
 
@@ -271,6 +278,18 @@ def result_keys(cargo, meta, names, options):
         if KEY_ENV.match(k) and k not in KEY_ENV_SKIP:
             common.update(f'{k}={os.environ[k]}\n'.encode())
     common.update(json.dumps(options, sort_keys=True).encode())
+    # Cargo (resolver 2) compiles a dependency shared by the crates of one cargo call once, with the
+    # union of the features they ask for, so any manifest can change another crate's code (e.g. sha2
+    # "force-soft" in one crate switches the SHA-256 backend of all). Cargo.lock records versions,
+    # not features: every workspace member's and every vendored path crate's Cargo.toml is keyed.
+    manifests = {os.path.normpath(p['manifest_path']) for p in meta['packages']}
+    for top in ('algos', 'crates', 'xtask', 'third_party'):
+        for r_, ds_, fs_ in os.walk(os.path.join(root, top)):
+            ds_[:] = sorted(x for x in ds_ if x not in ('target', '.git'))
+            if 'Cargo.toml' in fs_:
+                manifests.add(os.path.normpath(os.path.join(r_, 'Cargo.toml')))
+    for m in sorted(manifests):
+        common.update(f'{os.path.relpath(m, root)}={tree_digest(m, memo)}\n'.encode())
     common = common.hexdigest()
 
     closure = {}
@@ -299,7 +318,60 @@ def result_keys(cargo, meta, names, options):
         for d in sorted(dirs_of(by_name[n])):
             h.update(f'{os.path.relpath(d, root)}={tree_digest(d, memo)}\n'.encode())
         keys[n] = h.hexdigest()
-    return keys
+
+    # Per-algorithm keys of the catalog crates (see ALGO_CACHE_CRATES): base = the crate's whole key
+    # input except the directories of its algorithm dependencies; an algorithm's key = base + the
+    # directories of that algorithm's own closure below algos/. A directory of the closure that no
+    # algorithm package covers stays in the base, so every input is in some key.
+    algo = {}
+    for n in names:
+        if n not in ALGO_CACHE_CRATES:
+            continue
+        deps = [d['name'] for d in by_name[n].get('dependencies', []) if d['name'].startswith(ALGO_PREFIX)]
+        own = {}
+        for dep in deps:
+            if dep in by_name:
+                own[dep[len(ALGO_PREFIX):]] = {d for d in dirs_of(by_name[dep])
+                                               if not os.path.relpath(d, algos).startswith('..')}
+        covered = set().union(*own.values()) if own else set()
+        base = hashlib.sha256(common.encode())
+        for d in sorted(dirs_of(by_name[n]) - covered):
+            base.update(f'{os.path.relpath(d, root)}={tree_digest(d, memo)}\n'.encode())
+        # Every manifest is already in `common` (feature unification, see above). Known residual: all
+        # algorithm C libraries link into this one test binary, so a symbol clash between two of them
+        # could change an unchanged algorithm; the symbols layer (xtask check-symbols) rejects every
+        # unprefixed, common or weak global of a C upstream, which closes that path.
+        base = base.hexdigest()
+        per = {}
+        for i, ds in own.items():
+            h = hashlib.sha256(f'{n}\n{base}\n'.encode())
+            for d in sorted(ds):
+                h.update(f'{os.path.relpath(d, root)}={tree_digest(d, memo)}\n'.encode())
+            per[i] = h.hexdigest()
+        algo[n] = per
+    return keys, algo
+
+
+# Crates whose tests walk the whole catalog (crates/nextssl-registry/tests/kat.rs): when such a crate
+# must run, the algorithms whose per-algorithm key passed before are listed in KAT_DONE_FILE and not
+# smoked or replayed again. A change in the crate itself, the harness, nextssl-core or any other
+# non-algorithm input changes the base and so every algorithm key: then the whole catalog runs.
+ALGO_CACHE_CRATES = {'nextssl-registry'}
+ALGO_PREFIX = 'nextssl-algo-'
+
+
+def algo_cache_file(cache_dir, crate):
+    return os.path.join(cache_dir, crate + '.algos.json')
+
+
+def algo_done(cache_dir, crate, per):
+    """Algorithm ids whose recorded key equals the current one."""
+    try:
+        with open(algo_cache_file(cache_dir, crate), encoding='utf-8') as f:
+            rec = json.load(f)
+    except (OSError, ValueError):
+        return []
+    return sorted(i for i, k in per.items() if rec.get(i) == k)
 
 
 def cache_file(cache_dir, crate):
@@ -581,18 +653,38 @@ def main():
     elif a.result_cache and '--workspace' in args and not a.rerun_failed:
         meta = cargo_metadata(a.cargo)
         pkgs = workspace_members(a.cargo, excluded, meta)
-    keys, cached = {}, []
+    keys, cached, algo, done_files = {}, [], {}, {}
     if a.result_cache and pkgs is not None:
         os.makedirs(a.result_cache, exist_ok=True)
         options = {'cargo': a.cargo, 'runner': a.runner, 'timeout': a.timeout, 'limits': limits,
                    'clippy': a.clippy, 'umbrella': a.umbrella_features, 'args': rest}
         t_key = time.time()
-        keys = result_keys(a.cargo, meta, pkgs, options)
+        keys, algo = result_keys(a.cargo, meta, pkgs, options)
         if not a.result_cache_write_only:
             cached = [p for p in pkgs if cached_pass(a.result_cache, p, keys[p])]
             pkgs = [p for p in pkgs if p not in set(cached)]
         print(f'[testrun] result cache: {len(cached)} crate(s) unchanged since a passing run, '
               f'{len(pkgs)} to build and test ({time.time() - t_key:.0f} s to hash the inputs)', flush=True)
+        # A catalog crate that must run skips the algorithms proven before (KAT_DONE_FILE, kat.rs).
+        # The file lives below <workspace>/target: not an input of any key, and inside the directory
+        # wasmtime preopens in the container (--dir=/src).
+        subset = [k for k in KAT_SUBSET_ENV if os.environ.get(k)]
+        if subset:
+            print(f'[testrun] per-algorithm cache off: {", ".join(subset)} set (a subset pass proves '
+                  f'only that subset)', flush=True)
+            algo = {}
+        for c in sorted(set(pkgs) & set(algo)):
+            ids = [] if a.result_cache_write_only else algo_done(a.result_cache, c, algo[c])
+            print(f'[testrun] {c}: {len(ids)} of {len(algo[c])} algorithms unchanged since a passing run, '
+                  f'{len(algo[c]) - len(ids)} to smoke and replay', flush=True)
+            if ids:
+                # Named by the crate key: two runs at once on one checkout (other target or layer)
+                # never read each other's list.
+                path = os.path.join(meta['workspace_root'], 'target', f'kat-done-{c}-{keys[c][:16]}.txt')
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                with open(path, 'w', encoding='utf-8', newline='\n') as f:
+                    f.write('\n'.join(ids) + '\n')
+                done_files[c] = path
     if pkgs is not None:
         chunks = [pkgs] if pkgs else []
         # Windows limits a command line to 32767 characters: split very long package lists.
@@ -675,9 +767,16 @@ def main():
 
     def one(job):
         b, name = job
-        cmd = runner + [b['exe'], '--exact', name, '--test-threads', '1', '--nocapture']
+        env, run = env_for(b), runner
+        done_path = done_files.get(b['crate'])
+        if done_path:
+            env = dict(env, KAT_DONE_FILE=done_path)
+            # wasmtime passes no host environment to the module unless told to.
+            if run and os.path.basename(run[0]).startswith('wasmtime') and len(run) >= 2:
+                run = run[:2] + ['--env', f'KAT_DONE_FILE={done_path}'] + run[2:]
+        cmd = run + [b['exe'], '--exact', name, '--test-threads', '1', '--nocapture']
         limit = limits.get(b['crate'], a.timeout)
-        rc, out, secs, timed_out = run_proc(cmd, b['dir'], env_for(b), limit)
+        rc, out, secs, timed_out = run_proc(cmd, b['dir'], env, limit)
         lines = out.splitlines()
         ran_one = any(re.match(r'^test result: ok\. 1 passed', ln) for ln in lines)
         # A sanitizer that recovers (the ASan layer) lets the test pass; any report still fails it.
@@ -726,6 +825,11 @@ def main():
                 with open(cache_file(a.result_cache, p), 'w', encoding='utf-8', newline='\n') as f:
                     f.write(f'{keys[p]}\nrun {run_id} {time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}\n')
                 recorded += 1
+                # The crate passed: every algorithm either ran and passed now or was proven before with
+                # the same key, so all current algorithm keys are recorded.
+                if p in algo:
+                    with open(algo_cache_file(a.result_cache, p), 'w', encoding='utf-8', newline='\n') as f:
+                        json.dump(algo[p], f, sort_keys=True, indent=0)
             elif os.path.exists(cache_file(a.result_cache, p)):
                 os.remove(cache_file(a.result_cache, p))
         print(f'[testrun] result cache: recorded {recorded} passing crate(s)', flush=True)

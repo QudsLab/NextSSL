@@ -80,8 +80,31 @@ fn every_kat_file_exists_and_is_json() {
     }
 }
 
-/// Triage aid: KAT_ONLY=id1,id2 runs only those algorithms in the KAT replay and smoke loops (unset = all).
+/// Algorithms already proven by an earlier passing run whose inputs were bit for bit the same: the
+/// algorithm's own sources and KAT files, this crate and everything else the registry tests read
+/// (tools/testrun.py, per-algorithm result cache). testrun writes their ids, one per line, to the
+/// file named by KAT_DONE_FILE; they are left out of the KAT replay and smoke loops. Unset = none.
+/// A named file that cannot be read is an error, never "run nothing" or "run everything" silently.
+fn done() -> &'static BTreeSet<String> {
+    static DONE: std::sync::OnceLock<BTreeSet<String>> = std::sync::OnceLock::new();
+    DONE.get_or_init(|| match std::env::var("KAT_DONE_FILE") {
+        Ok(p) if !p.is_empty() => std::fs::read_to_string(&p)
+            .unwrap_or_else(|e| panic!("KAT_DONE_FILE {p}: {e}"))
+            .lines()
+            .map(str::trim)
+            .filter(|l| !l.is_empty())
+            .map(str::to_string)
+            .collect(),
+        _ => BTreeSet::new(),
+    })
+}
+
+/// KAT_ONLY=id1,id2 (triage aid) runs only those algorithms in the KAT replay and smoke loops
+/// (unset = all); algorithms in KAT_DONE_FILE are never run again (see `done`).
 fn selected(id: &str) -> bool {
+    if done().contains(id) {
+        return false;
+    }
     match std::env::var("KAT_ONLY") {
         Ok(only) if !only.is_empty() => only.split(',').any(|s| s == id),
         _ => true,
@@ -89,9 +112,26 @@ fn selected(id: &str) -> bool {
 }
 
 /// True unless KAT_ONLY selects a subset; catalog-wide floors (vector, file and kind counts) only
-/// make sense for the full run.
+/// make sense for the full catalog. Algorithms in KAT_DONE_FILE still count toward the floors
+/// (`done_kat_docs`): they passed with the same inputs, and leaving them out would switch the floors
+/// off for every run after the first.
 fn full_catalog() -> bool {
     std::env::var("KAT_ONLY").map_or(true, |v| v.is_empty())
+}
+
+/// The KAT json documents of the algorithms in KAT_DONE_FILE that `keep` accepts, read but not run:
+/// for the catalog-wide floors only.
+fn done_kat_docs(keep: impl Fn(&AlgoInfo) -> bool) -> Vec<J> {
+    let root = algos_dir();
+    let mut docs = Vec::new();
+    for a in all().iter().filter(|a| done().contains(a.id) && keep(a)) {
+        for f in a.kat {
+            let path = root.join(a.dir).join(f);
+            let text = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{path:?}: {e}"));
+            docs.push(serde_json::from_str(&text).unwrap_or_else(|e| panic!("{path:?}: {e}")));
+        }
+    }
+    docs
 }
 
 #[test]
@@ -162,6 +202,12 @@ fn hash_and_encoding_kats_replay_through_the_registry() {
         }
     }
     if full_catalog() {
+        let skip = std::env::var("KAT_SKIP").unwrap_or_default();
+        for doc in done_kat_docs(|a| is_hash_or_encoding(a) && !skip.split(',').any(|s| s == a.id))
+        {
+            total += doc["vectors"].as_array().map_or(0, Vec::len)
+                + doc["invalid"].as_array().map_or(0, Vec::len);
+        }
         assert!(total >= 15, "suspiciously few vectors ran: {total}");
     }
 }
@@ -1289,6 +1335,11 @@ fn published_kats_replay_through_the_registry() {
     );
     // The floor guards the full catalog; a KAT_ONLY subset may legitimately have fewer files.
     if full_catalog() {
+        let done_files = done_kat_docs(|_| true)
+            .iter()
+            .filter(|d| d.get("replay").and_then(J::as_str) == Some("registry"))
+            .count();
+        let files = files + done_files;
         assert!(files >= 20, "suspiciously few published KAT files: {files}");
     }
     assert!(
